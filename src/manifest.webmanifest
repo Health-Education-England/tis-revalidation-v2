@@ -1,0 +1,36 @@
+{
+  "name": "revalidation",
+  "short_name": "revalidation",
+  "theme_color": "#005eb8",
+  "background_color": "#f0f4f5",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "assets/favicons/smalltile-70x70.png",
+      "sizes": "70x70",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/favicons/mediumtile-150x150.png",
+      "sizes": "150x150",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/favicons/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/favicons/widetile-310x150.png",
+      "sizes": "310x150",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/favicons/largetile-310x310.png",
+      "sizes": "310x310",
+      "type": "image/png"
+    }
+  ]
+}

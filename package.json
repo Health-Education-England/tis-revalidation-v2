@@ -10,6 +10,11 @@
     "lint:styles": "stylelint \"src/**/*.scss\"",
     "e2e": "ng e2e"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged && npm run lint && npm run lint:styles"
+    }
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~9.0.2",
@@ -43,6 +48,7 @@
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.2",
     "prettier": "^1.19.1",
+    "pretty-quick": "^2.0.1",
     "protractor": "~5.4.3",
     "stylelint": "^13.2.0",
     "stylelint-prettier": "^1.1.2",

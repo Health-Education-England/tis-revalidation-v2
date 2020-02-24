@@ -8,6 +8,7 @@
     "test": "ng test",
     "lint": "ng lint && npm run lint:styles",
     "lint:styles": "stylelint \"src/**/*.scss\"",
+    "tslint-check": "tslint-config-prettier-check ./tslint.json",
     "e2e": "ng e2e"
   },
   "husky": {

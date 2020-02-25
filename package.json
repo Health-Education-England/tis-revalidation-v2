@@ -8,7 +8,13 @@
     "test": "ng test",
     "lint": "ng lint && npm run lint:styles",
     "lint:styles": "stylelint \"src/**/*.scss\"",
+    "tslint-check": "tslint-config-prettier-check ./tslint.json",
     "e2e": "ng e2e"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged && npm run lint && npm run lint:styles"
+    }
   },
   "private": true,
   "dependencies": {
@@ -44,11 +50,13 @@
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.2",
     "prettier": "^1.19.1",
+    "pretty-quick": "^2.0.1",
     "protractor": "~5.4.3",
     "stylelint": "^13.2.0",
     "stylelint-prettier": "^1.1.2",
     "ts-node": "~8.3.0",
     "tslint": "~5.18.0",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "~3.7.5"
   }
 }

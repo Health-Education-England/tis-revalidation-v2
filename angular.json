@@ -24,7 +24,8 @@
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "assets": [
-              { "glob": "**/*", "input": "node_modules/nhsuk-frontend/packages/assets/", "output": "src/assets/" },
+              "src/assets",
+              { "glob": "**/*", "input": "node_modules/nhsuk-frontend/packages/assets/", "output": "assets/" },
               "src/manifest.webmanifest"
             ],
             "styles": [
@@ -62,6 +63,36 @@
               ],
               "serviceWorker": true,
               "ngswConfigPath": "ngsw-config.json"
+            },
+            "staging": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.staging.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ],
+              "serviceWorker": true,
+              "ngswConfigPath": "ngsw-config.json"
             }
           }
         },
@@ -73,6 +104,9 @@
           "configurations": {
             "production": {
               "browserTarget": "revalidation:build:production"
+            },
+            "staging": {
+              "browserTarget": "revalidation:build:staging"
             }
           }
         },
@@ -90,7 +124,6 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "assets": [
-              "src/favicon.ico",
               "src/assets",
               "src/manifest.webmanifest"
             ],
@@ -123,6 +156,46 @@
             "production": {
               "devServerTarget": "revalidation:serve:production"
             }
+          }
+        }
+      }
+    },
+    "hee-shared": {
+      "projectType": "library",
+      "root": "projects/hee-shared",
+      "sourceRoot": "projects/hee-shared/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/hee-shared/tsconfig.lib.json",
+            "project": "projects/hee-shared/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/hee-shared/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/hee-shared/src/test.ts",
+            "tsConfig": "projects/hee-shared/tsconfig.spec.json",
+            "karmaConfig": "projects/hee-shared/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/hee-shared/tsconfig.lib.json",
+              "projects/hee-shared/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         }
       }

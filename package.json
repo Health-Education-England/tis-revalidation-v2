@@ -3,12 +3,13 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "npm run build:shared && ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint && npm run lint:styles",
     "lint:styles": "stylelint \"src/**/*.scss\"",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "build:shared": "ng build --project=hee-shared"
   },
   "private": true,
   "dependencies": {

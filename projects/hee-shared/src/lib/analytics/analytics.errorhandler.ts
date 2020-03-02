@@ -2,7 +2,7 @@ import { Injectable, ErrorHandler, Injector } from '@angular/core';
 import { Angulartics2GoogleGlobalSiteTag } from 'angulartics2/gst';
 
 /**
- * Intercept all application errors and pass to GA for analysing
+ * Intercept all application errors and pass to GA for analyzing
  */
 @Injectable()
 export class AnalyticsErrorHandler implements ErrorHandler {

@@ -2,50 +2,50 @@ import { NgModule, InjectionToken, Inject, Optional, SkipSelf, ModuleWithProvide
 import { InjectScript } from '../utilities.functions';
 import { DOCUMENT } from '@angular/common';
 
-export interface HotjarConfig {
-  hotjarid: number;
-  hotjarsv: number;
+export interface HotJarConfig {
+  hotJarId: number;
+  hotJarSv: number;
   enabled: boolean;
 }
 
-const HotjarConfigValue = new InjectionToken<HotjarConfig>('HotjarConfig');
+const HotJarConfigValue = new InjectionToken<HotJarConfig>('HotJarConfig');
 
 @NgModule({
   declarations: []
 })
-export class HotjarModule {
-  private hotjarscript: HTMLScriptElement;
+export class HotJarModule {
+  private hotJarScript: HTMLScriptElement;
 
   constructor(
-    @Optional() @SkipSelf() parentModule?: HotjarModule,
-    @Inject(HotjarConfigValue) private hotjarConfig?: HotjarConfig,
+    @Optional() @SkipSelf() parentModule?: HotJarModule,
+    @Inject(HotJarConfigValue) private hotJarConfig?: HotJarConfig,
     @Inject(DOCUMENT) private document?: Document
   ) {
     if (parentModule) {
-      throw new Error(`HotjarModule is already loaded. Import it in the AppModule only`);
+      throw new Error(`HotJarModule is already loaded. Import it in the AppModule only`);
     }
 
-    if (!hotjarConfig) {
-      throw new Error(`HotjarModule requires forRoot({ hotjarid: 'hotjar client id', hotjarsv: 'version number of hotjars js to use' })`);
+    if (!hotJarConfig) {
+      throw new Error(`HotJarModule requires forRoot({ hotJarId: 'hotJar client id', hotJarSv: 'version number of hotJar js to use' })`);
     }
 
-    this.InitialiseHotjar();
+    this.InitializeHotJar();
   }
 
-  private InitialiseHotjar(): void {
-    if (!this.hotjarscript && this.hotjarConfig.enabled) {
+  private InitializeHotJar(): void {
+    if (!this.hotJarScript && this.hotJarConfig.enabled) {
       const win = (window as any);
-      win.hj=win.hj||function(){(win.hj.q=win.hj.q||[]).push(arguments)};
-      const hotjarsrc = `https://static.hotjar.com/c/hotjar-${this.hotjarConfig.hotjarid}.js?sv=${this.hotjarConfig.hotjarsv}`;
-      this.hotjarscript = InjectScript(hotjarsrc, true, this.document);
+      win.hj = win.hj || function () { (win.hj.q = win.hj.q || []).push(arguments) };
+      const hotJarSrc = `https://static.hotjar.com/c/hotjar-${this.hotJarConfig.hotJarId}.js?sv=${this.hotJarConfig.hotJarSv}`;
+      this.hotJarScript = InjectScript(hotJarSrc, true, this.document);
     }
   }
 
-  static forRoot(config: HotjarConfig): ModuleWithProviders {
+  static forRoot(config: HotJarConfig): ModuleWithProviders {
     return {
-      ngModule: HotjarModule,
+      ngModule: HotJarModule,
       providers: [
-        { provide: HotjarConfigValue, useValue: config }
+        { provide: HotJarConfigValue, useValue: config }
       ]
     };
   }

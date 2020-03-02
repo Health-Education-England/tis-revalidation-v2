@@ -5,3 +5,5 @@ import { from } from 'rxjs';
  */
 
  export * from './lib/analytics/analytics.module';
+ export * from './lib/hotjar/hotjar.module';
+ export * from './lib/utilities.functions';

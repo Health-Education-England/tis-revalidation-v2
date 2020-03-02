@@ -3,6 +3,7 @@ import { DOCUMENT } from '@angular/common';
 import { Angulartics2Module } from 'angulartics2';
 import { Angulartics2GoogleGlobalSiteTag } from 'angulartics2/gst';
 import { AnalyticsErrorHandler } from './analytics.errorhandler';
+import { InjectScript } from '../utilities.functions';
 
 export interface AnalyticsConfig {
   siteId: string[];
@@ -63,10 +64,8 @@ export class AnalyticsModule {
    */
   private injectGoogleScript(): void {
     if (!this.googlescript && typeof this.win.gtag === 'undefined') {
-      this.googlescript = this.document.createElement('script');
-      this.googlescript.setAttribute('src', `https://www.googletagmanager.com/gtag/js?id=${this.siteID}`);
-      this.googlescript.setAttribute('async', '');
-      this.document.head.appendChild(this.googlescript);
+      const googlesrc = `https://www.googletagmanager.com/gtag/js?id=${this.siteID}`;
+      this.googlescript = InjectScript(googlesrc, true, this.document);
     }
   }
 

@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '@environment';
-import { AnalyticsModule } from 'hee-shared';
+import { AnalyticsModule, HotjarModule } from 'hee-shared';
 
 @NgModule({
   declarations: [
@@ -15,7 +15,8 @@ import { AnalyticsModule } from 'hee-shared';
     BrowserModule,
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    AnalyticsModule.forRoot({ siteId: ['UA-40570867-6'], enabled: environment.production })
+    AnalyticsModule.forRoot({ siteId: ['UA-40570867-6'], enabled: environment.production }),
+    HotjarModule.forRoot({ hotjarid: 1662399, hotjarsv: 6, enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]

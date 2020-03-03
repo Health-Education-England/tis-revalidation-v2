@@ -76,7 +76,7 @@ export class AnalyticsModule {
     if (!this.gaScript && typeof this.win.gtag === 'undefined') {
       this.gaScript = true;
       this.win.dataLayer = this.win.dataLayer || [];
-      this.win.gtag = (...args: any) => { (window as any).dataLayer.push(args); }; // The 'arguments' object cannot be referenced in an arrow function in ES3 and ES5. Consider using a standard function expression.
+      this.win.gtag = (...args: any) => { (window as any).dataLayer.push(args); }; // FIX: The 'arguments' object cannot be referenced in an arrow function in ES3 and ES5. Consider using a standard function expression.
       this.win.gtag('js', new Date());
     }
   }

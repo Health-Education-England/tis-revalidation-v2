@@ -35,7 +35,11 @@ export class HotJarModule {
   private InitializeHotJar(): void {
     if (!this.hotJarScript && this.hotJarConfig.enabled) {
       const win = (window as any);
-      win.hj = win.hj || function () { (win.hj.q = win.hj.q || []).push(arguments) };
+      if(win.hj) {
+        win.hj = win.hj;
+      } else {
+        win.hj = (...args: any) => { ((window as any).hj.q = (window as any).hj.q || []).push(args) }; // FIX: The 'arguments' object cannot be referenced in an arrow function in ES3 and ES5. Consider using a standard function expression.
+      }
       const hotJarSrc = `https://static.hotjar.com/c/hotjar-${this.hotJarConfig.hotJarId}.js?sv=${this.hotJarConfig.hotJarSv}`;
       this.hotJarScript = InjectScript(hotJarSrc, true, this.document);
     }

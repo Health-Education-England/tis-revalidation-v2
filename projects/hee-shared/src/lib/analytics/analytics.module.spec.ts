@@ -1,29 +1,9 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AnalyticsModule, AnalyticsConfig } from './analytics.module';
 import { RouterTestingModule } from "@angular/router/testing";
-import { Router, Routes } from "@angular/router";
+import { Router } from "@angular/router";
 import { Location } from "@angular/common";
-
-/**
- * MOCK DUMMY COMPONENT
- */
-import { Component } from '@angular/core';
-
-@Component({
-    selector: 'app-mock',
-    template: `Mock`
-})
-export class MockComponent { }
-
-@Component({
-    template: `<router-outlet></router-outlet>`
-})
-export class AppComponent { }
-
-export const routes: Routes = [
-    { path: '', redirectTo: 'mock', pathMatch: 'full' },
-    { path: 'mock', component: MockComponent }
-];
+import { AppComponent, MockComponent, routes } from '../mock.test.component';
 
 describe('MockComponent', () => {
     let location: Location;

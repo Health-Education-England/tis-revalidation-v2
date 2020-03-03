@@ -1,20 +1,22 @@
 /**
  * MOCK DUMMY COMPONENTS AND ROUTES
  */
-import { Component } from '@angular/core';
-import { Routes } from '@angular/router';
+import { Component } from "@angular/core";
+import { Routes } from "@angular/router";
 
 @Component({
-    selector: 'app-mock',
-    template: `Mock`
+  selector: "lib-mock",
+  template: `
+    Mock
+  `
 })
-export class MockComponent { }
+export class MockComponent {}
 
 @Component({
-    template: `<router-outlet></router-outlet>`
+  template: `
+    <router-outlet></router-outlet>
+  `
 })
-export class AppComponent { }
+export class AppComponent {}
 
-export const routes: Routes = [
-    { path: '', component: MockComponent }
-];
+export const routes: Routes = [{ path: "", component: MockComponent }];

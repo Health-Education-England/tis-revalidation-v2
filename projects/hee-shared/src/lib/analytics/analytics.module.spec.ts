@@ -6,7 +6,7 @@ import { Location } from "@angular/common";
 import { AppComponent, MockComponent, routes } from "../mock.test.component";
 
 describe("MockComponent", () => {
-  let location: Location;
+  //   let location: Location;
   let router: Router;
   let fixture: any;
   const analyticsConfig: AnalyticsConfig = { siteId: ["TEST"], enabled: true };
@@ -21,7 +21,7 @@ describe("MockComponent", () => {
     }).compileComponents();
 
     router = TestBed.inject(Router);
-    location = TestBed.inject(Location);
+    // location = TestBed.inject(Location);
 
     fixture = TestBed.createComponent(AppComponent);
 

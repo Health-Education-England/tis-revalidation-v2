@@ -2,7 +2,7 @@ import { TestBed, async } from "@angular/core/testing";
 import { HotJarModule, HotJarConfig } from "./hotjar.module";
 import { RouterTestingModule } from "@angular/router/testing";
 import { Router } from "@angular/router";
-import { Location } from "@angular/common";
+// import { Location } from "@angular/common";
 import { AppComponent, MockComponent, routes } from "../mock.test.component";
 
 describe("MockComponent", () => {

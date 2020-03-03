@@ -10,15 +10,13 @@ export interface AnalyticsConfig {
   enabled: boolean;
 }
 
-const AnalyticsConfigValue = new InjectionToken<AnalyticsConfig>('AnalyticsConfig');
+const AnalyticsConfigValue = new InjectionToken<AnalyticsConfig>(
+  "AnalyticsConfig"
+);
 
 @NgModule({
-  imports: [
-    Angulartics2Module.forRoot()
-  ],
-  providers: [
-    { provide: ErrorHandler, useClass: AnalyticsErrorHandler }
-  ]
+  imports: [Angulartics2Module.forRoot()],
+  providers: [{ provide: ErrorHandler, useClass: AnalyticsErrorHandler }]
 })
 export class AnalyticsModule {
   private googleScript: HTMLScriptElement;
@@ -33,16 +31,24 @@ export class AnalyticsModule {
     @Inject(DOCUMENT) private document?: Document
   ) {
     if (parentModule) {
-      throw new Error(`AnalyticsModule is already loaded. Import it in the AppModule only`);
+      throw new Error(
+        `AnalyticsModule is already loaded. Import it in the AppModule only`
+      );
     }
 
     if (!analyticsConfig) {
-      throw new Error(`AnalyticsModule requires forRoot({ siteId: [string array of site id's], enabled: true|false })`);
+      throw new Error(
+        `AnalyticsModule requires forRoot({ siteId: [string array of site id's], enabled: true|false })`
+      );
     }
 
-    if (this.analyticsConfig && this.analyticsConfig.enabled && this.analyticsConfig.siteId) {
-      this.siteID = this.analyticsConfig.siteId.join(',');
-      this.win = (window as any);
+    if (
+      this.analyticsConfig &&
+      this.analyticsConfig.enabled &&
+      this.analyticsConfig.siteId
+    ) {
+      this.siteID = this.analyticsConfig.siteId.join(",");
+      this.win = window as any;
       // TODO: see runOutsideAngularZones
       this.injectGoogleScript();
       this.initializeGtag();
@@ -53,9 +59,7 @@ export class AnalyticsModule {
   static forRoot(config: AnalyticsConfig): ModuleWithProviders {
     return {
       ngModule: AnalyticsModule,
-      providers: [
-        { provide: AnalyticsConfigValue, useValue: config }
-      ]
+      providers: [{ provide: AnalyticsConfigValue, useValue: config }]
     };
   }
 

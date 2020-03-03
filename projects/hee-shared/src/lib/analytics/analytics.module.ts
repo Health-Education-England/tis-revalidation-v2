@@ -1,16 +1,9 @@
-import {
-  NgModule,
-  Optional,
-  SkipSelf,
-  ModuleWithProviders,
-  Inject,
-  InjectionToken,
-  ErrorHandler
-} from "@angular/core";
-import { DOCUMENT } from "@angular/common";
-import { Angulartics2Module } from "angulartics2";
-import { Angulartics2GoogleGlobalSiteTag } from "angulartics2/gst";
-import { AnalyticsErrorHandler } from "./analytics.errorhandler";
+import { NgModule, Optional, SkipSelf, ModuleWithProviders, Inject, InjectionToken, ErrorHandler } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Angulartics2Module } from 'angulartics2';
+import { Angulartics2GoogleGlobalSiteTag } from 'angulartics2/gst';
+import { AnalyticsErrorHandler } from './analytics.errorhandler';
+import { InjectScript } from '../utilities.functions';
 
 export interface AnalyticsConfig {
   siteId: string[];
@@ -26,8 +19,8 @@ const AnalyticsConfigValue = new InjectionToken<AnalyticsConfig>(
   providers: [{ provide: ErrorHandler, useClass: AnalyticsErrorHandler }]
 })
 export class AnalyticsModule {
-  private googlescript: HTMLScriptElement;
-  private gascript: boolean;
+  private googleScript: HTMLScriptElement;
+  private gaScript: boolean;
   private siteID: string;
   private win: any;
 
@@ -74,28 +67,21 @@ export class AnalyticsModule {
    * Global site tag (gtag.js) - Google Analytics
    */
   private injectGoogleScript(): void {
-    if (!this.googlescript && typeof this.win.gtag === "undefined") {
-      this.googlescript = this.document.createElement("script");
-      this.googlescript.setAttribute(
-        "src",
-        `https://www.googletagmanager.com/gtag/js?id=${this.siteID}`
-      );
-      this.googlescript.setAttribute("async", "");
-      this.document.head.appendChild(this.googlescript);
+    if (!this.googleScript && typeof this.win.gtag === 'undefined') {
+      const googleSrc = `https://www.googletagmanager.com/gtag/js?id=${this.siteID}`;
+      this.googleScript = InjectScript(googleSrc, true, this.document);
     }
   }
 
   /**
-   * Initaialize window.gtag function for tracking
+   * Initialize window.gtag function for tracking
    */
   private initializeGtag(): void {
-    if (!this.gascript && typeof this.win.gtag === "undefined") {
-      this.gascript = true;
+    if (!this.gaScript && typeof this.win.gtag === 'undefined') {
+      this.gaScript = true;
       this.win.dataLayer = this.win.dataLayer || [];
-      this.win.gtag = (...args) => {
-        (window as any).dataLayer.push(args);
-      };
-      this.win.gtag("js", new Date());
+      this.win.gtag = (...args: any) => { (window as any).dataLayer.push(args); }; // FIX: The 'arguments' object cannot be referenced in an arrow function in ES3 and ES5. Consider using a standard function expression.
+      this.win.gtag('js', new Date());
     }
   }
 }

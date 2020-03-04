@@ -2,11 +2,9 @@ import { TestBed, async } from "@angular/core/testing";
 import { AnalyticsModule, AnalyticsConfig } from "./analytics.module";
 import { RouterTestingModule } from "@angular/router/testing";
 import { Router } from "@angular/router";
-// import { Location } from "@angular/common";
 import { AppComponent, MockComponent, routes } from "../mock.test.component";
 
 describe("MockComponent", () => {
-  //   let location: Location;
   let router: Router;
   let fixture: any;
   const analyticsConfig: AnalyticsConfig = { siteId: ["TEST"], enabled: true };
@@ -21,8 +19,6 @@ describe("MockComponent", () => {
     }).compileComponents();
 
     router = TestBed.inject(Router);
-    // location = TestBed.inject(Location);
-
     fixture = TestBed.createComponent(AppComponent);
 
     fixture.ngZone.run(() => {

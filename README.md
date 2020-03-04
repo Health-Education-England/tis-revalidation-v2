@@ -16,7 +16,7 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 ## Coding Style
 
-To ensure consistency across formatting of files, we use Prettier. Please ensure you setup your IDE using one of the following tutorials.
+To ensure consistency across formatting of files, we use [Prettier](https://prettier.io/). Please ensure you setup your IDE using one of the following tutorials.
 
 In case you haven't done this, there is also now a git-hook to ensure your code updates match the Prettier style:
 
@@ -31,7 +31,7 @@ In case you haven't done this, there is also now a git-hook to ensure your code 
 There is currently one `pre-commit` active githook in the project which can be found within `package.json`. This git hook runs;
 
 1.  **Prettier:** Ensures that the code follows the same style independant of developer. Prettier will restructure your code on every commit.
-2.  **Linting:** Ensures typescript and scss code is linted by runing `ng lint`. Any errors occurred during linting will prevent the commit from completing
+2.  **Linting:** Ensures typescript and scss code is linted by running the `ng lint` script. Any errors occurred during linting will prevent the commit from completing
 
 ## State Management
 

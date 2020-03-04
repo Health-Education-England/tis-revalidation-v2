@@ -33,6 +33,25 @@ There is currently one `pre-commit` active githook in the project which can be f
 1.  **Prettier:** Ensures that the code follows the same style independant of developer. Prettier will restructure your code on every commit.
 2.  **Linting:** Ensures typescript and scss code is linted by runing `ng lint`. Any errors occurred during linting will prevent the commit from completing
 
+## State Management
+
+We are using [NGXS](https://www.ngxs.io/) for state management. The [NGXS cli](https://www.ngxs.io/plugins/cli) can be leveraged in order to auto generate files.
+
+Example usage;
+
+```
+ngxs --name foo
+```
+
+Full options
+
+```
+--name name         Store name
+--directory path    By default, the prompt is set to the current directory
+--folder-name name  Use your own folder name, default: state
+--spec boolean      Creates a spec file for store, default: true
+```
+
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).

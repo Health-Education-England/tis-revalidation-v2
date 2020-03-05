@@ -1,14 +1,15 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-import { IEnvironment } from './environment.interface';
+import { IEnvironment } from "./environment.interface";
 export const environment: IEnvironment = {
   production: false,
-  host: ``,
+  host: `http://www.mocky.io/v2/`,
   siteIds: [],
   appUrls: {
     login: ``,
-    authRedirect: ``
+    authRedirect: ``,
+    listTrainees: `5e60f633330000bf1897be11`
   }
 };
 
@@ -19,4 +20,4 @@ export const environment: IEnvironment = {
  * This import should be commented out in production mode because it will have a negative impact
  * on performance if an error is thrown.
  */
-import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+import "zone.js/dist/zone-error"; // Included with Angular CLI.

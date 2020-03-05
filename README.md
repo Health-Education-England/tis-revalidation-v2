@@ -58,7 +58,12 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 ## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+The [Cypress](https://www.cypress.io) e2e tests can be run;
+
+- In headless mode in the electron browser via `npm run cypress` or
+- In interactive mode utilising the Cypress Test Runner via `npm run cypress-open` .
+
+For further info (click here)[https://docs.cypress.io/guides/guides/command-line.html#How-to-run-commands]
 
 ## Further help
 

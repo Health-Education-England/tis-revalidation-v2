@@ -6,11 +6,13 @@ import { environment } from "@environment";
 import { NgxsReduxDevtoolsPluginModule } from "@ngxs/devtools-plugin";
 import { NgxsLoggerPluginModule } from "@ngxs/logger-plugin";
 import { NgxsModule } from "@ngxs/store";
+import { MaterialModule } from "../material/material.module";
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
 
 @NgModule({
   declarations: [PageNotFoundComponent],
   imports: [
+    MaterialModule,
     ReactiveFormsModule,
     RouterModule,
     HttpClientModule,
@@ -20,6 +22,6 @@ import { PageNotFoundComponent } from "./page-not-found/page-not-found.component
     NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production }),
     NgxsLoggerPluginModule.forRoot({ disabled: environment.production })
   ],
-  exports: []
+  exports: [ReactiveFormsModule, MaterialModule]
 })
 export class SharedModule {}

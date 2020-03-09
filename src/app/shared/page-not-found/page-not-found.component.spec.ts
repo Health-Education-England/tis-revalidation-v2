@@ -1,4 +1,3 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { PageNotFoundComponent } from "./page-not-found.component";
@@ -9,8 +8,7 @@ describe("PageNotFoundComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [PageNotFoundComponent],
-      imports: [HttpClientTestingModule]
+      declarations: [PageNotFoundComponent]
     }).compileComponents();
   }));
 

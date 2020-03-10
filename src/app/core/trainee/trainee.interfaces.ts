@@ -1,13 +1,9 @@
 export interface ITrainee {
-  breach?: string;
-  dateAdded: string;
-  doctorFirstName: string;
-  doctorLastName: string;
-  doctorStatus?: string;
-  gmcReferenceNumber: string;
-  investigation?: string;
-  preliminaryInvestigation?: string;
-  sanction: string;
-  submissionDate: string;
-  underNotice: string;
+  firstName: string;
+  lastName: string;
+  gmcNumber: string;
+  designatedBody: string;
+  status: string;
+  traineeType: string;
+  lastUpdated: string;
 }

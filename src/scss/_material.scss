@@ -1,0 +1,49 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+// @import '~@angular/material/theming';
+@import "./material/theming"; //customize all variables in this local version of theme file
+// Plus imports for other components in your app.
+@import "./material/palette";
+
+// Define a custom typography config that overrides the font-family as well as the
+// `headlines` and `body-1` levels.
+// import font face, globals, and colours from nhsuk
+@import "~nhsuk-frontend/packages/core/generic/font-face";
+@import "~nhsuk-frontend/packages/core/settings/globals";
+@import "~nhsuk-frontend/packages/core/settings/colours";
+
+$nhsuk-typography: mat-typography-config(
+  $font-family: $nhsuk-font + $nhsuk-font-fallback
+);
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core($nhsuk-typography);
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$nhsuk-primary: mat-palette($nhsuk-blue);
+$nhsuk-accent: mat-palette($nhsuk-warm-yellow);
+$nhsuk-secondary: mat-palette($nhsuk-green);
+// The warn palette is optional (defaults to red).
+$nhsuk-warn: mat-palette($nhsuk-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$nhsuk-theme: mat-light-theme($nhsuk-primary, $nhsuk-accent, $nhsuk-warn);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($nhsuk-theme);
+
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  padding: 0;
+}

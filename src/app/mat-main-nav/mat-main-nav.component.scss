@@ -1,0 +1,45 @@
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 90%;
+}
+
+.icon_nhs_logo.mat-icon {
+  width: 40px;
+}
+
+// .sidenav .mat-toolbar {
+//   background: inherit;
+// }
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.fill-space {
+  flex: 1 1 auto;
+  padding-left: 16px;
+}
+
+.mat-icon-button,
+.mat-drawer {
+  &.hidden {
+    display: none;
+  }
+}
+
+.mat-expansion-panel.disabled .mat-expansion-panel-body {
+  padding-bottom: 0;
+}
+
+.app-status {
+  margin-top: 20%;
+  .mat-button-base {
+    width: 85%;
+    margin: 0 auto;
+  }
+}

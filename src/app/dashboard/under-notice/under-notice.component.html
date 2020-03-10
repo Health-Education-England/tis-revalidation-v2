@@ -5,24 +5,24 @@
     </caption>
     <thead class="nhsuk-table__head">
       <tr class="nhsuk-table__row">
-        <th class="nhsuk-table__header" scope="col">Date added</th>
         <th class="nhsuk-table__header" scope="col">First name</th>
         <th class="nhsuk-table__header" scope="col">Last name</th>
-        <th class="nhsuk-table__header" scope="col">Gmc Reference no</th>
-        <th class="nhsuk-table__header" scope="col">Sanction</th>
-        <th class="nhsuk-table__header" scope="col">Submission date</th>
-        <th class="nhsuk-table__header" scope="col">Under notice</th>
+        <th class="nhsuk-table__header" scope="col">Gmc no</th>
+        <th class="nhsuk-table__header" scope="col">Designated Body</th>
+        <th class="nhsuk-table__header" scope="col">Status</th>
+        <th class="nhsuk-table__header" scope="col">Trainee type</th>
+        <th class="nhsuk-table__header" scope="col">Last updated</th>
       </tr>
     </thead>
     <tbody class="nhsuk-table__body">
       <tr class="nhsuk-table__row" *ngFor="let i of trainees">
-        <td class="nhsuk-table__cell ">{{ i.dateAdded }}</td>
-        <td class="nhsuk-table__cell ">{{ i.doctorFirstName }}</td>
-        <td class="nhsuk-table__cell">{{ i.doctorLastName }}</td>
-        <td class="nhsuk-table__cell ">{{ i.gmcReferenceNumber }}</td>
-        <td class="nhsuk-table__cell ">{{ i.sanction }}</td>
-        <td class="nhsuk-table__cell">{{ i.submissionDate }}</td>
-        <td class="nhsuk-table__cell ">{{ i.underNotice }}</td>
+        <td class="nhsuk-table__cell ">{{ i.firstName }}</td>
+        <td class="nhsuk-table__cell ">{{ i.lastName }}</td>
+        <td class="nhsuk-table__cell">{{ i.gmcNumber }}</td>
+        <td class="nhsuk-table__cell ">{{ i.designatedBody }}</td>
+        <td class="nhsuk-table__cell ">{{ i.status }}</td>
+        <td class="nhsuk-table__cell">{{ i.traineeType }}</td>
+        <td class="nhsuk-table__cell ">{{ i.lastUpdated }}</td>
       </tr>
     </tbody>
   </table>

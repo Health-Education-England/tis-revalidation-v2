@@ -9,7 +9,7 @@ export const environment: IEnvironment = {
   appUrls: {
     login: ``,
     authRedirect: ``,
-    listTrainees: `5e60f633330000bf1897be11`
+    listTrainees: `5e6785e23100005c00230a3b`
   }
 };
 

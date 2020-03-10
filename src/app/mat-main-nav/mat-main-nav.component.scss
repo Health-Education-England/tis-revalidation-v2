@@ -1,3 +1,11 @@
+@import "@angular/material/core/style/_variables.scss";
+
+.mat-toolbar-row,
+.mat-toolbar-single-row {
+  @media (screen and #{$mat-xsmall}) {
+    height: 72px;
+  }
+}
 .sidenav-container {
   height: 100%;
 }
@@ -7,7 +15,12 @@
 }
 
 .icon_nhs_logo.mat-icon {
-  width: 40px;
+  width: 100px;
+  height: 40px;
+
+  &:hover {
+    box-shadow: 0 0 0 4px #003d78;
+  }
 }
 
 // .sidenav .mat-toolbar {
@@ -41,5 +54,9 @@
   .mat-button-base {
     width: 85%;
     margin: 0 auto;
+
+    @media (screen and #{$mat-small}) {
+      width: 60%;
+    }
   }
 }

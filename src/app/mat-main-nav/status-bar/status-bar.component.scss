@@ -1,0 +1,13 @@
+@import "@angular/material/core/style/_variables.scss";
+
+.app-status {
+  margin-top: 20%;
+  .mat-button-base {
+    width: 85%;
+    margin: 0 auto;
+
+    @media screen and (#{$mat-small}) {
+      width: 60%;
+    }
+  }
+}

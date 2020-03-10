@@ -2,10 +2,17 @@
 
 .mat-toolbar-row,
 .mat-toolbar-single-row {
-  @media (screen and #{$mat-xsmall}) {
+  @media screen and (#{$mat-xsmall}) {
     height: 72px;
   }
 }
+
+.mat-icon-button.logo-icon {
+  width: 100px;
+  height: 40px;
+  line-height: 1;
+}
+
 .sidenav-container {
   height: 100%;
 }
@@ -47,16 +54,4 @@
 
 .mat-expansion-panel.disabled .mat-expansion-panel-body {
   padding-bottom: 0;
-}
-
-.app-status {
-  margin-top: 20%;
-  .mat-button-base {
-    width: 85%;
-    margin: 0 auto;
-
-    @media (screen and #{$mat-small}) {
-      width: 60%;
-    }
-  }
 }

@@ -1,0 +1,119 @@
+<mat-accordion displayMode="flat">
+    <mat-expansion-panel>
+        <mat-expansion-panel-header collapsedHeight="48px" expandedHeight="48px">
+            People
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+            <a mat-list-item href="">Search people</a>
+            <a mat-list-item href="">Add persons record</a>
+            <a mat-list-item href="">Bulk upload</a>
+        </mat-nav-list>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header collapsedHeight="48px" expandedHeight="48px">
+            Posts
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+            <a mat-list-item href="">Search posts</a>
+            <a mat-list-item href="">Create posts</a>
+            <a mat-list-item href="">Bulk upload</a>
+        </mat-nav-list>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header collapsedHeight="48px" expandedHeight="48px">
+            Programmes
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+            <a mat-list-item href="">Search programmes</a>
+            <a mat-list-item href="">Create programmes</a>
+            <a mat-list-item href="">Curricula</a>
+            <a mat-list-item href="">Rotations</a>
+            <a mat-list-item href="">Specialty</a>
+        </mat-nav-list>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header collapsedHeight="48px" expandedHeight="48px">
+            Revalidation
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+            <a mat-list-item href="">Manage connections</a>
+            <a mat-list-item href="">Concerns log</a>
+            <a mat-list-item href="">Connection discrepancies</a>
+            <a mat-list-item href="">Provide recommendation</a>
+        </mat-nav-list>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel hideToggle="true" [ngClass]="'disabled'">
+        <mat-expansion-panel-header collapsedHeight="48px" expandedHeight="48px">
+            <mat-panel-title>
+                Assessments
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header collapsedHeight="48px" expandedHeight="48px">
+            Admin
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+            <a mat-list-item href="/admin/reference/college">College</a><a mat-list-item
+                href="/admin/reference/country">Country</a><a mat-list-item
+                href="/admin/reference/curriculum-sub-type">Curriculum Sub Type</a><a mat-list-item
+                href="/admin/reference/dbc">Dbc</a>
+
+            <mat-divider></mat-divider>
+
+            <a mat-list-item href="/admin/reference/ethnic-origin">Ethnic Origin</a>
+            <a mat-list-item href="/admin/reference/funding-issue">Funding Issue</a>
+            <a mat-list-item href="/admin/reference/funding-type">Funding Type</a>
+            <a mat-list-item href="/admin/reference/gdc-status">Gdc Status</a>
+
+            <mat-divider></mat-divider>
+
+            <a mat-list-item href="/admin/reference/gender">Gender</a><a mat-list-item
+                href="/admin/reference/gmc-status">Gmc Status</a><a mat-list-item
+                href="/admin/reference/grade">Grade</a>
+            <a mat-list-item href="/admin/reference/inactive-reason">Inactive Reason</a>
+
+            <mat-divider></mat-divider>
+
+            <a mat-list-item href="/admin/reference/leaving-destination">Leaving Destination</a><a mat-list-item
+                href="/admin/reference/leaving-reason">Leaving Reason</a><a mat-list-item
+                href="/admin/reference/local-office">Local Office</a><a mat-list-item
+                href="/admin/reference/marital-status">Marital Status</a>
+
+            <mat-divider></mat-divider>
+
+            <a mat-list-item href="/admin/reference/medical-school">Medical School</a>
+            <a mat-list-item href="/admin/reference/nationality">Nationality</a><a mat-list-item
+                href="/admin/reference/placement-type">Placement Type</a><a mat-list-item
+                href="/admin/reference/programme-membership-type">Programme Membership Type</a>
+
+            <mat-divider></mat-divider>
+
+            <a mat-list-item href="/admin/reference/record-type">Record Type</a><a mat-list-item
+                href="/admin/reference/religious-belief">Religious Belief</a><a mat-list-item
+                href="/admin/reference/role">Role</a>
+            <a mat-list-item href="/admin/reference/settled">Settled</a>
+
+            <mat-divider></mat-divider>
+
+            <a mat-list-item href="/admin/reference/sexual-orientation">Sexual Orientation</a><a mat-list-item
+                href="/admin/reference/site">Site</a><a mat-list-item href="/admin/programmes/specialty-group">Specialty
+                Group</a>
+            <a mat-list-item href="/admin/reference/status">Status</a>
+
+            <mat-divider></mat-divider>
+
+            <a mat-list-item href="/admin/reference/tariff-rate">Tariff Rate</a><a mat-list-item
+                href="/admin/reference/title">Title</a><a mat-list-item
+                href="/admin/reference/training-number-type">Training Number Type</a><a mat-list-item
+                href="/admin/reference/trust">Trust</a>
+        </mat-nav-list>
+    </mat-expansion-panel>
+
+    <app-status-bar></app-status-bar>
+</mat-accordion>

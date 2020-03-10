@@ -8,8 +8,8 @@ import { DomSanitizer } from "@angular/platform-browser";
 @Component({
   selector: "app-mat-main-nav",
   templateUrl: "./mat-main-nav.component.html",
-  styleUrls: ["./mat-main-nav.component.scss"]
-  // encapsulation: ViewEncapsulation.None
+  styleUrls: ["./mat-main-nav.component.scss"],
+  encapsulation: ViewEncapsulation.None
 })
 export class MatMainNavComponent {
   isHandset$: Observable<boolean> = this.breakpointObserver

@@ -20,10 +20,21 @@ import { MatListModule } from "@angular/material/list";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { MatBadgeModule } from "@angular/material/badge";
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { MatMenuModule } from "@angular/material/menu";
 import { HttpClientModule } from "@angular/common/http";
+import { StatusBarComponent } from "./mat-main-nav/status-bar/status-bar.component";
+import { MobileMenuComponent } from "./mat-main-nav/mobile-menu/mobile-menu.component";
+import { DesktopMenuComponent } from "./mat-main-nav/desktop-menu/desktop-menu.component";
 
 @NgModule({
-  declarations: [AppComponent, MainNavComponent, MatMainNavComponent],
+  declarations: [
+    AppComponent,
+    MainNavComponent,
+    MatMainNavComponent,
+    StatusBarComponent,
+    MobileMenuComponent,
+    DesktopMenuComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -51,7 +62,8 @@ import { HttpClientModule } from "@angular/common/http";
     MatListModule,
     MatExpansionModule,
     MatBadgeModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]

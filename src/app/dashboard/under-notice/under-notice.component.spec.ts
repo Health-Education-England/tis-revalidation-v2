@@ -1,4 +1,7 @@
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { NgxsModule } from "@ngxs/store";
+import { UnderNoticeState } from "./state/under-notice.state";
 
 import { UnderNoticeComponent } from "./under-notice.component";
 
@@ -8,7 +11,8 @@ describe("UnderNoticeComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [UnderNoticeComponent]
+      declarations: [UnderNoticeComponent],
+      imports: [NgxsModule.forRoot([UnderNoticeState]), HttpClientTestingModule]
     }).compileComponents();
   }));
 

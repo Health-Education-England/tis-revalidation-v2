@@ -7,6 +7,7 @@ import { AppComponent } from "./app.component";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { environment } from "@environment";
 import { AnalyticsModule, HotJarModule } from "hee-shared";
+import { SharedModule } from "./shared/shared.module";
 import { MainNavComponent } from "./main-nav/main-nav.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatMainNavComponent } from "./mat-main-nav/mat-main-nav.component";
@@ -26,6 +27,7 @@ import { HttpClientModule } from "@angular/common/http";
   imports: [
     BrowserModule,
     AppRoutingModule,
+    SharedModule,
     ServiceWorkerModule.register("ngsw-worker.js", {
       enabled: environment.production
     }),

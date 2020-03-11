@@ -6,6 +6,7 @@ export const environment: IEnvironment = {
   production: false,
   host: `http://www.mocky.io/v2/`,
   siteIds: [],
+  adminsUIHostUri: `https://dev-apps.tis.nhs.uk/`,
   appUrls: {
     login: ``,
     authRedirect: ``,

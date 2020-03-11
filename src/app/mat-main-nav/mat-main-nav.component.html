@@ -3,6 +3,7 @@
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false">
     <mat-toolbar color="primary">
+      <app-status-bar></app-status-bar>
       <span class="fill-space"></span>
       <button type="button" aria-label="Close side navigation" mat-icon-button (click)="drawer.close()"
         *ngIf="isHandset$ | async">
@@ -18,6 +19,7 @@
           <mat-icon svgIcon="icon_nhs_logo" [ngClass]="'icon_nhs_logo'">nhs logo</mat-icon>
         </a>
         <span class="fill-space"></span>
+        <app-status-bar *ngIf="!(isHandset$ | async)"></app-status-bar>
         <button type="button" [ngClass]="[drawer.opened ? 'hidden' : '']" aria-label="Open side navigation"
           mat-icon-button (click)="drawer.open()" *ngIf="isHandset$ | async">
           <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
@@ -25,6 +27,7 @@
       </mat-toolbar-row>
       <mat-toolbar-row *ngIf="!(isHandset$ | async)">
         <app-desktop-menu></app-desktop-menu>
+        <span class="fill-space"></span>
       </mat-toolbar-row>
     </mat-toolbar>
     <!-- Add Content Here -->

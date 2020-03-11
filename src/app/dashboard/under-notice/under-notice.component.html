@@ -1,9 +1,6 @@
-<ng-template #loading><mat-spinner #loading></mat-spinner></ng-template>
+<mat-spinner *ngIf="loading$ | async"></mat-spinner>
 
-<div
-  class="nhsuk-table-responsive"
-  *ngIf="trainees$ | async as trainees; else loading"
->
+<div class="nhsuk-table-responsive" *ngIf="trainees$ | async as trainees">
   <table class="nhsuk-table">
     <caption class="nhsuk-table__caption">
       Trainees under notice

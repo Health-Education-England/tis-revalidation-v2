@@ -1,3 +1,4 @@
+import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
@@ -12,6 +13,7 @@ import { PageNotFoundComponent } from "./page-not-found/page-not-found.component
 @NgModule({
   declarations: [PageNotFoundComponent],
   imports: [
+    CommonModule,
     MaterialModule,
     ReactiveFormsModule,
     RouterModule,
@@ -22,6 +24,6 @@ import { PageNotFoundComponent } from "./page-not-found/page-not-found.component
     NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production }),
     NgxsLoggerPluginModule.forRoot({ disabled: environment.production })
   ],
-  exports: [ReactiveFormsModule, MaterialModule]
+  exports: [CommonModule, ReactiveFormsModule, MaterialModule]
 })
 export class SharedModule {}

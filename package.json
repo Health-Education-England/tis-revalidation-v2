@@ -6,6 +6,7 @@
     "start": "npm run build:shared && ng serve",
     "build": "ng build",
     "test": "ng test",
+    "test:ci": "ng test --watch=false --browsers=ChromeHeadless --code-coverage=true",
     "lint": "ng lint && npm run lint:styles",
     "lint:styles": "stylelint \"src/**/*.scss\"",
     "cypress": "cypress run",

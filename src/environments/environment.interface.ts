@@ -8,6 +8,6 @@ export abstract class IEnvironment {
   abstract readonly appUrls: {
     readonly login: string;
     readonly authRedirect: string;
-    readonly listTrainees: string;
+    readonly getUnderNoticeTrainees: string;
   };
 }

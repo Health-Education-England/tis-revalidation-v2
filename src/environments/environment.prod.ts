@@ -6,6 +6,6 @@ export const environment: IEnvironment = {
   appUrls: {
     login: ``,
     authRedirect: ``,
-    listTrainees: ``
+    getUnderNoticeTrainees: ``
   }
 };

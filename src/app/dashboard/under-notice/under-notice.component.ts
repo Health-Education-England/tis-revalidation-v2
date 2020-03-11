@@ -10,6 +10,7 @@ import { UnderNoticeState } from "./state/under-notice.state";
   templateUrl: "./under-notice.component.html"
 })
 export class UnderNoticeComponent implements OnInit {
+  @Select(UnderNoticeState.loading) loading$: Observable<boolean>;
   @Select(UnderNoticeState.underNoticeTrainees) trainees$: Observable<
     ITrainee[]
   >;

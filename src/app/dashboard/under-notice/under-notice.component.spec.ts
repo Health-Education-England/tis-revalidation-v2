@@ -1,4 +1,5 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { NgxsModule } from "@ngxs/store";
 import { UnderNoticeState } from "./state/under-notice.state";
@@ -12,7 +13,8 @@ describe("UnderNoticeComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [UnderNoticeComponent],
-      imports: [NgxsModule.forRoot([UnderNoticeState]), HttpClientTestingModule]
+      imports: [NgxsModule.forRoot([UnderNoticeState]), HttpClientTestingModule],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));
 

@@ -7,12 +7,14 @@ import { GetUnderNoticeTrainees } from "./under-notice.actions";
 
 export class UnderNoticeStateModel {
   public items: ITrainee[];
+  public loading: boolean;
 }
 
 @State<UnderNoticeStateModel>({
   name: "underNotice",
   defaults: {
-    items: []
+    items: null,
+    loading: true
   }
 })
 @Injectable()
@@ -20,8 +22,13 @@ export class UnderNoticeState {
   constructor(private traineeService: TraineeService) {}
 
   @Selector()
-  static underNoticeTrainees(state: UnderNoticeStateModel) {
+  public static underNoticeTrainees(state: UnderNoticeStateModel) {
     return state.items;
+  }
+
+  @Selector()
+  public static loading(state: UnderNoticeStateModel) {
+    return state.loading;
   }
 
   @Action(GetUnderNoticeTrainees)
@@ -31,7 +38,8 @@ export class UnderNoticeState {
         const state = ctx.getState();
         ctx.setState({
           ...state,
-          items: result
+          items: result,
+          loading: false
         });
       })
     );

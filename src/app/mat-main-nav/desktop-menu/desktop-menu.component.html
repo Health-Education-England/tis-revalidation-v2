@@ -1,40 +1,11 @@
-<button mat-button [matMenuTriggerFor]="peopleMenu">People</button>
-<mat-menu color="primary" #peopleMenu="matMenu">
-    <button mat-menu-item>Search people</button>
-    <button mat-menu-item>Add person record</button>
-    <button mat-menu-item>Bulk upload</button>
-</mat-menu>
-
-<button mat-button [matMenuTriggerFor]="postsMenu">Posts</button>
-<mat-menu color="primary" #postsMenu="matMenu">
-    <button mat-menu-item>Search posts</button>
-    <button mat-menu-item>Create posts</button>
-    <button mat-menu-item>Bulk upload</button>
-</mat-menu>
-
-<button mat-button [matMenuTriggerFor]="programmesMenu">Programmes</button>
-<mat-menu color="primary" #programmesMenu="matMenu">
-    <button mat-menu-item>Create programmes</button>
-    <button mat-menu-item>Curricula</button>
-    <button mat-menu-item>Rotations</button>
-    <button mat-menu-item>Search programmes</button>
-</mat-menu>
-
-
-<button mat-button [matMenuTriggerFor]="revalidationMenu">Revalidation</button>
-<mat-menu color="primary" #revalidationMenu="matMenu">
-    <button mat-menu-item>Item 1</button>
-    <button mat-menu-item>Item 2</button>
-</mat-menu>
-
-<button mat-button [matMenuTriggerFor]="assessmentsMenu">Assessments</button>
-<mat-menu color="primary" #assessmentsMenu="matMenu">
-    <button mat-menu-item>Item 1</button>
-    <button mat-menu-item>Item 2</button>
-</mat-menu>
-
-<button mat-button [matMenuTriggerFor]="adminMenu">Admin</button>
-<mat-menu color="primary" #adminMenu="matMenu">
-    <button mat-menu-item>Item 1</button>
-    <button mat-menu-item>Item 2</button>
-</mat-menu>
+<ng-container *ngFor="let menuItem of menuItems$">
+    <ng-container *ngIf="menuItem.menuItems">
+        <button mat-button [matMenuTriggerFor]="subMenu">{{menuItem.name}}</button>
+        <mat-menu color="primary" #subMenu="matMenu" [class]="menuItem.menuItems?.length > 5 ? 'mega-menu': ''">
+            <ng-container *ngFor="let item of menuItem.menuItems; let i = index; let last = last">
+                <a mat-menu-item *ngIf="item.type === 0" routerLink="['{{ item.route }}']">{{item.name}}</a>
+                <a mat-menu-item *ngIf="item.type === 1" [href]="hostURI + item.route">{{item.name}}</a>
+            </ng-container>
+        </mat-menu>
+    </ng-container>
+</ng-container>

@@ -1,13 +1,20 @@
-@import "@angular/material/core/style/_variables.scss";
+@import "@angular/material/core/style/_variables";
+@import "~nhsuk-frontend/packages/core/settings/colours";
 
-.app-status {
-  margin-top: 20%;
-  .mat-button-base {
-    width: 85%;
-    margin: 0 auto;
-
-    @media screen and (#{$mat-small}) {
-      width: 60%;
-    }
+.mat-icon {
+  &.severity-low {
+    color: $color_nhsuk-yellow;
+  }
+  &.severity-medium {
+    color: $color_nhsuk-warm-yellow;
+  }
+  &.severity-high {
+    color: $color_nhsuk-red;
+  }
+  &.severity-none {
+    color: $color_nhsuk-green;
+  }
+  &.help {
+    color: $color_nhsuk-purple;
   }
 }

@@ -11,20 +11,12 @@ import { SharedModule } from "./shared/shared.module";
 import { MainNavComponent } from "./main-nav/main-nav.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatMainNavComponent } from "./mat-main-nav/mat-main-nav.component";
-import { LayoutModule } from "@angular/cdk/layout";
-import { MatToolbarModule } from "@angular/material/toolbar";
-import { MatButtonModule } from "@angular/material/button";
-import { MatSidenavModule } from "@angular/material/sidenav";
-import { MatIconModule } from "@angular/material/icon";
-import { MatListModule } from "@angular/material/list";
-import { MatExpansionModule } from "@angular/material/expansion";
-import { MatBadgeModule } from "@angular/material/badge";
-import { MatTooltipModule } from "@angular/material/tooltip";
-import { MatMenuModule } from "@angular/material/menu";
+
 import { HttpClientModule } from "@angular/common/http";
 import { StatusBarComponent } from "./mat-main-nav/status-bar/status-bar.component";
 import { MobileMenuComponent } from "./mat-main-nav/mobile-menu/mobile-menu.component";
 import { DesktopMenuComponent } from "./mat-main-nav/desktop-menu/desktop-menu.component";
+import { MaterialModule } from "./shared/material/material.module";
 
 @NgModule({
   declarations: [
@@ -54,16 +46,7 @@ import { DesktopMenuComponent } from "./mat-main-nav/desktop-menu/desktop-menu.c
     NgxsModule.forRoot([], { developmentMode: !environment.production }),
     BrowserAnimationsModule,
     HttpClientModule,
-    LayoutModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
-    MatExpansionModule,
-    MatBadgeModule,
-    MatTooltipModule,
-    MatMenuModule
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -44,6 +44,7 @@ body {
   height: 100%;
 }
 body {
+  font-family: $nhsuk-font + $nhsuk-font-fallback;
   margin: 0;
   padding: 0;
 }

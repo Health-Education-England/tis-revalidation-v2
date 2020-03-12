@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from "@angular/core";
+import { Component, ViewEncapsulation, Input } from "@angular/core";
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { MatIconRegistry } from "@angular/material/icon";
 import { Observable } from "rxjs";
@@ -18,6 +18,7 @@ export class MatMainNavComponent {
       map(result => result.matches),
       shareReplay()
     );
+  @Input() skipLinkSelector: string = "maincontent";
 
   constructor(
     private breakpointObserver: BreakpointObserver,

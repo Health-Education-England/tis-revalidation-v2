@@ -48,3 +48,25 @@ body {
   margin: 0;
   padding: 0;
 }
+// accessibility focus TO:DO investigate high-contrast https://material.angular.io/cdk/a11y/overview
+// .mat-focus-indicator:focus {
+//   box-shadow: 0 0 0 $nhsuk-border-radius $color_nhsuk-yellow;
+// }
+
+.nhsuk-skip-link {
+  left: -9999px;
+  padding: 8px;
+  position: absolute;
+  background-color: $color_nhsuk-yellow;
+  color: $color_nhsuk-black;
+  outline: $nhsuk-border-radius solid transparent;
+  text-decoration: none;
+
+  &:active,
+  &:focus {
+    left: 16px;
+    top: 16px;
+    z-index: 2;
+    background-color: $color_nhsuk-yellow;
+  }
+}

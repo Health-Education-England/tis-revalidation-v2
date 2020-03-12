@@ -1,3 +1,4 @@
+<a class="nhsuk-skip-link mat-focus-indicator" [routerLink] [fragment]="skipLinkSelector">Skip to main content</a>
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #drawer [ngClass]="{ hidden: !(isHandset$ | async) }" class="sidenav" fixedInViewport="false"
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"

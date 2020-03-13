@@ -43,7 +43,7 @@ body {
   height: 100%;
 }
 body {
-  font-family: $nhsuk-font + $nhsuk-font-fallback;
+  font-family: $nhsuk-font, $nhsuk-font-fallback, Serif, Sans-serif; // sonar error fall-back variable is Serif, Sans-serif
   margin: 0;
   padding: 0;
 }

@@ -1,7 +1,6 @@
 import { IMenuItem, MenuType } from "./menu-item.interface";
 
 export const menuItems: IMenuItem[] = [
-  //NOSONAR
   {
     name: "People",
     type: MenuType.external,

@@ -1,16 +1,17 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { DesktopMenuComponent } from './desktop-menu.component';
+import { DesktopMenuComponent } from "./desktop-menu.component";
+import { MatMenuModule } from "@angular/material/menu";
 
-describe('DesktopMenuComponent', () => {
+describe("DesktopMenuComponent", () => {
   let component: DesktopMenuComponent;
   let fixture: ComponentFixture<DesktopMenuComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DesktopMenuComponent ]
-    })
-    .compileComponents();
+      declarations: [DesktopMenuComponent],
+      imports: [MatMenuModule]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +20,7 @@ describe('DesktopMenuComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

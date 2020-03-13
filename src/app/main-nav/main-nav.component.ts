@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { Router } from "@angular/router";
+import { menuItems } from "../mat-main-nav/menu-items.const";
+import { IMenuItem } from "../mat-main-nav/menu-item.interface";
+import { environment } from "@environment";
 
 @Component({
   selector: "app-main-nav",
@@ -9,7 +11,9 @@ import { Router } from "@angular/router";
 export class MainNavComponent implements OnInit {
   @Input() skipLinkSelector: string = "maincontent";
   showMenu: boolean = false;
-  constructor(private router: Router) {}
+  menuItems$: IMenuItem[] = menuItems;
+  hostURI: string = environment.adminsUIHostUri;
+  constructor() {}
 
   ngOnInit(): void {}
   toggleMenu(): void {

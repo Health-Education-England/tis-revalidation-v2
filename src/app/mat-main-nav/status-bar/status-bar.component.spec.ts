@@ -1,16 +1,18 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { NoopAnimationsModule } from "@angular/platform-browser/animations";
+import { MatButtonModule } from "@angular/material/button";
+import { StatusBarComponent } from "./status-bar.component";
+import { MatMenuModule } from "@angular/material/menu";
 
-import { StatusBarComponent } from './status-bar.component';
-
-describe('StatusBarComponent', () => {
+describe("StatusBarComponent", () => {
   let component: StatusBarComponent;
   let fixture: ComponentFixture<StatusBarComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StatusBarComponent ]
-    })
-    .compileComponents();
+      declarations: [StatusBarComponent],
+      imports: [MatMenuModule]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +21,7 @@ describe('StatusBarComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

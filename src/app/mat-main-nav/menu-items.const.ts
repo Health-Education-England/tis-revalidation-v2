@@ -1,5 +1,5 @@
 import { IMenuItem, MenuType } from "./menu-item.interface";
-
+//NOSONAR
 export const menuItems: IMenuItem[] = [
   {
     name: "People",
@@ -330,3 +330,4 @@ export const menuItems: IMenuItem[] = [
     ]
   }
 ];
+//NOSONAR

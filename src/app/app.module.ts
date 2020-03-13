@@ -9,7 +9,6 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { SharedModule } from "./shared/shared.module";
 import { MainNavComponent } from "./main-nav/main-nav.component";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatMainNavComponent } from "./mat-main-nav/mat-main-nav.component";
 
 import { HttpClientModule } from "@angular/common/http";

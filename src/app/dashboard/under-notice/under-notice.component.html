@@ -2,9 +2,10 @@
 
 <div class="nhsuk-table-responsive" *ngIf="trainees$ | async as trainees">
   <table class="nhsuk-table">
-    <caption class="nhsuk-table__caption">
-      Trainees under notice
-    </caption>
+    <caption
+      class="nhsuk-table__caption"
+      [innerHTML]="'Trainees under notice'"
+    ></caption>
     <thead class="nhsuk-table__head">
       <tr class="nhsuk-table__row">
         <th class="nhsuk-table__header" scope="col">First name</th>

@@ -1,22 +1,23 @@
 import { Component, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
 import { ITrainee } from "../../core/trainee/trainee.interfaces";
-import { TraineeService } from "../../core/trainee/trainee.service";
+import { Select, Store } from "@ngxs/store";
+import { GetUnderNoticeTrainees } from "./state/under-notice.actions";
+import { UnderNoticeState } from "./state/under-notice.state";
 
 @Component({
   selector: "app-under-notice",
   templateUrl: "./under-notice.component.html"
 })
 export class UnderNoticeComponent implements OnInit {
-  public trainees$: Observable<ITrainee[]>;
+  @Select(UnderNoticeState.loading) loading$: Observable<boolean>;
+  @Select(UnderNoticeState.underNoticeTrainees) trainees$: Observable<
+    ITrainee[]
+  >;
 
-  constructor(private traineeService: TraineeService) {}
+  constructor(private store: Store) {}
 
   ngOnInit(): void {
-    this.listTrainees();
-  }
-
-  private listTrainees(): void {
-    this.trainees$ = this.traineeService.listTrainees();
+    this.store.dispatch(new GetUnderNoticeTrainees());
   }
 }

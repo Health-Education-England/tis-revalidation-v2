@@ -5,8 +5,7 @@ import { environment } from "@environment";
 
 @Component({
   selector: "app-main-nav",
-  templateUrl: "./main-nav.component.html",
-  styleUrls: ["./main-nav.component.scss"]
+  templateUrl: "./main-nav.component.html"
 })
 export class MainNavComponent implements OnInit {
   @Input() skipLinkSelector: string = "maincontent";

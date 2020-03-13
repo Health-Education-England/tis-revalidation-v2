@@ -1,17 +1,7 @@
-import {
-  Component,
-  OnInit,
-  ViewEncapsulation,
-  AfterViewInit,
-  ViewChild,
-  ElementRef,
-  ViewChildren,
-  QueryList
-} from "@angular/core";
+import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { menuItems } from "../menu-items.const";
 import { IMenuItem } from "../menu-item.interface";
 import { environment } from "@environment";
-import { MatButton } from "@angular/material/button";
 import { MatMenuTrigger } from "@angular/material/menu";
 
 @Component({
@@ -23,8 +13,6 @@ import { MatMenuTrigger } from "@angular/material/menu";
 export class DesktopMenuComponent implements OnInit {
   menuItems$: IMenuItem[] = menuItems;
   hostURI: string = environment.adminsUIHostUri;
-  // @ViewChildren("topMenuItem") topMenuItem: QueryList<MatButton>;
-  // @ViewChildren(MatMenuTrigger) matMenuTriggerFor: QueryList<MatMenuTrigger>;
   private currentMenuTrigger: MatMenuTrigger;
   private currentMenuElement: Element;
 

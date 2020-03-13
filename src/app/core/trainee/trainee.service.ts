@@ -10,9 +10,9 @@ import { ITrainee } from "./trainee.interfaces";
 export class TraineeService {
   constructor(private http: HttpClient) {}
 
-  public listTrainees(): Observable<[ITrainee]> {
-    return this.http.get<[ITrainee]>(
-      `${environment.host}${environment.appUrls.listTrainees}`
+  public getUnderNoticeTrainees(): Observable<ITrainee[]> {
+    return this.http.get<ITrainee[]>(
+      `${environment.host}${environment.appUrls.getUnderNoticeTrainees}`
     );
   }
 }

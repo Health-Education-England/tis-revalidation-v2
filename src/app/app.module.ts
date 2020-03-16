@@ -8,12 +8,17 @@ import { AnalyticsModule, HotJarModule } from "hee-shared";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { SharedModule } from "./shared/shared.module";
+import { HttpClientModule } from "@angular/common/http";
+import { MaterialModule } from "./shared/material/material.module";
+import { MainNavigationModule } from "./shared/main-navigation/main-navigation.module";
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
+    MaterialModule,
     SharedModule,
     AppRoutingModule,
     ServiceWorkerModule.register("ngsw-worker.js", {
@@ -28,9 +33,8 @@ import { SharedModule } from "./shared/shared.module";
       hotJarSv: 6,
       enabled: environment.production
     }),
-    NgxsModule.forRoot([], {
-      developmentMode: !environment.production
-    })
+    NgxsModule.forRoot([], { developmentMode: !environment.production }),
+    MainNavigationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

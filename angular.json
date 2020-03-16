@@ -32,7 +32,9 @@
               },
               "src/manifest.webmanifest"
             ],
-            "styles": ["src/styles.scss"],
+            "styles": [
+              "src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -101,7 +103,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "revalidation:build"
+            "browserTarget": "revalidation:build",
+            "proxyConfig": "proxy.conf.json"
           },
           "configurations": {
             "production": {
@@ -125,8 +128,18 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "assets": ["src/assets", "src/manifest.webmanifest"],
-            "styles": ["src/styles.scss"],
+            "assets": [
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "node_modules/nhsuk-frontend/packages/assets/",
+                "output": "assets/"
+              },
+              "src/manifest.webmanifest"
+            ],
+            "styles": [
+              "src/styles.scss"
+            ],
             "scripts": []
           }
         },
@@ -138,7 +151,9 @@
               "tsconfig.spec.json",
               "cypress/tsconfig.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         }
       }
@@ -176,7 +191,9 @@
               "projects/hee-shared/tsconfig.lib.json",
               "projects/hee-shared/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         }
       }

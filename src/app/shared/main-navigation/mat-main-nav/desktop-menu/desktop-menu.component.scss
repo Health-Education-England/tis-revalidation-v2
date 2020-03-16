@@ -1,21 +1,23 @@
 @import "~@angular/material/core/style/variables";
-
-.mat-menu-panel {
-  &.mega-menu {
-    max-width: 940.8px;
-    @media screen and (#{$mat-small}) {
-      max-width: 98%;
-    }
-
-    .mat-menu-content {
-      display: flex;
-      flex-wrap: wrap;
-    }
-
-    .mat-menu-item {
-      flex: 0 1 20%;
+// remove ng-deep if encapsulation is set to none
+::ng-deep {
+  .mat-menu-panel {
+    &.mega-menu {
+      max-width: 940.8px;
       @media screen and (#{$mat-small}) {
-        flex: 0 1 29%;
+        max-width: 98%;
+      }
+
+      .mat-menu-content {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .mat-menu-item {
+        flex: 0 1 20%;
+        @media screen and (#{$mat-small}) {
+          flex: 0 1 29%;
+        }
       }
     }
   }

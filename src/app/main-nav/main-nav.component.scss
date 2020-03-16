@@ -1,9 +1,0 @@
-@import "~nhsuk-frontend/packages/core/settings/breakpoints";
-@import "~nhsuk-frontend/packages/core/tools/sass-mq";
-
-@include mq($until: tablet) {
-  .nhsuk-header__menu-toggle {
-    right: auto;
-  }
-}
-// this isn't empty? sonar

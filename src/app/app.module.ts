@@ -8,24 +8,12 @@ import { AnalyticsModule, HotJarModule } from "hee-shared";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { SharedModule } from "./shared/shared.module";
-import { MainNavComponent } from "./main-nav/main-nav.component";
-import { MatMainNavComponent } from "./mat-main-nav/mat-main-nav.component";
-
 import { HttpClientModule } from "@angular/common/http";
-import { StatusBarComponent } from "./mat-main-nav/status-bar/status-bar.component";
-import { MobileMenuComponent } from "./mat-main-nav/mobile-menu/mobile-menu.component";
-import { DesktopMenuComponent } from "./mat-main-nav/desktop-menu/desktop-menu.component";
 import { MaterialModule } from "./shared/material/material.module";
+import { MainNavigationModule } from "./shared/main-navigation/main-navigation.module";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    MainNavComponent,
-    MatMainNavComponent,
-    StatusBarComponent,
-    MobileMenuComponent,
-    DesktopMenuComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -45,7 +33,8 @@ import { MaterialModule } from "./shared/material/material.module";
       hotJarSv: 6,
       enabled: environment.production
     }),
-    NgxsModule.forRoot([], { developmentMode: !environment.production })
+    NgxsModule.forRoot([], { developmentMode: !environment.production }),
+    MainNavigationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -49,17 +49,3 @@
     display: none;
   }
 }
-
-// TO DO extract all to mixins for re-use with media queries
-.no-decoration-link {
-  text-decoration: none;
-  color: inherit;
-}
-
-.d-block {
-  display: block;
-}
-
-.w-100 {
-  width: 100%;
-}

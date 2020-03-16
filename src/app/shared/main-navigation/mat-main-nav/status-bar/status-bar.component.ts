@@ -1,11 +1,10 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { environment } from "@environment";
 
 @Component({
   selector: "app-status-bar",
   templateUrl: "./status-bar.component.html",
-  styleUrls: ["./status-bar.component.scss"],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ["./status-bar.component.scss"]
 })
 export class StatusBarComponent implements OnInit {
   serviceSeverity: Severity;

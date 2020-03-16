@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, Input } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { MatIconRegistry } from "@angular/material/icon";
 import { Observable } from "rxjs";
@@ -8,8 +8,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 @Component({
   selector: "app-mat-main-nav",
   templateUrl: "./mat-main-nav.component.html",
-  styleUrls: ["./mat-main-nav.component.scss"],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ["./mat-main-nav.component.scss"]
 })
 export class MatMainNavComponent {
   isHandset$: Observable<boolean> = this.breakpointObserver

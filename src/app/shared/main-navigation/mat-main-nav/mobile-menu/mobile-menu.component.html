@@ -3,7 +3,7 @@
         <mat-expansion-panel-header collapsedHeight="48px" expandedHeight="48px">
             {{menuItem.name}}
         </mat-expansion-panel-header>
-        <mat-nav-list *ngFor="let item of menuItem.menuItems; let i = index; let last = last">
+        <mat-nav-list *ngFor="let item of menuItem.menuItems;">
             <a mat-list-item *ngIf="item.type === 0" routerLink="['{{ item.route }}']">{{item.name}}</a>
             <a mat-list-item *ngIf="item.type === 1" [href]="hostURI + item.route">{{item.name}}</a>
         </mat-nav-list>

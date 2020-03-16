@@ -9,8 +9,8 @@ import { environment } from "@environment";
   styleUrls: ["./main-nav.component.scss"]
 })
 export class MainNavComponent implements OnInit {
-  @Input() skipLinkSelector: string = "maincontent";
-  showMenu: boolean = false;
+  @Input() skipLinkSelector = "maincontent";
+  showMenu = false;
   menuItems$: IMenuItem[] = menuItems;
   hostURI: string = environment.adminsUIHostUri;
   constructor() {}

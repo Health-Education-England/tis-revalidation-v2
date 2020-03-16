@@ -1,4 +1,6 @@
 @import "@angular/material/core/style/_variables";
+@import "~nhsuk-frontend/packages/core/settings/globals";
+@import "~nhsuk-frontend/packages/core/settings/colours";
 
 .mat-toolbar-row,
 .mat-toolbar-single-row {
@@ -26,7 +28,7 @@
   height: 40px;
 
   &:hover {
-    box-shadow: 0 0 0 4px #003d78;
+    box-shadow: 0 0 0 $nhsuk-focus-width $color_shade_nhsuk-blue-35;
   }
 }
 

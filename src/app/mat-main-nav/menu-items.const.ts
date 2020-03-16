@@ -1,5 +1,5 @@
 import { IMenuItem } from "./menu-item.interface";
-//SONAR DUPLICATES FOR Typescript Object
+// SONAR DUPLICATES FOR Typescript Object
 export const menuItems: IMenuItem[] = JSON.parse(
   `[
     {

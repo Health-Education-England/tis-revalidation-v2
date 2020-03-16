@@ -1,8 +1,8 @@
 <ng-container *ngFor="let menuItem of menuItems$">
     <ng-container *ngIf="menuItem.menuItems">
-        <button mat-button [matMenuTriggerFor]="subMenu" #menuTrigger="matMenuTrigger">{{menuItem.name}}</button>
+        <button mat-button [matMenuTriggerFor]="subMenu">{{menuItem.name}}</button>
         <mat-menu color=" primary" #subMenu="matMenu" [class]="menuItem.menuItems?.length > 5 ? 'mega-menu': ''">
-            <ng-container *ngFor="let item of menuItem.menuItems; let i = index; let last = last">
+            <ng-container *ngFor="let item of menuItem.menuItems;">
                 <a mat-menu-item *ngIf="item.type === 0" routerLink="['{{ item.route }}']">{{item.name}}</a>
                 <a mat-menu-item *ngIf="item.type === 1" [href]="hostURI + item.route">{{item.name}}</a>
             </ng-container>

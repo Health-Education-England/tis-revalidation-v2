@@ -18,7 +18,7 @@ export class MatMainNavComponent {
       map(result => result.matches),
       shareReplay()
     );
-  @Input() skipLinkSelector: string = "maincontent";
+  @Input() skipLinkSelector = "maincontent";
 
   constructor(
     private breakpointObserver: BreakpointObserver,

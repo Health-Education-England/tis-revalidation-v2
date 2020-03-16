@@ -29,6 +29,8 @@ import { MaterialModule } from "./shared/material/material.module";
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
+    MaterialModule,
     SharedModule,
     AppRoutingModule,
     ServiceWorkerModule.register("ngsw-worker.js", {
@@ -43,10 +45,7 @@ import { MaterialModule } from "./shared/material/material.module";
       hotJarSv: 6,
       enabled: environment.production
     }),
-    NgxsModule.forRoot([], { developmentMode: !environment.production }),
-    BrowserAnimationsModule,
-    HttpClientModule,
-    MaterialModule
+    NgxsModule.forRoot([], { developmentMode: !environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]

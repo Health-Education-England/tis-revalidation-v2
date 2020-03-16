@@ -1,6 +1,6 @@
 <a class="nhsuk-skip-link mat-focus-indicator" [routerLink] [fragment]="skipLinkSelector">Skip to main content</a>
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer [ngClass]="{ hidden: !(isHandset$ | async) }" class="sidenav" fixedInViewport="false"
+  <mat-sidenav #drawer [ngClass]="{ hidden: (isHandset$ | async) === false }" class="sidenav" fixedInViewport="false"
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false">
     <mat-toolbar color="primary">
@@ -20,13 +20,13 @@
           <mat-icon svgIcon="icon_nhs_logo" [ngClass]="'icon_nhs_logo'">nhs logo</mat-icon>
         </a>
         <span class="fill-space"></span>
-        <app-status-bar *ngIf="!(isHandset$ | async)"></app-status-bar>
+        <app-status-bar *ngIf="(isHandset$ | async) === false"></app-status-bar>
         <button type="button" [ngClass]="[drawer.opened ? 'hidden' : '']" aria-label="Open side navigation"
           mat-icon-button (click)="drawer.open()" *ngIf="isHandset$ | async">
           <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
         </button>
       </mat-toolbar-row>
-      <mat-toolbar-row *ngIf="!(isHandset$ | async)">
+      <mat-toolbar-row *ngIf="(isHandset$ | async) === false">
         <app-desktop-menu></app-desktop-menu>
         <span class="fill-space"></span>
       </mat-toolbar-row>

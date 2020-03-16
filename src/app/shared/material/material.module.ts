@@ -9,20 +9,24 @@ import { MatExpansionModule } from "@angular/material/expansion";
 import { MatBadgeModule } from "@angular/material/badge";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatMenuModule } from "@angular/material/menu";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+
+const materialModules = [
+  LayoutModule,
+  MatToolbarModule,
+  MatButtonModule,
+  MatSidenavModule,
+  MatIconModule,
+  MatListModule,
+  MatExpansionModule,
+  MatBadgeModule,
+  MatTooltipModule,
+  MatMenuModule,
+  MatProgressSpinnerModule
+];
 
 @NgModule({
-  declarations: [],
-  exports: [
-    LayoutModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
-    MatExpansionModule,
-    MatBadgeModule,
-    MatTooltipModule,
-    MatMenuModule
-  ]
+  imports: [...materialModules],
+  exports: [...materialModules]
 })
 export class MaterialModule {}

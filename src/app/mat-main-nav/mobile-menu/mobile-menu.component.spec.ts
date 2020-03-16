@@ -1,16 +1,20 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { MobileMenuComponent } from "./mobile-menu.component";
+import { MaterialModule } from "src/app/shared/material/material.module";
+import { RouterTestingModule } from "@angular/router/testing";
+import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 
-import { MobileMenuComponent } from './mobile-menu.component';
-
-describe('MobileMenuComponent', () => {
+describe("MobileMenuComponent", () => {
   let component: MobileMenuComponent;
   let fixture: ComponentFixture<MobileMenuComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MobileMenuComponent ]
-    })
-    .compileComponents();
+      imports: [NoopAnimationsModule, MaterialModule, RouterTestingModule],
+      declarations: [MobileMenuComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +23,7 @@ describe('MobileMenuComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

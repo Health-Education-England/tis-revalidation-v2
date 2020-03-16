@@ -4,13 +4,6 @@
 // Plus imports for other components in your app.
 @import "./material/palette";
 
-// Define a custom typography config that overrides the font-family as well as the
-// `headlines` and `body-1` levels.
-// import font face, globals, and colours from nhsuk
-@import "~nhsuk-frontend/packages/core/generic/font-face";
-@import "~nhsuk-frontend/packages/core/settings/globals";
-@import "~nhsuk-frontend/packages/core/settings/colours";
-
 $nhsuk-typography: mat-typography-config(
   $font-family: $nhsuk-font + $nhsuk-font-fallback
 );

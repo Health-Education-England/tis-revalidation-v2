@@ -7,3 +7,8 @@ export interface ITrainee {
   traineeType: string;
   lastUpdated: string;
 }
+
+export interface ITraineeDataCell {
+  label: string;
+  name: string;
+}

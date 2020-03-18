@@ -1,32 +1,11 @@
 <mat-spinner *ngIf="loading$ | async"></mat-spinner>
 
-<div class="nhsuk-table-responsive" *ngIf="trainees$ | async as trainees">
-  <table class="nhsuk-table">
-    <caption
-      class="nhsuk-table__caption"
-      [innerHTML]="'Trainees under notice'"
-    ></caption>
-    <thead class="nhsuk-table__head">
-      <tr class="nhsuk-table__row">
-        <th class="nhsuk-table__header" scope="col">First name</th>
-        <th class="nhsuk-table__header" scope="col">Last name</th>
-        <th class="nhsuk-table__header" scope="col">Gmc no</th>
-        <th class="nhsuk-table__header" scope="col">Designated Body</th>
-        <th class="nhsuk-table__header" scope="col">Status</th>
-        <th class="nhsuk-table__header" scope="col">Trainee type</th>
-        <th class="nhsuk-table__header" scope="col">Last updated</th>
-      </tr>
-    </thead>
-    <tbody class="nhsuk-table__body">
-      <tr class="nhsuk-table__row" *ngFor="let i of trainees">
-        <td class="nhsuk-table__cell ">{{ i.firstName }}</td>
-        <td class="nhsuk-table__cell ">{{ i.lastName }}</td>
-        <td class="nhsuk-table__cell">{{ i.gmcNumber }}</td>
-        <td class="nhsuk-table__cell ">{{ i.programmeMembershipType }}</td>
-        <td class="nhsuk-table__cell ">{{ i.status }}</td>
-        <td class="nhsuk-table__cell">{{ i.traineeType }}</td>
-        <td class="nhsuk-table__cell ">{{ i.lastUpdated }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<mat-table *ngIf="trainees$ | async as trainees" [dataSource]="trainees">
+  <ng-container *ngFor="let i of columnData" matColumnDef="{{ i.label }}">
+    <mat-header-cell *matHeaderCellDef>{{ i.label }}</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element[i.name] }}</mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="columnLabels"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: columnLabels"></mat-row>
+</mat-table>

@@ -39,6 +39,7 @@ body {
   font-family: $nhsuk-font, $nhsuk-font-fallback, Serif, Sans-serif; // sonar error fall-back variable is Serif, Sans-serif
   margin: 0;
   padding: 0;
+  color: $color_nhsuk-black;
 }
 // accessibility focus TO:DO investigate high-contrast https://material.angular.io/cdk/a11y/overview
 // .mat-focus-indicator:focus {

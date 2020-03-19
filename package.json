@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "npm run build:shared && ng serve",
+    "start": "npm run build:shared && npm run build:browsers && ng serve",
     "build": "ng build",
     "test": "ng test",
     "test:ci": "ng test --watch=false --browsers=ChromeHeadless --code-coverage=true",
@@ -12,7 +12,8 @@
     "cypress": "cypress run",
     "cypress-open": "cypress open",
     "build:shared": "ng build --project=hee-shared",
-    "tslint-check": "tslint-config-prettier-check ./tslint.json"
+    "tslint-check": "tslint-config-prettier-check ./tslint.json",
+    "build:browsers": "node supported.browsers.node.ts"
   },
   "husky": {
     "hooks": {
@@ -52,6 +53,7 @@
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
+    "browserslist-useragent-regexp": "^2.0.1",
     "codelyzer": "^5.1.2",
     "cypress": "^4.1.0",
     "husky": "^4.2.3",

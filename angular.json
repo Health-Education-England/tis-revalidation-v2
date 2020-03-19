@@ -35,7 +35,13 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              {
+                "input": "supported.browsers.js",
+                "inject": false,
+                "bundleName": "supported.browsers"
+              }
+            ]
           },
           "configurations": {
             "production": {

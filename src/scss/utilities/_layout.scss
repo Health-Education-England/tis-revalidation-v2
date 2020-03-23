@@ -1,0 +1,135 @@
+// display
+.d-block {
+  display: block;
+}
+
+.d-grid {
+  display: grid;
+}
+
+.d-inline-grid {
+  display: inline-grid;
+}
+
+// justify items
+.justify-items-start {
+  justify-items: start;
+}
+
+.justify-items-center {
+  justify-items: center;
+}
+
+.justify-items-end {
+  justify-items: end;
+}
+
+// align items
+.align-items-start {
+  align-items: start;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.align-items-end {
+  align-items: end;
+}
+
+// justify content
+.justify-content-start {
+  justify-content: start;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.justify-content-end {
+  justify-content: end;
+}
+
+.justify-content-stretch {
+  justify-content: stretch;
+}
+
+.justify-content-around {
+  justify-content: space-around;
+}
+
+.justify-content-between {
+  justify-content: space-between;
+}
+
+.justify-content-evenly {
+  justify-content: space-evenly;
+}
+
+// align content
+.align-content-start {
+  align-content: start;
+}
+
+.align-content-center {
+  align-content: center;
+}
+
+.align-content-end {
+  align-content: end;
+}
+
+.align-content-stretch {
+  align-content: stretch;
+}
+
+.align-content-between {
+  align-content: space-between;
+}
+
+.align-content-around {
+  align-content: space-around;
+}
+
+.align-content-evenly {
+  align-content: space-evenly;
+}
+
+// grid auto flow
+.grid-auto-flow-row {
+  grid-auto-flow: row;
+}
+
+.grid-auto-flow-column {
+  grid-auto-flow: column;
+}
+
+.grid-auto-flow-dense {
+  grid-auto-flow: dense;
+}
+
+// justify self
+.justify-self-start {
+  justify-self: start;
+}
+
+.justify-self-center {
+  justify-self: center;
+}
+
+.justify-self-end {
+  justify-self: end;
+}
+
+// align self
+.align-self-start {
+  align-self: start;
+}
+
+.align-self-center {
+  align-self: center;
+}
+
+.align-self-end {
+  align-self: end;
+}

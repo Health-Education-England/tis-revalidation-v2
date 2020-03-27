@@ -1,10 +1,15 @@
 {
-    "/api": {
-        "target": "http://www.mocky.io/v2/",
-        "secure": false,
-        "pathRewrite": {
-            "^/api": ""
-        },
-        "changeOrigin": true
-    }
+  "/mocky": {
+    "target": "http://www.mocky.io/v2/",
+    "secure": false,
+    "pathRewrite": {
+      "^/mocky": ""
+    },
+    "changeOrigin": true
+  },
+  "/api": {
+    "target": "http://192.168.99.101:8080/revalidation/",
+    "secure": false,
+    "changeOrigin": false
+  }
 }

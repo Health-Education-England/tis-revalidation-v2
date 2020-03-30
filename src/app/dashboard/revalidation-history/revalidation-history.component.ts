@@ -10,6 +10,7 @@ import { MatBottomSheet } from "@angular/material/bottom-sheet";
 import { RevalidationNotesComponent } from "../revalidation-notes/revalidation-notes.component";
 import { MatDialog } from "@angular/material/dialog";
 import { RevalidationFormComponent } from "../revalidation-form/revalidation-form.component";
+import { PeriodicElement } from "./PeriodicElement";
 
 @Component({
   selector: "app-revalidation-history",
@@ -98,15 +99,4 @@ export class RevalidationHistoryComponent implements OnInit {
   toggleWatchTrainee(): void {
     this.watchTrainee = !this.watchTrainee;
   }
-}
-
-export interface PeriodicElement {
-  recommendation: string;
-  episodeId: number;
-  outcome: string; // enum from GMC table
-  gmcSubDueDate: string;
-  ActSubDate: string;
-  submittedBy: string;
-  submissionStatus: string;
-  comments: string[];
 }

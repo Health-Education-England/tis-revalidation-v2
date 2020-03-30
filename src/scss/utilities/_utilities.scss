@@ -1,3 +1,4 @@
+@import "~nhsuk-frontend/packages/core/settings/colours";
 // re-usable styles and mixins
 .no-decoration-link {
   text-decoration: none;
@@ -6,4 +7,28 @@
 
 .w-100 {
   width: 100%;
+}
+
+.icon-green {
+  color: $color_nhsuk-green;
+}
+
+.icon-blue {
+  color: $color_nhsuk-blue;
+}
+
+.icon-yellow {
+  color: $color_nhsuk-warm-yellow;
+}
+
+.icon-red {
+  color: $color_nhsuk-red;
+}
+
+.collapsed {
+  visibility: collapse;
+}
+
+.no-height {
+  height: 0px;
 }

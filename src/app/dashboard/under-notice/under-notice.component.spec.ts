@@ -5,6 +5,7 @@ import { NgxsModule, Store } from "@ngxs/store";
 import { GetUnderNoticeTrainees } from "./state/under-notice.actions";
 import { UnderNoticeState } from "./state/under-notice.state";
 import { UnderNoticeComponent } from "./under-notice.component";
+import { RouterTestingModule } from "@angular/router/testing";
 
 describe("UnderNoticeComponent", () => {
   let store: Store;
@@ -15,6 +16,7 @@ describe("UnderNoticeComponent", () => {
     TestBed.configureTestingModule({
       declarations: [UnderNoticeComponent],
       imports: [
+        RouterTestingModule,
         NgxsModule.forRoot([UnderNoticeState]),
         HttpClientTestingModule
       ],

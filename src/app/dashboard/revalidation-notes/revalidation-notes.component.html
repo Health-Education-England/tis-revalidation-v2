@@ -1,0 +1,31 @@
+<div class="flex-container" *ngIf="!addEditNote">
+    <span class="spacer"></span>
+    <button mat-button (click)="addNote()">
+        <mat-icon aria-hidden="false" aria-label="add note">note_add</mat-icon>
+    </button>
+</div>
+<mat-list *ngIf="!addEditNote">
+    <mat-list-item *ngFor="let message of messages;">
+        <span class="note">{{ message }}</span>
+        <span class="spacer"></span>
+        <button mat-button>
+            <mat-icon aria-hidden="false" aria-label="edit note">create</mat-icon>
+        </button>
+        <button mat-button>
+            <mat-icon aria-hidden="false" aria-label="delete note">delete</mat-icon>
+        </button>
+    </mat-list-item>
+</mat-list>
+<mat-list *ngIf="addEditNote">
+    <mat-list-item class="edit-note">
+        <textarea class="spacer editor"></textarea>
+        <div class="notes-button-holder">
+            <button mat-button aria-label="save note">
+                <mat-icon aria-hidden="false" class="icon-green" aria-label="delete note">save</mat-icon>
+            </button>
+            <button mat-button aria-label="cancel and go back" (click)="cancelNote()">
+                <mat-icon aria-hidden="false" class="icon-red" aria-label="cancel">cancel</mat-icon>
+            </button>
+        </div>
+    </mat-list-item>
+</mat-list>

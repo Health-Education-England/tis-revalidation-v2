@@ -7,6 +7,7 @@ import { GetUnderNoticeTrainees } from "./under-notice.actions";
 
 export class UnderNoticeStateModel {
   public items: ITrainee[];
+  public count: number;
   public loading: boolean;
 }
 
@@ -14,6 +15,7 @@ export class UnderNoticeStateModel {
   name: "underNotice",
   defaults: {
     items: null,
+    count: null,
     loading: true
   }
 })
@@ -34,11 +36,12 @@ export class UnderNoticeState {
   @Action(GetUnderNoticeTrainees)
   getUnderNoticeTrainees(ctx: StateContext<UnderNoticeStateModel>) {
     return this.traineeService.getUnderNoticeTrainees().pipe(
-      tap(result => {
+      tap((result) => {
         const state = ctx.getState();
         ctx.setState({
           ...state,
-          items: result,
+          items: result.doctorsForDB,
+          count: result.count,
           loading: false
         });
       })

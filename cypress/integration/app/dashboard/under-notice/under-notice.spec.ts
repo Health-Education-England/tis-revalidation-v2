@@ -13,33 +13,16 @@ describe("Under notice trainees", () => {
   });
 
   it("should show trainees data table with correct column headings", () => {
-    cy.get(".mat-header-cell")
-      .eq(0)
-      .should("have.text", "First name");
-    cy.get(".mat-header-cell")
-      .eq(1)
-      .should("have.text", "Last name");
-    cy.get(".mat-header-cell")
-      .eq(2)
-      .should("have.text", "Gmc no");
-    cy.get(".mat-header-cell")
-      .eq(3)
-      .should("have.text", "Designated Body");
-    cy.get(".mat-header-cell")
-      .eq(4)
-      .should("have.text", "Status");
-    cy.get(".mat-header-cell")
-      .eq(5)
-      .should("have.text", "Trainee type");
-    cy.get(".mat-header-cell")
-      .eq(6)
-      .should("have.text", "Last updated");
+    cy.get(".mat-header-cell").eq(0).should("have.text", "First name");
+    cy.get(".mat-header-cell").eq(1).should("have.text", "Last name");
+    cy.get(".mat-header-cell").eq(2).should("have.text", "Gmc no");
+    cy.get(".mat-header-cell").eq(3).should("have.text", "Sanction");
+    cy.get(".mat-header-cell").eq(4).should("have.text", "Submission date");
+    cy.get(".mat-header-cell").eq(5).should("have.text", "Under notice");
+    cy.get(".mat-header-cell").eq(6).should("have.text", "Date added");
   });
 
   it("should show trainees table with some data", () => {
-    cy.get(".mat-table .mat-row")
-      .eq(0)
-      .children()
-      .should("have.length", "7");
+    cy.get(".mat-table .mat-row").eq(0).children().should("have.length", "7");
   });
 });

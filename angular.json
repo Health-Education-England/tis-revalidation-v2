@@ -32,9 +32,7 @@
               },
               "src/manifest.webmanifest"
             ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "styles": ["src/styles.scss"],
             "scripts": [
               {
                 "input": "supported.browsers.js",
@@ -103,6 +101,20 @@
               ],
               "serviceWorker": true,
               "ngswConfigPath": "ngsw-config.json"
+            },
+            "local": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.local.ts"
+                }
+              ],
+              "optimization": false,
+              "outputHashing": "all",
+              "sourceMap": true,
+              "extractCss": true,
+              "aot": true,
+              "buildOptimizer": false
             }
           }
         },
@@ -118,6 +130,9 @@
             },
             "staging": {
               "browserTarget": "revalidation:build:staging"
+            },
+            "local": {
+              "browserTarget": "revalidation:build:local"
             }
           }
         },
@@ -143,9 +158,7 @@
               },
               "src/manifest.webmanifest"
             ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "styles": ["src/styles.scss"],
             "scripts": []
           }
         },
@@ -157,9 +170,7 @@
               "tsconfig.spec.json",
               "cypress/tsconfig.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -197,9 +208,7 @@
               "projects/hee-shared/tsconfig.lib.json",
               "projects/hee-shared/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }

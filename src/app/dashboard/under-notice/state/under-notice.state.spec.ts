@@ -2,7 +2,7 @@ import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { TestBed, async } from "@angular/core/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { of } from "rxjs";
-import { ITrainee } from "../../../core/trainee/trainee.interfaces";
+import { IUnderNoticeResponse } from "../../../core/trainee/trainee.interfaces";
 import { TraineeService } from "../../../core/trainee/trainee.service";
 import { UnderNoticeState } from "./under-notice.state";
 import { GetUnderNoticeTrainees } from "./under-notice.actions";
@@ -10,26 +10,29 @@ import { GetUnderNoticeTrainees } from "./under-notice.actions";
 describe("UnderNotice actions", () => {
   let store: Store;
   let traineeService: TraineeService;
-  const mockTrainees: ITrainee[] = [
-    {
-      firstName: "Bobby",
-      lastName: "Brown",
-      gmcNumber: "7777777",
-      programmeMembershipType: "test 1",
-      status: "test 1",
-      traineeType: "test 1",
-      lastUpdated: "2015-05-14"
-    },
-    {
-      firstName: "Eddie",
-      lastName: "Silver",
-      gmcNumber: "8383834",
-      programmeMembershipType: "test 5",
-      status: "test 5",
-      traineeType: "test 5",
-      lastUpdated: "2019-01-12"
-    }
-  ];
+  const mockResponse: IUnderNoticeResponse = {
+    doctorsForDB: [
+      {
+        dateAdded: "2015-05-14",
+        doctorFirstName: "Bobby",
+        doctorLastName: "Brown",
+        gmcReferenceNumber: "7777777",
+        sanction: "No",
+        submissionDate: "2018-05-14",
+        underNotice: "No"
+      },
+      {
+        dateAdded: "2017-09-01",
+        doctorFirstName: "Kelly",
+        doctorLastName: "Green",
+        gmcReferenceNumber: "1111",
+        sanction: "No",
+        submissionDate: "2019-01-12",
+        underNotice: "No"
+      }
+    ],
+    count: 21312
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -61,7 +64,7 @@ describe("UnderNotice actions", () => {
 
   it("should dispatch 'GetUnderNoticeTrainees' and select 'underNoticeTrainees'", () => {
     spyOn(traineeService, "getUnderNoticeTrainees").and.returnValue(
-      of(mockTrainees)
+      of(mockResponse)
     );
 
     store.dispatch(new GetUnderNoticeTrainees());
@@ -70,6 +73,6 @@ describe("UnderNotice actions", () => {
     );
 
     expect(underNoticeTrainees.length).toEqual(2);
-    expect(underNoticeTrainees[0].firstName).toEqual("Bobby");
+    expect(underNoticeTrainees[0].doctorFirstName).toEqual("Bobby");
   });
 });

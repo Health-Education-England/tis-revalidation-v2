@@ -1,11 +1,16 @@
 export interface ITrainee {
-  firstName: string;
-  lastName: string;
-  gmcNumber: string;
-  programmeMembershipType: string;
-  status: string;
-  traineeType: string;
-  lastUpdated: string;
+  dateAdded: string;
+  doctorFirstName: string;
+  doctorLastName: string;
+  gmcReferenceNumber: string;
+  sanction: string;
+  submissionDate: string;
+  underNotice: string;
+}
+
+export interface IUnderNoticeResponse {
+  doctorsForDB: ITrainee[];
+  count: number;
 }
 
 export interface ITraineeDataCell {

@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "@environment";
 import { Observable } from "rxjs";
-import { ITrainee } from "./trainee.interfaces";
+import { IUnderNoticeResponse } from "./trainee.interfaces";
 
 @Injectable({
   providedIn: "root"
@@ -10,8 +10,8 @@ import { ITrainee } from "./trainee.interfaces";
 export class TraineeService {
   constructor(private http: HttpClient) {}
 
-  public getUnderNoticeTrainees(): Observable<ITrainee[]> {
-    return this.http.get<ITrainee[]>(
+  public getUnderNoticeTrainees(): Observable<IUnderNoticeResponse> {
+    return this.http.get<IUnderNoticeResponse>(
       `${environment.host}${environment.appUrls.getUnderNoticeTrainees}`
     );
   }

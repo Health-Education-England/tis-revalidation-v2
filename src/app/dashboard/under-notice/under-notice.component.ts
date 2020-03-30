@@ -20,35 +20,35 @@ export class UnderNoticeComponent implements OnInit {
   public columnData: ITraineeDataCell[] = [
     {
       label: "First name",
-      name: "firstName"
+      name: "doctorFirstName"
     },
     {
       label: "Last name",
-      name: "lastName"
+      name: "doctorLastName"
     },
     {
       label: "Gmc no",
-      name: "gmcNumber"
+      name: "gmcReferenceNumber"
     },
     {
-      label: "Designated Body",
-      name: "programmeMembershipType"
+      label: "Sanction",
+      name: "sanction"
     },
     {
-      label: "Status",
-      name: "status"
+      label: "Submission date",
+      name: "submissionDate"
     },
     {
-      label: "Trainee type",
-      name: "traineeType"
+      label: "Under notice",
+      name: "underNotice"
     },
     {
-      label: "Last updated",
-      name: "lastUpdated"
+      label: "Date added",
+      name: "dateAdded"
     }
   ];
 
-  public columnLabels: string[] = this.columnData.map(i => i.label);
+  public columnLabels: string[] = this.columnData.map((i) => i.label);
 
   constructor(private store: Store) {}
 

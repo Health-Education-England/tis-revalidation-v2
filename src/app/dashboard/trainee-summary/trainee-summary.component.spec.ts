@@ -24,4 +24,6 @@ describe("TraineeSummaryComponent", () => {
   it("should create", () => {
     expect(component).toBeTruthy();
   });
+
+  // TODO: test navigation tabs have x tabs based on nav-links object, test routes also work
 });

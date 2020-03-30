@@ -1,16 +1,14 @@
 <mat-toolbar>
     <mat-toolbar-row>
-        <span>Third Line</span>
+        <!-- <span> TODO: Mobile Trainee details Opener</span> -->
         <span class="spacer"></span>
-        <button mat-icon-button aria-label="Watch trainee" (click)="toggleWatchTrainee()">
-            <mat-icon [ngClass]="{'icon-blue': watchTrainee}">{{ watchTrainee ? 'visibility' : 'visibility_off' }}
-            </mat-icon>
-        </button>
-        <button mat-icon-button aria-label="Add notes" (click)="openNotes()">
-            <mat-icon>speaker_notes</mat-icon>
+
+        <button mat-icon-button aria-label="Add notes" (click)="openNotes()" color="primary">
+            <mat-icon matBadge="4">speaker_notes</mat-icon>
         </button>
     </mat-toolbar-row>
 </mat-toolbar>
+<!--// TODO: Desktop Trainee details aside bar -->
 <div>
     <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
 

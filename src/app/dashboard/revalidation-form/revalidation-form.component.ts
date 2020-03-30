@@ -15,6 +15,7 @@ export class RevalidationFormComponent implements OnInit {
       action: new FormControl(""),
       date: new FormControl("", Validators.required),
       reason: new FormControl("", Validators.required),
+      confirm: new FormControl(false, Validators.requiredTrue),
       comments: new FormControl("")
     });
   }

@@ -2,8 +2,7 @@ import { Component, OnInit } from "@angular/core";
 
 @Component({
   selector: "app-trainee-summary",
-  templateUrl: "./trainee-summary.component.html",
-  styleUrls: ["./trainee-summary.component.scss"]
+  templateUrl: "./trainee-summary.component.html"
 })
 export class TraineeSummaryComponent implements OnInit {
   navLinks = [

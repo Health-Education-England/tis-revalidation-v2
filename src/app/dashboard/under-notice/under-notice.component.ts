@@ -7,7 +7,6 @@ import {
 import { Select, Store } from "@ngxs/store";
 import { GetUnderNoticeTrainees } from "./state/under-notice.actions";
 import { UnderNoticeState } from "./state/under-notice.state";
-import { MatRow } from "@angular/material/table";
 import { Router } from "@angular/router";
 
 @Component({
@@ -50,7 +49,7 @@ export class UnderNoticeComponent implements OnInit {
     }
   ];
 
-  public columnLabels: string[] = this.columnData.map((i) => i.label);
+  public columnLabels: string[] = this.columnData.map(i => i.label);
 
   constructor(private store: Store, private router: Router) {}
 
@@ -60,6 +59,6 @@ export class UnderNoticeComponent implements OnInit {
 
   traineeDetails(event: Event, row: ITrainee): void {
     event.stopPropagation();
-    this.router.navigate(["/dashboard/trainee", row.gmcNumber]);
+    this.router.navigate(["/dashboard/trainee", row.gmcReferenceNumber]);
   }
 }

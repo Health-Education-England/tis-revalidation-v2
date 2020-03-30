@@ -1,0 +1,32 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  padding: 0 16px;
+}
+
+.mat-list-item.edit-note {
+  min-height: 100px;
+  height: auto;
+
+  .mat-list-item-content {
+    height: 100%;
+  }
+  .editor {
+    min-height: 100px;
+  }
+
+  .notes-button-holder {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.note {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

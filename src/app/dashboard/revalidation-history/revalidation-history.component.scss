@@ -1,0 +1,57 @@
+@import "~nhsuk-frontend/packages/core/settings/colours";
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+table {
+  width: 100%;
+}
+
+tr.detail-row {
+  height: 0;
+}
+
+tr.element-row:not(.expanded-row):hover {
+  background: $color_nhsuk-grey-5;
+}
+
+tr.element-row:not(.expanded-row):active {
+  background: $color_transparent_nhsuk-blue-50;
+}
+
+.element-row td {
+  border-bottom-width: 0;
+}
+
+.element-detail {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.outcome {
+  line-height: 24px;
+  display: flex;
+  vertical-align: middle;
+}
+
+.outcome-text {
+  margin-left: 8px;
+}
+
+.element-submission-status,
+.element-notes {
+  padding: 16px 0;
+}
+
+.element-description-attribution {
+  opacity: 0.5;
+}
+
+.button-row {
+  margin-top: 32px;
+  padding: 16px;
+  display: flex;
+  flex-direction: row;
+}

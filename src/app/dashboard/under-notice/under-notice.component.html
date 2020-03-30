@@ -7,5 +7,7 @@
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="columnLabels"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: columnLabels"></mat-row>
+  <mat-row *matRowDef="let row; columns: columnLabels" (click)="traineeDetails($event, row)"
+    (keyup.enter)="traineeDetails($event, row)" (keyup.space)="traineeDetails($event, row)" tabindex="0" role="button">
+  </mat-row>
 </mat-table>

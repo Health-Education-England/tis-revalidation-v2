@@ -49,7 +49,7 @@ jobs:
 
   deploy:
     name: Deploy
-    needs: dockerize
+    needs: build
     runs-on: ubuntu-latest
 
     steps:

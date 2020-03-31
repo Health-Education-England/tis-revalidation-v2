@@ -19,6 +19,9 @@ jobs:
         with:
           node-version: "10.x"
 
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli@9.0.3
+
       - name: Pull down dependencies
         run: npm install
 

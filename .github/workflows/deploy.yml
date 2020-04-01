@@ -83,5 +83,5 @@ jobs:
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           service: tis-revalidation-v2
-          cluster: tis-revalidation-v2
+          cluster: tis-hee-revalidation
           wait-for-service-stability: true

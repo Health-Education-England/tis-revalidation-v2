@@ -78,10 +78,19 @@ jobs:
           container-name: tis-revalidation-v2
           image: ${{ steps.login-ecr.outputs.registry }}/tis-revalidation-v2:${{ github.sha }}
 
+      - name: Create empty ECS Service
+        id: create-service
+        run: |
+          aws ecs create-service \
+          --cluster revalidation \
+          --service-name revalidation-fe-service \
+          --launch-type FARGATE
+          echo "::set-output name=serivce-name::revalidation-fe-service"
+
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
-          #          service: tis-revalidation-v2
+          service: ${{ steps.create-service.outputs.service-name }}
           cluster: revalidation
           wait-for-service-stability: true

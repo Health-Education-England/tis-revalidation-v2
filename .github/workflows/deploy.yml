@@ -93,4 +93,5 @@ jobs:
           --service-name revalidation-fe-service \
           --task-definition tis-revalidation-v2 \
           --launch-type FARGATE \
-          --desired-count 2
+          --desired-count 3 \
+          --network-configuration "awsvpcConfiguration={subnets=[revalidation-subnet-a,revalidation-subnet-b,revalidation-subnet-c],assignPublicIp=ENABLED}"

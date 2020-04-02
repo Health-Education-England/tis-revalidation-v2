@@ -84,7 +84,8 @@ jobs:
           aws ecs create-service \
           --cluster revalidation \
           --service-name revalidation-fe-service \
-          --launch-type FARGATE
+          --launch-type FARGATE \
+          --desired-count 2
           echo "::set-output name=serivce-name::revalidation-fe-service"
 
       - name: Deploy Amazon ECS task definition

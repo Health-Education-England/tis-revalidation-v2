@@ -91,6 +91,6 @@ jobs:
           aws ecs create-service \
           --cluster revalidation \
           --service-name revalidation-fe-service \
-          --task-definition ${{ steps.task-def.outputs.task-definition }} \
+          --task-definition tis-revalidation-v2 \
           --launch-type FARGATE \
           --desired-count 2

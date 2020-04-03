@@ -1,6 +1,6 @@
-describe("Under notice trainees", () => {
+describe("Trainees", () => {
   it("should allow me to visit the page", () => {
-    cy.visit("/dashboard/under-notice");
+    cy.visit("/trainees");
   });
 
   it("should show loading spinner", () => {

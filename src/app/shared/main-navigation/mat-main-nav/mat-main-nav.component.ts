@@ -4,6 +4,7 @@ import { MatIconRegistry } from "@angular/material/icon";
 import { Observable } from "rxjs";
 import { map, shareReplay } from "rxjs/operators";
 import { DomSanitizer } from "@angular/platform-browser";
+import { DEFAULT_ROUTE } from "../../../core/trainee/constants";
 
 @Component({
   selector: "app-mat-main-nav",
@@ -11,10 +12,11 @@ import { DomSanitizer } from "@angular/platform-browser";
   styleUrls: ["./mat-main-nav.component.scss"]
 })
 export class MatMainNavComponent {
+  public defaultRoute: string = DEFAULT_ROUTE;
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
     .pipe(
-      map(result => result.matches),
+      map((result) => result.matches),
       shareReplay()
     );
   @Input() skipLinkSelector = "maincontent";

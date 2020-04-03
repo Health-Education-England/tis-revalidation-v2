@@ -2,22 +2,22 @@ import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { NgxsModule, Store } from "@ngxs/store";
-import { GetUnderNoticeTrainees } from "./state/under-notice.actions";
-import { UnderNoticeState } from "./state/under-notice.state";
-import { UnderNoticeComponent } from "./under-notice.component";
+import { GetTrainees } from "../state/trainees.actions";
+import { TraineesState } from "../state/trainees.state";
+import { TraineeListComponent } from "./trainee-list.component";
 import { RouterTestingModule } from "@angular/router/testing";
 
 describe("UnderNoticeComponent", () => {
   let store: Store;
-  let component: UnderNoticeComponent;
-  let fixture: ComponentFixture<UnderNoticeComponent>;
+  let component: TraineeListComponent;
+  let fixture: ComponentFixture<TraineeListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [UnderNoticeComponent],
+      declarations: [TraineeListComponent],
       imports: [
         RouterTestingModule,
-        NgxsModule.forRoot([UnderNoticeState]),
+        NgxsModule.forRoot([TraineesState]),
         HttpClientTestingModule
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -26,7 +26,7 @@ describe("UnderNoticeComponent", () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UnderNoticeComponent);
+    fixture = TestBed.createComponent(TraineeListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -38,6 +38,6 @@ describe("UnderNoticeComponent", () => {
   it("should dispatch 'GetUnderNoticeTrainees' on init", () => {
     spyOn(store, "dispatch");
     component.ngOnInit();
-    expect(store.dispatch).toHaveBeenCalledWith(new GetUnderNoticeTrainees());
+    expect(store.dispatch).toHaveBeenCalledWith(new GetTrainees());
   });
 });

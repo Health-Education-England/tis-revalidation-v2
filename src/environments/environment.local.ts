@@ -11,7 +11,7 @@ export const environment: IEnvironment = {
   appUrls: {
     login: ``,
     authRedirect: ``,
-    getUnderNoticeTrainees: `v1/doctors`
+    getTrainees: `v1/doctors`
   }
 };
 

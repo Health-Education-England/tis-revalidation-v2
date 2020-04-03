@@ -8,7 +8,7 @@ export interface ITrainee {
   underNotice: string;
 }
 
-export interface IUnderNoticeResponse {
+export interface IGetTraineesResponse {
   doctorsForDB: ITrainee[];
   count: number;
 }

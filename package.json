@@ -7,15 +7,15 @@
     "start:local": "npm run build:local && ng serve --configuration=local",
     "build": "ng build",
     "build:local": "npm run build:shared && npm run build:browsers",
+    "build:shared": "ng build --project=hee-shared",
+    "build:browsers": "node supported.browsers.node.ts",
     "test": "ng test",
     "test:ci": "ng test --watch=false --browsers=ChromeHeadless --code-coverage=true",
     "lint": "ng lint && npm run lint:styles",
     "lint:styles": "stylelint \"src/**/*.scss\"",
     "cypress": "cypress run",
     "cypress-open": "cypress open",
-    "build:shared": "ng build --project=hee-shared",
-    "tslint-check": "tslint-config-prettier-check ./tslint.json",
-    "build:browsers": "node supported.browsers.node.ts"
+    "tslint-check": "tslint-config-prettier-check ./tslint.json"
   },
   "husky": {
     "hooks": {

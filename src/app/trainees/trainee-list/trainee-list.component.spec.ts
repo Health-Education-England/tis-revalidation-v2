@@ -35,7 +35,7 @@ describe("UnderNoticeComponent", () => {
     expect(component).toBeTruthy();
   });
 
-  it("should dispatch 'GetUnderNoticeTrainees' on init", () => {
+  it("should dispatch 'GetTrainees' on init", () => {
     spyOn(store, "dispatch");
     component.ngOnInit();
     expect(store.dispatch).toHaveBeenCalledWith(new GetTrainees());

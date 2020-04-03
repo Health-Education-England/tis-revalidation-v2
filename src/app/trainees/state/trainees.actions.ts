@@ -9,9 +9,17 @@ export class SortTrainees {
   constructor(public column: string, public direction: SortDirection) {}
 }
 
+export class ResetTraineesSort {
+  static readonly type = "[Trainees] Reset Sort";
+}
+
 export class FilterTrainees {
   static readonly type = "[Trainees] Filter";
   constructor(public filter: string) {}
+}
+
+export class ClearTraineesFilter {
+  static readonly type = "[Trainees] Clear Filter";
 }
 
 export class SearchTrainees {

@@ -5,6 +5,7 @@
     *ngIf="sort$ | async as sort"
     [dataSource]="trainees"
     matSort
+    matSortDisableClear
     (matSortChange)="sortTrainees($event)"
     [matSortActive]="sort.active"
     [matSortDirection]="sort.direction"

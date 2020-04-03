@@ -10,9 +10,19 @@
     [matSortDirection]="sort.direction"
   >
     <ng-container *ngFor="let i of columnData" matColumnDef="{{ i.label }}">
-      <mat-header-cell *matHeaderCellDef [mat-sort-header]="i.name">{{
-        i.label
-      }}</mat-header-cell>
+      <ng-container *ngIf="i.enableSort; else disabledSort">
+        <mat-header-cell *matHeaderCellDef [mat-sort-header]="i.name">{{
+          i.label
+        }}</mat-header-cell>
+      </ng-container>
+      <ng-template #disabledSort>
+        <mat-header-cell
+          *matHeaderCellDef
+          [mat-sort-header]="i.name"
+          disabled
+          >{{ i.label }}</mat-header-cell
+        >
+      </ng-template>
       <mat-cell *matCellDef="let element">{{ element[i.name] }}</mat-cell>
     </ng-container>
 

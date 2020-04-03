@@ -22,31 +22,53 @@ export class TraineeListComponent implements OnInit {
   public columnData: ITraineeDataCell[] = [
     {
       label: "First name",
-      name: "doctorFirstName"
+      name: "doctorFirstName",
+      enableSort: true
     },
     {
       label: "Last name",
-      name: "doctorLastName"
+      name: "doctorLastName",
+      enableSort: true
     },
     {
       label: "Gmc no",
-      name: "gmcReferenceNumber"
+      name: "gmcReferenceNumber",
+      enableSort: false
     },
     {
-      label: "Sanction",
-      name: "sanction"
+      label: "GMC Submission due date",
+      name: "submissionDate",
+      enableSort: true
     },
     {
-      label: "Submission date",
-      name: "submissionDate"
+      label: "Status",
+      name: "doctorStatus",
+      enableSort: false
     },
     {
-      label: "Under notice",
-      name: "underNotice"
+      label: "Programme name",
+      name: "programmeName",
+      enableSort: false
     },
     {
-      label: "Date added",
-      name: "dateAdded"
+      label: "Programme membership type",
+      name: "programmeMembershipType",
+      enableSort: false
+    },
+    {
+      label: "CCT date",
+      name: "cctDate",
+      enableSort: true
+    },
+    {
+      label: "Admin",
+      name: "admin",
+      enableSort: false
+    },
+    {
+      label: "Last updated",
+      name: "lastUpdatedDate",
+      enableSort: true
     }
   ];
 

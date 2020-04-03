@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { LayoutModule } from "@angular/cdk/layout";
+import { MatSortModule } from "@angular/material/sort";
 import { MatTableModule } from "@angular/material/table";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatButtonModule } from "@angular/material/button";
@@ -44,7 +45,8 @@ const materialModules = [
   MatSelectModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatSlideToggleModule
+  MatSlideToggleModule,
+  MatSortModule
 ];
 
 @NgModule({

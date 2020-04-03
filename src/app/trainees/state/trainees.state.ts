@@ -65,7 +65,7 @@ export class TraineesState {
       tap((result) => {
         ctx.setState({
           ...state,
-          items: result.doctorsForDB,
+          items: result.traineeInfo,
           count: result.count,
           loading: false
         });

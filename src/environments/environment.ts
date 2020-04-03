@@ -11,7 +11,7 @@ export const environment: IEnvironment = {
   appUrls: {
     login: ``,
     authRedirect: ``,
-    getTrainees: `5e7cd87a3500007e5b069c79?mocky-delay=700ms`
+    getTrainees: `5e873af23100000bff81a2ea?mocky-delay=700ms`
   }
 };
 

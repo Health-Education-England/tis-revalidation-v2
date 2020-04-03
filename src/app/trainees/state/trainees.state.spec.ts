@@ -11,7 +11,7 @@ describe("Trainees actions", () => {
   let store: Store;
   let traineeService: TraineeService;
   const mockResponse: IGetTraineesResponse = {
-    doctorsForDB: [
+    traineeInfo: [
       {
         dateAdded: "2015-05-14",
         doctorFirstName: "Bobby",
@@ -19,7 +19,13 @@ describe("Trainees actions", () => {
         gmcReferenceNumber: "7777777",
         sanction: "No",
         submissionDate: "2018-05-14",
-        underNotice: "No"
+        underNotice: "No",
+        admin: "",
+        cctDate: "2015-09-08",
+        doctorStatus: "",
+        lastUpdatedDate: "2015-09-08",
+        programmeMembershipType: "",
+        programmeName: ""
       },
       {
         dateAdded: "2017-09-01",
@@ -28,7 +34,13 @@ describe("Trainees actions", () => {
         gmcReferenceNumber: "1111",
         sanction: "No",
         submissionDate: "2019-01-12",
-        underNotice: "No"
+        underNotice: "No",
+        admin: "",
+        cctDate: "2015-09-08",
+        doctorStatus: "",
+        lastUpdatedDate: "2015-09-08",
+        programmeMembershipType: "",
+        programmeName: ""
       }
     ],
     count: 21312

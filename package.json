@@ -9,7 +9,7 @@
     "build:local": "npm run build:shared && npm run build:browsers",
     "build:shared": "ng build --project=hee-shared",
     "build:browsers": "node supported.browsers.node.ts",
-    "test": "ng test",
+    "test": "ng test --code-coverage=true",
     "test:ci": "ng test --watch=false --browsers=ChromeHeadless --code-coverage=true",
     "lint": "ng lint && npm run lint:styles",
     "lint:styles": "stylelint \"src/**/*.scss\"",

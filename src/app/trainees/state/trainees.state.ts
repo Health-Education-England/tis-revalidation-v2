@@ -3,9 +3,14 @@ import { Injectable } from "@angular/core";
 import { Sort } from "@angular/material/sort";
 import { State, Action, StateContext, Selector } from "@ngxs/store";
 import { tap } from "rxjs/operators";
+import { DEFAULT_ROUTE_SORT } from "../../core/trainee/constants";
 import { ITrainee } from "../../core/trainee/trainee.interfaces";
 import { TraineeService } from "../../core/trainee/trainee.service";
-import { GetTrainees, SortTrainees } from "./trainees.actions";
+import {
+  GetTrainees,
+  ResetTraineesSort,
+  SortTrainees
+} from "./trainees.actions";
 
 export class TraineesStateModel {
   public items: ITrainee[];
@@ -28,6 +33,7 @@ export class TraineesStateModel {
 })
 @Injectable()
 export class TraineesState {
+  public defaultSort: Sort = DEFAULT_ROUTE_SORT;
   constructor(private traineeService: TraineeService) {}
 
   @Selector()
@@ -84,6 +90,17 @@ export class TraineesState {
         active: action.column,
         direction: action.direction
       }
+    });
+  }
+
+  @Action(ResetTraineesSort)
+  resetTraineesSort(ctx: StateContext<TraineesStateModel>) {
+    const state = ctx.getState();
+    return ctx.setState({
+      ...state,
+      items: null,
+      loading: true,
+      sort: this.defaultSort
     });
   }
 }

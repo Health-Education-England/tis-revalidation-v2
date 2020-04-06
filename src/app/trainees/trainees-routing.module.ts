@@ -13,6 +13,11 @@ const routes: Routes = [
         path: "",
         component: TraineeListComponent,
         data: { title: "Trainee list" }
+      },
+      {
+        path: "under-notice",
+        component: TraineeListComponent,
+        data: { title: "Trainees under-notice list" }
       }
     ]
   }

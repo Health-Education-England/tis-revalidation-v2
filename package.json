@@ -15,7 +15,8 @@
     "lint:styles": "stylelint \"src/**/*.scss\"",
     "cypress": "cypress run",
     "cypress-open": "cypress open",
-    "tslint-check": "tslint-config-prettier-check ./tslint.json"
+    "tslint-check": "tslint-config-prettier-check ./tslint.json",
+    "preinstall": "npx npm-force-resolutions"
   },
   "husky": {
     "hooks": {

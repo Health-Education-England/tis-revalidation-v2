@@ -3,7 +3,7 @@ describe("Trainees", () => {
     cy.visit("/trainees");
   });
 
-  it("should show loading spinner", () => {
+  it("should show loading spinner on page load", () => {
     cy.get("mat-spinner");
   });
 
@@ -31,5 +31,31 @@ describe("Trainees", () => {
 
   it("should show trainees table with some data", () => {
     cy.get(".mat-table .mat-row").eq(0).children().should("have.length", "10");
+  });
+
+  it("should list trainees by `GMC Submission due date` when page loads", () => {
+    cy.get(".mat-header-cell")
+      .eq(3)
+      .should("have.attr", "aria-sort")
+      .and("eq", "descending");
+  });
+
+  it("should list trainees by `First name` when sorted by this column", () => {
+    cy.get(".mat-header-cell").eq(0).click();
+    cy.get("mat-spinner");
+    cy.get(".mat-header-cell")
+      .eq(0)
+      .should("have.attr", "aria-sort")
+      .and("eq", "ascending");
+  });
+
+  it("should reset trainee list when `Clear all` is clicked", () => {
+    cy.get("app-reset-trainee-list span").should("have.text", "Clear all");
+    cy.get("app-reset-trainee-list span").click();
+    cy.get("mat-spinner");
+    cy.get(".mat-header-cell")
+      .eq(3)
+      .should("have.attr", "aria-sort")
+      .and("eq", "descending");
   });
 });

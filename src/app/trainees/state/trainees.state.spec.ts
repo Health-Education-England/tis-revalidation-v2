@@ -1,11 +1,13 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { TestBed, async } from "@angular/core/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { of } from "rxjs";
+import { DEFAULT_ROUTE_SORT } from "../../core/trainee/constants";
 import { IGetTraineesResponse } from "../../core/trainee/trainee.interfaces";
 import { TraineeService } from "../../core/trainee/trainee.service";
 import { TraineesState } from "./trainees.state";
-import { GetTrainees } from "./trainees.actions";
+import { GetTrainees, SortTrainees } from "./trainees.actions";
 
 describe("Trainees actions", () => {
   let store: Store;
@@ -49,7 +51,8 @@ describe("Trainees actions", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [NgxsModule.forRoot([TraineesState]), HttpClientTestingModule],
-      providers: [TraineeService]
+      providers: [TraineeService],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
     store = TestBed.inject(Store);
     traineeService = TestBed.inject(TraineeService);
@@ -60,7 +63,7 @@ describe("Trainees actions", () => {
     expect(traineeListState).toBeTruthy();
   });
 
-  it("should select default 'loading' state'", () => {
+  it("should select default 'loading' slice'", () => {
     const loading = store.selectSnapshot(TraineesState.loading);
     expect(loading).toBeTruthy();
   });
@@ -71,7 +74,7 @@ describe("Trainees actions", () => {
     expect(traineeService.getTrainees).toHaveBeenCalled();
   });
 
-  it("should dispatch 'getTrainees' and select 'trainees'", () => {
+  it("should dispatch 'getTrainees' and select 'trainees' slice", () => {
     spyOn(traineeService, "getTrainees").and.returnValue(of(mockResponse));
 
     store.dispatch(new GetTrainees());
@@ -79,5 +82,22 @@ describe("Trainees actions", () => {
 
     expect(trainees.length).toEqual(2);
     expect(trainees[0].doctorFirstName).toEqual("Bobby");
+  });
+
+  it("should dispatch 'getTrainees' and select 'count' slice", () => {
+    spyOn(traineeService, "getTrainees").and.returnValue(of(mockResponse));
+
+    store.dispatch(new GetTrainees());
+    const count = store.selectSnapshot(TraineesState.count);
+
+    expect(count).toEqual(21312);
+  });
+
+  it("should dispatch 'sortTrainees' and update store", () => {
+    store.dispatch(
+      new SortTrainees(DEFAULT_ROUTE_SORT.active, DEFAULT_ROUTE_SORT.direction)
+    );
+    const sort = store.selectSnapshot(TraineesState.sort);
+    expect(sort).toEqual(DEFAULT_ROUTE_SORT);
   });
 });

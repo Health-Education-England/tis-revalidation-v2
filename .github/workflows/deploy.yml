@@ -33,7 +33,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-2
+          aws-region: eu-west-1
 
       - name: Log in to Amazon ECR
         id: login-ecr
@@ -64,7 +64,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-2
+          aws-region: eu-west-1
 
       - name: Log in to Amazon ECR
         id: login-ecr
@@ -81,17 +81,12 @@ jobs:
       - name: Insert new Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
-          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          task-definition: tis-revalidation-v2
           cluster: revalidation
-          wait-for-service-stability: true
+          wait-for-service-stability: false
 
-      - name: Create Amazon ECS Service
-        id: create-service
-        run: |
-          aws ecs create-service \
-          --cluster revalidation \
-          --service-name revalidation-fe-service \
-          --task-definition tis-revalidation-v2 \
-          --launch-type FARGATE \
-          --desired-count 3 \
-          --network-configuration "awsvpcConfiguration={subnets=[revalidation-subnet-a,revalidation-subnet-b,revalidation-subnet-c],assignPublicIp=ENABLED}"
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2.0.0
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_TITLE: "TIS-HEE-REVALIDATION has been deployed through the pipeline"

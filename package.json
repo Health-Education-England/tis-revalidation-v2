@@ -76,5 +76,8 @@
     "tslint": "~5.18.0",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "~3.7.5"
+  },
+  "resolutions": {
+    "minimist": "^1.2.3"
   }
 }

@@ -86,7 +86,15 @@ jobs:
           wait-for-service-stability: false
 
       - name: Slack Notification
+        if: success()
         uses: rtCamp/action-slack-notify@v2.0.0
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_TITLE: "TIS-HEE-REVALIDATION has been deployed through the pipeline"
+          SLACK_TITLE: "TIS-REVALIDATION-V2 has been deployed through the pipeline"
+
+      - name: Slack Notification
+        if: failure()
+        uses: rtCamp/action-slack-notify@v2.0.0
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_TITLE: "TIS-REVALIDATION-V2 build has failed in the pipeline"

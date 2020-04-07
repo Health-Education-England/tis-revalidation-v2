@@ -16,7 +16,7 @@ export interface ITrainee {
 
 export interface IGetTraineesResponse {
   traineeInfo: ITrainee[];
-  count: number;
+  countTotal: number;
 }
 
 export interface ITraineeDataCell {

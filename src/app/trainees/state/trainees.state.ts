@@ -1,6 +1,7 @@
 import { HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Sort } from "@angular/material/sort";
+import { Router } from "@angular/router";
 import { State, Action, StateContext, Selector } from "@ngxs/store";
 import { tap } from "rxjs/operators";
 import { DEFAULT_ROUTE_SORT } from "../../core/trainee/constants";
@@ -8,33 +9,38 @@ import { ITrainee } from "../../core/trainee/trainee.interfaces";
 import { TraineeService } from "../../core/trainee/trainee.service";
 import {
   GetTrainees,
+  PaginateTrainees,
+  ResetTraineesPaginator,
   ResetTraineesSort,
-  SortTrainees
+  SortTrainees,
+  UpdateTraineesRoute
 } from "./trainees.actions";
 
 export class TraineesStateModel {
   public items: ITrainee[];
-  public count: number;
+  public countTotal: number;
   public loading: boolean;
   public sort: Sort;
+  public pageIndex: number;
 }
 
 @State<TraineesStateModel>({
   name: "trainees",
   defaults: {
     items: null,
-    count: null,
-    loading: true,
+    countTotal: null,
+    loading: null,
     sort: {
       active: null,
       direction: null
-    }
+    },
+    pageIndex: 0
   }
 })
 @Injectable()
 export class TraineesState {
   public defaultSort: Sort = DEFAULT_ROUTE_SORT;
-  constructor(private traineeService: TraineeService) {}
+  constructor(private traineeService: TraineeService, private router: Router) {}
 
   @Selector()
   public static trainees(state: TraineesStateModel) {
@@ -52,14 +58,25 @@ export class TraineesState {
   }
 
   @Selector()
-  public static count(state: TraineesStateModel) {
-    return state.count;
+  public static countTotal(state: TraineesStateModel) {
+    return state.countTotal;
+  }
+
+  @Selector()
+  public static pageIndex(state: TraineesStateModel) {
+    return state.pageIndex;
   }
 
   @Action(GetTrainees)
   getTrainees(ctx: StateContext<TraineesStateModel>) {
     const state = ctx.getState();
-    let params = new HttpParams();
+    ctx.setState({
+      ...state,
+      items: null,
+      loading: true
+    });
+
+    let params = new HttpParams().set("pageIndex", state.pageIndex.toString());
 
     if (state.sort.direction) {
       params = params
@@ -72,7 +89,7 @@ export class TraineesState {
         ctx.setState({
           ...state,
           items: result.traineeInfo,
-          count: result.count,
+          countTotal: result.countTotal,
           loading: false
         });
       })
@@ -84,8 +101,6 @@ export class TraineesState {
     const state = ctx.getState();
     return ctx.setState({
       ...state,
-      items: null,
-      loading: true,
       sort: {
         active: action.column,
         direction: action.direction
@@ -98,9 +113,40 @@ export class TraineesState {
     const state = ctx.getState();
     return ctx.setState({
       ...state,
-      items: null,
-      loading: true,
       sort: this.defaultSort
+    });
+  }
+
+  @Action(PaginateTrainees)
+  paginateTrainees(
+    ctx: StateContext<TraineesStateModel>,
+    action: PaginateTrainees
+  ) {
+    const state = ctx.getState();
+    return ctx.setState({
+      ...state,
+      pageIndex: action.pageIndex
+    });
+  }
+
+  @Action(ResetTraineesPaginator)
+  resetTraineesPaginator(ctx: StateContext<TraineesStateModel>) {
+    const state = ctx.getState();
+    return ctx.setState({
+      ...state,
+      pageIndex: 0
+    });
+  }
+
+  @Action(UpdateTraineesRoute)
+  updateTraineesRoute(ctx: StateContext<TraineesStateModel>) {
+    const state = ctx.getState();
+    return this.router.navigate(["/trainees"], {
+      queryParams: {
+        active: state.sort.active,
+        direction: state.sort.direction,
+        pageIndex: state.pageIndex
+      }
     });
   }
 }

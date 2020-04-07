@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { MaterialModule } from "../../shared/material/material.module";
 import { TraineeSummaryComponent } from "./trainee-summary.component";
 import { RouterTestingModule } from "@angular/router/testing";
 
@@ -9,7 +10,7 @@ describe("TraineeSummaryComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
+      imports: [RouterTestingModule, MaterialModule],
       declarations: [TraineeSummaryComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();

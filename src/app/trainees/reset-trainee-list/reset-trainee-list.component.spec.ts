@@ -1,15 +1,15 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { Sort } from "@angular/material/sort";
 import { Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { of } from "rxjs";
-import { DEFAULT_ROUTE_SORT } from "../../core/trainee/constants";
 import {
   ClearTraineesFilter,
   GetTrainees,
-  ResetTraineesSort
+  ResetTraineesPaginator,
+  ResetTraineesSort,
+  UpdateTraineesRoute
 } from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
 
@@ -45,8 +45,6 @@ describe("ResetTraineeListComponent", () => {
   });
 
   it("should dispatch relevant actions to reset trainee list", () => {
-    const mockSortEvent: Sort = DEFAULT_ROUTE_SORT;
-
     spyOn(store, "dispatch").and.returnValue(of({}));
     spyOn(router, "navigate");
 
@@ -54,12 +52,10 @@ describe("ResetTraineeListComponent", () => {
 
     expect(store.dispatch).toHaveBeenCalledWith([
       new ResetTraineesSort(),
+      new ResetTraineesPaginator(),
       new ClearTraineesFilter(),
-      new GetTrainees()
+      new GetTrainees(),
+      new UpdateTraineesRoute()
     ]);
-
-    expect(router.navigate).toHaveBeenCalledWith(["/trainees"], {
-      queryParams: mockSortEvent
-    });
   });
 });

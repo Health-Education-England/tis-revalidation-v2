@@ -23,19 +23,4 @@ describe("AppComponent", () => {
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
-
-  xit(`should have title as 'revalidation'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual("revalidation");
-  });
-
-  xit("should render title", () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector(".nhsuk-body").textContent).toContain(
-      "revalidation app is running!"
-    );
-  });
 });

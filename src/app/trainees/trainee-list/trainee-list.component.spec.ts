@@ -9,8 +9,10 @@ import { of } from "rxjs";
 import { ITrainee } from "../../core/trainee/trainee.interfaces";
 import {
   GetTrainees,
+  ResetTraineesPaginator,
   ResetTraineesSort,
-  SortTrainees
+  SortTrainees,
+  UpdateTraineesRoute
 } from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
 import { TraineeListComponent } from "./trainee-list.component";
@@ -23,7 +25,7 @@ class MockActivatedRoute {
   };
 }
 
-describe("UnderNoticeComponent", () => {
+describe("TraineeListComponent", () => {
   let store: Store;
   let component: TraineeListComponent;
   let fixture: ComponentFixture<TraineeListComponent>;
@@ -151,11 +153,9 @@ describe("UnderNoticeComponent", () => {
 
     expect(store.dispatch).toHaveBeenCalledWith([
       new SortTrainees(mockSortEvent.active, mockSortEvent.direction),
-      new GetTrainees()
+      new ResetTraineesPaginator(),
+      new GetTrainees(),
+      new UpdateTraineesRoute()
     ]);
-
-    expect(router.navigate).toHaveBeenCalledWith(["/trainees"], {
-      queryParams: mockSortEvent
-    });
   });
 });

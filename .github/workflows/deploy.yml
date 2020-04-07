@@ -81,7 +81,8 @@ jobs:
       - name: Insert new Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
-          task-definition: tis-revalidation-v2
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: tis-revalidation-v2
           cluster: revalidation
           wait-for-service-stability: false
 
@@ -98,3 +99,4 @@ jobs:
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_TITLE: "TIS-REVALIDATION-V2 build has failed in the pipeline"
+          SLACK_COLOR: "#fc1303"

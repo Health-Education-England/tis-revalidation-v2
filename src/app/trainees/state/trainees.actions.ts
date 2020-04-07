@@ -26,3 +26,16 @@ export class SearchTrainees {
   static readonly type = "[Trainees] Search";
   constructor(public query: string) {}
 }
+
+export class PaginateTrainees {
+  static readonly type = "[Trainees] Page";
+  constructor(public pageIndex: number) {}
+}
+
+export class UpdateTraineesRoute {
+  static readonly type = "[Trainees] Update Route";
+}
+
+export class ResetTraineesPaginator {
+  static readonly type = "[Trainees] Reset Paginator";
+}

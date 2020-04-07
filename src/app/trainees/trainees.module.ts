@@ -7,12 +7,14 @@ import { TraineeListComponent } from "./trainee-list/trainee-list.component";
 import { TraineesRoutingModule } from "./trainees-routing.module";
 import { TraineesComponent } from "./trainees.component";
 import { ResetTraineeListComponent } from "./reset-trainee-list/reset-trainee-list.component";
+import { TraineeListPaginatorComponent } from "./trainee-list-paginator/trainee-list-paginator.component";
 
 @NgModule({
   declarations: [
     TraineesComponent,
     TraineeListComponent,
-    ResetTraineeListComponent
+    ResetTraineeListComponent,
+    TraineeListPaginatorComponent
   ],
   imports: [
     MaterialModule,

@@ -1,18 +1,20 @@
 import { Component, OnInit } from "@angular/core";
 import { Sort } from "@angular/material/sort";
+import { ActivatedRoute, Params, Router } from "@angular/router";
+import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import {
   ITrainee,
   ITraineeDataCell
 } from "../../core/trainee/trainee.interfaces";
-import { Select, Store } from "@ngxs/store";
 import {
   GetTrainees,
+  ResetTraineesPaginator,
   ResetTraineesSort,
-  SortTrainees
+  SortTrainees,
+  UpdateTraineesRoute
 } from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
-import { ActivatedRoute, Params, Router } from "@angular/router";
 
 @Component({
   selector: "app-trainee-list",
@@ -104,24 +106,17 @@ export class TraineeListComponent implements OnInit {
     }
   }
 
-  public traineeDetails(event: Event, row: ITrainee): void {
+  public traineeDetails(event: Event, row: ITrainee): Promise<boolean> {
     event.stopPropagation();
-    this.router.navigate(["/dashboard/trainee", row.gmcReferenceNumber]);
+    return this.router.navigate(["/dashboard/trainee", row.gmcReferenceNumber]);
   }
 
   public sortTrainees(event: Sort): void {
-    this.store
-      .dispatch([
-        new SortTrainees(event.active, event.direction),
-        new GetTrainees()
-      ])
-      .subscribe(() =>
-        this.router.navigate(["/trainees"], {
-          queryParams: {
-            active: event.active,
-            direction: event.direction
-          }
-        })
-      );
+    this.store.dispatch([
+      new SortTrainees(event.active, event.direction),
+      new ResetTraineesPaginator(),
+      new GetTrainees(),
+      new UpdateTraineesRoute()
+    ]);
   }
 }

@@ -1,17 +1,26 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { TestBed, async } from "@angular/core/testing";
+import { Params, Router } from "@angular/router";
+import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { of } from "rxjs";
 import { DEFAULT_ROUTE_SORT } from "../../core/trainee/constants";
 import { IGetTraineesResponse } from "../../core/trainee/trainee.interfaces";
 import { TraineeService } from "../../core/trainee/trainee.service";
+import { MaterialModule } from "../../shared/material/material.module";
 import { TraineesState } from "./trainees.state";
-import { GetTrainees, SortTrainees } from "./trainees.actions";
+import {
+  GetTrainees,
+  PaginateTrainees,
+  SortTrainees,
+  UpdateTraineesRoute
+} from "./trainees.actions";
 
 describe("Trainees actions", () => {
   let store: Store;
   let traineeService: TraineeService;
+  let router: Router;
   const mockResponse: IGetTraineesResponse = {
     traineeInfo: [
       {
@@ -45,16 +54,22 @@ describe("Trainees actions", () => {
         programmeName: ""
       }
     ],
-    count: 21312
+    countTotal: 21312
   };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [NgxsModule.forRoot([TraineesState]), HttpClientTestingModule],
+      imports: [
+        NgxsModule.forRoot([TraineesState]),
+        HttpClientTestingModule,
+        RouterTestingModule,
+        MaterialModule
+      ],
       providers: [TraineeService],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
     store = TestBed.inject(Store);
+    router = TestBed.inject(Router);
     traineeService = TestBed.inject(TraineeService);
   }));
 
@@ -63,18 +78,20 @@ describe("Trainees actions", () => {
     expect(traineeListState).toBeTruthy();
   });
 
-  it("should select default 'loading' slice'", () => {
+  it("should dispatch 'GetTrainees' and set 'loading' slice'", () => {
+    spyOn(traineeService, "getTrainees").and.callThrough();
+    store.dispatch(new GetTrainees());
     const loading = store.selectSnapshot(TraineesState.loading);
     expect(loading).toBeTruthy();
   });
 
-  it("should dispatch 'getTrainees' and make api call", () => {
+  it("should dispatch 'GetTrainees' and make api call", () => {
     spyOn(traineeService, "getTrainees").and.callThrough();
     store.dispatch(new GetTrainees());
     expect(traineeService.getTrainees).toHaveBeenCalled();
   });
 
-  it("should dispatch 'getTrainees' and select 'trainees' slice", () => {
+  it("should dispatch 'GetTrainees' and select 'trainees' slice", () => {
     spyOn(traineeService, "getTrainees").and.returnValue(of(mockResponse));
 
     store.dispatch(new GetTrainees());
@@ -84,20 +101,45 @@ describe("Trainees actions", () => {
     expect(trainees[0].doctorFirstName).toEqual("Bobby");
   });
 
-  it("should dispatch 'getTrainees' and select 'count' slice", () => {
+  it("should dispatch 'GetTrainees' and select 'countTotal' slice", () => {
     spyOn(traineeService, "getTrainees").and.returnValue(of(mockResponse));
 
     store.dispatch(new GetTrainees());
-    const count = store.selectSnapshot(TraineesState.count);
+    const count = store.selectSnapshot(TraineesState.countTotal);
 
     expect(count).toEqual(21312);
   });
 
-  it("should dispatch 'sortTrainees' and update store", () => {
+  it("should dispatch 'SortTrainees' and update store", () => {
     store.dispatch(
       new SortTrainees(DEFAULT_ROUTE_SORT.active, DEFAULT_ROUTE_SORT.direction)
     );
     const sort = store.selectSnapshot(TraineesState.sort);
     expect(sort).toEqual(DEFAULT_ROUTE_SORT);
+  });
+
+  it("should dispatch 'PaginateTrainees' and update store", () => {
+    store.dispatch(new PaginateTrainees(34));
+    const pageIndex = store.selectSnapshot(TraineesState.pageIndex);
+    expect(pageIndex).toEqual(34);
+  });
+
+  it("should dispatch 'UpdateTraineesRoute' and navigate to trainees route", () => {
+    spyOn(router, "navigate");
+    const mockQueryParams: Params = {
+      active: "doctorFirstName",
+      direction: "asc",
+      pageIndex: 6
+    };
+
+    store.dispatch([
+      new SortTrainees(mockQueryParams.active, mockQueryParams.direction),
+      new PaginateTrainees(mockQueryParams.pageIndex),
+      new UpdateTraineesRoute()
+    ]);
+
+    expect(router.navigate).toHaveBeenCalledWith(["/trainees"], {
+      queryParams: mockQueryParams
+    });
   });
 });

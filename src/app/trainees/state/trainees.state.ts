@@ -76,7 +76,7 @@ export class TraineesState {
       loading: true
     });
 
-    let params = new HttpParams().set("pageIndex", state.pageIndex.toString());
+    let params = new HttpParams().set("pageNumber", state.pageIndex.toString());
 
     if (state.sort.direction) {
       params = params

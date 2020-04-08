@@ -13,8 +13,7 @@ import { PageNotFoundComponent } from "./page-not-found/page-not-found.component
     CommonModule,
     ReactiveFormsModule,
     RouterModule,
-    NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production }),
-    NgxsLoggerPluginModule.forRoot({ disabled: environment.production })
+    NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production })
   ],
   exports: [CommonModule, ReactiveFormsModule]
 })

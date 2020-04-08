@@ -87,6 +87,10 @@ export class TraineeListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log(
+      "%c TraineeListComponent ngOnInit fired ",
+      "background: green; color: black"
+    );
     this.setupInitialSorting();
     this.store.dispatch(new GetTrainees());
   }

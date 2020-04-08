@@ -27,6 +27,10 @@ export class TraineeListPaginatorComponent implements OnInit {
    * And update store accordingly
    */
   ngOnInit(): void {
+    console.log(
+      "%c TraineeListPaginatorComponent ngOnInit fired ",
+      "background: orange; color: black"
+    );
     const params: Params = this.route.snapshot.queryParams;
 
     if (params.pageIndex) {

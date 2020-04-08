@@ -5,7 +5,7 @@ import { RevalidationHistoryComponent } from "./revalidation-history/revalidatio
 
 const routes: Routes = [
   {
-    path: "trainee/:id",
+    path: "",
     component: TraineeSummaryComponent,
     data: { title: "Trainee summary" },
     children: [

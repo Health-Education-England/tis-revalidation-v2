@@ -1,106 +1,99 @@
-import { HttpParams } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Sort } from "@angular/material/sort";
 import { State, Action, StateContext, Selector } from "@ngxs/store";
-import { tap } from "rxjs/operators";
-import { DEFAULT_ROUTE_SORT } from "../../core/trainee/constants";
-import { ITrainee } from "../../core/trainee/trainee.interfaces";
-import { TraineeService } from "../../core/trainee/trainee.service";
+import { GetTrainees } from "./trainees.actions";
 import {
-  GetTrainees,
-  ResetTraineesSort,
-  SortTrainees
-} from "./trainees.actions";
+  ITrainee,
+  ITraineeRouteParams,
+  DefaultRouteParams
+} from "../trainees.interface";
+import { HttpParams } from "@angular/common/http";
+import { TraineesService } from "../trainees.service";
+import { tap, catchError } from "rxjs/operators";
+import { Injectable } from "@angular/core";
+import { of } from "rxjs";
 
 export class TraineesStateModel {
   public items: ITrainee[];
-  public count: number;
-  public loading: boolean;
-  public sort: Sort;
+  public countTotal: number;
+  public countUnderNotice: number;
+  public totalPages: number;
+  public params: ITraineeRouteParams;
+}
+
+export class TraineeStateModel {
+  public items: ITrainee;
+  public params: number;
 }
 
 @State<TraineesStateModel>({
-  name: "trainees",
+  name: "doctors",
+  defaults: {
+    items: [],
+    countTotal: null,
+    countUnderNotice: null,
+    totalPages: null,
+    params: DefaultRouteParams
+  }
+})
+@State<TraineeStateModel>({
+  name: "doctor",
   defaults: {
     items: null,
-    count: null,
-    loading: true,
-    sort: {
-      active: null,
-      direction: null
-    }
+    params: null
   }
 })
 @Injectable()
 export class TraineesState {
-  public defaultSort: Sort = DEFAULT_ROUTE_SORT;
-  constructor(private traineeService: TraineeService) {}
+  constructor(private doctorsService: TraineesService) {}
 
   @Selector()
-  public static trainees(state: TraineesStateModel) {
-    return state.items;
+  public static countTotal(state: TraineesStateModel) {
+    return state.countTotal;
   }
 
   @Selector()
-  public static loading(state: TraineesStateModel) {
-    return state.loading;
+  public static countUnderNotice(state: TraineesStateModel) {
+    return state.countUnderNotice;
   }
 
-  @Selector()
-  public static sort(state: TraineesStateModel) {
-    return state.sort;
-  }
-
-  @Selector()
-  public static count(state: TraineesStateModel) {
-    return state.count;
-  }
-
-  @Action(GetTrainees)
-  getTrainees(ctx: StateContext<TraineesStateModel>) {
+  @Action(GetTrainees, { cancelUncompleted: true })
+  get(ctx: StateContext<TraineesStateModel>, action: GetTrainees) {
     const state = ctx.getState();
     let params = new HttpParams();
 
-    if (state.sort.direction) {
-      params = params
-        .append("sortColumn", state.sort.active)
-        .append("sortOrder", state.sort.direction);
+    if (action.payload.underNotice !== null) {
+      params = params.append(
+        "underNotice",
+        action.payload.underNotice.toString()
+      );
+    }
+    if (action.payload.pageNumber !== null) {
+      params = params.append(
+        "pageNumber",
+        action.payload.pageNumber.toString()
+      );
+    }
+    if (action.payload.search !== null) {
+      params = params.append("search", action.payload.search);
+    }
+    if (action.payload.sortColumn !== null) {
+      params = params.append("sortColumn", action.payload.sortColumn);
+    }
+    if (action.payload.sortOrder !== null) {
+      params = params.append("sortOrder", action.payload.sortOrder);
     }
 
-    return this.traineeService.getTrainees(params).pipe(
+    return this.doctorsService.getTrainees(params).pipe(
       tap((result) => {
         ctx.setState({
           ...state,
           items: result.traineeInfo,
-          count: result.count,
-          loading: false
+          countTotal: result.countTotal,
+          countUnderNotice: result.countUnderNotice,
+          totalPages: result.totalPages,
+          params: action.payload
         });
-      })
+      }),
+      catchError(() => of([]))
     );
-  }
-
-  @Action(SortTrainees)
-  sortTrainees(ctx: StateContext<TraineesStateModel>, action: SortTrainees) {
-    const state = ctx.getState();
-    return ctx.setState({
-      ...state,
-      items: null,
-      loading: true,
-      sort: {
-        active: action.column,
-        direction: action.direction
-      }
-    });
-  }
-
-  @Action(ResetTraineesSort)
-  resetTraineesSort(ctx: StateContext<TraineesStateModel>) {
-    const state = ctx.getState();
-    return ctx.setState({
-      ...state,
-      items: null,
-      loading: true,
-      sort: this.defaultSort
-    });
   }
 }

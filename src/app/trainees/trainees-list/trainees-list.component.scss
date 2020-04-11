@@ -1,0 +1,22 @@
+@import "~nhsuk-frontend/packages/core/settings/colours";
+::ng-deep {
+  .mat-footer-cell {
+    &.centered {
+      justify-content: center;
+    }
+  }
+
+  .mat-sort-header-sorted {
+    color: $color_nhsuk-black;
+  }
+
+  .small-wrapper {
+    font-size: 14px;
+    min-width: 250px;
+    max-width: 280px;
+    width: 100%;
+    .mat-form-field-wrapper {
+      padding-bottom: 0px;
+    }
+  }
+}

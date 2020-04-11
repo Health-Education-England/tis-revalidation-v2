@@ -1,14 +1,9 @@
 <nav mat-tab-nav-bar>
-  <a mat-tab-link *ngFor="let link of navLinks" [routerLink]="link.path" routerLinkActive #rla="routerLinkActive"
-    [routerLinkActiveOptions]="{exact:true}" [active]="rla.isActive">
-    {{link.label}} <span class="inline-marker" [ngClass]="{'primary': rla.isActive }">{{link.count}}</span>
-  </a>
+    <a mat-tab-link *ngFor="let link of navLinks" [routerLink]="link.path" routerLinkActive #rla="routerLinkActive"
+        [routerLinkActiveOptions]="{exact:true}" [active]="rla.isActive">
+        {{link.label}} <span class="inline-marker" *ngIf="link.count | async"
+            [ngClass]="{'primary': rla.isActive }">{{link.count | async}}</span>
+    </a>
 </nav>
 
-<div class="d-grid justify-content-end p-15">
-  <app-reset-trainee-list class="pt-10 pb-10"></app-reset-trainee-list>
-</div>
-
-<div class="p-15">
-  <router-outlet></router-outlet>
-</div>
+<router-outlet></router-outlet>

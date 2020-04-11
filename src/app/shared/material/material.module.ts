@@ -22,6 +22,7 @@ import { MatSelectModule } from "@angular/material/select";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatNativeDateModule, MAT_DATE_LOCALE } from "@angular/material/core";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { MatPaginatorModule } from "@angular/material/paginator";
 
 const materialModules = [
   LayoutModule,
@@ -46,7 +47,8 @@ const materialModules = [
   MatDatepickerModule,
   MatNativeDateModule,
   MatSlideToggleModule,
-  MatSortModule
+  MatSortModule,
+  MatPaginatorModule
 ];
 
 @NgModule({

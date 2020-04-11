@@ -14,9 +14,11 @@ export interface ITrainee {
   underNotice: string;
 }
 
-export interface IGetTraineesResponse {
+export interface ITraineeResponse {
   traineeInfo: ITrainee[];
-  count: number;
+  countTotal: number;
+  countUnderNotice: number;
+  totalPages: number;
 }
 
 export interface ITraineeDataCell {
@@ -24,3 +26,19 @@ export interface ITraineeDataCell {
   name: string;
   enableSort: boolean;
 }
+
+export interface ITraineeRouteParams {
+  sortColumn?: string;
+  sortOrder?: string;
+  pageNumber?: number;
+  underNotice?: boolean; // maybe string[] for multiple
+  search?: string;
+}
+
+export const DefaultRouteParams: ITraineeRouteParams = {
+  sortColumn: "submissionDate",
+  sortOrder: "desc",
+  pageNumber: 0,
+  underNotice: null,
+  search: null
+};

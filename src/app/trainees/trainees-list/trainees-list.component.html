@@ -1,0 +1,65 @@
+<mat-toolbar>
+    <mat-toolbar-row>
+        <span class="spacer"></span>
+        <form class="small-wrapper" [formGroup]="searchTraineesForm" (ngSubmit)="searchSubmit()">
+            <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Search</mat-label>
+                <input autocomplete="off" matInput type="search" formControlName="searchTrainees"
+                    placeholder="GMC number, First or Last name">
+                <button type="submit" mat-button matSuffix mat-icon-button aria-label="Search">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </mat-form-field>
+        </form>
+
+        <button mat-icon-button [matMenuTriggerFor]="traineeMenu" aria-label="Application status menu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #traineeMenu="matMenu">
+            <button mat-menu-item (click)="resetData()">
+                <mat-icon color="primary">restore_page</mat-icon>
+                <span>Reset filters</span>
+            </button>
+
+            <button mat-menu-item>
+                <mat-icon color="primary">supervisor_account</mat-icon>
+                <span>Allocate admin</span>
+            </button>
+        </mat-menu>
+    </mat-toolbar-row>
+</mat-toolbar>
+<ng-container *ngIf="doctors">
+    <mat-table class="mat-elevation-z8" *ngIf="sort" [dataSource]="doctors" matSort matSortDisableClear
+        (matSortChange)="sortTrainees($event)" [matSortActive]="sort.active" [matSortDirection]="sort.direction">
+        <ng-container *ngFor="let i of columnData" matColumnDef="{{ i.label }}">
+            <ng-container *ngIf="i.enableSort; else disabledSort">
+                <mat-header-cell *matHeaderCellDef [mat-sort-header]="i.name">{{
+            i.label
+          }}</mat-header-cell>
+            </ng-container>
+            <ng-template #disabledSort>
+                <mat-header-cell *matHeaderCellDef [mat-sort-header]="i.name" disabled>{{ i.label }}</mat-header-cell>
+            </ng-template>
+            <mat-cell *matCellDef="let element">{{ element[i.name] }}</mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="columnLabels"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: columnLabels" (click)="traineeDetails($event, row)"
+            (keyup.enter)="traineeDetails($event, row)" (keyup.space)="traineeDetails($event, row)" tabindex="0"
+            role="button">
+        </mat-row>
+
+        <ng-container matColumnDef="noRecord">
+            <mat-footer-cell class="centered" *matFooterCellDef><em class="icon-red">No records found.</em>
+            </mat-footer-cell>
+        </ng-container>
+
+        <ng-template [ngIf]="doctors.length === 0">
+            <mat-footer-row *matFooterRowDef="['noRecord']"></mat-footer-row>
+        </ng-template>
+    </mat-table>
+</ng-container>
+
+<mat-paginator color="primary" *ngIf="count" [length]="count" [pageIndex]="pageNumber" [pageSize]="20"
+    [hidePageSize]="true" (page)="paginateTrainees($event)">
+</mat-paginator>

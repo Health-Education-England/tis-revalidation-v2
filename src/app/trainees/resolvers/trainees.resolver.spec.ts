@@ -23,4 +23,8 @@ describe("TraineesResolver", () => {
   it("should create an instance", () => {
     expect(new TraineesResolver(traineeStore)).toBeTruthy();
   });
+
+  afterEach(() => {
+    httpMock.verify();
+  });
 });

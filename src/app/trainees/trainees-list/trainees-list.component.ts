@@ -140,27 +140,29 @@ export class TraineesListComponent implements OnInit {
    * gets resolved data from routeResolver class
    */
   private initializeRouteData(): void {
-    const resolvedData = this.route.snapshot.data.store.doctors;
-    if (resolvedData) {
-      this.doctors = resolvedData.items;
+    this.route.data.subscribe((res: any) => {
+      const resolvedData = res.store.doctors;
+      if (resolvedData) {
+        this.doctors = resolvedData.items;
 
-      this.sort = {
-        active: resolvedData.params.sortColumn,
-        direction: resolvedData.params.sortOrder
-      };
+        this.sort = {
+          active: resolvedData.params.sortColumn,
+          direction: resolvedData.params.sortOrder
+        };
 
-      this.pageNumber = resolvedData.params.pageNumber;
+        this.pageNumber = resolvedData.params.pageNumber;
 
-      if (
-        resolvedData.params.underNotice &&
-        (resolvedData.params.underNotice === true ||
-          resolvedData.params.underNotice === "true")
-      ) {
-        this.count = resolvedData.countUnderNotice;
-      } else {
-        this.count = resolvedData.countTotal;
+        if (
+          resolvedData.params.underNotice &&
+          (resolvedData.params.underNotice === true ||
+            resolvedData.params.underNotice === "true")
+        ) {
+          this.count = resolvedData.countUnderNotice;
+        } else {
+          this.count = resolvedData.countTotal;
+        }
       }
-    }
+    });
   }
 
   /**

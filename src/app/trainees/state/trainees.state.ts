@@ -34,13 +34,6 @@ export class TraineeStateModel {
     params: DefaultRouteParams
   }
 })
-@State<TraineeStateModel>({
-  name: "doctor",
-  defaults: {
-    items: null,
-    params: null
-  }
-})
 @Injectable()
 export class TraineesState {
   constructor(private doctorsService: TraineesService) {}

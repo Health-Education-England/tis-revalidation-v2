@@ -68,7 +68,7 @@ describe("TraineesListComponent", () => {
         }
       ]
     }).compileComponents();
-    route = TestBed.inject(ActivatedRoute);
+
     router = TestBed.inject(Router);
   }));
 

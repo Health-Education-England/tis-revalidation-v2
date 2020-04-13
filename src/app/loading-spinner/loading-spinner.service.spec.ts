@@ -2,7 +2,6 @@ import { TestBed } from "@angular/core/testing";
 import { LoadingSpinnerService } from "./loading-spinner.service";
 import { MaterialModule } from "../shared/material/material.module";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
-import { Overlay } from "@angular/cdk/overlay";
 
 describe("LoadingSpinnerService", () => {
   let service: LoadingSpinnerService;

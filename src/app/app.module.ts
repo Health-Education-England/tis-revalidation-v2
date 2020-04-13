@@ -11,6 +11,7 @@ import { SharedModule } from "./shared/shared.module";
 import { HttpClientModule } from "@angular/common/http";
 import { MaterialModule } from "./shared/material/material.module";
 import { MainNavigationModule } from "./shared/main-navigation/main-navigation.module";
+import { LoadingSpinnerModule } from "./loading-spinner/loading-spinner.module";
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,6 +22,7 @@ import { MainNavigationModule } from "./shared/main-navigation/main-navigation.m
     MaterialModule,
     SharedModule,
     AppRoutingModule,
+    LoadingSpinnerModule,
     ServiceWorkerModule.register("ngsw-worker.js", {
       enabled: environment.production
     }),

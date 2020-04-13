@@ -22,10 +22,8 @@ import { DefaultRouteParams, ITraineeRouteParams } from "../trainees.interface";
 describe("TraineesListComponent", () => {
   let component: TraineesListComponent;
   let fixture: ComponentFixture<TraineesListComponent>;
-  let resolvedData: any = {};
+  const resolvedData: any = {};
   let mockResponse = traineesResponse1;
-  let route: ActivatedRoute;
-  let router: Router;
   let routeParams: ITraineeRouteParams = DefaultRouteParams;
 
   const routes: Routes = [
@@ -33,7 +31,7 @@ describe("TraineesListComponent", () => {
     { path: "under-notice", component: TraineesListComponent }
   ];
 
-  let mockObservable = () => {
+  const mockObservable = () => {
     resolvedData.snapshot = { params: routeParams };
     resolvedData.data = of({
       store: {
@@ -68,13 +66,10 @@ describe("TraineesListComponent", () => {
         }
       ]
     }).compileComponents();
-
-    router = TestBed.inject(Router);
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TraineesListComponent);
-    router.initialNavigation();
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

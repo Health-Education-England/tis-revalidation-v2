@@ -6,14 +6,12 @@ import { Overlay } from "@angular/cdk/overlay";
 
 describe("LoadingSpinnerService", () => {
   let service: LoadingSpinnerService;
-  let overlay: Overlay;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [NoopAnimationsModule, MaterialModule]
     });
     service = TestBed.inject(LoadingSpinnerService);
-    overlay = TestBed.inject(Overlay);
   });
 
   it("should be created", () => {

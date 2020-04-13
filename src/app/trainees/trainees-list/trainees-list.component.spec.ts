@@ -10,7 +10,7 @@ import { TraineesListComponent } from "./trainees-list.component";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { MaterialModule } from "src/app/shared/material/material.module";
 import { RouterTestingModule } from "@angular/router/testing";
-import { ActivatedRoute, Router, Routes } from "@angular/router";
+import { ActivatedRoute, Routes } from "@angular/router";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { of } from "rxjs";
 import {

@@ -6,6 +6,8 @@ import { MaterialModule } from "src/app/shared/material/material.module";
 import { RouterTestingModule } from "@angular/router/testing";
 import { ActivatedRoute } from "@angular/router";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
+import { of } from "rxjs";
+import { traineesResponse1 } from "../spec-data/spec.trainees";
 
 describe("TraineesListComponent", () => {
   let component: TraineesListComponent;
@@ -25,18 +27,7 @@ describe("TraineesListComponent", () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            snapshot: {
-              data: {
-                store: {
-                  doctors: {
-                    items: [],
-                    params: {},
-                    countUnderNotice: 0,
-                    countTotal: 0
-                  }
-                }
-              }
-            }
+            data: of({ store: traineesResponse1 })
           }
         }
       ]

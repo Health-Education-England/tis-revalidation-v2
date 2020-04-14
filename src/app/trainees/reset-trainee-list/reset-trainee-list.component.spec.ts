@@ -50,12 +50,11 @@ describe("ResetTraineeListComponent", () => {
 
     component.resetTraineeList();
 
-    expect(store.dispatch).toHaveBeenCalledWith([
-      new ResetTraineesSort(),
-      new ResetTraineesPaginator(),
-      new ClearTraineesFilter(),
-      new GetTrainees(),
-      new UpdateTraineesRoute()
-    ]);
+    expect(store.dispatch).toHaveBeenCalledTimes(5);
+    expect(store.dispatch).toHaveBeenCalledWith(new ResetTraineesSort());
+    expect(store.dispatch).toHaveBeenCalledWith(new ResetTraineesPaginator());
+    expect(store.dispatch).toHaveBeenCalledWith(new ClearTraineesFilter());
+    expect(store.dispatch).toHaveBeenCalledWith(new GetTrainees());
+    expect(store.dispatch).toHaveBeenCalledWith(new UpdateTraineesRoute());
   });
 });

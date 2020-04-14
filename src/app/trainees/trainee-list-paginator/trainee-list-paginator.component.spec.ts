@@ -5,6 +5,7 @@ import { MatPaginatorModule, PageEvent } from "@angular/material/paginator";
 import { ActivatedRoute, Params } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
+import { of } from "rxjs";
 import {
   GetTrainees,
   PaginateTrainees,
@@ -105,14 +106,15 @@ describe("TraineeListPaginatorComponent", () => {
       pageSize: 100,
       length: 20
     };
-    spyOn(store, "dispatch");
+    spyOn(store, "dispatch").and.returnValue(of({}));
 
     component.paginateTrainees(mockPageEvent);
 
-    expect(store.dispatch).toHaveBeenCalledWith([
-      new PaginateTrainees(mockPageEvent.pageIndex),
-      new GetTrainees(),
-      new UpdateTraineesRoute()
-    ]);
+    expect(store.dispatch).toHaveBeenCalledTimes(3);
+    expect(store.dispatch).toHaveBeenCalledWith(
+      new PaginateTrainees(mockPageEvent.pageIndex)
+    );
+    expect(store.dispatch).toHaveBeenCalledWith(new GetTrainees());
+    expect(store.dispatch).toHaveBeenCalledWith(new UpdateTraineesRoute());
   });
 });

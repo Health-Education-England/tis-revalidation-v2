@@ -1,10 +1,10 @@
 import { HttpParams } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { Injectable, NgZone } from "@angular/core";
 import { Sort } from "@angular/material/sort";
 import { Router } from "@angular/router";
 import { State, Action, StateContext, Selector } from "@ngxs/store";
 import { tap } from "rxjs/operators";
-import { DEFAULT_ROUTE_SORT } from "../../core/trainee/constants";
+import { DEFAULT_SORT } from "../../core/trainee/constants";
 import { ITrainee } from "../../core/trainee/trainee.interfaces";
 import { TraineeService } from "../../core/trainee/trainee.service";
 import {
@@ -39,8 +39,11 @@ export class TraineesStateModel {
 })
 @Injectable()
 export class TraineesState {
-  public defaultSort: Sort = DEFAULT_ROUTE_SORT;
-  constructor(private traineeService: TraineeService, private router: Router) {}
+  constructor(
+    private traineeService: TraineeService,
+    private router: Router,
+    private ngZone: NgZone
+  ) {}
 
   @Selector()
   public static trainees(state: TraineesStateModel) {
@@ -113,7 +116,7 @@ export class TraineesState {
     const state = ctx.getState();
     return ctx.setState({
       ...state,
-      sort: this.defaultSort
+      sort: DEFAULT_SORT
     });
   }
 
@@ -141,12 +144,14 @@ export class TraineesState {
   @Action(UpdateTraineesRoute)
   updateTraineesRoute(ctx: StateContext<TraineesStateModel>) {
     const state = ctx.getState();
-    return this.router.navigate(["/trainees"], {
-      queryParams: {
-        active: state.sort.active,
-        direction: state.sort.direction,
-        pageIndex: state.pageIndex
-      }
-    });
+    return this.ngZone.run(() =>
+      this.router.navigate(["/trainees"], {
+        queryParams: {
+          active: state.sort.active,
+          direction: state.sort.direction,
+          pageIndex: state.pageIndex
+        }
+      })
+    );
   }
 }

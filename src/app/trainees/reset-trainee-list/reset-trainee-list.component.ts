@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { Sort } from "@angular/material/sort";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
+import { take } from "rxjs/operators";
 import {
   ClearTraineesFilter,
   GetTrainees,
@@ -21,12 +22,12 @@ export class ResetTraineeListComponent {
   constructor(private store: Store) {}
 
   public resetTraineeList(): void {
-    this.store.dispatch([
-      new ResetTraineesSort(),
-      new ResetTraineesPaginator(),
-      new ClearTraineesFilter(),
-      new GetTrainees(),
-      new UpdateTraineesRoute()
-    ]);
+    this.store.dispatch(new ResetTraineesSort());
+    this.store.dispatch(new ResetTraineesPaginator());
+    this.store.dispatch(new ClearTraineesFilter());
+    this.store
+      .dispatch(new GetTrainees())
+      .pipe(take(1))
+      .subscribe(() => this.store.dispatch(new UpdateTraineesRoute()));
   }
 }

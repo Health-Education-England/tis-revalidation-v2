@@ -5,7 +5,7 @@ import { Params, Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { of } from "rxjs";
-import { DEFAULT_ROUTE_SORT } from "../../core/trainee/constants";
+import { DEFAULT_SORT } from "../../core/trainee/constants";
 import { IGetTraineesResponse } from "../../core/trainee/trainee.interfaces";
 import { TraineeService } from "../../core/trainee/trainee.service";
 import { MaterialModule } from "../../shared/material/material.module";
@@ -112,10 +112,10 @@ describe("Trainees actions", () => {
 
   it("should dispatch 'SortTrainees' and update store", () => {
     store.dispatch(
-      new SortTrainees(DEFAULT_ROUTE_SORT.active, DEFAULT_ROUTE_SORT.direction)
+      new SortTrainees(DEFAULT_SORT.active, DEFAULT_SORT.direction)
     );
     const sort = store.selectSnapshot(TraineesState.sort);
-    expect(sort).toEqual(DEFAULT_ROUTE_SORT);
+    expect(sort).toEqual(DEFAULT_SORT);
   });
 
   it("should dispatch 'PaginateTrainees' and update store", () => {

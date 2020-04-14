@@ -3,6 +3,7 @@ import { PageEvent } from "@angular/material/paginator/paginator";
 import { ActivatedRoute, Params } from "@angular/router";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
+import { take } from "rxjs/operators";
 import {
   GetTrainees,
   PaginateTrainees,
@@ -37,10 +38,10 @@ export class TraineeListPaginatorComponent implements OnInit {
   }
 
   public paginateTrainees(event: PageEvent) {
-    this.store.dispatch([
-      new PaginateTrainees(event.pageIndex),
-      new GetTrainees(),
-      new UpdateTraineesRoute()
-    ]);
+    this.store.dispatch(new PaginateTrainees(event.pageIndex));
+    this.store
+      .dispatch(new GetTrainees())
+      .pipe(take(1))
+      .subscribe(() => this.store.dispatch(new UpdateTraineesRoute()));
   }
 }

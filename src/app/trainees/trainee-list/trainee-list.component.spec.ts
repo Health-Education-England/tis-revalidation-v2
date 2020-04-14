@@ -151,11 +151,12 @@ describe("TraineeListComponent", () => {
 
     component.sortTrainees(mockSortEvent);
 
-    expect(store.dispatch).toHaveBeenCalledWith([
-      new SortTrainees(mockSortEvent.active, mockSortEvent.direction),
-      new ResetTraineesPaginator(),
-      new GetTrainees(),
-      new UpdateTraineesRoute()
-    ]);
+    expect(store.dispatch).toHaveBeenCalledTimes(4);
+    expect(store.dispatch).toHaveBeenCalledWith(
+      new SortTrainees(mockSortEvent.active, mockSortEvent.direction)
+    );
+    expect(store.dispatch).toHaveBeenCalledWith(new ResetTraineesPaginator());
+    expect(store.dispatch).toHaveBeenCalledWith(new GetTrainees());
+    expect(store.dispatch).toHaveBeenCalledWith(new UpdateTraineesRoute());
   });
 });

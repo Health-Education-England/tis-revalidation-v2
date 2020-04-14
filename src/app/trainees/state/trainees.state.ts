@@ -23,16 +23,17 @@ export class TraineeStateModel {
   public items: ITrainee;
   public params: number;
 }
+const defaultState = {
+  items: [],
+  countTotal: null,
+  countUnderNotice: null,
+  totalPages: null,
+  params: DefaultRouteParams
+};
 
 @State<TraineesStateModel>({
   name: "doctors",
-  defaults: {
-    items: [],
-    countTotal: null,
-    countUnderNotice: null,
-    totalPages: null,
-    params: DefaultRouteParams
-  }
+  defaults: defaultState
 })
 @Injectable()
 export class TraineesState {
@@ -86,7 +87,10 @@ export class TraineesState {
           params: action.payload
         });
       }),
-      catchError(() => of([]))
+      catchError(() => {
+        ctx.patchState({ ...defaultState, params: action.payload });
+        return of([]);
+      })
     );
   }
 }

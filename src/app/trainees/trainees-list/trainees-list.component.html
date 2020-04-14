@@ -54,9 +54,8 @@
             </mat-footer-cell>
         </ng-container>
 
-        <ng-template [ngIf]="doctors.length === 0">
-            <mat-footer-row *matFooterRowDef="['noRecord']"></mat-footer-row>
-        </ng-template>
+        <mat-footer-row *matFooterRowDef="['noRecord']" [ngClass]="{'hide':doctors.length > 0}"></mat-footer-row>
+
     </mat-table>
 </ng-container>
 

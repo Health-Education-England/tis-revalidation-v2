@@ -55,3 +55,9 @@
 .spacer {
   flex: 1 1 auto;
 }
+
+.hidden,
+.hide,
+[hidden] {
+  display: none;
+}

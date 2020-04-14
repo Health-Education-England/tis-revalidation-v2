@@ -123,11 +123,7 @@ export class TraineesListComponent implements OnInit {
 
   public resetData(): void {
     this.searchTraineesForm.reset();
-
-    this.router.navigate(["./", {}], {
-      relativeTo: this.route,
-      replaceUrl: true
-    });
+    this.router.navigate(["./", {}], { relativeTo: this.route });
   }
 
   private redirectRoute(sentParams: Params) {

@@ -4,7 +4,7 @@ import { TraineesComponent } from "./trainees.component";
 
 const routes: Routes = [
   {
-    path: "trainees",
+    path: "",
     component: TraineesComponent,
     data: { title: "Trainees list" }
   }

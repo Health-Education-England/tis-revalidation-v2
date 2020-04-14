@@ -3,6 +3,7 @@ import { Sort } from "@angular/material/sort";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
+import { take } from "rxjs/operators";
 import {
   ITrainee,
   ITraineeDataCell
@@ -112,11 +113,11 @@ export class TraineeListComponent implements OnInit {
   }
 
   public sortTrainees(event: Sort): void {
-    this.store.dispatch([
-      new SortTrainees(event.active, event.direction),
-      new ResetTraineesPaginator(),
-      new GetTrainees(),
-      new UpdateTraineesRoute()
-    ]);
+    this.store.dispatch(new SortTrainees(event.active, event.direction));
+    this.store.dispatch(new ResetTraineesPaginator());
+    this.store
+      .dispatch(new GetTrainees())
+      .pipe(take(1))
+      .subscribe(() => this.store.dispatch(new UpdateTraineesRoute()));
   }
 }

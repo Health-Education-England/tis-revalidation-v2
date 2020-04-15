@@ -2,34 +2,27 @@ import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { Sort } from "@angular/material/sort";
-import { ActivatedRoute, Params, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { of } from "rxjs";
 import { ITrainee } from "../../core/trainee/trainee.interfaces";
 import {
   GetTrainees,
+  PaginateTrainees,
   ResetTraineesPaginator,
   ResetTraineesSort,
+  SearchTrainees,
   SortTrainees,
   UpdateTraineesRoute
 } from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
 import { TraineeListComponent } from "./trainee-list.component";
 
-class MockActivatedRoute {
-  snapshot = {
-    get queryParams(): Params {
-      return {};
-    }
-  };
-}
-
 describe("TraineeListComponent", () => {
   let store: Store;
   let component: TraineeListComponent;
   let fixture: ComponentFixture<TraineeListComponent>;
-  let route: ActivatedRoute;
   let router: Router;
 
   beforeEach(async(() => {
@@ -40,17 +33,10 @@ describe("TraineeListComponent", () => {
         NgxsModule.forRoot([TraineesState]),
         HttpClientTestingModule
       ],
-      providers: [
-        {
-          provide: ActivatedRoute,
-          useClass: MockActivatedRoute
-        }
-      ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
     store = TestBed.inject(Store);
     router = TestBed.inject(Router);
-    route = TestBed.inject(ActivatedRoute);
   }));
 
   beforeEach(() => {
@@ -69,6 +55,18 @@ describe("TraineeListComponent", () => {
     expect(component.setupInitialSorting).toHaveBeenCalled();
   });
 
+  it("should invoke 'setupInitialPagination' on init", () => {
+    spyOn(component, "setupInitialPagination");
+    component.ngOnInit();
+    expect(component.setupInitialPagination).toHaveBeenCalled();
+  });
+
+  it("should invoke 'checkInitialSearchQuery' on init", () => {
+    spyOn(component, "checkInitialSearchQuery");
+    component.ngOnInit();
+    expect(component.checkInitialSearchQuery).toHaveBeenCalled();
+  });
+
   it("should dispatch 'GetTrainees' on init", () => {
     spyOn(store, "dispatch");
     component.ngOnInit();
@@ -76,40 +74,72 @@ describe("TraineeListComponent", () => {
   });
 
   it("'setupInitialSorting()' should dispatch 'SortTrainees' if both params exist", () => {
-    const mockQueryParams: Params = {
+    spyOn(store, "dispatch");
+
+    component.params = {
       active: "doctorFirstName",
       direction: "asc"
     };
-
-    spyOnProperty(route.snapshot, "queryParams").and.returnValue(
-      mockQueryParams
-    );
-    spyOn(store, "dispatch");
-
     component.setupInitialSorting();
 
     expect(store.dispatch).toHaveBeenCalledTimes(1);
     expect(store.dispatch).toHaveBeenCalledWith(
-      new SortTrainees(mockQueryParams.active, mockQueryParams.direction)
+      new SortTrainees(component.params.active, component.params.direction)
     );
     expect(store.dispatch).not.toHaveBeenCalledWith(new ResetTraineesSort());
   });
 
   it("'setupInitialSorting()' should dispatch 'ResetTraineesSort' if both params don't exist", () => {
-    const mockQueryParams: Params = {};
-
-    spyOnProperty(route.snapshot, "queryParams").and.returnValue(
-      mockQueryParams
-    );
     spyOn(store, "dispatch");
 
+    component.params = {};
     component.setupInitialSorting();
 
     expect(store.dispatch).toHaveBeenCalledTimes(1);
     expect(store.dispatch).not.toHaveBeenCalledWith(
-      new SortTrainees(mockQueryParams.active, mockQueryParams.direction)
+      new SortTrainees(component.params.active, component.params.direction)
     );
     expect(store.dispatch).toHaveBeenCalledWith(new ResetTraineesSort());
+  });
+
+  it("'setupInitialPagination()' should dispatch 'PaginateTrainees' if param exists", () => {
+    spyOn(store, "dispatch");
+
+    component.params = { pageIndex: 4 };
+    component.setupInitialPagination();
+
+    expect(store.dispatch).toHaveBeenCalledTimes(1);
+    expect(store.dispatch).toHaveBeenCalledWith(
+      new PaginateTrainees(component.params.pageIndex)
+    );
+    expect(store.dispatch).not.toHaveBeenCalledWith(
+      new ResetTraineesPaginator()
+    );
+  });
+
+  it("'setupInitialPagination()' should dispatch 'ResetTraineesPaginator' if param does not exist", () => {
+    spyOn(store, "dispatch");
+
+    component.params = {};
+    component.setupInitialPagination();
+
+    expect(store.dispatch).toHaveBeenCalledTimes(1);
+    expect(store.dispatch).toHaveBeenCalledWith(new ResetTraineesPaginator());
+    expect(store.dispatch).not.toHaveBeenCalledWith(
+      new PaginateTrainees(component.params.pageIndex)
+    );
+  });
+
+  it("'checkInitialSearchQuery()' should dispatch 'SearchTrainees' if param exists", () => {
+    spyOn(store, "dispatch");
+
+    component.params = { searchQuery: "429123" };
+    component.checkInitialSearchQuery();
+
+    expect(store.dispatch).toHaveBeenCalledTimes(1);
+    expect(store.dispatch).toHaveBeenCalledWith(
+      new SearchTrainees(component.params.searchQuery)
+    );
   });
 
   it("'traineeDetails()' should navigate to details route", () => {

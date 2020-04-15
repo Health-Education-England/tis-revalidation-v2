@@ -8,10 +8,12 @@ import { DEFAULT_SORT } from "../../core/trainee/constants";
 import { ITrainee } from "../../core/trainee/trainee.interfaces";
 import { TraineeService } from "../../core/trainee/trainee.service";
 import {
+  ClearTraineesSearch,
   GetTrainees,
   PaginateTrainees,
   ResetTraineesPaginator,
   ResetTraineesSort,
+  SearchTrainees,
   SortTrainees,
   UpdateTraineesRoute
 } from "./trainees.actions";
@@ -22,6 +24,7 @@ export class TraineesStateModel {
   public loading: boolean;
   public sort: Sort;
   public pageIndex: number;
+  public searchQuery: string;
 }
 
 @State<TraineesStateModel>({
@@ -34,7 +37,8 @@ export class TraineesStateModel {
       active: null,
       direction: null
     },
-    pageIndex: 0
+    pageIndex: 0,
+    searchQuery: null
   }
 })
 @Injectable()
@@ -70,6 +74,11 @@ export class TraineesState {
     return state.pageIndex;
   }
 
+  @Selector()
+  public static searchQuery(state: TraineesStateModel) {
+    return state.searchQuery;
+  }
+
   @Action(GetTrainees)
   getTrainees(ctx: StateContext<TraineesStateModel>) {
     const state = ctx.getState();
@@ -85,6 +94,10 @@ export class TraineesState {
       params = params
         .append("sortColumn", state.sort.active)
         .append("sortOrder", state.sort.direction);
+    }
+
+    if (state.searchQuery) {
+      params = params.append("searchQuery", state.searchQuery);
     }
 
     return this.traineeService.getTrainees(params).pipe(
@@ -149,9 +162,27 @@ export class TraineesState {
         queryParams: {
           active: state.sort.active,
           direction: state.sort.direction,
-          pageIndex: state.pageIndex
+          pageIndex: state.pageIndex,
+          ...(state.searchQuery && { searchQuery: state.searchQuery })
         }
       })
     );
+  }
+
+  @Action(SearchTrainees)
+  searchTrainees(
+    ctx: StateContext<TraineesStateModel>,
+    action: SearchTrainees
+  ) {
+    return ctx.patchState({
+      searchQuery: action.searchQuery
+    });
+  }
+
+  @Action(ClearTraineesSearch)
+  clearTraineesSearch(ctx: StateContext<TraineesStateModel>) {
+    return ctx.patchState({
+      searchQuery: null
+    });
   }
 }

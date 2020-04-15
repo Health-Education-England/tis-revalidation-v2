@@ -24,7 +24,11 @@ export class ClearTraineesFilter {
 
 export class SearchTrainees {
   static readonly type = "[Trainees] Search";
-  constructor(public query: string) {}
+  constructor(public searchQuery: string) {}
+}
+
+export class ClearTraineesSearch {
+  static readonly type = "[Trainees] Clear Search";
 }
 
 export class PaginateTrainees {

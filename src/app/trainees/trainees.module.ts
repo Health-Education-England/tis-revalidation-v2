@@ -8,13 +8,15 @@ import { TraineesRoutingModule } from "./trainees-routing.module";
 import { TraineesComponent } from "./trainees.component";
 import { ResetTraineeListComponent } from "./reset-trainee-list/reset-trainee-list.component";
 import { TraineeListPaginatorComponent } from "./trainee-list-paginator/trainee-list-paginator.component";
+import { TraineeSearchComponent } from "./trainee-search/trainee-search.component";
 
 @NgModule({
   declarations: [
     TraineesComponent,
     TraineeListComponent,
     ResetTraineeListComponent,
-    TraineeListPaginatorComponent
+    TraineeListPaginatorComponent,
+    TraineeSearchComponent
   ],
   imports: [
     MaterialModule,

@@ -1,0 +1,14 @@
+<form (ngSubmit)="checkForm()" [formGroup]="form" autocomplete="off">
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="Enter name / GMC no"
+      [formControlName]="'searchQuery'"
+      [value]="searchQuery$ | async"
+    />
+    <mat-error *ngIf="form.invalid">No search terms entered</mat-error>
+  </mat-form-field>
+  <button mat-button type="submit">
+    <mat-icon>search</mat-icon>
+  </button>
+</form>

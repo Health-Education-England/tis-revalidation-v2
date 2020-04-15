@@ -10,8 +10,10 @@ import {
 } from "../../core/trainee/trainee.interfaces";
 import {
   GetTrainees,
+  PaginateTrainees,
   ResetTraineesPaginator,
   ResetTraineesSort,
+  SearchTrainees,
   SortTrainees,
   UpdateTraineesRoute
 } from "../state/trainees.actions";
@@ -78,8 +80,8 @@ export class TraineeListComponent implements OnInit {
       enableSort: true
     }
   ];
-
   public columnLabels: string[] = this.columnData.map((i) => i.label);
+  public params: Params = this.route.snapshot.queryParams;
 
   constructor(
     private store: Store,
@@ -87,23 +89,39 @@ export class TraineeListComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
 
+  /**
+   * Check if query params exist
+   * Then dispatch appropriate events
+   * And update store accordingly
+   */
   ngOnInit(): void {
     this.setupInitialSorting();
+    this.setupInitialPagination();
+    this.checkInitialSearchQuery();
     this.store.dispatch(new GetTrainees());
   }
 
-  /**
-   * Check if sorting query params exist
-   * Then dispatch appropriate event
-   * And update store accordingly
-   */
   public setupInitialSorting(): void {
-    const params: Params = this.route.snapshot.queryParams;
-
-    if (params.active && params.direction) {
-      this.store.dispatch(new SortTrainees(params.active, params.direction));
+    if (this.params.active && this.params.direction) {
+      this.store.dispatch(
+        new SortTrainees(this.params.active, this.params.direction)
+      );
     } else {
       this.store.dispatch(new ResetTraineesSort());
+    }
+  }
+
+  public setupInitialPagination(): void {
+    if (this.params.pageIndex) {
+      this.store.dispatch(new PaginateTrainees(this.params.pageIndex));
+    } else {
+      this.store.dispatch(new ResetTraineesPaginator());
+    }
+  }
+
+  public checkInitialSearchQuery(): void {
+    if (this.params.searchQuery) {
+      this.store.dispatch(new SearchTrainees(this.params.searchQuery));
     }
   }
 

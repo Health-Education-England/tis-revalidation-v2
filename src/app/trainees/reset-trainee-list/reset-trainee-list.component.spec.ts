@@ -6,6 +6,7 @@ import { NgxsModule, Store } from "@ngxs/store";
 import { of } from "rxjs";
 import {
   ClearTraineesFilter,
+  ClearTraineesSearch,
   GetTrainees,
   ResetTraineesPaginator,
   ResetTraineesSort,
@@ -50,10 +51,11 @@ describe("ResetTraineeListComponent", () => {
 
     component.resetTraineeList();
 
-    expect(store.dispatch).toHaveBeenCalledTimes(5);
+    expect(store.dispatch).toHaveBeenCalledTimes(6);
     expect(store.dispatch).toHaveBeenCalledWith(new ResetTraineesSort());
     expect(store.dispatch).toHaveBeenCalledWith(new ResetTraineesPaginator());
     expect(store.dispatch).toHaveBeenCalledWith(new ClearTraineesFilter());
+    expect(store.dispatch).toHaveBeenCalledWith(new ClearTraineesSearch());
     expect(store.dispatch).toHaveBeenCalledWith(new GetTrainees());
     expect(store.dispatch).toHaveBeenCalledWith(new UpdateTraineesRoute());
   });

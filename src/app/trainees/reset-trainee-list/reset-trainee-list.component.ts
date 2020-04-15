@@ -5,6 +5,7 @@ import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
 import {
   ClearTraineesFilter,
+  ClearTraineesSearch,
   GetTrainees,
   ResetTraineesPaginator,
   ResetTraineesSort,
@@ -25,6 +26,7 @@ export class ResetTraineeListComponent {
     this.store.dispatch(new ResetTraineesSort());
     this.store.dispatch(new ResetTraineesPaginator());
     this.store.dispatch(new ClearTraineesFilter());
+    this.store.dispatch(new ClearTraineesSearch());
     this.store
       .dispatch(new GetTrainees())
       .pipe(take(1))

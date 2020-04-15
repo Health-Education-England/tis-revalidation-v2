@@ -25,12 +25,12 @@ import { MainNavigationModule } from "./shared/main-navigation/main-navigation.m
       enabled: environment.production
     }),
     AnalyticsModule.forRoot({
-      siteId: ["UA-40570867-6"],
+      siteId: environment.siteIds,
       enabled: environment.production
     }),
     HotJarModule.forRoot({
-      hotJarId: 1662399,
-      hotJarSv: 6,
+      hotJarId: environment.hotJarId,
+      hotJarSv: environment.hotJarSv,
       enabled: environment.production
     }),
     NgxsModule.forRoot([], { developmentMode: !environment.production }),

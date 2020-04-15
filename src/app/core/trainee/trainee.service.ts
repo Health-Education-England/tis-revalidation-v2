@@ -12,7 +12,7 @@ export class TraineeService {
 
   public getTrainees(params?: HttpParams): Observable<IGetTraineesResponse> {
     return this.http.get<IGetTraineesResponse>(
-      `${environment.host}${environment.appUrls.getTrainees}`,
+      `${environment.appUrls.getTrainees}`,
       { params }
     );
   }

@@ -83,31 +83,13 @@ export const menuItems: IMenuItem[] = JSON.parse(
     {
         "name": "Revalidation",
         "type": 0,
-        "route": "admin/manage-connections",
+        "route": "/trainees",
         "description": "",
         "menuItems": [
             {
                 "type": 0,
-                "route": "admin/manage-connections",
-                "name": "Manage connections",
-                "description": ""
-            },
-            {
-                "type": 0,
-                "route": "concerns/",
-                "name": "Concerns log",
-                "description": ""
-            },
-            {
-                "type": 0,
-                "route": "admin/manage-connections/create",
-                "name": "Connection discrepancies",
-                "description": ""
-            },
-            {
-                "type": 0,
-                "route": "revalidation/",
-                "name": "Provide recommendation",
+                "route": "/",
+                "name": "All Trainees",
                 "description": ""
             }
         ]

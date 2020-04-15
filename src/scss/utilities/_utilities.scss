@@ -36,3 +36,22 @@
 .no-height {
   height: 0px;
 }
+
+.inline-marker {
+  display: inline-block;
+  vertical-align: baseline;
+  padding: 2px 7px;
+  margin: 0 4px;
+  border-radius: 4px;
+  font-size: 13px;
+  background-color: $color_nhsuk-grey-4;
+
+  &.primary {
+    background-color: $color_nhsuk-blue;
+    color: $color_nhsuk-white;
+  }
+}
+
+.spacer {
+  flex: 1 1 auto;
+}

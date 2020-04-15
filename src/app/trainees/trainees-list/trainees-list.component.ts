@@ -89,7 +89,7 @@ export class TraineesListComponent implements OnInit {
 
   public searchTrainee(searchTerm: any): void {
     let searchParams = {};
-    if (searchTerm && searchTerm.length >= 2) {
+    if (searchTerm) {
       searchParams = {
         search: searchTerm,
         pageNumber: 0 // reset page to 0 on search
@@ -170,7 +170,9 @@ export class TraineesListComponent implements OnInit {
     this.searchTrainees.valueChanges
       .pipe(debounceTime(1000))
       .subscribe((searchTerm: any) => {
-        if (searchTerm) this.searchTrainee(searchTerm);
+        if (searchTerm && searchTerm.length >= 2) {
+          this.searchTrainee(searchTerm);
+        }
       });
 
     this.searchTraineesForm.addControl("searchTrainees", this.searchTrainees);

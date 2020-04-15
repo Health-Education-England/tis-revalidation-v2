@@ -20,6 +20,8 @@
         <a mat-icon-button routerLink="/" aria-label="NHS Revalidation" class="logo-icon">
           <mat-icon svgIcon="icon_nhs_logo" [ngClass]="'icon_nhs_logo'">nhs logo</mat-icon>
         </a>
+        <span class="pl-10"></span>
+        <app-desktop-menu *ngIf="(isHandset$ | async) === false"></app-desktop-menu>
         <span class="fill-space"></span>
         <app-status-bar *ngIf="(isHandset$ | async) === false"></app-status-bar>
         <button type="button" [ngClass]="[drawer.opened ? 'hidden' : '']" aria-label="Open side navigation"
@@ -27,10 +29,10 @@
           <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
         </button>
       </mat-toolbar-row>
-      <mat-toolbar-row *ngIf="(isHandset$ | async) === false">
+      <!-- <mat-toolbar-row *ngIf="(isHandset$ | async) === false">
         <app-desktop-menu></app-desktop-menu>
         <span class="fill-space"></span>
-      </mat-toolbar-row>
+      </mat-toolbar-row> -->
     </mat-toolbar>
     <!-- Add Content Here -->
     <ng-content></ng-content>

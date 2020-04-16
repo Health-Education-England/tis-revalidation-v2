@@ -5,12 +5,9 @@ import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { of } from "rxjs";
+import { TraineeService } from "../../core/trainee/trainee.service";
 import { MaterialModule } from "../../shared/material/material.module";
-import {
-  GetTrainees,
-  SearchTrainees,
-  UpdateTraineesRoute
-} from "../state/trainees.actions";
+import { GetTrainees, SearchTrainees } from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
 
 import { TraineeSearchComponent } from "./trainee-search.component";
@@ -19,6 +16,7 @@ describe("TraineeSearchComponent", () => {
   let store: Store;
   let component: TraineeSearchComponent;
   let fixture: ComponentFixture<TraineeSearchComponent>;
+  let traineeService: TraineeService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -33,6 +31,7 @@ describe("TraineeSearchComponent", () => {
       ]
     }).compileComponents();
     store = TestBed.inject(Store);
+    traineeService = TestBed.inject(TraineeService);
   }));
 
   beforeEach(() => {
@@ -64,12 +63,12 @@ describe("TraineeSearchComponent", () => {
   it("should create form, form control with default value", () => {
     component.params = {};
     component.setupForm();
-    expect(component.form.value.searchQuery).toBeNull();
+    expect(component.form.value.searchQuery).toEqual("");
   });
 
-  it("form should be invalid if min length validation fails", () => {
+  it("form should be invalid if no characters entered", () => {
     component.params = {
-      searchQuery: "9"
+      searchQuery: ""
     };
     component.setupForm();
     expect(component.form.invalid).toBeTruthy();
@@ -89,6 +88,7 @@ describe("TraineeSearchComponent", () => {
 
   it("should dispatch relevant actions on valid form submission", () => {
     spyOn(store, "dispatch").and.returnValue(of({}));
+    spyOn(traineeService, "updateTraineesRoute");
 
     component.params = {
       searchQuery: "87723113"
@@ -96,11 +96,11 @@ describe("TraineeSearchComponent", () => {
     component.setupForm();
     component.submitForm(component.params.searchQuery);
 
-    expect(store.dispatch).toHaveBeenCalledTimes(3);
+    expect(store.dispatch).toHaveBeenCalledTimes(2);
     expect(store.dispatch).toHaveBeenCalledWith(
       new SearchTrainees(component.params.searchQuery)
     );
     expect(store.dispatch).toHaveBeenCalledWith(new GetTrainees());
-    expect(store.dispatch).toHaveBeenCalledWith(new UpdateTraineesRoute());
+    expect(traineeService.updateTraineesRoute).toHaveBeenCalled();
   });
 });

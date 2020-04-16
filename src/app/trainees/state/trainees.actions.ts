@@ -36,10 +36,6 @@ export class PaginateTrainees {
   constructor(public pageIndex: number) {}
 }
 
-export class UpdateTraineesRoute {
-  static readonly type = "[Trainees] Update Route";
-}
-
 export class ResetTraineesPaginator {
   static readonly type = "[Trainees] Reset Paginator";
 }

@@ -3,10 +3,10 @@ import { PageEvent } from "@angular/material/paginator/paginator";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
+import { TraineeService } from "../../core/trainee/trainee.service";
 import {
   GetTrainees,
-  PaginateTrainees,
-  UpdateTraineesRoute
+  PaginateTrainees
 } from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
 
@@ -18,13 +18,13 @@ export class TraineeListPaginatorComponent {
   @Select(TraineesState.countTotal) countTotal$: Observable<number>;
   @Select(TraineesState.pageIndex) pageIndex$: Observable<number>;
 
-  constructor(private store: Store) {}
+  constructor(private store: Store, private traineeService: TraineeService) {}
 
   public paginateTrainees(event: PageEvent) {
     this.store.dispatch(new PaginateTrainees(event.pageIndex));
     this.store
       .dispatch(new GetTrainees())
       .pipe(take(1))
-      .subscribe(() => this.store.dispatch(new UpdateTraineesRoute()));
+      .subscribe(() => this.traineeService.updateTraineesRoute());
   }
 }

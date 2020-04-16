@@ -8,14 +8,14 @@ import {
   ITrainee,
   ITraineeDataCell
 } from "../../core/trainee/trainee.interfaces";
+import { TraineeService } from "../../core/trainee/trainee.service";
 import {
   GetTrainees,
   PaginateTrainees,
   ResetTraineesPaginator,
   ResetTraineesSort,
   SearchTrainees,
-  SortTrainees,
-  UpdateTraineesRoute
+  SortTrainees
 } from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
 
@@ -80,13 +80,15 @@ export class TraineeListComponent implements OnInit {
       enableSort: true
     }
   ];
+
   public columnLabels: string[] = this.columnData.map((i) => i.label);
   public params: Params = this.route.snapshot.queryParams;
 
   constructor(
     private store: Store,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private traineeService: TraineeService
   ) {}
 
   /**
@@ -136,6 +138,6 @@ export class TraineeListComponent implements OnInit {
     this.store
       .dispatch(new GetTrainees())
       .pipe(take(1))
-      .subscribe(() => this.store.dispatch(new UpdateTraineesRoute()));
+      .subscribe(() => this.traineeService.updateTraineesRoute());
   }
 }

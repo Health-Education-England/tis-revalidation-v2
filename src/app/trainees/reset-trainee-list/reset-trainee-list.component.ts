@@ -3,13 +3,13 @@ import { Sort } from "@angular/material/sort";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
+import { TraineeService } from "../../core/trainee/trainee.service";
 import {
   ClearTraineesFilter,
   ClearTraineesSearch,
   GetTrainees,
   ResetTraineesPaginator,
-  ResetTraineesSort,
-  UpdateTraineesRoute
+  ResetTraineesSort
 } from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
 
@@ -20,7 +20,8 @@ import { TraineesState } from "../state/trainees.state";
 export class ResetTraineeListComponent {
   @Select(TraineesState.sort) sort$: Observable<Sort>;
   @Select(TraineesState.pageIndex) pageIndex$: Observable<number>;
-  constructor(private store: Store) {}
+
+  constructor(private store: Store, private traineeService: TraineeService) {}
 
   public resetTraineeList(): void {
     this.store.dispatch(new ResetTraineesSort());
@@ -30,6 +31,6 @@ export class ResetTraineeListComponent {
     this.store
       .dispatch(new GetTrainees())
       .pipe(take(1))
-      .subscribe(() => this.store.dispatch(new UpdateTraineesRoute()));
+      .subscribe(() => this.traineeService.updateTraineesRoute());
   }
 }

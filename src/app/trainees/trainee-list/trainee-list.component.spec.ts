@@ -5,25 +5,36 @@ import { Sort } from "@angular/material/sort";
 import { Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
-import { of } from "rxjs";
+import { Observable, of } from "rxjs";
 import { ITrainee } from "../../core/trainee/trainee.interfaces";
+import { TraineeService } from "../../core/trainee/trainee.service";
 import {
   GetTrainees,
   PaginateTrainees,
   ResetTraineesPaginator,
   ResetTraineesSort,
   SearchTrainees,
-  SortTrainees,
-  UpdateTraineesRoute
+  SortTrainees
 } from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
 import { TraineeListComponent } from "./trainee-list.component";
+
+class MockTraineeService {
+  public getTrainees(): Observable<any> {
+    return of({});
+  }
+
+  public updateTraineesRoute(): Observable<any> {
+    return of({});
+  }
+}
 
 describe("TraineeListComponent", () => {
   let store: Store;
   let component: TraineeListComponent;
   let fixture: ComponentFixture<TraineeListComponent>;
   let router: Router;
+  let traineeService: TraineeService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -33,10 +44,17 @@ describe("TraineeListComponent", () => {
         NgxsModule.forRoot([TraineesState]),
         HttpClientTestingModule
       ],
+      providers: [
+        {
+          provide: TraineeService,
+          useClass: MockTraineeService
+        }
+      ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
     store = TestBed.inject(Store);
     router = TestBed.inject(Router);
+    traineeService = TestBed.inject(TraineeService);
   }));
 
   beforeEach(() => {
@@ -178,15 +196,16 @@ describe("TraineeListComponent", () => {
 
     spyOn(store, "dispatch").and.returnValue(of({}));
     spyOn(router, "navigate");
+    spyOn(traineeService, "updateTraineesRoute");
 
     component.sortTrainees(mockSortEvent);
 
-    expect(store.dispatch).toHaveBeenCalledTimes(4);
+    expect(store.dispatch).toHaveBeenCalledTimes(3);
     expect(store.dispatch).toHaveBeenCalledWith(
       new SortTrainees(mockSortEvent.active, mockSortEvent.direction)
     );
     expect(store.dispatch).toHaveBeenCalledWith(new ResetTraineesPaginator());
     expect(store.dispatch).toHaveBeenCalledWith(new GetTrainees());
-    expect(store.dispatch).toHaveBeenCalledWith(new UpdateTraineesRoute());
+    expect(traineeService.updateTraineesRoute).toHaveBeenCalled();
   });
 });

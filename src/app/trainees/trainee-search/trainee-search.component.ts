@@ -4,11 +4,8 @@ import { ActivatedRoute, Params } from "@angular/router";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
-import {
-  GetTrainees,
-  SearchTrainees,
-  UpdateTraineesRoute
-} from "../state/trainees.actions";
+import { TraineeService } from "../../core/trainee/trainee.service";
+import { GetTrainees, SearchTrainees } from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
 
 @Component({
@@ -23,7 +20,8 @@ export class TraineeSearchComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private store: Store,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private traineeService: TraineeService
   ) {}
 
   ngOnInit() {
@@ -53,6 +51,6 @@ export class TraineeSearchComponent implements OnInit {
     this.store
       .dispatch(new GetTrainees())
       .pipe(take(1))
-      .subscribe(() => this.store.dispatch(new UpdateTraineesRoute()));
+      .subscribe(() => this.traineeService.updateTraineesRoute());
   }
 }

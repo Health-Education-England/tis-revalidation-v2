@@ -1,8 +1,7 @@
 import { HttpParams } from "@angular/common/http";
-import { Injectable, NgZone } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { Sort } from "@angular/material/sort";
-import { Router } from "@angular/router";
-import { State, Action, StateContext, Selector } from "@ngxs/store";
+import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { tap } from "rxjs/operators";
 import { DEFAULT_SORT } from "../../core/trainee/constants";
 import { ITrainee } from "../../core/trainee/trainee.interfaces";
@@ -14,8 +13,7 @@ import {
   ResetTraineesPaginator,
   ResetTraineesSort,
   SearchTrainees,
-  SortTrainees,
-  UpdateTraineesRoute
+  SortTrainees
 } from "./trainees.actions";
 
 export class TraineesStateModel {
@@ -43,11 +41,7 @@ export class TraineesStateModel {
 })
 @Injectable()
 export class TraineesState {
-  constructor(
-    private traineeService: TraineeService,
-    private router: Router,
-    private ngZone: NgZone
-  ) {}
+  constructor(private traineeService: TraineeService) {}
 
   @Selector()
   public static trainees(state: TraineesStateModel) {
@@ -81,13 +75,12 @@ export class TraineesState {
 
   @Action(GetTrainees)
   getTrainees(ctx: StateContext<TraineesStateModel>) {
-    const state = ctx.getState();
-    ctx.setState({
-      ...state,
+    ctx.patchState({
       items: null,
       loading: true
     });
 
+    const state = ctx.getState();
     let params = new HttpParams().set("pageNumber", state.pageIndex.toString());
 
     if (state.sort.direction) {
@@ -102,8 +95,7 @@ export class TraineesState {
 
     return this.traineeService.getTrainees(params).pipe(
       tap((result) => {
-        ctx.setState({
-          ...state,
+        ctx.patchState({
           items: result.traineeInfo,
           countTotal: result.countTotal,
           loading: false
@@ -152,21 +144,6 @@ export class TraineesState {
       ...state,
       pageIndex: 0
     });
-  }
-
-  @Action(UpdateTraineesRoute)
-  updateTraineesRoute(ctx: StateContext<TraineesStateModel>) {
-    const state = ctx.getState();
-    return this.ngZone.run(() =>
-      this.router.navigate(["/trainees"], {
-        queryParams: {
-          active: state.sort.active,
-          direction: state.sort.direction,
-          pageIndex: state.pageIndex,
-          ...(state.searchQuery && { searchQuery: state.searchQuery })
-        }
-      })
-    );
   }
 
   @Action(SearchTrainees)

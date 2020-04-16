@@ -1,26 +1,33 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
-import { TestBed, async } from "@angular/core/testing";
-import { Params, Router } from "@angular/router";
+import { async, TestBed } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
-import { of } from "rxjs";
+import { Observable, of } from "rxjs";
 import { DEFAULT_SORT } from "../../core/trainee/constants";
 import { IGetTraineesResponse } from "../../core/trainee/trainee.interfaces";
 import { TraineeService } from "../../core/trainee/trainee.service";
 import { MaterialModule } from "../../shared/material/material.module";
-import { TraineesState } from "./trainees.state";
 import {
   GetTrainees,
   PaginateTrainees,
-  SortTrainees,
-  UpdateTraineesRoute
+  SortTrainees
 } from "./trainees.actions";
+import { TraineesState } from "./trainees.state";
 
-describe("Trainees actions", () => {
+export class MockTraineeService {
+  public getTrainees(): Observable<any> {
+    return of({});
+  }
+
+  public updateTraineesRoute(): Observable<any> {
+    return of({});
+  }
+}
+
+describe("Trainees state", () => {
   let store: Store;
   let traineeService: TraineeService;
-  let router: Router;
   const mockResponse: IGetTraineesResponse = {
     traineeInfo: [
       {
@@ -65,24 +72,21 @@ describe("Trainees actions", () => {
         RouterTestingModule,
         MaterialModule
       ],
-      providers: [TraineeService],
+      providers: [
+        {
+          provide: TraineeService,
+          useClass: MockTraineeService
+        }
+      ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
     store = TestBed.inject(Store);
-    router = TestBed.inject(Router);
     traineeService = TestBed.inject(TraineeService);
   }));
 
   it("should select 'TraineesState'", () => {
     const traineeListState = store.selectSnapshot(TraineesState);
     expect(traineeListState).toBeTruthy();
-  });
-
-  it("should dispatch 'GetTrainees' and set 'loading' slice'", () => {
-    spyOn(traineeService, "getTrainees").and.callThrough();
-    store.dispatch(new GetTrainees());
-    const loading = store.selectSnapshot(TraineesState.loading);
-    expect(loading).toBeTruthy();
   });
 
   it("should dispatch 'GetTrainees' and make api call", () => {
@@ -122,24 +126,5 @@ describe("Trainees actions", () => {
     store.dispatch(new PaginateTrainees(34));
     const pageIndex = store.selectSnapshot(TraineesState.pageIndex);
     expect(pageIndex).toEqual(34);
-  });
-
-  it("should dispatch 'UpdateTraineesRoute' and navigate to trainees route", () => {
-    spyOn(router, "navigate");
-    const mockQueryParams: Params = {
-      active: "doctorFirstName",
-      direction: "asc",
-      pageIndex: 6
-    };
-
-    store.dispatch([
-      new SortTrainees(mockQueryParams.active, mockQueryParams.direction),
-      new PaginateTrainees(mockQueryParams.pageIndex),
-      new UpdateTraineesRoute()
-    ]);
-
-    expect(router.navigate).toHaveBeenCalledWith(["/trainees"], {
-      queryParams: mockQueryParams
-    });
   });
 });

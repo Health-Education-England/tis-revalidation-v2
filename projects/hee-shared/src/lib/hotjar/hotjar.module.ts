@@ -54,6 +54,10 @@ export class HotJarModule {
     if (!this.hotJarScript && this.hotJarConfig.enabled) {
       const win = window as any;
       if (!win.hj) {
+        win._hjSettings = {
+          hjid: this.hotJarConfig.hotJarId,
+          hjsv: this.hotJarConfig.hotJarSv
+        };
         win.hj = (...args: any) => {
           ((window as any).hj.q = (window as any).hj.q || []).push(args);
         }; // FIX: The 'arguments' object cannot be referenced in an arrow function in ES3 and ES5. Consider using a standard function expression.

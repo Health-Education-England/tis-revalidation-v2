@@ -1,13 +1,19 @@
-<div class="trainee-container mat-elevation-z8">
-    <ng-container *ngIf="doctors">
-        <mat-table *ngIf="sort" [dataSource]="doctors" matSort matSortDisableClear
+<div class="trainee-container mat-elevation-z8"
+    [ngClass]="{'large-device': (isLarge$ | async) === true || (isExtraLarge$ | async) === true}">
+    <ng-container *ngIf="trainees$ | async as trainees">
+        <mat-table *ngIf="sort$ | async as sort" [dataSource]="trainees" matSort matSortDisableClear
             (matSortChange)="sortTrainees($event)" [matSortActive]="sort.active" [matSortDirection]="sort.direction">
 
             <!-- Header row second group -->
             <ng-container matColumnDef="header-toolbar">
-                <mat-header-cell *matHeaderCellDef class="tool-bar-column">
+                <mat-header-cell *matHeaderCellDef class="tool-bar-column"
+                    [ngClass]="{'large-device': (isLarge$ | async) === true || (isExtraLarge$ | async) === true}">
 
-                    <span class="spacer"></span>
+                    <span class="spacer" *ngIf="(isLarge$ | async) === true || (isExtraLarge$ | async) === true"></span>
+                    <button mat-icon-button *ngIf="(isLarge$ | async) === false || (isExtraLarge$ | async) === false"
+                        [matMenuTriggerFor]="traineeMenu" aria-label="Application status menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
                     <form class="small-wrapper" [formGroup]="searchTraineesForm" (ngSubmit)="searchSubmit()">
                         <mat-form-field class="w-100" appearance="outline">
                             <mat-label>Search</mat-label>
@@ -19,7 +25,8 @@
                         </mat-form-field>
                     </form>
 
-                    <button mat-icon-button [matMenuTriggerFor]="traineeMenu" aria-label="Application status menu">
+                    <button mat-icon-button *ngIf="(isLarge$ | async) === true || (isExtraLarge$ | async) === true"
+                        [matMenuTriggerFor]="traineeMenu" aria-label="Application status menu">
                         <mat-icon>more_vert</mat-icon>
                     </button>
                     <mat-menu #traineeMenu="matMenu">
@@ -36,7 +43,9 @@
                 </mat-header-cell>
             </ng-container>
 
-            <mat-header-row *matHeaderRowDef="['header-toolbar']; sticky: true"></mat-header-row>
+            <mat-header-row *matHeaderRowDef="['header-toolbar']"
+                [ngClass]="{'hide':trainees.length === 0, 'mat-header-sticky large-device': (isLarge$ | async) === true || (isExtraLarge$ | async) === true}">
+            </mat-header-row>
 
 
             <ng-container *ngFor="let i of columnData" matColumnDef="{{ i.label }}">
@@ -55,7 +64,7 @@
             <mat-header-row *matHeaderRowDef="columnLabels"></mat-header-row>
             <mat-row *matRowDef="let row; columns: columnLabels" (click)="traineeDetails($event, row)"
                 (keyup.enter)="traineeDetails($event, row)" (keyup.space)="traineeDetails($event, row)" tabindex="0"
-                role="button">
+                role="row">
             </mat-row>
 
             <ng-container matColumnDef="noRecord">
@@ -63,12 +72,25 @@
                 </mat-footer-cell>
             </ng-container>
 
-            <mat-footer-row *matFooterRowDef="['noRecord']" [ngClass]="{'hide':doctors.length > 0}"></mat-footer-row>
+            <mat-footer-row *matFooterRowDef="['noRecord']" [ngClass]="{'hide':trainees.length > 0}">
+            </mat-footer-row>
+
+            <ng-container matColumnDef="paginatorHolder">
+                <mat-footer-cell class="tool-bar-column"
+                    [ngClass]="{'large-device centered': (isLarge$ | async) === true || (isExtraLarge$ | async) === true}"
+                    *matFooterCellDef>
+                    <mat-paginator color="primary" *ngIf="count$ | async as count" [length]="count"
+                        [pageIndex]="pageNumber$ | async" [pageSize]="20" [hidePageSize]="true"
+                        (page)="paginateTrainees($event)" showFirstLastButtons>
+                    </mat-paginator>
+                </mat-footer-cell>
+            </ng-container>
+
+            <mat-footer-row *matFooterRowDef="['paginatorHolder']">
+            </mat-footer-row>
 
         </mat-table>
     </ng-container>
 
-    <mat-paginator color="primary" *ngIf="count" [length]="count" [pageIndex]="pageNumber" [pageSize]="20"
-        [hidePageSize]="true" (page)="paginateTrainees($event)">
-    </mat-paginator>
+
 </div>

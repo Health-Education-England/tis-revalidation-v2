@@ -49,6 +49,36 @@ export class TraineesState {
     return state.countUnderNotice;
   }
 
+  @Selector()
+  public static trainees(state: TraineesStateModel) {
+    return state.items;
+  }
+
+  @Selector()
+  public static sort(state: TraineesStateModel) {
+    return {
+      active: state.params.sortColumn,
+      direction: state.params.sortOrder
+    };
+  }
+
+  @Selector()
+  public static pageNumber(state: TraineesStateModel) {
+    return state.params.pageNumber;
+  }
+
+  @Selector()
+  public static count(state: TraineesStateModel) {
+    if (
+      state.params.underNotice &&
+      (state.params.underNotice === true || state.params.underNotice === "true")
+    ) {
+      return state.countUnderNotice;
+    } else {
+      return state.countTotal;
+    }
+  }
+
   @Action(GetTrainees, { cancelUncompleted: true })
   get(ctx: StateContext<TraineesStateModel>, action: GetTrainees) {
     const state = ctx.getState();
@@ -92,5 +122,5 @@ export class TraineesState {
         return of([]);
       })
     );
-  }
+  } //
 }

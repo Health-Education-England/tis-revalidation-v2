@@ -1,22 +1,63 @@
 @import "~nhsuk-frontend/packages/core/settings/colours";
+@import "~@angular/material/core/style/variables";
+// $mat-xsmall: 'max-width: 599px';
+// $mat-small: 'max-width: 959px';
+@mixin mat-table-columns($columns) {
+  .mat-column- {
+    @each $colName, $props in $columns {
+      $width: map-get($props, "width");
+
+      &#{$colName} {
+        flex: 0 0 $width;
+        min-width: $width;
+
+        @if map-has-key($props, "color") {
+          color: map-get($props, "color");
+        }
+      }
+    }
+  }
+}
+
 ::ng-deep {
+  .mat-header-cell,
   .mat-footer-cell {
+    &.tool-bar-column {
+      &.large-device {
+        padding: 4px 16px;
+      }
+
+      padding: 4px 0px;
+    }
+
     &.centered {
       justify-content: center;
     }
   }
 
-  .mat-header-cell {
-    &.tool-bar-column {
-      padding: 4px 16px;
+  .mat-header-sticky {
+    &.large-device {
+      top: 0px;
+      position: sticky;
+      z-index: $z-index-drawer;
     }
   }
 
   .trainee-container {
-    z-index: 10;
-    position: relative;
-    height: 100vh;
-    overflow: unset;
+    &.large-device {
+      z-index: $z-index-fab;
+      position: relative;
+      height: 100vh;
+      overflow: unset;
+    }
+
+    height: auto;
+    overflow-x: scroll;
+  }
+
+  .mat-table {
+    width: 100%;
+    display: table;
   }
 
   .mat-sort-header-sorted {
@@ -33,3 +74,38 @@
     }
   }
 }
+
+@include mat-table-columns(
+  (
+    First-name: (
+      width: 200px
+    ),
+    Last-name: (
+      width: 200px
+    ),
+    Gmc-no: (
+      width: 80px
+    ),
+    GMC-Submission-due-date: (
+      width: 80px
+    ),
+    Status: (
+      width: 150px
+    ),
+    Programme-name: (
+      width: 200px
+    ),
+    Programme-membership-type: (
+      width: 100px
+    ),
+    CCT-date: (
+      width: 80px
+    ),
+    Admin: (
+      width: 200px
+    ),
+    Last-updated: (
+      width: 80px
+    )
+  )
+);

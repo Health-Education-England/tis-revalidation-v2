@@ -4,7 +4,11 @@ import { ITrainee, ITraineeDataCell } from "../trainees.interface";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { PageEvent } from "@angular/material/paginator";
 import { FormGroup, FormControl } from "@angular/forms";
-import { debounceTime } from "rxjs/operators";
+import { debounceTime, map, shareReplay } from "rxjs/operators";
+import { TraineesStateModel, TraineesState } from "../state/trainees.state";
+import { Select } from "@ngxs/store";
+import { Observable } from "rxjs";
+import { Breakpoints, BreakpointObserver } from "@angular/cdk/layout";
 
 @Component({
   selector: "app-trainees-list",
@@ -12,10 +16,31 @@ import { debounceTime } from "rxjs/operators";
   styleUrls: ["./trainees-list.component.scss"]
 })
 export class TraineesListComponent implements OnInit {
-  doctors: ITrainee[];
-  sort: Sort;
-  pageNumber: number;
-  count: number;
+  @Select(TraineesState.trainees) trainees$: Observable<ITrainee[]>;
+  @Select(TraineesState.sort) sort$: Observable<Sort>;
+  @Select(TraineesState.pageNumber) pageNumber$: Observable<number>;
+  @Select(TraineesState.count) count$: Observable<number>;
+
+  isExtraLarge$: Observable<boolean> = this.breakpointObserver
+    .observe(Breakpoints.XLarge)
+    .pipe(
+      map((result) => {
+        console.log("Xlarge", result);
+        return result.matches;
+      }),
+      shareReplay()
+    );
+
+  isLarge$: Observable<boolean> = this.breakpointObserver
+    .observe(Breakpoints.Large)
+    .pipe(
+      map((result) => {
+        console.log("Large", result);
+        return result.matches;
+      }),
+      shareReplay()
+    );
+
   searchTraineesForm: FormGroup;
   searchTrainees: FormControl;
 
@@ -74,10 +99,15 @@ export class TraineesListComponent implements OnInit {
 
   public columnLabels: string[] = this.columnData.map((i) => i.label);
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    this.isExtraLarge$.subscribe();
+  }
 
   ngOnInit(): void {
-    this.initializeRouteData();
     this.initializeSearchForm();
   }
 
@@ -130,35 +160,6 @@ export class TraineesListComponent implements OnInit {
     let params = this.route.snapshot.params;
     params = { ...params, ...sentParams };
     this.router.navigate(["./", params], { relativeTo: this.route });
-  }
-
-  /**
-   * gets resolved data from routeResolver class
-   */
-  private initializeRouteData(): void {
-    this.route.data.subscribe((res: any) => {
-      const resolvedData = res.store.doctors;
-      if (resolvedData) {
-        this.doctors = resolvedData.items;
-
-        this.sort = {
-          active: resolvedData.params.sortColumn,
-          direction: resolvedData.params.sortOrder
-        };
-
-        this.pageNumber = resolvedData.params.pageNumber;
-
-        if (
-          resolvedData.params.underNotice &&
-          (resolvedData.params.underNotice === true ||
-            resolvedData.params.underNotice === "true")
-        ) {
-          this.count = resolvedData.countUnderNotice;
-        } else {
-          this.count = resolvedData.countTotal;
-        }
-      }
-    });
   }
 
   /**

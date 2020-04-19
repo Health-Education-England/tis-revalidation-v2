@@ -83,7 +83,7 @@ jobs:
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           service: tis-revalidation-v2
-          cluster: revalidation
+          cluster: revalidation-preprod
           wait-for-service-stability: false
 
       - name: Slack Notification

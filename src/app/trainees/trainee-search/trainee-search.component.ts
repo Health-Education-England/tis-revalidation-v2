@@ -5,7 +5,12 @@ import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
 import { TraineeService } from "../../core/trainee/trainee.service";
-import { GetTrainees, SearchTrainees } from "../state/trainees.actions";
+import {
+  GetTrainees,
+  ResetTraineesPaginator,
+  ResetTraineesSort,
+  SearchTrainees
+} from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
 
 @Component({
@@ -48,6 +53,8 @@ export class TraineeSearchComponent implements OnInit {
 
   public submitForm(searchQuery: string): void {
     this.store.dispatch(new SearchTrainees(searchQuery));
+    this.store.dispatch(new ResetTraineesSort());
+    this.store.dispatch(new ResetTraineesPaginator());
     this.store
       .dispatch(new GetTrainees())
       .pipe(take(1))

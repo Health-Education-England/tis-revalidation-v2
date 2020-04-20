@@ -4,10 +4,7 @@ import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
 import { TraineeService } from "../../core/trainee/trainee.service";
-import {
-  GetTrainees,
-  PaginateTrainees
-} from "../state/trainees.actions";
+import { GetTrainees, PaginateTrainees } from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
 
 @Component({
@@ -15,7 +12,7 @@ import { TraineesState } from "../state/trainees.state";
   templateUrl: "./trainee-list-paginator.component.html"
 })
 export class TraineeListPaginatorComponent {
-  @Select(TraineesState.countTotal) countTotal$: Observable<number>;
+  @Select(TraineesState.totalResults) totalResults$: Observable<number>;
   @Select(TraineesState.pageIndex) pageIndex$: Observable<number>;
 
   constructor(private store: Store, private traineeService: TraineeService) {}

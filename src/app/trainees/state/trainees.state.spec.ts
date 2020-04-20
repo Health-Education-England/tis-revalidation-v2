@@ -1,3 +1,4 @@
+import { HttpParams } from "@angular/common/http";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { async, TestBed } from "@angular/core/testing";
@@ -9,8 +10,11 @@ import { IGetTraineesResponse } from "../../core/trainee/trainee.interfaces";
 import { TraineeService } from "../../core/trainee/trainee.service";
 import { MaterialModule } from "../../shared/material/material.module";
 import {
+  ClearTraineesSearch,
   GetTrainees,
   PaginateTrainees,
+  ResetTraineesPaginator,
+  SearchTrainees,
   SortTrainees
 } from "./trainees.actions";
 import { TraineesState } from "./trainees.state";
@@ -61,7 +65,10 @@ describe("Trainees state", () => {
         programmeName: ""
       }
     ],
-    countTotal: 21312
+    countTotal: 21312,
+    countUnderNotice: 212,
+    totalResults: 77,
+    totalPages: 100
   };
 
   beforeEach(async(() => {
@@ -114,6 +121,17 @@ describe("Trainees state", () => {
     expect(count).toEqual(21312);
   });
 
+  it("should dispatch 'SearchTrainees, GetTrainees' and invoke api with searchQuery", () => {
+    spyOn(traineeService, "getTrainees").and.callThrough();
+    let mockParams = new HttpParams().set("pageNumber", "0");
+
+    store.dispatch(new SearchTrainees("lisa"));
+    store.dispatch(new GetTrainees());
+
+    mockParams = mockParams.append("searchQuery", "lisa");
+    expect(traineeService.getTrainees).toHaveBeenCalledWith(mockParams);
+  });
+
   it("should dispatch 'SortTrainees' and update store", () => {
     store.dispatch(
       new SortTrainees(DEFAULT_SORT.active, DEFAULT_SORT.direction)
@@ -126,5 +144,23 @@ describe("Trainees state", () => {
     store.dispatch(new PaginateTrainees(34));
     const pageIndex = store.selectSnapshot(TraineesState.pageIndex);
     expect(pageIndex).toEqual(34);
+  });
+
+  it("should dispatch 'ResetTraineesPaginator' and update store", () => {
+    store.dispatch(new ResetTraineesPaginator());
+    const pageIndex = store.selectSnapshot(TraineesState.pageIndex);
+    expect(pageIndex).toEqual(0);
+  });
+
+  it("should dispatch 'SearchTrainees' and update store", () => {
+    store.dispatch(new SearchTrainees("smith"));
+    const searchQuery = store.selectSnapshot(TraineesState.searchQuery);
+    expect(searchQuery).toEqual("smith");
+  });
+
+  it("should dispatch 'ClearTraineesSearch' and update store", () => {
+    store.dispatch(new ClearTraineesSearch());
+    const searchQuery = store.selectSnapshot(TraineesState.searchQuery);
+    expect(searchQuery).toBeNull();
   });
 });

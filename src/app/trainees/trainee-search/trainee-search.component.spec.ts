@@ -7,7 +7,12 @@ import { NgxsModule, Store } from "@ngxs/store";
 import { of } from "rxjs";
 import { TraineeService } from "../../core/trainee/trainee.service";
 import { MaterialModule } from "../../shared/material/material.module";
-import { GetTrainees, SearchTrainees } from "../state/trainees.actions";
+import {
+  GetTrainees,
+  ResetTraineesPaginator,
+  ResetTraineesSort,
+  SearchTrainees
+} from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
 
 import { TraineeSearchComponent } from "./trainee-search.component";
@@ -96,10 +101,12 @@ describe("TraineeSearchComponent", () => {
     component.setupForm();
     component.submitForm(component.params.searchQuery);
 
-    expect(store.dispatch).toHaveBeenCalledTimes(2);
+    expect(store.dispatch).toHaveBeenCalledTimes(4);
     expect(store.dispatch).toHaveBeenCalledWith(
       new SearchTrainees(component.params.searchQuery)
     );
+    expect(store.dispatch).toHaveBeenCalledWith(new ResetTraineesSort());
+    expect(store.dispatch).toHaveBeenCalledWith(new ResetTraineesPaginator());
     expect(store.dispatch).toHaveBeenCalledWith(new GetTrainees());
     expect(traineeService.updateTraineesRoute).toHaveBeenCalled();
   });

@@ -57,7 +57,8 @@ describe("TraineeService", () => {
       queryParams: {
         active: snapshot.sort.active,
         direction: snapshot.sort.direction,
-        pageIndex: snapshot.pageIndex
+        pageIndex: snapshot.pageIndex,
+        ...(snapshot.searchQuery && { searchQuery: snapshot.searchQuery })
       }
     });
   });

@@ -1,5 +1,4 @@
 import { Component } from "@angular/core";
-import { Sort } from "@angular/material/sort";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
@@ -9,22 +8,34 @@ import {
   ClearTraineesSearch,
   GetTrainees,
   ResetTraineesPaginator,
-  ResetTraineesSort
+  ResetTraineesSort,
+  AllDoctorsFilter
 } from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
 
 @Component({
-  selector: "app-reset-trainee-list",
-  templateUrl: "./reset-trainee-list.component.html"
+  selector: "app-trainee-filters",
+  templateUrl: "./trainee-filters.component.html",
+  styleUrls: ["./trainee-filters.component.scss"]
 })
-export class ResetTraineeListComponent {
-  @Select(TraineesState.sort) sort$: Observable<Sort>;
-  @Select(TraineesState.pageIndex) pageIndex$: Observable<number>;
+export class TraineeFiltersComponent {
+  @Select(TraineesState.countTotal) countTotal$: Observable<number>;
+  @Select(TraineesState.countUnderNotice) countUnderNotice$: Observable<number>;
+  @Select(TraineesState.underNotice) underNotice$: Observable<boolean>;
 
   constructor(private store: Store, private traineeService: TraineeService) {}
 
-  public resetTraineeList(): void {
+  public filterByAllDoctors(): void {
+    this.store.dispatch(new AllDoctorsFilter());
+    this.getTrainees();
+  }
+
+  public filterByUnderNotice(): void {
     this.store.dispatch(new UnderNoticeFilter());
+    this.getTrainees();
+  }
+
+  public getTrainees(): void {
     this.store.dispatch(new ResetTraineesSort());
     this.store.dispatch(new ResetTraineesPaginator());
     this.store.dispatch(new ClearTraineesSearch());

@@ -5,29 +5,22 @@ import { Sort } from "@angular/material/sort";
 import { Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
-import { Observable, of } from "rxjs";
+import { of } from "rxjs";
 import { ITrainee } from "../../core/trainee/trainee.interfaces";
 import { TraineeService } from "../../core/trainee/trainee.service";
+import { MockTraineeService } from "../../core/trainee/trainee.service.spec";
 import {
+  AllDoctorsFilter,
   GetTrainees,
   PaginateTrainees,
   ResetTraineesPaginator,
   ResetTraineesSort,
   SearchTrainees,
-  SortTrainees
+  SortTrainees,
+  UnderNoticeFilter
 } from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
 import { TraineeListComponent } from "./trainee-list.component";
-
-class MockTraineeService {
-  public getTrainees(): Observable<any> {
-    return of({});
-  }
-
-  public updateTraineesRoute(): Observable<any> {
-    return of({});
-  }
-}
 
 describe("TraineeListComponent", () => {
   let store: Store;
@@ -146,6 +139,27 @@ describe("TraineeListComponent", () => {
     expect(store.dispatch).not.toHaveBeenCalledWith(
       new PaginateTrainees(component.params.pageIndex)
     );
+  });
+
+  it("'setupInitialFilter()' should dispatch 'AllDoctorsFilter' if param value is false", () => {
+    spyOn(store, "dispatch");
+
+    component.params = { underNotice: "false" };
+    component.setupInitialFilter();
+
+    expect(store.dispatch).toHaveBeenCalledTimes(1);
+    expect(store.dispatch).toHaveBeenCalledWith(new AllDoctorsFilter());
+    expect(store.dispatch).not.toHaveBeenCalledWith(new UnderNoticeFilter());
+  });
+
+  it("'setupInitialFilter()' should dispatch 'UnderNoticeFilter' if param does not exist", () => {
+    spyOn(store, "dispatch");
+
+    component.setupInitialFilter();
+
+    expect(store.dispatch).toHaveBeenCalledTimes(1);
+    expect(store.dispatch).toHaveBeenCalledWith(new UnderNoticeFilter());
+    expect(store.dispatch).not.toHaveBeenCalledWith(new AllDoctorsFilter());
   });
 
   it("'checkInitialSearchQuery()' should dispatch 'SearchTrainees' if param exists", () => {

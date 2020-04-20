@@ -4,22 +4,13 @@ import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { MatPaginatorModule, PageEvent } from "@angular/material/paginator";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
-import { Observable, of } from "rxjs";
+import { of } from "rxjs";
 import { TraineeService } from "../../core/trainee/trainee.service";
+import { MockTraineeService } from "../../core/trainee/trainee.service.spec";
 import { GetTrainees, PaginateTrainees } from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
 
 import { TraineeListPaginatorComponent } from "./trainee-list-paginator.component";
-
-class MockTraineeService {
-  public getTrainees(): Observable<any> {
-    return of({});
-  }
-
-  public updateTraineesRoute(): Observable<any> {
-    return of({});
-  }
-}
 
 describe("TraineeListPaginatorComponent", () => {
   let store: Store;

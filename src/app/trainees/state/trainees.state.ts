@@ -13,7 +13,9 @@ import {
   ResetTraineesPaginator,
   ResetTraineesSort,
   SearchTrainees,
-  SortTrainees
+  SortTrainees,
+  AllDoctorsFilter,
+  UnderNoticeFilter
 } from "./trainees.actions";
 
 export class TraineesStateModel {
@@ -26,6 +28,7 @@ export class TraineesStateModel {
   public sort: Sort;
   public totalPages: number;
   public totalResults: number;
+  public underNotice: boolean;
 }
 
 @State<TraineesStateModel>({
@@ -42,7 +45,8 @@ export class TraineesStateModel {
       active: null,
       direction: null
     },
-    totalResults: null
+    totalResults: null,
+    underNotice: null
   }
 })
 @Injectable()
@@ -70,6 +74,11 @@ export class TraineesState {
   }
 
   @Selector()
+  public static countUnderNotice(state: TraineesStateModel) {
+    return state.countUnderNotice;
+  }
+
+  @Selector()
   public static totalResults(state: TraineesStateModel) {
     return state.totalResults;
   }
@@ -84,6 +93,11 @@ export class TraineesState {
     return state.searchQuery;
   }
 
+  @Selector()
+  public static underNotice(state: TraineesStateModel) {
+    return state.underNotice;
+  }
+
   @Action(GetTrainees)
   getTrainees(ctx: StateContext<TraineesStateModel>) {
     ctx.patchState({
@@ -91,18 +105,7 @@ export class TraineesState {
       loading: true
     });
 
-    const state = ctx.getState();
-    let params = new HttpParams().set("pageNumber", state.pageIndex.toString());
-
-    if (state.sort.direction) {
-      params = params
-        .append("sortColumn", state.sort.active)
-        .append("sortOrder", state.sort.direction);
-    }
-
-    if (state.searchQuery) {
-      params = params.append("searchQuery", state.searchQuery);
-    }
+    const params: HttpParams = this.traineeService.generateParams();
 
     return this.traineeService.getTrainees(params).pipe(
       tap((result) => {
@@ -165,6 +168,20 @@ export class TraineesState {
   clearTraineesSearch(ctx: StateContext<TraineesStateModel>) {
     return ctx.patchState({
       searchQuery: null
+    });
+  }
+
+  @Action(UnderNoticeFilter)
+  underNoticeFilter(ctx: StateContext<TraineesStateModel>) {
+    return ctx.patchState({
+      underNotice: true
+    });
+  }
+
+  @Action(AllDoctorsFilter)
+  allDoctorsFilter(ctx: StateContext<TraineesStateModel>) {
+    return ctx.patchState({
+      underNotice: false
     });
   }
 }

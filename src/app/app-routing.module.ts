@@ -16,7 +16,7 @@ const routes: Routes = [
   {
     path: "trainees/:id",
     loadChildren: () =>
-      import("./dashboard/dashboard.module").then((m) => m.DashboardModule)
+      import("./trainee/trainee.module").then((m) => m.TraineeModule)
   },
   {
     path: "**",

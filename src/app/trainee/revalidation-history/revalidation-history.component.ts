@@ -31,7 +31,6 @@ export class RevalidationHistoryComponent implements OnInit {
   dataSource: PeriodicElement[];
   watchTrainee: boolean;
   columnsToDisplay = [
-    "episodeId",
     "recommendation",
     "outcome",
     "gmcSubDueDate",
@@ -91,7 +90,7 @@ export class RevalidationHistoryComponent implements OnInit {
   openDialog() {
     const dialogRef = this.dialog.open(RevalidationFormComponent);
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
     });
   }

@@ -1,10 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: "app-trainee-summary",
-  templateUrl: "./trainee-summary.component.html"
+  selector: "app-trainee",
+  templateUrl: "./trainee.component.html",
+  styleUrls: ["./trainee.component.scss"]
 })
-export class TraineeSummaryComponent implements OnInit {
+export class TraineeComponent implements OnInit {
   navLinks = [
     {
       label: "Recommendation",

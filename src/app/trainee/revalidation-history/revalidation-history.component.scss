@@ -1,11 +1,15 @@
 @import "~nhsuk-frontend/packages/core/settings/colours";
-
-.spacer {
-  flex: 1 1 auto;
-}
+@import "../../../scss/utilities/spacing-helpers";
+// .spacer {
+//   flex: 1 1 auto;
+// }
 
 tr.detail-row {
   height: 0;
+}
+
+tr.element-row {
+  cursor: pointer;
 }
 
 tr.element-row:not(.expanded-row):hover {
@@ -51,3 +55,23 @@ tr.element-row:not(.expanded-row):active {
   display: flex;
   flex-direction: row;
 }
+
+@include mat-table-columns(
+  (
+    recommendation: (
+      width: 150px
+    ),
+    outcome: (
+      width: 150px
+    ),
+    gmcSubDueDate: (
+      width: 180px
+    ),
+    ActSubDate: (
+      width: 180px
+    ),
+    submittedBy: (
+      width: 180px
+    )
+  )
+);

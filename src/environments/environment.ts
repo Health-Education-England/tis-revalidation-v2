@@ -12,7 +12,9 @@ export const environment: IEnvironment = {
   appUrls: {
     login: ``,
     authRedirect: ``,
-    getTrainees: `mocky/5e8d6eea310000be90429898?mocky-delay=700ms`
+    // 5e997d8a33000062007b2354 = 21 trainees
+    // 5e997dba33000096297b235d = 0 trainees to simulate no results found
+    getTrainees: `mocky/5e997dba33000096297b235d?mocky-delay=700ms`
   }
 };
 

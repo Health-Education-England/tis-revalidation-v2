@@ -26,6 +26,7 @@ import { TraineesState } from "../state/trainees.state";
 export class TraineeListComponent implements OnInit {
   @Select(TraineesState.loading) loading$: Observable<boolean>;
   @Select(TraineesState.trainees) trainees$: Observable<ITrainee[]>;
+  @Select(TraineesState.totalResults) totalResults$: Observable<number>;
   @Select(TraineesState.sort) sort$: Observable<Sort>;
 
   public columnData: ITraineeDataCell[] = [
@@ -80,7 +81,6 @@ export class TraineeListComponent implements OnInit {
       enableSort: true
     }
   ];
-
   public columnLabels: string[] = this.columnData.map((i) => i.label);
   public params: Params = this.route.snapshot.queryParams;
 

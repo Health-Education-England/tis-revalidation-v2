@@ -17,26 +17,32 @@ import {
 } from "./trainees.actions";
 
 export class TraineesStateModel {
-  public items: ITrainee[];
   public countTotal: number;
+  public countUnderNotice: number;
+  public items: ITrainee[];
   public loading: boolean;
-  public sort: Sort;
   public pageIndex: number;
   public searchQuery: string;
+  public sort: Sort;
+  public totalPages: number;
+  public totalResults: number;
 }
 
 @State<TraineesStateModel>({
   name: "trainees",
   defaults: {
-    items: null,
     countTotal: null,
+    countUnderNotice: null,
+    items: null,
     loading: null,
+    totalPages: null,
+    pageIndex: 0,
+    searchQuery: null,
     sort: {
       active: null,
       direction: null
     },
-    pageIndex: 0,
-    searchQuery: null
+    totalResults: null
   }
 })
 @Injectable()
@@ -61,6 +67,11 @@ export class TraineesState {
   @Selector()
   public static countTotal(state: TraineesStateModel) {
     return state.countTotal;
+  }
+
+  @Selector()
+  public static totalResults(state: TraineesStateModel) {
+    return state.totalResults;
   }
 
   @Selector()
@@ -98,6 +109,8 @@ export class TraineesState {
         ctx.patchState({
           items: result.traineeInfo,
           countTotal: result.countTotal,
+          countUnderNotice: result.countUnderNotice,
+          totalResults: result.totalResults,
           loading: false
         });
       })
@@ -106,9 +119,7 @@ export class TraineesState {
 
   @Action(SortTrainees)
   sortTrainees(ctx: StateContext<TraineesStateModel>, action: SortTrainees) {
-    const state = ctx.getState();
-    return ctx.setState({
-      ...state,
+    return ctx.patchState({
       sort: {
         active: action.column,
         direction: action.direction
@@ -118,9 +129,7 @@ export class TraineesState {
 
   @Action(ResetTraineesSort)
   resetTraineesSort(ctx: StateContext<TraineesStateModel>) {
-    const state = ctx.getState();
-    return ctx.setState({
-      ...state,
+    return ctx.patchState({
       sort: DEFAULT_SORT
     });
   }
@@ -130,18 +139,14 @@ export class TraineesState {
     ctx: StateContext<TraineesStateModel>,
     action: PaginateTrainees
   ) {
-    const state = ctx.getState();
-    return ctx.setState({
-      ...state,
+    return ctx.patchState({
       pageIndex: action.pageIndex
     });
   }
 
   @Action(ResetTraineesPaginator)
   resetTraineesPaginator(ctx: StateContext<TraineesStateModel>) {
-    const state = ctx.getState();
-    return ctx.setState({
-      ...state,
+    return ctx.patchState({
       pageIndex: 0
     });
   }

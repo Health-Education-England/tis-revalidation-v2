@@ -1,6 +1,6 @@
 <mat-paginator
-  *ngIf="countTotal$ | async as countTotal"
-  [length]="countTotal"
+  *ngIf="totalResults$ | async as totalResults"
+  [length]="totalResults"
   [pageIndex]="pageIndex$ | async"
   [pageSize]="20"
   [hidePageSize]="true"

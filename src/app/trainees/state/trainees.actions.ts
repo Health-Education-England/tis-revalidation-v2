@@ -13,13 +13,12 @@ export class ResetTraineesSort {
   static readonly type = "[Trainees] Reset Sort";
 }
 
-export class FilterTrainees {
-  static readonly type = "[Trainees] Filter";
-  constructor(public filter: string) {}
+export class AllDoctorsFilter {
+  static readonly type = "[Trainees] All Doctors Filter";
 }
 
-export class ClearTraineesFilter {
-  static readonly type = "[Trainees] Clear Filter";
+export class UnderNoticeFilter {
+  static readonly type = "[Trainees] Under Notice Filter";
 }
 
 export class SearchTrainees {

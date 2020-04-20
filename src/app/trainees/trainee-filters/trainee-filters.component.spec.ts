@@ -1,12 +1,11 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
-import { of } from "rxjs";
 import { TraineeService } from "../../core/trainee/trainee.service";
 import { MockTraineeService } from "../../core/trainee/trainee.service.spec";
 import {
+  AllDoctorsFilter,
   ClearTraineesSearch,
   GetTrainees,
   ResetTraineesPaginator,
@@ -15,18 +14,17 @@ import {
 } from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
 
-import { ResetTraineeListComponent } from "./reset-trainee-list.component";
+import { TraineeFiltersComponent } from "./trainee-filters.component";
 
-describe("ResetTraineeListComponent", () => {
+describe("TraineeFiltersComponent", () => {
   let store: Store;
-  let component: ResetTraineeListComponent;
-  let fixture: ComponentFixture<ResetTraineeListComponent>;
-  let router: Router;
+  let component: TraineeFiltersComponent;
+  let fixture: ComponentFixture<TraineeFiltersComponent>;
   let traineeService: TraineeService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ResetTraineeListComponent],
+      declarations: [TraineeFiltersComponent],
       imports: [
         RouterTestingModule,
         NgxsModule.forRoot([TraineesState]),
@@ -40,12 +38,11 @@ describe("ResetTraineeListComponent", () => {
       ]
     }).compileComponents();
     store = TestBed.inject(Store);
-    router = TestBed.inject(Router);
     traineeService = TestBed.inject(TraineeService);
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ResetTraineeListComponent);
+    fixture = TestBed.createComponent(TraineeFiltersComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -54,19 +51,45 @@ describe("ResetTraineeListComponent", () => {
     expect(component).toBeTruthy();
   });
 
-  it("should dispatch relevant actions to reset trainee list", () => {
-    spyOn(store, "dispatch").and.returnValue(of({}));
-    spyOn(router, "navigate");
-    spyOn(traineeService, "updateTraineesRoute");
+  it("`filterByAllDoctors()` should dispatch `AllDoctorsFilter` event", () => {
+    spyOn(store, "dispatch").and.callThrough();
+    component.filterByAllDoctors();
+    expect(store.dispatch).toHaveBeenCalledWith(new AllDoctorsFilter());
+  });
 
-    component.resetTraineeList();
+  it("`filterByAllDoctors()` should invoke `getTrainees()`", () => {
+    spyOn(component, "getTrainees");
+    component.filterByAllDoctors();
+    expect(component.getTrainees).toHaveBeenCalled();
+  });
 
-    expect(store.dispatch).toHaveBeenCalledTimes(5);
+  it("`filterByUnderNotice()` should dispatch `UnderNoticeFilter` event", () => {
+    spyOn(store, "dispatch").and.callThrough();
+    component.filterByUnderNotice();
+    expect(store.dispatch).toHaveBeenCalledWith(new UnderNoticeFilter());
+  });
+
+  it("`filterByUnderNotice()` should invoke `getTrainees()`", () => {
+    spyOn(component, "getTrainees");
+    component.filterByUnderNotice();
+    expect(component.getTrainees).toHaveBeenCalled();
+  });
+
+  it("`getTrainees()` should dispatch relevant events", () => {
+    spyOn(store, "dispatch").and.callThrough();
+
+    component.getTrainees();
+
+    expect(store.dispatch).toHaveBeenCalledTimes(4);
     expect(store.dispatch).toHaveBeenCalledWith(new ResetTraineesSort());
     expect(store.dispatch).toHaveBeenCalledWith(new ResetTraineesPaginator());
-    expect(store.dispatch).toHaveBeenCalledWith(new UnderNoticeFilter());
     expect(store.dispatch).toHaveBeenCalledWith(new ClearTraineesSearch());
     expect(store.dispatch).toHaveBeenCalledWith(new GetTrainees());
+  });
+
+  it("`getTrainees()` should invoke `updateTraineesRoute()`", () => {
+    spyOn(traineeService, "updateTraineesRoute");
+    component.getTrainees();
     expect(traineeService.updateTraineesRoute).toHaveBeenCalled();
   });
 });

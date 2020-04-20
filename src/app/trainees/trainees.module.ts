@@ -9,6 +9,7 @@ import { TraineesComponent } from "./trainees.component";
 import { ResetTraineeListComponent } from "./reset-trainee-list/reset-trainee-list.component";
 import { TraineeListPaginatorComponent } from "./trainee-list-paginator/trainee-list-paginator.component";
 import { TraineeSearchComponent } from "./trainee-search/trainee-search.component";
+import { TraineeFiltersComponent } from "./trainee-filters/trainee-filters.component";
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { TraineeSearchComponent } from "./trainee-search/trainee-search.componen
     TraineeListComponent,
     ResetTraineeListComponent,
     TraineeListPaginatorComponent,
-    TraineeSearchComponent
+    TraineeSearchComponent,
+    TraineeFiltersComponent
   ],
   imports: [
     MaterialModule,

@@ -24,6 +24,22 @@ export class TraineeService {
     );
   }
 
+  public generateParams(): HttpParams {
+    const snapshot: TraineesStateModel = this.store.snapshot().trainees;
+
+    let params: HttpParams = new HttpParams()
+      .set("sortColumn", snapshot.sort.active)
+      .set("sortOrder", snapshot.sort.direction)
+      .set("pageNumber", snapshot.pageIndex.toString())
+      .set("underNotice", snapshot.underNotice.toString());
+
+    if (snapshot.searchQuery) {
+      params = params.append("searchQuery", snapshot.searchQuery);
+    }
+
+    return params;
+  }
+
   public updateTraineesRoute(): Promise<boolean> {
     const snapshot: TraineesStateModel = this.store.snapshot().trainees;
 
@@ -32,6 +48,7 @@ export class TraineeService {
         active: snapshot.sort.active,
         direction: snapshot.sort.direction,
         pageIndex: snapshot.pageIndex,
+        underNotice: snapshot.underNotice,
         ...(snapshot.searchQuery && { searchQuery: snapshot.searchQuery })
       }
     });

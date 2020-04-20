@@ -93,13 +93,14 @@ export class AnalyticsModule {
         (window as any).ga.q = (window as any).ga.q || [];
         (window as any).ga.q.push(args);
       };
-      (this.win.ga = this.win.ga || gaFnc), (this.win.ga.l = +new Date());
+      this.win.ga = this.win.ga || gaFnc;
+      this.win.ga.l = +new Date();
 
       // set ga siteIds and track-mode to none on development auto in production
       const track = this.analyticsConfig.enabled ? "auto" : "none";
-      this.analyticsConfig.siteId.every((siteId: string) => {
+      for (const siteId of this.analyticsConfig.siteId) {
         this.win.ga("create", siteId, track);
-      });
+      }
     }
   }
 }

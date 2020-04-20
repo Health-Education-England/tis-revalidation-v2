@@ -1,9 +1,17 @@
-import { NgModule, Optional, SkipSelf, ModuleWithProviders, Inject, InjectionToken, ErrorHandler } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
-import { Angulartics2Module } from 'angulartics2';
-import { Angulartics2GoogleGlobalSiteTag } from 'angulartics2/gst';
-import { AnalyticsErrorHandler } from './analytics.errorhandler';
-import { InjectScript } from '../utilities.functions';
+import {
+  NgModule,
+  Optional,
+  SkipSelf,
+  ModuleWithProviders,
+  Inject,
+  InjectionToken,
+  ErrorHandler
+} from "@angular/core";
+import { DOCUMENT } from "@angular/common";
+import { Angulartics2Module } from "angulartics2";
+import { Angulartics2GoogleAnalytics } from "angulartics2/ga";
+import { AnalyticsErrorHandler } from "./analytics.errorhandler";
+import { InjectScript } from "../utilities.functions";
 
 export interface AnalyticsConfig {
   siteId: string[];
@@ -21,11 +29,10 @@ const AnalyticsConfigValue = new InjectionToken<AnalyticsConfig>(
 export class AnalyticsModule {
   private googleScript: HTMLScriptElement;
   private gaScript: boolean;
-  private siteID: string;
   private win: any;
 
   constructor(
-    private angulartics: Angulartics2GoogleGlobalSiteTag,
+    private angulartics: Angulartics2GoogleAnalytics,
     @Optional() @SkipSelf() parentModule?: AnalyticsModule,
     @Inject(AnalyticsConfigValue) private analyticsConfig?: AnalyticsConfig,
     @Inject(DOCUMENT) private document?: Document
@@ -47,12 +54,13 @@ export class AnalyticsModule {
       this.analyticsConfig.enabled &&
       this.analyticsConfig.siteId
     ) {
-      this.siteID = this.analyticsConfig.siteId.join(",");
-      this.win = window as any;
-      // TODO: see runOutsideAngularZones
-      this.injectGoogleScript();
-      this.initializeGtag();
-      this.angulartics.startTracking();
+      if (this.analyticsConfig.enabled) {
+        this.win = window as any;
+        this.angulartics.settings.additionalAccountNames = this.analyticsConfig.siteId;
+        this.initializeGa();
+        this.injectGoogleScript();
+        this.angulartics.startTracking();
+      }
     }
   }
 
@@ -64,24 +72,34 @@ export class AnalyticsModule {
   }
 
   /**
-   * Global site tag (gtag.js) - Google Analytics
+   * Global site tag (ga) - Google Analytics
    */
   private injectGoogleScript(): void {
-    if (!this.googleScript && typeof this.win.gtag === 'undefined') {
-      const googleSrc = `https://www.googletagmanager.com/gtag/js?id=${this.siteID}`;
+    if (!this.googleScript) {
+      const googleSrc = `https://www.google-analytics.com/analytics.js`;
       this.googleScript = InjectScript(googleSrc, true, this.document);
     }
   }
 
   /**
-   * Initialize window.gtag function for tracking
+   * Initialize window.ga object and function for tracking
    */
-  private initializeGtag(): void {
-    if (!this.gaScript && typeof this.win.gtag === 'undefined') {
+  private initializeGa(): void {
+    if (!this.gaScript && typeof this.win.ga === "undefined") {
       this.gaScript = true;
-      this.win.dataLayer = this.win.dataLayer || [];
-      this.win.gtag = (...args: any) => { (window as any).dataLayer.push(args); }; // FIX: The 'arguments' object cannot be referenced in an arrow function in ES3 and ES5. Consider using a standard function expression.
-      this.win.gtag('js', new Date());
+
+      this.win.GoogleAnalyticsObject = "ga";
+      const gaFnc = (...args: any) => {
+        (window as any).ga.q = (window as any).ga.q || [];
+        (window as any).ga.q.push(args);
+      };
+      (this.win.ga = this.win.ga || gaFnc), (this.win.ga.l = +new Date());
+
+      // set ga siteIds and track-mode to none on development auto in production
+      const track = this.analyticsConfig.enabled ? "auto" : "none";
+      this.analyticsConfig.siteId.every((siteId: string) => {
+        this.win.ga("create", siteId, track);
+      });
     }
   }
 }

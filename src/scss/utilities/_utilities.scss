@@ -60,3 +60,19 @@
   overflow: auto;
   position: relative;
 }
+
+.hidden,
+.hide,
+[hidden] {
+  display: none;
+}
+
+.mat-tab-label,
+.mat-tab-link {
+  color: $color_nhsuk-black;
+}
+
+.centered {
+  justify-content: center;
+  text-align: center;
+}

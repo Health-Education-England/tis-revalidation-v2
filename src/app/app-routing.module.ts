@@ -14,7 +14,7 @@ const routes: Routes = [
       import("./trainees/trainees.module").then((m) => m.TraineesModule)
   },
   {
-    path: "trainees/:id",
+    path: "trainee/:id",
     loadChildren: () =>
       import("./trainee/trainee.module").then((m) => m.TraineeModule)
   },

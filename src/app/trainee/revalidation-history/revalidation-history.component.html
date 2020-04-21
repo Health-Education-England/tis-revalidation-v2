@@ -63,6 +63,15 @@
             (keyup.space)="expandedElement = expandedElement === element ? null : element">
         </tr>
         <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+
+        <ng-container matColumnDef="noRecord">
+            <td colspan="5" mat-footer-cell class="centered" *matFooterCellDef>
+                <em class="icon-red">No history available.</em>
+            </td>
+        </ng-container>
+
+        <tr mat-footer-row *matFooterRowDef="['noRecord']" [ngClass]="{'hide':dataSource.length > 0}">
+        </tr>
     </table>
 </div>
 <div class="button-row">

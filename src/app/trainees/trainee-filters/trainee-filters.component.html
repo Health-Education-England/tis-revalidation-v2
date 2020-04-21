@@ -2,12 +2,12 @@
   *ngIf="{
     countTotal: countTotal$ | async,
     countUnderNotice: countUnderNotice$ | async,
-    underNotice: underNotice$ | async
+    filter: filter$ | async
   } as data"
 >
   <button
     mat-raised-button
-    [class.mat-primary]="!data.underNotice"
+    [class.mat-primary]="data.filter === traineesFilterType.ALL_DOCTORS"
     class="trainee-filters__btn"
     aria-label="Filter all doctors"
     (click)="filterByAllDoctors()"
@@ -16,7 +16,7 @@
   </button>
   <button
     mat-raised-button
-    [class.mat-primary]="data.underNotice"
+    [class.mat-primary]="data.filter === traineesFilterType.UNDER_NOTICE"
     aria-label="Filter under notice"
     (click)="filterByUnderNotice()"
   >

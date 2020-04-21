@@ -6,7 +6,8 @@ import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
 import {
   ITrainee,
-  ITraineeDataCell
+  ITraineeDataCell,
+  TraineesFilterType
 } from "../../core/trainee/trainee.interfaces";
 import { TraineeService } from "../../core/trainee/trainee.service";
 import {
@@ -125,7 +126,10 @@ export class TraineeListComponent implements OnInit {
   }
 
   public setupInitialFilter(): void {
-    if (this.params.underNotice && this.params.underNotice === "false") {
+    if (
+      this.params.filter &&
+      this.params.filter === TraineesFilterType.ALL_DOCTORS
+    ) {
       this.store.dispatch(new AllDoctorsFilter());
     } else {
       this.store.dispatch(new UnderNoticeFilter());

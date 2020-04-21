@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
+import { TraineesFilterType } from "../../core/trainee/trainee.interfaces";
 import { TraineeService } from "../../core/trainee/trainee.service";
 import {
   UnderNoticeFilter,
@@ -21,7 +22,8 @@ import { TraineesState } from "../state/trainees.state";
 export class TraineeFiltersComponent {
   @Select(TraineesState.countTotal) countTotal$: Observable<number>;
   @Select(TraineesState.countUnderNotice) countUnderNotice$: Observable<number>;
-  @Select(TraineesState.underNotice) underNotice$: Observable<boolean>;
+  @Select(TraineesState.filter) filter$: Observable<TraineesFilterType>;
+  public traineesFilterType = TraineesFilterType;
 
   constructor(private store: Store, private traineeService: TraineeService) {}
 

@@ -4,7 +4,10 @@ import { Sort } from "@angular/material/sort";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { tap } from "rxjs/operators";
 import { DEFAULT_SORT } from "../../core/trainee/constants";
-import { ITrainee } from "../../core/trainee/trainee.interfaces";
+import {
+  ITrainee,
+  TraineesFilterType
+} from "../../core/trainee/trainee.interfaces";
 import { TraineeService } from "../../core/trainee/trainee.service";
 import {
   ClearTraineesSearch,
@@ -21,6 +24,7 @@ import {
 export class TraineesStateModel {
   public countTotal: number;
   public countUnderNotice: number;
+  public filter: TraineesFilterType;
   public items: ITrainee[];
   public loading: boolean;
   public pageIndex: number;
@@ -28,7 +32,6 @@ export class TraineesStateModel {
   public sort: Sort;
   public totalPages: number;
   public totalResults: number;
-  public underNotice: boolean;
 }
 
 @State<TraineesStateModel>({
@@ -36,17 +39,17 @@ export class TraineesStateModel {
   defaults: {
     countTotal: null,
     countUnderNotice: null,
+    filter: null,
     items: null,
     loading: null,
-    totalPages: null,
     pageIndex: 0,
     searchQuery: null,
+    totalPages: null,
     sort: {
       active: null,
       direction: null
     },
-    totalResults: null,
-    underNotice: null
+    totalResults: null
   }
 })
 @Injectable()
@@ -94,8 +97,8 @@ export class TraineesState {
   }
 
   @Selector()
-  public static underNotice(state: TraineesStateModel) {
-    return state.underNotice;
+  public static filter(state: TraineesStateModel) {
+    return state.filter;
   }
 
   @Action(GetTrainees)
@@ -174,14 +177,14 @@ export class TraineesState {
   @Action(UnderNoticeFilter)
   underNoticeFilter(ctx: StateContext<TraineesStateModel>) {
     return ctx.patchState({
-      underNotice: true
+      filter: TraineesFilterType.UNDER_NOTICE
     });
   }
 
   @Action(AllDoctorsFilter)
   allDoctorsFilter(ctx: StateContext<TraineesStateModel>) {
     return ctx.patchState({
-      underNotice: false
+      filter: TraineesFilterType.ALL_DOCTORS
     });
   }
 }

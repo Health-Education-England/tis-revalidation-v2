@@ -4,6 +4,7 @@ import { async, TestBed } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { DEFAULT_SORT } from "../../core/trainee/constants";
+import { TraineesFilterType } from "../../core/trainee/trainee.interfaces";
 import { TraineeService } from "../../core/trainee/trainee.service";
 import { MockTraineeService } from "../../core/trainee/trainee.service.spec";
 import { MaterialModule } from "../../shared/material/material.module";
@@ -107,13 +108,13 @@ describe("Trainees state", () => {
 
   it("should dispatch 'UnderNoticeFilter' and update store", () => {
     store.dispatch(new UnderNoticeFilter());
-    const underNotice = store.selectSnapshot(TraineesState.underNotice);
-    expect(underNotice).toBeTruthy();
+    const filter = store.selectSnapshot(TraineesState.filter);
+    expect(filter).toEqual(TraineesFilterType.UNDER_NOTICE);
   });
 
   it("should dispatch 'AllDoctorsFilter' and update store", () => {
     store.dispatch(new AllDoctorsFilter());
-    const underNotice = store.selectSnapshot(TraineesState.underNotice);
-    expect(underNotice).toBeFalsy();
+    const filter = store.selectSnapshot(TraineesState.filter);
+    expect(filter).toEqual(TraineesFilterType.ALL_DOCTORS);
   });
 });

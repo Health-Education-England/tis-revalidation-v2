@@ -6,7 +6,10 @@ import { Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { of } from "rxjs";
-import { ITrainee } from "../../core/trainee/trainee.interfaces";
+import {
+  ITrainee,
+  TraineesFilterType
+} from "../../core/trainee/trainee.interfaces";
 import { TraineeService } from "../../core/trainee/trainee.service";
 import { MockTraineeService } from "../../core/trainee/trainee.service.spec";
 import {
@@ -141,10 +144,10 @@ describe("TraineeListComponent", () => {
     );
   });
 
-  it("'setupInitialFilter()' should dispatch 'AllDoctorsFilter' if param value is false", () => {
+  it("'setupInitialFilter()' should dispatch 'AllDoctorsFilter' if param value is `allDoctors`", () => {
     spyOn(store, "dispatch");
 
-    component.params = { underNotice: "false" };
+    component.params = { filter: TraineesFilterType.ALL_DOCTORS };
     component.setupInitialFilter();
 
     expect(store.dispatch).toHaveBeenCalledTimes(1);

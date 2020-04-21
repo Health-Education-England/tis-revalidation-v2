@@ -138,7 +138,7 @@ describe("TraineeService", () => {
         active: snapshot.sort.active,
         direction: snapshot.sort.direction,
         pageIndex: snapshot.pageIndex,
-        underNotice: snapshot.underNotice,
+        filter: snapshot.filter,
         ...(snapshot.searchQuery && { searchQuery: snapshot.searchQuery })
       }
     });

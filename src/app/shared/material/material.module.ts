@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { LayoutModule } from "@angular/cdk/layout";
+import { MatChipsModule } from "@angular/material/chips";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatSortModule } from "@angular/material/sort";
 import { MatTableModule } from "@angular/material/table";
@@ -48,7 +49,8 @@ const materialModules = [
   MatNativeDateModule,
   MatSlideToggleModule,
   MatSortModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatChipsModule
 ];
 
 @NgModule({

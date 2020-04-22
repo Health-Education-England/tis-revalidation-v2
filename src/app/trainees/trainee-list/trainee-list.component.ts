@@ -31,6 +31,7 @@ export class TraineeListComponent implements OnInit {
   @Select(TraineesState.trainees) trainees$: Observable<ITrainee[]>;
   @Select(TraineesState.totalResults) totalResults$: Observable<number>;
   @Select(TraineesState.sort) sort$: Observable<Sort>;
+  @Select(TraineesState.error) error$: Observable<string>;
 
   public columnData: ITraineeDataCell[] = [
     {

@@ -19,8 +19,12 @@ const routes: Routes = [
       import("./trainee/trainee.module").then((m) => m.TraineeModule)
   },
   {
-    path: "**",
+    path: "404",
     component: PageNotFoundComponent
+  },
+  {
+    path: "**",
+    redirectTo: "404"
   }
 ];
 

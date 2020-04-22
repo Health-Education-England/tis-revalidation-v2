@@ -8,6 +8,11 @@ import { RevalidationFormComponent } from "./revalidation-form/revalidation-form
 import { RevalidationNotesComponent } from "./revalidation-notes/revalidation-notes.component";
 import { MaterialModule } from "../shared/material/material.module";
 import { SharedModule } from "../shared/shared.module";
+import { NgxsModule } from "@ngxs/store";
+import { TraineeResolver } from "./trainee.resolver";
+import { RevalidationHistoryState } from "./state/revalidation-history.state";
+import { RevalidationHistoryService } from "./services/revalidation-history.service";
+import { RevalidationNotesState } from "./state/revalidation-notes.state";
 
 @NgModule({
   declarations: [
@@ -16,6 +21,14 @@ import { SharedModule } from "../shared/shared.module";
     RevalidationFormComponent,
     RevalidationNotesComponent
   ],
-  imports: [MaterialModule, SharedModule, CommonModule, TraineeRoutingModule]
+  imports: [
+    MaterialModule,
+    SharedModule,
+    CommonModule,
+    TraineeRoutingModule,
+    NgxsModule.forFeature([RevalidationHistoryState]),
+    NgxsModule.forFeature([RevalidationNotesState])
+  ],
+  providers: [RevalidationHistoryService, TraineeResolver]
 })
 export class TraineeModule {}

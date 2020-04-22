@@ -5,16 +5,18 @@
     </button>
 </div>
 <mat-list *ngIf="!addEditNote">
-    <mat-list-item *ngFor="let message of messages;">
-        <span class="note">{{ message }}</span>
-        <span class="spacer"></span>
-        <button mat-button>
-            <mat-icon aria-hidden="false" aria-label="edit note">create</mat-icon>
-        </button>
-        <button mat-button>
-            <mat-icon aria-hidden="false" aria-label="delete note">delete</mat-icon>
-        </button>
-    </mat-list-item>
+    <ng-container *ngIf="revalidationNotes$ | async as revalidationNotes">
+        <mat-list-item *ngFor="let note of revalidationNotes;">
+            <span class="note">{{ note.note }}</span>
+            <span class="spacer"></span>
+            <button mat-button>
+                <mat-icon aria-hidden="false" aria-label="edit note">create</mat-icon>
+            </button>
+            <button mat-button>
+                <mat-icon aria-hidden="false" aria-label="delete note">delete</mat-icon>
+            </button>
+        </mat-list-item>
+    </ng-container>
 </mat-list>
 <mat-list *ngIf="addEditNote">
     <mat-list-item class="edit-note">

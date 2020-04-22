@@ -10,7 +10,14 @@ import { MatBottomSheet } from "@angular/material/bottom-sheet";
 import { RevalidationNotesComponent } from "../revalidation-notes/revalidation-notes.component";
 import { MatDialog } from "@angular/material/dialog";
 import { RevalidationFormComponent } from "../revalidation-form/revalidation-form.component";
-import { PeriodicElement } from "./PeriodicElement";
+import {
+  IRecommendation,
+  IRevalidationHistory
+} from "../revalidation-history.interface";
+import { RevalidationHistoryRespone2 } from "../mock-data/trainee-spec-data";
+import { RevalidationHistoryState } from "../state/revalidation-history.state";
+import { Select } from "@ngxs/store";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "app-revalidation-history",
@@ -28,8 +35,6 @@ import { PeriodicElement } from "./PeriodicElement";
   ]
 })
 export class RevalidationHistoryComponent implements OnInit {
-  dataSource: PeriodicElement[];
-  watchTrainee: boolean;
   columnsToDisplay = [
     "recommendation",
     "outcome",
@@ -37,51 +42,13 @@ export class RevalidationHistoryComponent implements OnInit {
     "ActSubDate",
     "submittedBy"
   ];
-  expandedElement: PeriodicElement | null;
+  expandedElement: IRecommendation | null;
   constructor(private bottomSheet: MatBottomSheet, public dialog: MatDialog) {}
 
-  ngOnInit(): void {
-    this.dataSource = [
-      {
-        episodeId: 124735,
-        recommendation: "Revalidate",
-        outcome: "Approved",
-        gmcSubDueDate: "17-Jun-2020",
-        ActSubDate: "16-Jun-2019",
-        submittedBy: "A Pringle",
-        submissionStatus: `Revalidated`,
-        comments: [`Form R received - no concerns`, `More comments added`]
-      },
-      {
-        episodeId: 228741,
-        recommendation: "Revalidate",
-        outcome: "Rejected",
-        gmcSubDueDate: "18-Jun-2020",
-        ActSubDate: "16-Jun-2019",
-        submittedBy: "A Pringle",
-        submissionStatus: `Non Engagement on the 16-Jun-2019`,
-        comments: [
-          `Form R received - no concerns`,
-          `Started GP training on 01/02/2019. No ARCP as yet.`
-        ]
-      },
-      {
-        episodeId: 109876,
-        recommendation: "Revalidate",
-        outcome: "Under review",
-        gmcSubDueDate: "19-Jun-2020",
-        ActSubDate: "16-Jun-2019",
-        submittedBy: "A Pringle",
-        submissionStatus: `Deferred on the 19-Jun-2020`,
-        comments: [
-          `Form R submitted to new system. No concerns.`,
-          `Started GP training. No ARCP as yet.`
-        ]
-      }
-    ];
+  @Select(RevalidationHistoryState.revalidationHistory)
+  revalidationHistory$: Observable<IRevalidationHistory>;
 
-    this.watchTrainee = false;
-  }
+  ngOnInit(): void {}
 
   openNotes(): void {
     this.bottomSheet.open(RevalidationNotesComponent);
@@ -93,9 +60,5 @@ export class RevalidationHistoryComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
     });
-  }
-
-  toggleWatchTrainee(): void {
-    this.watchTrainee = !this.watchTrainee;
   }
 }

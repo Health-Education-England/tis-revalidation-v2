@@ -5,6 +5,9 @@ import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { MaterialModule } from "src/app/shared/material/material.module";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { RouterTestingModule } from "@angular/router/testing";
+import { NgxsModule } from "@ngxs/store";
+import { RevalidationHistoryState } from "../state/revalidation-history.state";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 
 describe("RevalidationHistoryComponent", () => {
   let component: RevalidationHistoryComponent;
@@ -12,7 +15,13 @@ describe("RevalidationHistoryComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, MaterialModule, RouterTestingModule],
+      imports: [
+        NoopAnimationsModule,
+        MaterialModule,
+        RouterTestingModule,
+        HttpClientTestingModule,
+        NgxsModule.forRoot([RevalidationHistoryState])
+      ],
       declarations: [RevalidationHistoryComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();

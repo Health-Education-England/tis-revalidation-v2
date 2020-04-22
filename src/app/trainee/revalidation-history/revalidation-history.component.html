@@ -7,8 +7,8 @@
         </button>
     </mat-toolbar-row>
 </mat-toolbar>
-<div class="trainee-container mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="w-100">
+<div class="trainee-container mat-elevation-z8" *ngIf="revalidationHistory$ | async as revalidationHistory">
+    <table mat-table [dataSource]="revalidationHistory.recommendations" multiTemplateDataRows class="w-100">
         <caption class="collapsed no-height">Trainee revalidation historical details</caption>
         <ng-container matColumnDef="recommendation">
             <th mat-header-cell scope="col" *matHeaderCellDef> Recommendation </th>
@@ -70,7 +70,8 @@
             </td>
         </ng-container>
 
-        <tr mat-footer-row *matFooterRowDef="['noRecord']" [ngClass]="{'hide':dataSource.length > 0}">
+        <tr mat-footer-row *matFooterRowDef="['noRecord']"
+            [ngClass]="{'hide':revalidationHistory.recommendations.length > 0}">
         </tr>
     </table>
 </div>

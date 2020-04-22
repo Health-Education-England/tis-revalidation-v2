@@ -5,9 +5,8 @@ import { HttpParams } from "@angular/common/http";
 import { RevalidationHistoryRespone2 } from "../mock-data/trainee-spec-data";
 import { tap, catchError } from "rxjs/operators";
 import { IRevalidationHistory } from "../revalidation-history.interface";
-import { of, throwError } from "rxjs";
+import { of } from "rxjs";
 import { RevalidationHistoryService } from "../services/revalidation-history.service";
-import { isNumber } from "util";
 
 export class RevalidationHistoryStateModel {
   public item: IRevalidationHistory;

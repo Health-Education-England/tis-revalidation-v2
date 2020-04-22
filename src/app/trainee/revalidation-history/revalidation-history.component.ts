@@ -14,7 +14,6 @@ import {
   IRecommendation,
   IRevalidationHistory
 } from "../revalidation-history.interface";
-import { RevalidationHistoryRespone2 } from "../mock-data/trainee-spec-data";
 import { RevalidationHistoryState } from "../state/revalidation-history.state";
 import { Select } from "@ngxs/store";
 import { Observable } from "rxjs";

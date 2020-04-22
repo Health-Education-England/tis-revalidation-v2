@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { MatBottomSheetRef } from "@angular/material/bottom-sheet";
 import { INote } from "../revalidation-history.interface";
-import { notesResponse1 } from "../mock-data/trainee-spec-data";
 import { Select } from "@ngxs/store";
 import { RevalidationNotesState } from "../state/revalidation-notes.state";
 import { Observable } from "rxjs";

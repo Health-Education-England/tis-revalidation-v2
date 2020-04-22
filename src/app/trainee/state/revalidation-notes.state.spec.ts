@@ -1,11 +1,7 @@
 import { TestBed, async } from "@angular/core/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { RevalidationNotesState } from "./revalidation-notes.state";
-import {
-  AddRevalidationNote,
-  EditRevalidationNote,
-  GetRevalidationNotes
-} from "./revalidation-notes.actions";
+import { GetRevalidationNotes } from "./revalidation-notes.actions";
 import {
   HttpClientTestingModule,
   HttpTestingController

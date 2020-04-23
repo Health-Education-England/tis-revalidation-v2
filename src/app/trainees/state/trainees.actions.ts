@@ -1,7 +1,19 @@
+import { HttpErrorResponse } from "@angular/common/http";
 import { SortDirection } from "@angular/material/sort/sort-direction";
+import { IGetTraineesResponse } from "../../core/trainee/trainee.interfaces";
 
 export class GetTrainees {
   static readonly type = "[Trainees] Get";
+}
+
+export class GetTraineesSuccess {
+  static readonly type = "[Trainees] Get Success";
+  constructor(public response: IGetTraineesResponse) {}
+}
+
+export class GetTraineesError {
+  static readonly type = "[Trainees] Get Error";
+  constructor(public error: HttpErrorResponse) {}
 }
 
 export class SortTrainees {

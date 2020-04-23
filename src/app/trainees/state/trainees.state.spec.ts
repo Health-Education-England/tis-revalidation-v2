@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from "@angular/common/http";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { async, TestBed } from "@angular/core/testing";
@@ -12,6 +13,7 @@ import {
   AllDoctorsFilter,
   ClearTraineesSearch,
   GetTrainees,
+  GetTraineesError,
   PaginateTrainees,
   ResetTraineesPaginator,
   SearchTrainees,
@@ -72,6 +74,21 @@ describe("Trainees state", () => {
     const count = store.selectSnapshot(TraineesState.countTotal);
 
     expect(count).toEqual(21312);
+  });
+
+  it("should dispatch 'GetTraineesError' and select 'error' slice", () => {
+    const mockError = new HttpErrorResponse({
+      status: 404,
+      statusText: "Not Found",
+      url: "/trainees",
+      error: {
+        message: "Http failure response for /trainees: 404 Not Found"
+      }
+    });
+
+    store.dispatch(new GetTraineesError(mockError));
+    const error = store.selectSnapshot(TraineesState.error);
+    expect(error).toEqual(`Error: ${mockError.error.message}`);
   });
 
   it("should dispatch 'SortTrainees' and update store", () => {

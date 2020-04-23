@@ -1,29 +1,33 @@
-import { HttpParams } from "@angular/common/http";
+import { HttpErrorResponse, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Sort } from "@angular/material/sort";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
-import { tap } from "rxjs/operators";
+import { catchError, finalize, switchMap, take } from "rxjs/operators";
 import { DEFAULT_SORT } from "../../core/trainee/constants";
 import {
+  IGetTraineesResponse,
   ITrainee,
   TraineesFilterType
 } from "../../core/trainee/trainee.interfaces";
 import { TraineeService } from "../../core/trainee/trainee.service";
 import {
+  AllDoctorsFilter,
   ClearTraineesSearch,
   GetTrainees,
+  GetTraineesError,
+  GetTraineesSuccess,
   PaginateTrainees,
   ResetTraineesPaginator,
   ResetTraineesSort,
   SearchTrainees,
   SortTrainees,
-  AllDoctorsFilter,
   UnderNoticeFilter
 } from "./trainees.actions";
 
 export class TraineesStateModel {
   public countTotal: number;
   public countUnderNotice: number;
+  public error?: string;
   public filter: TraineesFilterType;
   public items: ITrainee[];
   public loading: boolean;
@@ -87,6 +91,11 @@ export class TraineesState {
   }
 
   @Selector()
+  public static error(state: TraineesStateModel) {
+    return state.error;
+  }
+
+  @Selector()
   public static pageIndex(state: TraineesStateModel) {
     return state.pageIndex;
   }
@@ -110,17 +119,46 @@ export class TraineesState {
 
     const params: HttpParams = this.traineeService.generateParams();
 
-    return this.traineeService.getTrainees(params).pipe(
-      tap((result) => {
-        ctx.patchState({
-          items: result.traineeInfo,
-          countTotal: result.countTotal,
-          countUnderNotice: result.countUnderNotice,
-          totalResults: result.totalResults,
-          loading: false
-        });
-      })
-    );
+    return this.traineeService
+      .getTrainees(params)
+      .pipe(
+        take(1),
+        switchMap((response: IGetTraineesResponse) =>
+          ctx.dispatch(new GetTraineesSuccess(response))
+        ),
+        catchError((error: HttpErrorResponse) =>
+          ctx.dispatch(new GetTraineesError(error))
+        ),
+        finalize(() =>
+          ctx.patchState({
+            loading: false
+          })
+        )
+      )
+      .subscribe();
+  }
+
+  @Action(GetTraineesSuccess)
+  getTraineesSuccess(
+    ctx: StateContext<TraineesStateModel>,
+    action: GetTraineesSuccess
+  ) {
+    return ctx.patchState({
+      items: action.response.traineeInfo,
+      countTotal: action.response.countTotal,
+      countUnderNotice: action.response.countUnderNotice,
+      totalResults: action.response.totalResults
+    });
+  }
+
+  @Action(GetTraineesError)
+  getTraineesError(
+    ctx: StateContext<TraineesStateModel>,
+    action: GetTraineesError
+  ) {
+    return ctx.patchState({
+      error: `Error: ${action.error.message}`
+    });
   }
 
   @Action(SortTrainees)

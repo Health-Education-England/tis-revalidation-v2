@@ -21,7 +21,7 @@ describe("Trainee filters", () => {
 
   it("clicking on all doctors button should update the query parameter in url", () => {
     cy.location().should((loc) =>
-      expect(loc.search).to.contain("underNotice=false")
+      expect(loc.search).to.contain("filter=allDoctors")
     );
   });
 });

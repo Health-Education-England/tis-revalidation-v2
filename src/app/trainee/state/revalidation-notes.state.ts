@@ -1,10 +1,8 @@
 import { State, Action, StateContext, Selector } from "@ngxs/store";
 import { GetRevalidationNotes } from "./revalidation-notes.actions";
 import { HttpParams } from "@angular/common/http";
-import { notesResponse1 } from "../mock-data/trainee-spec-data";
 import { Injectable } from "@angular/core";
-import { tap, catchError } from "rxjs/operators";
-import { of } from "rxjs";
+import { tap } from "rxjs/operators";
 import { RevalidationNotesService } from "../services/revalidation-notes.service";
 import { INote } from "../revalidation-history.interface";
 
@@ -37,19 +35,11 @@ export class RevalidationNotesState {
       action.payload.toString()
     );
 
-    const mockResponse = notesResponse1; // TODO: remove mock
     return this.service.getRevalidationNotes(httpParam).pipe(
       tap((result: INote[]) => {
         ctx.patchState({
           items: result
         });
-      }),
-      // TODO: delete catchError used to mock Trainee Data here
-      catchError((err: any) => {
-        ctx.patchState({
-          items: mockResponse
-        });
-        return of(err);
       })
     );
   }

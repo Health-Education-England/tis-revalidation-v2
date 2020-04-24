@@ -2,10 +2,8 @@ import { State, Action, StateContext, Selector } from "@ngxs/store";
 import { RevalidationHistoryAction } from "./revalidation-history.actions";
 import { Injectable } from "@angular/core";
 import { HttpParams } from "@angular/common/http";
-import { RevalidationHistoryRespone2 } from "../mock-data/trainee-spec-data";
-import { tap, catchError } from "rxjs/operators";
+import { tap } from "rxjs/operators";
 import { IRevalidationHistory } from "../revalidation-history.interface";
-import { of } from "rxjs";
 import { RevalidationHistoryService } from "../services/revalidation-history.service";
 
 export class RevalidationHistoryStateModel {
@@ -50,13 +48,6 @@ export class RevalidationHistoryState {
         ctx.patchState({
           item: result
         });
-      }),
-      // TODO: delete catchError used to mock Trainee Data here
-      catchError((err: any) => {
-        ctx.patchState({
-          item: RevalidationHistoryRespone2
-        });
-        return of(err);
       })
     );
   }

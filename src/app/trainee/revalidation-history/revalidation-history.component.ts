@@ -38,7 +38,7 @@ export class RevalidationHistoryComponent implements OnInit {
     "recommendation",
     "outcome",
     "gmcSubDueDate",
-    "ActSubDate",
+    "actSubDate",
     "submittedBy"
   ];
   expandedElement: IRecommendation | null;

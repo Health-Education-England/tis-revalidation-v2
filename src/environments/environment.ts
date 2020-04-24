@@ -14,7 +14,9 @@ export const environment: IEnvironment = {
     authRedirect: ``,
     // 5e997d8a33000062007b2354 = 21 trainees
     // 5e997dba33000096297b235d = 0 trainees to simulate no results found
-    getTrainees: `mocky/5e997dba33000096297b235d?mocky-delay=700ms`
+    getTrainees: `mocky/5e997dba33000096297b235d?mocky-delay=700ms`,
+    getRecommendation: `mocky/5ea2d9614f00006c00d9f533`,
+    getNotes: `mocky/5ea2da614f00006c00d9f540`
   }
 };
 

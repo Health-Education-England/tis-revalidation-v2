@@ -8,6 +8,7 @@ import {
 } from "@angular/common/http/testing";
 import { INote } from "../revalidation-history.interface";
 import { notesResponse1 } from "../mock-data/trainee-spec-data";
+import { environment } from "@environment";
 
 describe("RevalidationNotes actions", () => {
   let store: Store;
@@ -29,7 +30,9 @@ describe("RevalidationNotes actions", () => {
 
     store.dispatch(new GetRevalidationNotes(gmcId));
 
-    const req = httpMock.expectOne(`?id=${gmcId}`);
+    const req = httpMock.expectOne(
+      `${environment.appUrls.getNotes}?id=${gmcId}`
+    );
     expect(req.request.method).toEqual("GET");
     req.flush(notesResponse1);
 

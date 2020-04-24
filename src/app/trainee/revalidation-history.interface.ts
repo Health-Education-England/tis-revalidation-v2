@@ -12,7 +12,7 @@ export interface IRecommendation {
   recommendation: string;
   outcome: string;
   gmcSubDueDate: Date;
-  ActSubDate: Date;
+  actSubDate: Date;
   submittedBy: string;
   submissionStatus: string;
   comments: IComment[];

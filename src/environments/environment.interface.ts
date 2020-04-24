@@ -12,5 +12,7 @@ export abstract class IEnvironment {
     readonly login: string;
     readonly authRedirect: string;
     readonly getTrainees: string;
+    readonly getRecommendation: string;
+    readonly getNotes: string;
   };
 }

@@ -9,6 +9,7 @@ import {
 import { RevalidationHistoryRespone2 } from "../mock-data/trainee-spec-data";
 import { ErrorHandler } from "@angular/core";
 import { IRevalidationHistory } from "../revalidation-history.interface";
+import { environment } from "@environment";
 
 describe("RevalidationHistory actions", () => {
   let store: Store;
@@ -35,7 +36,9 @@ describe("RevalidationHistory actions", () => {
 
     store.dispatch(new RevalidationHistoryAction(gmcId));
 
-    const req = httpMock.expectOne(`?id=${gmcId}`);
+    const req = httpMock.expectOne(
+      `${environment.appUrls.getRecommendation}?id=${gmcId}`
+    );
     expect(req.request.method).toEqual("GET");
     req.flush(RevalidationHistoryRespone2);
 

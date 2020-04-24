@@ -5,12 +5,19 @@
 </ng-container>
 
 <ng-template #notLoading>
-  <ng-container>
-    <mat-table *ngIf="{
+  <ng-container *ngIf="totalResults$ | async; else noResults">
+    <mat-table
+      *ngIf="{
         sort: sort$ | async,
         trainees: trainees$ | async
-      } as data" [dataSource]="data.trainees" matSort matSortDisableClear (matSortChange)="sortTrainees($event)"
-      [matSortActive]="data.sort.active" [matSortDirection]="data.sort.direction">
+      } as data"
+      [dataSource]="data.trainees"
+      matSort
+      matSortDisableClear
+      (matSortChange)="sortTrainees($event)"
+      [matSortActive]="data.sort.active"
+      [matSortDirection]="data.sort.direction"
+    >
       <ng-container *ngFor="let i of columnData" matColumnDef="{{ i.label }}">
         <ng-container *ngIf="i.enableSort; else disabledSort">
           <mat-header-cell *matHeaderCellDef [mat-sort-header]="i.name">{{
@@ -18,15 +25,25 @@
           }}</mat-header-cell>
         </ng-container>
         <ng-template #disabledSort>
-          <mat-header-cell *matHeaderCellDef [mat-sort-header]="i.name" disabled>{{ i.label }}</mat-header-cell>
+          <mat-header-cell
+            *matHeaderCellDef
+            [mat-sort-header]="i.name"
+            disabled
+            >{{ i.label }}</mat-header-cell
+          >
         </ng-template>
         <mat-cell *matCellDef="let element">{{ element[i.name] }}</mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="columnLabels"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: columnLabels" (click)="traineeDetails($event, row)"
-        (keyup.enter)="traineeDetails($event, row)" (keyup.space)="traineeDetails($event, row)" tabindex="0"
-        role="button">
+      <mat-row
+        *matRowDef="let row; columns: columnLabels"
+        (click)="traineeDetails($event, row)"
+        (keyup.enter)="traineeDetails($event, row)"
+        (keyup.space)="traineeDetails($event, row)"
+        tabindex="0"
+        role="button"
+      >
       </mat-row>
     </mat-table>
   </ng-container>

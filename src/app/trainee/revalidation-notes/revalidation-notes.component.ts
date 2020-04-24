@@ -1,5 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { MatBottomSheetRef } from "@angular/material/bottom-sheet";
+import { INote } from "../revalidation-history.interface";
+import { Select } from "@ngxs/store";
+import { RevalidationNotesState } from "../state/revalidation-notes.state";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "app-revalidation-notes",
@@ -7,20 +11,14 @@ import { MatBottomSheetRef } from "@angular/material/bottom-sheet";
   styleUrls: ["./revalidation-notes.component.scss"]
 })
 export class RevalidationNotesComponent implements OnInit {
-  messages: string[]; // mock
+  @Select(RevalidationNotesState.revalidationNotes)
+  revalidationNotes$: Observable<INote[]>;
   addEditNote: boolean;
   constructor(
     private bottomSheetRef: MatBottomSheetRef<RevalidationNotesComponent>
   ) {}
 
   ngOnInit(): void {
-    this.messages = [
-      `Lorem ipsum dolor sit amet, consectetur adipiscing elit`,
-      `Pellentesque facilisis erat non mollis varius.`,
-      `Donec laoreet sapien a eros commodo ultricies.`,
-      `Maecenas ac dui dignissim, faucibus lectus sit amet, feugiat neque. et massa quis urna elementum interdum in ac neque. Vestibulum ut justo mattis, eleifend neque et, vulputate neque. Duis ornare leo at posuere feugiat.`
-    ];
-
     this.addEditNote = false;
   }
 

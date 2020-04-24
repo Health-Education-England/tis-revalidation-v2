@@ -200,7 +200,7 @@ describe("TraineeListComponent", () => {
 
     component.traineeDetails(mockEvent, mockTrainee);
     expect(router.navigate).toHaveBeenCalledWith([
-      "/trainees",
+      "/trainee",
       mockTrainee.gmcReferenceNumber
     ]);
   });

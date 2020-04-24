@@ -7,13 +7,9 @@
         </button>
     </mat-toolbar-row>
 </mat-toolbar>
-<div>
-    <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 w-100">
+<div class="trainee-container mat-elevation-z8" *ngIf="revalidationHistory$ | async as revalidationHistory">
+    <table mat-table [dataSource]="revalidationHistory.recommendations" multiTemplateDataRows class="w-100">
         <caption class="collapsed no-height">Trainee revalidation historical details</caption>
-        <ng-container matColumnDef="episodeId">
-            <th mat-header-cell scope="col" *matHeaderCellDef> Episode Id </th>
-            <td mat-cell *matCellDef="let element"> {{ element.episodeId }} </td>
-        </ng-container>
         <ng-container matColumnDef="recommendation">
             <th mat-header-cell scope="col" *matHeaderCellDef> Recommendation </th>
             <td mat-cell *matCellDef="let element"> {{ element.recommendation }} </td>
@@ -34,9 +30,9 @@
             <td mat-cell *matCellDef="let element"> {{ element.gmcSubDueDate }}
             </td>
         </ng-container>
-        <ng-container matColumnDef="ActSubDate">
+        <ng-container matColumnDef="actSubDate">
             <th mat-header-cell scope="col" *matHeaderCellDef> Actual Submission Date </th>
-            <td mat-cell *matCellDef="let element"> {{ element.ActSubDate }} </td>
+            <td mat-cell *matCellDef="let element"> {{ element.actSubDate }} </td>
         </ng-container>
         <ng-container matColumnDef="submittedBy">
             <th mat-header-cell scope="col" *matHeaderCellDef> Submitted By </th>
@@ -60,18 +56,26 @@
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-        <tr role="button" tabindex="0" mat-row *matRowDef="let element; columns: columnsToDisplay;" class="element-row"
+        <tr tabindex="0" mat-row *matRowDef="let element; columns: columnsToDisplay;" class="element-row"
             [class.expanded-row]="expandedElement === element"
             (click)="expandedElement = expandedElement === element ? null : element"
             (keyup.enter)="expandedElement = expandedElement === element ? null : element"
             (keyup.space)="expandedElement = expandedElement === element ? null : element">
         </tr>
         <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+
+        <ng-container matColumnDef="noRecord">
+            <td colspan="5" mat-footer-cell class="centered" *matFooterCellDef>
+                <em class="icon-red">No history available.</em>
+            </td>
+        </ng-container>
+
+        <tr mat-footer-row *matFooterRowDef="['noRecord']"
+            [ngClass]="{'hide':revalidationHistory.recommendations.length > 0}">
+        </tr>
     </table>
-
-    <div class="button-row">
-        <span class="spacer"></span>
-        <button mat-raised-button (click)="openDialog()" color="primary">Recommend</button>
-    </div>
-
+</div>
+<div class="button-row">
+    <span class="spacer"></span>
+    <button mat-raised-button (click)="openDialog()" color="primary">Recommend</button>
 </div>

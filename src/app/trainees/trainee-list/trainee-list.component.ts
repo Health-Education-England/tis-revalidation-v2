@@ -145,7 +145,7 @@ export class TraineeListComponent implements OnInit {
 
   public traineeDetails(event: Event, row: ITrainee): Promise<boolean> {
     event.stopPropagation();
-    return this.router.navigate(["/trainees", row.gmcReferenceNumber]);
+    return this.router.navigate(["/trainee", row.gmcReferenceNumber]);
   }
 
   public sortTrainees(event: Sort): void {

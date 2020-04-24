@@ -6,16 +6,19 @@ import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
 import {
   ITrainee,
-  ITraineeDataCell
+  ITraineeDataCell,
+  TraineesFilterType
 } from "../../core/trainee/trainee.interfaces";
 import { TraineeService } from "../../core/trainee/trainee.service";
 import {
+  AllDoctorsFilter,
   GetTrainees,
   PaginateTrainees,
   ResetTraineesPaginator,
   ResetTraineesSort,
   SearchTrainees,
-  SortTrainees
+  SortTrainees,
+  UnderNoticeFilter
 } from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
 
@@ -28,6 +31,7 @@ export class TraineeListComponent implements OnInit {
   @Select(TraineesState.trainees) trainees$: Observable<ITrainee[]>;
   @Select(TraineesState.totalResults) totalResults$: Observable<number>;
   @Select(TraineesState.sort) sort$: Observable<Sort>;
+  @Select(TraineesState.error) error$: Observable<string>;
 
   public columnData: ITraineeDataCell[] = [
     {
@@ -99,6 +103,7 @@ export class TraineeListComponent implements OnInit {
   ngOnInit(): void {
     this.setupInitialSorting();
     this.setupInitialPagination();
+    this.setupInitialFilter();
     this.checkInitialSearchQuery();
     this.store.dispatch(new GetTrainees());
   }
@@ -118,6 +123,17 @@ export class TraineeListComponent implements OnInit {
       this.store.dispatch(new PaginateTrainees(this.params.pageIndex));
     } else {
       this.store.dispatch(new ResetTraineesPaginator());
+    }
+  }
+
+  public setupInitialFilter(): void {
+    if (
+      this.params.filter &&
+      this.params.filter === TraineesFilterType.ALL_DOCTORS
+    ) {
+      this.store.dispatch(new AllDoctorsFilter());
+    } else {
+      this.store.dispatch(new UnderNoticeFilter());
     }
   }
 

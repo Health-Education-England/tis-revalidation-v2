@@ -1,4 +1,9 @@
-<form (ngSubmit)="checkForm()" [formGroup]="form" autocomplete="off">
+<form
+  class="d-grid trainee-search"
+  (ngSubmit)="checkForm()"
+  [formGroup]="form"
+  autocomplete="off"
+>
   <mat-form-field>
     <input
       matInput
@@ -8,7 +13,7 @@
     />
     <mat-error *ngIf="form.invalid">No search terms entered</mat-error>
   </mat-form-field>
-  <button mat-button type="submit">
-    <mat-icon>search</mat-icon>
+  <button mat-button color="primary" aria-label="Trainees search" type="submit">
+    <mat-icon aria-label="search icon">search</mat-icon>
   </button>
 </form>

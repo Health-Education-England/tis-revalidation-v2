@@ -1,24 +1,34 @@
-import { HttpParams } from "@angular/common/http";
+import { HttpErrorResponse, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Sort } from "@angular/material/sort";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
-import { tap } from "rxjs/operators";
+import { catchError, finalize, switchMap, take } from "rxjs/operators";
 import { DEFAULT_SORT } from "../../core/trainee/constants";
-import { ITrainee } from "../../core/trainee/trainee.interfaces";
+import {
+  IGetTraineesResponse,
+  ITrainee,
+  TraineesFilterType
+} from "../../core/trainee/trainee.interfaces";
 import { TraineeService } from "../../core/trainee/trainee.service";
 import {
+  AllDoctorsFilter,
   ClearTraineesSearch,
   GetTrainees,
+  GetTraineesError,
+  GetTraineesSuccess,
   PaginateTrainees,
   ResetTraineesPaginator,
   ResetTraineesSort,
   SearchTrainees,
-  SortTrainees
+  SortTrainees,
+  UnderNoticeFilter
 } from "./trainees.actions";
 
 export class TraineesStateModel {
   public countTotal: number;
   public countUnderNotice: number;
+  public error?: string;
+  public filter: TraineesFilterType;
   public items: ITrainee[];
   public loading: boolean;
   public pageIndex: number;
@@ -33,11 +43,12 @@ export class TraineesStateModel {
   defaults: {
     countTotal: null,
     countUnderNotice: null,
+    filter: null,
     items: null,
     loading: null,
-    totalPages: null,
     pageIndex: 0,
     searchQuery: null,
+    totalPages: null,
     sort: {
       active: null,
       direction: null
@@ -70,8 +81,18 @@ export class TraineesState {
   }
 
   @Selector()
+  public static countUnderNotice(state: TraineesStateModel) {
+    return state.countUnderNotice;
+  }
+
+  @Selector()
   public static totalResults(state: TraineesStateModel) {
     return state.totalResults;
+  }
+
+  @Selector()
+  public static error(state: TraineesStateModel) {
+    return state.error;
   }
 
   @Selector()
@@ -84,6 +105,11 @@ export class TraineesState {
     return state.searchQuery;
   }
 
+  @Selector()
+  public static filter(state: TraineesStateModel) {
+    return state.filter;
+  }
+
   @Action(GetTrainees)
   getTrainees(ctx: StateContext<TraineesStateModel>) {
     ctx.patchState({
@@ -91,30 +117,48 @@ export class TraineesState {
       loading: true
     });
 
-    const state = ctx.getState();
-    let params = new HttpParams().set("pageNumber", state.pageIndex.toString());
+    const params: HttpParams = this.traineeService.generateParams();
 
-    if (state.sort.direction) {
-      params = params
-        .append("sortColumn", state.sort.active)
-        .append("sortOrder", state.sort.direction);
-    }
+    return this.traineeService
+      .getTrainees(params)
+      .pipe(
+        take(1),
+        switchMap((response: IGetTraineesResponse) =>
+          ctx.dispatch(new GetTraineesSuccess(response))
+        ),
+        catchError((error: HttpErrorResponse) =>
+          ctx.dispatch(new GetTraineesError(error))
+        ),
+        finalize(() =>
+          ctx.patchState({
+            loading: false
+          })
+        )
+      )
+      .subscribe();
+  }
 
-    if (state.searchQuery) {
-      params = params.append("searchQuery", state.searchQuery);
-    }
+  @Action(GetTraineesSuccess)
+  getTraineesSuccess(
+    ctx: StateContext<TraineesStateModel>,
+    action: GetTraineesSuccess
+  ) {
+    return ctx.patchState({
+      items: action.response.traineeInfo,
+      countTotal: action.response.countTotal,
+      countUnderNotice: action.response.countUnderNotice,
+      totalResults: action.response.totalResults
+    });
+  }
 
-    return this.traineeService.getTrainees(params).pipe(
-      tap((result) => {
-        ctx.patchState({
-          items: result.traineeInfo,
-          countTotal: result.countTotal,
-          countUnderNotice: result.countUnderNotice,
-          totalResults: result.totalResults,
-          loading: false
-        });
-      })
-    );
+  @Action(GetTraineesError)
+  getTraineesError(
+    ctx: StateContext<TraineesStateModel>,
+    action: GetTraineesError
+  ) {
+    return ctx.patchState({
+      error: `Error: ${action.error.message}`
+    });
   }
 
   @Action(SortTrainees)
@@ -165,6 +209,20 @@ export class TraineesState {
   clearTraineesSearch(ctx: StateContext<TraineesStateModel>) {
     return ctx.patchState({
       searchQuery: null
+    });
+  }
+
+  @Action(UnderNoticeFilter)
+  underNoticeFilter(ctx: StateContext<TraineesStateModel>) {
+    return ctx.patchState({
+      filter: TraineesFilterType.UNDER_NOTICE
+    });
+  }
+
+  @Action(AllDoctorsFilter)
+  allDoctorsFilter(ctx: StateContext<TraineesStateModel>) {
+    return ctx.patchState({
+      filter: TraineesFilterType.ALL_DOCTORS
     });
   }
 }

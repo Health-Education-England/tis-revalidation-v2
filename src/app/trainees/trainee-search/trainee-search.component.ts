@@ -15,7 +15,8 @@ import { TraineesState } from "../state/trainees.state";
 
 @Component({
   selector: "app-trainee-search",
-  templateUrl: "./trainee-search.component.html"
+  templateUrl: "./trainee-search.component.html",
+  styleUrls: ["./trainee-search.component.scss"]
 })
 export class TraineeSearchComponent implements OnInit {
   @Select(TraineesState.searchQuery) searchQuery$: Observable<string>;

@@ -5,7 +5,7 @@ import { environment } from "@environment";
 import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { TraineesStateModel } from "../../trainees/state/trainees.state";
-import { IGetTraineesResponse } from "./trainee.interfaces";
+import { IGetTraineesResponse, TraineesFilterType } from "./trainee.interfaces";
 
 @Injectable({
   providedIn: "root"
@@ -24,6 +24,25 @@ export class TraineeService {
     );
   }
 
+  public generateParams(): HttpParams {
+    const snapshot: TraineesStateModel = this.store.snapshot().trainees;
+
+    let params: HttpParams = new HttpParams()
+      .set("sortColumn", snapshot.sort.active)
+      .set("sortOrder", snapshot.sort.direction)
+      .set("pageNumber", snapshot.pageIndex.toString())
+      .set(
+        TraineesFilterType.UNDER_NOTICE,
+        snapshot.filter === TraineesFilterType.UNDER_NOTICE ? "true" : "false"
+      );
+
+    if (snapshot.searchQuery) {
+      params = params.append("searchQuery", snapshot.searchQuery);
+    }
+
+    return params;
+  }
+
   public updateTraineesRoute(): Promise<boolean> {
     const snapshot: TraineesStateModel = this.store.snapshot().trainees;
 
@@ -32,6 +51,7 @@ export class TraineeService {
         active: snapshot.sort.active,
         direction: snapshot.sort.direction,
         pageIndex: snapshot.pageIndex,
+        filter: snapshot.filter,
         ...(snapshot.searchQuery && { searchQuery: snapshot.searchQuery })
       }
     });

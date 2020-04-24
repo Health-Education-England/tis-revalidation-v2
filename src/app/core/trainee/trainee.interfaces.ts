@@ -27,3 +27,8 @@ export interface ITraineeDataCell {
   name: string;
   enableSort: boolean;
 }
+
+export enum TraineesFilterType {
+  UNDER_NOTICE = "underNotice",
+  ALL_DOCTORS = "allDoctors"
+}

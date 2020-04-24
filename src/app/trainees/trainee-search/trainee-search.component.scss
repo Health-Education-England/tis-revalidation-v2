@@ -1,0 +1,7 @@
+.trainee-search {
+  grid-template-columns: auto 1fr;
+}
+
+.trainee-search ::ng-deep .mat-form-field-infix {
+  width: auto;
+}

@@ -1,0 +1,17 @@
+@import "~nhsuk-frontend/packages/core/settings/colours";
+.trainee-details {
+  max-height: 70vh;
+  overflow: auto;
+
+  &.large-display {
+    max-height: unset;
+  }
+}
+::ng-deep {
+  .mat-list-base .mat-list-item .mat-list-text .mat-caption {
+    font-size: 14px;
+    // color: $color_nhsuk-black;
+    color: tint($color_nhsuk-black, 46%);
+    color: rgba(0, 0, 0, 0.54);
+  }
+}

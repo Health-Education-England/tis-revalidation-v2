@@ -10,7 +10,7 @@ export const environment: IEnvironment = {
     login: ``,
     authRedirect: ``,
     getTrainees: `api/v1/doctors`,
-    getRecommendation: `mocky/5ea2d9614f00006c00d9f533`,
+    getRecommendation: `mocky/5ea6d31b2f00004e00c4e7d9`,
     getNotes: `mocky/5ea2da614f00006c00d9f540`
   }
 };

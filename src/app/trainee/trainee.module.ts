@@ -13,13 +13,15 @@ import { TraineeResolver } from "./trainee.resolver";
 import { RevalidationHistoryState } from "./state/revalidation-history.state";
 import { RevalidationHistoryService } from "./services/revalidation-history.service";
 import { RevalidationNotesState } from "./state/revalidation-notes.state";
+import { TraineeDetailsComponent } from './trainee-details/trainee-details.component';
 
 @NgModule({
   declarations: [
     TraineeComponent,
     RevalidationHistoryComponent,
     RevalidationFormComponent,
-    RevalidationNotesComponent
+    RevalidationNotesComponent,
+    TraineeDetailsComponent
   ],
   imports: [
     MaterialModule,

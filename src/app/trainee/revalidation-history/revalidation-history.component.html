@@ -37,10 +37,12 @@
                 <th mat-header-cell scope="col" *matHeaderCellDef> Outcome</th>
                 <td mat-cell *matCellDef="let element">
                     <div class="outcome" [ngSwitch]="element.outcome">
-                        <mat-icon *ngSwitchCase="'Approved'" aria-hidden="true" class="icon-green">done_all</mat-icon>
+                        <mat-icon *ngSwitchCase="'Approved'" aria-hidden="true" class="icon-green">done_all
+                        </mat-icon>
                         <mat-icon *ngSwitchCase="'Rejected'" aria-hidden="true" class="icon-red">error_outline
                         </mat-icon>
-                        <mat-icon *ngSwitchCase="'Under review'" aria-hidden="true" class="icon-blue">done</mat-icon>
+                        <mat-icon *ngSwitchCase="'Under review'" aria-hidden="true" class="icon-blue">done
+                        </mat-icon>
                         <span class="outcome-text">{{ element.outcome }}</span>
                     </div>
                 </td>

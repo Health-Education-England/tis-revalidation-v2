@@ -1,16 +1,28 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { TraineeDetailsComponent } from './trainee-details.component';
+import { TraineeDetailsComponent } from "./trainee-details.component";
+import { NgxsModule } from "@ngxs/store";
+import { RevalidationHistoryState } from "../state/revalidation-history.state";
+import { NoopAnimationsModule } from "@angular/platform-browser/animations";
+import { MaterialModule } from "src/app/shared/material/material.module";
+import { RouterTestingModule } from "@angular/router/testing";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 
-describe('TraineeDetailsComponent', () => {
+describe("TraineeDetailsComponent", () => {
   let component: TraineeDetailsComponent;
   let fixture: ComponentFixture<TraineeDetailsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TraineeDetailsComponent ]
-    })
-    .compileComponents();
+      imports: [
+        NoopAnimationsModule,
+        MaterialModule,
+        RouterTestingModule,
+        HttpClientTestingModule,
+        NgxsModule.forRoot([RevalidationHistoryState])
+      ],
+      declarations: [TraineeDetailsComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +31,7 @@ describe('TraineeDetailsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

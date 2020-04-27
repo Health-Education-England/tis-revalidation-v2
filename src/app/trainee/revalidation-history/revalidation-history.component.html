@@ -68,7 +68,7 @@
                         <mat-divider *ngIf="element.comments?.length > 0"></mat-divider>
                         <ng-container *ngFor="let comment of element.comments">
                             <div class="element-notes">
-                                {{ comment }}
+                                {{ comment.comment }}
                             </div>
                         </ng-container>
                     </div>

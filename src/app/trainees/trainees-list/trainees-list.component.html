@@ -43,8 +43,8 @@
                 </mat-header-cell>
             </ng-container>
 
-            <mat-header-row *matHeaderRowDef="['header-toolbar']"
-                [ngClass]="{'hide':trainees.length === 0, 'mat-header-sticky large-device': (isLarge$ | async) === true || (isExtraLarge$ | async) === true}">
+            <mat-header-row *matHeaderRowDef="['header-toolbar']" class="mat-header-sticky"
+                [ngClass]="{'hide':trainees.length === 0, 'large-device': (isLarge$ | async) === true || (isExtraLarge$ | async) === true}">
             </mat-header-row>
 
 

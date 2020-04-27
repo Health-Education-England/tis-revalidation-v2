@@ -10,6 +10,7 @@ import { TraineesService } from "../trainees.service";
 import { tap, catchError } from "rxjs/operators";
 import { Injectable } from "@angular/core";
 import { of } from "rxjs";
+import { append, patch } from "@ngxs/store/operators";
 
 export class TraineesStateModel {
   public items: ITrainee[];
@@ -108,14 +109,27 @@ export class TraineesState {
 
     return this.doctorsService.getTrainees(params).pipe(
       tap((result) => {
-        ctx.setState({
-          ...state,
-          items: result.traineeInfo,
-          countTotal: result.countTotal,
-          countUnderNotice: result.countUnderNotice,
-          totalPages: result.totalPages,
-          params: action.payload
-        });
+        if (action.payload.pageNumber.toString() === "0") {
+          debugger;
+          ctx.setState({
+            ...state,
+            items: result.traineeInfo,
+            countTotal: result.countTotal,
+            countUnderNotice: result.countUnderNotice,
+            totalPages: result.totalPages,
+            params: action.payload
+          });
+        } else {
+          ctx.setState(
+            patch({
+              items: [...new Set([...state.items, ...result.traineeInfo])],
+              countTotal: result.countTotal,
+              countUnderNotice: result.countUnderNotice,
+              totalPages: result.totalPages,
+              params: action.payload
+            })
+          );
+        }
       }),
       catchError(() => {
         ctx.patchState({ ...defaultState, params: action.payload });

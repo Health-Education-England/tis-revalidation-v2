@@ -36,23 +36,23 @@
   }
 
   .mat-header-sticky {
-    &.large-device {
-      top: 0px;
-      position: sticky;
-      z-index: $z-index-drawer;
-    }
+    // &.large-device {
+    top: 0px;
+    position: sticky;
+    z-index: $z-index-drawer;
+    // }
   }
 
   .trainee-container {
-    &.large-device {
-      z-index: $z-index-fab;
-      position: relative;
-      height: 100vh;
-      overflow: unset;
-    }
+    // &.large-device {
+    z-index: $z-index-fab;
+    position: relative;
+    height: 100vh;
+    overflow: auto;
+    // }
 
-    height: auto;
-    overflow-x: scroll;
+    // height: auto;
+    // overflow-x: scroll;
   }
 
   .mat-table {

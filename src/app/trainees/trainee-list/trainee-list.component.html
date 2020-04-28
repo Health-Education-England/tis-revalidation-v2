@@ -27,56 +27,70 @@
     <!-- trainees -->
     <ng-template #trainees>
       <ng-container *ngIf="data.totalResults; else noResults">
-        <mat-table
-          *ngIf="{
-            sort: sort$ | async,
-            trainees: trainees$ | async
-          } as data"
-          [dataSource]="data.trainees"
-          matSort
-          matSortDisableClear
-          (matSortChange)="sortTrainees($event)"
-          [matSortActive]="data.sort.active"
-          [matSortDirection]="data.sort.direction"
-        >
-          <ng-container
-            *ngFor="let i of columnData"
-            matColumnDef="{{ i.label }}"
+        <div class="table-container">
+          <table
+            mat-table
+            *ngIf="{
+              sort: sort$ | async,
+              trainees: trainees$ | async
+            } as data"
+            class="w-100"
+            [dataSource]="data.trainees"
+            matSort
+            matSortDisableClear
+            (matSortChange)="sortTrainees($event)"
+            [matSortActive]="data.sort.active"
+            [matSortDirection]="data.sort.direction"
           >
-            <ng-container *ngIf="i.enableSort; else disabledSort">
-              <mat-header-cell *matHeaderCellDef [mat-sort-header]="i.name">{{
-                i.label
-              }}</mat-header-cell>
+            <caption class="collapsed no-height">
+              Trainees list
+            </caption>
+            <ng-container
+              *ngFor="let i of columnData"
+              matColumnDef="{{ i.name }}"
+            >
+              <ng-container *ngIf="i.enableSort; else disabledSort">
+                <th
+                  mat-header-cell
+                  *matHeaderCellDef
+                  [mat-sort-header]="i.name"
+                  scope="col"
+                  [innerHTML]="i.label"
+                ></th>
+              </ng-container>
+              <ng-template #disabledSort>
+                <th
+                  mat-header-cell
+                  *matHeaderCellDef
+                  [mat-sort-header]="i.name"
+                  scope="col"
+                  [innerHTML]="i.label"
+                  disabled
+                ></th>
+              </ng-template>
+
+              <!-- mat cell -->
+              <td mat-cell *matCellDef="let element">
+                <ng-container
+                  *ngIf="dateColumns.includes(i.name); else noPipe"
+                  >{{ element[i.name] | date: dateFormat }}</ng-container
+                >
+                <ng-template #noPipe>{{ element[i.name] }}</ng-template>
+              </td>
             </ng-container>
-            <ng-template #disabledSort>
-              <mat-header-cell
-                *matHeaderCellDef
-                [mat-sort-header]="i.name"
-                disabled
-                >{{ i.label }}</mat-header-cell
-              >
-            </ng-template>
 
-            <!-- mat cell -->
-            <mat-cell *matCellDef="let element">
-              <ng-container *ngIf="dateColumns.includes(i.name); else noPipe">{{
-                element[i.name] | date: dateFormat
-              }}</ng-container>
-              <ng-template #noPipe>{{ element[i.name] }}</ng-template>
-            </mat-cell>
-          </ng-container>
-
-          <mat-header-row *matHeaderRowDef="columnLabels"></mat-header-row>
-          <mat-row
-            *matRowDef="let row; columns: columnLabels"
-            (click)="traineeDetails($event, row)"
-            (keyup.enter)="traineeDetails($event, row)"
-            (keyup.space)="traineeDetails($event, row)"
-            tabindex="0"
-            role="button"
-          >
-          </mat-row>
-        </mat-table>
+            <tr mat-header-row *matHeaderRowDef="columnNames"></tr>
+            <tr
+              mat-row
+              *matRowDef="let row; columns: columnNames"
+              (click)="traineeDetails($event, row)"
+              (keyup.enter)="traineeDetails($event, row)"
+              (keyup.space)="traineeDetails($event, row)"
+              tabindex="0"
+              role="button"
+            ></tr>
+          </table>
+        </div>
       </ng-container>
 
       <!--  no results found -->

@@ -5,6 +5,7 @@ import { Observable } from "rxjs";
 import { IRevalidationHistory } from "../revalidation-history.interface";
 import { Breakpoints, BreakpointObserver } from "@angular/cdk/layout";
 import { map, shareReplay } from "rxjs/operators";
+import { environment } from "@environment";
 
 @Component({
   selector: "app-trainee-details",
@@ -14,6 +15,8 @@ import { map, shareReplay } from "rxjs/operators";
 export class TraineeDetailsComponent implements OnInit {
   @Select(RevalidationHistoryState.revalidationHistory)
   revalidationHistory$: Observable<IRevalidationHistory>;
+
+  dateFormat = environment.dateFormat;
 
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)

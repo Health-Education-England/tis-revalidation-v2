@@ -26,4 +26,10 @@ describe("MobileMenuComponent", () => {
   it("should create", () => {
     expect(component).toBeTruthy();
   });
+
+  it("should emit close mobile menu", () => {
+    spyOn(component.closeMenu, "emit");
+    component.onMenuClick();
+    expect(component.closeMenu.emit).toHaveBeenCalled();
+  });
 });

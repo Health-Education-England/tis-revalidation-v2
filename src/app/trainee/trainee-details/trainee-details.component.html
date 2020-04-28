@@ -19,7 +19,7 @@
         </mat-list-item>
         <mat-list-item *ngIf="revalidationHistory.cctDate">
             <div class="mat-caption" mat-line>CCT date:</div>
-            <div mat-line>{{revalidationHistory.cctDate | date: 'dd/MM/yyyy'}}</div>
+            <div mat-line>{{revalidationHistory.cctDate | date: dateFormat}}</div>
         </mat-list-item>
     </mat-list>
     <mat-divider></mat-divider>

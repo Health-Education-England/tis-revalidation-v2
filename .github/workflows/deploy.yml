@@ -25,8 +25,11 @@ jobs:
       - name: Pull down dependencies
         run: npm install
 
+      - name: Run unit tests
+        run: npm run test:ci
+
       - name: Build
-        run: npm run build:shared && npm run build:browsers && ng build --prod
+        run: npm run build:misc && ng build --prod
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1

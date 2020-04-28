@@ -1,8 +1,8 @@
-import { TestBed, async } from "@angular/core/testing";
-import { AnalyticsModule, AnalyticsConfig } from "./analytics.module";
-import { RouterTestingModule } from "@angular/router/testing";
+import { async, TestBed } from "@angular/core/testing";
 import { Router } from "@angular/router";
+import { RouterTestingModule } from "@angular/router/testing";
 import { AppComponent, MockComponent, routes } from "../mock.test.component";
+import { AnalyticsConfig, AnalyticsModule } from "./analytics.module";
 
 describe("MockComponent", () => {
   let router: Router;
@@ -34,24 +34,18 @@ describe("MockComponent", () => {
   describe("Analytics Module loader tests", () => {
     let docHead: HTMLHeadElement;
     let scriptTag: HTMLScriptElement;
-    let siteId: string;
     let asyncTag: boolean;
 
     beforeEach(() => {
       docHead = fixture.debugElement.nativeNode.ownerDocument.head;
       scriptTag = docHead.querySelector(
-        'script[src^="https://www.googletagmanager.com/gtag/js"]'
+        'script[src^="https://www.google-analytics.com/analytics.js"]'
       );
-      siteId = scriptTag.getAttribute("src");
       asyncTag = scriptTag.hasAttribute("async");
     });
 
     it("header tag should contain the script tag", () => {
       expect(scriptTag).toBeTruthy();
-    });
-
-    it("script tag should contain the injected siteId", () => {
-      expect(siteId).toContain(analyticsConfig.siteId.join());
     });
 
     it("script tag should contain the async attribute", () => {

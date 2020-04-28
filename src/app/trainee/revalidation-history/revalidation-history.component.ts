@@ -17,6 +17,9 @@ import {
 import { RevalidationHistoryState } from "../state/revalidation-history.state";
 import { Select } from "@ngxs/store";
 import { Observable } from "rxjs";
+import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
+import { map, shareReplay } from "rxjs/operators";
+import { environment } from "@environment";
 
 @Component({
   selector: "app-revalidation-history",
@@ -42,10 +45,24 @@ export class RevalidationHistoryComponent implements OnInit {
     "submittedBy"
   ];
   expandedElement: IRecommendation | null;
-  constructor(private bottomSheet: MatBottomSheet, public dialog: MatDialog) {}
 
   @Select(RevalidationHistoryState.revalidationHistory)
   revalidationHistory$: Observable<IRevalidationHistory>;
+
+  dateFormat = environment.dateFormat;
+
+  isHandset$: Observable<boolean> = this.breakpointObserver
+    .observe(Breakpoints.Handset)
+    .pipe(
+      map((result) => result.matches),
+      shareReplay()
+    );
+
+  constructor(
+    private bottomSheet: MatBottomSheet,
+    public dialog: MatDialog,
+    private breakpointObserver: BreakpointObserver
+  ) {}
 
   ngOnInit(): void {}
 

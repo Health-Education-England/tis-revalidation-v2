@@ -1,81 +1,110 @@
-<mat-toolbar>
-    <mat-toolbar-row>
-        <span class="spacer"></span>
+<ng-container *ngIf="{isHandset : isHandset$ | async}; let device;">
+    <mat-toolbar>
+        <mat-toolbar-row>
+            <ng-container *ngIf="device.isHandset">
+                <mat-menu #traineeMenu="matMenu">
+                    <app-trainee-details></app-trainee-details>
+                </mat-menu>
 
-        <button mat-icon-button aria-label="Add notes" (click)="openNotes()" color="primary">
-            <mat-icon matBadge="4">speaker_notes</mat-icon>
-        </button>
-    </mat-toolbar-row>
-</mat-toolbar>
-<div class="trainee-container mat-elevation-z8" *ngIf="revalidationHistory$ | async as revalidationHistory">
-    <table mat-table [dataSource]="revalidationHistory.recommendations" multiTemplateDataRows class="w-100">
-        <caption class="collapsed no-height">Trainee revalidation historical details</caption>
-        <ng-container matColumnDef="recommendation">
-            <th mat-header-cell scope="col" *matHeaderCellDef> Recommendation </th>
-            <td mat-cell *matCellDef="let element"> {{ element.recommendation }} </td>
-        </ng-container>
-        <ng-container matColumnDef="outcome">
-            <th mat-header-cell scope="col" *matHeaderCellDef> Outcome</th>
-            <td mat-cell *matCellDef="let element">
-                <div class="outcome" [ngSwitch]="element.outcome">
-                    <mat-icon *ngSwitchCase="'Approved'" aria-hidden="true" class="icon-green">done_all</mat-icon>
-                    <mat-icon *ngSwitchCase="'Rejected'" aria-hidden="true" class="icon-red">error_outline</mat-icon>
-                    <mat-icon *ngSwitchCase="'Under review'" aria-hidden="true" class="icon-blue">done</mat-icon>
-                    <span class="outcome-text">{{ element.outcome }}</span>
-                </div>
-            </td>
-        </ng-container>
-        <ng-container matColumnDef="gmcSubDueDate">
-            <th mat-header-cell scope="col" *matHeaderCellDef> GMC Submission Due Date </th>
-            <td mat-cell *matCellDef="let element"> {{ element.gmcSubDueDate }}
-            </td>
-        </ng-container>
-        <ng-container matColumnDef="actSubDate">
-            <th mat-header-cell scope="col" *matHeaderCellDef> Actual Submission Date </th>
-            <td mat-cell *matCellDef="let element"> {{ element.actSubDate }} </td>
-        </ng-container>
-        <ng-container matColumnDef="submittedBy">
-            <th mat-header-cell scope="col" *matHeaderCellDef> Submitted By </th>
-            <td mat-cell *matCellDef="let element"> {{ element.submittedBy }} </td>
-        </ng-container>
+                <button mat-icon-button aria-label="Trainee details" [matMenuTriggerFor]="traineeMenu">
+                    <mat-icon aria-label="Trainee details">account_box</mat-icon>
+                </button>
+            </ng-container>
 
-        <ng-container matColumnDef="expandedDetail">
-            <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-                <div class="element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-                    <div class="element-submission-status">
-                        <strong>Submission Status:</strong> {{element.submissionStatus}}
-                    </div>
-                    <mat-divider *ngIf="element.comments?.length > 0"></mat-divider>
-                    <ng-container *ngFor="let comment of element.comments">
-                        <div class="element-notes">
-                            {{ comment }}
+            <span class="spacer"></span>
+
+            <button mat-icon-button aria-label="Add notes" (click)="openNotes()" color="primary">
+                <mat-icon matBadge="4">speaker_notes</mat-icon>
+            </button>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <div [ngClass]="{'d-flex mat-elevation-z8': !device.isHandset}">
+        <div class="left-nav" *ngIf="!device.isHandset">
+            <app-trainee-details></app-trainee-details>
+        </div>
+
+        <mat-divider *ngIf="!device.isHandset" [vertical]="true"></mat-divider>
+
+        <div class="trainee-container " [ngClass]="{'spacer': !device.isHandset, 'mat-elevation-z8': device.isHandset}"
+            *ngIf="revalidationHistory$ | async as revalidationHistory">
+            <table mat-table [dataSource]="revalidationHistory.recommendations" multiTemplateDataRows class="w-100">
+                <caption class="collapsed no-height">Trainee revalidation historical details</caption>
+                <ng-container matColumnDef="recommendation">
+                    <th mat-header-cell scope="col" *matHeaderCellDef> Recommendation </th>
+                    <td mat-cell *matCellDef="let element"> {{ element.recommendation }} </td>
+                </ng-container>
+                <ng-container matColumnDef="outcome">
+                    <th mat-header-cell scope="col" *matHeaderCellDef> Outcome</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="outcome" [ngSwitch]="element.outcome">
+                            <mat-icon *ngSwitchCase="'Approved'" aria-hidden="true" class="icon-green">done_all
+                            </mat-icon>
+                            <mat-icon *ngSwitchCase="'Rejected'" aria-hidden="true" class="icon-red">error_outline
+                            </mat-icon>
+                            <mat-icon *ngSwitchCase="'Under review'" aria-hidden="true" class="icon-blue">done
+                            </mat-icon>
+                            <span class="outcome-text">{{ element.outcome }}</span>
                         </div>
-                    </ng-container>
-                </div>
-            </td>
-        </ng-container>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="gmcSubDueDate">
+                    <th mat-header-cell scope="col" *matHeaderCellDef> GMC Submission Due Date </th>
+                    <td mat-cell *matCellDef="let element"> {{ element.gmcSubDueDate | date: dateFormat}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="actSubDate">
+                    <th mat-header-cell scope="col" *matHeaderCellDef> Actual Submission Date </th>
+                    <td mat-cell *matCellDef="let element"> {{ element.actSubDate | date: dateFormat}} </td>
+                </ng-container>
+                <ng-container matColumnDef="submittedBy">
+                    <th mat-header-cell scope="col" *matHeaderCellDef> Submitted By </th>
+                    <td mat-cell *matCellDef="let element"> {{ element.submittedBy }} </td>
+                </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-        <tr tabindex="0" mat-row *matRowDef="let element; columns: columnsToDisplay;" class="element-row"
-            [class.expanded-row]="expandedElement === element"
-            (click)="expandedElement = expandedElement === element ? null : element"
-            (keyup.enter)="expandedElement = expandedElement === element ? null : element"
-            (keyup.space)="expandedElement = expandedElement === element ? null : element">
-        </tr>
-        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+                <ng-container matColumnDef="expandedDetail">
+                    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+                        <div class="element-detail"
+                            [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                            <div class="element-submission-status">
+                                <strong>Submission Status:</strong> {{element.submissionStatus}}
+                            </div>
+                            <mat-divider *ngIf="element.comments?.length > 0"></mat-divider>
+                            <ng-container *ngFor="let comment of element.comments">
+                                <div class="element-notes">
+                                    {{ comment.comment }}
+                                </div>
+                            </ng-container>
+                        </div>
+                    </td>
+                </ng-container>
 
-        <ng-container matColumnDef="noRecord">
-            <td colspan="5" mat-footer-cell class="centered" *matFooterCellDef>
-                <em class="icon-red">No history available.</em>
-            </td>
-        </ng-container>
+                <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                <tr tabindex="0" mat-row *matRowDef="let element; columns: columnsToDisplay;" class="element-row"
+                    [class.expanded-row]="expandedElement === element"
+                    (click)="expandedElement = expandedElement === element ? null : element"
+                    (keyup.enter)="expandedElement = expandedElement === element ? null : element"
+                    (keyup.space)="expandedElement = expandedElement === element ? null : element">
+                </tr>
+                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
 
-        <tr mat-footer-row *matFooterRowDef="['noRecord']"
-            [ngClass]="{'hide':revalidationHistory.recommendations.length > 0}">
-        </tr>
-    </table>
-</div>
-<div class="button-row">
-    <span class="spacer"></span>
-    <button mat-raised-button (click)="openDialog()" color="primary">Recommend</button>
-</div>
+                <ng-container matColumnDef="noRecord">
+                    <td colspan="5" mat-footer-cell class="centered" *matFooterCellDef>
+                        <em class="icon-red">No history available.</em>
+                    </td>
+                </ng-container>
+
+                <tr mat-footer-row *matFooterRowDef="['noRecord']"
+                    [ngClass]="{'hide':revalidationHistory.recommendations.length > 0}">
+                </tr>
+            </table>
+            <div class="button-row" *ngIf="!device.isHandset">
+                <span class="spacer"></span>
+                <button mat-raised-button (click)="openDialog()" color="primary">Recommend</button>
+            </div>
+        </div>
+        <div class="button-row" *ngIf="device.isHandset">
+            <span class="spacer"></span>
+            <button mat-raised-button (click)="openDialog()" color="primary">Recommend</button>
+        </div>
+    </div>
+</ng-container>

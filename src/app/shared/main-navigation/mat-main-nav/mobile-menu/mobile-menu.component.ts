@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { menuItems } from "../menu-items.const";
 import { IMenuItem } from "../menu-item.interface";
 import { environment } from "@environment";
@@ -11,7 +11,12 @@ import { environment } from "@environment";
 export class MobileMenuComponent implements OnInit {
   menuItems$: IMenuItem[] = menuItems;
   hostURI: string = environment.adminsUIHostUri;
+  @Output() closeMenu = new EventEmitter();
   constructor() {}
 
   ngOnInit(): void {}
+
+  onMenuClick(): void {
+    this.closeMenu.emit();
+  }
 }

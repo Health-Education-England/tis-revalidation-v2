@@ -5,6 +5,7 @@ export abstract class IEnvironment {
   abstract readonly hotJarSv: number;
   abstract readonly adminsUIHostUri: string; // admins-ui related links
   abstract readonly supportLink: string; // link to tis-support
+  abstract readonly dateFormat: string; // TODO: when implementing i18n localization use value from locale
   /**
    * Add api urls here as required
    */

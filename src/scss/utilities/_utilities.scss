@@ -69,7 +69,7 @@
 
 .mat-tab-label,
 .mat-tab-link {
-  color: $color_nhsuk-black;
+  color: shade($color_nhsuk-black, 100%);
 }
 
 .centered {

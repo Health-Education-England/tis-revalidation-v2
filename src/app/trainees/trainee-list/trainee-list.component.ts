@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Sort } from "@angular/material/sort";
 import { ActivatedRoute, Params, Router } from "@angular/router";
+import { environment } from "@environment";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
@@ -33,6 +34,13 @@ export class TraineeListComponent implements OnInit {
   @Select(TraineesState.sort) sort$: Observable<Sort>;
   @Select(TraineesState.error) error$: Observable<string>;
 
+  public dateFormat: string = environment.dateFormat;
+  public dateColumns: string[] = [
+    "cctDate",
+    "submissionDate",
+    "dateAdded",
+    "lastUpdatedDate"
+  ];
   public columnData: ITraineeDataCell[] = [
     {
       label: "First name",

@@ -56,7 +56,14 @@
                 >{{ i.label }}</mat-header-cell
               >
             </ng-template>
-            <mat-cell *matCellDef="let element">{{ element[i.name] }}</mat-cell>
+
+            <!-- mat cell -->
+            <mat-cell *matCellDef="let element">
+              <ng-container *ngIf="dateColumns.includes(i.name); else noPipe">{{
+                element[i.name] | date: dateFormat
+              }}</ng-container>
+              <ng-template #noPipe>{{ element[i.name] }}</ng-template>
+            </mat-cell>
           </ng-container>
 
           <mat-header-row *matHeaderRowDef="columnLabels"></mat-header-row>

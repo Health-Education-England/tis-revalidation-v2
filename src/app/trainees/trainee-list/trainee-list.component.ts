@@ -25,7 +25,8 @@ import { TraineesState } from "../state/trainees.state";
 
 @Component({
   selector: "app-trainee-list",
-  templateUrl: "./trainee-list.component.html"
+  templateUrl: "./trainee-list.component.html",
+  styleUrls: ["./trainee-list.component.scss"]
 })
 export class TraineeListComponent implements OnInit {
   @Select(TraineesState.loading) loading$: Observable<boolean>;
@@ -93,7 +94,7 @@ export class TraineeListComponent implements OnInit {
       enableSort: true
     }
   ];
-  public columnLabels: string[] = this.columnData.map((i) => i.label);
+  public columnNames: string[] = this.columnData.map((i) => i.name);
   public params: Params = this.route.snapshot.queryParams;
 
   constructor(

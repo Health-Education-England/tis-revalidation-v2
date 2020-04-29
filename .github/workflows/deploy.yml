@@ -25,6 +25,9 @@ jobs:
       - name: Pull down dependencies
         run: npm install
 
+      - name: Run linting
+        run: npm run lint
+
       - name: Run unit tests
         run: npm run test:ci
 

@@ -26,7 +26,6 @@ export abstract class IEnvironment {
     readonly scope: string[];
     readonly redirectSignIn: string;
     readonly redirectSignOut: string;
-    // readonly returnTo: string;
     readonly responseType: string;
   };
 }

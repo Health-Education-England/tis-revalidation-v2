@@ -17,13 +17,12 @@ export const environment: IEnvironment = {
   awsConfig: {
     region: "eu-west-2",
     userPoolId: "eu-west-2_hkwYIoHu3",
+    scope: ["openid", "aws.cognito.signin.user.admin"],
+    redirectSignIn: "http://localhost:4200",
     userPoolWebClientId: "3adscm2usl3lop510nfijpr12f",
     authenticationFlowType: "USER_PASSWORD_AUTH",
     domain: "stage-auth.tis.nhs.uk",
-    scope: ["openid", "aws.cognito.signin.user.admin"],
-    redirectSignIn: "http://localhost:4200",
     redirectSignOut: "http://localhost:4200",
-    // returnTo: "http://localhost:4200",
     responseType: "token"
   }
 };

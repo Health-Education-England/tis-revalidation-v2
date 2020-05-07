@@ -16,15 +16,14 @@ export const environment: IEnvironment = {
   },
   // TODO add correct prod values below
   awsConfig: {
-    region: "eu-west-2",
-    userPoolId: "eu-west-2_hkwYIoHu3",
     userPoolWebClientId: "3adscm2usl3lop510nfijpr12f",
     authenticationFlowType: "USER_PASSWORD_AUTH",
+    region: "eu-west-2",
+    userPoolId: "eu-west-2_hkwYIoHu3",
     domain: "stage-auth.tis.nhs.uk",
     scope: ["openid", "aws.cognito.signin.user.admin"],
     redirectSignIn: "http://localhost:4200",
     redirectSignOut: "http://localhost:4200",
-    // returnTo: "http://localhost:4200",
     responseType: "token"
   }
 };

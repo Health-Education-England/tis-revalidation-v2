@@ -21,16 +21,15 @@ export const environment: IEnvironment = {
     getTrainees: `mocky/5e997d8a33000062007b2354?mocky-delay=700ms`
   },
   awsConfig: {
+    redirectSignIn: "http://localhost:4200",
+    redirectSignOut: "http://localhost:4200",
+    responseType: "token",
     region: "eu-west-2",
     userPoolId: "eu-west-2_hkwYIoHu3",
     userPoolWebClientId: "3adscm2usl3lop510nfijpr12f",
     authenticationFlowType: "USER_PASSWORD_AUTH",
     domain: "stage-auth.tis.nhs.uk",
-    scope: ["openid", "aws.cognito.signin.user.admin"],
-    redirectSignIn: "http://localhost:4200",
-    redirectSignOut: "http://localhost:4200",
-    // returnTo: "http://localhost:4200",
-    responseType: "token"
+    scope: ["openid", "aws.cognito.signin.user.admin"]
   }
 };
 

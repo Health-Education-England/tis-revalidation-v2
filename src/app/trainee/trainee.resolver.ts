@@ -21,7 +21,7 @@ export class TraineeResolver implements Resolve<IRevalidationHistory> {
     state: RouterStateSnapshot
   ): Observable<IRevalidationHistory> | Observable<any> {
     const gmcID: number = Number(route.params.id);
-    return forkJoin(
+    return forkJoin([
       // dispatch history data
       this.store.dispatch(new RevalidationHistoryAction(gmcID)).pipe(
         catchError((err: any) => {
@@ -30,6 +30,6 @@ export class TraineeResolver implements Resolve<IRevalidationHistory> {
       ),
       // dispatch trainee notes data
       this.store.dispatch(new GetRevalidationNotes(gmcID))
-    );
+    ]);
   }
 }

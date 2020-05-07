@@ -1,5 +1,5 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
-import { NgModule } from "@angular/core";
+import { NgModule, APP_INITIALIZER } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ServiceWorkerModule } from "@angular/service-worker";
@@ -14,6 +14,8 @@ import { MainNavigationModule } from "./shared/main-navigation/main-navigation.m
 import { MaterialModule } from "./shared/material/material.module";
 import { SharedModule } from "./shared/shared.module";
 import { AuthInterceptor } from "./core/auth/auth.interceptor";
+import { AuthService } from "./core/auth/auth.service";
+import { initializeApplication } from "./core/auth/auth.initializer";
 
 /* Configure Amplify resources */
 Amplify.configure(AWS_CONFIG);
@@ -43,7 +45,14 @@ Amplify.configure(AWS_CONFIG);
     MainNavigationModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    AuthService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeApplication,
+      multi: true,
+      deps: [AuthService]
+    }
   ],
   bootstrap: [AppComponent]
 })

@@ -24,6 +24,7 @@ export const environment: IEnvironment = {
     scope: ["openid", "aws.cognito.signin.user.admin"],
     redirectSignIn: "http://localhost:4200",
     redirectSignOut: "http://localhost:4200",
+    // returnTo: "http://localhost:4200",
     responseType: "token"
   }
 };

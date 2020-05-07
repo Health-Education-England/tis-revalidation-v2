@@ -5,19 +5,19 @@ import {
   HttpEvent,
   HttpInterceptor
 } from "@angular/common/http";
-import { Observable, from } from "rxjs";
-import { Auth } from "aws-amplify";
-import { switchMap } from "rxjs/operators";
+import { Observable, of } from "rxjs";
+import { switchMap, catchError } from "rxjs/operators";
+import { AuthService } from "./auth.service";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor() {}
+  constructor(private authService: AuthService) {}
 
   intercept(
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    return from(Auth.currentSession()).pipe(
+    return this.authService.currentSession().pipe(
       switchMap((res) => {
         const authorization = res.getIdToken();
         request = request.clone({
@@ -26,6 +26,9 @@ export class AuthInterceptor implements HttpInterceptor {
           }
         });
         return next.handle(request);
+      }),
+      catchError((err: any) => {
+        return of(err);
       })
     );
   }

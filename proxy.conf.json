@@ -9,7 +9,7 @@
   },
   "/api": {
     "target": "https://stage-revalidation.tis.nhs.uk/",
-    "secure": false,
-    "changeOrigin": false
+    "secure": true,
+    "changeOrigin": true
   }
 }

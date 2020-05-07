@@ -1,4 +1,4 @@
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -13,6 +13,7 @@ import { AWS_CONFIG } from "./core/auth/aws-config";
 import { MainNavigationModule } from "./shared/main-navigation/main-navigation.module";
 import { MaterialModule } from "./shared/material/material.module";
 import { SharedModule } from "./shared/shared.module";
+import { AuthInterceptor } from "./core/auth/auth.interceptor";
 
 /* Configure Amplify resources */
 Amplify.configure(AWS_CONFIG);
@@ -41,7 +42,9 @@ Amplify.configure(AWS_CONFIG);
     NgxsModule.forRoot([], { developmentMode: !environment.production }),
     MainNavigationModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

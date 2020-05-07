@@ -8,7 +8,7 @@
     "changeOrigin": true
   },
   "/api": {
-    "target": "http://localhost:8080/revalidation/",
+    "target": "https://stage-revalidation.tis.nhs.uk/",
     "secure": false,
     "changeOrigin": false
   }

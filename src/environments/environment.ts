@@ -19,6 +19,17 @@ export const environment: IEnvironment = {
     getRecommendation: `mocky/5ea6d31b2f00004e00c4e7d9`,
     getNotes: `mocky/5ea2da614f00006c00d9f540`,
     getTrainees: `mocky/5e997d8a33000062007b2354?mocky-delay=700ms`
+  },
+  awsConfig: {
+    region: "eu-west-2",
+    userPoolId: "eu-west-2_hkwYIoHu3",
+    userPoolWebClientId: "3adscm2usl3lop510nfijpr12f",
+    authenticationFlowType: "USER_PASSWORD_AUTH",
+    domain: "stage-auth.tis.nhs.uk",
+    scope: ["openid", "aws.cognito.signin.user.admin"],
+    redirectSignIn: "http://localhost:4200",
+    redirectSignOut: "http://localhost:4200",
+    responseType: "token"
   }
 };
 

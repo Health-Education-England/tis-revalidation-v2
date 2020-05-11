@@ -16,4 +16,16 @@ export abstract class IEnvironment {
     readonly getRecommendation: string;
     readonly getNotes: string;
   };
+
+  abstract readonly awsConfig: {
+    readonly region: string;
+    readonly userPoolId: string;
+    readonly userPoolWebClientId: string;
+    readonly authenticationFlowType: string;
+    readonly domain: string;
+    readonly scope: string[];
+    readonly redirectSignIn: string;
+    readonly redirectSignOut: string;
+    readonly responseType: string;
+  };
 }

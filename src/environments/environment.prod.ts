@@ -13,5 +13,17 @@ export const environment: IEnvironment = {
     getTrainees: `api/v1/doctors`,
     getRecommendation: `mocky/5ea6d31b2f00004e00c4e7d9`,
     getNotes: `mocky/5ea2da614f00006c00d9f540`
+  },
+  // TODO add correct prod values below
+  awsConfig: {
+    userPoolWebClientId: "3adscm2usl3lop510nfijpr12f",
+    authenticationFlowType: "USER_PASSWORD_AUTH",
+    region: "eu-west-2",
+    userPoolId: "eu-west-2_hkwYIoHu3",
+    domain: "stage-auth.tis.nhs.uk",
+    scope: ["openid", "aws.cognito.signin.user.admin"],
+    redirectSignIn: "http://localhost:4200",
+    redirectSignOut: "http://localhost:4200",
+    responseType: "token"
   }
 };

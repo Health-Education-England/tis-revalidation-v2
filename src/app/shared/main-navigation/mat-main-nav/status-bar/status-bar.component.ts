@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { environment } from "@environment";
+import { AuthService } from "src/app/core/auth/auth.service";
 
 @Component({
   selector: "app-status-bar",
@@ -11,13 +12,17 @@ export class StatusBarComponent implements OnInit {
   helpLink: string = environment.supportLink;
   notificationsCount: number;
 
-  constructor() {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
     // TO:DO get service statuses
     this.serviceSeverity = Severity.NONE;
     // TO:DO get notifications count
     this.notificationsCount = 3;
+  }
+
+  logOut(): void {
+    this.authService.signOut();
   }
 }
 

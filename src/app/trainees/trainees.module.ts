@@ -10,7 +10,6 @@ import { ResetTraineeListComponent } from "./reset-trainee-list/reset-trainee-li
 import { TraineeListPaginatorComponent } from "./trainee-list-paginator/trainee-list-paginator.component";
 import { TraineeSearchComponent } from "./trainee-search/trainee-search.component";
 import { TraineeFiltersComponent } from "./trainee-filters/trainee-filters.component";
-
 @NgModule({
   declarations: [
     TraineesComponent,
@@ -25,6 +24,7 @@ import { TraineeFiltersComponent } from "./trainee-filters/trainee-filters.compo
     SharedModule,
     TraineesRoutingModule,
     NgxsModule.forFeature([TraineesState])
-  ]
+  ],
+  providers: []
 })
 export class TraineesModule {}

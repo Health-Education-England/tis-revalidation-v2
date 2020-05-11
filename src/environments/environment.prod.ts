@@ -22,8 +22,8 @@ export const environment: IEnvironment = {
     userPoolId: "eu-west-2_hkwYIoHu3",
     domain: "stage-auth.tis.nhs.uk",
     scope: ["openid", "aws.cognito.signin.user.admin"],
-    redirectSignIn: "http://localhost:4200",
-    redirectSignOut: "http://localhost:4200",
+    redirectSignIn: "https://revalidation.tis.nhs.uk",
+    redirectSignOut: "https://revalidation.tis.nhs.uk",
     responseType: "token"
   }
 };

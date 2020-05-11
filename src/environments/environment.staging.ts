@@ -18,11 +18,11 @@ export const environment: IEnvironment = {
     region: "eu-west-2",
     userPoolId: "eu-west-2_hkwYIoHu3",
     scope: ["openid", "aws.cognito.signin.user.admin"],
-    redirectSignIn: "http://localhost:4200",
+    redirectSignIn: "https://stage-revalidation.tis.nhs.uk",
     userPoolWebClientId: "3adscm2usl3lop510nfijpr12f",
     authenticationFlowType: "USER_PASSWORD_AUTH",
     domain: "stage-auth.tis.nhs.uk",
-    redirectSignOut: "http://localhost:4200",
+    redirectSignOut: "https://stage-revalidation.tis.nhs.uk",
     responseType: "token"
   }
 };

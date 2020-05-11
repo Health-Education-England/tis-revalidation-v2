@@ -10,8 +10,6 @@ import { ResetTraineeListComponent } from "./reset-trainee-list/reset-trainee-li
 import { TraineeListPaginatorComponent } from "./trainee-list-paginator/trainee-list-paginator.component";
 import { TraineeSearchComponent } from "./trainee-search/trainee-search.component";
 import { TraineeFiltersComponent } from "./trainee-filters/trainee-filters.component";
-import { AuthResolver } from "../core/auth/auth.resolver";
-
 @NgModule({
   declarations: [
     TraineesComponent,
@@ -27,6 +25,6 @@ import { AuthResolver } from "../core/auth/auth.resolver";
     TraineesRoutingModule,
     NgxsModule.forFeature([TraineesState])
   ],
-  providers: [AuthResolver]
+  providers: []
 })
 export class TraineesModule {}

@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Sort } from "@angular/material/sort";
+import { Sort as ISort } from "@angular/material/sort";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { environment } from "@environment";
 import { Select, Store } from "@ngxs/store";
@@ -13,12 +13,12 @@ import {
 import { TraineeService } from "../../core/trainee/trainee.service";
 import {
   AllDoctorsFilter,
-  GetTrainees,
-  PaginateTrainees,
-  ResetTraineesPaginator,
-  ResetTraineesSort,
-  SearchTrainees,
-  SortTrainees,
+  Get,
+  Paginate,
+  ResetPaginator,
+  ResetSort,
+  Search,
+  Sort,
   UnderNoticeFilter
 } from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
@@ -32,7 +32,7 @@ export class TraineeListComponent implements OnInit {
   @Select(TraineesState.loading) loading$: Observable<boolean>;
   @Select(TraineesState.trainees) trainees$: Observable<ITrainee[]>;
   @Select(TraineesState.totalResults) totalResults$: Observable<number>;
-  @Select(TraineesState.sort) sort$: Observable<Sort>;
+  @Select(TraineesState.sort) sort$: Observable<ISort>;
   @Select(TraineesState.error) error$: Observable<string>;
 
   public dateFormat: string = environment.dateFormat;
@@ -114,24 +114,22 @@ export class TraineeListComponent implements OnInit {
     this.setupInitialPagination();
     this.setupInitialFilter();
     this.checkInitialSearchQuery();
-    this.store.dispatch(new GetTrainees());
+    this.store.dispatch(new Get());
   }
 
   public setupInitialSorting(): void {
     if (this.params.active && this.params.direction) {
-      this.store.dispatch(
-        new SortTrainees(this.params.active, this.params.direction)
-      );
+      this.store.dispatch(new Sort(this.params.active, this.params.direction));
     } else {
-      this.store.dispatch(new ResetTraineesSort());
+      this.store.dispatch(new ResetSort());
     }
   }
 
   public setupInitialPagination(): void {
     if (this.params.pageIndex) {
-      this.store.dispatch(new PaginateTrainees(this.params.pageIndex));
+      this.store.dispatch(new Paginate(this.params.pageIndex));
     } else {
-      this.store.dispatch(new ResetTraineesPaginator());
+      this.store.dispatch(new ResetPaginator());
     }
   }
 
@@ -148,7 +146,7 @@ export class TraineeListComponent implements OnInit {
 
   public checkInitialSearchQuery(): void {
     if (this.params.searchQuery) {
-      this.store.dispatch(new SearchTrainees(this.params.searchQuery));
+      this.store.dispatch(new Search(this.params.searchQuery));
     }
   }
 
@@ -157,11 +155,11 @@ export class TraineeListComponent implements OnInit {
     return this.router.navigate(["/trainee", row.gmcReferenceNumber]);
   }
 
-  public sortTrainees(event: Sort): void {
-    this.store.dispatch(new SortTrainees(event.active, event.direction));
-    this.store.dispatch(new ResetTraineesPaginator());
+  public sortTrainees(event: ISort): void {
+    this.store.dispatch(new Sort(event.active, event.direction));
+    this.store.dispatch(new ResetPaginator());
     this.store
-      .dispatch(new GetTrainees())
+      .dispatch(new Get())
       .pipe(take(1))
       .subscribe(() => this.traineeService.updateTraineesRoute());
   }

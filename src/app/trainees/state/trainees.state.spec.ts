@@ -11,13 +11,13 @@ import { MockTraineeService } from "../../core/trainee/trainee.service.spec";
 import { MaterialModule } from "../../shared/material/material.module";
 import {
   AllDoctorsFilter,
-  ClearTraineesSearch,
-  GetTrainees,
-  GetTraineesError,
-  PaginateTrainees,
-  ResetTraineesPaginator,
-  SearchTrainees,
-  SortTrainees,
+  ClearSearch,
+  Get,
+  GetError,
+  Paginate,
+  ResetPaginator,
+  Search,
+  Sort,
   UnderNoticeFilter
 } from "./trainees.actions";
 import { TraineesState } from "./trainees.state";
@@ -53,14 +53,14 @@ describe("Trainees state", () => {
 
   it("should dispatch 'GetTrainees' and make api call", () => {
     spyOn(traineeService, "getTrainees").and.callThrough();
-    store.dispatch(new GetTrainees());
+    store.dispatch(new Get());
     expect(traineeService.getTrainees).toHaveBeenCalled();
   });
 
   it("should dispatch 'GetTrainees' and select 'trainees' slice", () => {
     spyOn(traineeService, "getTrainees").and.callThrough();
 
-    store.dispatch(new GetTrainees());
+    store.dispatch(new Get());
     const trainees = store.selectSnapshot(TraineesState.trainees);
 
     expect(trainees.length).toEqual(2);
@@ -70,7 +70,7 @@ describe("Trainees state", () => {
   it("should dispatch 'GetTrainees' and select 'countTotal' slice", () => {
     spyOn(traineeService, "getTrainees").and.callThrough();
 
-    store.dispatch(new GetTrainees());
+    store.dispatch(new Get());
     const count = store.selectSnapshot(TraineesState.countTotal);
 
     expect(count).toEqual(21312);
@@ -86,39 +86,37 @@ describe("Trainees state", () => {
       }
     });
 
-    store.dispatch(new GetTraineesError(mockError));
+    store.dispatch(new GetError(mockError));
     const error = store.selectSnapshot(TraineesState.error);
     expect(error).toEqual(`Error: ${mockError.error.message}`);
   });
 
   it("should dispatch 'SortTrainees' and update store", () => {
-    store.dispatch(
-      new SortTrainees(DEFAULT_SORT.active, DEFAULT_SORT.direction)
-    );
+    store.dispatch(new Sort(DEFAULT_SORT.active, DEFAULT_SORT.direction));
     const sort = store.selectSnapshot(TraineesState.sort);
     expect(sort).toEqual(DEFAULT_SORT);
   });
 
   it("should dispatch 'PaginateTrainees' and update store", () => {
-    store.dispatch(new PaginateTrainees(34));
+    store.dispatch(new Paginate(34));
     const pageIndex = store.selectSnapshot(TraineesState.pageIndex);
     expect(pageIndex).toEqual(34);
   });
 
   it("should dispatch 'ResetTraineesPaginator' and update store", () => {
-    store.dispatch(new ResetTraineesPaginator());
+    store.dispatch(new ResetPaginator());
     const pageIndex = store.selectSnapshot(TraineesState.pageIndex);
     expect(pageIndex).toEqual(0);
   });
 
   it("should dispatch 'SearchTrainees' and update store", () => {
-    store.dispatch(new SearchTrainees("smith"));
+    store.dispatch(new Search("smith"));
     const searchQuery = store.selectSnapshot(TraineesState.searchQuery);
     expect(searchQuery).toEqual("smith");
   });
 
   it("should dispatch 'ClearTraineesSearch' and update store", () => {
-    store.dispatch(new ClearTraineesSearch());
+    store.dispatch(new ClearSearch());
     const searchQuery = store.selectSnapshot(TraineesState.searchQuery);
     expect(searchQuery).toBeNull();
   });

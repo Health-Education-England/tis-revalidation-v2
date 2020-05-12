@@ -4,7 +4,7 @@ import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
 import { TraineeService } from "../../core/trainee/trainee.service";
-import { GetTrainees, PaginateTrainees } from "../state/trainees.actions";
+import { Get, Paginate } from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
 
 @Component({
@@ -18,9 +18,9 @@ export class TraineeListPaginatorComponent {
   constructor(private store: Store, private traineeService: TraineeService) {}
 
   public paginateTrainees(event: PageEvent) {
-    this.store.dispatch(new PaginateTrainees(event.pageIndex));
+    this.store.dispatch(new Paginate(event.pageIndex));
     this.store
-      .dispatch(new GetTrainees())
+      .dispatch(new Get())
       .pipe(take(1))
       .subscribe(() => this.traineeService.updateTraineesRoute());
   }

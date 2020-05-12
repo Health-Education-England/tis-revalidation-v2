@@ -1,7 +1,7 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { MatSortModule, Sort } from "@angular/material/sort";
+import { MatSortModule, Sort as ISort } from "@angular/material/sort";
 import { MatTableModule } from "@angular/material/table";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { Router } from "@angular/router";
@@ -16,12 +16,12 @@ import { TraineeService } from "../../core/trainee/trainee.service";
 import { MockTraineeService } from "../../core/trainee/trainee.service.spec";
 import {
   AllDoctorsFilter,
-  GetTrainees,
-  PaginateTrainees,
-  ResetTraineesPaginator,
-  ResetTraineesSort,
-  SearchTrainees,
-  SortTrainees,
+  Get,
+  Paginate,
+  ResetPaginator,
+  ResetSort,
+  Search,
+  Sort,
   UnderNoticeFilter
 } from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
@@ -89,7 +89,7 @@ describe("TraineeListComponent", () => {
   it("should dispatch 'GetTrainees' on init", () => {
     spyOn(store, "dispatch");
     component.ngOnInit();
-    expect(store.dispatch).toHaveBeenCalledWith(new GetTrainees());
+    expect(store.dispatch).toHaveBeenCalledWith(new Get());
   });
 
   it("'setupInitialSorting()' should dispatch 'SortTrainees' if both params exist", () => {
@@ -103,9 +103,9 @@ describe("TraineeListComponent", () => {
 
     expect(store.dispatch).toHaveBeenCalledTimes(1);
     expect(store.dispatch).toHaveBeenCalledWith(
-      new SortTrainees(component.params.active, component.params.direction)
+      new Sort(component.params.active, component.params.direction)
     );
-    expect(store.dispatch).not.toHaveBeenCalledWith(new ResetTraineesSort());
+    expect(store.dispatch).not.toHaveBeenCalledWith(new ResetSort());
   });
 
   it("'setupInitialSorting()' should dispatch 'ResetTraineesSort' if both params don't exist", () => {
@@ -116,9 +116,9 @@ describe("TraineeListComponent", () => {
 
     expect(store.dispatch).toHaveBeenCalledTimes(1);
     expect(store.dispatch).not.toHaveBeenCalledWith(
-      new SortTrainees(component.params.active, component.params.direction)
+      new Sort(component.params.active, component.params.direction)
     );
-    expect(store.dispatch).toHaveBeenCalledWith(new ResetTraineesSort());
+    expect(store.dispatch).toHaveBeenCalledWith(new ResetSort());
   });
 
   it("'setupInitialPagination()' should dispatch 'PaginateTrainees' if param exists", () => {
@@ -129,11 +129,9 @@ describe("TraineeListComponent", () => {
 
     expect(store.dispatch).toHaveBeenCalledTimes(1);
     expect(store.dispatch).toHaveBeenCalledWith(
-      new PaginateTrainees(component.params.pageIndex)
+      new Paginate(component.params.pageIndex)
     );
-    expect(store.dispatch).not.toHaveBeenCalledWith(
-      new ResetTraineesPaginator()
-    );
+    expect(store.dispatch).not.toHaveBeenCalledWith(new ResetPaginator());
   });
 
   it("'setupInitialPagination()' should dispatch 'ResetTraineesPaginator' if param does not exist", () => {
@@ -143,9 +141,9 @@ describe("TraineeListComponent", () => {
     component.setupInitialPagination();
 
     expect(store.dispatch).toHaveBeenCalledTimes(1);
-    expect(store.dispatch).toHaveBeenCalledWith(new ResetTraineesPaginator());
+    expect(store.dispatch).toHaveBeenCalledWith(new ResetPaginator());
     expect(store.dispatch).not.toHaveBeenCalledWith(
-      new PaginateTrainees(component.params.pageIndex)
+      new Paginate(component.params.pageIndex)
     );
   });
 
@@ -178,7 +176,7 @@ describe("TraineeListComponent", () => {
 
     expect(store.dispatch).toHaveBeenCalledTimes(1);
     expect(store.dispatch).toHaveBeenCalledWith(
-      new SearchTrainees(component.params.searchQuery)
+      new Search(component.params.searchQuery)
     );
   });
 
@@ -211,7 +209,7 @@ describe("TraineeListComponent", () => {
   });
 
   it("should sort trainees", () => {
-    const mockSortEvent: Sort = {
+    const mockSortEvent: ISort = {
       active: "doctorFirstName",
       direction: "asc"
     };
@@ -224,10 +222,10 @@ describe("TraineeListComponent", () => {
 
     expect(store.dispatch).toHaveBeenCalledTimes(3);
     expect(store.dispatch).toHaveBeenCalledWith(
-      new SortTrainees(mockSortEvent.active, mockSortEvent.direction)
+      new Sort(mockSortEvent.active, mockSortEvent.direction)
     );
-    expect(store.dispatch).toHaveBeenCalledWith(new ResetTraineesPaginator());
-    expect(store.dispatch).toHaveBeenCalledWith(new GetTrainees());
+    expect(store.dispatch).toHaveBeenCalledWith(new ResetPaginator());
+    expect(store.dispatch).toHaveBeenCalledWith(new Get());
     expect(traineeService.updateTraineesRoute).toHaveBeenCalled();
   });
 });

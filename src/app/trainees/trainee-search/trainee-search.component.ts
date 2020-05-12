@@ -6,10 +6,10 @@ import { Observable, Subscription } from "rxjs";
 import { filter, take } from "rxjs/operators";
 import { TraineeService } from "../../core/trainee/trainee.service";
 import {
-  GetTrainees,
-  ResetTraineesPaginator,
-  ResetTraineesSort,
-  SearchTrainees
+  Get,
+  ResetPaginator,
+  ResetSort,
+  Search
 } from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
 
@@ -72,11 +72,11 @@ export class TraineeSearchComponent implements OnInit, OnDestroy {
   }
 
   public submitForm(searchQuery: string): void {
-    this.store.dispatch(new SearchTrainees(searchQuery));
-    this.store.dispatch(new ResetTraineesSort());
-    this.store.dispatch(new ResetTraineesPaginator());
+    this.store.dispatch(new Search(searchQuery));
+    this.store.dispatch(new ResetSort());
+    this.store.dispatch(new ResetPaginator());
     this.store
-      .dispatch(new GetTrainees())
+      .dispatch(new Get())
       .pipe(take(1))
       .subscribe(() => this.traineeService.updateTraineesRoute());
   }

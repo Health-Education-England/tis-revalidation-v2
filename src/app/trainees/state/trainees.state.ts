@@ -1,6 +1,6 @@
 import { HttpErrorResponse, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Sort } from "@angular/material/sort";
+import { Sort as ISort } from "@angular/material/sort";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { catchError, finalize, switchMap, take } from "rxjs/operators";
 import { DEFAULT_SORT } from "../../core/trainee/constants";
@@ -12,15 +12,15 @@ import {
 import { TraineeService } from "../../core/trainee/trainee.service";
 import {
   AllDoctorsFilter,
-  ClearTraineesSearch,
-  GetTrainees,
-  GetTraineesError,
-  GetTraineesSuccess,
-  PaginateTrainees,
-  ResetTraineesPaginator,
-  ResetTraineesSort,
-  SearchTrainees,
-  SortTrainees,
+  ClearSearch,
+  Get,
+  GetError,
+  GetSuccess,
+  Paginate,
+  ResetPaginator,
+  ResetSort,
+  Search,
+  Sort,
   UnderNoticeFilter
 } from "./trainees.actions";
 
@@ -33,7 +33,7 @@ export class TraineesStateModel {
   public loading: boolean;
   public pageIndex: number;
   public searchQuery: string;
-  public sort: Sort;
+  public sort: ISort;
   public totalPages: number;
   public totalResults: number;
 }
@@ -110,7 +110,7 @@ export class TraineesState {
     return state.filter;
   }
 
-  @Action(GetTrainees)
+  @Action(Get)
   getTrainees(ctx: StateContext<TraineesStateModel>) {
     ctx.patchState({
       items: null,
@@ -124,10 +124,10 @@ export class TraineesState {
       .pipe(
         take(1),
         switchMap((response: IGetTraineesResponse) =>
-          ctx.dispatch(new GetTraineesSuccess(response))
+          ctx.dispatch(new GetSuccess(response))
         ),
         catchError((error: HttpErrorResponse) =>
-          ctx.dispatch(new GetTraineesError(error))
+          ctx.dispatch(new GetError(error))
         ),
         finalize(() =>
           ctx.patchState({
@@ -138,10 +138,10 @@ export class TraineesState {
       .subscribe();
   }
 
-  @Action(GetTraineesSuccess)
+  @Action(GetSuccess)
   getTraineesSuccess(
     ctx: StateContext<TraineesStateModel>,
-    action: GetTraineesSuccess
+    action: GetSuccess
   ) {
     return ctx.patchState({
       items: action.response.traineeInfo,
@@ -151,18 +151,15 @@ export class TraineesState {
     });
   }
 
-  @Action(GetTraineesError)
-  getTraineesError(
-    ctx: StateContext<TraineesStateModel>,
-    action: GetTraineesError
-  ) {
+  @Action(GetError)
+  getTraineesError(ctx: StateContext<TraineesStateModel>, action: GetError) {
     return ctx.patchState({
       error: `Error: ${action.error.message}`
     });
   }
 
-  @Action(SortTrainees)
-  sortTrainees(ctx: StateContext<TraineesStateModel>, action: SortTrainees) {
+  @Action(Sort)
+  sortTrainees(ctx: StateContext<TraineesStateModel>, action: Sort) {
     return ctx.patchState({
       sort: {
         active: action.column,
@@ -171,41 +168,35 @@ export class TraineesState {
     });
   }
 
-  @Action(ResetTraineesSort)
+  @Action(ResetSort)
   resetTraineesSort(ctx: StateContext<TraineesStateModel>) {
     return ctx.patchState({
       sort: DEFAULT_SORT
     });
   }
 
-  @Action(PaginateTrainees)
-  paginateTrainees(
-    ctx: StateContext<TraineesStateModel>,
-    action: PaginateTrainees
-  ) {
+  @Action(Paginate)
+  paginateTrainees(ctx: StateContext<TraineesStateModel>, action: Paginate) {
     return ctx.patchState({
       pageIndex: action.pageIndex
     });
   }
 
-  @Action(ResetTraineesPaginator)
+  @Action(ResetPaginator)
   resetTraineesPaginator(ctx: StateContext<TraineesStateModel>) {
     return ctx.patchState({
       pageIndex: 0
     });
   }
 
-  @Action(SearchTrainees)
-  searchTrainees(
-    ctx: StateContext<TraineesStateModel>,
-    action: SearchTrainees
-  ) {
+  @Action(Search)
+  searchTrainees(ctx: StateContext<TraineesStateModel>, action: Search) {
     return ctx.patchState({
       searchQuery: action.searchQuery
     });
   }
 
-  @Action(ClearTraineesSearch)
+  @Action(ClearSearch)
   clearTraineesSearch(ctx: StateContext<TraineesStateModel>) {
     return ctx.patchState({
       searchQuery: null

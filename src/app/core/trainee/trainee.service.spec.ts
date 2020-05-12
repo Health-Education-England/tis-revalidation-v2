@@ -10,8 +10,8 @@ import { environment } from "@environment";
 import { NgxsModule, Store } from "@ngxs/store";
 import { BehaviorSubject, Observable, of } from "rxjs";
 import {
-  ResetTraineesPaginator,
-  SearchTrainees,
+  ResetPaginator,
+  Search,
   UnderNoticeFilter
 } from "../../trainees/state/trainees.actions";
 import {
@@ -111,7 +111,7 @@ describe("TraineeService", () => {
   });
 
   it("`generateParams()` should generate and return HttpParams", () => {
-    store.dispatch(new ResetTraineesPaginator());
+    store.dispatch(new ResetPaginator());
     store.dispatch(new UnderNoticeFilter());
 
     const params: HttpParams = service.generateParams();
@@ -120,8 +120,8 @@ describe("TraineeService", () => {
   });
 
   it("`generateParams()` should include search query if its set on store", () => {
-    store.dispatch(new SearchTrainees("lisa"));
-    store.dispatch(new ResetTraineesPaginator());
+    store.dispatch(new Search("lisa"));
+    store.dispatch(new ResetPaginator());
     store.dispatch(new UnderNoticeFilter());
 
     const params: HttpParams = service.generateParams();

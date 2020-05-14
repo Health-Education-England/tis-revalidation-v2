@@ -8,10 +8,10 @@ import { of } from "rxjs";
 import { TraineeService } from "../../core/trainee/trainee.service";
 import { MaterialModule } from "../../shared/material/material.module";
 import {
-  GetTrainees,
-  ResetTraineesPaginator,
-  ResetTraineesSort,
-  SearchTrainees
+  Get,
+  ResetPaginator,
+  ResetSort,
+  Search
 } from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
 
@@ -118,11 +118,11 @@ describe("TraineeSearchComponent", () => {
 
     expect(store.dispatch).toHaveBeenCalledTimes(4);
     expect(store.dispatch).toHaveBeenCalledWith(
-      new SearchTrainees(component.params.searchQuery)
+      new Search(component.params.searchQuery)
     );
-    expect(store.dispatch).toHaveBeenCalledWith(new ResetTraineesSort());
-    expect(store.dispatch).toHaveBeenCalledWith(new ResetTraineesPaginator());
-    expect(store.dispatch).toHaveBeenCalledWith(new GetTrainees());
+    expect(store.dispatch).toHaveBeenCalledWith(new ResetSort());
+    expect(store.dispatch).toHaveBeenCalledWith(new ResetPaginator());
+    expect(store.dispatch).toHaveBeenCalledWith(new Get());
     expect(traineeService.updateTraineesRoute).toHaveBeenCalled();
   });
 

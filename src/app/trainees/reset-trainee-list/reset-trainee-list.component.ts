@@ -6,10 +6,10 @@ import { take } from "rxjs/operators";
 import { TraineeService } from "../../core/trainee/trainee.service";
 import {
   UnderNoticeFilter,
-  ClearTraineesSearch,
-  GetTrainees,
-  ResetTraineesPaginator,
-  ResetTraineesSort
+  ClearSearch,
+  Get,
+  ResetPaginator,
+  ResetSort
 } from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
 
@@ -26,11 +26,11 @@ export class ResetTraineeListComponent {
   public resetTraineeList(): void {
     this.traineeService.resetSearchForm$.next(true);
     this.store.dispatch(new UnderNoticeFilter());
-    this.store.dispatch(new ResetTraineesSort());
-    this.store.dispatch(new ResetTraineesPaginator());
-    this.store.dispatch(new ClearTraineesSearch());
+    this.store.dispatch(new ResetSort());
+    this.store.dispatch(new ResetPaginator());
+    this.store.dispatch(new ClearSearch());
     this.store
-      .dispatch(new GetTrainees())
+      .dispatch(new Get())
       .pipe(take(1))
       .subscribe(() => this.traineeService.updateTraineesRoute());
   }

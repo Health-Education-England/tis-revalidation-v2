@@ -6,10 +6,10 @@ import { TraineeService } from "../../core/trainee/trainee.service";
 import { MockTraineeService } from "../../core/trainee/trainee.service.spec";
 import {
   AllDoctorsFilter,
-  ClearTraineesSearch,
-  GetTrainees,
-  ResetTraineesPaginator,
-  ResetTraineesSort,
+  ClearSearch,
+  Get,
+  ResetPaginator,
+  ResetSort,
   UnderNoticeFilter
 } from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
@@ -81,10 +81,10 @@ describe("TraineeFiltersComponent", () => {
     component.getTrainees();
 
     expect(store.dispatch).toHaveBeenCalledTimes(4);
-    expect(store.dispatch).toHaveBeenCalledWith(new ResetTraineesSort());
-    expect(store.dispatch).toHaveBeenCalledWith(new ResetTraineesPaginator());
-    expect(store.dispatch).toHaveBeenCalledWith(new ClearTraineesSearch());
-    expect(store.dispatch).toHaveBeenCalledWith(new GetTrainees());
+    expect(store.dispatch).toHaveBeenCalledWith(new ResetSort());
+    expect(store.dispatch).toHaveBeenCalledWith(new ResetPaginator());
+    expect(store.dispatch).toHaveBeenCalledWith(new ClearSearch());
+    expect(store.dispatch).toHaveBeenCalledWith(new Get());
   });
 
   it("`getTrainees()` should invoke `updateTraineesRoute()`", () => {

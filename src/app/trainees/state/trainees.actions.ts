@@ -2,26 +2,26 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { SortDirection } from "@angular/material/sort/sort-direction";
 import { IGetTraineesResponse } from "../../core/trainee/trainee.interfaces";
 
-export class GetTrainees {
+export class Get {
   static readonly type = "[Trainees] Get";
 }
 
-export class GetTraineesSuccess {
+export class GetSuccess {
   static readonly type = "[Trainees] Get Success";
   constructor(public response: IGetTraineesResponse) {}
 }
 
-export class GetTraineesError {
+export class GetError {
   static readonly type = "[Trainees] Get Error";
   constructor(public error: HttpErrorResponse) {}
 }
 
-export class SortTrainees {
+export class Sort {
   static readonly type = "[Trainees] Sort";
   constructor(public column: string, public direction: SortDirection) {}
 }
 
-export class ResetTraineesSort {
+export class ResetSort {
   static readonly type = "[Trainees] Reset Sort";
 }
 
@@ -33,20 +33,20 @@ export class UnderNoticeFilter {
   static readonly type = "[Trainees] Under Notice Filter";
 }
 
-export class SearchTrainees {
+export class Search {
   static readonly type = "[Trainees] Search";
   constructor(public searchQuery: string) {}
 }
 
-export class ClearTraineesSearch {
+export class ClearSearch {
   static readonly type = "[Trainees] Clear Search";
 }
 
-export class PaginateTrainees {
-  static readonly type = "[Trainees] Page";
+export class Paginate {
+  static readonly type = "[Trainees] Paginate";
   constructor(public pageIndex: number) {}
 }
 
-export class ResetTraineesPaginator {
+export class ResetPaginator {
   static readonly type = "[Trainees] Reset Paginator";
 }

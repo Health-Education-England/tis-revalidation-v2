@@ -6,10 +6,10 @@ import { TraineesFilterType } from "../../core/trainee/trainee.interfaces";
 import { TraineeService } from "../../core/trainee/trainee.service";
 import {
   UnderNoticeFilter,
-  ClearTraineesSearch,
-  GetTrainees,
-  ResetTraineesPaginator,
-  ResetTraineesSort,
+  ClearSearch,
+  Get,
+  ResetPaginator,
+  ResetSort,
   AllDoctorsFilter
 } from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
@@ -38,11 +38,11 @@ export class TraineeFiltersComponent {
   }
 
   public getTrainees(): void {
-    this.store.dispatch(new ResetTraineesSort());
-    this.store.dispatch(new ResetTraineesPaginator());
-    this.store.dispatch(new ClearTraineesSearch());
+    this.store.dispatch(new ResetSort());
+    this.store.dispatch(new ResetPaginator());
+    this.store.dispatch(new ClearSearch());
     this.store
-      .dispatch(new GetTrainees())
+      .dispatch(new Get())
       .pipe(take(1))
       .subscribe(() => this.traineeService.updateTraineesRoute());
   }

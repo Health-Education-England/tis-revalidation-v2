@@ -7,7 +7,7 @@ import { NgxsModule, Store } from "@ngxs/store";
 import { of } from "rxjs";
 import { TraineeService } from "../../core/trainee/trainee.service";
 import { MockTraineeService } from "../../core/trainee/trainee.service.spec";
-import { GetTrainees, PaginateTrainees } from "../state/trainees.actions";
+import { Get, Paginate } from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
 
 import { TraineeListPaginatorComponent } from "./trainee-list-paginator.component";
@@ -63,9 +63,9 @@ describe("TraineeListPaginatorComponent", () => {
 
     expect(store.dispatch).toHaveBeenCalledTimes(2);
     expect(store.dispatch).toHaveBeenCalledWith(
-      new PaginateTrainees(mockPageEvent.pageIndex)
+      new Paginate(mockPageEvent.pageIndex)
     );
-    expect(store.dispatch).toHaveBeenCalledWith(new GetTrainees());
+    expect(store.dispatch).toHaveBeenCalledWith(new Get());
     expect(traineeService.updateTraineesRoute).toHaveBeenCalled();
   });
 });

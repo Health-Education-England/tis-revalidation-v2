@@ -49,10 +49,16 @@ describe("TraineeSearchComponent", () => {
     expect(component).toBeTruthy();
   });
 
-  it("should invoke setupForm on `ngOnInit()`", () => {
+  it("should invoke setupForm() on `ngOnInit()`", () => {
     spyOn(component, "setupForm");
     component.ngOnInit();
     expect(component.setupForm).toHaveBeenCalled();
+  });
+
+  it("should invoke setupSubscription() on `ngOnInit()`", () => {
+    spyOn(component, "setupSubscription");
+    component.ngOnInit();
+    expect(component.setupSubscription).toHaveBeenCalled();
   });
 
   it("should create form, form control with value from query params", () => {
@@ -77,6 +83,15 @@ describe("TraineeSearchComponent", () => {
     };
     component.setupForm();
     expect(component.form.invalid).toBeTruthy();
+  });
+
+  it("should invoke resetForm() upon receiving `resetSearchForm$` event", () => {
+    spyOn(component.ngForm, "resetForm");
+
+    traineeService.resetSearchForm$.next(true);
+    component.setupSubscription();
+
+    expect(component.ngForm.resetForm).toHaveBeenCalled();
   });
 
   it("form is only submitted if valid", () => {
@@ -109,5 +124,11 @@ describe("TraineeSearchComponent", () => {
     expect(store.dispatch).toHaveBeenCalledWith(new ResetTraineesPaginator());
     expect(store.dispatch).toHaveBeenCalledWith(new GetTrainees());
     expect(traineeService.updateTraineesRoute).toHaveBeenCalled();
+  });
+
+  it("should unsubscribe from subscriptions upon `ngOnDestroy()`", () => {
+    spyOn(component.subscriptions, "unsubscribe");
+    component.ngOnDestroy();
+    expect(component.subscriptions.unsubscribe).toHaveBeenCalled();
   });
 });

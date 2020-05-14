@@ -1,9 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Params } from "@angular/router";
 import { Select, Store } from "@ngxs/store";
-import { Observable } from "rxjs";
-import { take } from "rxjs/operators";
+import { Observable, Subscription } from "rxjs";
+import { filter, take } from "rxjs/operators";
 import { TraineeService } from "../../core/trainee/trainee.service";
 import {
   GetTrainees,
@@ -18,10 +18,12 @@ import { TraineesState } from "../state/trainees.state";
   templateUrl: "./trainee-search.component.html",
   styleUrls: ["./trainee-search.component.scss"]
 })
-export class TraineeSearchComponent implements OnInit {
+export class TraineeSearchComponent implements OnInit, OnDestroy {
   @Select(TraineesState.searchQuery) searchQuery$: Observable<string>;
   public form: FormGroup;
   public params: Params = this.route.snapshot.queryParams;
+  public subscriptions: Subscription = new Subscription();
+  @ViewChild("ngForm") public ngForm;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -32,6 +34,7 @@ export class TraineeSearchComponent implements OnInit {
 
   ngOnInit() {
     this.setupForm();
+    this.setupSubscription();
   }
 
   public setupForm(): void {
@@ -41,14 +44,30 @@ export class TraineeSearchComponent implements OnInit {
   }
 
   /**
+   * Subscribe to resetSearchForm$ event triggered by clear all filters btn
+   * And then reset form
+   *
+   * angular material forms error state is bound to FormGroupDirective / NgForm
+   * so therefore form must be reset by resetForm() instead of FormGroup's reset()
+   * https://github.com/angular/components/issues/4190
+   */
+  public setupSubscription(): void {
+    this.subscriptions.add(
+      this.traineeService.resetSearchForm$
+        .pipe(filter(Boolean))
+        .subscribe(() => this.ngForm.resetForm())
+    );
+  }
+
+  /**
    * If form is valid then trim leading and trailing whitespaces from query
    * So that search cannot be invoked with just blank spaces
    */
   public checkForm(): void {
-    const searchQuery = this.form.value.searchQuery.trim();
+    const searchQuery = this.form.value.searchQuery;
 
-    if (searchQuery.length && this.form.valid) {
-      this.submitForm(searchQuery);
+    if (searchQuery && searchQuery.length && this.form.valid) {
+      this.submitForm(searchQuery.trim());
     }
   }
 
@@ -60,5 +79,9 @@ export class TraineeSearchComponent implements OnInit {
       .dispatch(new GetTrainees())
       .pipe(take(1))
       .subscribe(() => this.traineeService.updateTraineesRoute());
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 }

@@ -56,12 +56,10 @@
  * Zone JS is required by default for Angular itself.
  */
 // global window object needed for awsamplify as per https://github.com/aws-amplify/amplify-js/issues/678
-declare global {
-  interface Window {
-    global: any;
-  }
-}
-window.global = window;
+(window as any).global = window;
+// hee-shared application utility function
+import { PreloadStyleSheet } from "hee-shared";
+PreloadStyleSheet();
 import "zone.js/dist/zone"; // Included with Angular CLI.
 
 /***************************************************************************************************

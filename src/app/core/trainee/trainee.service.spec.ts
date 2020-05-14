@@ -8,7 +8,7 @@ import { Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { environment } from "@environment";
 import { NgxsModule, Store } from "@ngxs/store";
-import { Observable, of } from "rxjs";
+import { BehaviorSubject, Observable, of } from "rxjs";
 import {
   ResetTraineesPaginator,
   SearchTrainees,
@@ -61,6 +61,8 @@ const mockResponse: IGetTraineesResponse = {
 };
 
 export class MockTraineeService {
+  public resetSearchForm$: BehaviorSubject<boolean> = new BehaviorSubject(null);
+
   public getTrainees(): Observable<any> {
     return of(mockResponse);
   }

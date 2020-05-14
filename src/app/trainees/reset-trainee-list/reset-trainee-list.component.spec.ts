@@ -54,10 +54,15 @@ describe("ResetTraineeListComponent", () => {
     expect(component).toBeTruthy();
   });
 
+  it("should emit `resetSearchForm$` event on resetTraineeList()", () => {
+    spyOn(traineeService.resetSearchForm$, "next");
+    component.resetTraineeList();
+    expect(traineeService.resetSearchForm$.next).toHaveBeenCalledWith(true);
+  });
+
   it("should dispatch relevant actions to reset trainee list", () => {
     spyOn(store, "dispatch").and.returnValue(of({}));
     spyOn(router, "navigate");
-    spyOn(traineeService, "updateTraineesRoute");
 
     component.resetTraineeList();
 
@@ -67,6 +72,11 @@ describe("ResetTraineeListComponent", () => {
     expect(store.dispatch).toHaveBeenCalledWith(new UnderNoticeFilter());
     expect(store.dispatch).toHaveBeenCalledWith(new ClearTraineesSearch());
     expect(store.dispatch).toHaveBeenCalledWith(new GetTrainees());
+  });
+
+  it("should invoke `updateTraineesRoute()` on resetTraineeList()", () => {
+    spyOn(traineeService, "updateTraineesRoute");
+    component.resetTraineeList();
     expect(traineeService.updateTraineesRoute).toHaveBeenCalled();
   });
 });

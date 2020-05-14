@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { environment } from "@environment";
 import { Store } from "@ngxs/store";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { TraineesStateModel } from "../../trainees/state/trainees.state";
 import { IGetTraineesResponse, TraineesFilterType } from "./trainee.interfaces";
 
@@ -11,6 +11,8 @@ import { IGetTraineesResponse, TraineesFilterType } from "./trainee.interfaces";
   providedIn: "root"
 })
 export class TraineeService {
+  public resetSearchForm$: BehaviorSubject<boolean> = new BehaviorSubject(null);
+
   constructor(
     private http: HttpClient,
     private router: Router,

@@ -1,7 +1,9 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { Sort } from "@angular/material/sort";
+import { MatSortModule, Sort } from "@angular/material/sort";
+import { MatTableModule } from "@angular/material/table";
+import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
@@ -38,7 +40,10 @@ describe("TraineeListComponent", () => {
       imports: [
         RouterTestingModule,
         NgxsModule.forRoot([TraineesState]),
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        MatTableModule,
+        MatSortModule,
+        NoopAnimationsModule
       ],
       providers: [
         {

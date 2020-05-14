@@ -24,6 +24,7 @@ export class ResetTraineeListComponent {
   constructor(private store: Store, private traineeService: TraineeService) {}
 
   public resetTraineeList(): void {
+    this.traineeService.resetSearchForm$.next(true);
     this.store.dispatch(new UnderNoticeFilter());
     this.store.dispatch(new ResetTraineesSort());
     this.store.dispatch(new ResetTraineesPaginator());

@@ -19,6 +19,11 @@ const routes: Routes = [
       import("./trainee/trainee.module").then((m) => m.TraineeModule)
   },
   {
+    path: "concerns",
+    loadChildren: () =>
+      import("./concerns/concerns.module").then((m) => m.ConcernsModule)
+  },
+  {
     path: "404",
     component: PageNotFoundComponent
   },

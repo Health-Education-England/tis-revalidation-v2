@@ -12,7 +12,7 @@ export class TraineeComponent implements OnInit {
     },
     {
       label: "Concerns",
-      path: ""
+      path: "/concerns"
     },
     {
       label: "Connections",

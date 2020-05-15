@@ -1,5 +1,5 @@
 .trainee-search {
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto minmax(0, 1fr);
 }
 
 .trainee-search ::ng-deep .mat-form-field-infix {

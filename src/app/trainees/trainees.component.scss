@@ -1,3 +1,11 @@
+@import "~@angular/material/core/style/variables";
+@import "~nhsuk-frontend/packages/core/settings/colours";
+
 .trainees-top-section {
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: auto minmax(0, 1fr);
+  background: $color_nhsuk-white;
+
+  @media screen and (#{$mat-xsmall}) {
+    grid-template-columns: auto;
+  }
 }

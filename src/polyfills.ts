@@ -57,9 +57,24 @@
  */
 // global window object needed for awsamplify as per https://github.com/aws-amplify/amplify-js/issues/678
 (window as any).global = window;
-// hee-shared application utility function
-import { PreloadStyleSheet } from "hee-shared";
-PreloadStyleSheet();
+/**
+ * https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content
+ * https://support.mozilla.org/en-US/questions/1248200
+ * Not supported in firefox, safari.
+ */
+(() => {
+  const doc = document as any;
+  const styleSheetLink = doc.createElement("link");
+  const supportsPreload = styleSheetLink.relList.supports("preload");
+  if (!supportsPreload) {
+    const preLoads = doc.head.querySelectorAll(
+      'link[rel="preload"][as="style"]'
+    );
+    preLoads.forEach((element: HTMLLinkElement) => {
+      element.setAttribute("rel", "stylesheet");
+    });
+  }
+})();
 import "zone.js/dist/zone"; // Included with Angular CLI.
 
 /***************************************************************************************************

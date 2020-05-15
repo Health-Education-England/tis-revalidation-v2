@@ -16,8 +16,7 @@ import { TraineesState } from "../state/trainees.state";
 
 @Component({
   selector: "app-trainee-filters",
-  templateUrl: "./trainee-filters.component.html",
-  styleUrls: ["./trainee-filters.component.scss"]
+  templateUrl: "./trainee-filters.component.html"
 })
 export class TraineeFiltersComponent {
   @Select(TraineesState.countTotal) countTotal$: Observable<number>;

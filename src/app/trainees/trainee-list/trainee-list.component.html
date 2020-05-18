@@ -55,8 +55,9 @@
                   *matHeaderCellDef
                   [mat-sort-header]="i.name"
                   scope="col"
-                  [innerHTML]="i.label"
-                ></th>
+                >
+                  {{ i.label }}
+                </th>
               </ng-container>
               <ng-template #disabledSort>
                 <th
@@ -64,9 +65,10 @@
                   *matHeaderCellDef
                   [mat-sort-header]="i.name"
                   scope="col"
-                  [innerHTML]="i.label"
                   disabled
-                ></th>
+                >
+                  {{ i.label }}
+                </th>
               </ng-template>
 
               <!-- mat cell -->

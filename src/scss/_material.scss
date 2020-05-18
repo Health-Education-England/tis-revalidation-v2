@@ -63,3 +63,9 @@ body {
     background-color: $color_transparent_nhsuk-blue-50;
   }
 }
+
+.sticky-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}

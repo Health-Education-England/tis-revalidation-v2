@@ -11,8 +11,8 @@ import {
 } from "../../core/trainee/trainee.interfaces";
 import { TraineeService } from "../../core/trainee/trainee.service";
 import {
-  AllDoctorsFilter,
   ClearSearch,
+  Filter,
   Get,
   GetError,
   GetSuccess,
@@ -20,8 +20,7 @@ import {
   ResetPaginator,
   ResetSort,
   Search,
-  Sort,
-  UnderNoticeFilter
+  Sort
 } from "./trainees.actions";
 
 export class TraineesStateModel {
@@ -61,7 +60,7 @@ export class TraineesState {
   constructor(private traineeService: TraineeService) {}
 
   @Selector()
-  public static trainees(state: TraineesStateModel) {
+  public static items(state: TraineesStateModel) {
     return state.items;
   }
 
@@ -111,7 +110,7 @@ export class TraineesState {
   }
 
   @Action(Get)
-  getTrainees(ctx: StateContext<TraineesStateModel>) {
+  get(ctx: StateContext<TraineesStateModel>) {
     ctx.patchState({
       items: null,
       loading: true
@@ -139,10 +138,7 @@ export class TraineesState {
   }
 
   @Action(GetSuccess)
-  getTraineesSuccess(
-    ctx: StateContext<TraineesStateModel>,
-    action: GetSuccess
-  ) {
+  getSuccess(ctx: StateContext<TraineesStateModel>, action: GetSuccess) {
     return ctx.patchState({
       items: action.response.traineeInfo,
       countTotal: action.response.countTotal,
@@ -152,14 +148,14 @@ export class TraineesState {
   }
 
   @Action(GetError)
-  getTraineesError(ctx: StateContext<TraineesStateModel>, action: GetError) {
+  getError(ctx: StateContext<TraineesStateModel>, action: GetError) {
     return ctx.patchState({
       error: `Error: ${action.error.message}`
     });
   }
 
   @Action(Sort)
-  sortTrainees(ctx: StateContext<TraineesStateModel>, action: Sort) {
+  sort(ctx: StateContext<TraineesStateModel>, action: Sort) {
     return ctx.patchState({
       sort: {
         active: action.column,
@@ -169,51 +165,42 @@ export class TraineesState {
   }
 
   @Action(ResetSort)
-  resetTraineesSort(ctx: StateContext<TraineesStateModel>) {
+  resetSort(ctx: StateContext<TraineesStateModel>) {
     return ctx.patchState({
       sort: DEFAULT_SORT
     });
   }
 
   @Action(Paginate)
-  paginateTrainees(ctx: StateContext<TraineesStateModel>, action: Paginate) {
+  paginate(ctx: StateContext<TraineesStateModel>, action: Paginate) {
     return ctx.patchState({
       pageIndex: action.pageIndex
     });
   }
 
   @Action(ResetPaginator)
-  resetTraineesPaginator(ctx: StateContext<TraineesStateModel>) {
+  resetPaginator(ctx: StateContext<TraineesStateModel>) {
     return ctx.patchState({
       pageIndex: 0
     });
   }
 
   @Action(Search)
-  searchTrainees(ctx: StateContext<TraineesStateModel>, action: Search) {
+  search(ctx: StateContext<TraineesStateModel>, action: Search) {
     return ctx.patchState({
       searchQuery: action.searchQuery
     });
   }
 
   @Action(ClearSearch)
-  clearTraineesSearch(ctx: StateContext<TraineesStateModel>) {
+  clearSearch(ctx: StateContext<TraineesStateModel>) {
     return ctx.patchState({
       searchQuery: null
     });
   }
 
-  @Action(UnderNoticeFilter)
-  underNoticeFilter(ctx: StateContext<TraineesStateModel>) {
-    return ctx.patchState({
-      filter: TraineesFilterType.UNDER_NOTICE
-    });
-  }
-
-  @Action(AllDoctorsFilter)
-  allDoctorsFilter(ctx: StateContext<TraineesStateModel>) {
-    return ctx.patchState({
-      filter: TraineesFilterType.ALL_DOCTORS
-    });
+  @Action(Filter)
+  filter(ctx: StateContext<TraineesStateModel>, action: Filter) {
+    return ctx.patchState(action);
   }
 }

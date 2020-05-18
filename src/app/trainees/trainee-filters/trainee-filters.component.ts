@@ -5,12 +5,11 @@ import { take } from "rxjs/operators";
 import { TraineesFilterType } from "../../core/trainee/trainee.interfaces";
 import { TraineeService } from "../../core/trainee/trainee.service";
 import {
-  UnderNoticeFilter,
+  Filter,
   ClearSearch,
   Get,
   ResetPaginator,
-  ResetSort,
-  AllDoctorsFilter
+  ResetSort
 } from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
 
@@ -27,12 +26,12 @@ export class TraineeFiltersComponent {
   constructor(private store: Store, private traineeService: TraineeService) {}
 
   public filterByAllDoctors(): void {
-    this.store.dispatch(new AllDoctorsFilter());
+    this.store.dispatch(new Filter(TraineesFilterType.ALL_DOCTORS));
     this.getTrainees();
   }
 
   public filterByUnderNotice(): void {
-    this.store.dispatch(new UnderNoticeFilter());
+    this.store.dispatch(new Filter(TraineesFilterType.UNDER_NOTICE));
     this.getTrainees();
   }
 

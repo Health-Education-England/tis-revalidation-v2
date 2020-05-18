@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { of } from "rxjs";
+import { TraineesFilterType } from "../../core/trainee/trainee.interfaces";
 import { TraineeService } from "../../core/trainee/trainee.service";
 import { MockTraineeService } from "../../core/trainee/trainee.service.spec";
 import {
@@ -11,7 +12,7 @@ import {
   Get,
   ResetPaginator,
   ResetSort,
-  UnderNoticeFilter
+  Filter
 } from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
 
@@ -69,7 +70,9 @@ describe("ResetTraineeListComponent", () => {
     expect(store.dispatch).toHaveBeenCalledTimes(5);
     expect(store.dispatch).toHaveBeenCalledWith(new ResetSort());
     expect(store.dispatch).toHaveBeenCalledWith(new ResetPaginator());
-    expect(store.dispatch).toHaveBeenCalledWith(new UnderNoticeFilter());
+    expect(store.dispatch).toHaveBeenCalledWith(
+      new Filter(TraineesFilterType.UNDER_NOTICE)
+    );
     expect(store.dispatch).toHaveBeenCalledWith(new ClearSearch());
     expect(store.dispatch).toHaveBeenCalledWith(new Get());
   });

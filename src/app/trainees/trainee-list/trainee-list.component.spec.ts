@@ -15,14 +15,13 @@ import {
 import { TraineeService } from "../../core/trainee/trainee.service";
 import { MockTraineeService } from "../../core/trainee/trainee.service.spec";
 import {
-  AllDoctorsFilter,
+  Filter,
   Get,
   Paginate,
   ResetPaginator,
   ResetSort,
   Search,
-  Sort,
-  UnderNoticeFilter
+  Sort
 } from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
 import { TraineeListComponent } from "./trainee-list.component";
@@ -154,8 +153,12 @@ describe("TraineeListComponent", () => {
     component.setupInitialFilter();
 
     expect(store.dispatch).toHaveBeenCalledTimes(1);
-    expect(store.dispatch).toHaveBeenCalledWith(new AllDoctorsFilter());
-    expect(store.dispatch).not.toHaveBeenCalledWith(new UnderNoticeFilter());
+    expect(store.dispatch).toHaveBeenCalledWith(
+      new Filter(TraineesFilterType.ALL_DOCTORS)
+    );
+    expect(store.dispatch).not.toHaveBeenCalledWith(
+      new Filter(TraineesFilterType.UNDER_NOTICE)
+    );
   });
 
   it("'setupInitialFilter()' should dispatch 'UnderNoticeFilter' if param does not exist", () => {
@@ -164,8 +167,12 @@ describe("TraineeListComponent", () => {
     component.setupInitialFilter();
 
     expect(store.dispatch).toHaveBeenCalledTimes(1);
-    expect(store.dispatch).toHaveBeenCalledWith(new UnderNoticeFilter());
-    expect(store.dispatch).not.toHaveBeenCalledWith(new AllDoctorsFilter());
+    expect(store.dispatch).toHaveBeenCalledWith(
+      new Filter(TraineesFilterType.UNDER_NOTICE)
+    );
+    expect(store.dispatch).not.toHaveBeenCalledWith(
+      new Filter(TraineesFilterType.ALL_DOCTORS)
+    );
   });
 
   it("'checkInitialSearchQuery()' should dispatch 'SearchTrainees' if param exists", () => {
@@ -201,7 +208,7 @@ describe("TraineeListComponent", () => {
     spyOn(mockEvent, "preventDefault");
     spyOn(router, "navigate");
 
-    component.traineeDetails(mockEvent, mockTrainee);
+    component.navigateToDetails(mockEvent, mockTrainee);
     expect(router.navigate).toHaveBeenCalledWith([
       "/trainee",
       mockTrainee.gmcReferenceNumber
@@ -218,7 +225,7 @@ describe("TraineeListComponent", () => {
     spyOn(router, "navigate");
     spyOn(traineeService, "updateTraineesRoute");
 
-    component.sortTrainees(mockSortEvent);
+    component.sort(mockSortEvent);
 
     expect(store.dispatch).toHaveBeenCalledTimes(3);
     expect(store.dispatch).toHaveBeenCalledWith(

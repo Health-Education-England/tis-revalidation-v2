@@ -1,52 +1,54 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { SortDirection } from "@angular/material/sort/sort-direction";
-import { IGetTraineesResponse } from "../../core/trainee/trainee.interfaces";
+import {
+  IGetTraineesResponse,
+  TraineesFilterType
+} from "../../core/trainee/trainee.interfaces";
+
+const label = `[Trainees]`;
 
 export class Get {
-  static readonly type = "[Trainees] Get";
+  static readonly type = `${label} Get`;
 }
 
 export class GetSuccess {
-  static readonly type = "[Trainees] Get Success";
+  static readonly type = `${label} Get Success`;
   constructor(public response: IGetTraineesResponse) {}
 }
 
 export class GetError {
-  static readonly type = "[Trainees] Get Error";
+  static readonly type = `${label} Get Error`;
   constructor(public error: HttpErrorResponse) {}
 }
 
 export class Sort {
-  static readonly type = "[Trainees] Sort";
+  static readonly type = `${label} Sort`;
   constructor(public column: string, public direction: SortDirection) {}
 }
 
 export class ResetSort {
-  static readonly type = "[Trainees] Reset Sort";
+  static readonly type = `${label} Reset Sort`;
 }
 
-export class AllDoctorsFilter {
-  static readonly type = "[Trainees] All Doctors Filter";
-}
-
-export class UnderNoticeFilter {
-  static readonly type = "[Trainees] Under Notice Filter";
+export class Filter {
+  static readonly type = `${label} Filter`;
+  constructor(public filter: TraineesFilterType) {}
 }
 
 export class Search {
-  static readonly type = "[Trainees] Search";
+  static readonly type = `${label} Search`;
   constructor(public searchQuery: string) {}
 }
 
 export class ClearSearch {
-  static readonly type = "[Trainees] Clear Search";
+  static readonly type = `${label} Clear Search`;
 }
 
 export class Paginate {
-  static readonly type = "[Trainees] Paginate";
+  static readonly type = `${label} Paginate`;
   constructor(public pageIndex: number) {}
 }
 
 export class ResetPaginator {
-  static readonly type = "[Trainees] Reset Paginator";
+  static readonly type = `${label} Reset Paginator`;
 }

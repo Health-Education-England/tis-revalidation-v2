@@ -12,14 +12,13 @@ import {
 } from "../../core/trainee/trainee.interfaces";
 import { TraineeService } from "../../core/trainee/trainee.service";
 import {
-  AllDoctorsFilter,
+  Filter,
   Get,
   Paginate,
   ResetPaginator,
   ResetSort,
   Search,
-  Sort,
-  UnderNoticeFilter
+  Sort
 } from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
 
@@ -30,7 +29,7 @@ import { TraineesState } from "../state/trainees.state";
 })
 export class TraineeListComponent implements OnInit {
   @Select(TraineesState.loading) loading$: Observable<boolean>;
-  @Select(TraineesState.trainees) trainees$: Observable<ITrainee[]>;
+  @Select(TraineesState.items) items$: Observable<ITrainee[]>;
   @Select(TraineesState.totalResults) totalResults$: Observable<number>;
   @Select(TraineesState.sort) sort$: Observable<ISort>;
   @Select(TraineesState.error) error$: Observable<string>;
@@ -138,9 +137,9 @@ export class TraineeListComponent implements OnInit {
       this.params.filter &&
       this.params.filter === TraineesFilterType.ALL_DOCTORS
     ) {
-      this.store.dispatch(new AllDoctorsFilter());
+      this.store.dispatch(new Filter(TraineesFilterType.ALL_DOCTORS));
     } else {
-      this.store.dispatch(new UnderNoticeFilter());
+      this.store.dispatch(new Filter(TraineesFilterType.UNDER_NOTICE));
     }
   }
 
@@ -150,12 +149,12 @@ export class TraineeListComponent implements OnInit {
     }
   }
 
-  public traineeDetails(event: Event, row: ITrainee): Promise<boolean> {
+  public navigateToDetails(event: Event, row: ITrainee): Promise<boolean> {
     event.stopPropagation();
     return this.router.navigate(["/trainee", row.gmcReferenceNumber]);
   }
 
-  public sortTrainees(event: ISort): void {
+  public sort(event: ISort): void {
     this.store.dispatch(new Sort(event.active, event.direction));
     this.store.dispatch(new ResetPaginator());
     this.store

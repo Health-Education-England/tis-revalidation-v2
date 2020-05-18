@@ -2,15 +2,15 @@ import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
+import { TraineesFilterType } from "../../core/trainee/trainee.interfaces";
 import { TraineeService } from "../../core/trainee/trainee.service";
 import { MockTraineeService } from "../../core/trainee/trainee.service.spec";
 import {
-  AllDoctorsFilter,
+  Filter,
   ClearSearch,
   Get,
   ResetPaginator,
-  ResetSort,
-  UnderNoticeFilter
+  ResetSort
 } from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
 
@@ -54,7 +54,9 @@ describe("TraineeFiltersComponent", () => {
   it("`filterByAllDoctors()` should dispatch `AllDoctorsFilter` event", () => {
     spyOn(store, "dispatch").and.callThrough();
     component.filterByAllDoctors();
-    expect(store.dispatch).toHaveBeenCalledWith(new AllDoctorsFilter());
+    expect(store.dispatch).toHaveBeenCalledWith(
+      new Filter(TraineesFilterType.ALL_DOCTORS)
+    );
   });
 
   it("`filterByAllDoctors()` should invoke `getTrainees()`", () => {
@@ -66,7 +68,9 @@ describe("TraineeFiltersComponent", () => {
   it("`filterByUnderNotice()` should dispatch `UnderNoticeFilter` event", () => {
     spyOn(store, "dispatch").and.callThrough();
     component.filterByUnderNotice();
-    expect(store.dispatch).toHaveBeenCalledWith(new UnderNoticeFilter());
+    expect(store.dispatch).toHaveBeenCalledWith(
+      new Filter(TraineesFilterType.UNDER_NOTICE)
+    );
   });
 
   it("`filterByUnderNotice()` should invoke `getTrainees()`", () => {

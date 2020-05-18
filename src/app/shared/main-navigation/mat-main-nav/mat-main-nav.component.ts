@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit, OnDestroy } from "@angular/core";
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { MatIconRegistry } from "@angular/material/icon";
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import { map, shareReplay, filter } from "rxjs/operators";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Router, NavigationEnd } from "@angular/router";
@@ -11,7 +11,8 @@ import { Router, NavigationEnd } from "@angular/router";
   templateUrl: "./mat-main-nav.component.html",
   styleUrls: ["./mat-main-nav.component.scss"]
 })
-export class MatMainNavComponent implements OnInit {
+export class MatMainNavComponent implements OnInit, OnDestroy {
+  private subscription: Subscription;
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
     .pipe(
@@ -29,8 +30,9 @@ export class MatMainNavComponent implements OnInit {
   ) {
     this.addNHSIcon();
   }
+
   ngOnInit(): void {
-    this.router.events
+    this.subscription = this.router.events
       .pipe(filter((e) => e instanceof NavigationEnd))
       .subscribe(() => {
         const hashLocation = `#${this.skipLinkSelector}`;
@@ -39,6 +41,10 @@ export class MatMainNavComponent implements OnInit {
           ? this.activeUrl
           : this.activeUrl + hashLocation;
       });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   addNHSIcon() {

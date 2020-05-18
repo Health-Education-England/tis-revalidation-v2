@@ -3,8 +3,8 @@ import { Sort } from "@angular/material/sort";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
-import { TraineesFilterType } from "../../core/trainee/trainee.interfaces";
-import { TraineeService } from "../../core/trainee/trainee.service";
+import { TraineesFilterType } from "../trainees.interfaces";
+import { TraineesService } from "../services/trainees.service";
 import {
   Filter,
   ClearSearch,
@@ -22,7 +22,7 @@ export class ResetTraineeListComponent {
   @Select(TraineesState.sort) sort$: Observable<Sort>;
   @Select(TraineesState.pageIndex) pageIndex$: Observable<number>;
 
-  constructor(private store: Store, private traineeService: TraineeService) {}
+  constructor(private store: Store, private traineeService: TraineesService) {}
 
   public resetTraineeList(): void {
     this.traineeService.resetSearchForm$.next(true);

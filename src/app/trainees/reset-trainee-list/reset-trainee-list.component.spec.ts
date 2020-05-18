@@ -4,9 +4,9 @@ import { Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { of } from "rxjs";
-import { TraineesFilterType } from "../../core/trainee/trainee.interfaces";
-import { TraineeService } from "../../core/trainee/trainee.service";
-import { MockTraineeService } from "../../core/trainee/trainee.service.spec";
+import { TraineesFilterType } from "../trainees.interfaces";
+import { TraineesService } from "../services/trainees.service";
+import { MockTraineeService } from "../services/trainees.service.spec";
 import {
   ClearSearch,
   Get,
@@ -23,7 +23,7 @@ describe("ResetTraineeListComponent", () => {
   let component: ResetTraineeListComponent;
   let fixture: ComponentFixture<ResetTraineeListComponent>;
   let router: Router;
-  let traineeService: TraineeService;
+  let traineeService: TraineesService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -35,14 +35,14 @@ describe("ResetTraineeListComponent", () => {
       ],
       providers: [
         {
-          provide: TraineeService,
+          provide: TraineesService,
           useClass: MockTraineeService
         }
       ]
     }).compileComponents();
     store = TestBed.inject(Store);
     router = TestBed.inject(Router);
-    traineeService = TestBed.inject(TraineeService);
+    traineeService = TestBed.inject(TraineesService);
   }));
 
   beforeEach(() => {

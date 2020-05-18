@@ -6,7 +6,7 @@ import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { of } from "rxjs";
-import { TraineeService } from "../../core/trainee/trainee.service";
+import { TraineesService } from "../services/trainees.service";
 import { MaterialModule } from "../../shared/material/material.module";
 import {
   Get,
@@ -22,7 +22,7 @@ describe("TraineeSearchComponent", () => {
   let store: Store;
   let component: TraineeSearchComponent;
   let fixture: ComponentFixture<TraineeSearchComponent>;
-  let traineeService: TraineeService;
+  let traineeService: TraineesService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -38,7 +38,7 @@ describe("TraineeSearchComponent", () => {
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
     store = TestBed.inject(Store);
-    traineeService = TestBed.inject(TraineeService);
+    traineeService = TestBed.inject(TraineesService);
   }));
 
   beforeEach(() => {

@@ -2,9 +2,9 @@ import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
-import { TraineesFilterType } from "../../core/trainee/trainee.interfaces";
-import { TraineeService } from "../../core/trainee/trainee.service";
-import { MockTraineeService } from "../../core/trainee/trainee.service.spec";
+import { TraineesFilterType } from "../trainees.interfaces";
+import { TraineesService } from "../services/trainees.service";
+import { MockTraineeService } from "../services/trainees.service.spec";
 import {
   Filter,
   ClearSearch,
@@ -20,7 +20,7 @@ describe("TraineeFiltersComponent", () => {
   let store: Store;
   let component: TraineeFiltersComponent;
   let fixture: ComponentFixture<TraineeFiltersComponent>;
-  let traineeService: TraineeService;
+  let traineeService: TraineesService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -32,13 +32,13 @@ describe("TraineeFiltersComponent", () => {
       ],
       providers: [
         {
-          provide: TraineeService,
+          provide: TraineesService,
           useClass: MockTraineeService
         }
       ]
     }).compileComponents();
     store = TestBed.inject(Store);
-    traineeService = TestBed.inject(TraineeService);
+    traineeService = TestBed.inject(TraineesService);
   }));
 
   beforeEach(() => {

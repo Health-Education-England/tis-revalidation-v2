@@ -4,10 +4,10 @@ import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { async, TestBed } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
-import { DEFAULT_SORT } from "../../core/trainee/constants";
-import { TraineesFilterType } from "../../core/trainee/trainee.interfaces";
-import { TraineeService } from "../../core/trainee/trainee.service";
-import { MockTraineeService } from "../../core/trainee/trainee.service.spec";
+import { DEFAULT_SORT } from "../constants";
+import { TraineesFilterType } from "../trainees.interfaces";
+import { TraineesService } from "../services/trainees.service";
+import { MockTraineeService } from "../services/trainees.service.spec";
 import { MaterialModule } from "../../shared/material/material.module";
 import {
   Filter,
@@ -23,7 +23,7 @@ import { TraineesState } from "./trainees.state";
 
 describe("Trainees state", () => {
   let store: Store;
-  let traineeService: TraineeService;
+  let traineeService: TraineesService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -35,14 +35,14 @@ describe("Trainees state", () => {
       ],
       providers: [
         {
-          provide: TraineeService,
+          provide: TraineesService,
           useClass: MockTraineeService
         }
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
     store = TestBed.inject(Store);
-    traineeService = TestBed.inject(TraineeService);
+    traineeService = TestBed.inject(TraineesService);
   }));
 
   it("should select 'TraineesState'", () => {

@@ -9,8 +9,8 @@ import {
   ITrainee,
   ITraineeDataCell,
   TraineesFilterType
-} from "../../core/trainee/trainee.interfaces";
-import { TraineeService } from "../../core/trainee/trainee.service";
+} from "../trainees.interfaces";
+import { TraineesService } from "../services/trainees.service";
 import {
   Filter,
   Get,
@@ -100,7 +100,7 @@ export class TraineeListComponent implements OnInit {
     private store: Store,
     private router: Router,
     private route: ActivatedRoute,
-    private traineeService: TraineeService
+    private traineeService: TraineesService
   ) {}
 
   /**

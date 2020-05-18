@@ -30,9 +30,12 @@
                 "input": "node_modules/nhsuk-frontend/packages/assets/",
                 "output": "assets/"
               },
-              "src/manifest.webmanifest"
+              "src/manifest.webmanifest",
+              "src/robots.txt"
             ],
-            "styles": ["src/styles.scss"],
+            "styles": [
+              "src/styles.scss"
+            ],
             "scripts": [
               {
                 "input": "supported.browsers.js",
@@ -156,9 +159,12 @@
                 "input": "node_modules/nhsuk-frontend/packages/assets/",
                 "output": "assets/"
               },
-              "src/manifest.webmanifest"
+              "src/manifest.webmanifest",
+              "src/robots.txt"
             ],
-            "styles": ["src/styles.scss"],
+            "styles": [
+              "src/styles.scss"
+            ],
             "scripts": []
           }
         },
@@ -170,7 +176,9 @@
               "tsconfig.spec.json",
               "cypress/tsconfig.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         }
       }
@@ -208,7 +216,9 @@
               "projects/hee-shared/tsconfig.lib.json",
               "projects/hee-shared/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         }
       }

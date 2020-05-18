@@ -4,13 +4,16 @@ import { Router } from "@angular/router";
 import { environment } from "@environment";
 import { Store } from "@ngxs/store";
 import { BehaviorSubject, Observable } from "rxjs";
-import { TraineesStateModel } from "../../trainees/state/trainees.state";
-import { IGetTraineesResponse, TraineesFilterType } from "./trainee.interfaces";
+import { TraineesStateModel } from "../state/trainees.state";
+import {
+  IGetTraineesResponse,
+  TraineesFilterType
+} from "../trainees.interfaces";
 
 @Injectable({
   providedIn: "root"
 })
-export class TraineeService {
+export class TraineesService {
   public resetSearchForm$: BehaviorSubject<boolean> = new BehaviorSubject(null);
 
   constructor(

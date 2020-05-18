@@ -3,7 +3,7 @@ import { PageEvent } from "@angular/material/paginator/paginator";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
-import { TraineeService } from "../../core/trainee/trainee.service";
+import { TraineesService } from "../services/trainees.service";
 import { Get, Paginate } from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
 
@@ -15,7 +15,7 @@ export class TraineeListPaginatorComponent {
   @Select(TraineesState.totalResults) totalResults$: Observable<number>;
   @Select(TraineesState.pageIndex) pageIndex$: Observable<number>;
 
-  constructor(private store: Store, private traineeService: TraineeService) {}
+  constructor(private store: Store, private traineeService: TraineesService) {}
 
   public paginateTrainees(event: PageEvent) {
     this.store.dispatch(new Paginate(event.pageIndex));

@@ -1,3 +1,5 @@
+import { IGetRecordsResponse } from "../shared/records/records.interfaces";
+
 export interface ITrainee {
   admin: string;
   cctDate: string;
@@ -14,11 +16,9 @@ export interface ITrainee {
   underNotice: string;
 }
 
-export interface IGetTraineesResponse {
+export interface IGetTraineesResponse extends IGetRecordsResponse {
   countTotal: number;
   countUnderNotice: number;
-  totalResults: number;
-  totalPages: number;
   traineeInfo: ITrainee[];
 }
 

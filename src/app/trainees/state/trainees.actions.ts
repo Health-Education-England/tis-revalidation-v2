@@ -1,9 +1,12 @@
-import { HttpErrorResponse } from "@angular/common/http";
 import { SortDirection } from "@angular/material/sort/sort-direction";
 import {
   IGetTraineesResponse,
   TraineesFilterType
-} from "../../core/trainee/trainee.interfaces";
+} from "../trainees.interfaces";
+import {
+  GetErrorPayload,
+  GetSuccessPayload
+} from "../../shared/records/state/records.actions";
 
 const label = `[Trainees]`;
 
@@ -11,14 +14,12 @@ export class Get {
   static readonly type = `${label} Get`;
 }
 
-export class GetSuccess {
+export class GetSuccess extends GetSuccessPayload<IGetTraineesResponse> {
   static readonly type = `${label} Get Success`;
-  constructor(public response: IGetTraineesResponse) {}
 }
 
-export class GetError {
+export class GetError extends GetErrorPayload {
   static readonly type = `${label} Get Error`;
-  constructor(public error: HttpErrorResponse) {}
 }
 
 export class Sort {

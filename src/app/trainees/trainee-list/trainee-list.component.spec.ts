@@ -8,12 +8,9 @@ import { Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { of } from "rxjs";
-import {
-  ITrainee,
-  TraineesFilterType
-} from "../../core/trainee/trainee.interfaces";
-import { TraineeService } from "../../core/trainee/trainee.service";
-import { MockTraineeService } from "../../core/trainee/trainee.service.spec";
+import { ITrainee, TraineesFilterType } from "../trainees.interfaces";
+import { TraineesService } from "../services/trainees.service";
+import { MockTraineeService } from "../services/trainees.service.spec";
 import {
   Filter,
   Get,
@@ -31,7 +28,7 @@ describe("TraineeListComponent", () => {
   let component: TraineeListComponent;
   let fixture: ComponentFixture<TraineeListComponent>;
   let router: Router;
-  let traineeService: TraineeService;
+  let traineeService: TraineesService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -46,7 +43,7 @@ describe("TraineeListComponent", () => {
       ],
       providers: [
         {
-          provide: TraineeService,
+          provide: TraineesService,
           useClass: MockTraineeService
         }
       ],
@@ -54,7 +51,7 @@ describe("TraineeListComponent", () => {
     }).compileComponents();
     store = TestBed.inject(Store);
     router = TestBed.inject(Router);
-    traineeService = TestBed.inject(TraineeService);
+    traineeService = TestBed.inject(TraineesService);
   }));
 
   beforeEach(() => {

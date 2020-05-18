@@ -4,7 +4,7 @@ import { ActivatedRoute, Params } from "@angular/router";
 import { Select, Store } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
 import { filter, take } from "rxjs/operators";
-import { TraineeService } from "../../core/trainee/trainee.service";
+import { TraineesService } from "../services/trainees.service";
 import {
   Get,
   ResetPaginator,
@@ -29,7 +29,7 @@ export class TraineeSearchComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private store: Store,
     private route: ActivatedRoute,
-    private traineeService: TraineeService
+    private traineeService: TraineesService
   ) {}
 
   ngOnInit() {

@@ -3,13 +3,13 @@ import { Injectable } from "@angular/core";
 import { Sort as ISort } from "@angular/material/sort";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { catchError, finalize, switchMap, take } from "rxjs/operators";
-import { DEFAULT_SORT } from "../../core/trainee/constants";
+import { DEFAULT_SORT } from "../constants";
 import {
   IGetTraineesResponse,
   ITrainee,
   TraineesFilterType
-} from "../../core/trainee/trainee.interfaces";
-import { TraineeService } from "../../core/trainee/trainee.service";
+} from "../trainees.interfaces";
+import { TraineesService } from "../services/trainees.service";
 import {
   ClearSearch,
   Filter,
@@ -57,7 +57,7 @@ export class TraineesStateModel {
 })
 @Injectable()
 export class TraineesState {
-  constructor(private traineeService: TraineeService) {}
+  constructor(private traineeService: TraineesService) {}
 
   @Selector()
   public static items(state: TraineesStateModel) {

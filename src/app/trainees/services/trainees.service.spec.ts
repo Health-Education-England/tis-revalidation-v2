@@ -9,17 +9,13 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { environment } from "@environment";
 import { NgxsModule, Store } from "@ngxs/store";
 import { BehaviorSubject, Observable, of } from "rxjs";
+import { ResetPaginator, Search, Filter } from "../state/trainees.actions";
+import { TraineesState, TraineesStateModel } from "../state/trainees.state";
 import {
-  ResetPaginator,
-  Search,
-  Filter
-} from "../../trainees/state/trainees.actions";
-import {
-  TraineesState,
-  TraineesStateModel
-} from "../../trainees/state/trainees.state";
-import { IGetTraineesResponse, TraineesFilterType } from "./trainee.interfaces";
-import { TraineeService } from "./trainee.service";
+  IGetTraineesResponse,
+  TraineesFilterType
+} from "../trainees.interfaces";
+import { TraineesService } from "./trainees.service";
 
 const mockResponse: IGetTraineesResponse = {
   traineeInfo: [
@@ -77,7 +73,7 @@ export class MockTraineeService {
 }
 
 describe("TraineeService", () => {
-  let service: TraineeService;
+  let service: TraineesService;
   let http: HttpTestingController;
   let router: Router;
   let store: Store;
@@ -89,9 +85,9 @@ describe("TraineeService", () => {
         RouterTestingModule,
         NgxsModule.forRoot([TraineesState])
       ],
-      providers: [TraineeService]
+      providers: [TraineesService]
     });
-    service = TestBed.inject(TraineeService);
+    service = TestBed.inject(TraineesService);
     http = TestBed.inject(HttpTestingController);
     router = TestBed.inject(Router);
     store = TestBed.inject(Store);

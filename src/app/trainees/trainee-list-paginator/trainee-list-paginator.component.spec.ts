@@ -5,8 +5,8 @@ import { MatPaginatorModule, PageEvent } from "@angular/material/paginator";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { of } from "rxjs";
-import { TraineeService } from "../../core/trainee/trainee.service";
-import { MockTraineeService } from "../../core/trainee/trainee.service.spec";
+import { TraineesService } from "../services/trainees.service";
+import { MockTraineeService } from "../services/trainees.service.spec";
 import { Get, Paginate } from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
 
@@ -16,7 +16,7 @@ describe("TraineeListPaginatorComponent", () => {
   let store: Store;
   let component: TraineeListPaginatorComponent;
   let fixture: ComponentFixture<TraineeListPaginatorComponent>;
-  let traineeService: TraineeService;
+  let traineeService: TraineesService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -28,7 +28,7 @@ describe("TraineeListPaginatorComponent", () => {
       ],
       providers: [
         {
-          provide: TraineeService,
+          provide: TraineesService,
           useClass: MockTraineeService
         }
       ],
@@ -36,7 +36,7 @@ describe("TraineeListPaginatorComponent", () => {
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
     store = TestBed.inject(Store);
-    traineeService = TestBed.inject(TraineeService);
+    traineeService = TestBed.inject(TraineesService);
   }));
 
   beforeEach(() => {

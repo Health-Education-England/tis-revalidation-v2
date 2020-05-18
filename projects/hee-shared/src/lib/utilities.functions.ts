@@ -25,3 +25,21 @@ export function InjectScript(
   doc.head.appendChild(script);
   return script;
 }
+/**
+ * https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content
+ * https://support.mozilla.org/en-US/questions/1248200
+ * Not supported in firefox, safari. Import once in polyfills.ts or appComponent
+ */
+export function PreloadStyleSheet(): void {
+  const doc = document as any;
+  const styleSheetLink = doc.createElement("link");
+  const supportsPreload = styleSheetLink.relList.supports("preload");
+  if (!supportsPreload) {
+    const preLoads = doc.head.querySelectorAll(
+      'link[rel="preload"][as="style"]'
+    );
+    preLoads.forEach((element: HTMLLinkElement) => {
+      element.setAttribute("rel", "stylesheet");
+    });
+  }
+}

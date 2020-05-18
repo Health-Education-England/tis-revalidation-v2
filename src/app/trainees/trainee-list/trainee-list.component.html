@@ -15,35 +15,32 @@
 
   <ng-template #notLoading>
     <!--  error -->
-    <div
-      *ngIf="data.error; else trainees"
-      class="d-grid justify-content-center"
-    >
+    <div *ngIf="data.error; else items" class="d-grid justify-content-center">
       <mat-chip-list class="mat-chip-list-stacked" aria-orientation="vertical">
         <mat-chip selected color="warn">{{ data.error }}</mat-chip>
       </mat-chip-list>
     </div>
 
-    <!-- trainees -->
-    <ng-template #trainees>
+    <!-- Records list -->
+    <ng-template #items>
       <ng-container *ngIf="data.totalResults; else noResults">
         <div class="table-container">
           <table
             mat-table
             *ngIf="{
               sort: sort$ | async,
-              trainees: trainees$ | async
+              items: items$ | async
             } as data"
             class="w-100"
-            [dataSource]="data.trainees"
+            [dataSource]="data.items"
             matSort
             matSortDisableClear
-            (matSortChange)="sortTrainees($event)"
+            (matSortChange)="sort($event)"
             [matSortActive]="data.sort.active"
             [matSortDirection]="data.sort.direction"
           >
             <caption class="collapsed no-height">
-              Trainees list
+              Records list
             </caption>
             <ng-container
               *ngFor="let i of columnData"
@@ -85,9 +82,9 @@
             <tr
               mat-row
               *matRowDef="let row; columns: columnNames"
-              (click)="traineeDetails($event, row)"
-              (keyup.enter)="traineeDetails($event, row)"
-              (keyup.space)="traineeDetails($event, row)"
+              (click)="navigateToDetails($event, row)"
+              (keyup.enter)="navigateToDetails($event, row)"
+              (keyup.space)="navigateToDetails($event, row)"
               tabindex="0"
               role="button"
             ></tr>

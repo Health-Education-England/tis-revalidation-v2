@@ -10,15 +10,14 @@ import { TraineeService } from "../../core/trainee/trainee.service";
 import { MockTraineeService } from "../../core/trainee/trainee.service.spec";
 import { MaterialModule } from "../../shared/material/material.module";
 import {
-  AllDoctorsFilter,
+  Filter,
   ClearSearch,
   Get,
   GetError,
   Paginate,
   ResetPaginator,
   Search,
-  Sort,
-  UnderNoticeFilter
+  Sort
 } from "./trainees.actions";
 import { TraineesState } from "./trainees.state";
 
@@ -61,7 +60,7 @@ describe("Trainees state", () => {
     spyOn(traineeService, "getTrainees").and.callThrough();
 
     store.dispatch(new Get());
-    const trainees = store.selectSnapshot(TraineesState.trainees);
+    const trainees = store.selectSnapshot(TraineesState.items);
 
     expect(trainees.length).toEqual(2);
     expect(trainees[0].doctorFirstName).toEqual("Bobby");
@@ -122,13 +121,13 @@ describe("Trainees state", () => {
   });
 
   it("should dispatch 'UnderNoticeFilter' and update store", () => {
-    store.dispatch(new UnderNoticeFilter());
+    store.dispatch(new Filter(TraineesFilterType.UNDER_NOTICE));
     const filter = store.selectSnapshot(TraineesState.filter);
     expect(filter).toEqual(TraineesFilterType.UNDER_NOTICE);
   });
 
   it("should dispatch 'AllDoctorsFilter' and update store", () => {
-    store.dispatch(new AllDoctorsFilter());
+    store.dispatch(new Filter(TraineesFilterType.ALL_DOCTORS));
     const filter = store.selectSnapshot(TraineesState.filter);
     expect(filter).toEqual(TraineesFilterType.ALL_DOCTORS);
   });

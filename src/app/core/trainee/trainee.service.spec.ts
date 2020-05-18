@@ -12,13 +12,13 @@ import { BehaviorSubject, Observable, of } from "rxjs";
 import {
   ResetPaginator,
   Search,
-  UnderNoticeFilter
+  Filter
 } from "../../trainees/state/trainees.actions";
 import {
   TraineesState,
   TraineesStateModel
 } from "../../trainees/state/trainees.state";
-import { IGetTraineesResponse } from "./trainee.interfaces";
+import { IGetTraineesResponse, TraineesFilterType } from "./trainee.interfaces";
 import { TraineeService } from "./trainee.service";
 
 const mockResponse: IGetTraineesResponse = {
@@ -112,7 +112,7 @@ describe("TraineeService", () => {
 
   it("`generateParams()` should generate and return HttpParams", () => {
     store.dispatch(new ResetPaginator());
-    store.dispatch(new UnderNoticeFilter());
+    store.dispatch(new Filter(TraineesFilterType.UNDER_NOTICE));
 
     const params: HttpParams = service.generateParams();
 
@@ -122,7 +122,7 @@ describe("TraineeService", () => {
   it("`generateParams()` should include search query if its set on store", () => {
     store.dispatch(new Search("lisa"));
     store.dispatch(new ResetPaginator());
-    store.dispatch(new UnderNoticeFilter());
+    store.dispatch(new Filter(TraineesFilterType.UNDER_NOTICE));
 
     const params: HttpParams = service.generateParams();
 

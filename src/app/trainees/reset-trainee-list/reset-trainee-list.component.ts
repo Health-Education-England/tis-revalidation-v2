@@ -3,9 +3,10 @@ import { Sort } from "@angular/material/sort";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
+import { TraineesFilterType } from "../../core/trainee/trainee.interfaces";
 import { TraineeService } from "../../core/trainee/trainee.service";
 import {
-  UnderNoticeFilter,
+  Filter,
   ClearSearch,
   Get,
   ResetPaginator,
@@ -25,7 +26,7 @@ export class ResetTraineeListComponent {
 
   public resetTraineeList(): void {
     this.traineeService.resetSearchForm$.next(true);
-    this.store.dispatch(new UnderNoticeFilter());
+    this.store.dispatch(new Filter(TraineesFilterType.UNDER_NOTICE));
     this.store.dispatch(new ResetSort());
     this.store.dispatch(new ResetPaginator());
     this.store.dispatch(new ClearSearch());

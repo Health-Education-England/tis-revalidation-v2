@@ -3,9 +3,7 @@ import {
   OnInit,
   ViewEncapsulation,
   ViewChild,
-  OnDestroy,
-  AfterViewChecked,
-  ChangeDetectorRef
+  OnDestroy
 } from "@angular/core";
 import { MatBottomSheet } from "@angular/material/bottom-sheet";
 import { RevalidationNotesComponent } from "../revalidation-notes/revalidation-notes.component";

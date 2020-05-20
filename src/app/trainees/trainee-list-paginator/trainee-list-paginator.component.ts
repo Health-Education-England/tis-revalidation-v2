@@ -12,8 +12,10 @@ import { TraineesState } from "../state/trainees.state";
   templateUrl: "./trainee-list-paginator.component.html"
 })
 export class TraineeListPaginatorComponent {
-  @Select(TraineesState.totalResults) totalResults$: Observable<number>;
-  @Select(TraineesState.pageIndex) pageIndex$: Observable<number>;
+  @Select(TraineesState.totalResults<number>()) totalResults$: Observable<
+    number
+  >;
+  @Select(TraineesState.pageIndex<number>()) pageIndex$: Observable<number>;
 
   constructor(private store: Store, private traineeService: TraineesService) {}
 

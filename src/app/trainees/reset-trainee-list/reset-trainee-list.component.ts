@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { Sort } from "@angular/material/sort";
+import { Sort as ISort } from "@angular/material/sort/sort";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
@@ -19,8 +19,8 @@ import { TraineesState } from "../state/trainees.state";
   templateUrl: "./reset-trainee-list.component.html"
 })
 export class ResetTraineeListComponent {
-  @Select(TraineesState.sort) sort$: Observable<Sort>;
-  @Select(TraineesState.pageIndex) pageIndex$: Observable<number>;
+  @Select(TraineesState.sort<ISort>()) sort$: Observable<ISort>;
+  @Select(TraineesState.pageIndex<number>()) pageIndex$: Observable<number>;
 
   constructor(private store: Store, private traineeService: TraineesService) {}
 

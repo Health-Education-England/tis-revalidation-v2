@@ -28,11 +28,13 @@ import { TraineesState } from "../state/trainees.state";
   styleUrls: ["./trainee-list.component.scss"]
 })
 export class TraineeListComponent implements OnInit {
-  @Select(TraineesState.loading) loading$: Observable<boolean>;
-  @Select(TraineesState.items) items$: Observable<ITrainee[]>;
-  @Select(TraineesState.totalResults) totalResults$: Observable<number>;
-  @Select(TraineesState.sort) sort$: Observable<ISort>;
-  @Select(TraineesState.error) error$: Observable<string>;
+  @Select(TraineesState.loading<boolean>()) loading$: Observable<boolean>;
+  @Select(TraineesState.items<ITrainee>()) items$: Observable<ITrainee[]>;
+  @Select(TraineesState.totalResults<number>()) totalResults$: Observable<
+    number
+  >;
+  @Select(TraineesState.sort<ISort>()) sort$: Observable<ISort>;
+  @Select(TraineesState.error<string>()) error$: Observable<string>;
 
   public dateFormat: string = environment.dateFormat;
   public dateColumns: string[] = [

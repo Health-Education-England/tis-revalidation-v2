@@ -19,7 +19,7 @@ import { TraineesState } from "../state/trainees.state";
   styleUrls: ["./trainee-search.component.scss"]
 })
 export class TraineeSearchComponent implements OnInit, OnDestroy {
-  @Select(TraineesState.searchQuery) searchQuery$: Observable<string>;
+  @Select(TraineesState.searchQuery<string>()) searchQuery$: Observable<string>;
   public form: FormGroup;
   public params: Params = this.route.snapshot.queryParams;
   public subscriptions: Subscription = new Subscription();

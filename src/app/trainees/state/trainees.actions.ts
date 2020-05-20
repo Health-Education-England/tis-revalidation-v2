@@ -1,12 +1,15 @@
-import { SortDirection } from "@angular/material/sort/sort-direction";
+import {
+  FilterPayload,
+  GetErrorPayload,
+  GetSuccessPayload,
+  PaginatePayload,
+  SearchPayload,
+  SortPayload
+} from "../../shared/records/state/records.actions";
 import {
   IGetTraineesResponse,
   TraineesFilterType
 } from "../trainees.interfaces";
-import {
-  GetErrorPayload,
-  GetSuccessPayload
-} from "../../shared/records/state/records.actions";
 
 const label = `[Trainees]`;
 
@@ -22,32 +25,28 @@ export class GetError extends GetErrorPayload {
   static readonly type = `${label} Get Error`;
 }
 
-export class Sort {
+export class Sort extends SortPayload {
   static readonly type = `${label} Sort`;
-  constructor(public column: string, public direction: SortDirection) {}
 }
 
 export class ResetSort {
   static readonly type = `${label} Reset Sort`;
 }
 
-export class Filter {
+export class Filter extends FilterPayload<TraineesFilterType> {
   static readonly type = `${label} Filter`;
-  constructor(public filter: TraineesFilterType) {}
 }
 
-export class Search {
+export class Search extends SearchPayload {
   static readonly type = `${label} Search`;
-  constructor(public searchQuery: string) {}
 }
 
 export class ClearSearch {
   static readonly type = `${label} Clear Search`;
 }
 
-export class Paginate {
+export class Paginate extends PaginatePayload {
   static readonly type = `${label} Paginate`;
-  constructor(public pageIndex: number) {}
 }
 
 export class ResetPaginator {

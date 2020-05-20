@@ -20,7 +20,9 @@ import { TraineesState } from "../state/trainees.state";
 export class TraineeFiltersComponent {
   @Select(TraineesState.countTotal) countTotal$: Observable<number>;
   @Select(TraineesState.countUnderNotice) countUnderNotice$: Observable<number>;
-  @Select(TraineesState.filter) filter$: Observable<TraineesFilterType>;
+  @Select(TraineesState.filter<TraineesFilterType>()) filter$: Observable<
+    TraineesFilterType
+  >;
   public traineesFilterType = TraineesFilterType;
 
   constructor(private store: Store, private traineeService: TraineesService) {}

@@ -60,19 +60,19 @@ describe("Trainees state", () => {
     spyOn(traineeService, "getTrainees").and.callThrough();
 
     store.dispatch(new Get());
-    const trainees = store.selectSnapshot(TraineesState.items);
+    const items = store.snapshot().trainees.items;
 
-    expect(trainees.length).toEqual(2);
-    expect(trainees[0].doctorFirstName).toEqual("Bobby");
+    expect(items.length).toEqual(2);
+    expect(items[0].doctorFirstName).toEqual("Bobby");
   });
 
   it("should dispatch 'GetTrainees' and select 'countTotal' slice", () => {
     spyOn(traineeService, "getTrainees").and.callThrough();
 
     store.dispatch(new Get());
-    const count = store.selectSnapshot(TraineesState.countTotal);
+    const countTotal = store.snapshot().trainees.countTotal;
 
-    expect(count).toEqual(21312);
+    expect(countTotal).toEqual(21312);
   });
 
   it("should dispatch 'GetTraineesError' and select 'error' slice", () => {
@@ -86,49 +86,49 @@ describe("Trainees state", () => {
     });
 
     store.dispatch(new GetError(mockError));
-    const error = store.selectSnapshot(TraineesState.error);
+    const error = store.snapshot().trainees.error;
     expect(error).toEqual(`Error: ${mockError.error.message}`);
   });
 
   it("should dispatch 'SortTrainees' and update store", () => {
     store.dispatch(new Sort(DEFAULT_SORT.active, DEFAULT_SORT.direction));
-    const sort = store.selectSnapshot(TraineesState.sort);
+    const sort = store.snapshot().trainees.sort;
     expect(sort).toEqual(DEFAULT_SORT);
   });
 
   it("should dispatch 'PaginateTrainees' and update store", () => {
     store.dispatch(new Paginate(34));
-    const pageIndex = store.selectSnapshot(TraineesState.pageIndex);
+    const pageIndex = store.snapshot().trainees.pageIndex;
     expect(pageIndex).toEqual(34);
   });
 
   it("should dispatch 'ResetTraineesPaginator' and update store", () => {
     store.dispatch(new ResetPaginator());
-    const pageIndex = store.selectSnapshot(TraineesState.pageIndex);
+    const pageIndex = store.snapshot().trainees.pageIndex;
     expect(pageIndex).toEqual(0);
   });
 
   it("should dispatch 'SearchTrainees' and update store", () => {
     store.dispatch(new Search("smith"));
-    const searchQuery = store.selectSnapshot(TraineesState.searchQuery);
+    const searchQuery = store.snapshot().trainees.searchQuery;
     expect(searchQuery).toEqual("smith");
   });
 
   it("should dispatch 'ClearTraineesSearch' and update store", () => {
     store.dispatch(new ClearSearch());
-    const searchQuery = store.selectSnapshot(TraineesState.searchQuery);
+    const searchQuery = store.snapshot().trainees.searchQuery;
     expect(searchQuery).toBeNull();
   });
 
   it("should dispatch 'UnderNoticeFilter' and update store", () => {
     store.dispatch(new Filter(TraineesFilterType.UNDER_NOTICE));
-    const filter = store.selectSnapshot(TraineesState.filter);
+    const filter = store.snapshot().trainees.filter;
     expect(filter).toEqual(TraineesFilterType.UNDER_NOTICE);
   });
 
   it("should dispatch 'AllDoctorsFilter' and update store", () => {
     store.dispatch(new Filter(TraineesFilterType.ALL_DOCTORS));
-    const filter = store.selectSnapshot(TraineesState.filter);
+    const filter = store.snapshot().trainees.filter;
     expect(filter).toEqual(TraineesFilterType.ALL_DOCTORS);
   });
 });

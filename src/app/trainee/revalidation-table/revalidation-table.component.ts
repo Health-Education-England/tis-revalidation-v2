@@ -34,7 +34,7 @@ export class RevalidationTableComponent implements OnInit {
   ];
   expandedElement: IRecommendation | null;
   dateFormat = environment.dateFormat;
-  @Input() recommendationHistory: IRecommendation[];
+  @Input() recommendationsHistory: IRecommendation[];
 
   constructor() {}
 

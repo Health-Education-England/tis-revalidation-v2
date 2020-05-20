@@ -22,8 +22,6 @@ describe("RevalidationHistoryComponent", () => {
         MaterialModule,
         RouterTestingModule,
         HttpClientTestingModule,
-        MatTableModule,
-        MatSortModule,
         NgxsModule.forRoot([RevalidationHistoryState])
       ],
       declarations: [RevalidationHistoryComponent],

@@ -4,7 +4,6 @@ import { CommonModule } from "@angular/common";
 import { TraineeRoutingModule } from "./trainee-routing.module";
 import { TraineeComponent } from "./trainee.component";
 import { RevalidationHistoryComponent } from "./revalidation-history/revalidation-history.component";
-import { RevalidationFormComponent } from "./revalidation-form/revalidation-form.component";
 import { RevalidationNotesComponent } from "./revalidation-notes/revalidation-notes.component";
 import { MaterialModule } from "../shared/material/material.module";
 import { SharedModule } from "../shared/shared.module";
@@ -13,19 +12,16 @@ import { TraineeResolver } from "./trainee.resolver";
 import { RevalidationHistoryState } from "./state/revalidation-history.state";
 import { RevalidationHistoryService } from "./services/revalidation-history.service";
 import { RevalidationNotesState } from "./state/revalidation-notes.state";
-import { TraineeDetailsComponent } from './trainee-details/trainee-details.component';
-import { RevalidationTableComponent } from './revalidation-table/revalidation-table.component';
-import { RevalidationConfirmationComponent } from './revalidation-confirmation/revalidation-confirmation.component';
+import { TraineeDetailsComponent } from "./trainee-details/trainee-details.component";
+import { RevalidationTableComponent } from "./revalidation-table/revalidation-table.component";
 
 @NgModule({
   declarations: [
     TraineeComponent,
     RevalidationHistoryComponent,
-    RevalidationFormComponent,
     RevalidationNotesComponent,
     TraineeDetailsComponent,
-    RevalidationTableComponent,
-    RevalidationConfirmationComponent
+    RevalidationTableComponent
   ],
   imports: [
     MaterialModule,

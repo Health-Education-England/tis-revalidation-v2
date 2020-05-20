@@ -1,5 +1,5 @@
 <div class="table-container">
-    <table mat-table [dataSource]="recommendationHistory" multiTemplateDataRows class="w-100">
+    <table mat-table [dataSource]="recommendationsHistory" multiTemplateDataRows class="w-100">
         <caption class="collapsed no-height">
             Trainee revalidation historical details
         </caption>
@@ -80,6 +80,6 @@
             </td>
         </ng-container>
 
-        <tr mat-footer-row *matFooterRowDef="['noRecord']" [ngClass]="{ hide: recommendationHistory.length > 0 }"></tr>
+        <tr mat-footer-row *matFooterRowDef="['noRecord']" [ngClass]="{ hide: recommendationsHistory.length > 0 }"></tr>
     </table>
 </div>

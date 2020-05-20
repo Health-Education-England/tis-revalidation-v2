@@ -27,5 +27,6 @@ export abstract class IEnvironment {
     readonly redirectSignIn: string;
     readonly redirectSignOut: string;
     readonly responseType: string;
+    readonly mandatorySignIn: boolean;
   };
 }

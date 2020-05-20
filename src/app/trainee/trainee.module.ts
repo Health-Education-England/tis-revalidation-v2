@@ -14,6 +14,8 @@ import { RevalidationHistoryState } from "./state/revalidation-history.state";
 import { RevalidationHistoryService } from "./services/revalidation-history.service";
 import { RevalidationNotesState } from "./state/revalidation-notes.state";
 import { TraineeDetailsComponent } from './trainee-details/trainee-details.component';
+import { RevalidationTableComponent } from './revalidation-table/revalidation-table.component';
+import { RevalidationConfirmationComponent } from './revalidation-confirmation/revalidation-confirmation.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { TraineeDetailsComponent } from './trainee-details/trainee-details.compo
     RevalidationHistoryComponent,
     RevalidationFormComponent,
     RevalidationNotesComponent,
-    TraineeDetailsComponent
+    TraineeDetailsComponent,
+    RevalidationTableComponent,
+    RevalidationConfirmationComponent
   ],
   imports: [
     MaterialModule,

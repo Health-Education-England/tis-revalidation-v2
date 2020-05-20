@@ -24,6 +24,7 @@ export const environment: IEnvironment = {
     scope: ["openid", "aws.cognito.signin.user.admin"],
     redirectSignIn: "https://revalidation.tis.nhs.uk",
     redirectSignOut: "https://revalidation.tis.nhs.uk",
-    responseType: "token"
+    responseType: "token",
+    mandatorySignIn: true
   }
 };

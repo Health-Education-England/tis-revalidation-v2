@@ -1,55 +1,32 @@
-import { Component, OnInit } from "@angular/core";
 import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger
-} from "@angular/animations";
+  Component,
+  OnInit,
+  ViewEncapsulation,
+  ViewChild,
+  ChangeDetectorRef,
+  AfterViewChecked
+} from "@angular/core";
 import { MatBottomSheet } from "@angular/material/bottom-sheet";
 import { RevalidationNotesComponent } from "../revalidation-notes/revalidation-notes.component";
-import { MatDialog } from "@angular/material/dialog";
-import { RevalidationFormComponent } from "../revalidation-form/revalidation-form.component";
-import {
-  IRecommendation,
-  IRevalidationHistory
-} from "../revalidation-history.interface";
+import { IRevalidationHistory } from "../revalidation-history.interface";
 import { RevalidationHistoryState } from "../state/revalidation-history.state";
 import { Select } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { map, shareReplay } from "rxjs/operators";
-import { environment } from "@environment";
+import { FormGroup } from "@angular/forms";
+import { RevalidationFormComponent } from "../revalidation-form/revalidation-form.component";
+import { MatStepper } from "@angular/material/stepper";
 
 @Component({
   selector: "app-revalidation-history",
   templateUrl: "./revalidation-history.component.html",
   styleUrls: ["./revalidation-history.component.scss"],
-  animations: [
-    trigger("detailExpand", [
-      state("collapsed", style({ height: "0px", minHeight: "0" })),
-      state("expanded", style({ height: "*" })),
-      transition(
-        "expanded <=> collapsed",
-        animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)")
-      )
-    ])
-  ]
+  encapsulation: ViewEncapsulation.None
 })
-export class RevalidationHistoryComponent implements OnInit {
-  columnsToDisplay = [
-    "recommendation",
-    "outcome",
-    "gmcSubDueDate",
-    "actSubDate",
-    "submittedBy"
-  ];
-  expandedElement: IRecommendation | null;
-
+export class RevalidationHistoryComponent implements OnInit, AfterViewChecked {
   @Select(RevalidationHistoryState.revalidationHistory)
   revalidationHistory$: Observable<IRevalidationHistory>;
-
-  dateFormat = environment.dateFormat;
 
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
@@ -58,23 +35,41 @@ export class RevalidationHistoryComponent implements OnInit {
       shareReplay()
     );
 
+  @ViewChild("stepper") stepper: MatStepper;
+
+  revalidationForm: FormGroup;
+  confirmationForm: FormGroup;
+  onRevalidationForm(formGroup: FormGroup): void {
+    this.revalidationForm = formGroup;
+  }
+  onConfirmationForm(formGroup: FormGroup): void {
+    this.confirmationForm = formGroup;
+  }
+
   constructor(
     private bottomSheet: MatBottomSheet,
-    public dialog: MatDialog,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private changeDetector: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {}
 
-  openNotes(): void {
-    this.bottomSheet.open(RevalidationNotesComponent);
+  ngAfterViewChecked() {
+    this.changeDetector.detectChanges();
   }
 
-  openDialog() {
-    const dialogRef = this.dialog.open(RevalidationFormComponent);
+  saveDraft(): void {
+    (window as any).alert("draft saved");
+    this.resetMatStepper();
+  }
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
+  resetMatStepper(): void {
+    this.stepper.reset();
+    this.revalidationForm.reset();
+    this.confirmationForm.reset();
+  }
+
+  openNotes(): void {
+    this.bottomSheet.open(RevalidationNotesComponent);
   }
 }

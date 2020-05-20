@@ -1,0 +1,13 @@
+@import "~@angular/material/core/style/variables";
+
+.terms {
+  height: 300px;
+  overflow: scroll;
+  margin-bottom: 24px;
+  padding: 10px 15px;
+
+  @media screen and (#{$mat-small}) {
+    // padding: 8px 10px;
+    // margin-bottom: 28px;
+  }
+}

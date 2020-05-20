@@ -1,15 +1,11 @@
 import { HttpParams } from "@angular/common/http";
-import {
-  HttpClientTestingModule,
-  HttpTestingController
-} from "@angular/common/http/testing";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { TestBed } from "@angular/core/testing";
-import { Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
-import { environment } from "@environment";
 import { NgxsModule, Store } from "@ngxs/store";
 import { BehaviorSubject, Observable, of } from "rxjs";
-import { ResetPaginator, Search, Filter } from "../state/trainees.actions";
+import { RecordsService } from "../../shared/records/services/records.service";
+import { Filter, ResetPaginator, Search } from "../state/trainees.actions";
 import { TraineesState, TraineesStateModel } from "../state/trainees.state";
 import {
   IGetTraineesResponse,
@@ -17,7 +13,7 @@ import {
 } from "../trainees.interfaces";
 import { TraineesService } from "./trainees.service";
 
-const mockResponse: IGetTraineesResponse = {
+export const mockTraineesResponse: IGetTraineesResponse = {
   traineeInfo: [
     {
       dateAdded: "2015-05-14",
@@ -59,12 +55,8 @@ const mockResponse: IGetTraineesResponse = {
 export class MockTraineeService {
   public resetSearchForm$: BehaviorSubject<boolean> = new BehaviorSubject(null);
 
-  public getTrainees(): Observable<any> {
-    return of(mockResponse);
-  }
-
   public updateTraineesRoute(): Observable<any> {
-    return of(mockResponse);
+    return of(mockTraineesResponse);
   }
 
   public generateParams(): any {
@@ -73,9 +65,8 @@ export class MockTraineeService {
 }
 
 describe("TraineeService", () => {
-  let service: TraineesService;
-  let http: HttpTestingController;
-  let router: Router;
+  let traineeService: TraineesService;
+  let recordsService: RecordsService;
   let store: Store;
 
   beforeEach(() => {
@@ -87,30 +78,20 @@ describe("TraineeService", () => {
       ],
       providers: [TraineesService]
     });
-    service = TestBed.inject(TraineesService);
-    http = TestBed.inject(HttpTestingController);
-    router = TestBed.inject(Router);
+    traineeService = TestBed.inject(TraineesService);
+    recordsService = TestBed.inject(RecordsService);
     store = TestBed.inject(Store);
   });
 
   it("should be created", () => {
-    expect(service).toBeTruthy();
-  });
-
-  it("`getTrainees()` should call api", () => {
-    service.getTrainees().subscribe();
-
-    const mockHttp = http.expectOne(`${environment.appUrls.getTrainees}`);
-    expect(mockHttp.request.method).toBe("GET");
-
-    http.verify();
+    expect(traineeService).toBeTruthy();
   });
 
   it("`generateParams()` should generate and return HttpParams", () => {
     store.dispatch(new ResetPaginator());
     store.dispatch(new Filter(TraineesFilterType.UNDER_NOTICE));
 
-    const params: HttpParams = service.generateParams();
+    const params: HttpParams = traineeService.generateParams();
 
     expect(params instanceof HttpParams).toBeTruthy();
   });
@@ -120,25 +101,20 @@ describe("TraineeService", () => {
     store.dispatch(new ResetPaginator());
     store.dispatch(new Filter(TraineesFilterType.UNDER_NOTICE));
 
-    const params: HttpParams = service.generateParams();
+    const params: HttpParams = traineeService.generateParams();
 
     expect(params.get("searchQuery")).toEqual("lisa");
   });
 
-  it("`updateTraineesRoute()` should navigate to `/trainees`", () => {
-    spyOn(router, "navigate");
+  it("`updateTraineesRoute()` should invoke `recordsService.updateRoute()`", () => {
+    spyOn(recordsService, "updateRoute");
 
     const snapshot: TraineesStateModel = store.snapshot().trainees;
-    service.updateTraineesRoute();
+    traineeService.updateTraineesRoute();
 
-    expect(router.navigate).toHaveBeenCalledWith(["/trainees"], {
-      queryParams: {
-        active: snapshot.sort.active,
-        direction: snapshot.sort.direction,
-        pageIndex: snapshot.pageIndex,
-        filter: snapshot.filter,
-        ...(snapshot.searchQuery && { searchQuery: snapshot.searchQuery })
-      }
-    });
+    expect(recordsService.updateRoute).toHaveBeenCalledWith(
+      snapshot,
+      "trainees"
+    );
   });
 });

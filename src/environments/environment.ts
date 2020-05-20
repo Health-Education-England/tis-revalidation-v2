@@ -18,7 +18,8 @@ export const environment: IEnvironment = {
     // 5e997dba33000096297b235d = 0 trainees to simulate no results found
     getRecommendation: `mocky/5ea6d31b2f00004e00c4e7d9`,
     getNotes: `mocky/5ea2da614f00006c00d9f540`,
-    getTrainees: `mocky/5e997d8a33000062007b2354?mocky-delay=700ms`
+    getTrainees: `mocky/5e997d8a33000062007b2354?mocky-delay=700ms`,
+    getConcerns: `mocky/5ec5423d2f0000d7c7dc30f9?mocky-delay=700ms`
   },
   awsConfig: {
     redirectSignIn: "http://localhost:4200",

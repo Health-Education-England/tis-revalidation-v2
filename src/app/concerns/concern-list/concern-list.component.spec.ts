@@ -1,4 +1,6 @@
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule } from "@ngxs/store";
 import { ConcernsState } from "../state/concerns.state";
 import { ConcernListComponent } from "./concern-list.component";
@@ -10,7 +12,11 @@ describe("ConcernListComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ConcernListComponent],
-      imports: [NgxsModule.forRoot([ConcernsState])]
+      imports: [
+        RouterTestingModule,
+        HttpClientTestingModule,
+        NgxsModule.forRoot([ConcernsState])
+      ]
     }).compileComponents();
   }));
 

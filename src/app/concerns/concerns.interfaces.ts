@@ -1,17 +1,22 @@
 import { IGetRecordsResponse } from "../shared/records/records.interfaces";
 
-// TO DO: to be defined
 export interface IGetConcernsResponse extends IGetRecordsResponse {
-  concernsInfo: any;
+  concernsInfo: IConcern[];
 }
 
-// TO DO: to be defined
 export interface IConcern {
+  admin: string;
+  closedDate: string;
+  dateRaised: string;
   doctorFirstName: string;
   doctorLastName: string;
-  doctorStatus: string;
+  followUpDate: string;
   gmcReferenceNumber: string;
-  lastUpdatedDate: string;
+  programmeNumber: string;
+  site: string;
+  source: string;
+  status: string;
+  type: string;
 }
 
 export enum ConcernsFilterType {

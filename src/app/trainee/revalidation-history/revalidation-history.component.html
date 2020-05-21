@@ -6,177 +6,173 @@
           <app-trainee-details></app-trainee-details>
         </mat-menu>
 
-        <button
-          mat-icon-button
-          aria-label="Trainee details"
-          [matMenuTriggerFor]="traineeMenu"
-        >
+        <button mat-icon-button aria-label="Trainee details" [matMenuTriggerFor]="traineeMenu">
           <mat-icon aria-label="Trainee details">account_box</mat-icon>
         </button>
       </ng-container>
 
       <span class="spacer"></span>
 
-      <button
-        mat-icon-button
-        aria-label="Add notes"
-        (click)="openNotes()"
-        color="primary"
-      >
+      <button mat-icon-button aria-label="Add notes" (click)="openNotes()" color="primary">
         <mat-icon matBadge="4">speaker_notes</mat-icon>
       </button>
     </mat-toolbar-row>
   </mat-toolbar>
-  <div [ngClass]="{ 'd-flex mat-elevation-z8': !device.isHandset }">
+  <div class="revalidation-history" [ngClass]="{ 'd-flex': !device.isHandset }">
     <div class="left-nav" *ngIf="!device.isHandset">
       <app-trainee-details></app-trainee-details>
     </div>
 
     <mat-divider *ngIf="!device.isHandset" [vertical]="true"></mat-divider>
 
-    <div
-      class="table-container"
-      [ngClass]="{
-        spacer: !device.isHandset,
-        'mat-elevation-z8': device.isHandset
-      }"
-      *ngIf="revalidationHistory$ | async as revalidationHistory"
-    >
-      <table
-        mat-table
-        [dataSource]="revalidationHistory.recommendations"
-        multiTemplateDataRows
-        class="w-100"
-      >
-        <caption class="collapsed no-height">
-          Trainee revalidation historical details
-        </caption>
-        <ng-container matColumnDef="recommendation">
-          <th mat-header-cell scope="col" *matHeaderCellDef>Recommendation</th>
-          <td mat-cell *matCellDef="let element">
-            {{ element.recommendation }}
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="outcome">
-          <th mat-header-cell scope="col" *matHeaderCellDef>Outcome</th>
-          <td mat-cell *matCellDef="let element">
-            <div class="outcome" [ngSwitch]="element.outcome">
-              <mat-icon
-                *ngSwitchCase="'Approved'"
-                aria-hidden="true"
-                class="icon-green"
-                >done_all
-              </mat-icon>
-              <mat-icon
-                *ngSwitchCase="'Rejected'"
-                aria-hidden="true"
-                class="icon-red"
-                >error_outline
-              </mat-icon>
-              <mat-icon
-                *ngSwitchCase="'Under review'"
-                aria-hidden="true"
-                class="icon-blue"
-                >done
-              </mat-icon>
-              <span class="outcome-text">{{ element.outcome }}</span>
-            </div>
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="gmcSubDueDate">
-          <th mat-header-cell scope="col" *matHeaderCellDef>
-            GMC Submission Due Date
-          </th>
-          <td mat-cell *matCellDef="let element">
-            {{ element.gmcSubDueDate | date: dateFormat }}
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="actSubDate">
-          <th mat-header-cell scope="col" *matHeaderCellDef>
-            Actual Submission Date
-          </th>
-          <td mat-cell *matCellDef="let element">
-            {{ element.actSubDate | date: dateFormat }}
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="submittedBy">
-          <th mat-header-cell scope="col" *matHeaderCellDef>Submitted By</th>
-          <td mat-cell *matCellDef="let element">{{ element.submittedBy }}</td>
-        </ng-container>
+    <ng-container *ngIf="revalidationHistory$ | async as revalidationHistory">
+      <mat-horizontal-stepper #stepper linear>
 
-        <ng-container matColumnDef="expandedDetail">
-          <td
-            mat-cell
-            *matCellDef="let element"
-            [attr.colspan]="columnsToDisplay.length"
-          >
-            <div
-              class="element-detail"
-              [@detailExpand]="
-                element == expandedElement ? 'expanded' : 'collapsed'
-              "
-            >
-              <div class="element-submission-status">
-                <strong>Submission Status:</strong>
-                {{ element.submissionStatus }}
-              </div>
-              <mat-divider *ngIf="element.comments?.length > 0"></mat-divider>
-              <ng-container *ngFor="let comment of element.comments">
-                <div class="element-notes">
-                  {{ comment.comment }}
-                </div>
+        <mat-step label="history">
+          <app-revalidation-table [recommendationsHistory]="revalidationHistory.recommendations">
+          </app-revalidation-table>
+          <div class="button-row">
+            <button mat-button mat-raised-button matStepperNext color="primary">
+
+              <ng-container *ngIf="recommendationHistory; else editMode">
+                Create recommendation
               </ng-container>
+
+              <ng-template #editMode>
+                Edit recommendation
+              </ng-template>
+            </button>
+            <span class="spacer"></span>
+          </div>
+        </mat-step>
+
+        <mat-step [stepControl]="revalidationForm">
+          <form class="revalidation-form w-100" [formGroup]="revalidationForm">
+            <mat-form-field class="w-100">
+              <mat-label>Select an action</mat-label>
+              <mat-select formControlName="action">
+                <mat-option>None</mat-option>
+                <mat-option value="Revalidate">Revalidate</mat-option>
+                <mat-option value="Defer">Defer</mat-option>
+                <mat-option value="Non-Engagement">Non-Engagement</mat-option>
+              </mat-select>
+              <mat-error *ngIf="revalidationForm.controls['action']?.hasError('required')">
+                Please select an action
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-100" *ngIf="revalidationForm.controls['action']?.value === 'Defer'">
+              <mat-label>Choose a date</mat-label>
+              <input matInput formControlName="deferralDate" [matDatepicker]="picker">
+              <mat-error *ngIf="revalidationForm.controls['deferralDate']?.hasError('required')">
+                Date must be entered
+              </mat-error>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field class="w-100" *ngIf="revalidationForm.controls['action']?.value === 'Defer'">
+              <mat-label>Reason</mat-label>
+              <input matInput placeholder="Reason for ..." formControlName="deferralReason">
+              <mat-error *ngIf="revalidationForm.controls['deferralReason']?.hasError('required')">
+                Reason must be provided
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-100" formArrayName="comments">
+              <mat-label>Leave a comment</mat-label>
+              <ng-container *ngFor="let comment of comments.controls; let i=index">
+                <textarea matInput [formControlName]="i" placeholder="comments..."></textarea>
+              </ng-container>
+            </mat-form-field>
+
+
+          </form>
+          <div class="button-row">
+            <button mat-button mat-raised-button matStepperPrevious>Back</button>
+            <button mat-button mat-raised-button [disabled]="revalidationForm ? !revalidationForm.valid : true"
+              (click)="saveDraft();" color="accent">
+              Save draft
+            </button>
+            <button mat-button mat-raised-button matStepperNext
+              [disabled]="revalidationForm ? !revalidationForm.valid : true" color="primary">
+              Proceed
+            </button>
+            <span class="spacer"></span>
+          </div>
+        </mat-step>
+
+        <mat-step [stepControl]="confirmationForm">
+          <form class="revalidation-form w-100" [formGroup]="confirmationForm">
+            <div class="terms mat-body">
+              <h2 class="mat-title">AGREEMENT TO TERMS</h2>
+
+              <p>These Terms and Conditions constitute a legally binding agreement made between you, whether
+                personally or on
+                behalf of an entity (“you”) and Health Education England (“we,” “us” or “our”), concerning your access
+                to and use
+                of the [revalidation web services] website as well as any other media form, media channel, mobile
+                website or
+                mobile
+                application related, linked, or otherwise connected thereto (collectively, the “Site”).</p>
+
+              <p>You agree that by accessing the Site, you have read, understood, and agree to be bound by all of
+                these Terms and
+                Conditions. If you do not agree with all of these Terms and Conditions, then you are expressly
+                prohibited from
+                using the Site and you must discontinue use immediately.</p>
+
+              <p>Supplemental terms and conditions or documents that may be posted on the Site from time to time are
+                hereby
+                expressly incorporated herein by reference. We reserve the right, in our sole discretion, to make
+                changes or
+                modifications to these Terms and Conditions at any time and for any reason.</p>
+
+              <p>We will alert you about any changes by updating the “Last updated” date of these Terms and
+                Conditions, and you
+                waive any right to receive specific notice of each such change.</p>
+
+              <p>It is your responsibility to periodically review these Terms and Conditions to stay informed of
+                updates. You
+                will be subject to, and will be deemed to have been made aware of and to have accepted, the changes
+                in any
+                revised Terms and Conditions by your continued use of the Site after the date such revised Terms and
+                Conditions
+                are posted.</p>
+
+              <p>The information provided on the Site is not intended for distribution to or use by any person or
+                entity in any
+                jurisdiction or country where such distribution or use would be contrary to law or regulation or
+                which would
+                subject us to any registration requirement within such jurisdiction or country.</p>
+
+              <p>Accordingly, those persons who choose to access the Site from other locations do so on their own
+                initiative and
+                are solely responsible for compliance with local laws, if and to the extent local laws are
+                applicable.</p>
             </div>
-          </td>
-        </ng-container>
+            <mat-divider></mat-divider>
+            <section class="w-100 mt-20">
+              <mat-slide-toggle class="example-margin" color="primary" [required]="true" formControlName="confirm">
+                I confirm all relevant information has been considered
+              </mat-slide-toggle>
+            </section>
 
-        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-        <tr
-          tabindex="0"
-          mat-row
-          *matRowDef="let element; columns: columnsToDisplay"
-          class="element-row"
-          [class.expanded-row]="expandedElement === element"
-          (click)="
-            expandedElement = expandedElement === element ? null : element
-          "
-          (keyup.enter)="
-            expandedElement = expandedElement === element ? null : element
-          "
-          (keyup.space)="
-            expandedElement = expandedElement === element ? null : element
-          "
-        ></tr>
-        <tr
-          mat-row
-          *matRowDef="let row; columns: ['expandedDetail']"
-          class="detail-row"
-        ></tr>
+          </form>
+          <div class="button-row">
+            <button mat-button mat-raised-button matStepperPrevious>Back</button>
+            <button mat-button mat-raised-button matStepperNext color="primary"
+              [disabled]="confirmationForm ? !confirmationForm.controls['confirm'].value : true">
+              Submit to GMC
+            </button>
+            <span class="spacer"></span>
+          </div>
+        </mat-step>
 
-        <ng-container matColumnDef="noRecord">
-          <td colspan="5" mat-footer-cell class="centered" *matFooterCellDef>
-            <em class="icon-red">No history available.</em>
-          </td>
-        </ng-container>
+      </mat-horizontal-stepper>
+    </ng-container>
 
-        <tr
-          mat-footer-row
-          *matFooterRowDef="['noRecord']"
-          [ngClass]="{ hide: revalidationHistory.recommendations.length > 0 }"
-        ></tr>
-      </table>
-      <div class="button-row" *ngIf="!device.isHandset">
-        <span class="spacer"></span>
-        <button mat-raised-button (click)="openDialog()" color="primary">
-          Recommend
-        </button>
-      </div>
-    </div>
-    <div class="button-row" *ngIf="device.isHandset">
-      <span class="spacer"></span>
-      <button mat-raised-button (click)="openDialog()" color="primary">
-        Recommend
-      </button>
-    </div>
+
+
   </div>
 </ng-container>

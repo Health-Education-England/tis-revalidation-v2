@@ -30,7 +30,8 @@ export const environment: IEnvironment = {
     userPoolWebClientId: "3adscm2usl3lop510nfijpr12f",
     authenticationFlowType: "USER_PASSWORD_AUTH",
     domain: "stage-auth.tis.nhs.uk",
-    scope: ["openid", "aws.cognito.signin.user.admin"]
+    scope: ["openid", "aws.cognito.signin.user.admin"],
+    mandatorySignIn: false
   }
 };
 

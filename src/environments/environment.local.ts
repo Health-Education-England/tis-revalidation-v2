@@ -27,7 +27,8 @@ export const environment: IEnvironment = {
     redirectSignOut: "http://localhost:4200",
     responseType: "token",
     region: "eu-west-2",
-    userPoolId: "eu-west-2_hkwYIoHu3"
+    userPoolId: "eu-west-2_hkwYIoHu3",
+    mandatorySignIn: true
   }
 };
 

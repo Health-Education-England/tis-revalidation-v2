@@ -1,6 +1,11 @@
+import { HttpErrorResponse, HttpParams } from "@angular/common/http";
 import { Sort as ISort } from "@angular/material/sort/sort";
 import { createSelector, StateContext } from "@ngxs/store";
+import { catchError, finalize, switchMap, take } from "rxjs/operators";
 import { DEFAULT_SORT } from "../../../trainees/constants";
+import { GetError, GetSuccess } from "../../../trainees/state/trainees.actions";
+import { IGetTraineesResponse } from "../../../trainees/trainees.interfaces";
+import { RecordsService } from "../services/records.service";
 
 export class RecordsStateModel<T, F> {
   public error?: string;
@@ -29,6 +34,8 @@ export const defaultRecordsState = {
 };
 
 export class RecordsState {
+  constructor(protected recordsService: RecordsService) {}
+
   static items<T>() {
     return createSelector([this], (state: { items: T[] }) => {
       return state.items;
@@ -77,11 +84,33 @@ export class RecordsState {
     });
   }
 
-  protected getHandler(ctx: StateContext<any>) {
+  protected getHandler(
+    ctx: StateContext<any>,
+    endPoint: string,
+    params?: HttpParams
+  ) {
     ctx.patchState({
       items: null,
       loading: true
     });
+
+    this.recordsService
+      .getRecords(endPoint, params)
+      .pipe(
+        take(1),
+        switchMap((response: IGetTraineesResponse) =>
+          ctx.dispatch(new GetSuccess(response))
+        ),
+        catchError((error: HttpErrorResponse) =>
+          ctx.dispatch(new GetError(error))
+        ),
+        finalize(() =>
+          ctx.patchState({
+            loading: false
+          })
+        )
+      )
+      .subscribe();
   }
 
   protected getSuccessHandler(ctx: StateContext<any>, action: any) {

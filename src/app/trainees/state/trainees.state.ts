@@ -1,18 +1,15 @@
-import { HttpErrorResponse, HttpParams } from "@angular/common/http";
+import { HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { environment } from "@environment";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
-import { catchError, finalize, switchMap, take } from "rxjs/operators";
+import { RecordsService } from "../../shared/records/services/records.service";
 import {
   defaultRecordsState,
   RecordsState,
   RecordsStateModel
 } from "../../shared/records/state/records.state";
-import {
-  IGetTraineesResponse,
-  ITrainee,
-  TraineesFilterType
-} from "../trainees.interfaces";
 import { TraineesService } from "../services/trainees.service";
+import { ITrainee, TraineesFilterType } from "../trainees.interfaces";
 import {
   ClearSearch,
   Filter,
@@ -44,8 +41,11 @@ export class TraineesStateModel extends RecordsStateModel<
 })
 @Injectable()
 export class TraineesState extends RecordsState {
-  constructor(private traineesService: TraineesService) {
-    super();
+  constructor(
+    private traineesService: TraineesService,
+    protected recordsService: RecordsService
+  ) {
+    super(recordsService);
   }
 
   @Selector()
@@ -60,27 +60,9 @@ export class TraineesState extends RecordsState {
 
   @Action(Get)
   get(ctx: StateContext<TraineesStateModel>) {
-    super.getHandler(ctx);
-
     const params: HttpParams = this.traineesService.generateParams();
-
-    return this.traineesService
-      .getTrainees(params)
-      .pipe(
-        take(1),
-        switchMap((response: IGetTraineesResponse) =>
-          ctx.dispatch(new GetSuccess(response))
-        ),
-        catchError((error: HttpErrorResponse) =>
-          ctx.dispatch(new GetError(error))
-        ),
-        finalize(() =>
-          ctx.patchState({
-            loading: false
-          })
-        )
-      )
-      .subscribe();
+    const endPoint = `${environment.appUrls.getTrainees}`;
+    return super.getHandler(ctx, endPoint, params);
   }
 
   @Action(GetSuccess)

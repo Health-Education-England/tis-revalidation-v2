@@ -13,11 +13,13 @@
             <th mat-header-cell scope="col" *matHeaderCellDef>Outcome</th>
             <td mat-cell *matCellDef="let element">
                 <div class="outcome" [ngSwitch]="element.outcome">
-                    <mat-icon *ngSwitchCase="'Approved'" aria-hidden="true" class="icon-green">done_all
+                    <mat-icon *ngSwitchCase="revalidationOutcome.Approved" aria-hidden="true" class="icon-green">
+                        done_all
                     </mat-icon>
-                    <mat-icon *ngSwitchCase="'Rejected'" aria-hidden="true" class="icon-red">error_outline
+                    <mat-icon *ngSwitchCase="revalidationOutcome.Rejected" aria-hidden="true" class="icon-red">
+                        error_outline
                     </mat-icon>
-                    <mat-icon *ngSwitchCase="'Under review'" aria-hidden="true" class="icon-blue">done
+                    <mat-icon *ngSwitchCase="revalidationOutcome.UnderReview" aria-hidden="true" class="icon-blue">done
                     </mat-icon>
                     <span class="outcome-text">{{ element.outcome }}</span>
                 </div>
@@ -65,13 +67,8 @@
 
         <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
         <tr tabindex="0" mat-row *matRowDef="let element; columns: columnsToDisplay" class="element-row"
-            [class.expanded-row]="expandedElement === element" (click)="
-        expandedElement = expandedElement === element ? null : element
-      " (keyup.enter)="
-        expandedElement = expandedElement === element ? null : element
-      " (keyup.space)="
-        expandedElement = expandedElement === element ? null : element
-      "></tr>
+            [class.expanded-row]="expandedElement === element" (click)="currentExpanded(element)"
+            (keyup.enter)="currentExpanded(element)" (keyup.space)="currentExpanded(element)"></tr>
         <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
 
         <ng-container matColumnDef="noRecord">

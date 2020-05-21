@@ -1,5 +1,8 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { IRecommendation } from "../revalidation-history.interface";
+import {
+  IRecommendation,
+  RevalidationOutcome
+} from "../revalidation-history.interface";
 import { environment } from "@environment";
 import {
   trigger,
@@ -35,8 +38,13 @@ export class RevalidationTableComponent implements OnInit {
   expandedElement: IRecommendation | null;
   dateFormat = environment.dateFormat;
   @Input() recommendationsHistory: IRecommendation[];
+  revalidationOutcome = RevalidationOutcome;
 
   constructor() {}
+
+  currentExpanded(element: any) {
+    this.expandedElement = this.expandedElement === element ? null : element;
+  }
 
   ngOnInit(): void {}
 }

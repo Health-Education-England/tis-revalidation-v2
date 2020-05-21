@@ -18,21 +18,6 @@ export interface IRecommendation {
   comments: IComment[];
   deferralReason?: string;
   deferralDate?: Date;
-
-  // private String proposedOutcomeCode;
-  // private String deferralDate;
-  // private String deferralReason;
-  // private String deferralComment;
-  // private String revalidationStatusCode;
-  // private String gmcSubmissionDateTime;
-  // private String gmcSubmissionReturnCode;
-  // private String gmcRecommendationId;
-  // private String gmcOutcomeCode;
-  // private String gmcStatusCheckDateTime;
-  // private String admin;
-  // private String submissionDate;
-  // private String recommendationSubmitter;
-  // private String dateAdded;
 }
 
 export interface IComment {
@@ -43,4 +28,10 @@ export interface IComment {
 export interface INote {
   id: number;
   note: string;
+}
+
+export enum RevalidationOutcome {
+  Approved = "Approved",
+  Rejected = "Rejected",
+  UnderReview = "Under review"
 }

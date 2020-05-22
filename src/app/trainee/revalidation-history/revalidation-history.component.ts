@@ -9,7 +9,7 @@ import { MatBottomSheet } from "@angular/material/bottom-sheet";
 import { RevalidationNotesComponent } from "../revalidation-notes/revalidation-notes.component";
 import {
   IRevalidationHistory,
-  IRecommendation
+  IRevalidation
 } from "../revalidation-history.interface";
 import { RevalidationHistoryState } from "../state/revalidation-history.state";
 import { Select } from "@ngxs/store";
@@ -45,7 +45,7 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
   deferralReason: FormControl;
   comments: FormArray;
   componentSubscriptions: Subscription[] = [];
-  recommendationHistory: IRecommendation;
+  revalidation: IRevalidation;
 
   constructor(
     private bottomSheet: MatBottomSheet,
@@ -53,9 +53,11 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
   ) {
     this.componentSubscriptions.push(
       this.revalidationHistory$.subscribe((res) => {
-        this.recommendationHistory = res.recommendations.find((item) => {
-          return item.submissionStatus === "draft";
-        });
+        this.revalidation = null;
+        // TODO: refactor with new column
+        // res.revalidations.find((item: IRevalidation) => {
+        //   return item.submissionStatus === "draft";
+        // });
 
         this.bindRecommendationData();
         this.bindFormControl();
@@ -87,17 +89,18 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
   }
 
   private bindRecommendationData(): void {
-    if (!this.recommendationHistory) {
-      this.recommendationHistory = {
-        Id: null,
-        recommendation: null,
-        outcome: null,
-        gmcSubDueDate: null,
-        actSubDate: null,
-        submittedBy: null,
-        submissionStatus: null,
-        comments: null,
-        deferralReason: null
+    if (!this.revalidation) {
+      this.revalidation = {
+        actualSubmissionDate: null,
+        admin: null,
+        deferralComment: null,
+        deferralDate: null,
+        deferralReason: null,
+        gmcOutcome: null,
+        gmcRevalidationId: null,
+        gmcSubmissionDate: null,
+        revalidationStatus: null,
+        revalidationType: null
       };
     }
   }
@@ -114,13 +117,13 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
 
   private createVariableControls(): void {
     this.deferralReason = new FormControl(
-      this.recommendationHistory.deferralReason,
+      this.revalidation.deferralReason,
       Validators.required
     );
     this.revalidationForm.addControl("deferralReason", this.deferralReason);
 
     this.deferralDate = new FormControl(
-      this.recommendationHistory.deferralDate,
+      this.revalidation.deferralDate,
       Validators.required
     );
     this.revalidationForm.addControl("deferralDate", this.deferralDate);
@@ -128,18 +131,19 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
 
   private createCommentControls(): void {
     this.comments = new FormArray([new FormControl("")]);
-    if (this.recommendationHistory.comments) {
-      for (const comment of this.recommendationHistory.comments) {
-        const commentControl = new FormControl(comment.comment);
-        this.comments.push(commentControl);
-      }
-    }
+    // TODO: uncomment when comments array is added to mongo-db
+    // if (this.revalidation.comments) {
+    //   for (const comment of this.revalidation.comments) {
+    //     const commentControl = new FormControl(comment.comment);
+    //     this.comments.push(commentControl);
+    //   }
+    // }
     this.revalidationForm.addControl("comments", this.comments);
   }
 
   private subscribeToActions(): void {
     this.action = new FormControl(
-      this.recommendationHistory.recommendation,
+      this.revalidation.revalidationType,
       Validators.required
     );
     this.revalidationForm.addControl("action", this.action);

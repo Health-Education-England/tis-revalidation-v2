@@ -38,12 +38,7 @@ export class RevalidationHistoryState {
       throw err;
     }
 
-    const httpParam: HttpParams = new HttpParams().set(
-      "id",
-      action.payload.toString()
-    );
-
-    return this.service.getRevalidationHistory(httpParam).pipe(
+    return this.service.getRevalidationHistory(action.payload).pipe(
       tap((result: IRevalidationHistory) => {
         ctx.patchState({
           item: result

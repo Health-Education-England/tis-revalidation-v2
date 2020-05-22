@@ -11,11 +11,10 @@ export class RevalidationHistoryService {
   constructor(private http: HttpClient) {}
 
   getRevalidationHistory(
-    params: HttpParams
+    gmcID: number
   ): Observable<IRevalidationHistory | any> {
     return this.http.get<IRevalidationHistory>(
-      `${environment.appUrls.getRecommendation}`,
-      { params }
+      `${environment.appUrls.getRecommendation}/${gmcID}`
     );
   }
 }

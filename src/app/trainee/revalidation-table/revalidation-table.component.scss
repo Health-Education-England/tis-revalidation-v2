@@ -48,19 +48,19 @@ tr.element-row:not(.expanded-row):active {
 
 @include mat-table-columns(
   (
-    recommendation: (
+    revalidationType: (
       width: 150px
     ),
-    outcome: (
+    gmcOutcome: (
       width: 150px
     ),
-    gmcSubDueDate: (
+    gmcSubmissionDate: (
       width: 180px
     ),
-    actSubDate: (
+    actualSubmissionDate: (
       width: 180px
     ),
-    submittedBy: (
+    admin: (
       width: 180px
     )
   )

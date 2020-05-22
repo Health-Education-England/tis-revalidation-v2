@@ -24,6 +24,7 @@ export const environment: IEnvironment = {
     authenticationFlowType: "USER_PASSWORD_AUTH",
     domain: "stage-auth.tis.nhs.uk",
     redirectSignOut: "https://stage-revalidation.tis.nhs.uk",
-    responseType: "token"
+    responseType: "token",
+    mandatorySignIn: true
   }
 };

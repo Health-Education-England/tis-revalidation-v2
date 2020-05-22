@@ -7,6 +7,7 @@ export const AWS_CONFIG = {
     userPoolId: environment.awsConfig.userPoolId,
     userPoolWebClientId: environment.awsConfig.userPoolWebClientId,
     authenticationFlowType: environment.awsConfig.authenticationFlowType,
+    mandatorySignIn: environment.awsConfig.mandatorySignIn,
     oauth: {
       domain: environment.awsConfig.domain,
       scope: environment.awsConfig.scope,

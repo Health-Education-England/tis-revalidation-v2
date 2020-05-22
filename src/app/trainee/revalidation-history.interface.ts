@@ -16,6 +16,8 @@ export interface IRecommendation {
   submittedBy: string;
   submissionStatus: string;
   comments: IComment[];
+  deferralReason?: string;
+  deferralDate?: Date;
 }
 
 export interface IComment {
@@ -26,4 +28,10 @@ export interface IComment {
 export interface INote {
   id: number;
   note: string;
+}
+
+export enum RevalidationOutcome {
+  Approved = "Approved",
+  Rejected = "Rejected",
+  UnderReview = "Under review"
 }

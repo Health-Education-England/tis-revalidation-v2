@@ -1,7 +1,6 @@
 import { State, Action, StateContext, Selector } from "@ngxs/store";
 import { RevalidationHistoryAction } from "./revalidation-history.actions";
 import { Injectable } from "@angular/core";
-import { HttpParams } from "@angular/common/http";
 import { tap } from "rxjs/operators";
 import { IRevalidationHistory } from "../revalidation-history.interface";
 import { RevalidationHistoryService } from "../services/revalidation-history.service";

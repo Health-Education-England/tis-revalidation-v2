@@ -10,6 +10,7 @@ import { RevalidationHistoryRespone2 } from "../mock-data/trainee-spec-data";
 import { ErrorHandler } from "@angular/core";
 import { IRevalidationHistory } from "../revalidation-history.interface";
 import { environment } from "@environment";
+import { MaterialModule } from "src/app/shared/material/material.module";
 
 describe("RevalidationHistory actions", () => {
   let store: Store;
@@ -22,6 +23,7 @@ describe("RevalidationHistory actions", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
+        MaterialModule,
         NgxsModule.forRoot([RevalidationHistoryState]),
         HttpClientTestingModule
       ],
@@ -37,7 +39,7 @@ describe("RevalidationHistory actions", () => {
     store.dispatch(new RevalidationHistoryAction(gmcId));
 
     const req = httpMock.expectOne(
-      `${environment.appUrls.getRecommendation}?id=${gmcId}`
+      `${environment.appUrls.getRecommendation}/${gmcId}`
     );
     expect(req.request.method).toEqual("GET");
     req.flush(RevalidationHistoryRespone2);

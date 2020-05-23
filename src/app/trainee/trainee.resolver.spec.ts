@@ -7,6 +7,7 @@ import { Component } from "@angular/core";
 import { RevalidationHistoryState } from "./state/revalidation-history.state";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { RevalidationNotesState } from "./state/revalidation-notes.state";
+import { MaterialModule } from "../shared/material/material.module";
 
 @Component({
   template: `blank`
@@ -20,6 +21,7 @@ describe("TraineeResolver", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
+        MaterialModule,
         NgxsModule.forRoot([RevalidationHistoryState]),
         NgxsModule.forRoot([RevalidationNotesState]),
         HttpClientTestingModule,

@@ -1,13 +1,13 @@
 <div class="trainee-details" [ngClass]="{'large-display': (isHandset$ | async) === false}"
     *ngIf="revalidationHistory$ | async as revalidationHistory">
     <mat-list>
-        <mat-list-item *ngIf="revalidationHistory.traineeName">
+        <mat-list-item *ngIf="revalidationHistory.fullName">
             <div class="mat-caption" mat-line>Name:</div>
-            <div mat-line>{{revalidationHistory.traineeName}}</div>
+            <div mat-line>{{revalidationHistory.fullName}}</div>
         </mat-list-item>
-        <mat-list-item *ngIf="revalidationHistory.gmcId">
+        <mat-list-item *ngIf="revalidationHistory.gmcNumber">
             <div class="mat-caption" mat-line>GMC No:</div>
-            <div mat-line>{{revalidationHistory.gmcId}}</div>
+            <div mat-line>{{revalidationHistory.gmcNumber}}</div>
         </mat-list-item>
         <mat-list-item *ngIf="revalidationHistory.programmeMembershipType">
             <div class="mat-caption" mat-line>Programme membership type:</div>

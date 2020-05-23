@@ -1,7 +1,6 @@
 import { State, Action, StateContext, Selector } from "@ngxs/store";
 import { RevalidationHistoryAction } from "./revalidation-history.actions";
 import { Injectable } from "@angular/core";
-import { HttpParams } from "@angular/common/http";
 import { tap } from "rxjs/operators";
 import { IRevalidationHistory } from "../revalidation-history.interface";
 import { RevalidationHistoryService } from "../services/revalidation-history.service";
@@ -38,12 +37,7 @@ export class RevalidationHistoryState {
       throw err;
     }
 
-    const httpParam: HttpParams = new HttpParams().set(
-      "id",
-      action.payload.toString()
-    );
-
-    return this.service.getRevalidationHistory(httpParam).pipe(
+    return this.service.getRevalidationHistory(action.payload).pipe(
       tap((result: IRevalidationHistory) => {
         ctx.patchState({
           item: result

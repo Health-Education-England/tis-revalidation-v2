@@ -29,12 +29,12 @@
       <mat-horizontal-stepper #stepper linear>
 
         <mat-step label="history">
-          <app-revalidation-table [recommendationsHistory]="revalidationHistory.recommendations">
+          <app-revalidation-table [revalidationHistory]="revalidationHistory.revalidations">
           </app-revalidation-table>
           <div class="button-row">
             <button mat-button mat-raised-button matStepperNext color="primary">
 
-              <ng-container *ngIf="recommendationHistory; else editMode">
+              <ng-container *ngIf="revalidation; else editMode">
                 Create recommendation
               </ng-container>
 
@@ -49,7 +49,7 @@
         <mat-step [stepControl]="revalidationForm">
           <form class="revalidation-form w-100" [formGroup]="revalidationForm">
             <mat-form-field class="w-100">
-              <mat-label>Select an action</mat-label>
+              <mat-label>Make a recommendation</mat-label>
               <mat-select formControlName="action">
                 <mat-option>None</mat-option>
                 <mat-option value="Revalidate">Revalidate</mat-option>
@@ -57,7 +57,7 @@
                 <mat-option value="Non-Engagement">Non-Engagement</mat-option>
               </mat-select>
               <mat-error *ngIf="revalidationForm.controls['action']?.hasError('required')">
-                Please select an action
+                Please make a recommendation
               </mat-error>
             </mat-form-field>
 

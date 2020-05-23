@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { IRevalidationHistory } from "../revalidation-history.interface";
 import { environment } from "@environment";
@@ -11,11 +11,10 @@ export class RevalidationHistoryService {
   constructor(private http: HttpClient) {}
 
   getRevalidationHistory(
-    params: HttpParams
+    gmcID: number
   ): Observable<IRevalidationHistory | any> {
     return this.http.get<IRevalidationHistory>(
-      `${environment.appUrls.getRecommendation}`,
-      { params }
+      `${environment.appUrls.getRecommendation}/${gmcID}`
     );
   }
 }

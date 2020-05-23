@@ -1,49 +1,50 @@
 <div class="table-container">
-    <table mat-table [dataSource]="recommendationsHistory" multiTemplateDataRows class="w-100">
+    <table mat-table [dataSource]="revalidationHistory" multiTemplateDataRows class="w-100">
         <caption class="collapsed no-height">
             Trainee revalidation historical details
         </caption>
-        <ng-container matColumnDef="recommendation">
+        <ng-container matColumnDef="revalidationType">
             <th mat-header-cell scope="col" *matHeaderCellDef>Recommendation</th>
             <td mat-cell *matCellDef="let element">
-                {{ element.recommendation }}
+                {{ revalidationType[element.revalidationType] }}
             </td>
         </ng-container>
-        <ng-container matColumnDef="outcome">
+        <ng-container matColumnDef="gmcOutcome">
             <th mat-header-cell scope="col" *matHeaderCellDef>Outcome</th>
             <td mat-cell *matCellDef="let element">
-                <div class="outcome" [ngSwitch]="element.outcome">
-                    <mat-icon *ngSwitchCase="revalidationOutcome.Approved" aria-hidden="true" class="icon-green">
+                <div class="outcome" [ngSwitch]="element.gmcOutcome">
+                    <mat-icon *ngSwitchCase="revalidationGmcOutcome.APPROVED" aria-hidden="true" class="icon-green">
                         done_all
                     </mat-icon>
-                    <mat-icon *ngSwitchCase="revalidationOutcome.Rejected" aria-hidden="true" class="icon-red">
+                    <mat-icon *ngSwitchCase="revalidationGmcOutcome.REJECTED" aria-hidden="true" class="icon-red">
                         error_outline
                     </mat-icon>
-                    <mat-icon *ngSwitchCase="revalidationOutcome.UnderReview" aria-hidden="true" class="icon-blue">done
+                    <mat-icon *ngSwitchCase="revalidationGmcOutcome.UNDER_REVIEW" aria-hidden="true" class="icon-blue">
+                        done
                     </mat-icon>
-                    <span class="outcome-text">{{ element.outcome }}</span>
+                    <span class="outcome-text">{{ revalidationGmcOutcome[element.gmcOutcome] }}</span>
                 </div>
             </td>
         </ng-container>
-        <ng-container matColumnDef="gmcSubDueDate">
+        <ng-container matColumnDef="gmcSubmissionDate">
             <th mat-header-cell scope="col" *matHeaderCellDef>
                 GMC Submission Due Date
             </th>
             <td mat-cell *matCellDef="let element">
-                {{ element.gmcSubDueDate | date: dateFormat }}
+                {{ element.gmcSubmissionDate | date: dateFormat }}
             </td>
         </ng-container>
-        <ng-container matColumnDef="actSubDate">
+        <ng-container matColumnDef="actualSubmissionDate">
             <th mat-header-cell scope="col" *matHeaderCellDef>
                 Actual Submission Date
             </th>
             <td mat-cell *matCellDef="let element">
-                {{ element.actSubDate | date: dateFormat }}
+                {{ element.actualSubmissionDate | date: dateFormat }}
             </td>
         </ng-container>
-        <ng-container matColumnDef="submittedBy">
+        <ng-container matColumnDef="admin">
             <th mat-header-cell scope="col" *matHeaderCellDef>Submitted By</th>
-            <td mat-cell *matCellDef="let element">{{ element.submittedBy }}</td>
+            <td mat-cell *matCellDef="let element">{{ element.admin }}</td>
         </ng-container>
 
         <ng-container matColumnDef="expandedDetail">
@@ -53,7 +54,7 @@
           ">
                     <div class="element-submission-status">
                         <strong>Submission Status:</strong>
-                        {{ element.submissionStatus }}
+                        {{ revalidationStatus[element.revalidationStatus] }}
                     </div>
                     <mat-divider *ngIf="element.comments?.length > 0"></mat-divider>
                     <ng-container *ngFor="let comment of element.comments">
@@ -77,6 +78,6 @@
             </td>
         </ng-container>
 
-        <tr mat-footer-row *matFooterRowDef="['noRecord']" [ngClass]="{ hide: recommendationsHistory.length > 0 }"></tr>
+        <tr mat-footer-row *matFooterRowDef="['noRecord']" [ngClass]="{ hide: revalidationHistory.length > 0 }"></tr>
     </table>
 </div>

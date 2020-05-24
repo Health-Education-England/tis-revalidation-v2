@@ -1,6 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { MatPaginatorModule } from "@angular/material/paginator";
+import { NoopAnimationsModule } from "@angular/platform-browser/animations";
+import { MaterialModule } from "../shared/material/material.module";
 
 import { TraineesComponent } from "./trainees.component";
 
@@ -10,7 +11,7 @@ describe("TraineesComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [MatPaginatorModule],
+      imports: [MaterialModule, NoopAnimationsModule],
       declarations: [TraineesComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();

@@ -4,9 +4,8 @@ import { TestBed } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { BehaviorSubject, Observable, of } from "rxjs";
-import { RecordsService } from "../../shared/records/services/records.service";
 import { Filter, ResetPaginator, Search } from "../state/trainees.actions";
-import { TraineesState, TraineesStateModel } from "../state/trainees.state";
+import { TraineesState } from "../state/trainees.state";
 import {
   IGetTraineesResponse,
   TraineesFilterType
@@ -66,7 +65,6 @@ export class MockTraineeService {
 
 describe("TraineeService", () => {
   let traineeService: TraineesService;
-  let recordsService: RecordsService;
   let store: Store;
 
   beforeEach(() => {
@@ -79,7 +77,6 @@ describe("TraineeService", () => {
       providers: [TraineesService]
     });
     traineeService = TestBed.inject(TraineesService);
-    recordsService = TestBed.inject(RecordsService);
     store = TestBed.inject(Store);
   });
 
@@ -104,17 +101,5 @@ describe("TraineeService", () => {
     const params: HttpParams = traineeService.generateParams();
 
     expect(params.get("searchQuery")).toEqual("lisa");
-  });
-
-  it("`updateTraineesRoute()` should invoke `recordsService.updateRoute()`", () => {
-    spyOn(recordsService, "updateRoute");
-
-    const snapshot: TraineesStateModel = store.snapshot().trainees;
-    traineeService.updateTraineesRoute();
-
-    expect(recordsService.updateRoute).toHaveBeenCalledWith(
-      snapshot,
-      "trainees"
-    );
   });
 });

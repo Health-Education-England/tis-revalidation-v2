@@ -1,7 +1,6 @@
 import { HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Store } from "@ngxs/store";
-import { BehaviorSubject } from "rxjs";
 import { RecordsService } from "../../shared/records/services/records.service";
 import { TraineesStateModel } from "../state/trainees.state";
 import { TraineesFilterType } from "../trainees.interfaces";
@@ -10,8 +9,6 @@ import { TraineesFilterType } from "../trainees.interfaces";
   providedIn: "root"
 })
 export class TraineesService {
-  public resetSearchForm$: BehaviorSubject<boolean> = new BehaviorSubject(null);
-
   constructor(private store: Store, private recordsService: RecordsService) {}
 
   public generateParams(): HttpParams {
@@ -24,10 +21,5 @@ export class TraineesService {
     );
 
     return params;
-  }
-
-  public updateTraineesRoute(): Promise<boolean> {
-    const snapshot: TraineesStateModel = this.store.snapshot().trainees;
-    return this.recordsService.updateRoute(snapshot, "trainees");
   }
 }

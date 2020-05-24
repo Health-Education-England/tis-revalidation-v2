@@ -4,7 +4,7 @@ import { ActivatedRoute, Params } from "@angular/router";
 import { Select, Store } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
 import { filter, take } from "rxjs/operators";
-import { TraineesService } from "../services/trainees.service";
+import { RecordsService } from "../../shared/records/services/records.service";
 import {
   Get,
   ResetPaginator,
@@ -29,7 +29,7 @@ export class TraineeSearchComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private store: Store,
     private route: ActivatedRoute,
-    private traineeService: TraineesService
+    private recordsService: RecordsService
   ) {}
 
   ngOnInit() {
@@ -53,7 +53,7 @@ export class TraineeSearchComponent implements OnInit, OnDestroy {
    */
   public setupSubscription(): void {
     this.subscriptions.add(
-      this.traineeService.resetSearchForm$
+      this.recordsService.resetSearchForm$
         .pipe(filter(Boolean))
         .subscribe(() => this.ngForm.resetForm())
     );
@@ -78,7 +78,7 @@ export class TraineeSearchComponent implements OnInit, OnDestroy {
     this.store
       .dispatch(new Get())
       .pipe(take(1))
-      .subscribe(() => this.traineeService.updateTraineesRoute());
+      .subscribe(() => this.recordsService.updateRoute("trainees"));
   }
 
   ngOnDestroy() {

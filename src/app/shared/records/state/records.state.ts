@@ -1,10 +1,6 @@
-import { HttpErrorResponse, HttpParams } from "@angular/common/http";
+import { Sort } from "@angular/material/sort";
 import { Sort as ISort } from "@angular/material/sort/sort";
 import { createSelector, StateContext } from "@ngxs/store";
-import { catchError, finalize, switchMap, take } from "rxjs/operators";
-import { DEFAULT_SORT } from "../../../trainees/constants";
-import { GetError, GetSuccess } from "../../../trainees/state/trainees.actions";
-import { IGetTraineesResponse } from "../../../trainees/trainees.interfaces";
 import { RecordsService } from "../services/records.service";
 
 export class RecordsStateModel<T, F> {
@@ -84,38 +80,20 @@ export class RecordsState {
     });
   }
 
-  protected getHandler(
-    ctx: StateContext<any>,
-    endPoint: string,
-    params?: HttpParams
-  ) {
+  protected getHandler(ctx: StateContext<any>) {
     ctx.patchState({
       items: null,
       loading: true
     });
-
-    this.recordsService
-      .getRecords(endPoint, params)
-      .pipe(
-        take(1),
-        switchMap((response: IGetTraineesResponse) =>
-          ctx.dispatch(new GetSuccess(response))
-        ),
-        catchError((error: HttpErrorResponse) =>
-          ctx.dispatch(new GetError(error))
-        ),
-        finalize(() =>
-          ctx.patchState({
-            loading: false
-          })
-        )
-      )
-      .subscribe();
   }
 
-  protected getSuccessHandler(ctx: StateContext<any>, action: any) {
+  protected getSuccessHandler(
+    ctx: StateContext<any>,
+    action: any,
+    sliceName: string
+  ) {
     ctx.patchState({
-      items: action.response.traineeInfo,
+      items: action.response[sliceName],
       totalResults: action.response.totalResults
     });
   }
@@ -135,9 +113,9 @@ export class RecordsState {
     });
   }
 
-  protected resetSortHandler(ctx: StateContext<any>) {
+  protected resetSortHandler(ctx: StateContext<any>, sortOptions: Sort) {
     ctx.patchState({
-      sort: DEFAULT_SORT
+      sort: sortOptions
     });
   }
 

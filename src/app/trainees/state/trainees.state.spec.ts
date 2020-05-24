@@ -4,10 +4,11 @@ import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { async, TestBed } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
+import { of } from "rxjs";
 import { MaterialModule } from "../../shared/material/material.module";
 import { RecordsService } from "../../shared/records/services/records.service";
-import { MockRecordsService } from "../../shared/records/services/records.service.spec";
 import { DEFAULT_SORT } from "../constants";
+import { mockTraineesResponse } from "../services/trainees.service.spec";
 import { TraineesFilterType } from "../trainees.interfaces";
 import {
   ClearSearch,
@@ -33,12 +34,7 @@ describe("Trainees state", () => {
         RouterTestingModule,
         MaterialModule
       ],
-      providers: [
-        {
-          provide: RecordsService,
-          useClass: MockRecordsService
-        }
-      ],
+      providers: [RecordsService],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
     store = TestBed.inject(Store);
@@ -51,14 +47,14 @@ describe("Trainees state", () => {
   });
 
   it("should dispatch 'Get' and invoke `getHandler`", () => {
-    spyOn(recordsService, "getRecords").and.callThrough();
+    spyOn(recordsService, "getRecords").and.returnValue(of({}));
     store
       .dispatch(new Get())
       .subscribe(() => expect(recordsService.getRecords).toHaveBeenCalled());
   });
 
   it("should dispatch 'Get' and select 'trainees' slice", () => {
-    spyOn(recordsService, "getRecords").and.callThrough();
+    spyOn(recordsService, "getRecords").and.returnValue(of({}));
 
     store.dispatch(new Get()).subscribe(() => {
       const items = store.snapshot().trainees.items;
@@ -68,7 +64,9 @@ describe("Trainees state", () => {
   });
 
   it("should dispatch 'Get' and select 'countTotal' slice", () => {
-    spyOn(recordsService, "getRecords").and.callThrough();
+    spyOn(recordsService, "getRecords").and.returnValue(
+      of(mockTraineesResponse)
+    );
 
     store.dispatch(new Get()).subscribe(() => {
       const countTotal = store.snapshot().trainees.countTotal;

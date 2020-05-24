@@ -1,8 +1,15 @@
 import {
+  FilterPayload,
   GetErrorPayload,
-  GetSuccessPayload
+  GetSuccessPayload,
+  PaginatePayload,
+  SearchPayload,
+  SortPayload
 } from "../../shared/records/state/records.actions";
-import { IGetConcernsResponse } from "../concerns.interfaces";
+import {
+  ConcernsFilterType,
+  IGetConcernsResponse
+} from "../concerns.interfaces";
 
 const label = `[Concerns]`;
 
@@ -16,4 +23,32 @@ export class GetSuccess extends GetSuccessPayload<IGetConcernsResponse> {
 
 export class GetError extends GetErrorPayload {
   static readonly type = `${label} Get Error`;
+}
+
+export class Sort extends SortPayload {
+  static readonly type = `${label} Sort`;
+}
+
+export class ResetSort {
+  static readonly type = `${label} Reset Sort`;
+}
+
+export class Filter extends FilterPayload<ConcernsFilterType> {
+  static readonly type = `${label} Filter`;
+}
+
+export class Search extends SearchPayload {
+  static readonly type = `${label} Search`;
+}
+
+export class ClearSearch {
+  static readonly type = `${label} Clear Search`;
+}
+
+export class Paginate extends PaginatePayload {
+  static readonly type = `${label} Paginate`;
+}
+
+export class ResetPaginator {
+  static readonly type = `${label} Reset Paginator`;
 }

@@ -1,49 +1,25 @@
 import { Component, OnInit } from "@angular/core";
-import { Sort as ISort } from "@angular/material/sort";
-import { ActivatedRoute, Params, Router } from "@angular/router";
-import { environment } from "@environment";
-import { Select, Store } from "@ngxs/store";
-import { Observable } from "rxjs";
-import { take } from "rxjs/operators";
-import {
-  ITrainee,
-  ITraineeDataCell,
-  TraineesFilterType
-} from "../trainees.interfaces";
-import { TraineesService } from "../services/trainees.service";
-import {
-  Filter,
-  Get,
-  Paginate,
-  ResetPaginator,
-  ResetSort,
-  Search,
-  Sort
-} from "../state/trainees.actions";
-import { TraineesState } from "../state/trainees.state";
+import { ActivatedRoute, Router } from "@angular/router";
+import { Store } from "@ngxs/store";
+import { RecordListComponent } from "../../shared/records/record-list/record-list.component";
+import { RecordsService } from "../../shared/records/services/records.service";
+import { Filter } from "../state/trainees.actions";
+import { TraineesFilterType } from "../trainees.interfaces";
 
 @Component({
   selector: "app-trainee-list",
   templateUrl: "./trainee-list.component.html",
   styleUrls: ["./trainee-list.component.scss"]
 })
-export class TraineeListComponent implements OnInit {
-  @Select(TraineesState.loading<boolean>()) loading$: Observable<boolean>;
-  @Select(TraineesState.items<ITrainee>()) items$: Observable<ITrainee[]>;
-  @Select(TraineesState.totalResults<number>()) totalResults$: Observable<
-    number
-  >;
-  @Select(TraineesState.sort<ISort>()) sort$: Observable<ISort>;
-  @Select(TraineesState.error<string>()) error$: Observable<string>;
-
-  public dateFormat: string = environment.dateFormat;
-  public dateColumns: string[] = [
+export class TraineeListComponent extends RecordListComponent
+  implements OnInit {
+  public dateColumns = [
     "cctDate",
     "submissionDate",
     "dateAdded",
     "lastUpdatedDate"
   ];
-  public columnData: ITraineeDataCell[] = [
+  public columnData = [
     {
       label: "First name",
       name: "doctorFirstName",
@@ -95,43 +71,18 @@ export class TraineeListComponent implements OnInit {
       enableSort: true
     }
   ];
-  public columnNames: string[] = this.columnData.map((i) => i.name);
-  public params: Params = this.route.snapshot.queryParams;
 
   constructor(
-    private store: Store,
-    private router: Router,
-    private route: ActivatedRoute,
-    private traineeService: TraineesService
-  ) {}
+    protected recordsService: RecordsService,
+    protected route: ActivatedRoute,
+    protected router: Router,
+    protected store: Store
+  ) {
+    super(recordsService, route, router, store);
+  }
 
-  /**
-   * Check if query params exist
-   * Then dispatch appropriate events
-   * And update store accordingly
-   */
   ngOnInit(): void {
-    this.setupInitialSorting();
-    this.setupInitialPagination();
     this.setupInitialFilter();
-    this.checkInitialSearchQuery();
-    this.store.dispatch(new Get());
-  }
-
-  public setupInitialSorting(): void {
-    if (this.params.active && this.params.direction) {
-      this.store.dispatch(new Sort(this.params.active, this.params.direction));
-    } else {
-      this.store.dispatch(new ResetSort());
-    }
-  }
-
-  public setupInitialPagination(): void {
-    if (this.params.pageIndex) {
-      this.store.dispatch(new Paginate(this.params.pageIndex));
-    } else {
-      this.store.dispatch(new ResetPaginator());
-    }
   }
 
   public setupInitialFilter(): void {
@@ -143,25 +94,5 @@ export class TraineeListComponent implements OnInit {
     } else {
       this.store.dispatch(new Filter(TraineesFilterType.UNDER_NOTICE));
     }
-  }
-
-  public checkInitialSearchQuery(): void {
-    if (this.params.searchQuery) {
-      this.store.dispatch(new Search(this.params.searchQuery));
-    }
-  }
-
-  public navigateToDetails(event: Event, row: ITrainee): Promise<boolean> {
-    event.stopPropagation();
-    return this.router.navigate(["/trainee", row.gmcReferenceNumber]);
-  }
-
-  public sort(event: ISort): void {
-    this.store.dispatch(new Sort(event.active, event.direction));
-    this.store.dispatch(new ResetPaginator());
-    this.store
-      .dispatch(new Get())
-      .pipe(take(1))
-      .subscribe(() => this.traineeService.updateTraineesRoute());
   }
 }

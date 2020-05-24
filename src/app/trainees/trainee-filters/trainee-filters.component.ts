@@ -2,8 +2,8 @@ import { Component } from "@angular/core";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
+import { RecordsService } from "../../shared/records/services/records.service";
 import { TraineesFilterType } from "../trainees.interfaces";
-import { TraineesService } from "../services/trainees.service";
 import {
   Filter,
   ClearSearch,
@@ -25,7 +25,7 @@ export class TraineeFiltersComponent {
   >;
   public traineesFilterType = TraineesFilterType;
 
-  constructor(private store: Store, private traineeService: TraineesService) {}
+  constructor(private store: Store, private recordsService: RecordsService) {}
 
   public filterByAllDoctors(): void {
     this.store.dispatch(new Filter(TraineesFilterType.ALL_DOCTORS));
@@ -44,6 +44,6 @@ export class TraineeFiltersComponent {
     this.store
       .dispatch(new Get())
       .pipe(take(1))
-      .subscribe(() => this.traineeService.updateTraineesRoute());
+      .subscribe(() => this.recordsService.updateRoute("trainees"));
   }
 }

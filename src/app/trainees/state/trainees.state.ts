@@ -2,13 +2,14 @@ import { HttpErrorResponse, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "@environment";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
-import { catchError, finalize, switchMap, take } from "rxjs/operators";
+import { catchError, finalize, map, switchMap, take } from "rxjs/operators";
 import { RecordsService } from "../../shared/records/services/records.service";
 import {
   defaultRecordsState,
   RecordsState,
   RecordsStateModel
 } from "../../shared/records/state/records.state";
+import { RevalidationStatus } from "../../trainee/revalidation-history.interface";
 import { DEFAULT_SORT } from "../constants";
 import { TraineesService } from "../services/trainees.service";
 import {
@@ -74,6 +75,13 @@ export class TraineesState extends RecordsState {
       .getRecords(endPoint, params)
       .pipe(
         take(1),
+        map((response: IGetTraineesResponse) => {
+          response.traineeInfo.forEach(
+            (item: ITrainee) =>
+              (item.doctorStatus = RevalidationStatus[item.doctorStatus])
+          );
+          return response;
+        }),
         switchMap((response: IGetTraineesResponse) =>
           ctx.dispatch(new GetSuccess(response))
         ),

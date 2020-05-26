@@ -4,6 +4,7 @@ import { TestBed } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { BehaviorSubject, Observable, of } from "rxjs";
+import { RevalidationStatus } from "../../trainee/revalidation-history.interface";
 import { Filter, ResetPaginator, Search } from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
 import {
@@ -24,7 +25,7 @@ export const mockTraineesResponse: IGetTraineesResponse = {
       underNotice: "No",
       admin: "",
       cctDate: "2015-09-08",
-      doctorStatus: "",
+      doctorStatus: RevalidationStatus.SUBMITTED_TO_GMC,
       lastUpdatedDate: "2015-09-08",
       programmeMembershipType: "",
       programmeName: ""
@@ -39,7 +40,7 @@ export const mockTraineesResponse: IGetTraineesResponse = {
       underNotice: "No",
       admin: "",
       cctDate: "2015-09-08",
-      doctorStatus: "",
+      doctorStatus: RevalidationStatus.READY_TO_REVIEW,
       lastUpdatedDate: "2015-09-08",
       programmeMembershipType: "",
       programmeName: ""

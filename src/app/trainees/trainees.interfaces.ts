@@ -1,4 +1,5 @@
 import { IGetRecordsResponse } from "../shared/records/records.interfaces";
+import { RevalidationStatus } from "../trainee/revalidation-history.interface";
 
 export interface ITrainee {
   admin: string;
@@ -6,7 +7,7 @@ export interface ITrainee {
   dateAdded: string;
   doctorFirstName: string;
   doctorLastName: string;
-  doctorStatus: string;
+  doctorStatus: RevalidationStatus;
   gmcReferenceNumber: string;
   lastUpdatedDate: string;
   programmeMembershipType: string;

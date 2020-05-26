@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule, PreloadAllModules } from "@angular/router";
 import { PageNotFoundComponent } from "./shared/page-not-found/page-not-found.component";
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: "",
     redirectTo: "/trainees",

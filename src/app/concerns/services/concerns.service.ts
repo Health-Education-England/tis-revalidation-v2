@@ -18,9 +18,4 @@ export class ConcernsService {
 
     return params;
   }
-
-  public updateConcernsRoute(): Promise<boolean> {
-    const snapshot: ConcernsStateModel = this.store.snapshot().concerns;
-    return this.recordsService.updateRoute(snapshot, "concerns");
-  }
 }

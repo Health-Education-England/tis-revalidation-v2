@@ -6,7 +6,7 @@ import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { of } from "rxjs";
-import { TraineesService } from "../services/trainees.service";
+import { RecordsService } from "../../shared/records/services/records.service";
 import { MaterialModule } from "../../shared/material/material.module";
 import {
   Get,
@@ -22,7 +22,7 @@ describe("TraineeSearchComponent", () => {
   let store: Store;
   let component: TraineeSearchComponent;
   let fixture: ComponentFixture<TraineeSearchComponent>;
-  let traineeService: TraineesService;
+  let recordsService: RecordsService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -38,7 +38,7 @@ describe("TraineeSearchComponent", () => {
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
     store = TestBed.inject(Store);
-    traineeService = TestBed.inject(TraineesService);
+    recordsService = TestBed.inject(RecordsService);
   }));
 
   beforeEach(() => {
@@ -90,7 +90,7 @@ describe("TraineeSearchComponent", () => {
   it("should invoke resetForm() upon receiving `resetSearchForm$` event", () => {
     spyOn(component.ngForm, "resetForm");
 
-    traineeService.resetSearchForm$.next(true);
+    recordsService.resetSearchForm$.next(true);
     component.setupSubscription();
 
     expect(component.ngForm.resetForm).toHaveBeenCalled();
@@ -110,7 +110,7 @@ describe("TraineeSearchComponent", () => {
 
   it("should dispatch relevant actions on valid form submission", () => {
     spyOn(store, "dispatch").and.returnValue(of({}));
-    spyOn(traineeService, "updateTraineesRoute");
+    spyOn(recordsService, "updateRoute");
 
     component.params = {
       searchQuery: "87723113"
@@ -125,7 +125,7 @@ describe("TraineeSearchComponent", () => {
     expect(store.dispatch).toHaveBeenCalledWith(new ResetSort());
     expect(store.dispatch).toHaveBeenCalledWith(new ResetPaginator());
     expect(store.dispatch).toHaveBeenCalledWith(new Get());
-    expect(traineeService.updateTraineesRoute).toHaveBeenCalled();
+    expect(recordsService.updateRoute).toHaveBeenCalled();
   });
 
   it("should unsubscribe from subscriptions upon `ngOnDestroy()`", () => {

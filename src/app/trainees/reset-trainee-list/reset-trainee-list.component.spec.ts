@@ -1,12 +1,14 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { of } from "rxjs";
+import { routes } from "../../app-routing.module";
+import { MaterialModule } from "../../shared/material/material.module";
+import { RecordsService } from "../../shared/records/services/records.service";
 import { TraineesFilterType } from "../trainees.interfaces";
-import { TraineesService } from "../services/trainees.service";
-import { MockTraineeService } from "../services/trainees.service.spec";
 import {
   ClearSearch,
   Get,
@@ -23,26 +25,22 @@ describe("ResetTraineeListComponent", () => {
   let component: ResetTraineeListComponent;
   let fixture: ComponentFixture<ResetTraineeListComponent>;
   let router: Router;
-  let traineeService: TraineesService;
+  let recordsService: RecordsService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ResetTraineeListComponent],
       imports: [
-        RouterTestingModule,
+        MaterialModule,
+        NoopAnimationsModule,
+        RouterTestingModule.withRoutes(routes),
         NgxsModule.forRoot([TraineesState]),
         HttpClientTestingModule
-      ],
-      providers: [
-        {
-          provide: TraineesService,
-          useClass: MockTraineeService
-        }
       ]
     }).compileComponents();
     store = TestBed.inject(Store);
     router = TestBed.inject(Router);
-    traineeService = TestBed.inject(TraineesService);
+    recordsService = TestBed.inject(RecordsService);
   }));
 
   beforeEach(() => {
@@ -56,9 +54,9 @@ describe("ResetTraineeListComponent", () => {
   });
 
   it("should emit `resetSearchForm$` event on resetTraineeList()", () => {
-    spyOn(traineeService.resetSearchForm$, "next");
+    spyOn(recordsService.resetSearchForm$, "next").and.callThrough();
     component.resetTraineeList();
-    expect(traineeService.resetSearchForm$.next).toHaveBeenCalledWith(true);
+    expect(recordsService.resetSearchForm$.next).toHaveBeenCalledWith(true);
   });
 
   it("should dispatch relevant actions to reset trainee list", () => {
@@ -77,9 +75,9 @@ describe("ResetTraineeListComponent", () => {
     expect(store.dispatch).toHaveBeenCalledWith(new Get());
   });
 
-  it("should invoke `updateTraineesRoute()` on resetTraineeList()", () => {
-    spyOn(traineeService, "updateTraineesRoute");
+  it("should invoke `updateRoute()` on resetTraineeList()", () => {
+    spyOn(recordsService, "updateRoute");
     component.resetTraineeList();
-    expect(traineeService.updateTraineesRoute).toHaveBeenCalled();
+    expect(recordsService.updateRoute).toHaveBeenCalledWith("trainees");
   });
 });

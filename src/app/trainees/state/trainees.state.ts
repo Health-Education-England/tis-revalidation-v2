@@ -1,15 +1,21 @@
-import { HttpParams } from "@angular/common/http";
+import { HttpErrorResponse, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "@environment";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
+import { catchError, finalize, switchMap, take } from "rxjs/operators";
 import { RecordsService } from "../../shared/records/services/records.service";
 import {
   defaultRecordsState,
   RecordsState,
   RecordsStateModel
 } from "../../shared/records/state/records.state";
+import { DEFAULT_SORT } from "../constants";
 import { TraineesService } from "../services/trainees.service";
-import { ITrainee, TraineesFilterType } from "../trainees.interfaces";
+import {
+  IGetTraineesResponse,
+  ITrainee,
+  TraineesFilterType
+} from "../trainees.interfaces";
 import {
   ClearSearch,
   Filter,
@@ -62,12 +68,30 @@ export class TraineesState extends RecordsState {
   get(ctx: StateContext<TraineesStateModel>) {
     const params: HttpParams = this.traineesService.generateParams();
     const endPoint = `${environment.appUrls.getTrainees}`;
-    return super.getHandler(ctx, endPoint, params);
+    super.getHandler(ctx);
+
+    return this.recordsService
+      .getRecords(endPoint, params)
+      .pipe(
+        take(1),
+        switchMap((response: IGetTraineesResponse) =>
+          ctx.dispatch(new GetSuccess(response))
+        ),
+        catchError((error: HttpErrorResponse) =>
+          ctx.dispatch(new GetError(error))
+        ),
+        finalize(() =>
+          ctx.patchState({
+            loading: false
+          })
+        )
+      )
+      .subscribe();
   }
 
   @Action(GetSuccess)
   getSuccess(ctx: StateContext<TraineesStateModel>, action: GetSuccess) {
-    super.getSuccessHandler(ctx, action);
+    super.getSuccessHandler(ctx, action, "traineeInfo");
 
     return ctx.patchState({
       countTotal: action.response.countTotal,
@@ -87,7 +111,7 @@ export class TraineesState extends RecordsState {
 
   @Action(ResetSort)
   resetSort(ctx: StateContext<TraineesStateModel>) {
-    return super.resetSortHandler(ctx);
+    return super.resetSortHandler(ctx, DEFAULT_SORT);
   }
 
   @Action(Paginate)

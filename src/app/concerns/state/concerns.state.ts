@@ -1,19 +1,32 @@
-import { HttpParams } from "@angular/common/http";
+import { HttpErrorResponse, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "@environment";
 import { Action, State, StateContext } from "@ngxs/store";
+import { catchError, finalize, switchMap, take } from "rxjs/operators";
 import { RecordsService } from "../../shared/records/services/records.service";
 import {
   defaultRecordsState,
   RecordsState,
   RecordsStateModel
 } from "../../shared/records/state/records.state";
+import { DEFAULT_SORT } from "../constants";
 import {
+  ClearSearch,
+  Filter,
+  Paginate,
+  ResetPaginator,
+  ResetSort,
+  Search,
+  Sort,
   Get,
   GetError,
   GetSuccess
-} from "../../trainees/state/trainees.actions";
-import { ConcernsFilterType, IConcern } from "../concerns.interfaces";
+} from "./concerns.actions";
+import {
+  ConcernsFilterType,
+  IConcern,
+  IGetConcernsResponse
+} from "../concerns.interfaces";
 import { ConcernsService } from "../services/concerns.service";
 
 export class ConcernsStateModel extends RecordsStateModel<
@@ -40,16 +53,69 @@ export class ConcernsState extends RecordsState {
   get(ctx: StateContext<ConcernsStateModel>) {
     const params: HttpParams = this.concernsService.generateParams();
     const endPoint = `${environment.appUrls.getConcerns}`;
-    return super.getHandler(ctx, endPoint, params);
+    super.getHandler(ctx);
+
+    return this.recordsService
+      .getRecords(endPoint, params)
+      .pipe(
+        take(1),
+        switchMap((response: IGetConcernsResponse) =>
+          ctx.dispatch(new GetSuccess(response))
+        ),
+        catchError((error: HttpErrorResponse) =>
+          ctx.dispatch(new GetError(error))
+        ),
+        finalize(() =>
+          ctx.patchState({
+            loading: false
+          })
+        )
+      )
+      .subscribe();
   }
 
   @Action(GetSuccess)
   getSuccess(ctx: StateContext<ConcernsStateModel>, action: GetSuccess) {
-    return super.getSuccessHandler(ctx, action);
+    return super.getSuccessHandler(ctx, action, "concernsInfo");
   }
 
   @Action(GetError)
   getError(ctx: StateContext<ConcernsStateModel>, action: GetError) {
     return super.getErrorHandler(ctx, action);
+  }
+
+  @Action(Sort)
+  sort(ctx: StateContext<ConcernsStateModel>, action: Sort) {
+    return super.sortHandler(ctx, action);
+  }
+
+  @Action(ResetSort)
+  resetSort(ctx: StateContext<ConcernsStateModel>) {
+    return super.resetSortHandler(ctx, DEFAULT_SORT);
+  }
+
+  @Action(Paginate)
+  paginate(ctx: StateContext<ConcernsStateModel>, action: Paginate) {
+    return super.paginateHandler(ctx, action);
+  }
+
+  @Action(ResetPaginator)
+  resetPaginator(ctx: StateContext<ConcernsStateModel>) {
+    return super.resetPaginatorHandler(ctx);
+  }
+
+  @Action(Search)
+  search(ctx: StateContext<ConcernsStateModel>, action: Search) {
+    return super.searchHandler(ctx, action);
+  }
+
+  @Action(ClearSearch)
+  clearSearch(ctx: StateContext<ConcernsStateModel>) {
+    return super.clearSearchHandler(ctx);
+  }
+
+  @Action(Filter)
+  filter(ctx: StateContext<ConcernsStateModel>, action: Filter) {
+    return super.filterHandler(ctx, action);
   }
 }

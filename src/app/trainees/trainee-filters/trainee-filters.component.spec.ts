@@ -1,10 +1,12 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
+import { routes } from "../../app-routing.module";
+import { MaterialModule } from "../../shared/material/material.module";
+import { RecordsService } from "../../shared/records/services/records.service";
 import { TraineesFilterType } from "../trainees.interfaces";
-import { TraineesService } from "../services/trainees.service";
-import { MockTraineeService } from "../services/trainees.service.spec";
 import {
   Filter,
   ClearSearch,
@@ -20,25 +22,21 @@ describe("TraineeFiltersComponent", () => {
   let store: Store;
   let component: TraineeFiltersComponent;
   let fixture: ComponentFixture<TraineeFiltersComponent>;
-  let traineeService: TraineesService;
+  let recordsService: RecordsService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [TraineeFiltersComponent],
       imports: [
-        RouterTestingModule,
+        MaterialModule,
+        NoopAnimationsModule,
+        RouterTestingModule.withRoutes(routes),
         NgxsModule.forRoot([TraineesState]),
         HttpClientTestingModule
-      ],
-      providers: [
-        {
-          provide: TraineesService,
-          useClass: MockTraineeService
-        }
       ]
     }).compileComponents();
     store = TestBed.inject(Store);
-    traineeService = TestBed.inject(TraineesService);
+    recordsService = TestBed.inject(RecordsService);
   }));
 
   beforeEach(() => {
@@ -91,9 +89,9 @@ describe("TraineeFiltersComponent", () => {
     expect(store.dispatch).toHaveBeenCalledWith(new Get());
   });
 
-  it("`getTrainees()` should invoke `updateTraineesRoute()`", () => {
-    spyOn(traineeService, "updateTraineesRoute");
+  it("`getTrainees()` should invoke `updateRoute()`", () => {
+    spyOn(recordsService, "updateRoute");
     component.getTrainees();
-    expect(traineeService.updateTraineesRoute).toHaveBeenCalled();
+    expect(recordsService.updateRoute).toHaveBeenCalled();
   });
 });

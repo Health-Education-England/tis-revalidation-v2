@@ -22,12 +22,6 @@ export interface IGetTraineesResponse extends IGetRecordsResponse {
   traineeInfo: ITrainee[];
 }
 
-export interface ITraineeDataCell {
-  label: string;
-  name: string;
-  enableSort: boolean;
-}
-
 export enum TraineesFilterType {
   UNDER_NOTICE = "underNotice",
   ALL_DOCTORS = "allDoctors"

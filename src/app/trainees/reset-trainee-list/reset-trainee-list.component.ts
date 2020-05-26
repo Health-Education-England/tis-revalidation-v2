@@ -3,8 +3,8 @@ import { Sort as ISort } from "@angular/material/sort/sort";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
+import { RecordsService } from "../../shared/records/services/records.service";
 import { TraineesFilterType } from "../trainees.interfaces";
-import { TraineesService } from "../services/trainees.service";
 import {
   Filter,
   ClearSearch,
@@ -22,10 +22,10 @@ export class ResetTraineeListComponent {
   @Select(TraineesState.sort<ISort>()) sort$: Observable<ISort>;
   @Select(TraineesState.pageIndex<number>()) pageIndex$: Observable<number>;
 
-  constructor(private store: Store, private traineeService: TraineesService) {}
+  constructor(private store: Store, private recordsService: RecordsService) {}
 
   public resetTraineeList(): void {
-    this.traineeService.resetSearchForm$.next(true);
+    this.recordsService.resetSearchForm$.next(true);
     this.store.dispatch(new Filter(TraineesFilterType.UNDER_NOTICE));
     this.store.dispatch(new ResetSort());
     this.store.dispatch(new ResetPaginator());
@@ -33,6 +33,6 @@ export class ResetTraineeListComponent {
     this.store
       .dispatch(new Get())
       .pipe(take(1))
-      .subscribe(() => this.traineeService.updateTraineesRoute());
+      .subscribe(() => this.recordsService.updateRoute("trainees"));
   }
 }

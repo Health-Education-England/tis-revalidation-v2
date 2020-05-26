@@ -2,11 +2,11 @@ import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { MatPaginatorModule, PageEvent } from "@angular/material/paginator";
+import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { of } from "rxjs";
-import { TraineesService } from "../services/trainees.service";
-import { MockTraineeService } from "../services/trainees.service.spec";
+import { RecordsService } from "../../shared/records/services/records.service";
 import { Get, Paginate } from "../state/trainees.actions";
 import { TraineesState } from "../state/trainees.state";
 
@@ -16,27 +16,22 @@ describe("TraineeListPaginatorComponent", () => {
   let store: Store;
   let component: TraineeListPaginatorComponent;
   let fixture: ComponentFixture<TraineeListPaginatorComponent>;
-  let traineeService: TraineesService;
+  let recordsService: RecordsService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
         MatPaginatorModule,
+        NoopAnimationsModule,
         NgxsModule.forRoot([TraineesState]),
         HttpClientTestingModule
-      ],
-      providers: [
-        {
-          provide: TraineesService,
-          useClass: MockTraineeService
-        }
       ],
       declarations: [TraineeListPaginatorComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
     store = TestBed.inject(Store);
-    traineeService = TestBed.inject(TraineesService);
+    recordsService = TestBed.inject(RecordsService);
   }));
 
   beforeEach(() => {
@@ -57,7 +52,7 @@ describe("TraineeListPaginatorComponent", () => {
       length: 20
     };
     spyOn(store, "dispatch").and.returnValue(of({}));
-    spyOn(traineeService, "updateTraineesRoute");
+    spyOn(recordsService, "updateRoute");
 
     component.paginateTrainees(mockPageEvent);
 
@@ -66,6 +61,6 @@ describe("TraineeListPaginatorComponent", () => {
       new Paginate(mockPageEvent.pageIndex)
     );
     expect(store.dispatch).toHaveBeenCalledWith(new Get());
-    expect(traineeService.updateTraineesRoute).toHaveBeenCalled();
+    expect(recordsService.updateRoute).toHaveBeenCalled();
   });
 });

@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { NgxsModule } from "@ngxs/store";
 import { MaterialModule } from "../shared/material/material.module";
+import { RecordsModule } from "../shared/records/records.module";
 import { SharedModule } from "../shared/shared.module";
 import { TraineesState } from "./state/trainees.state";
 import { TraineeListComponent } from "./trainee-list/trainee-list.component";
@@ -20,6 +21,7 @@ import { TraineeFiltersComponent } from "./trainee-filters/trainee-filters.compo
     TraineeFiltersComponent
   ],
   imports: [
+    RecordsModule,
     MaterialModule,
     SharedModule,
     TraineesRoutingModule,

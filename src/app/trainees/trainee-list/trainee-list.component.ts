@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { RecordListComponent } from "../../shared/records/record-list/record-list.component";
@@ -9,7 +9,8 @@ import { TraineesFilterType } from "../trainees.interfaces";
 @Component({
   selector: "app-trainee-list",
   templateUrl: "./trainee-list.component.html",
-  styleUrls: ["./trainee-list.component.scss"]
+  styleUrls: ["./trainee-list.component.scss"],
+  encapsulation: ViewEncapsulation.None
 })
 export class TraineeListComponent extends RecordListComponent
   implements OnInit {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { RecordListComponent } from "../../shared/records/record-list/record-list.component";
@@ -8,7 +8,8 @@ import { Filter } from "../state/concerns.actions";
 
 @Component({
   selector: "app-concern-list",
-  templateUrl: "./concern-list.component.html"
+  templateUrl: "./concern-list.component.html",
+  encapsulation: ViewEncapsulation.None
 })
 export class ConcernListComponent extends RecordListComponent
   implements OnInit {

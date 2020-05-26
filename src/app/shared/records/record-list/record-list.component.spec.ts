@@ -7,6 +7,7 @@ import { Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule } from "@ngxs/store";
 import { of } from "rxjs";
+import { RevalidationStatus } from "../../../trainee/revalidation-history.interface";
 import { TraineesState } from "../../../trainees/state/trainees.state";
 import { ITrainee } from "../../../trainees/trainees.interfaces";
 import { MaterialModule } from "../../material/material.module";
@@ -149,7 +150,7 @@ describe("RecordListComponent", () => {
       underNotice: "No",
       admin: "",
       cctDate: "2015-09-08",
-      doctorStatus: "",
+      doctorStatus: RevalidationStatus.NOT_STARTED,
       lastUpdatedDate: "2015-09-08",
       programmeMembershipType: "",
       programmeName: ""

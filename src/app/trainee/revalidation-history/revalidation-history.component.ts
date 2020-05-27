@@ -18,7 +18,13 @@ import { Select } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { map, shareReplay } from "rxjs/operators";
-import { FormGroup, FormControl, FormArray, Validators } from "@angular/forms";
+import {
+  FormGroup,
+  FormControl,
+  FormArray,
+  Validators,
+  AbstractControl
+} from "@angular/forms";
 import { MatHorizontalStepper } from "@angular/material/stepper";
 import { RevalidationNotesState } from "../state/revalidation-notes.state";
 
@@ -96,6 +102,7 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
   }
 
   submitToGMC(): void {
+    //TODO: cast revalidationType to Enum Key
     (window as any).alert("Submitted to GMC");
     this.resetMatStepper();
   }
@@ -162,7 +169,7 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
 
     this.componentSubscriptions.push(
       this.action.valueChanges.subscribe((val) => {
-        if (this.revalidationType[val] === this.revalidationType.DEFER) {
+        if (val === this.revalidationType.DEFER) {
           this.deferralReason.setValidators(Validators.required);
           this.deferralDate.setValidators(Validators.required);
         } else {

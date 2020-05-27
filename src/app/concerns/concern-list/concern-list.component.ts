@@ -4,6 +4,7 @@ import { Store } from "@ngxs/store";
 import { RecordListComponent } from "../../shared/records/record-list/record-list.component";
 import { RecordsService } from "../../shared/records/services/records.service";
 import { ConcernsFilterType } from "../concerns.interfaces";
+import { COLUMN_DATA } from "../constants";
 import { Filter } from "../state/concerns.actions";
 
 @Component({
@@ -14,68 +15,7 @@ import { Filter } from "../state/concerns.actions";
 export class ConcernListComponent extends RecordListComponent
   implements OnInit {
   public dateColumns = ["closedDate", "dateRaised", "status", "followUpDate"];
-  public columnData = [
-    {
-      label: "First name",
-      name: "doctorFirstName",
-      enableSort: true
-    },
-    {
-      label: "Last name",
-      name: "doctorLastName",
-      enableSort: true
-    },
-    {
-      label: "Gmc no",
-      name: "gmcReferenceNumber",
-      enableSort: false
-    },
-    {
-      label: "Programme",
-      name: "programmeNumber",
-      enableSort: false
-    },
-    {
-      label: "Date raised",
-      name: "dateRaised",
-      enableSort: true
-    },
-    {
-      label: "Type",
-      name: "type",
-      enableSort: false
-    },
-    {
-      label: "Site",
-      name: "site",
-      enableSort: false
-    },
-    {
-      label: "Source",
-      name: "source",
-      enableSort: false
-    },
-    {
-      label: "Status",
-      name: "status",
-      enableSort: false
-    },
-    {
-      label: "Admin",
-      name: "admin",
-      enableSort: false
-    },
-    {
-      label: "Follow-up date",
-      name: "followUpDate",
-      enableSort: false
-    },
-    {
-      label: "Closed date",
-      name: "closedDate",
-      enableSort: false
-    }
-  ];
+  public columnData = COLUMN_DATA;
 
   constructor(
     protected recordsService: RecordsService,

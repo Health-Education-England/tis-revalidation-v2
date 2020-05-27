@@ -5,9 +5,12 @@ import { Sort as ISort } from "@angular/material/sort/sort";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
-import { NgxsModule } from "@ngxs/store";
+import { NgxsModule, Store } from "@ngxs/store";
 import { of } from "rxjs";
+import { COLUMN_DATA } from "../../../concerns/constants";
 import { RevalidationStatus } from "../../../trainee/revalidation-history.interface";
+import { DEFAULT_SORT } from "../../../trainees/constants";
+import { mockTraineesResponse } from "../../../trainees/services/trainees.service.spec";
 import { TraineesState } from "../../../trainees/state/trainees.state";
 import { ITrainee } from "../../../trainees/trainees.interfaces";
 import { MaterialModule } from "../../material/material.module";
@@ -19,6 +22,7 @@ const mockSimpleChanges: SimpleChanges = {
 };
 
 describe("RecordListComponent", () => {
+  let store: Store;
   let component: RecordListComponent;
   let fixture: ComponentFixture<RecordListComponent>;
   let router: Router;
@@ -35,6 +39,7 @@ describe("RecordListComponent", () => {
         NgxsModule.forRoot([TraineesState])
       ]
     }).compileComponents();
+    store = TestBed.inject(Store);
     router = TestBed.inject(Router);
     recordsService = TestBed.inject(RecordsService);
   }));
@@ -47,6 +52,27 @@ describe("RecordListComponent", () => {
 
   it("should create", () => {
     expect(component).toBeTruthy();
+  });
+
+  it("should select 'items$' from state", () => {
+    component.stateName = "trainees";
+    store.reset({ trainees: { items: mockTraineesResponse.traineeInfo } });
+
+    component.items$.subscribe((value) => {
+      expect(value).toBeInstanceOf(Array);
+      expect(value.length).toBe(2);
+    });
+  });
+
+  it("should select 'sort$' from state", () => {
+    component.stateName = "trainees";
+    store.reset({ trainees: { sort: DEFAULT_SORT } });
+
+    component.sort$.subscribe((value) => {
+      expect(value).toBeInstanceOf(Object);
+      expect(value.active).toBe(DEFAULT_SORT.active);
+      expect(value.direction).toBe(DEFAULT_SORT.direction);
+    });
   });
 
   it("should invoke 'setupInitialSorting' on init", () => {
@@ -71,6 +97,12 @@ describe("RecordListComponent", () => {
     spyOn(recordsService, "get");
     component.ngOnChanges(mockSimpleChanges);
     expect(recordsService.get).toHaveBeenCalled();
+  });
+
+  it("`columnNames()` should return an array of strings", () => {
+    component.columnData = COLUMN_DATA;
+    expect(component.columnNames).toBeInstanceOf(Array);
+    expect(component.columnNames[0]).toEqual("doctorFirstName");
   });
 
   it("'setupInitialSorting()' should invoke 'recordsService.sort()' if both params exist", () => {

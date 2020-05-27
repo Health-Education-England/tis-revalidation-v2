@@ -162,7 +162,7 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
 
     this.componentSubscriptions.push(
       this.action.valueChanges.subscribe((val) => {
-        if (val === "DEFER") {
+        if (this.revalidationType[val] === this.revalidationType.DEFER) {
           this.deferralReason.setValidators(Validators.required);
           this.deferralDate.setValidators(Validators.required);
         } else {

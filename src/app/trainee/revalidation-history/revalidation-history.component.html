@@ -67,7 +67,8 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field class="w-100" *ngIf="revalidationForm.controls['action']?.value === 'DEFER'">
+            <mat-form-field class="w-100"
+              *ngIf="revalidationType[revalidationForm.controls['action']?.value] === revalidationType.DEFER">
               <mat-label>Choose a date</mat-label>
               <input matInput formControlName="deferralDate" [matDatepicker]="picker">
               <mat-error *ngIf="revalidationForm.controls['deferralDate']?.hasError('required')">
@@ -77,7 +78,8 @@
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
 
-            <mat-form-field class="w-100" *ngIf="revalidationForm.controls['action']?.value === 'DEFER'">
+            <mat-form-field class="w-100"
+              *ngIf="revalidationType[revalidationForm.controls['action']?.value] === revalidationType.DEFER">
               <mat-label>Reason</mat-label>
               <input matInput placeholder="Reason for ..." formControlName="deferralReason">
               <mat-error *ngIf="revalidationForm.controls['deferralReason']?.hasError('required')">

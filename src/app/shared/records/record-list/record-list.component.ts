@@ -45,7 +45,7 @@ export class RecordListComponent implements OnChanges {
   ) {}
 
   /**
-   * Setup column/cell mapping,
+   * Set state name,
    * Then check if query params exist
    * Then dispatch appropriate events
    * And update store accordingly

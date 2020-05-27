@@ -9,15 +9,24 @@ import { MatBottomSheet } from "@angular/material/bottom-sheet";
 import { RevalidationNotesComponent } from "../revalidation-notes/revalidation-notes.component";
 import {
   IRevalidationHistory,
-  IRevalidation
+  IRevalidation,
+  RevalidationType,
+  INote
 } from "../revalidation-history.interface";
 import { RevalidationHistoryState } from "../state/revalidation-history.state";
 import { Select } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { map, shareReplay } from "rxjs/operators";
-import { FormGroup, FormControl, FormArray, Validators } from "@angular/forms";
+import {
+  FormGroup,
+  FormControl,
+  FormArray,
+  Validators,
+  AbstractControl
+} from "@angular/forms";
 import { MatHorizontalStepper } from "@angular/material/stepper";
+import { RevalidationNotesState } from "../state/revalidation-notes.state";
 
 @Component({
   selector: "app-revalidation-history",
@@ -28,6 +37,9 @@ import { MatHorizontalStepper } from "@angular/material/stepper";
 export class RevalidationHistoryComponent implements OnInit, OnDestroy {
   @Select(RevalidationHistoryState.revalidationHistory)
   revalidationHistory$: Observable<IRevalidationHistory>;
+
+  @Select(RevalidationNotesState.revalidationNotes)
+  revalidationNotes$: Observable<INote[]>;
 
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
@@ -46,6 +58,7 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
   comments: FormArray;
   componentSubscriptions: Subscription[] = [];
   revalidation: IRevalidation;
+  revalidationType = RevalidationType;
 
   constructor(
     private bottomSheet: MatBottomSheet,
@@ -86,6 +99,12 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
 
   openNotes(): void {
     this.bottomSheet.open(RevalidationNotesComponent);
+  }
+
+  submitToGMC(): void {
+    // TODO: cast revalidationType to Enum Key
+    (window as any).alert("Submitted to GMC");
+    this.resetMatStepper();
   }
 
   private bindRecommendationData(): void {
@@ -150,7 +169,7 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
 
     this.componentSubscriptions.push(
       this.action.valueChanges.subscribe((val) => {
-        if (val === "Defer") {
+        if (val === this.revalidationType.DEFER) {
           this.deferralReason.setValidators(Validators.required);
           this.deferralDate.setValidators(Validators.required);
         } else {

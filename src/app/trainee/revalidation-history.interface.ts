@@ -37,11 +37,13 @@ export enum RevalidationStatus {
   READY_TO_SUBMIT = "Ready to submit",
   SUBMITTED_TO_GMC = "Submitted to GMC"
 }
+
 export enum RevalidationGmcOutcome {
   APPROVED = "Approved",
   REJECTED = "Rejected",
   UNDER_REVIEW = "Under review"
 }
+
 export enum RevalidationType {
   REVALIDATE = "Revalidate",
   DEFER = "Defer",

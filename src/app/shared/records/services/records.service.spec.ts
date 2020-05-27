@@ -55,7 +55,7 @@ describe("RecordsService", () => {
     const routeName = "trainees";
     service.updateRoute(routeName);
 
-    expect(router.navigate).toHaveBeenCalledWith([routeName], {
+    expect(router.navigate).toHaveBeenCalledWith(["/"], {
       queryParams: {
         active: snapshot.sort.active,
         direction: snapshot.sort.direction,

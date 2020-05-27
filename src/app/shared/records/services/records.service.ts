@@ -60,8 +60,8 @@ export class RecordsService {
 
   public updateRoute(route: string): Promise<boolean> {
     const snapshot: any = this.store.snapshot()[route];
-
-    return this.router.navigate([route], {
+    const current = this.router.url.split("?")[0];
+    return this.router.navigate([current], {
       queryParams: {
         active: snapshot.sort.active,
         direction: snapshot.sort.direction,

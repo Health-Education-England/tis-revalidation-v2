@@ -102,7 +102,7 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
   }
 
   submitToGMC(): void {
-    //TODO: cast revalidationType to Enum Key
+    // TODO: cast revalidationType to Enum Key
     (window as any).alert("Submitted to GMC");
     this.resetMatStepper();
   }

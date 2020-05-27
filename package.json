@@ -72,7 +72,7 @@
     "karma-jasmine-html-reporter": "^1.5.4",
     "karma-mocha-reporter": "^2.2.5",
     "ng-packagr": "^9.0.0",
-    "prettier": "^2.0.2",
+    "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
     "rollup": "^1.32.1",
     "stylelint": "^13.5.0",

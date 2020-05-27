@@ -54,7 +54,9 @@ describe("Trainees state", () => {
   });
 
   it("should dispatch 'Get' and select 'trainees' slice", () => {
-    spyOn(recordsService, "getRecords").and.returnValue(of({}));
+    spyOn(recordsService, "getRecords").and.returnValue(
+      of(mockTraineesResponse)
+    );
 
     store.dispatch(new Get()).subscribe(() => {
       const items = store.snapshot().trainees.items;

@@ -9,83 +9,83 @@ on:
   pull_request:
     branches:
       - "**"
-  jobs:
-    build:
-      name: Build
-      runs-on: ubuntu-latest
+    jobs:
+      build:
+        name: Build
+        runs-on: ubuntu-latest
 
-      steps:
-        - name: Checkout
-          uses: actions/checkout@v2
+        steps:
+          - name: Checkout
+            uses: actions/checkout@v2
 
-        - name: Set up Node
-          uses: actions/setup-node@v1
-          with:
-            node-version: "12.x"
+          - name: Set up Node
+            uses: actions/setup-node@v1
+            with:
+              node-version: "12.x"
 
-        - name: Install Angular CLI
-          run: npm install -g @angular/cli@latest
+          - name: Install Angular CLI
+            run: npm install -g @angular/cli@latest
 
-        - name: Pull down dependencies
-          run: npm install
+          - name: Pull down dependencies
+            run: npm install
 
-        - name: Run linting
-          run: npm run lint
+          - name: Run linting
+            run: npm run lint
 
-        - name: Build
-          run: npm run build:misc && ng build --configuration=staging
+          - name: Build
+            run: npm run build:misc && ng build --configuration=staging
 
-        - name: Run unit tests
-          run: npm run test:ci
+          - name: Run unit tests
+            run: npm run test:ci
 
-    deploy:
-      name: Deploy
-      needs: build
-      runs-on: ubuntu-latest
-      if: github.ref == 'refs/heads/master'
+      deploy:
+        name: Deploy
+        needs: build
+        runs-on: ubuntu-latest
+        if: github.ref == 'refs/heads/master'
 
-      steps:
-        - name: Checkout
-          uses: actions/checkout@v2
+        steps:
+          - name: Checkout
+            uses: actions/checkout@v2
 
-        - name: Configure AWS credentials
-          uses: aws-actions/configure-aws-credentials@v1
-          with:
-            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            aws-region: eu-west-2
+          - name: Configure AWS credentials
+            uses: aws-actions/configure-aws-credentials@v1
+            with:
+              aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+              aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+              aws-region: eu-west-2
 
-        - name: Log in to Amazon ECR
-          id: login-ecr
-          uses: aws-actions/amazon-ecr-login@v1
+          - name: Log in to Amazon ECR
+            id: login-ecr
+            uses: aws-actions/amazon-ecr-login@v1
 
-        - name: Fill in the new image ID in the Amazon ECS task definition
-          id: task-def
-          uses: aws-actions/amazon-ecs-render-task-definition@v1
-          with:
-            task-definition: .aws/task-definition.json
-            container-name: reval-fe
-            image: ${{ steps.login-ecr.outputs.registry }}/tis-revalidation-v2:${{ github.sha }}
+          - name: Fill in the new image ID in the Amazon ECS task definition
+            id: task-def
+            uses: aws-actions/amazon-ecs-render-task-definition@v1
+            with:
+              task-definition: .aws/task-definition.json
+              container-name: reval-fe
+              image: ${{ steps.login-ecr.outputs.registry }}/tis-revalidation-v2:${{ github.sha }}
 
-        - name: Insert new Amazon ECS task definition
-          uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-          with:
-            task-definition: ${{ steps.task-def.outputs.task-definition }}
-            service: reval-fe
-            cluster: revalidation-preprod
-            wait-for-service-stability: false
+          - name: Insert new Amazon ECS task definition
+            uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+            with:
+              task-definition: ${{ steps.task-def.outputs.task-definition }}
+              service: reval-fe
+              cluster: revalidation-preprod
+              wait-for-service-stability: false
 
-        - name: Slack Notification
-          if: success()
-          uses: rtCamp/action-slack-notify@v2.0.0
-          env:
-            SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-            SLACK_TITLE: "TIS-REVALIDATION-V2 has been deployed through the pipeline"
+          - name: Slack Notification
+            if: success()
+            uses: rtCamp/action-slack-notify@v2.0.0
+            env:
+              SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+              SLACK_TITLE: "TIS-REVALIDATION-V2 has been deployed through the pipeline"
 
-        - name: Slack Notification
-          if: failure()
-          uses: rtCamp/action-slack-notify@v2.0.0
-          env:
-            SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-            SLACK_TITLE: "TIS-REVALIDATION-V2 build has failed in the pipeline"
-            SLACK_COLOR: "#fc1303"
+          - name: Slack Notification
+            if: failure()
+            uses: rtCamp/action-slack-notify@v2.0.0
+            env:
+              SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+              SLACK_TITLE: "TIS-REVALIDATION-V2 build has failed in the pipeline"
+              SLACK_COLOR: "#fc1303"

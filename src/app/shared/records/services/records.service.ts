@@ -58,6 +58,17 @@ export class RecordsService {
     return params;
   }
 
+  /**
+   * This method gets the current state and current route,
+   * Then reloads the current route by updating the query params,
+   * And hence updates the url in the browser
+   *
+   * Note: Same route navigation doesn't re trigger angular life cycle hooks
+   * which effectively means the components do not get reinstantiated
+   * which is great for performance.
+   */
+  // TODO once all remaining list related components have been refactored to be shared
+  // remove route parameter as the route name can be grabbed from the service
   public updateRoute(route: string): Promise<boolean> {
     const snapshot: any = this.store.snapshot()[route];
     const current = this.router.url.split("?")[0];

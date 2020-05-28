@@ -13,7 +13,8 @@ export const environment: IEnvironment = {
     getTrainees: `api/v1/doctors`,
     getConcerns: `api/v1/concerns`,
     getRecommendation: `api/recommendation`,
-    getNotes: `mocky/5ea2da614f00006c00d9f540`
+    getNotes: `mocky/5ea2da614f00006c00d9f540`,
+    getConnections: `api/v1/connections`
   },
   awsConfig: {
     region: "eu-west-2",

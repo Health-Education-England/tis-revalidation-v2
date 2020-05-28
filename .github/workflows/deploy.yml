@@ -1,5 +1,39 @@
 name: Deploy
 
+on: 
+  pull_request:
+    branches:
+      - '**'
+
+      jobs:
+        build:
+          name: Build
+          runs-on: ubuntu-latest
+      
+          steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+      
+            - name: Set up Node
+              uses: actions/setup-node@v1
+              with:
+                node-version: "12.x"
+      
+            - name: Install Angular CLI
+              run: npm install -g @angular/cli@latest
+      
+            - name: Pull down dependencies
+              run: npm install
+      
+            - name: Run linting
+              run: npm run lint
+      
+            - name: Build
+              run: npm run build:misc && ng build --configuration=staging
+      
+            - name: Run unit tests
+              run: npm run test:ci
+
 on:
   push:
     branches:

@@ -16,7 +16,7 @@ export class TraineeComponent implements OnInit {
     },
     {
       label: "Connections",
-      path: ""
+      path: "/connections"
     }
   ];
   constructor() {}

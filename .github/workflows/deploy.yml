@@ -1,97 +1,42 @@
 name: Deploy
 
-on: 
-  pull_request:
-
-      jobs:
-        build:
-          name: Build
-          runs-on: ubuntu-latest
-      
-          steps:
-            - name: Checkout
-              uses: actions/checkout@v2
-      
-            - name: Set up Node
-              uses: actions/setup-node@v1
-              with:
-                node-version: "12.x"
-      
-            - name: Install Angular CLI
-              run: npm install -g @angular/cli@latest
-      
-            - name: Pull down dependencies
-              run: npm install
-      
-            - name: Run linting
-              run: npm run lint
-      
-            - name: Build
-              run: npm run build:misc && ng build --configuration=staging
-      
-            - name: Run unit tests
-              run: npm run test:ci
-
 on:
-  push:
-    branches:
-      - master
+  [push, pull_request]:
+    jobs:
+      build:
+        name: Build
+        runs-on: ubuntu-latest
+
+        steps:
+          - name: Checkout
+            uses: actions/checkout@v2
+
+          - name: Set up Node
+            uses: actions/setup-node@v1
+            with:
+              node-version: "12.x"
+
+          - name: Install Angular CLI
+            run: npm install -g @angular/cli@latest
+
+          - name: Pull down dependencies
+            run: npm install
+
+          - name: Run linting
+            run: npm run lint
+
+          - name: Build
+            run: npm run build:misc && ng build --configuration=staging
+
+          - name: Run unit tests
+            run: npm run test:ci
 
 jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Set up Node
-        uses: actions/setup-node@v1
-        with:
-          node-version: "12.x"
-
-      - name: Install Angular CLI
-        run: npm install -g @angular/cli@latest
-
-      - name: Pull down dependencies
-        run: npm install
-
-      - name: Run linting
-        run: npm run lint
-
-      - name: Build
-        run: npm run build:misc && ng build --configuration=staging
-
-      - name: Run unit tests
-        run: npm run test:ci
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-2
-
-      - name: Log in to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-
-      - name: Docker Build, tag and push image to Amazon ECR
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: tis-revalidation-v2
-          IMAGE_TAG: ${{ github.sha }}
-        run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
-
   deploy:
     name: Deploy
     needs: build
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
 
     steps:
       - name: Checkout

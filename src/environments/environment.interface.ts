@@ -16,6 +16,7 @@ export abstract class IEnvironment {
     readonly getConcerns: string;
     readonly getRecommendation: string;
     readonly getNotes: string;
+    readonly getConnections: string;
   };
 
   abstract readonly awsConfig: {

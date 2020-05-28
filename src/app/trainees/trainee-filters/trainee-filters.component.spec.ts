@@ -3,7 +3,6 @@ import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
-import { routes } from "../../app-routing.module";
 import { MaterialModule } from "../../shared/material/material.module";
 import { RecordsService } from "../../shared/records/services/records.service";
 import { TraineesFilterType } from "../trainees.interfaces";
@@ -26,14 +25,16 @@ describe("TraineeFiltersComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [TraineeFiltersComponent],
       imports: [
         MaterialModule,
         NoopAnimationsModule,
-        RouterTestingModule.withRoutes(routes),
+        RouterTestingModule.withRoutes([
+          { path: "", component: TraineeFiltersComponent }
+        ]),
         NgxsModule.forRoot([TraineesState]),
         HttpClientTestingModule
-      ]
+      ],
+      declarations: [TraineeFiltersComponent]
     }).compileComponents();
     store = TestBed.inject(Store);
     recordsService = TestBed.inject(RecordsService);

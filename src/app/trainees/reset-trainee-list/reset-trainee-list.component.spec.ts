@@ -5,7 +5,6 @@ import { Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { of } from "rxjs";
-import { routes } from "../../app-routing.module";
 import { MaterialModule } from "../../shared/material/material.module";
 import { RecordsService } from "../../shared/records/services/records.service";
 import { TraineesFilterType } from "../trainees.interfaces";
@@ -33,7 +32,9 @@ describe("ResetTraineeListComponent", () => {
       imports: [
         MaterialModule,
         NoopAnimationsModule,
-        RouterTestingModule.withRoutes(routes),
+        RouterTestingModule.withRoutes([
+          { path: "", component: ResetTraineeListComponent }
+        ]),
         NgxsModule.forRoot([TraineesState]),
         HttpClientTestingModule
       ]

@@ -3,7 +3,16 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { RecordListComponent } from "../../shared/records/record-list/record-list.component";
 import { RecordsService } from "../../shared/records/services/records.service";
-import { Filter } from "../state/trainees.actions";
+import { COLUMN_DATA } from "../constants";
+import {
+  Filter,
+  Get,
+  Paginate,
+  ResetPaginator,
+  ResetSort,
+  Search,
+  Sort
+} from "../state/trainees.actions";
 import { TraineesFilterType } from "../trainees.interfaces";
 
 @Component({
@@ -20,58 +29,7 @@ export class TraineeListComponent extends RecordListComponent
     "dateAdded",
     "lastUpdatedDate"
   ];
-  public columnData = [
-    {
-      label: "First name",
-      name: "doctorFirstName",
-      enableSort: true
-    },
-    {
-      label: "Last name",
-      name: "doctorLastName",
-      enableSort: true
-    },
-    {
-      label: "Gmc no",
-      name: "gmcReferenceNumber",
-      enableSort: false
-    },
-    {
-      label: "GMC Submission due date",
-      name: "submissionDate",
-      enableSort: true
-    },
-    {
-      label: "Status",
-      name: "doctorStatus",
-      enableSort: false
-    },
-    {
-      label: "Programme name",
-      name: "programmeName",
-      enableSort: false
-    },
-    {
-      label: "Programme membership type",
-      name: "programmeMembershipType",
-      enableSort: false
-    },
-    {
-      label: "CCT date",
-      name: "cctDate",
-      enableSort: true
-    },
-    {
-      label: "Admin",
-      name: "admin",
-      enableSort: false
-    },
-    {
-      label: "Last updated",
-      name: "lastUpdatedDate",
-      enableSort: true
-    }
-  ];
+  public columnData = COLUMN_DATA;
 
   constructor(
     protected recordsService: RecordsService,
@@ -80,6 +38,14 @@ export class TraineeListComponent extends RecordListComponent
     protected store: Store
   ) {
     super(recordsService, route, router, store);
+    this.recordsService.setActions(
+      Get,
+      Sort,
+      ResetSort,
+      Paginate,
+      ResetPaginator,
+      Search
+    );
   }
 
   ngOnInit(): void {

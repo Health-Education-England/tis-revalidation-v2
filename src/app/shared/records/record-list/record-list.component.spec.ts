@@ -55,12 +55,14 @@ describe("RecordListComponent", () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RecordListComponent);
     component = fixture.componentInstance;
-    recordsService.getAction = Get;
-    recordsService.sortAction = Sort;
-    recordsService.resetSortAction = ResetSort;
-    recordsService.paginateAction = Paginate;
-    recordsService.resetPaginatorAction = ResetPaginator;
-    recordsService.searchAction = Search;
+    recordsService.setActions(
+      Get,
+      Sort,
+      ResetSort,
+      Paginate,
+      ResetPaginator,
+      Search
+    );
     fixture.detectChanges();
   });
 

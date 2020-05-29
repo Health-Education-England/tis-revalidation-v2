@@ -5,7 +5,15 @@ import { RecordListComponent } from "../../shared/records/record-list/record-lis
 import { RecordsService } from "../../shared/records/services/records.service";
 import { ConcernsFilterType } from "../concerns.interfaces";
 import { COLUMN_DATA } from "../constants";
-import { Filter } from "../state/concerns.actions";
+import {
+  Filter,
+  Get,
+  Paginate,
+  ResetPaginator,
+  ResetSort,
+  Search,
+  Sort
+} from "../state/concerns.actions";
 
 @Component({
   selector: "app-concern-list",
@@ -24,6 +32,14 @@ export class ConcernListComponent extends RecordListComponent
     protected store: Store
   ) {
     super(recordsService, route, router, store);
+    this.recordsService.setActions(
+      Get,
+      Sort,
+      ResetSort,
+      Paginate,
+      ResetPaginator,
+      Search
+    );
   }
 
   ngOnInit(): void {

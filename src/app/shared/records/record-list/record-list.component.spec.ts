@@ -11,6 +11,14 @@ import { COLUMN_DATA } from "../../../concerns/constants";
 import { RevalidationStatus } from "../../../trainee/revalidation-history.interface";
 import { DEFAULT_SORT } from "../../../trainees/constants";
 import { mockTraineesResponse } from "../../../trainees/services/trainees.service.spec";
+import {
+  Get,
+  Paginate,
+  ResetPaginator,
+  ResetSort,
+  Search,
+  Sort
+} from "../../../trainees/state/trainees.actions";
 import { TraineesState } from "../../../trainees/state/trainees.state";
 import { ITrainee } from "../../../trainees/trainees.interfaces";
 import { MaterialModule } from "../../material/material.module";
@@ -47,6 +55,12 @@ describe("RecordListComponent", () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RecordListComponent);
     component = fixture.componentInstance;
+    recordsService.getAction = Get;
+    recordsService.sortAction = Sort;
+    recordsService.resetSortAction = ResetSort;
+    recordsService.paginateAction = Paginate;
+    recordsService.resetPaginatorAction = ResetPaginator;
+    recordsService.searchAction = Search;
     fixture.detectChanges();
   });
 

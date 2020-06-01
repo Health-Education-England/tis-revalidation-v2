@@ -22,6 +22,7 @@ import {
 import { TraineesState } from "../../../trainees/state/trainees.state";
 import { ITrainee } from "../../../trainees/trainees.interfaces";
 import { MaterialModule } from "../../material/material.module";
+import { generateColumnData } from "../constants";
 import { RecordsService } from "../services/records.service";
 import { RecordListComponent } from "./record-list.component";
 
@@ -116,7 +117,7 @@ describe("RecordListComponent", () => {
   });
 
   it("`columnNames()` should return an array of strings", () => {
-    component.columnData = COLUMN_DATA;
+    component.columnData = generateColumnData(COLUMN_DATA);
     expect(component.columnNames).toBeInstanceOf(Array);
     expect(component.columnNames[0]).toEqual("doctorFirstName");
   });

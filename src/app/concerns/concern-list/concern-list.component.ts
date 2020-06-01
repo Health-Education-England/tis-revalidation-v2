@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Store } from "@ngxs/store";
+import { generateColumnData } from "../../shared/records/constants";
 import { RecordListComponent } from "../../shared/records/record-list/record-list.component";
 import { RecordsService } from "../../shared/records/services/records.service";
 import { ConcernsFilterType } from "../concerns.interfaces";
@@ -23,7 +24,7 @@ import {
 export class ConcernListComponent extends RecordListComponent
   implements OnInit {
   public dateColumns = ["closedDate", "dateRaised", "status", "followUpDate"];
-  public columnData = COLUMN_DATA;
+  public columnData = generateColumnData(COLUMN_DATA);
 
   constructor(
     protected recordsService: RecordsService,

@@ -20,7 +20,7 @@ export const environment: IEnvironment = {
     getNotes: `mocky/5ea2da614f00006c00d9f540`,
     getTrainees: `mocky/5e997d8a33000062007b2354?mocky-delay=700ms`,
     getConcerns: `mocky/5eca487b3000009471a6cf4b?mocky-delay=700ms`,
-    getConnections: `mocky/5ecfc8283200006500e3d5ae?mocky-delay=700ms`
+    getConnections: `mocky/5ed1335b3500009300ffa375?mocky-delay=700ms`
   },
   awsConfig: {
     redirectSignIn: "http://localhost:4200",

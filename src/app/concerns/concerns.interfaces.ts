@@ -20,6 +20,6 @@ export interface IConcern {
 }
 
 export enum ConcernsFilterType {
-  OPEN = "open",
-  CLOSED = "closed"
+  OPEN = "Open",
+  CLOSED = "Closed"
 }

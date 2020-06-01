@@ -4,12 +4,11 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { RecordsService } from "../../shared/records/services/records.service";
 import { defaultRecordsState } from "../../shared/records/state/records.state";
-import { ConcernsState } from "../state/concerns.state";
+import { ConnectionsState } from "../state/connections.state";
+import { ConnectionsService } from "./connections.service";
 
-import { ConcernsService } from "./concerns.service";
-
-describe("ConcernsService", () => {
-  let concernsService: ConcernsService;
+describe("ConnectionsService", () => {
+  let connectionsService: ConnectionsService;
   let recordsService: RecordsService;
   let store: Store;
 
@@ -18,16 +17,16 @@ describe("ConcernsService", () => {
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
-        NgxsModule.forRoot([ConcernsState])
+        NgxsModule.forRoot([ConnectionsState])
       ]
     });
-    concernsService = TestBed.inject(ConcernsService);
+    connectionsService = TestBed.inject(ConnectionsService);
     recordsService = TestBed.inject(RecordsService);
     store = TestBed.inject(Store);
   });
 
   it("should be created", () => {
-    expect(concernsService).toBeTruthy();
+    expect(connectionsService).toBeTruthy();
   });
 
   it("`generateParams()` should return `HttpParams`", () => {
@@ -35,7 +34,7 @@ describe("ConcernsService", () => {
 
     const sortColumn = "doctorFirstName";
     const sortDirection = "asc";
-    const concernsState = {
+    const connectionsState = {
       ...defaultRecordsState,
       sort: {
         active: sortColumn,
@@ -44,10 +43,10 @@ describe("ConcernsService", () => {
     };
 
     store.reset({
-      concerns: concernsState
+      connections: connectionsState
     });
 
-    const httpParams = concernsService.generateParams();
+    const httpParams = connectionsService.generateParams();
 
     expect(recordsService.generateParams).toHaveBeenCalled();
     expect(httpParams.get("sortColumn")).toBe(sortColumn);

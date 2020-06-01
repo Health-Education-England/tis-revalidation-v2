@@ -1,4 +1,5 @@
 import { Sort } from "@angular/material/sort";
+import { RECORDS_COLUMN_DATA } from "../shared/records/constants";
 import { IRecordDataCell } from "../shared/records/records.interfaces";
 
 export const DEFAULT_SORT: Sort = {
@@ -7,21 +8,7 @@ export const DEFAULT_SORT: Sort = {
 };
 
 export const COLUMN_DATA: IRecordDataCell[] = [
-  {
-    label: "First name",
-    name: "doctorFirstName",
-    enableSort: true
-  },
-  {
-    label: "Last name",
-    name: "doctorLastName",
-    enableSort: true
-  },
-  {
-    label: "Gmc no",
-    name: "gmcReferenceNumber",
-    enableSort: false
-  },
+  ...RECORDS_COLUMN_DATA,
   {
     label: "GMC Submission due date",
     name: "submissionDate",

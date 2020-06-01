@@ -40,11 +40,18 @@ describe("ConcernListComponent", () => {
     expect(component).toBeTruthy();
   });
 
+  it("should invoke `setupInitialFilter()` upon ngOnInit", () => {
+    spyOn(component, "setupInitialFilter");
+
+    component.ngOnInit();
+    expect(component.setupInitialFilter).toHaveBeenCalled();
+  });
+
   it("'setupInitialFilter()' should dispatch 'Open' filter if param value is `Open`", () => {
     spyOn(store, "dispatch");
 
     component.params = { filter: ConcernsFilterType.OPEN };
-    component.ngOnInit();
+    component.setupInitialFilter();
 
     expect(store.dispatch).toHaveBeenCalledTimes(1);
     expect(store.dispatch).toHaveBeenCalledWith(
@@ -58,7 +65,7 @@ describe("ConcernListComponent", () => {
   it("'setupInitialFilter()' should dispatch 'Closed' filter if param does not exist", () => {
     spyOn(store, "dispatch");
 
-    component.ngOnInit();
+    component.setupInitialFilter();
 
     expect(store.dispatch).toHaveBeenCalledTimes(1);
     expect(store.dispatch).toHaveBeenCalledWith(

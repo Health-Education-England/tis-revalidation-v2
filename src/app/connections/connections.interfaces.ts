@@ -19,3 +19,11 @@ export interface IConnection {
   programmeOwner: string;
   startDate: string;
 }
+
+export enum ConnectionsFilterType {
+  ADD_CONNECTION = "Add Connection",
+  REMOVE_CONNECTION = "Remove Connection",
+  EXCEPTIONS_QUEUE = "Exceptions Queue",
+  ALL = "All",
+  HIDDEN = "Hidden"
+}

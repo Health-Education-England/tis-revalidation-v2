@@ -24,6 +24,6 @@ export interface IGetTraineesResponse extends IGetRecordsResponse {
 }
 
 export enum TraineesFilterType {
-  UNDER_NOTICE = "underNotice",
-  ALL_DOCTORS = "allDoctors"
+  UNDER_NOTICE = "Under Notice",
+  ALL_DOCTORS = "All Doctors"
 }

@@ -69,12 +69,14 @@
 
             <mat-form-field class="w-100" *ngIf="action?.value === revalidationType.DEFER">
               <mat-label>Choose a date</mat-label>
-              <input matInput formControlName="deferralDate" [matDatepicker]="picker">
+              <input matInput formControlName="deferralDate" [min]="minReferralDate" [max]="maxReferralDate"
+                [matDatepicker]="picker">
               <mat-error *ngIf="revalidationForm.controls['deferralDate']?.hasError('required')">
-                Date must be entered
+                Date is required and must be between {{ minReferralDate | date: dateFormat }} and
+                {{ maxReferralDate | date: dateFormat }}
               </mat-error>
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
+              <mat-datepicker touchUi #picker></mat-datepicker>
             </mat-form-field>
 
             <mat-form-field class="w-100" *ngIf="action?.value === revalidationType.DEFER">
@@ -85,12 +87,32 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field class="w-100" formArrayName="comments">
-              <mat-label>Leave a comment</mat-label>
-              <ng-container *ngFor="let comment of comments.controls; let i=index">
-                <textarea matInput [formControlName]="i" placeholder="comments..."></textarea>
-              </ng-container>
-            </mat-form-field>
+            <div class="comments-section pt-40">
+              <div class="comments-toolbar w-100">
+                <button type="button" mat-button [disabled]="action?.valid === false" (click)="addCommentControl()"
+                  matTooltip="Add comment">
+                  <mat-icon aria-hidden="false" aria-label="add comment">add</mat-icon>
+                </button>
+                <span class="spacer"></span>
+                <button type="button" mat-button [disabled]="action?.valid === false" (click)='deleteCommentControl()'
+                  matTooltip="Delete selected comments">
+                  <mat-icon aria-hidden="false" aria-label="delete selected comments">delete</mat-icon>
+                </button>
+                <mat-checkbox formControlName="allComments" matTooltip="select or deselect all comments"></mat-checkbox>
+              </div>
+
+              <div formArrayName="comments" class="comments">
+                <ng-container *ngFor="let comment of comments.controls; let i=index" [formGroupName]="i">
+                  <mat-form-field class="w-100">
+                    <mat-label>Leave a comment</mat-label>
+                    <textarea matInput [formControlName]="'comment'" placeholder="comments..."></textarea>
+                    <div class="select-control">
+                      <mat-checkbox [formControlName]="'checkbox'"></mat-checkbox>
+                    </div>
+                  </mat-form-field>
+                </ng-container>
+              </div>
+            </div>
 
 
           </form>
@@ -105,7 +127,7 @@
               Recommend
             </button>
             <span class="spacer"></span>
-            <button mat-icon-button aria-label="Reset changes" (click)="resetMatStepper()">
+            <button type="button" mat-icon-button aria-label="Reset changes" (click)="resetMatStepper()">
               <mat-icon>restore</mat-icon>
             </button>
           </div>

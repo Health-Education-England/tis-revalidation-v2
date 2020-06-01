@@ -42,3 +42,34 @@
     margin-bottom: 16px;
   }
 }
+
+.comments-section {
+  position: relative;
+
+  .comments-toolbar {
+    position: absolute;
+    top: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    white-space: nowrap;
+    background-color: whitesmoke;
+
+    .mat-checkbox {
+      margin-right: 16px;
+    }
+  }
+
+  .select-control {
+    position: absolute;
+    right: -32px;
+    bottom: 0;
+  }
+
+  .comments {
+    width: calc(100% - 32px);
+    // @media screen and (#{$mat-xsmall}) {
+    //   width: 90%;
+    // }
+  }
+}

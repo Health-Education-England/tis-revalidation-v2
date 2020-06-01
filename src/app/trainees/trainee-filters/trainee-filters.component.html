@@ -8,19 +8,19 @@
   <nav mat-tab-nav-bar>
     <a
       mat-tab-link
-      [active]="data.filter === allDoctors"
+      [active]="data.filter === traineesFilterType.ALL_DOCTORS"
       aria-label="Filter all doctors"
       (click)="filterByAllDoctors()"
     >
-      {{ allDoctors | uppercase }} - {{ data.countTotal }}
+      ALL DOCTORS - {{ data.countTotal }}
     </a>
     <a
       mat-tab-link
-      [active]="data.filter === underNotice"
+      [active]="data.filter === traineesFilterType.UNDER_NOTICE"
       aria-label="Filter under notice"
       (click)="filterByUnderNotice()"
     >
-      {{ underNotice | uppercase }} - {{ data.countUnderNotice }}
+      UNDER NOTICE - {{ data.countUnderNotice }}
     </a>
   </nav>
 </ng-container>

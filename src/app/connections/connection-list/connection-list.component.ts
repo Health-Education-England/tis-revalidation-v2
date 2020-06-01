@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Store } from "@ngxs/store";
+import { generateColumnData } from "../../shared/records/constants";
 import { RecordListComponent } from "../../shared/records/record-list/record-list.component";
 import { RecordsService } from "../../shared/records/services/records.service";
 import { ConnectionsFilterType } from "../connections.interfaces";
@@ -22,7 +23,7 @@ import {
 export class ConnectionListComponent extends RecordListComponent
   implements OnInit {
   public dateColumns = ["gmcSubmissionDate", "endDate", "startDate"];
-  public columnData = COLUMN_DATA;
+  public columnData = generateColumnData(COLUMN_DATA);
 
   constructor(
     protected recordsService: RecordsService,

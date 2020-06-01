@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Store } from "@ngxs/store";
+import { generateColumnData } from "../../shared/records/constants";
 import { RecordListComponent } from "../../shared/records/record-list/record-list.component";
 import { RecordsService } from "../../shared/records/services/records.service";
 import { COLUMN_DATA } from "../constants";
@@ -29,7 +30,7 @@ export class TraineeListComponent extends RecordListComponent
     "dateAdded",
     "lastUpdatedDate"
   ];
-  public columnData = COLUMN_DATA;
+  public columnData = generateColumnData(COLUMN_DATA);
 
   constructor(
     protected recordsService: RecordsService,

@@ -17,3 +17,17 @@ export const RECORDS_COLUMN_DATA: IRecordDataCell[] = [
     enableSort: false
   }
 ];
+
+export const generateColumnData = (data: any[][]): IRecordDataCell[] => {
+  const generatedData: IRecordDataCell[] = [...RECORDS_COLUMN_DATA];
+
+  data.forEach((item: any[]) => {
+    generatedData.push({
+      label: item[0],
+      name: item[1],
+      enableSort: item[2]
+    });
+  });
+
+  return generatedData;
+};

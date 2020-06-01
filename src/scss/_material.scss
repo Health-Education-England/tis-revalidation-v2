@@ -46,10 +46,15 @@ body {
 //   box-shadow: 0 0 0 $nhsuk-border-radius $color_nhsuk-yellow;
 // }
 
-.nhsuk-skip-link {
-  background-color: $color_nhsuk-yellow;
+.nhsuk-skip-link.mat-raised-button {
   outline: $nhsuk-border-radius solid transparent;
-  text-decoration: none;
+  left: -9999px;
+  position: absolute;
+
+  &:focus {
+    left: 8px;
+    top: 8px;
+  }
 }
 
 .mat-row.cdk-row {

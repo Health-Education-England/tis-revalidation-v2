@@ -15,7 +15,7 @@ export function initializeApplication(
       .currentSession()
       .pipe(
         map(() => {
-          navigationHandler = (router: Router) => {
+          navigationHandler = () => {
             requestedUrl = win.localStorage.getItem(redirectKey);
             if (requestedUrl) {
               win.localStorage.removeItem(redirectKey);
@@ -31,6 +31,6 @@ export function initializeApplication(
       )
       .toPromise()
       .then(() => {
-        navigationHandler(router);
+        navigationHandler();
       });
 }

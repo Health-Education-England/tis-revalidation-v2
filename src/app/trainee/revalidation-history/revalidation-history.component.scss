@@ -8,8 +8,7 @@
   @media screen and (#{$mat-small}) {
     margin: 32px 0 16px;
   }
-}
-.button-row {
+
   & button {
     display: table-cell;
     margin-right: 8px;

@@ -2,8 +2,6 @@ name: Deploy
 
 on:
   push:
-    branches:
-      - "**"
 
 jobs:
   build:
@@ -37,8 +35,33 @@ jobs:
       - uses: actions/upload-artifact@v2
         if: github.ref == 'refs/heads/master'
         with:
-          name: revalidation-artifact:${{ github.sha }}
+          name: revalidation-artifact
           path: dist/revalidation/ # or dist
+
+  backup-artifacts:
+    name: Backup build artifacts
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: revalidation-artifact
+          path: dist/revalidation/
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-2
+
+      - name: Backup build artifacts
+        run: |
+          workflow=$(echo ${{ github.workflow }} | sed -e 's/\W/-/g' -e 's/\(.*\)/\L\1/')
+          aws s3 sync build-artifacts s3://tis-build-artifacts/${{ github.event.repository.name }}/$workflow/${{ github.run_number }}
 
   deploy:
     name: Deploy
@@ -52,12 +75,8 @@ jobs:
 
       - uses: actions/download-artifact@v2
         with:
-          name: revalidation-artifact:${{ github.sha }}
+          name: revalidation-artifact
           path: dist/revalidation/
-
-      - name: Display structure of downloaded files
-        run: ls -R
-        working-directory: dist/revalidation/
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1

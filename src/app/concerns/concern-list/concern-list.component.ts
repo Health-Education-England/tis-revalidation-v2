@@ -1,11 +1,20 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Store } from "@ngxs/store";
+import { generateColumnData } from "../../shared/records/constants";
 import { RecordListComponent } from "../../shared/records/record-list/record-list.component";
 import { RecordsService } from "../../shared/records/services/records.service";
 import { ConcernsFilterType } from "../concerns.interfaces";
 import { COLUMN_DATA } from "../constants";
-import { Filter } from "../state/concerns.actions";
+import {
+  Filter,
+  Get,
+  Paginate,
+  ResetPaginator,
+  ResetSort,
+  Search,
+  Sort
+} from "../state/concerns.actions";
 
 @Component({
   selector: "app-concern-list",
@@ -15,7 +24,7 @@ import { Filter } from "../state/concerns.actions";
 export class ConcernListComponent extends RecordListComponent
   implements OnInit {
   public dateColumns = ["closedDate", "dateRaised", "status", "followUpDate"];
-  public columnData = COLUMN_DATA;
+  public columnData = generateColumnData(COLUMN_DATA);
 
   constructor(
     protected recordsService: RecordsService,
@@ -24,6 +33,14 @@ export class ConcernListComponent extends RecordListComponent
     protected store: Store
   ) {
     super(recordsService, route, router, store);
+    this.recordsService.setActions(
+      Get,
+      Sort,
+      ResetSort,
+      Paginate,
+      ResetPaginator,
+      Search
+    );
   }
 
   ngOnInit(): void {

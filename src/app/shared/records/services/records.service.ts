@@ -3,22 +3,6 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { BehaviorSubject, Observable } from "rxjs";
-import {
-  Get as GetConcerns,
-  Paginate as PaginateConcerns,
-  ResetPaginator as ResetConcernsPaginator,
-  ResetSort as ResetConcernsSort,
-  Search as ConcernsSearch,
-  Sort as SortConcerns
-} from "../../../concerns/state/concerns.actions";
-import {
-  Get as GetTrainees,
-  Paginate as PaginateTrainees,
-  ResetPaginator as ResetTraineesPaginator,
-  ResetSort as ResetTraineesSort,
-  Search as TraineesSearch,
-  Sort as SortTrainees
-} from "../../../trainees/state/trainees.actions";
 
 @Injectable({
   providedIn: "root"
@@ -27,18 +11,34 @@ export class RecordsService {
   public resetSearchForm$: BehaviorSubject<boolean> = new BehaviorSubject(null);
   public stateName: string;
 
+  // TODO type these
+  public getAction: any;
+  public sortAction: any;
+  public resetSortAction: any;
+  public paginateAction: any;
+  public resetPaginatorAction: any;
+  public searchAction: any;
+
   constructor(
     private store: Store,
     private router: Router,
     private http: HttpClient
   ) {}
 
-  public get isTraineesState(): boolean {
-    return this.stateName === "trainees";
-  }
-
-  public get isConcernsState(): boolean {
-    return this.stateName === "concerns";
+  public setActions(
+    getAction,
+    sortAction,
+    resetSortAction,
+    paginateAction,
+    resetPaginatorAction,
+    searchAction
+  ): void {
+    this.getAction = getAction;
+    this.sortAction = sortAction;
+    this.resetSortAction = resetSortAction;
+    this.paginateAction = paginateAction;
+    this.resetPaginatorAction = resetPaginatorAction;
+    this.searchAction = searchAction;
   }
 
   public getRecords<T>(endPoint: string, params?: HttpParams): Observable<T> {
@@ -58,8 +58,17 @@ export class RecordsService {
     return params;
   }
 
-  public updateRoute(route: string): Promise<boolean> {
-    const snapshot: any = this.store.snapshot()[route];
+  /**
+   * This method gets the current state and current route,
+   * Then reloads the current route by updating the query params,
+   * And hence updates the url in the browser
+   *
+   * Note: Same route navigation doesn't re trigger angular life cycle hooks
+   * which effectively means the components do not get reinstantiated
+   * which is great for performance.
+   */
+  public updateRoute(): Promise<boolean> {
+    const snapshot: any = this.store.snapshot()[this.stateName];
     const current = this.router.url.split("?")[0];
     return this.router.navigate([current], {
       queryParams: {
@@ -73,50 +82,50 @@ export class RecordsService {
   }
 
   public get(): Observable<any> {
-    if (this.isTraineesState) {
-      return this.store.dispatch(new GetTrainees());
-    } else if (this.isConcernsState) {
-      return this.store.dispatch(new GetConcerns());
+    if (!this.getAction) {
+      throw new Error("getAction must be defined");
     }
+
+    return this.store.dispatch(new this.getAction());
   }
 
-  public sort(active: string, direction): void {
-    if (this.isTraineesState) {
-      this.store.dispatch(new SortTrainees(active, direction));
-    } else if (this.isConcernsState) {
-      this.store.dispatch(new SortConcerns(active, direction));
+  public sort(active: string, direction): Observable<any> {
+    if (!this.sortAction) {
+      throw new Error("sortActionFunction must be defined");
     }
+
+    return this.store.dispatch(new this.sortAction(active, direction));
   }
 
-  public resetSort(): void {
-    if (this.isTraineesState) {
-      this.store.dispatch(new ResetTraineesSort());
-    } else if (this.isConcernsState) {
-      this.store.dispatch(new ResetConcernsSort());
+  public resetSort(): Observable<any> {
+    if (!this.resetSortAction) {
+      throw new Error("resetSortAction must be defined");
     }
+
+    return this.store.dispatch(new this.resetSortAction());
   }
 
-  public paginate(pageIndex: number): void {
-    if (this.isTraineesState) {
-      this.store.dispatch(new PaginateTrainees(pageIndex));
-    } else if (this.isConcernsState) {
-      this.store.dispatch(new PaginateConcerns(pageIndex));
+  public paginate(pageIndex: number): Observable<any> {
+    if (!this.paginateAction) {
+      throw new Error("paginateAction must be defined");
     }
+
+    return this.store.dispatch(new this.paginateAction(pageIndex));
   }
 
-  public resetPaginator(): void {
-    if (this.isTraineesState) {
-      this.store.dispatch(new ResetTraineesPaginator());
-    } else if (this.isConcernsState) {
-      this.store.dispatch(new ResetConcernsPaginator());
+  public resetPaginator(): Observable<any> {
+    if (!this.resetPaginatorAction) {
+      throw new Error("resetPaginatorAction must be defined");
     }
+
+    return this.store.dispatch(new this.resetPaginatorAction());
   }
 
-  public search(searchQuery: string): void {
-    if (this.isTraineesState) {
-      this.store.dispatch(new TraineesSearch(searchQuery));
-    } else if (this.isConcernsState) {
-      this.store.dispatch(new ConcernsSearch(searchQuery));
+  public search(searchQuery: string): Observable<any> {
+    if (!this.searchAction) {
+      throw new Error("searchAction must be defined");
     }
+
+    return this.store.dispatch(new this.searchAction(searchQuery));
   }
 }

@@ -23,17 +23,18 @@ export class TraineeFiltersComponent {
   @Select(TraineesState.filter<TraineesFilterType>()) filter$: Observable<
     TraineesFilterType
   >;
-  public traineesFilterType = TraineesFilterType;
+  public allDoctors: TraineesFilterType = TraineesFilterType.ALL_DOCTORS;
+  public underNotice: TraineesFilterType = TraineesFilterType.UNDER_NOTICE;
 
   constructor(private store: Store, private recordsService: RecordsService) {}
 
   public filterByAllDoctors(): void {
-    this.store.dispatch(new Filter(TraineesFilterType.ALL_DOCTORS));
+    this.store.dispatch(new Filter(this.allDoctors));
     this.getTrainees();
   }
 
   public filterByUnderNotice(): void {
-    this.store.dispatch(new Filter(TraineesFilterType.UNDER_NOTICE));
+    this.store.dispatch(new Filter(this.underNotice));
     this.getTrainees();
   }
 
@@ -44,6 +45,6 @@ export class TraineeFiltersComponent {
     this.store
       .dispatch(new Get())
       .pipe(take(1))
-      .subscribe(() => this.recordsService.updateRoute("trainees"));
+      .subscribe(() => this.recordsService.updateRoute());
   }
 }

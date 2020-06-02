@@ -5,25 +5,25 @@ import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { MaterialModule } from "../../shared/material/material.module";
-import { Filter } from "../state/concerns.actions";
-import { ConcernsFilterType } from "../concerns.interfaces";
-import { ConcernsState } from "../state/concerns.state";
-import { ConcernListComponent } from "./concern-list.component";
+import { ConnectionsFilterType } from "../connections.interfaces";
+import { Filter } from "../state/connections.actions";
+import { ConnectionsState } from "../state/connections.state";
+import { ConnectionListComponent } from "./connection-list.component";
 
-describe("ConcernListComponent", () => {
+describe("ConnectionListComponent", () => {
   let store: Store;
-  let component: ConcernListComponent;
-  let fixture: ComponentFixture<ConcernListComponent>;
+  let component: ConnectionListComponent;
+  let fixture: ComponentFixture<ConnectionListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ConcernListComponent],
+      declarations: [ConnectionListComponent],
       imports: [
         RouterTestingModule,
         HttpClientTestingModule,
         MaterialModule,
         NoopAnimationsModule,
-        NgxsModule.forRoot([ConcernsState])
+        NgxsModule.forRoot([ConnectionsState])
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
@@ -31,7 +31,7 @@ describe("ConcernListComponent", () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ConcernListComponent);
+    fixture = TestBed.createComponent(ConnectionListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -47,32 +47,32 @@ describe("ConcernListComponent", () => {
     expect(component.setupInitialFilter).toHaveBeenCalled();
   });
 
-  it("'setupInitialFilter()' should dispatch 'Open' filter if param value is `Open`", () => {
+  it("'setupInitialFilter()' should dispatch 'Add Connection' filter if param value is `Add Connection`", () => {
     spyOn(store, "dispatch");
 
-    component.params = { filter: ConcernsFilterType.OPEN };
+    component.params = { filter: ConnectionsFilterType.ADD_CONNECTION };
     component.setupInitialFilter();
 
     expect(store.dispatch).toHaveBeenCalledTimes(1);
     expect(store.dispatch).toHaveBeenCalledWith(
-      new Filter(ConcernsFilterType.OPEN)
+      new Filter(ConnectionsFilterType.ADD_CONNECTION)
     );
     expect(store.dispatch).not.toHaveBeenCalledWith(
-      new Filter(ConcernsFilterType.CLOSED)
+      new Filter(ConnectionsFilterType.ALL)
     );
   });
 
-  it("'setupInitialFilter()' should dispatch 'Closed' filter if param does not exist", () => {
+  it("'setupInitialFilter()' should dispatch 'All' filter if param does not exist", () => {
     spyOn(store, "dispatch");
 
     component.setupInitialFilter();
 
     expect(store.dispatch).toHaveBeenCalledTimes(1);
     expect(store.dispatch).toHaveBeenCalledWith(
-      new Filter(ConcernsFilterType.CLOSED)
+      new Filter(ConnectionsFilterType.ALL)
     );
     expect(store.dispatch).not.toHaveBeenCalledWith(
-      new Filter(ConcernsFilterType.OPEN)
+      new Filter(ConnectionsFilterType.ADD_CONNECTION)
     );
   });
 });

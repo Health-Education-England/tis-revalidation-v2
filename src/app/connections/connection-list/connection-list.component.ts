@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { generateColumnData } from "../../shared/records/constants";
 import { RecordListComponent } from "../../shared/records/record-list/record-list.component";
 import { RecordsService } from "../../shared/records/services/records.service";
+import { ConnectionsFilterType } from "../connections.interfaces";
 import { COLUMN_DATA } from "../constants";
 import {
   Filter,
@@ -13,23 +14,15 @@ import {
   ResetSort,
   Search,
   Sort
-} from "../state/trainees.actions";
-import { TraineesFilterType } from "../trainees.interfaces";
+} from "../state/connections.actions";
 
 @Component({
-  selector: "app-trainee-list",
-  templateUrl: "./trainee-list.component.html",
-  styleUrls: ["./trainee-list.component.scss"],
-  encapsulation: ViewEncapsulation.None
+  selector: "app-connection-list",
+  templateUrl: "./connection-list.component.html"
 })
-export class TraineeListComponent extends RecordListComponent
+export class ConnectionListComponent extends RecordListComponent
   implements OnInit {
-  public dateColumns = [
-    "cctDate",
-    "submissionDate",
-    "dateAdded",
-    "lastUpdatedDate"
-  ];
+  public dateColumns = ["gmcSubmissionDate", "endDate", "startDate"];
   public columnData = generateColumnData(COLUMN_DATA);
 
   constructor(
@@ -56,11 +49,11 @@ export class TraineeListComponent extends RecordListComponent
   public setupInitialFilter(): void {
     if (
       this.params.filter &&
-      this.params.filter === TraineesFilterType.ALL_DOCTORS
+      this.params.filter === ConnectionsFilterType.ADD_CONNECTION
     ) {
-      this.store.dispatch(new Filter(TraineesFilterType.ALL_DOCTORS));
+      this.store.dispatch(new Filter(ConnectionsFilterType.ADD_CONNECTION));
     } else {
-      this.store.dispatch(new Filter(TraineesFilterType.UNDER_NOTICE));
+      this.store.dispatch(new Filter(ConnectionsFilterType.ALL));
     }
   }
 }

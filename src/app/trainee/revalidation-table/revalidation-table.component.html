@@ -22,6 +22,10 @@
           <mat-icon *ngSwitchCase="revalidationGmcOutcome.UNDER_REVIEW" aria-hidden="true" class="icon-blue">
             done
           </mat-icon>
+          <mat-icon *NgSwitchDefault aria-hidden="true" class="icon-yellow">
+            warning
+          </mat-icon>
+
           <span class="outcome-text">{{
             revalidationGmcOutcome[element.gmcOutcome]
           }}</span>

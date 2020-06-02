@@ -8,10 +8,16 @@
   @media screen and (#{$mat-small}) {
     margin: 32px 0 16px;
   }
-}
-.button-row button {
-  display: table-cell;
-  margin-right: 8px;
+
+  & button {
+    display: table-cell;
+    margin-right: 8px;
+
+    &:last-of-type,
+    &:last-child {
+      margin-right: 0px;
+    }
+  }
 }
 .mat-stepper-horizontal {
   overflow: hidden;
@@ -40,5 +46,45 @@
   @media screen and (#{$mat-xsmall}) {
     padding: 8px 10px;
     margin-bottom: 16px;
+  }
+}
+.comments-toolbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  white-space: nowrap;
+  opacity: 0.8;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  min-width: 150px;
+  max-width: 500px;
+
+  &:hover,
+  &:focus {
+    opacity: 1;
+    transition: opacity 0.5s;
+  }
+
+  .mat-checkbox {
+    margin-right: 12px;
+  }
+}
+.comments-section {
+  position: relative;
+
+  .mat-checkbox {
+    margin-right: 12px;
+  }
+
+  .select-control {
+    position: absolute;
+    right: -10px;
+    bottom: 5px;
+  }
+
+  .comments {
+    textarea.mat-input-element {
+      width: calc(100% - 32px);
+    }
   }
 }

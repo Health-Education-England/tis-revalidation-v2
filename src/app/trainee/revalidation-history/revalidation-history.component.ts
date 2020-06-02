@@ -27,6 +27,7 @@ import {
 } from "@angular/forms";
 import { MatHorizontalStepper } from "@angular/material/stepper";
 import { RevalidationNotesState } from "../state/revalidation-notes.state";
+import { environment } from "@environment";
 
 @Component({
   selector: "app-revalidation-history",
@@ -55,10 +56,14 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
   action: FormControl;
   deferralDate: FormControl;
   deferralReason: FormControl;
+  allComments: FormControl;
   comments: FormArray;
   componentSubscriptions: Subscription[] = [];
   revalidation: IRevalidation;
   revalidationType = RevalidationType;
+  minReferralDate: Date;
+  maxReferralDate: Date;
+  dateFormat = environment.dateFormat;
 
   constructor(
     private bottomSheet: MatBottomSheet,
@@ -95,6 +100,8 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
     this.stepper.reset();
     this.revalidationForm.reset();
     this.confirmationForm.reset();
+    this.bindRecommendationData();
+    this.bindFormControl();
   }
 
   openNotes(): void {
@@ -105,6 +112,46 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
     // TODO: cast revalidationType to Enum Key
     (window as any).alert("Submitted to GMC");
     this.resetMatStepper();
+  }
+
+  addCommentControl(): void {
+    let commentControl = new FormGroup({
+      comment: new FormControl(""),
+      checkbox: new FormControl(false)
+    });
+    this.comments.push(commentControl);
+  }
+
+  deleteCommentControl(): void {
+    const filter = (commentControl: FormGroup, index: number) => {
+      const checkbox = commentControl.controls["checkbox"];
+      return checkbox.value === true;
+    };
+    const filteredControls = this.comments.controls.filter(filter);
+    const allSelected: boolean =
+      filteredControls.length === this.comments.controls.length;
+    filteredControls.forEach(() => {
+      this.comments.removeAt(this.comments.controls.findIndex(filter));
+    });
+    if (allSelected) {
+      this.allComments.patchValue(false, { onlySelf: true, emitEvent: false });
+    }
+  }
+  /**
+   * submission date + 60 days < new deferral date < submission date + 365 days
+   */
+  private setMinMaxDeferralDates(): void {
+    const dateReference = (): Date => {
+      return this.revalidation.gmcSubmissionDate
+        ? new Date(this.revalidation.gmcSubmissionDate)
+        : new Date();
+    };
+    this.minReferralDate = new Date(
+      dateReference().setDate(dateReference().getDate() + 60)
+    );
+    this.maxReferralDate = new Date(
+      dateReference().setFullYear(dateReference().getFullYear() + 1)
+    );
   }
 
   private bindRecommendationData(): void {
@@ -129,9 +176,11 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
       confirm: new FormControl(false, Validators.requiredTrue)
     });
     this.revalidationForm = new FormGroup({});
+    this.setMinMaxDeferralDates();
     this.createVariableControls();
     this.createCommentControls();
     this.subscribeToActions();
+    this.createAllCommentsControl();
   }
 
   private createVariableControls(): void {
@@ -149,7 +198,7 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
   }
 
   private createCommentControls(): void {
-    this.comments = new FormArray([new FormControl("")]);
+    this.comments = new FormArray([]);
     // TODO: uncomment when comments array is added to mongo-db
     // if (this.revalidation.comments) {
     //   for (const comment of this.revalidation.comments) {
@@ -157,7 +206,25 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
     //     this.comments.push(commentControl);
     //   }
     // }
+    // else clause
+    this.addCommentControl();
     this.revalidationForm.addControl("comments", this.comments);
+  }
+
+  private createAllCommentsControl(): void {
+    this.allComments = new FormControl({
+      value: false,
+      disabled: true
+    });
+    this.revalidationForm.addControl("allComments", this.allComments);
+    this.componentSubscriptions.push(
+      this.allComments.valueChanges.subscribe((val) => {
+        this.comments.controls.forEach((commentControl: FormGroup) => {
+          const checkbox = commentControl.controls["checkbox"];
+          checkbox.setValue(val);
+        });
+      })
+    );
   }
 
   private subscribeToActions(): void {
@@ -179,6 +246,12 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
         // update validity
         this.deferralReason.updateValueAndValidity();
         this.deferralDate.updateValueAndValidity();
+        // enable disable all comments tick box
+        if (val) {
+          this.allComments.enable({ onlySelf: true, emitEvent: false });
+        } else {
+          this.allComments.disable({ onlySelf: true, emitEvent: false });
+        }
       })
     );
   }

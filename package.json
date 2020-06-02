@@ -38,7 +38,7 @@
     "@angular/service-worker": "~9.1.9",
     "@ngxs/logger-plugin": "^3.6.2",
     "@ngxs/store": "^3.6.2",
-    "angulartics2": "^8.3.0",
+    "angulartics2": "^9.0.1",
     "aws-amplify": "^3.0.13",
     "nhsuk-frontend": "^3.1.0",
     "rxjs": "~6.5.5",

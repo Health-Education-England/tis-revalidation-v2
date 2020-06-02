@@ -79,7 +79,6 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
 
         this.bindRecommendationData();
         this.bindFormControl();
-        console.log(this.revalidationForm);
       })
     );
   }
@@ -121,7 +120,6 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
       checkbox: new FormControl(false)
     });
     this.comments.push(commentControl);
-    console.log(this.stepper);
   }
 
   deleteCommentControl(): void {

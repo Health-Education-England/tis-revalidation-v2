@@ -89,19 +89,19 @@
 
             <div class="comments-section pt-40">
               <div class="comments-toolbar w-100">
-                <button type="button" mat-button [disabled]="action?.valid === false" (click)="addCommentControl()"
+                <button type="button" mat-icon-button [disabled]="action?.valid === false" (click)="addCommentControl()"
                   matTooltip="Add comment">
                   <mat-icon aria-hidden="false" aria-label="add comment">add</mat-icon>
                 </button>
                 <span class="spacer"></span>
-                <button type="button" mat-button [disabled]="action?.valid === false" (click)='deleteCommentControl()'
-                  matTooltip="Delete selected comments">
+                <button type="button" mat-icon-button [disabled]="action?.valid === false"
+                  (click)='deleteCommentControl()' matTooltip="Delete selected comments">
                   <mat-icon aria-hidden="false" aria-label="delete selected comments">delete</mat-icon>
                 </button>
                 <mat-checkbox formControlName="allComments" matTooltip="select or deselect all comments"></mat-checkbox>
               </div>
 
-              <div formArrayName="comments" class="comments">
+              <div formArrayName="comments" class="comments mt-20">
                 <ng-container *ngFor="let comment of comments.controls; let i=index" [formGroupName]="i">
                   <mat-form-field class="w-100">
                     <mat-label>Leave a comment</mat-label>

@@ -33,7 +33,6 @@ jobs:
         run: npm run test:ci
 
       - uses: actions/upload-artifact@v2
-        if: github.ref == 'refs/heads/master'
         with:
           name: revalidation-artifact
           path: dist/revalidation/ # or dist
@@ -42,7 +41,6 @@ jobs:
     name: Backup build artifacts
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
 
     steps:
       - name: Download build artifacts
@@ -61,7 +59,7 @@ jobs:
       - name: Backup build artifacts
         run: |
           workflow=$(echo ${{ github.workflow }} | sed -e 's/\W/-/g' -e 's/\(.*\)/\L\1/')
-          aws s3 sync build-artifacts s3://tis-build-artifacts/${{ github.event.repository.name }}/$workflow/${{ github.run_number }}
+          aws s3 sync revalidation-artifact s3://tis-build-artifacts/${{ github.event.repository.name }}/$workflow/${{ github.run_number }}
 
   deploy:
     name: Deploy

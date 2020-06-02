@@ -67,10 +67,8 @@ export class RecordsService {
    * which effectively means the components do not get reinstantiated
    * which is great for performance.
    */
-  // TODO once all remaining list related components have been refactored to be shared
-  // remove route parameter as the route name can be grabbed from the service
-  public updateRoute(route: string): Promise<boolean> {
-    const snapshot: any = this.store.snapshot()[route];
+  public updateRoute(): Promise<boolean> {
+    const snapshot: any = this.store.snapshot()[this.stateName];
     const current = this.router.url.split("?")[0];
     return this.router.navigate([current], {
       queryParams: {

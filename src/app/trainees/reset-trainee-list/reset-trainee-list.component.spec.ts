@@ -48,6 +48,7 @@ describe("ResetTraineeListComponent", () => {
     fixture = TestBed.createComponent(ResetTraineeListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    recordsService.stateName = "trainees";
   });
 
   it("should create", () => {
@@ -79,6 +80,6 @@ describe("ResetTraineeListComponent", () => {
   it("should invoke `updateRoute()` on resetTraineeList()", () => {
     spyOn(recordsService, "updateRoute");
     component.resetTraineeList();
-    expect(recordsService.updateRoute).toHaveBeenCalledWith("trainees");
+    expect(recordsService.updateRoute).toHaveBeenCalled();
   });
 });

@@ -78,7 +78,7 @@ export class TraineeSearchComponent implements OnInit, OnDestroy {
     this.store
       .dispatch(new Get())
       .pipe(take(1))
-      .subscribe(() => this.recordsService.updateRoute("trainees"));
+      .subscribe(() => this.recordsService.updateRoute());
   }
 
   ngOnDestroy() {

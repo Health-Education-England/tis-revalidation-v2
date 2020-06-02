@@ -29,6 +29,6 @@ export class TraineeListPaginatorComponent {
     this.store
       .dispatch(new Get())
       .pipe(take(1))
-      .subscribe(() => this.recordsService.updateRoute("trainees"));
+      .subscribe(() => this.recordsService.updateRoute());
   }
 }

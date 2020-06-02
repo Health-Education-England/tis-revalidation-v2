@@ -44,6 +44,7 @@ describe("TraineeFiltersComponent", () => {
     fixture = TestBed.createComponent(TraineeFiltersComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    recordsService.stateName = "trainees";
   });
 
   it("should create", () => {

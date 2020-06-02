@@ -95,6 +95,6 @@ export class RecordListComponent implements OnChanges {
     this.recordsService
       .get()
       .pipe(take(1))
-      .subscribe(() => this.recordsService.updateRoute(this.stateName));
+      .subscribe(() => this.recordsService.updateRoute());
   }
 }

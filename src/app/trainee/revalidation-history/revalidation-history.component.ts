@@ -121,6 +121,7 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
       checkbox: new FormControl(false)
     });
     this.comments.push(commentControl);
+    console.log(this.stepper);
   }
 
   deleteCommentControl(): void {

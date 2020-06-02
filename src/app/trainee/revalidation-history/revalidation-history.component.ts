@@ -115,7 +115,7 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
   }
 
   addCommentControl(): void {
-    let commentControl = new FormGroup({
+    const commentControl = new FormGroup({
       comment: new FormControl(""),
       checkbox: new FormControl(false)
     });
@@ -124,7 +124,7 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
 
   deleteCommentControl(): void {
     const filter = (commentControl: FormGroup, index: number) => {
-      const checkbox = commentControl.controls["checkbox"];
+      const checkbox = commentControl.controls.checkbox;
       return checkbox.value === true;
     };
     const filteredControls = this.comments.controls.filter(filter);
@@ -220,7 +220,7 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
     this.componentSubscriptions.push(
       this.allComments.valueChanges.subscribe((val) => {
         this.comments.controls.forEach((commentControl: FormGroup) => {
-          const checkbox = commentControl.controls["checkbox"];
+          const checkbox = commentControl.controls.checkbox;
           checkbox.setValue(val);
         });
       })

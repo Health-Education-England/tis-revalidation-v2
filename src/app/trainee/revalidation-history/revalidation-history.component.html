@@ -22,7 +22,7 @@
             </ng-container>
 
 
-            <div class="comments-toolbar bg-white mat-elevation-z1 w-100" *ngIf="stepper.selectedIndex === 1"
+            <div class="comments-toolbar fade-in mat-elevation-z1 w-100" *ngIf="stepper.selectedIndex === 1"
               [formGroup]="revalidationForm">
               <button type="button" mat-icon-button [disabled]="action?.valid === false" (click)="addCommentControl()"
                 matTooltip="Add comment">

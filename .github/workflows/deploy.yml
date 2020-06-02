@@ -16,6 +16,16 @@ jobs:
         with:
           node-version: "12.x"
 
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: npm-cache
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ env.cache-name }}-
+
       - name: Install Angular CLI
         run: npm install -g @angular/cli@latest
 

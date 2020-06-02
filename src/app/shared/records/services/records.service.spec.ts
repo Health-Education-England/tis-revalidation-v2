@@ -52,8 +52,8 @@ describe("RecordsService", () => {
     spyOn(router, "navigate");
 
     const snapshot: TraineesStateModel = store.snapshot().trainees;
-    const routeName = "trainees";
-    service.updateRoute(routeName);
+    service.stateName = "trainees";
+    service.updateRoute();
 
     expect(router.navigate).toHaveBeenCalledWith(["/"], {
       queryParams: {

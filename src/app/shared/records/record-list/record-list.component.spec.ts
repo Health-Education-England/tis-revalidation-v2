@@ -236,8 +236,6 @@ describe("RecordListComponent", () => {
     );
     expect(recordsService.resetPaginator).toHaveBeenCalled();
     expect(recordsService.get).toHaveBeenCalled();
-    expect(recordsService.updateRoute).toHaveBeenCalledWith(
-      component.stateName
-    );
+    expect(recordsService.updateRoute).toHaveBeenCalled();
   });
 });

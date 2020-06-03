@@ -59,7 +59,7 @@ jobs:
       - name: Backup build artifacts
         run: |
           workflow=$(echo ${{ github.workflow }} | sed -e 's/\W/-/g' -e 's/\(.*\)/\L\1/')
-          aws s3 sync revalidation-artifact s3://tis-build-artifacts/${{ github.event.repository.name }}/$workflow/${{ github.run_number }}
+          aws s3 sync dist/revalidation/ s3://tis-build-artifacts/${{ github.event.repository.name }}/$workflow/${{ github.run_number }}
 
   deploy:
     name: Deploy

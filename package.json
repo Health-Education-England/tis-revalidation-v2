@@ -39,7 +39,7 @@
     "@ngxs/logger-plugin": "^3.6.2",
     "@ngxs/store": "^3.6.2",
     "angulartics2": "^9.0.1",
-    "aws-amplify": "^3.0.13",
+    "aws-amplify": "^3.0.14",
     "nhsuk-frontend": "^3.1.0",
     "rxjs": "~6.5.5",
     "tslib": "^1.13.0",

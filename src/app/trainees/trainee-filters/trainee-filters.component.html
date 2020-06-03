@@ -12,7 +12,7 @@
       aria-label="Filter all doctors"
       (click)="filterByAllDoctors()"
     >
-      {{ allDoctors | uppercase }} - {{ data.countTotal }}
+      ALL DOCTORS - {{ data.countTotal }}
     </a>
     <a
       mat-tab-link
@@ -20,7 +20,7 @@
       aria-label="Filter under notice"
       (click)="filterByUnderNotice()"
     >
-      {{ underNotice | uppercase }} - {{ data.countUnderNotice }}
+      UNDER NOTICE - {{ data.countUnderNotice }}
     </a>
   </nav>
 </ng-container>

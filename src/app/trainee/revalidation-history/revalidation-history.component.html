@@ -8,6 +8,7 @@
     <mat-divider *ngIf="!device.isHandset" [vertical]="true"></mat-divider>
 
     <ng-container *ngIf="revalidationHistory$ | async as revalidationHistory">
+
       <div class="w-100 bg-white">
         <mat-toolbar class="sticky-toolbar">
 
@@ -76,7 +77,7 @@
               <mat-form-field class="w-100">
                 <mat-label>Make a recommendation</mat-label>
                 <mat-select formControlName="action">
-                  <mat-option *ngFor="let revalType of revalidationType | keyvalue" [value]="revalType.value">
+                  <mat-option *ngFor="let revalType of recommendationType | keyvalue" [value]="revalType.value">
                     {{ revalType.value }}
                   </mat-option>
                 </mat-select>
@@ -85,7 +86,7 @@
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field class="w-100" *ngIf="action?.value === revalidationType.DEFER">
+              <mat-form-field class="w-100" *ngIf="action?.value === recommendationType.DEFER">
                 <mat-label>Choose a date</mat-label>
                 <input matInput formControlName="deferralDate" [min]="minReferralDate" [max]="maxReferralDate"
                   [matDatepicker]="picker">
@@ -97,11 +98,28 @@
                 <mat-datepicker touchUi #picker></mat-datepicker>
               </mat-form-field>
 
-              <mat-form-field class="w-100" *ngIf="action?.value === revalidationType.DEFER">
+              <mat-form-field class="w-100" *ngIf="action?.value === recommendationType.DEFER">
                 <mat-label>Reason</mat-label>
-                <input matInput placeholder="Reason for ..." formControlName="deferralReason">
-                <mat-error *ngIf="revalidationForm.controls['deferralReason']?.hasError('required')">
+                <mat-select formControlName="deferralReason">
+                  <mat-option *ngFor="let reason of deferralReasons" [value]="reason.code">
+                    {{ reason.reason }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="deferralReason?.hasError('required')">
                   Reason must be provided
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="w-100"
+                *ngIf="action?.value === recommendationType.DEFER && deferralSubReasons.length > 0">
+                <mat-label>Sub reason</mat-label>
+                <mat-select formControlName="deferralSubReason">
+                  <mat-option *ngFor="let reason of deferralSubReasons" [value]="reason.code">
+                    {{ reason.reason }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="deferralSubReason?.hasError('required')">
+                  Sub reason must be provided
                 </mat-error>
               </mat-form-field>
 
@@ -142,8 +160,8 @@
           <mat-step [stepControl]="confirmationForm">
             <form class="w-100" [formGroup]="confirmationForm">
               <div class="terms mat-body" [ngSwitch]="action?.value">
-                <ng-container *ngSwitchCase="revalidationType.REVALIDATE">
-                  <h2 class="mat-title">Recommendation: {{revalidationType.REVALIDATE}}</h2>
+                <ng-container *ngSwitchCase="recommendationType.REVALIDATE">
+                  <h2 class="mat-title">Recommendation: {{recommendationType.REVALIDATE}}</h2>
                   <p>Made pursuant to The Medical Profession (Responsible Officer) Regulations and The General Medical
                     Council (Licence to Practise and Revalidation) Regulations</p>
                   <p>I am the appointed or nominated Responsible Officer for each medical practitioner named below.</p>
@@ -178,8 +196,8 @@
                     consequently their licence to practise should be continued.</p>
                 </ng-container>
 
-                <ng-container *ngSwitchCase="revalidationType.DEFER">
-                  <h2 class="mat-title">Recommendation: {{revalidationType.DEFER}}</h2>
+                <ng-container *ngSwitchCase="recommendationType.DEFER">
+                  <h2 class="mat-title">Recommendation: {{recommendationType.DEFER}}</h2>
                   <p>Made pursuant to The Medical Profession (Responsible Officer) Regulations and The General Medical
                     Council (Licence to Practise and Revalidation) Regulations</p>
                   <p>I am the appointed or nominated Responsible Officer for the medical practitioner to whom this
@@ -209,8 +227,8 @@
                   </ul>
                 </ng-container>
 
-                <ng-container *ngSwitchCase="revalidationType.NON_ENGAGEMENT">
-                  <h2 class="mat-title">Recommendation: {{revalidationType.NON_ENGAGEMENT}}</h2>
+                <ng-container *ngSwitchCase="recommendationType.NON_ENGAGEMENT">
+                  <h2 class="mat-title">Recommendation: {{recommendationType.NON_ENGAGEMENT}}</h2>
                   <p>Made pursuant to The Medical Profession (Responsible Officer) Regulations and The General Medical
                     Council (Licence to Practise and Revalidation) Regulations</p>
                   <p>I am the appointed or nominated Responsible Officer for the medical practitioner to whom this

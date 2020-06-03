@@ -5,6 +5,7 @@ export interface IRevalidationHistory {
   programmeMembershipType: string;
   currentGrade: string;
   revalidations: IRevalidation[];
+  deferralReasons: DeferralReason[];
 }
 
 export interface IRevalidation {
@@ -12,12 +13,16 @@ export interface IRevalidation {
   admin: string;
   deferralComment: string;
   deferralDate: Date;
-  deferralReason: Date;
+  deferralReason: number;
   gmcOutcome: RevalidationGmcOutcome;
   gmcRevalidationId: number;
   gmcSubmissionDate: Date;
   revalidationStatus: RevalidationStatus;
-  revalidationType: RevalidationType;
+  recommendationType: RecommendationType;
+  comments: string[];
+  deferralSubReason: number;
+  gmcNumber: number;
+  recommendationId: string;
 }
 
 export interface IComment {
@@ -41,11 +46,17 @@ export enum RevalidationStatus {
 export enum RevalidationGmcOutcome {
   APPROVED = "Approved",
   REJECTED = "Rejected",
-  UNDER_REVIEW = "Under review"
+  UNDER_REVIEW = "Under Review"
 }
 
-export enum RevalidationType {
+export enum RecommendationType {
   REVALIDATE = "Revalidate",
   DEFER = "Defer",
   NON_ENGAGEMENT = "Non Engagement"
+}
+
+export interface DeferralReason {
+  code: number;
+  reason: string;
+  subReasons: DeferralReason[] | any;
 }

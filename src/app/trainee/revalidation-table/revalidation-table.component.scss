@@ -48,7 +48,7 @@ tr.element-row:not(.expanded-row):active {
 
 @include mat-table-columns(
   (
-    revalidationType: (
+    recommendationType: (
       width: 150px
     ),
     gmcOutcome: (

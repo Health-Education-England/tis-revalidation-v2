@@ -2,7 +2,7 @@
 export const RevalidationHistoryRespone1 = {};
 export const RevalidationHistoryRespone2 = JSON.parse(
   `{"fullName":"Hubey Coping","gmcNumber":"8304613","programmeMembershipType":"General Surgery","currentGrade":"grade","cctDate":"2020-05-22",
-  "revalidations":[{"gmcOutcome":"APPROVED","revalidationType":"REVALIDATE","gmcSubmissionDate":"2017-10-16T11:57:29","actualSubmissionDate":"2017-11-30","gmcRevalidationId":null,"revalidationStatus":"SUBMITTED_TO_GMC","deferralDate":null,"deferralReason":null,"deferralComment":null,"admin":"emma.cruickshank@hee.nhs.uk"}]}`
+  "revalidations":[{"gmcOutcome":"APPROVED","revalidationType":"REVALIDATE","gmcSubmissionDate":"2017-10-16T11:57:29","actualSubmissionDate":"2017-11-30","gmcRevalidationId":null,"RecommendationStatus":"SUBMITTED_TO_GMC","deferralDate":null,"deferralReason":null,"deferralComment":null,"admin":"emma.cruickshank@hee.nhs.uk"}]}`
 );
 export const notesResponse1 = JSON.parse(`[
     {"id": "123", "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit"},

@@ -85,8 +85,8 @@
               (click)="navigateToDetails($event, row)"
               (keyup.enter)="navigateToDetails($event, row)"
               (keyup.space)="navigateToDetails($event, row)"
+              [class.highlight-row]="row.underNotice === 'YES'"
               tabindex="0"
-              role="button"
             ></tr>
           </table>
         </div>

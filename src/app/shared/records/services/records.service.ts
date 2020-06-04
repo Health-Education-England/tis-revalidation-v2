@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { Store } from "@ngxs/store";
-import { BehaviorSubject, Observable, throwError } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root"
@@ -83,7 +83,7 @@ export class RecordsService {
 
   public get(): Observable<any> {
     if (!this.getAction) {
-      return throwError("getAction must be defined");
+      throw new Error("getAction must be defined");
     }
 
     return this.store.dispatch(new this.getAction());
@@ -91,7 +91,7 @@ export class RecordsService {
 
   public sort(active: string, direction): Observable<any> {
     if (!this.sortAction) {
-      return throwError("sortAction must be defined");
+      throw new Error("sortActionFunction must be defined");
     }
 
     return this.store.dispatch(new this.sortAction(active, direction));
@@ -99,7 +99,7 @@ export class RecordsService {
 
   public resetSort(): Observable<any> {
     if (!this.resetSortAction) {
-      return throwError("resetSortAction must be defined");
+      throw new Error("resetSortAction must be defined");
     }
 
     return this.store.dispatch(new this.resetSortAction());
@@ -107,7 +107,7 @@ export class RecordsService {
 
   public paginate(pageIndex: number): Observable<any> {
     if (!this.paginateAction) {
-      return throwError("paginateAction must be defined");
+      throw new Error("paginateAction must be defined");
     }
 
     return this.store.dispatch(new this.paginateAction(pageIndex));
@@ -115,7 +115,7 @@ export class RecordsService {
 
   public resetPaginator(): Observable<any> {
     if (!this.resetPaginatorAction) {
-      return throwError("resetPaginatorAction must be defined");
+      throw new Error("resetPaginatorAction must be defined");
     }
 
     return this.store.dispatch(new this.resetPaginatorAction());
@@ -123,7 +123,7 @@ export class RecordsService {
 
   public search(searchQuery: string): Observable<any> {
     if (!this.searchAction) {
-      return throwError("searchAction must be defined");
+      throw new Error("searchAction must be defined");
     }
 
     return this.store.dispatch(new this.searchAction(searchQuery));

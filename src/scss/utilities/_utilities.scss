@@ -61,6 +61,14 @@
   position: relative;
 }
 
+.highlight-row {
+  background-color: rgba(213, 40, 27, 0.15);
+
+  td:first-child {
+    border-left: solid 4px $color_nhsuk-red;
+  }
+}
+
 .hidden,
 .hide,
 [hidden] {

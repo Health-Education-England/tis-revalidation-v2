@@ -1,5 +1,9 @@
 @import "~@angular/material/core/style/variables";
 
+.main-col {
+  grid-template-rows: 64px auto;
+}
+
 .button-row {
   margin: 48px 0;
   display: flex;
@@ -24,6 +28,8 @@
   width: 100%;
 }
 .revalidation-history {
+  grid-template-columns: 220px 1px auto;
+
   .mat-horizontal-stepper-header-container {
     display: none;
   }

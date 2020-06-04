@@ -20,13 +20,7 @@ import { Select } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { map, shareReplay } from "rxjs/operators";
-import {
-  FormGroup,
-  FormControl,
-  FormArray,
-  Validators,
-  AbstractControl
-} from "@angular/forms";
+import { FormGroup, FormControl, FormArray, Validators } from "@angular/forms";
 import { MatHorizontalStepper } from "@angular/material/stepper";
 import { RevalidationNotesState } from "../state/revalidation-notes.state";
 import { environment } from "@environment";
@@ -138,7 +132,7 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
    * deletes appropriate controls
    */
   deleteCommentControl(): void {
-    const filter = (commentControl: FormGroup, index: number) => {
+    const filter = (commentControl: FormGroup) => {
       const checkbox = commentControl.controls.checkbox;
       return checkbox.value === true;
     };

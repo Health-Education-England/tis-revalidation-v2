@@ -16,61 +16,30 @@
               <app-trainee-details></app-trainee-details>
             </mat-menu>
 
-            <button
-              mat-icon-button
-              aria-label="Trainee details"
-              [matMenuTriggerFor]="traineeMenu"
-            >
+            <button mat-icon-button aria-label="Trainee details" [matMenuTriggerFor]="traineeMenu">
               <mat-icon aria-label="Trainee details">account_box</mat-icon>
             </button>
           </ng-container>
 
-          <div
-            class="comments-toolbar fade-in mat-elevation-z1 w-100"
-            *ngIf="stepper.selectedIndex === 1"
-            [formGroup]="revalidationForm"
-          >
-            <button
-              type="button"
-              mat-icon-button
-              [disabled]="action?.valid === false"
-              (click)="addCommentControl()"
-              matTooltip="Add comment"
-            >
-              <mat-icon aria-hidden="false" aria-label="add comment"
-                >add</mat-icon
-              >
+          <div class="comments-toolbar fade-in mat-elevation-z1 w-100" *ngIf="stepper.selectedIndex === 1"
+            [formGroup]="revalidationForm">
+            <button type="button" mat-icon-button [disabled]="action?.valid === false" (click)="addCommentControl()"
+              matTooltip="Add comment">
+              <mat-icon aria-hidden="false" aria-label="add comment">add</mat-icon>
             </button>
             <span class="spacer"></span>
-            <button
-              type="button"
-              mat-icon-button
-              [disabled]="action?.valid === false"
-              (click)="deleteCommentControl()"
-              matTooltip="Delete selected comments"
-            >
-              <mat-icon
-                aria-hidden="false"
-                aria-label="delete selected comments"
-                >delete</mat-icon
-              >
+            <button type="button" mat-icon-button [disabled]="action?.valid === false" (click)="deleteCommentControl()"
+              matTooltip="Delete selected comments">
+              <mat-icon aria-hidden="false" aria-label="delete selected comments">delete</mat-icon>
             </button>
-            <mat-checkbox
-              formControlName="allComments"
-              matTooltip="select or deselect all comments"
-            ></mat-checkbox>
+            <mat-checkbox formControlName="allComments" matTooltip="select or deselect all comments"></mat-checkbox>
           </div>
 
           <span class="spacer"></span>
 
           <button mat-icon-button aria-label="Add notes" (click)="openNotes()">
-            <mat-icon
-              *ngIf="revalidationNotes$ | async as notes; else noNotes"
-              color="primary"
-              matBadgeColor="warn"
-              matBadge="{{ notes.length }}"
-              [matBadgeHidden]="notes.length === 0"
-            >
+            <mat-icon *ngIf="revalidationNotes$ | async as notes; else noNotes" color="primary" matBadgeColor="warn"
+              matBadge="{{ notes.length }}" [matBadgeHidden]="notes.length === 0">
               speaker_notes
             </mat-icon>
 
@@ -82,18 +51,11 @@
 
         <mat-horizontal-stepper #stepper linear>
           <mat-step label="history">
-            <app-revalidation-table
-              [revalidationHistory]="revalidationHistory.revalidations"
-            >
+            <app-revalidation-table [revalidationHistory]="revalidationHistory.revalidations">
             </app-revalidation-table>
 
             <div class="button-row">
-              <button
-                mat-button
-                mat-raised-button
-                matStepperNext
-                color="primary"
-              >
+              <button mat-button mat-raised-button matStepperNext color="primary">
                 <ng-container *ngIf="editRecommendation; else createMode">
                   Edit recommendation
                 </ng-container>
@@ -107,17 +69,11 @@
           </mat-step>
 
           <mat-step [stepControl]="revalidationForm">
-            <form
-              class="revalidation-form w-100"
-              [formGroup]="revalidationForm"
-            >
+            <form class="revalidation-form w-100" [formGroup]="revalidationForm">
               <mat-form-field class="w-100">
                 <mat-label>Make a recommendation</mat-label>
                 <mat-select formControlName="action">
-                  <mat-option
-                    *ngFor="let revalType of recommendationType | keyvalue"
-                    [value]="revalType.value"
-                  >
+                  <mat-option *ngFor="let revalType of recommendationType | keyvalue" [value]="revalType.value">
                     {{ revalType.value }}
                   </mat-option>
                 </mat-select>
@@ -129,28 +85,18 @@
               <mat-form-field class="w-100" *ngIf="action?.value === recommendationType.DEFER">
 
                 <mat-label>Choose a date</mat-label>
-                <input
-                  matInput
-                  formControlName="deferralDate"
-                  [min]="minReferralDate"
-                  [max]="maxReferralDate"
-                  [matDatepicker]="picker"
-                />
-                <mat-error
-                  *ngIf="
+                <input matInput formControlName="deferralDate" [min]="minReferralDate" [max]="maxReferralDate"
+                  [matDatepicker]="picker" />
+                <mat-error *ngIf="
                     revalidationForm.controls['deferralDate']?.hasError(
                       'required'
                     )
-                  "
-                >
+                  ">
                   Date is required and must be between
                   {{ minReferralDate | date: dateFormat }} and
                   {{ maxReferralDate | date: dateFormat }}
                 </mat-error>
-                <mat-datepicker-toggle
-                  matSuffix
-                  [for]="picker"
-                ></mat-datepicker-toggle>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker touchUi #picker></mat-datepicker>
               </mat-form-field>
 
@@ -181,21 +127,12 @@
 
               <div class="comments-section">
                 <div formArrayName="comments" class="comments">
-                  <ng-container
-                    *ngFor="let comment of comments.controls; let i = index"
-                    [formGroupName]="i"
-                  >
+                  <ng-container *ngFor="let comment of comments.controls; let i = index" [formGroupName]="i">
                     <mat-form-field class="w-100">
                       <mat-label>Leave a comment</mat-label>
-                      <textarea
-                        matInput
-                        [formControlName]="'comment'"
-                        placeholder="comments..."
-                      ></textarea>
+                      <textarea matInput [formControlName]="'comment'" placeholder="comments..."></textarea>
                       <div class="select-control">
-                        <mat-checkbox
-                          [formControlName]="'checkbox'"
-                        ></mat-checkbox>
+                        <mat-checkbox [formControlName]="'checkbox'"></mat-checkbox>
                       </div>
                     </mat-form-field>
                   </ng-container>
@@ -213,12 +150,7 @@
                 Recommend
               </button>
               <span class="spacer"></span>
-              <button
-                type="button"
-                mat-icon-button
-                aria-label="Reset changes"
-                (click)="resetMatStepper()"
-              >
+              <button type="button" mat-icon-button aria-label="Reset changes" (click)="resetMatStepper()">
                 <mat-icon>restore</mat-icon>
               </button>
             </div>
@@ -388,12 +320,7 @@
               </div>
               <mat-divider></mat-divider>
               <section class="w-100 mt-20">
-                <mat-slide-toggle
-                  class="example-margin"
-                  color="primary"
-                  [required]="true"
-                  formControlName="confirm"
-                >
+                <mat-slide-toggle class="example-margin" color="primary" [required]="true" formControlName="confirm">
                   I confirm all relevant information has been considered
                 </mat-slide-toggle>
               </section>
@@ -402,27 +329,15 @@
               <button mat-button mat-raised-button matStepperPrevious>
                 Back
               </button>
-              <button
-                mat-button
-                mat-raised-button
-                matStepperNext
-                color="primary"
-                (click)="submitToGMC()"
-                [disabled]="
+              <button mat-button mat-raised-button matStepperNext color="primary" (click)="submitToGMC()" [disabled]="
                   confirmationForm
                     ? !confirmationForm.controls['confirm'].value
                     : true
-                "
-              >
+                ">
                 Submit to GMC
               </button>
               <span class="spacer"></span>
-              <button
-                type="button"
-                mat-icon-button
-                aria-label="Reset changes"
-                (click)="resetMatStepper()"
-              >
+              <button type="button" mat-icon-button aria-label="Reset changes" (click)="resetMatStepper()">
                 <mat-icon>restore</mat-icon>
               </button>
             </div>

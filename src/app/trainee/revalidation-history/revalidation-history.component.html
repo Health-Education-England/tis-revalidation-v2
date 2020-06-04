@@ -57,15 +57,15 @@
           <mat-step label="history">
             <app-revalidation-table [revalidationHistory]="revalidationHistory.revalidations">
             </app-revalidation-table>
-            <div class="button-row">
-              <button mat-button mat-raised-button matStepperNext color="primary">
+            <div class="button-row" *ngIf="enableRecommendation">
+              <button type="button" mat-button mat-raised-button matStepperNext color="primary">
 
-                <ng-container *ngIf="revalidation; else editMode">
-                  Create recommendation
+                <ng-container *ngIf="editRecommendation; else createMode">
+                  Edit recommendation
                 </ng-container>
 
-                <ng-template #editMode>
-                  Edit recommendation
+                <ng-template #createMode>
+                  Create recommendation
                 </ng-template>
               </button>
               <span class="spacer"></span>
@@ -141,12 +141,12 @@
 
             </form>
             <div class="button-row">
-              <button mat-button mat-raised-button matStepperPrevious>Back</button>
+              <button type="button" mat-button mat-raised-button matStepperPrevious>Back</button>
               <button mat-button mat-raised-button [disabled]="revalidationForm ? !revalidationForm.valid : true"
                 (click)="saveDraft();" color="accent">
                 Save draft
               </button>
-              <button mat-button mat-raised-button matStepperNext
+              <button type="button" mat-button mat-raised-button matStepperNext
                 [disabled]="revalidationForm ? !revalidationForm.valid : true" color="primary">
                 Recommend
               </button>

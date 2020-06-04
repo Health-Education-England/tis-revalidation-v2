@@ -60,7 +60,7 @@
           ">
           <div class="element-submission-status">
             <strong>Submission Status:</strong>
-            {{ revalidationStatus[element.revalidationStatus] }}
+            {{ recommendationStatus[element.recommendationStatus] }}
           </div>
           <mat-divider *ngIf="element.comments?.length > 0"></mat-divider>
           <ng-container *ngFor="let comment of element.comments">

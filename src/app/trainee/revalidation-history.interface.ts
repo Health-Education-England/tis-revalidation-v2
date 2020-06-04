@@ -6,23 +6,24 @@ export interface IRevalidationHistory {
   currentGrade: string;
   revalidations: IRevalidation[];
   deferralReasons: DeferralReason[];
+  underNotice: string;
 }
 
 export interface IRevalidation {
   actualSubmissionDate: Date;
   admin: string;
+  comments: string[];
   deferralComment: string;
   deferralDate: Date;
   deferralReason: number;
-  gmcOutcome: RevalidationGmcOutcome;
-  gmcRevalidationId: number;
-  gmcSubmissionDate: Date;
-  revalidationStatus: RevalidationStatus;
-  recommendationType: RecommendationType;
-  comments: string[];
   deferralSubReason: number;
   gmcNumber: number;
+  gmcOutcome: RecommendationGmcOutcome;
+  gmcRevalidationId: string; // check type with back-end
+  gmcSubmissionDate: Date;
   recommendationId: string;
+  recommendationStatus: RecommendationStatus;
+  recommendationType: RecommendationType;
 }
 
 export interface IComment {
@@ -35,7 +36,7 @@ export interface INote {
   note: string;
 }
 
-export enum RevalidationStatus {
+export enum RecommendationStatus {
   NOT_STARTED = "Not started",
   STARTED = "Started",
   READY_TO_REVIEW = "Ready to review",
@@ -43,7 +44,7 @@ export enum RevalidationStatus {
   SUBMITTED_TO_GMC = "Submitted to GMC"
 }
 
-export enum RevalidationGmcOutcome {
+export enum RecommendationGmcOutcome {
   APPROVED = "Approved",
   REJECTED = "Rejected",
   UNDER_REVIEW = "Under Review"

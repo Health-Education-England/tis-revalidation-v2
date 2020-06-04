@@ -12,7 +12,8 @@ import {
   IRevalidation,
   RecommendationType,
   INote,
-  DeferralReason
+  DeferralReason,
+  RecommendationStatus
 } from "../revalidation-history.interface";
 import { RevalidationHistoryState } from "../state/revalidation-history.state";
 import { Select } from "@ngxs/store";
@@ -68,6 +69,9 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
   dateFormat = environment.dateFormat;
   deferralReasons: DeferralReason[];
   deferralSubReasons: DeferralReason[] = [];
+  enableRecommendation = false;
+  editRecommendation = false;
+  recommendationStatus = RecommendationStatus;
 
   constructor(
     private bottomSheet: MatBottomSheet,
@@ -75,11 +79,14 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
   ) {
     this.componentSubscriptions.push(
       this.revalidationHistory$.subscribe((res) => {
-        this.revalidation = null;
-        // TODO: refactor with new column
-        // res.revalidations.find((item: IRevalidation) => {
-        //   return item.submissionStatus === "draft";
-        // });
+        this.revalidation = res.revalidations.find((item: IRevalidation) => {
+          return (
+            this.recommendationStatus[item.recommendationStatus] !==
+            this.recommendationStatus.SUBMITTED_TO_GMC
+          );
+        });
+        this.editRecommendation = this.revalidation ? true : false;
+        this.enableRecommendation = res.underNotice.toLowerCase() === "yes";
         this.deferralReasons = res.deferralReasons;
         this.bindRecommendationData();
         this.bindFormControl();
@@ -174,7 +181,7 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
         gmcOutcome: null,
         gmcRevalidationId: null,
         gmcSubmissionDate: null,
-        revalidationStatus: null,
+        recommendationStatus: null,
         recommendationType: null,
         comments: [],
         deferralSubReason: null,

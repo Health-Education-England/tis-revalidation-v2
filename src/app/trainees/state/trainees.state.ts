@@ -9,7 +9,7 @@ import {
   RecordsState,
   RecordsStateModel
 } from "../../shared/records/state/records.state";
-import { RevalidationStatus } from "../../trainee/revalidation-history.interface";
+import { RecommendationStatus } from "../../trainee/revalidation-history.interface";
 import { DEFAULT_SORT } from "../constants";
 import { TraineesService } from "../services/trainees.service";
 import {
@@ -78,7 +78,7 @@ export class TraineesState extends RecordsState {
         map((response: IGetTraineesResponse) => {
           response.traineeInfo.forEach(
             (item: ITrainee) =>
-              (item.doctorStatus = RevalidationStatus[item.doctorStatus])
+              (item.doctorStatus = RecommendationStatus[item.doctorStatus])
           );
           return response;
         }),

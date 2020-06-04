@@ -10,21 +10,17 @@ import { RevalidationNotesComponent } from "../revalidation-notes/revalidation-n
 import {
   IRevalidationHistory,
   IRevalidation,
-  RevalidationType,
-  INote
+  RecommendationType,
+  INote,
+  DeferralReason,
+  RecommendationStatus
 } from "../revalidation-history.interface";
 import { RevalidationHistoryState } from "../state/revalidation-history.state";
 import { Select } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { map, shareReplay } from "rxjs/operators";
-import {
-  FormGroup,
-  FormControl,
-  FormArray,
-  Validators,
-  AbstractControl
-} from "@angular/forms";
+import { FormGroup, FormControl, FormArray, Validators } from "@angular/forms";
 import { MatHorizontalStepper } from "@angular/material/stepper";
 import { RevalidationNotesState } from "../state/revalidation-notes.state";
 import { environment } from "@environment";
@@ -56,14 +52,20 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
   action: FormControl;
   deferralDate: FormControl;
   deferralReason: FormControl;
+  deferralSubReason: FormControl;
   allComments: FormControl;
   comments: FormArray;
   componentSubscriptions: Subscription[] = [];
   revalidation: IRevalidation;
-  revalidationType = RevalidationType;
+  recommendationType = RecommendationType;
   minReferralDate: Date;
   maxReferralDate: Date;
   dateFormat = environment.dateFormat;
+  deferralReasons: DeferralReason[];
+  deferralSubReasons: DeferralReason[] = [];
+  enableRecommendation = false;
+  editRecommendation = false;
+  recommendationStatus = RecommendationStatus;
 
   constructor(
     private bottomSheet: MatBottomSheet,
@@ -71,12 +73,15 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
   ) {
     this.componentSubscriptions.push(
       this.revalidationHistory$.subscribe((res) => {
-        this.revalidation = null;
-        // TODO: refactor with new column
-        // res.revalidations.find((item: IRevalidation) => {
-        //   return item.submissionStatus === "draft";
-        // });
-
+        this.revalidation = res.revalidations.find((item: IRevalidation) => {
+          return (
+            this.recommendationStatus[item.recommendationStatus] !==
+            this.recommendationStatus.SUBMITTED_TO_GMC
+          );
+        });
+        this.editRecommendation = this.revalidation ? true : false;
+        this.enableRecommendation = res.underNotice.toLowerCase() === "yes";
+        this.deferralReasons = res.deferralReasons;
         this.bindRecommendationData();
         this.bindFormControl();
       })
@@ -109,21 +114,25 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
   }
 
   submitToGMC(): void {
-    // TODO: cast revalidationType to Enum Key
+    // TODO: cast recommendationType to Enum Key
     (window as any).alert("Submitted to GMC");
     this.resetMatStepper();
   }
 
-  addCommentControl(): void {
+  addCommentControl(commentText?: string): void {
     const commentControl = new FormGroup({
-      comment: new FormControl(""),
+      comment: new FormControl(commentText ? commentText : ""),
       checkbox: new FormControl(false)
     });
     this.comments.push(commentControl);
   }
 
+  /**
+   * filters checkbox FormControls marked for deletion
+   * deletes appropriate controls
+   */
   deleteCommentControl(): void {
-    const filter = (commentControl: FormGroup, index: number) => {
+    const filter = (commentControl: FormGroup) => {
       const checkbox = commentControl.controls.checkbox;
       return checkbox.value === true;
     };
@@ -137,6 +146,7 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
       this.allComments.patchValue(false, { onlySelf: true, emitEvent: false });
     }
   }
+
   /**
    * submission date + 60 days < new deferral date < submission date + 365 days
    */
@@ -165,8 +175,12 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
         gmcOutcome: null,
         gmcRevalidationId: null,
         gmcSubmissionDate: null,
-        revalidationStatus: null,
-        revalidationType: null
+        recommendationStatus: null,
+        recommendationType: null,
+        comments: [],
+        deferralSubReason: null,
+        gmcNumber: null,
+        recommendationId: null
       };
     }
   }
@@ -183,34 +197,76 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
     this.createAllCommentsControl();
   }
 
+  /**
+   * creates deferralReason, deferralSubReason and deferralDate controls
+   * bind show sub reasons based on reason data selected
+   */
   private createVariableControls(): void {
     this.deferralReason = new FormControl(
       this.revalidation.deferralReason,
       Validators.required
     );
-    this.revalidationForm.addControl("deferralReason", this.deferralReason);
+
+    this.deferralSubReason = new FormControl(
+      this.revalidation.deferralSubReason,
+      Validators.required
+    );
 
     this.deferralDate = new FormControl(
       this.revalidation.deferralDate,
       Validators.required
     );
+
+    this.componentSubscriptions.push(
+      this.deferralReason.valueChanges.subscribe((val) => {
+        const selectedReason = this.deferralReasons.find(
+          (reason: DeferralReason) => {
+            return reason.code === val;
+          }
+        );
+
+        this.deferralSubReasons = selectedReason?.subReasons
+          ? selectedReason.subReasons
+          : [];
+
+        if (this.deferralSubReasons.length > 0) {
+          this.deferralSubReason.setValidators(Validators.required);
+        } else {
+          this.deferralSubReason.clearValidators();
+        }
+        // update validity
+        this.deferralSubReason.updateValueAndValidity();
+        this.deferralSubReason.reset();
+      })
+    );
+
+    this.revalidationForm.addControl("deferralReason", this.deferralReason);
+    this.revalidationForm.addControl(
+      "deferralSubReason",
+      this.deferralSubReason
+    );
     this.revalidationForm.addControl("deferralDate", this.deferralDate);
   }
 
+  /**
+   * creates a comments FormGroup for each comment
+   * adds an empty comment FormGroup for readily adding comment
+   */
   private createCommentControls(): void {
     this.comments = new FormArray([]);
-    // TODO: uncomment when comments array is added to mongo-db
-    // if (this.revalidation.comments) {
-    //   for (const comment of this.revalidation.comments) {
-    //     const commentControl = new FormControl(comment.comment);
-    //     this.comments.push(commentControl);
-    //   }
-    // }
-    // else clause
+    if (this.revalidation.comments) {
+      for (const comment of this.revalidation.comments) {
+        this.addCommentControl(comment);
+      }
+    }
     this.addCommentControl();
     this.revalidationForm.addControl("comments", this.comments);
   }
 
+  /**
+   * Creates all comments checkbox
+   * ticks and un-ticks checkboxes besides individual comments for delete functionality
+   */
   private createAllCommentsControl(): void {
     this.allComments = new FormControl({
       value: false,
@@ -227,30 +283,43 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * build recommendation action formControl
+   * add subscription of action control to subscription array
+   * when defer, set required validators for deferral date, reason and sub-reason formControls
+   * enable disable all comments tick box in tool-bar // TODO: revise with users
+   */
   private subscribeToActions(): void {
     this.action = new FormControl(
-      this.revalidation.revalidationType,
+      this.revalidation.recommendationType,
       Validators.required
     );
     this.revalidationForm.addControl("action", this.action);
 
     this.componentSubscriptions.push(
       this.action.valueChanges.subscribe((val) => {
-        if (val === this.revalidationType.DEFER) {
+        if (val === this.recommendationType.DEFER) {
           this.deferralReason.setValidators(Validators.required);
+          this.deferralSubReason.setValidators(Validators.required);
           this.deferralDate.setValidators(Validators.required);
         } else {
           this.deferralReason.clearValidators();
+          this.deferralSubReason.clearValidators();
           this.deferralDate.clearValidators();
+          this.deferralReason.reset();
+          this.deferralSubReason.reset();
+          this.deferralDate.reset();
         }
-        // update validity
+
         this.deferralReason.updateValueAndValidity();
         this.deferralDate.updateValueAndValidity();
-        // enable disable all comments tick box
+        this.deferralSubReason.updateValueAndValidity();
+
+        const opts = { onlySelf: true, emitEvent: false };
         if (val) {
-          this.allComments.enable({ onlySelf: true, emitEvent: false });
+          this.allComments.enable(opts);
         } else {
-          this.allComments.disable({ onlySelf: true, emitEvent: false });
+          this.allComments.disable(opts);
         }
       })
     );

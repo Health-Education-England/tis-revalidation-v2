@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from "@angular/core";
 import {
   IRevalidation,
-  RevalidationGmcOutcome,
-  RevalidationType,
-  RevalidationStatus
+  RecommendationGmcOutcome,
+  RecommendationType,
+  RecommendationStatus
 } from "../revalidation-history.interface";
 import { environment } from "@environment";
 import {
@@ -31,7 +31,7 @@ import {
 })
 export class RevalidationTableComponent implements OnInit {
   columnsToDisplay = [
-    "revalidationType",
+    "recommendationType",
     "gmcOutcome",
     "gmcSubmissionDate",
     "actualSubmissionDate",
@@ -40,9 +40,9 @@ export class RevalidationTableComponent implements OnInit {
   expandedElement: IRevalidation | null;
   dateFormat = environment.dateFormat;
   @Input() revalidationHistory: IRevalidation[];
-  revalidationGmcOutcome = RevalidationGmcOutcome;
-  revalidationType = RevalidationType;
-  revalidationStatus = RevalidationStatus;
+  revalidationGmcOutcome = RecommendationGmcOutcome;
+  recommendationType = RecommendationType;
+  recommendationStatus = RecommendationStatus;
 
   constructor() {}
 

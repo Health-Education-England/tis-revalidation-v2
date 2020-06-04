@@ -5,19 +5,25 @@ export interface IRevalidationHistory {
   programmeMembershipType: string;
   currentGrade: string;
   revalidations: IRevalidation[];
+  deferralReasons: DeferralReason[];
+  underNotice: string;
 }
 
 export interface IRevalidation {
   actualSubmissionDate: Date;
   admin: string;
+  comments: string[];
   deferralComment: string;
   deferralDate: Date;
-  deferralReason: Date;
-  gmcOutcome: RevalidationGmcOutcome;
-  gmcRevalidationId: number;
+  deferralReason: number;
+  deferralSubReason: number;
+  gmcNumber: number;
+  gmcOutcome: RecommendationGmcOutcome;
+  gmcRevalidationId: string; // check type with back-end
   gmcSubmissionDate: Date;
-  revalidationStatus: RevalidationStatus;
-  revalidationType: RevalidationType;
+  recommendationId: string;
+  recommendationStatus: RecommendationStatus;
+  recommendationType: RecommendationType;
 }
 
 export interface IComment {
@@ -30,7 +36,7 @@ export interface INote {
   note: string;
 }
 
-export enum RevalidationStatus {
+export enum RecommendationStatus {
   NOT_STARTED = "Not started",
   STARTED = "Started",
   READY_TO_REVIEW = "Ready to review",
@@ -38,14 +44,20 @@ export enum RevalidationStatus {
   SUBMITTED_TO_GMC = "Submitted to GMC"
 }
 
-export enum RevalidationGmcOutcome {
+export enum RecommendationGmcOutcome {
   APPROVED = "Approved",
   REJECTED = "Rejected",
-  UNDER_REVIEW = "Under review"
+  UNDER_REVIEW = "Under Review"
 }
 
-export enum RevalidationType {
+export enum RecommendationType {
   REVALIDATE = "Revalidate",
   DEFER = "Defer",
   NON_ENGAGEMENT = "Non Engagement"
+}
+
+export interface DeferralReason {
+  code: number;
+  reason: string;
+  subReasons: DeferralReason[] | any;
 }

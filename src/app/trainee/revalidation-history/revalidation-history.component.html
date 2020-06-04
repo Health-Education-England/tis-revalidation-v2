@@ -7,68 +7,39 @@
     <mat-divider *ngIf="!device.isHandset" [vertical]="true"></mat-divider>
 
     <ng-container *ngIf="revalidationHistory$ | async as revalidationHistory">
+
       <div class="main-col d-grid bg-white">
+
         <mat-toolbar class="sticky-toolbar">
           <ng-container *ngIf="device.isHandset">
             <mat-menu #traineeMenu="matMenu">
               <app-trainee-details></app-trainee-details>
             </mat-menu>
 
-            <button
-              mat-icon-button
-              aria-label="Trainee details"
-              [matMenuTriggerFor]="traineeMenu"
-            >
+            <button mat-icon-button aria-label="Trainee details" [matMenuTriggerFor]="traineeMenu">
               <mat-icon aria-label="Trainee details">account_box</mat-icon>
             </button>
           </ng-container>
 
-          <div
-            class="comments-toolbar fade-in mat-elevation-z1 w-100"
-            *ngIf="stepper.selectedIndex === 1"
-            [formGroup]="revalidationForm"
-          >
-            <button
-              type="button"
-              mat-icon-button
-              [disabled]="action?.valid === false"
-              (click)="addCommentControl()"
-              matTooltip="Add comment"
-            >
-              <mat-icon aria-hidden="false" aria-label="add comment"
-                >add</mat-icon
-              >
+          <div class="comments-toolbar fade-in mat-elevation-z1 w-100" *ngIf="stepper.selectedIndex === 1"
+            [formGroup]="revalidationForm">
+            <button type="button" mat-icon-button [disabled]="action?.valid === false" (click)="addCommentControl()"
+              matTooltip="Add comment">
+              <mat-icon aria-hidden="false" aria-label="add comment">add</mat-icon>
             </button>
             <span class="spacer"></span>
-            <button
-              type="button"
-              mat-icon-button
-              [disabled]="action?.valid === false"
-              (click)="deleteCommentControl()"
-              matTooltip="Delete selected comments"
-            >
-              <mat-icon
-                aria-hidden="false"
-                aria-label="delete selected comments"
-                >delete</mat-icon
-              >
+            <button type="button" mat-icon-button [disabled]="action?.valid === false" (click)="deleteCommentControl()"
+              matTooltip="Delete selected comments">
+              <mat-icon aria-hidden="false" aria-label="delete selected comments">delete</mat-icon>
             </button>
-            <mat-checkbox
-              formControlName="allComments"
-              matTooltip="select or deselect all comments"
-            ></mat-checkbox>
+            <mat-checkbox formControlName="allComments" matTooltip="select or deselect all comments"></mat-checkbox>
           </div>
 
           <span class="spacer"></span>
 
           <button mat-icon-button aria-label="Add notes" (click)="openNotes()">
-            <mat-icon
-              *ngIf="revalidationNotes$ | async as notes; else noNotes"
-              color="primary"
-              matBadgeColor="warn"
-              matBadge="{{ notes.length }}"
-              [matBadgeHidden]="notes.length === 0"
-            >
+            <mat-icon *ngIf="revalidationNotes$ | async as notes; else noNotes" color="primary" matBadgeColor="warn"
+              matBadge="{{ notes.length }}" [matBadgeHidden]="notes.length === 0">
               speaker_notes
             </mat-icon>
 
@@ -80,23 +51,17 @@
 
         <mat-horizontal-stepper #stepper linear>
           <mat-step label="history">
-            <app-revalidation-table
-              [revalidationHistory]="revalidationHistory.revalidations"
-            >
+            <app-revalidation-table [revalidationHistory]="revalidationHistory.revalidations">
             </app-revalidation-table>
+
             <div class="button-row">
-              <button
-                mat-button
-                mat-raised-button
-                matStepperNext
-                color="primary"
-              >
-                <ng-container *ngIf="revalidation; else editMode">
-                  Create recommendation
+              <button mat-button mat-raised-button matStepperNext color="primary">
+                <ng-container *ngIf="editRecommendation; else createMode">
+                  Edit recommendation
                 </ng-container>
 
-                <ng-template #editMode>
-                  Edit recommendation
+                <ng-template #createMode>
+                  Create recommendation
                 </ng-template>
               </button>
               <span class="spacer"></span>
@@ -104,17 +69,11 @@
           </mat-step>
 
           <mat-step [stepControl]="revalidationForm">
-            <form
-              class="revalidation-form w-100"
-              [formGroup]="revalidationForm"
-            >
+            <form class="revalidation-form w-100" [formGroup]="revalidationForm">
               <mat-form-field class="w-100">
                 <mat-label>Make a recommendation</mat-label>
                 <mat-select formControlName="action">
-                  <mat-option
-                    *ngFor="let revalType of revalidationType | keyvalue"
-                    [value]="revalType.value"
-                  >
+                  <mat-option *ngFor="let revalType of recommendationType | keyvalue" [value]="revalType.value">
                     {{ revalType.value }}
                   </mat-option>
                 </mat-select>
@@ -123,74 +82,57 @@
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field
-                class="w-100"
-                *ngIf="action?.value === revalidationType.DEFER"
-              >
+              <mat-form-field class="w-100" *ngIf="action?.value === recommendationType.DEFER">
+
                 <mat-label>Choose a date</mat-label>
-                <input
-                  matInput
-                  formControlName="deferralDate"
-                  [min]="minReferralDate"
-                  [max]="maxReferralDate"
-                  [matDatepicker]="picker"
-                />
-                <mat-error
-                  *ngIf="
+                <input matInput formControlName="deferralDate" [min]="minReferralDate" [max]="maxReferralDate"
+                  [matDatepicker]="picker" />
+                <mat-error *ngIf="
                     revalidationForm.controls['deferralDate']?.hasError(
                       'required'
                     )
-                  "
-                >
+                  ">
                   Date is required and must be between
                   {{ minReferralDate | date: dateFormat }} and
                   {{ maxReferralDate | date: dateFormat }}
                 </mat-error>
-                <mat-datepicker-toggle
-                  matSuffix
-                  [for]="picker"
-                ></mat-datepicker-toggle>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker touchUi #picker></mat-datepicker>
               </mat-form-field>
 
-              <mat-form-field
-                class="w-100"
-                *ngIf="action?.value === revalidationType.DEFER"
-              >
+              <mat-form-field class="w-100" *ngIf="action?.value === recommendationType.DEFER">
                 <mat-label>Reason</mat-label>
-                <input
-                  matInput
-                  placeholder="Reason for ..."
-                  formControlName="deferralReason"
-                />
-                <mat-error
-                  *ngIf="
-                    revalidationForm.controls['deferralReason']?.hasError(
-                      'required'
-                    )
-                  "
-                >
+                <mat-select formControlName="deferralReason">
+                  <mat-option *ngFor="let reason of deferralReasons" [value]="reason.code">
+                    {{ reason.reason }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="deferralReason?.hasError('required')">
                   Reason must be provided
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="w-100"
+                *ngIf="action?.value === recommendationType.DEFER && deferralSubReasons.length > 0">
+                <mat-label>Sub reason</mat-label>
+                <mat-select formControlName="deferralSubReason">
+                  <mat-option *ngFor="let reason of deferralSubReasons" [value]="reason.code">
+                    {{ reason.reason }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="deferralSubReason?.hasError('required')">
+                  Sub reason must be provided
                 </mat-error>
               </mat-form-field>
 
               <div class="comments-section">
                 <div formArrayName="comments" class="comments">
-                  <ng-container
-                    *ngFor="let comment of comments.controls; let i = index"
-                    [formGroupName]="i"
-                  >
+                  <ng-container *ngFor="let comment of comments.controls; let i = index" [formGroupName]="i">
                     <mat-form-field class="w-100">
                       <mat-label>Leave a comment</mat-label>
-                      <textarea
-                        matInput
-                        [formControlName]="'comment'"
-                        placeholder="comments..."
-                      ></textarea>
+                      <textarea matInput [formControlName]="'comment'" placeholder="comments..."></textarea>
                       <div class="select-control">
-                        <mat-checkbox
-                          [formControlName]="'checkbox'"
-                        ></mat-checkbox>
+                        <mat-checkbox [formControlName]="'checkbox'"></mat-checkbox>
                       </div>
                     </mat-form-field>
                   </ng-container>
@@ -198,34 +140,17 @@
               </div>
             </form>
             <div class="button-row">
-              <button mat-button mat-raised-button matStepperPrevious>
-                Back
-              </button>
-              <button
-                mat-button
-                mat-raised-button
-                [disabled]="revalidationForm ? !revalidationForm.valid : true"
-                (click)="saveDraft()"
-                color="accent"
-              >
+              <button type="button" mat-button mat-raised-button matStepperPrevious>Back</button>
+              <button mat-button mat-raised-button [disabled]="revalidationForm ? !revalidationForm.valid : true"
+                (click)="saveDraft();" color="accent">
                 Save draft
               </button>
-              <button
-                mat-button
-                mat-raised-button
-                matStepperNext
-                [disabled]="revalidationForm ? !revalidationForm.valid : true"
-                color="primary"
-              >
+              <button type="button" mat-button mat-raised-button matStepperNext
+                [disabled]="revalidationForm ? !revalidationForm.valid : true" color="primary">
                 Recommend
               </button>
               <span class="spacer"></span>
-              <button
-                type="button"
-                mat-icon-button
-                aria-label="Reset changes"
-                (click)="resetMatStepper()"
-              >
+              <button type="button" mat-icon-button aria-label="Reset changes" (click)="resetMatStepper()">
                 <mat-icon>restore</mat-icon>
               </button>
             </div>
@@ -234,27 +159,14 @@
           <mat-step [stepControl]="confirmationForm">
             <form class="w-100" [formGroup]="confirmationForm">
               <div class="terms mat-body" [ngSwitch]="action?.value">
-                <ng-container *ngSwitchCase="revalidationType.REVALIDATE">
-                  <h2 class="mat-title">
-                    Recommendation: {{ revalidationType.REVALIDATE }}
-                  </h2>
-                  <p>
-                    Made pursuant to The Medical Profession (Responsible
-                    Officer) Regulations and The General Medical Council
-                    (Licence to Practise and Revalidation) Regulations
-                  </p>
-                  <p>
-                    I am the appointed or nominated Responsible Officer for each
-                    medical practitioner named below.
-                  </p>
-                  <p>
-                    I have read the criteria for recommendations to revalidate.
-                  </p>
-                  <p>
-                    In determining my revalidation recommendation to the General
-                    Medical Council for the medical practitioners named below,
-                    it is my judgement that each has:
-                  </p>
+                <ng-container *ngSwitchCase="recommendationType.REVALIDATE">
+                  <h2 class="mat-title">Recommendation: {{recommendationType.REVALIDATE}}</h2>
+                  <p>Made pursuant to The Medical Profession (Responsible Officer) Regulations and The General Medical
+                    Council (Licence to Practise and Revalidation) Regulations</p>
+                  <p>I am the appointed or nominated Responsible Officer for each medical practitioner named below.</p>
+                  <p>I have read the criteria for recommendations to revalidate.</p>
+                  <p>In determining my revalidation recommendation to the General Medical Council for the medical
+                    practitioners named below, it is my judgement that each has:</p>
                   <ul>
                     <li>
                       participated in either annual appraisal that considers the
@@ -304,24 +216,13 @@
                     should be continued.
                   </p>
                 </ng-container>
-
-                <ng-container *ngSwitchCase="revalidationType.DEFER">
-                  <h2 class="mat-title">
-                    Recommendation: {{ revalidationType.DEFER }}
-                  </h2>
-                  <p>
-                    Made pursuant to The Medical Profession (Responsible
-                    Officer) Regulations and The General Medical Council
-                    (Licence to Practise and Revalidation) Regulations
-                  </p>
-                  <p>
-                    I am the appointed or nominated Responsible Officer for the
-                    medical practitioner to whom this deferral request applies.
-                  </p>
-                  <p>
-                    I have read the criteria for a deferral and I am satisfied
-                    that:
-                  </p>
+                <ng-container *ngSwitchCase="recommendationType.DEFER">
+                  <h2 class="mat-title">Recommendation: {{recommendationType.DEFER}}</h2>
+                  <p>Made pursuant to The Medical Profession (Responsible Officer) Regulations and The General Medical
+                    Council (Licence to Practise and Revalidation) Regulations</p>
+                  <p>I am the appointed or nominated Responsible Officer for the medical practitioner to whom this
+                    deferral request applies.</p>
+                  <p>I have read the criteria for a deferral and I am satisfied that:</p>
                   <ul>
                     <li>
                       the medical practitioner has engaged with the systems and
@@ -366,25 +267,14 @@
                     </li>
                   </ul>
                 </ng-container>
+                <ng-container *ngSwitchCase="recommendationType.NON_ENGAGEMENT">
+                  <h2 class="mat-title">Recommendation: {{recommendationType.NON_ENGAGEMENT}}</h2>
+                  <p>Made pursuant to The Medical Profession (Responsible Officer) Regulations and The General Medical
+                    Council (Licence to Practise and Revalidation) Regulations</p>
+                  <p>I am the appointed or nominated Responsible Officer for the medical practitioner to whom this
+                    notification of non-engagement applies.</p>
+                  <p>I have read the criteria for non-engagement and I confirm that:</p>
 
-                <ng-container *ngSwitchCase="revalidationType.NON_ENGAGEMENT">
-                  <h2 class="mat-title">
-                    Recommendation: {{ revalidationType.NON_ENGAGEMENT }}
-                  </h2>
-                  <p>
-                    Made pursuant to The Medical Profession (Responsible
-                    Officer) Regulations and The General Medical Council
-                    (Licence to Practise and Revalidation) Regulations
-                  </p>
-                  <p>
-                    I am the appointed or nominated Responsible Officer for the
-                    medical practitioner to whom this notification of
-                    non-engagement applies.
-                  </p>
-                  <p>
-                    I have read the criteria for non-engagement and I confirm
-                    that:
-                  </p>
                   <ul>
                     <li>
                       The medical practitioner has not engaged in appraisal or
@@ -430,12 +320,7 @@
               </div>
               <mat-divider></mat-divider>
               <section class="w-100 mt-20">
-                <mat-slide-toggle
-                  class="example-margin"
-                  color="primary"
-                  [required]="true"
-                  formControlName="confirm"
-                >
+                <mat-slide-toggle class="example-margin" color="primary" [required]="true" formControlName="confirm">
                   I confirm all relevant information has been considered
                 </mat-slide-toggle>
               </section>
@@ -444,27 +329,15 @@
               <button mat-button mat-raised-button matStepperPrevious>
                 Back
               </button>
-              <button
-                mat-button
-                mat-raised-button
-                matStepperNext
-                color="primary"
-                (click)="submitToGMC()"
-                [disabled]="
+              <button mat-button mat-raised-button matStepperNext color="primary" (click)="submitToGMC()" [disabled]="
                   confirmationForm
                     ? !confirmationForm.controls['confirm'].value
                     : true
-                "
-              >
+                ">
                 Submit to GMC
               </button>
               <span class="spacer"></span>
-              <button
-                type="button"
-                mat-icon-button
-                aria-label="Reset changes"
-                (click)="resetMatStepper()"
-              >
+              <button type="button" mat-icon-button aria-label="Reset changes" (click)="resetMatStepper()">
                 <mat-icon>restore</mat-icon>
               </button>
             </div>

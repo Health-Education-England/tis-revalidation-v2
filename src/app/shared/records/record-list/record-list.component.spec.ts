@@ -8,7 +8,7 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { of } from "rxjs";
 import { COLUMN_DATA } from "../../../concerns/constants";
-import { RevalidationStatus } from "../../../trainee/revalidation-history.interface";
+import { RecommendationStatus } from "../../../trainee/revalidation-history.interface";
 import { DEFAULT_SORT } from "../../../trainees/constants";
 import { mockTraineesResponse } from "../../../trainees/services/trainees.service.spec";
 import {
@@ -199,7 +199,7 @@ describe("RecordListComponent", () => {
       underNotice: "No",
       admin: "",
       cctDate: "2015-09-08",
-      doctorStatus: RevalidationStatus.NOT_STARTED,
+      doctorStatus: RecommendationStatus.NOT_STARTED,
       lastUpdatedDate: "2015-09-08",
       programmeMembershipType: "",
       programmeName: ""

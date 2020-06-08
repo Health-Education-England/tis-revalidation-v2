@@ -72,13 +72,12 @@
               {{ comment }}
             </div>
           </ng-container>
-          <!--// TODO: sanitize data and remove deferralComment-->
-          <!-- <ng-container *ngIf="element.deferralComment">
+          <ng-container *ngIf="element.deferralComment">
             <mat-divider></mat-divider>
             <div class="element-notes">
-              {{ deferralComment }}
+              {{ element.deferralComment | stripHtml }}
             </div>
-          </ng-container> -->
+          </ng-container>
         </div>
       </td>
     </ng-container>

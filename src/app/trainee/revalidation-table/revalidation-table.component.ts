@@ -1,10 +1,9 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import {
   IRevalidation,
   RecommendationGmcOutcome,
   RecommendationType,
-  RecommendationStatus,
-  IRevalidationHistory
+  RecommendationStatus
 } from "../revalidation-history.interface";
 import { environment } from "@environment";
 import {

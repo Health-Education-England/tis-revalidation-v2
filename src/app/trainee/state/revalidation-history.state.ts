@@ -1,11 +1,4 @@
 import { State, Action, Selector, StateContext } from "@ngxs/store";
-import {
-  patch,
-  append,
-  removeItem,
-  insertItem,
-  updateItem
-} from "@ngxs/store/operators";
 
 import {
   RevalidationHistoryAction,
@@ -22,7 +15,6 @@ import {
   DeferralReason
 } from "../revalidation-history.interface";
 import { RevalidationHistoryService } from "../services/revalidation-history.service";
-import { builtinModules } from "module";
 
 export class RevalidationHistoryStateModel {
   public item: IRevalidationHistory;
@@ -133,7 +125,7 @@ export class RevalidationHistoryState {
   }
 
   @Action(SaveRevalidationHistory, { cancelUncompleted: true })
-  set(ctx: StateContext<any>, action: SaveRevalidationHistory) {
+  set(_ctx: StateContext<any>, action: SaveRevalidationHistory) {
     return this.service.saveRecommendation(action.payload);
   }
 
@@ -150,7 +142,7 @@ export class RevalidationHistoryState {
   }
 
   @Action(SubmitRevalidationHistoryToGMC, { cancelUncompleted: true })
-  post(ctx: StateContext<any>, action: SubmitRevalidationHistoryToGMC) {
+  post(_ctx: StateContext<any>, action: SubmitRevalidationHistoryToGMC) {
     return this.service.submitRecommendationToGMC(
       action.gmcId,
       action.recommendationId

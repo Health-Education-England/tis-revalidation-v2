@@ -36,7 +36,6 @@ import { RevalidationNotesState } from "../state/revalidation-notes.state";
 import { environment } from "@environment";
 import {
   SaveRevalidationHistory,
-  AddRevalidationHistory,
   RevalidationHistoryAction,
   SubmitRevalidationHistoryToGMC
 } from "../state/revalidation-history.actions";
@@ -169,7 +168,7 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
         this.resetMatStepper();
         return of(res);
       };
-
+      debugger;
       // dispatch save and rebind data
       // if submit to gmc flag dispatch submit functionality
       this.store
@@ -425,22 +424,5 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
     return this._snackBar.open(message, "Close", {
       duration: 2000
     });
-  }
-
-  private saveBoundFormData(): void {
-    if (this.revalidationForm.valid) {
-      const formValue = this.revalidationForm.value;
-      this.revalidation.recommendationType = formValue.action;
-      this.revalidation.comments = formValue.comments
-        .filter((comments: { comment: string; checkbox: boolean }) => {
-          return !!comments.comment.trim();
-        })
-        .map((comments: { comment: string; checkbox: boolean }) => {
-          return comments.comment;
-        });
-      this.revalidation.deferralDate = formValue.deferralDate;
-      this.revalidation.deferralReason = formValue.deferralReason;
-      this.revalidation.deferralSubReason = formValue.deferralSubReason;
-    }
   }
 }

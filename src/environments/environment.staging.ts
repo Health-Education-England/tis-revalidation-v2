@@ -15,8 +15,8 @@ export const environment: IEnvironment = {
     getRecommendation: `api/recommendation`,
     getNotes: `mocky/5ea2da614f00006c00d9f540`,
     getConnections: `api/v1/connections`,
-    saveRecommendation: `revalidation/api/recommendation`,
-    submitToGMC: `revalidation/api/recommendation/{gmcId}/submit/{recommendationId}`
+    submitToGMC: `api/recommendation/{gmcId}/submit/{recommendationId}`,
+    saveRecommendation: `api/recommendation`
   },
   awsConfig: {
     region: "eu-west-2",

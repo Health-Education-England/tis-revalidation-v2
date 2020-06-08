@@ -2,8 +2,7 @@ import { Pipe, PipeTransform, Inject } from "@angular/core";
 import { DOCUMENT } from "@angular/common";
 
 @Pipe({
-  name: "stripHtml",
-  pure: true
+  name: "stripHtml"
 })
 export class StripHtmlPipe implements PipeTransform {
   constructor(@Inject(DOCUMENT) private document: Document) {}

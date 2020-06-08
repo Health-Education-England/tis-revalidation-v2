@@ -8,16 +8,10 @@ import { DOCUMENT } from "@angular/common";
 export class StripHtmlPipe implements PipeTransform {
   constructor(@Inject(DOCUMENT) private document: Document) {}
   transform(htmlString: string, ...args: any[]): string {
-    return (
-      this.document
-        .createRange()
-        // Creates a fragment and turns the supplied string into HTML nodes
-        .createContextualFragment(htmlString)
-        // Gets the text from the fragment
-        .textContent // Removes the Zero-Width Space, Zero-Width Joiner, Zero-Width No-Break Space, Left-To-Right Mark, and Right-To-Left Mark characters
-        .replace(/[\u200B-\u200D\uFEFF\u200E\u200F]/g, "")
-        // Trims off any extra space on either end of the string
-        .trim()
-    );
+    return this.document
+      .createRange()
+      .createContextualFragment(htmlString)
+      .textContent.replace(/[\u200B-\u200D\uFEFF\u200E\u200F]/g, "")
+      .trim();
   }
 }

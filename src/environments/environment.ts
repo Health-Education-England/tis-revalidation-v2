@@ -20,7 +20,9 @@ export const environment: IEnvironment = {
     getNotes: `mocky/5ea2da614f00006c00d9f540`,
     getTrainees: `mocky/5ed7d6b6320000c3f2274cc1?mocky-delay=700ms`,
     getConcerns: `mocky/5eca487b3000009471a6cf4b?mocky-delay=700ms`,
-    getConnections: `mocky/5ed1335b3500009300ffa375?mocky-delay=700ms`
+    getConnections: `mocky/5ed1335b3500009300ffa375?mocky-delay=700ms`,
+    saveRecommendation: `revalidation/api/recommendation`,
+    submitToGMC: `revalidation/api/recommendation/{gmcId}/submit/{recommendationId}`
   },
   awsConfig: {
     redirectSignIn: "http://localhost:4200",

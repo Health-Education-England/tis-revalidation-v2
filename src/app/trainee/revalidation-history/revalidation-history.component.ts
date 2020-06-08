@@ -168,7 +168,6 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
         this.resetMatStepper();
         return of(res);
       };
-      debugger;
       // dispatch save and rebind data
       // if submit to gmc flag dispatch submit functionality
       this.store

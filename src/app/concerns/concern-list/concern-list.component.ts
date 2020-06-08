@@ -23,7 +23,12 @@ import {
 })
 export class ConcernListComponent extends RecordListComponent
   implements OnInit {
-  public dateColumns = ["closedDate", "dateRaised", "status", "followUpDate"];
+  public dateColumns = [
+    "closedDate",
+    "dateRaised",
+    "dateAdded",
+    "followUpDate"
+  ];
   public columnData = generateColumnData(COLUMN_DATA);
 
   constructor(

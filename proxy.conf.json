@@ -1,7 +1,7 @@
 {
   "/mocky": {
-    "target": "http://www.mocky.io/v2/",
-    "secure": false,
+    "target": "https://run.mocky.io/v3/",
+    "secure": true,
     "pathRewrite": {
       "^/mocky": ""
     },

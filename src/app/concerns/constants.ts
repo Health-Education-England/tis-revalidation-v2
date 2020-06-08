@@ -6,7 +6,7 @@ export const DEFAULT_SORT: Sort = {
 };
 
 export const COLUMN_DATA: any[][] = [
-  ["Programme", "programmeNumber", false],
+  ["Programme", "programme", false],
   ["Date raised", "dateRaised", true],
   ["Type", "type", false],
   ["Site", "site", false],

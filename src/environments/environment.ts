@@ -16,13 +16,13 @@ export const environment: IEnvironment = {
     // 5e9ea0ef340000b81a6eee04 = 404 error
     // 5e997d8a33000062007b2354 = 21 trainees
     // 5e997dba33000096297b235d = 0 trainees to simulate no results found
-    getRecommendation: `mocky/5ea6d31b2f00004e00c4e7d9`,
-    getNotes: `mocky/5ea2da614f00006c00d9f540`,
-    getTrainees: `mocky/5ed7d6b6320000c3f2274cc1?mocky-delay=700ms`,
-    getConcerns: `mocky/5eca487b3000009471a6cf4b?mocky-delay=700ms`,
-    getConnections: `mocky/5ed1335b3500009300ffa375?mocky-delay=700ms`,
+    getRecommendation: `api/recommendation`,
+    saveRecommendation: `api/recommendation`,
     submitToGMC: `api/recommendation/{gmcId}/submit/{recommendationId}`,
-    saveRecommendation: `api/recommendation`
+    getNotes: `mocky/45017692-2588-48dc-b6c2-c637cd723625`,
+    getTrainees: `mocky/81267580-411e-4ce6-8dca-2f65f9d2e485?mocky-delay=700ms`,
+    getConcerns: `mocky/c25f77cf-594a-484b-b50b-562aa9438115?mocky-delay=700ms`,
+    getConnections: `mocky/761e392c-2889-423f-9b30-f29219f7471d?mocky-delay=700ms`
   },
   awsConfig: {
     redirectSignIn: "http://localhost:4200",

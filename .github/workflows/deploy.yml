@@ -26,9 +26,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ env.cache-name }}-
 
-      - name: Install Angular CLI
-        run: npm install -g @angular/cli@latest
-
       - name: Pull down dependencies
         run: npm install
 
@@ -36,7 +33,7 @@ jobs:
         run: npm run lint
 
       - name: Build
-        run: npm run build:misc && ng build --configuration=staging
+        run: npm run build:misc && npm run build --configuration=staging
 
       - name: Run unit tests
         run: npm run test:ci

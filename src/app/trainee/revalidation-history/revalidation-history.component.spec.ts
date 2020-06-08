@@ -9,7 +9,7 @@ import { NgxsModule } from "@ngxs/store";
 import { RevalidationHistoryState } from "../state/revalidation-history.state";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 
-describe("RevalidationHistoryComponent", () => {
+xdescribe("RevalidationHistoryComponent", () => {
   let component: RevalidationHistoryComponent;
   let fixture: ComponentFixture<RevalidationHistoryComponent>;
 

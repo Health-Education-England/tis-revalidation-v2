@@ -2,13 +2,14 @@ import { HttpErrorResponse, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "@environment";
 import { Action, State, StateContext } from "@ngxs/store";
-import { catchError, finalize, switchMap, take } from "rxjs/operators";
+import { catchError, finalize, map, switchMap, take } from "rxjs/operators";
 import { RecordsService } from "../../shared/records/services/records.service";
 import {
   defaultRecordsState,
   RecordsState,
   RecordsStateModel
 } from "../../shared/records/state/records.state";
+import { RecommendationStatus } from "../../trainee/revalidation-history.interface";
 import { DEFAULT_SORT } from "../constants";
 import {
   ClearSearch,
@@ -59,6 +60,13 @@ export class ConcernsState extends RecordsState {
       .getRecords(endPoint, params)
       .pipe(
         take(1),
+        map((response: IGetConcernsResponse) => {
+          response.concernTrainees.forEach(
+            (item: IConcern) =>
+              (item.status = RecommendationStatus[item.status])
+          );
+          return response;
+        }),
         switchMap((response: IGetConcernsResponse) =>
           ctx.dispatch(new GetSuccess(response))
         ),
@@ -76,7 +84,7 @@ export class ConcernsState extends RecordsState {
 
   @Action(GetSuccess)
   getSuccess(ctx: StateContext<ConcernsStateModel>, action: GetSuccess) {
-    return super.getSuccessHandler(ctx, action, "concernsInfo");
+    return super.getSuccessHandler(ctx, action, "concernTrainees");
   }
 
   @Action(GetError)

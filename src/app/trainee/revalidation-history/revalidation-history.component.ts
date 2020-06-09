@@ -421,7 +421,7 @@ export class RevalidationHistoryComponent implements OnInit, OnDestroy {
 
   private openSnackBar(message: string): MatSnackBarRef<SimpleSnackBar> {
     return this._snackBar.open(message, "Close", {
-      duration: 2000
+      duration: 5000
     });
   }
 }

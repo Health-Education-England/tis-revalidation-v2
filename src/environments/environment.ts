@@ -16,7 +16,9 @@ export const environment: IEnvironment = {
     // 5e9ea0ef340000b81a6eee04 = 404 error
     // 5e997d8a33000062007b2354 = 21 trainees
     // 5e997dba33000096297b235d = 0 trainees to simulate no results found
-    getRecommendation: `mocky/c3bdf0a2-66b6-4d95-8d07-62337f737100`,
+    getRecommendation: `api/recommendation`,
+    saveRecommendation: `api/recommendation`,
+    submitToGMC: `api/recommendation/{gmcId}/submit/{recommendationId}`,
     getNotes: `mocky/45017692-2588-48dc-b6c2-c637cd723625`,
     getTrainees: `mocky/81267580-411e-4ce6-8dca-2f65f9d2e485?mocky-delay=700ms`,
     getConcerns: `mocky/c25f77cf-594a-484b-b50b-562aa9438115?mocky-delay=700ms`,

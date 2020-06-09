@@ -67,6 +67,35 @@
   td:first-child {
     border-left: solid 4px $color_nhsuk-red;
   }
+
+  &-primary {
+    background-color: tint($color_nhsuk-blue, 90);
+
+    td:first-child {
+      border-left: solid 4px $color_nhsuk-blue;
+    }
+  }
+
+  &-accent {
+    background-color: tint($color_nhsuk-warm-yellow, 90);
+    td:first-child {
+      border-left: solid 4px $color_nhsuk-warm-yellow;
+    }
+  }
+
+  &-warn {
+    background-color: tint($color_nhsuk-red, 90);
+    td:first-child {
+      border-left: solid 4px $color_nhsuk-red;
+    }
+  }
+
+  &-active {
+    background-color: tint($color_nhsuk-green, 90);
+    td:first-child {
+      border-left: solid 4px $color_nhsuk-green;
+    }
+  }
 }
 
 .hidden,

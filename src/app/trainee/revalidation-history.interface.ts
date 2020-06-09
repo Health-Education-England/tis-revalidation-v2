@@ -1,5 +1,5 @@
 export interface IRevalidationHistory {
-  gmcNumber: string;
+  gmcNumber: number;
   fullName: string;
   cctDate: Date;
   programmeMembershipType: string;
@@ -19,11 +19,11 @@ export interface IRevalidation {
   deferralSubReason: number;
   gmcNumber: number;
   gmcOutcome: RecommendationGmcOutcome;
-  gmcRevalidationId: string; // check type with back-end
+  gmcRevalidationId: string;
   gmcSubmissionDate: Date;
   recommendationId: string;
   recommendationStatus: RecommendationStatus;
-  recommendationType: RecommendationType;
+  recommendationType: string; // RecommendationType;
 }
 
 export interface IComment {

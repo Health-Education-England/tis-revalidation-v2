@@ -1,4 +1,4 @@
-<div class="table-container">
+<div class="table-container" *ngIf="revalidationHistory$ | async as revalidationHistory">
   <table mat-table [dataSource]="revalidationHistory" multiTemplateDataRows class="w-100">
     <caption class="collapsed no-height">
       Trainee revalidation historical details
@@ -59,13 +59,23 @@
             element == expandedElement ? 'expanded' : 'collapsed'
           ">
           <div class="element-submission-status">
-            <strong>Submission Status:</strong>
-            {{ recommendationStatus[element.recommendationStatus] }}
+            <h2 class="mat-h2">Submission Status:
+              <span>
+                {{ recommendationStatus[element.recommendationStatus] }}
+              </span>
+            </h2>
           </div>
-          <mat-divider *ngIf="element.comments?.length > 0"></mat-divider>
+          <h3 class="mat-h3" *ngIf="element.comments?.length > 0">Comments:</h3>
           <ng-container *ngFor="let comment of element.comments">
+            <mat-divider></mat-divider>
             <div class="element-notes">
-              {{ comment.comment }}
+              {{ comment }}
+            </div>
+          </ng-container>
+          <ng-container *ngIf="element.deferralComment">
+            <mat-divider></mat-divider>
+            <div class="element-notes">
+              {{ element.deferralComment | stripHtml }}
             </div>
           </ng-container>
         </div>
@@ -75,7 +85,9 @@
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
     <tr tabindex="0" mat-row *matRowDef="let element; columns: columnsToDisplay" class="element-row"
       [class.expanded-row]="expandedElement === element" (click)="currentExpanded(element)"
-      (keyup.enter)="currentExpanded(element)" (keyup.space)="currentExpanded(element)"></tr>
+      (keyup.enter)="currentExpanded(element)" (keyup.space)="currentExpanded(element)"
+      [class.highlight-row-active]="recommendationStatus[element.recommendationStatus] !== recommendationStatus.SUBMITTED_TO_GMC">
+    </tr>
     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
 
     <ng-container matColumnDef="noRecord">

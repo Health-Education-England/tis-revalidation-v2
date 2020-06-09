@@ -26,6 +26,7 @@ import { MatNativeDateModule, MAT_DATE_LOCALE } from "@angular/material/core";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatStepperModule } from "@angular/material/stepper";
 import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 const materialModules = [
   LayoutModule,
@@ -54,7 +55,8 @@ const materialModules = [
   MatPaginatorModule,
   MatChipsModule,
   MatStepperModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatSnackBarModule
 ];
 
 @NgModule({

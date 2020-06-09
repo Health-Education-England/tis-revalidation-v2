@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import {
   IRevalidation,
   RecommendationGmcOutcome,
@@ -13,6 +13,9 @@ import {
   transition,
   animate
 } from "@angular/animations";
+import { Select } from "@ngxs/store";
+import { RevalidationHistoryState } from "../state/revalidation-history.state";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "app-revalidation-table",
@@ -39,10 +42,11 @@ export class RevalidationTableComponent implements OnInit {
   ];
   expandedElement: IRevalidation | null;
   dateFormat = environment.dateFormat;
-  @Input() revalidationHistory: IRevalidation[];
   revalidationGmcOutcome = RecommendationGmcOutcome;
   recommendationType = RecommendationType;
   recommendationStatus = RecommendationStatus;
+  @Select(RevalidationHistoryState.recommendationHistory)
+  revalidationHistory$: Observable<IRevalidation[]>;
 
   constructor() {}
 

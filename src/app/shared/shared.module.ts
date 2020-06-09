@@ -9,9 +9,10 @@ import { PageNotFoundComponent } from "./page-not-found/page-not-found.component
 import { RecordListComponent } from "./records/record-list/record-list.component";
 import { MaterialModule } from "./material/material.module";
 import { RecordsService } from "./records/services/records.service";
+import { StripHtmlPipe } from "./strip-html.pipe";
 
 @NgModule({
-  declarations: [PageNotFoundComponent, RecordListComponent],
+  declarations: [PageNotFoundComponent, RecordListComponent, StripHtmlPipe],
   imports: [
     CommonModule,
     MaterialModule,
@@ -21,6 +22,11 @@ import { RecordsService } from "./records/services/records.service";
     NgxsLoggerPluginModule.forRoot({ disabled: environment.production })
   ],
   providers: [RecordsService],
-  exports: [CommonModule, ReactiveFormsModule, RecordListComponent]
+  exports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RecordListComponent,
+    StripHtmlPipe
+  ]
 })
 export class SharedModule {}

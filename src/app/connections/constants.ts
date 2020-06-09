@@ -1,13 +1,6 @@
-import { Sort } from "@angular/material/sort";
-
-export const DEFAULT_SORT: Sort = {
-  active: "gmcSubmissionDate",
-  direction: "desc"
-};
-
 export const COLUMN_DATA: any[][] = [
   ["Programme name", "programmeName", false],
-  ["GMC Submission date", "gmcSubmissionDate", false],
+  ["GMC Submission date", "submissionDate", false],
   ["Designated body", "designatedBody", false],
   ["Programme owner", "programmeOwner", false],
   ["Programme membership", "programmeMembership", false],

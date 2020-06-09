@@ -9,7 +9,6 @@ import { NgxsModule, Store } from "@ngxs/store";
 import { of } from "rxjs";
 import { COLUMN_DATA } from "../../../concerns/constants";
 import { RecommendationStatus } from "../../../trainee/revalidation-history.interface";
-import { DEFAULT_SORT } from "../../../trainees/constants";
 import { mockTraineesResponse } from "../../../trainees/services/trainees.service.spec";
 import {
   Get,
@@ -22,7 +21,7 @@ import {
 import { TraineesState } from "../../../trainees/state/trainees.state";
 import { ITrainee } from "../../../trainees/trainees.interfaces";
 import { MaterialModule } from "../../material/material.module";
-import { generateColumnData } from "../constants";
+import { DEFAULT_SORT, generateColumnData } from "../constants";
 import { RecordsService } from "../services/records.service";
 import { RecordListComponent } from "./record-list.component";
 

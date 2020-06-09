@@ -42,6 +42,18 @@
                 "inject": false,
                 "bundleName": "supported.browsers"
               }
+            ],
+            "budgets": [
+              {
+                "type": "initial",
+                "maximumWarning": "30mb",
+                "maximumError": "60mb"
+              },
+              {
+                "type": "anyComponentStyle",
+                "maximumWarning": "30kb",
+                "maximumError": "60kb"
+              }
             ]
           },
           "configurations": {

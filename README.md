@@ -13,6 +13,8 @@ Run `ng generate component component-name` to generate a new component. You can 
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+\*NOTE on build you may encounter `Error: Call retries were exceeded`
+fix: `node --max_old_space_size=4096 node_modules/@angular/cli/bin/ng build`
 
 ## Coding Style
 

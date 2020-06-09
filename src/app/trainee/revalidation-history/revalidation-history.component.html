@@ -69,8 +69,8 @@
           </mat-step>
 
           <mat-step [stepControl]="revalidationForm">
-            <form class="revalidation-form w-100" [formGroup]="revalidationForm">
-              <mat-form-field class="w-100">
+            <form class="revalidation-form" [formGroup]="revalidationForm">
+              <mat-form-field>
                 <mat-label>Make a recommendation</mat-label>
                 <mat-select formControlName="action">
                   <mat-option *ngFor="let revalType of recommendationType | keyvalue" [value]="revalType.key">
@@ -82,7 +82,7 @@
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field class="w-100" *ngIf="deferSelected">
+              <mat-form-field *ngIf="deferSelected">
 
                 <mat-label>Choose a date</mat-label>
                 <input matInput formControlName="deferralDate" [min]="minReferralDate" [max]="maxReferralDate"
@@ -100,7 +100,7 @@
                 <mat-datepicker touchUi #picker></mat-datepicker>
               </mat-form-field>
 
-              <mat-form-field class="w-100" *ngIf="deferSelected">
+              <mat-form-field *ngIf="deferSelected">
                 <mat-label>Reason</mat-label>
                 <mat-select formControlName="deferralReason">
                   <mat-option *ngFor="let reason of deferralReasons" [value]="reason.code">
@@ -112,7 +112,7 @@
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field class="w-100" *ngIf="deferSelected && deferralSubReasons.length > 0">
+              <mat-form-field *ngIf="deferSelected && deferralSubReasons.length > 0">
                 <mat-label>Sub reason</mat-label>
                 <mat-select formControlName="deferralSubReason">
                   <mat-option *ngFor="let reason of deferralSubReasons" [value]="reason.code">
@@ -127,7 +127,7 @@
               <div class="comments-section">
                 <div formArrayName="comments" class="comments">
                   <ng-container *ngFor="let comment of comments.controls; let i = index" [formGroupName]="i">
-                    <mat-form-field class="w-100">
+                    <mat-form-field class="full-width">
                       <mat-label>Leave a comment</mat-label>
                       <textarea matInput [formControlName]="'comment'" placeholder="comments..."></textarea>
                       <div class="select-control">
@@ -149,7 +149,8 @@
                 Recommend
               </button>
               <span class="spacer"></span>
-              <button type="button" mat-icon-button aria-label="Reset changes" (click)="resetMatStepper()">
+              <button type="button" mat-icon-button aria-label="Reset changes" matTooltipPosition="left" color="warn"
+                matTooltip="Reset changes" (click)="resetMatStepper()">
                 <mat-icon>restore</mat-icon>
               </button>
             </div>
@@ -336,7 +337,8 @@
                 Submit to GMC
               </button>
               <span class="spacer"></span>
-              <button type="button" mat-icon-button aria-label="Reset changes" (click)="resetMatStepper()">
+              <button type="button" mat-icon-button aria-label="Reset changes" color="warn" matTooltipPosition="left"
+                matTooltip="Reset changes" (click)="resetMatStepper()">
                 <mat-icon>restore</mat-icon>
               </button>
             </div>

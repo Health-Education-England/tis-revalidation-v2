@@ -14,7 +14,7 @@ import {
   IConnection,
   IGetConnectionsResponse
 } from "../connections.interfaces";
-import { DEFAULT_SORT } from "../constants";
+import { DEFAULT_SORT } from "../../shared/records/constants";
 import { ConnectionsService } from "../services/connections.service";
 import {
   ClearSearch,

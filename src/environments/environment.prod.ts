@@ -11,7 +11,7 @@ export const environment: IEnvironment = {
     login: ``,
     authRedirect: ``,
     getTrainees: `api/v1/doctors`,
-    getConcerns: `api/v1/concerns`,
+    getConcerns: `api/concerns`,
     getRecommendation: `api/recommendation`,
     getNotes: `mocky/5ea2da614f00006c00d9f540`,
     getConnections: `api/v1/connections`,

@@ -1,13 +1,6 @@
-import { Sort } from "@angular/material/sort";
-
-export const DEFAULT_SORT: Sort = {
-  active: "dateRaised",
-  direction: "desc"
-};
-
 export const COLUMN_DATA: any[][] = [
   ["Programme", "programme", false],
-  ["Date raised", "dateRaised", true],
+  ["Date raised", "dateRaised", false],
   ["Type", "type", false],
   ["Site", "site", false],
   ["Source", "source", false],

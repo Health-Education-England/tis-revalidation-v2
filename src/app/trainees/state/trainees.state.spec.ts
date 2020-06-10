@@ -7,7 +7,7 @@ import { NgxsModule, Store } from "@ngxs/store";
 import { of } from "rxjs";
 import { MaterialModule } from "../../shared/material/material.module";
 import { RecordsService } from "../../shared/records/services/records.service";
-import { DEFAULT_SORT } from "../constants";
+import { DEFAULT_SORT } from "../../shared/records/constants";
 import { mockTraineesResponse } from "../services/trainees.service.spec";
 import { TraineesFilterType } from "../trainees.interfaces";
 import {

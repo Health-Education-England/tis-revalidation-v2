@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { DetailsModule } from "../shared/details/details.module";
 
 import { TraineeRoutingModule } from "./trainee-routing.module";
 import { TraineeComponent } from "./trainee.component";
@@ -26,6 +27,7 @@ import { RevalidationTableComponent } from "./revalidation-table/revalidation-ta
   imports: [
     MaterialModule,
     SharedModule,
+    DetailsModule,
     CommonModule,
     TraineeRoutingModule,
     NgxsModule.forFeature([RevalidationHistoryState]),

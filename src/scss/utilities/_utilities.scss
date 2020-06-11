@@ -13,7 +13,13 @@
   width: 100%;
 }
 
-$colour-values: (warn:$color_nhsuk-red, success: $color_nhsuk-green, primary: $color_nhsuk-blue, accent: $color_nhsuk-warm-yellow) !default;
+$colour-values: (
+  warn: $color_nhsuk-red,
+  success: $color_nhsuk-green,
+  primary: $color_nhsuk-blue,
+  accent: $color_nhsuk-warm-yellow
+) !default;
+
 @mixin icon-colours() {
   @each $att-name, $att-value in $colour-values {
     .icon-#{$att-name} {

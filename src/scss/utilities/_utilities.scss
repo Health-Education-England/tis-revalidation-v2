@@ -13,21 +13,21 @@
   width: 100%;
 }
 
-.icon-green {
-  color: $color_nhsuk-green;
-}
+$colour-values: (
+  warn: $color_nhsuk-red,
+  success: $color_nhsuk-green,
+  primary: $color_nhsuk-blue,
+  accent: $color_nhsuk-warm-yellow
+) !default;
 
-.icon-blue {
-  color: $color_nhsuk-blue;
+@mixin icon-colours() {
+  @each $att-name, $att-value in $colour-values {
+    .icon-#{$att-name} {
+      color: $att-value;
+    }
+  }
 }
-
-.icon-yellow {
-  color: $color_nhsuk-warm-yellow;
-}
-
-.icon-red {
-  color: $color_nhsuk-red;
-}
+@include icon-colours();
 
 .collapsed {
   visibility: collapse;
@@ -61,42 +61,23 @@
   position: relative;
 }
 
-.highlight-row {
-  background-color: rgba(213, 40, 27, 0.15);
+@mixin highlight-rows() {
+  @each $att-name, $att-value in $colour-values {
+    .highlight-row-#{$att-name} {
+      background-color: tint($att-value, 95);
 
-  td:first-child {
-    border-left: solid 4px $color_nhsuk-red;
-  }
+      &.mat-row.cdk-row:hover {
+        background-color: tint($att-value, 90);
+      }
 
-  &-primary {
-    background-color: tint($color_nhsuk-blue, 90);
-
-    td:first-child {
-      border-left: solid 4px $color_nhsuk-blue;
-    }
-  }
-
-  &-accent {
-    background-color: tint($color_nhsuk-warm-yellow, 90);
-    td:first-child {
-      border-left: solid 4px $color_nhsuk-warm-yellow;
-    }
-  }
-
-  &-warn {
-    background-color: tint($color_nhsuk-red, 90);
-    td:first-child {
-      border-left: solid 4px $color_nhsuk-red;
-    }
-  }
-
-  &-active {
-    background-color: tint($color_nhsuk-green, 90);
-    td:first-child {
-      border-left: solid 4px $color_nhsuk-green;
+      td:first-child {
+        border-left: 4px solid $att-value;
+      }
     }
   }
 }
+
+@include highlight-rows();
 
 .hidden,
 .hide,

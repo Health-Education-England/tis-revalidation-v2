@@ -58,7 +58,7 @@ body {
 }
 
 .mat-row.cdk-row {
-  &[role="button"] {
+  &[tabindex="0"] {
     cursor: pointer;
   }
   &:hover {

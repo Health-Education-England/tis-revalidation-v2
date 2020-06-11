@@ -1,0 +1,11 @@
+@import "~@angular/material/core/style/variables";
+@import "~nhsuk-frontend/packages/core/settings/colours";
+
+.recommendations-top-section {
+  grid-template-columns: auto minmax(0, 1fr);
+  background: $color_nhsuk-white;
+
+  @media screen and (#{$mat-xsmall}) {
+    grid-template-columns: auto;
+  }
+}

@@ -5,13 +5,15 @@ import { PageNotFoundComponent } from "./shared/page-not-found/page-not-found.co
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "/trainees",
+    redirectTo: "/recommendations",
     pathMatch: "full"
   },
   {
-    path: "trainees",
+    path: "recommendations",
     loadChildren: () =>
-      import("./trainees/trainees.module").then((m) => m.TraineesModule)
+      import("./recommendations/recommendations.module").then(
+        (m) => m.RecommendationsModule
+      )
   },
   {
     path: "trainee/:id",

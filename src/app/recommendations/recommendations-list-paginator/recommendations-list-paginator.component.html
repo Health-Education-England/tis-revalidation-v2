@@ -1,0 +1,9 @@
+<mat-paginator
+  *ngIf="totalResults$ | async as totalResults"
+  [length]="totalResults"
+  [pageIndex]="pageIndex$ | async"
+  [pageSize]="20"
+  [hidePageSize]="true"
+  (page)="paginate($event)"
+>
+</mat-paginator>

@@ -1,0 +1,45 @@
+<div class="d-grid recommendations-search">
+  <div class="d-grid align-items-center">
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="menu"
+      aria-label="Menu for clear all and allocate admin "
+    >
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <app-reset-recommendations-list></app-reset-recommendations-list>
+      <button mat-menu-item disabled>
+        Allocate admin
+      </button>
+    </mat-menu>
+  </div>
+
+  <form
+    (ngSubmit)="checkForm()"
+    [formGroup]="form"
+    #ngForm="ngForm"
+    autocomplete="off"
+    class="pr-15"
+  >
+    <mat-form-field>
+      <mat-label>Enter name / GMC no</mat-label>
+      <input
+        matInput
+        type="text"
+        [formControlName]="'searchQuery'"
+        [value]="searchQuery$ | async"
+      />
+      <button
+        mat-button
+        matSuffix
+        color="primary"
+        aria-label="Recommendations search"
+        type="submit"
+      >
+        <mat-icon aria-label="search icon">search</mat-icon>
+      </button>
+      <mat-error *ngIf="form.invalid">No search terms entered</mat-error>
+    </mat-form-field>
+  </form>
+</div>

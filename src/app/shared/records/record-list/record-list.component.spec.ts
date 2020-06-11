@@ -9,7 +9,7 @@ import { NgxsModule, Store } from "@ngxs/store";
 import { of } from "rxjs";
 import { COLUMN_DATA } from "../../../concerns/constants";
 import { RecommendationStatus } from "../../../trainee/revalidation-history.interface";
-import { mockTraineesResponse } from "../../../trainees/services/trainees.service.spec";
+import { mockRecommendationsResponse } from "../../../recommendations/services/recommendations.service.spec";
 import {
   Get,
   Paginate,
@@ -17,16 +17,16 @@ import {
   ResetSort,
   Search,
   Sort
-} from "../../../trainees/state/trainees.actions";
-import { TraineesState } from "../../../trainees/state/trainees.state";
-import { ITrainee } from "../../../trainees/trainees.interfaces";
+} from "../../../recommendations/state/recommendations.actions";
+import { RecommendationsState } from "../../../recommendations/state/recommendations.state";
+import { IRecommendation } from "../../../recommendations/recommendations.interfaces";
 import { MaterialModule } from "../../material/material.module";
 import { DEFAULT_SORT, generateColumnData } from "../constants";
 import { RecordsService } from "../services/records.service";
 import { RecordListComponent } from "./record-list.component";
 
 const mockSimpleChanges: SimpleChanges = {
-  stateName: new SimpleChange(null, "trainees", null)
+  stateName: new SimpleChange(null, "recommendations", null)
 };
 
 describe("RecordListComponent", () => {
@@ -44,7 +44,7 @@ describe("RecordListComponent", () => {
         NoopAnimationsModule,
         HttpClientTestingModule,
         RouterTestingModule,
-        NgxsModule.forRoot([TraineesState])
+        NgxsModule.forRoot([RecommendationsState])
       ]
     }).compileComponents();
     store = TestBed.inject(Store);
@@ -71,8 +71,10 @@ describe("RecordListComponent", () => {
   });
 
   it("should select 'items$' from state", () => {
-    component.stateName = "trainees";
-    store.reset({ trainees: { items: mockTraineesResponse.traineeInfo } });
+    component.stateName = "recommendations";
+    store.reset({
+      recommendations: { items: mockRecommendationsResponse.traineeInfo }
+    });
 
     component.items$.subscribe((value) => {
       expect(value).toBeInstanceOf(Array);
@@ -81,8 +83,8 @@ describe("RecordListComponent", () => {
   });
 
   it("should select 'sort$' from state", () => {
-    component.stateName = "trainees";
-    store.reset({ trainees: { sort: DEFAULT_SORT } });
+    component.stateName = "recommendations";
+    store.reset({ recommendations: { sort: DEFAULT_SORT } });
 
     component.sort$.subscribe((value) => {
       expect(value).toBeInstanceOf(Object);
@@ -188,7 +190,7 @@ describe("RecordListComponent", () => {
 
   it("'navigateToDetails()' should navigate to details route", () => {
     const mockEvent: Event = new MouseEvent("click");
-    const mockTrainee: ITrainee = {
+    const mockRecommendation: IRecommendation = {
       dateAdded: "2015-05-14",
       doctorFirstName: "Bobby",
       doctorLastName: "Brown",
@@ -208,14 +210,14 @@ describe("RecordListComponent", () => {
     spyOn(router, "navigate");
 
     component.detailsRoute = "/trainee";
-    component.navigateToDetails(mockEvent, mockTrainee);
+    component.navigateToDetails(mockEvent, mockRecommendation);
     expect(router.navigate).toHaveBeenCalledWith([
       component.detailsRoute,
-      mockTrainee.gmcReferenceNumber
+      mockRecommendation.gmcReferenceNumber
     ]);
   });
 
-  it("should sort trainees", () => {
+  it("should sort recommendations", () => {
     const mockSortEvent: ISort = {
       active: "doctorFirstName",
       direction: "asc"
@@ -226,7 +228,7 @@ describe("RecordListComponent", () => {
     spyOn(recordsService, "get").and.returnValue(of({}));
     spyOn(recordsService, "updateRoute");
 
-    component.stateName = "trainees";
+    component.stateName = "recommendations";
     component.sort(mockSortEvent);
 
     expect(recordsService.sort).toHaveBeenCalledWith(

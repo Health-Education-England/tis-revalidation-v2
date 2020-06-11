@@ -13,7 +13,7 @@ export const environment: IEnvironment = {
   appUrls: {
     login: ``,
     authRedirect: ``,
-    getTrainees: `api/v1/doctors`,
+    getRecommendations: `api/v1/doctors`,
     getConcerns: `api/concerns`,
     getRecommendation: `api/recommendation`,
     getNotes: `mocky/5ea2da614f00006c00d9f540`,

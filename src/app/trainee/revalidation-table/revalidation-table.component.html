@@ -86,7 +86,7 @@
     <tr tabindex="0" mat-row *matRowDef="let element; columns: columnsToDisplay" class="element-row"
       [class.expanded-row]="expandedElement === element" (click)="currentExpanded(element)"
       (keyup.enter)="currentExpanded(element)" (keyup.space)="currentExpanded(element)"
-      [class.highlight-row-active]="recommendationStatus[element.recommendationStatus] !== recommendationStatus.SUBMITTED_TO_GMC">
+      [class.highlight-row-success]="recommendationStatus[element.recommendationStatus] !== recommendationStatus.SUBMITTED_TO_GMC">
     </tr>
     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
 

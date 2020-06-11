@@ -12,7 +12,7 @@ export abstract class IEnvironment {
   abstract readonly appUrls: {
     readonly login: string;
     readonly authRedirect: string;
-    readonly getTrainees: string;
+    readonly getRecommendations: string;
     readonly getConcerns: string;
     readonly getRecommendation: string;
     readonly getNotes: string;

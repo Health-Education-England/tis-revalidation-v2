@@ -8,9 +8,9 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { environment } from "@environment";
 import { NgxsModule, Store } from "@ngxs/store";
 import {
-  TraineesState,
-  TraineesStateModel
-} from "../../../trainees/state/trainees.state";
+  RecommendationsState,
+  RecommendationsStateModel
+} from "../../../recommendations/state/recommendations.state";
 
 import { RecordsService } from "./records.service";
 
@@ -25,7 +25,7 @@ describe("RecordsService", () => {
       imports: [
         RouterTestingModule,
         HttpClientTestingModule,
-        NgxsModule.forRoot([TraineesState])
+        NgxsModule.forRoot([RecommendationsState])
       ]
     });
     service = TestBed.inject(RecordsService);
@@ -39,7 +39,7 @@ describe("RecordsService", () => {
   });
 
   it("`getRecords()` should call api", () => {
-    const endPoint = `${environment.appUrls.getTrainees}`;
+    const endPoint = `${environment.appUrls.getRecommendations}`;
     service.getRecords(endPoint).subscribe();
 
     const mockHttp = http.expectOne(endPoint);
@@ -51,8 +51,9 @@ describe("RecordsService", () => {
   it("`updateRoute()` should invoke router navigation", () => {
     spyOn(router, "navigate");
 
-    const snapshot: TraineesStateModel = store.snapshot().trainees;
-    service.stateName = "trainees";
+    const snapshot: RecommendationsStateModel = store.snapshot()
+      .recommendations;
+    service.stateName = "recommendations";
     service.updateRoute();
 
     expect(router.navigate).toHaveBeenCalledWith(["/"], {

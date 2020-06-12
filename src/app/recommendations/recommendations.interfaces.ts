@@ -1,5 +1,5 @@
 import { IGetRecordsResponse } from "../shared/records/records.interfaces";
-import { RecommendationStatus } from "../trainee/revalidation-history.interface";
+import { RecommendationStatus } from "../recommendation/recommendation-history.interface";
 
 export interface IRecommendation {
   admin: string;

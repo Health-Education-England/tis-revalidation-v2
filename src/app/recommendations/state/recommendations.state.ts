@@ -9,7 +9,7 @@ import {
   RecordsState,
   RecordsStateModel
 } from "../../shared/records/state/records.state";
-import { RecommendationStatus } from "../../trainee/revalidation-history.interface";
+import { RecommendationStatus } from "../../recommendation/recommendation-history.interface";
 import { DEFAULT_SORT } from "../../shared/records/constants";
 import { RecommendationsService } from "../services/recommendations.service";
 import {

@@ -404,10 +404,7 @@ export class RecommendationHistoryComponent implements OnInit, OnDestroy {
         }
       })
     );
-    // validate when form is edit mode
-    if (this.recommendation.recommendationId) {
-      this.action.updateValueAndValidity();
-    }
+    this.action.updateValueAndValidity();
     this.recommendationForm.addControl("action", this.action);
   }
 

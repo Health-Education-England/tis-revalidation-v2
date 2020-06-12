@@ -89,7 +89,7 @@ export const menuItems: IMenuItem[] = JSON.parse(
             {
                 "type": 0,
                 "route": "/",
-                "name": "All Trainees",
+                "name": "Recommendations",
                 "description": ""
             }
         ]

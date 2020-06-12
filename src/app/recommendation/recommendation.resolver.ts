@@ -20,7 +20,7 @@ export class RecommendationResolver implements Resolve<IRecommendationHistory> {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<IRecommendationHistory> | Observable<any> {
-    const gmcID: number = Number(route.params.id);
+    const gmcID: number = Number(route.params.gmcId);
     return forkJoin([
       this.store.dispatch(new GetRecommendationHistory(gmcID)).pipe(
         catchError((err: any) => {

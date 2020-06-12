@@ -16,7 +16,7 @@ const routes: Routes = [
       )
   },
   {
-    path: "recommendation/:id",
+    path: "recommendation/:gmcId",
     loadChildren: () =>
       import("./recommendation/recommendation.module").then(
         (m) => m.RecommendationModule
@@ -26,6 +26,11 @@ const routes: Routes = [
     path: "concerns",
     loadChildren: () =>
       import("./concerns/concerns.module").then((m) => m.ConcernsModule)
+  },
+  {
+    path: "concern/:gmcId",
+    loadChildren: () =>
+      import("./concern/concern.module").then((m) => m.ConcernModule)
   },
   {
     path: "connections",

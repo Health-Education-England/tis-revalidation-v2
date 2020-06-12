@@ -16,9 +16,11 @@ const routes: Routes = [
       )
   },
   {
-    path: "trainee/:id",
+    path: "recommendation/:id",
     loadChildren: () =>
-      import("./trainee/trainee.module").then((m) => m.TraineeModule)
+      import("./recommendation/recommendation.module").then(
+        (m) => m.RecommendationModule
+      )
   },
   {
     path: "concerns",

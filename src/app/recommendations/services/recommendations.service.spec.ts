@@ -4,7 +4,7 @@ import { TestBed } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { BehaviorSubject, Observable, of } from "rxjs";
-import { RecommendationStatus } from "../../trainee/revalidation-history.interface";
+import { RecommendationStatus } from "../../recommendation/recommendation-history.interface";
 import {
   Filter,
   ResetPaginator,

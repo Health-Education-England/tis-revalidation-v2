@@ -22,7 +22,8 @@ export const environment: IEnvironment = {
     getNotes: `mocky/45017692-2588-48dc-b6c2-c637cd723625`,
     getRecommendations: `mocky/81267580-411e-4ce6-8dca-2f65f9d2e485?mocky-delay=700ms`,
     getConcerns: `mocky/c25f77cf-594a-484b-b50b-562aa9438115?mocky-delay=700ms`,
-    getConnections: `mocky/4a202550-2c45-41c8-ab48-91786f8054eb?mocky-delay=700ms`
+    getConnections: `mocky/4a202550-2c45-41c8-ab48-91786f8054eb?mocky-delay=700ms`,
+    getDetails: `api/recommendation`
   },
   awsConfig: {
     redirectSignIn: "http://localhost:4200",

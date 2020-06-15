@@ -11,6 +11,7 @@ import { catchError } from "rxjs/operators";
 import { Injectable } from "@angular/core";
 import { Get as GetRecommendationHistory } from "./state/recommendation-history.actions";
 import { GetRecommendationNotes } from "./state/recommendation-notes.actions";
+import { Get as DetailsSideNavAction } from "../shared/details/details-side-nav/state/details-side-nav.actions";
 
 @Injectable()
 export class RecommendationResolver implements Resolve<IRecommendationHistory> {
@@ -27,7 +28,8 @@ export class RecommendationResolver implements Resolve<IRecommendationHistory> {
           return this.router.navigate(["/404"]);
         })
       ),
-      this.store.dispatch(new GetRecommendationNotes(gmcID))
+      this.store.dispatch(new GetRecommendationNotes(gmcID)),
+      this.store.dispatch(new DetailsSideNavAction(gmcID))
     ]);
   }
 }

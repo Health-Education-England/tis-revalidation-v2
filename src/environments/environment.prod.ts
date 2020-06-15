@@ -16,6 +16,7 @@ export const environment: IEnvironment = {
     getNotes: `mocky/5ea2da614f00006c00d9f540`,
     getConnections: `api/v1/connections`,
     saveRecommendation: `api/recommendation`,
+    getDetails: `api/recommendation`,
     submitToGMC: `api/recommendation/{gmcId}/submit/{recommendationId}`
   },
   // TODO add correct prod values below

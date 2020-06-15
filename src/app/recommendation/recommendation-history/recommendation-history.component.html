@@ -4,7 +4,7 @@
     [ngClass]="{ 'd-grid': !device.isHandset }"
   >
     <div class="left-nav" *ngIf="!device.isHandset">
-      <app-recommendation-details></app-recommendation-details>
+      <app-details-side-nav></app-details-side-nav>
     </div>
 
     <mat-divider *ngIf="!device.isHandset" [vertical]="true"></mat-divider>
@@ -16,7 +16,7 @@
         <mat-toolbar class="sticky-toolbar">
           <ng-container *ngIf="device.isHandset">
             <mat-menu #recommendationMenu="matMenu">
-              <app-recommendation-details></app-recommendation-details>
+              <app-details-side-nav></app-details-side-nav>
             </mat-menu>
 
             <button

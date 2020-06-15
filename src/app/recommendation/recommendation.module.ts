@@ -11,7 +11,6 @@ import { RecommendationResolver } from "./recommendation.resolver";
 import { RecommendationHistoryState } from "./state/recommendation-history.state";
 import { RecommendationHistoryService } from "./services/recommendation-history.service";
 import { RecommendationNotesState } from "./state/recommendation-notes.state";
-import { RecommendationDetailsComponent } from "./recommendation-details/recommendation-details.component";
 import { RecommendationTableComponent } from "./recommendation-table/recommendation-table.component";
 import { RecommendationHistoryComponent } from "./recommendation-history/recommendation-history.component";
 import { RecommendationNotesComponent } from "./recommendation-notes/recommendation-notes.component";
@@ -21,7 +20,6 @@ import { RecommendationNotesComponent } from "./recommendation-notes/recommendat
     RecommendationComponent,
     RecommendationHistoryComponent,
     RecommendationNotesComponent,
-    RecommendationDetailsComponent,
     RecommendationTableComponent
   ],
   imports: [

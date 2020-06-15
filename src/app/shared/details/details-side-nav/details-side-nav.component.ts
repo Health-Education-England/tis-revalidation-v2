@@ -1,20 +1,20 @@
 import { Component, OnInit } from "@angular/core";
 import { Select } from "@ngxs/store";
-import { RecommendationHistoryState } from "../state/recommendation-history.state";
 import { Observable } from "rxjs";
-import { IRecommendationHistory } from "../recommendation-history.interface";
 import { Breakpoints, BreakpointObserver } from "@angular/cdk/layout";
 import { map, shareReplay } from "rxjs/operators";
 import { environment } from "@environment";
+import { DetailsSideNavState } from "./state/details-side-nav.state";
+import { IRecommendationHistory } from "src/app/recommendation/recommendation-history.interface";
 
 @Component({
-  selector: "app-recommendation-details",
-  templateUrl: "./recommendation-details.component.html",
-  styleUrls: ["./recommendation-details.component.scss"]
+  selector: "app-details-side-nav",
+  templateUrl: "./details-side-nav.component.html",
+  styleUrls: ["./details-side-nav.component.scss"]
 })
-export class RecommendationDetailsComponent implements OnInit {
-  @Select(RecommendationHistoryState.recommendationHistory)
-  recommendationHistory$: Observable<IRecommendationHistory>;
+export class DetailsSideNavComponent implements OnInit {
+  @Select(DetailsSideNavState.traineeDetails)
+  traineeDetails$: Observable<IRecommendationHistory>;
 
   dateFormat = environment.dateFormat;
 

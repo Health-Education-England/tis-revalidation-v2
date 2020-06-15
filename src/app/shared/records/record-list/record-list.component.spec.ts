@@ -8,7 +8,7 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { of } from "rxjs";
 import { COLUMN_DATA } from "../../../concerns/constants";
-import { RecommendationStatus } from "../../../trainee/revalidation-history.interface";
+import { RecommendationStatus } from "../../../recommendation/recommendation-history.interface";
 import { mockRecommendationsResponse } from "../../../recommendations/services/recommendations.service.spec";
 import {
   Get,

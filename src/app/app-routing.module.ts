@@ -16,14 +16,21 @@ const routes: Routes = [
       )
   },
   {
-    path: "trainee/:id",
+    path: "recommendation/:gmcId",
     loadChildren: () =>
-      import("./trainee/trainee.module").then((m) => m.TraineeModule)
+      import("./recommendation/recommendation.module").then(
+        (m) => m.RecommendationModule
+      )
   },
   {
     path: "concerns",
     loadChildren: () =>
       import("./concerns/concerns.module").then((m) => m.ConcernsModule)
+  },
+  {
+    path: "concern/:gmcId",
+    loadChildren: () =>
+      import("./concern/concern.module").then((m) => m.ConcernModule)
   },
   {
     path: "connections",

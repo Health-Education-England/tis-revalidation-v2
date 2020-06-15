@@ -48,3 +48,4 @@ Thumbs.db
 
 ### Additional Rules ###
 /cypress/videos/
+/supported.browsers.js

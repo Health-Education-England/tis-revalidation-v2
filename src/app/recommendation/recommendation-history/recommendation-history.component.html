@@ -1,0 +1,500 @@
+<ng-container *ngIf="{ isHandset: isHandset$ | async }; let device">
+  <div
+    class="recommendation-history"
+    [ngClass]="{ 'd-grid': !device.isHandset }"
+  >
+    <div class="left-nav" *ngIf="!device.isHandset">
+      <app-recommendation-details></app-recommendation-details>
+    </div>
+
+    <mat-divider *ngIf="!device.isHandset" [vertical]="true"></mat-divider>
+
+    <ng-container
+      *ngIf="recommendationHistory$ | async as recommendationHistory"
+    >
+      <div class="main-col d-grid bg-white">
+        <mat-toolbar class="sticky-toolbar">
+          <ng-container *ngIf="device.isHandset">
+            <mat-menu #recommendationMenu="matMenu">
+              <app-recommendation-details></app-recommendation-details>
+            </mat-menu>
+
+            <button
+              mat-icon-button
+              aria-label="Recommendation details"
+              [matMenuTriggerFor]="recommendationMenu"
+            >
+              <mat-icon aria-label="Recommendation details"
+                >account_box</mat-icon
+              >
+            </button>
+          </ng-container>
+
+          <div
+            class="comments-toolbar fade-in mat-elevation-z1 w-100"
+            *ngIf="stepper.selectedIndex === 1"
+            [formGroup]="recommendationForm"
+          >
+            <button
+              type="button"
+              mat-icon-button
+              [disabled]="action?.valid === false"
+              (click)="addCommentControl()"
+              matTooltip="Add comment"
+            >
+              <mat-icon aria-hidden="false" aria-label="add comment"
+                >add</mat-icon
+              >
+            </button>
+            <span class="spacer"></span>
+            <button
+              type="button"
+              mat-icon-button
+              [disabled]="action?.valid === false"
+              (click)="deleteCommentControl()"
+              matTooltip="Delete selected comments"
+            >
+              <mat-icon
+                aria-hidden="false"
+                aria-label="delete selected comments"
+                >delete</mat-icon
+              >
+            </button>
+            <mat-checkbox
+              formControlName="allComments"
+              matTooltip="select or deselect all comments"
+            ></mat-checkbox>
+          </div>
+
+          <span class="spacer"></span>
+
+          <button mat-icon-button aria-label="Add notes" (click)="openNotes()">
+            <mat-icon
+              *ngIf="recommendationNotes$ | async as notes; else noNotes"
+              color="primary"
+              matBadgeColor="warn"
+              matBadge="{{ notes.length }}"
+              [matBadgeHidden]="notes.length === 0"
+            >
+              speaker_notes
+            </mat-icon>
+
+            <ng-template #noNotes>
+              <mat-icon color="primary">speaker_notes</mat-icon>
+            </ng-template>
+          </button>
+        </mat-toolbar>
+
+        <mat-horizontal-stepper #stepper linear>
+          <mat-step label="history">
+            <app-recommendation-table> </app-recommendation-table>
+
+            <div class="button-row" *ngIf="enableRecommendation$ | async">
+              <button
+                mat-button
+                mat-raised-button
+                matStepperNext
+                color="primary"
+              >
+                <ng-container
+                  *ngIf="editRecommendation$ | async; else createMode"
+                >
+                  Edit recommendation
+                </ng-container>
+
+                <ng-template #createMode>
+                  Create recommendation
+                </ng-template>
+              </button>
+              <span class="spacer"></span>
+            </div>
+          </mat-step>
+
+          <mat-step [stepControl]="recommendationForm">
+            <form class="recommendation-form" [formGroup]="recommendationForm">
+              <mat-form-field>
+                <mat-label>Make a recommendation</mat-label>
+                <mat-select formControlName="action">
+                  <mat-option
+                    *ngFor="let revalType of recommendationType | keyvalue"
+                    [value]="revalType.key"
+                  >
+                    {{ revalType.value }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="action?.hasError('required')">
+                  Please make a recommendation
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field *ngIf="deferSelected">
+                <mat-label>Choose a date</mat-label>
+                <input
+                  matInput
+                  formControlName="deferralDate"
+                  [min]="minReferralDate"
+                  [max]="maxReferralDate"
+                  [matDatepicker]="picker"
+                />
+                <mat-error *ngIf="deferralDate?.hasError('required')">
+                  Date is required and must be between
+                  {{ minReferralDate | date: dateFormat }} and
+                  {{ maxReferralDate | date: dateFormat }}
+                </mat-error>
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker touchUi #picker></mat-datepicker>
+              </mat-form-field>
+
+              <mat-form-field *ngIf="deferSelected">
+                <mat-label>Reason</mat-label>
+                <mat-select formControlName="deferralReason">
+                  <mat-option
+                    *ngFor="let reason of deferralReasons"
+                    [value]="reason.code"
+                  >
+                    {{ reason.reason }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="deferralReason?.hasError('required')">
+                  Reason must be provided
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field
+                *ngIf="deferSelected && deferralSubReasons.length > 0"
+              >
+                <mat-label>Sub reason</mat-label>
+                <mat-select formControlName="deferralSubReason">
+                  <mat-option
+                    *ngFor="let reason of deferralSubReasons"
+                    [value]="reason.code"
+                  >
+                    {{ reason.reason }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="deferralSubReason?.hasError('required')">
+                  Sub reason must be provided
+                </mat-error>
+              </mat-form-field>
+
+              <div class="comments-section">
+                <div formArrayName="comments" class="comments">
+                  <ng-container
+                    *ngFor="let comment of comments.controls; let i = index"
+                    [formGroupName]="i"
+                  >
+                    <mat-form-field class="full-width">
+                      <mat-label>Leave a comment</mat-label>
+                      <textarea
+                        matInput
+                        [formControlName]="'comment'"
+                        placeholder="comments..."
+                      ></textarea>
+                      <div class="select-control">
+                        <mat-checkbox
+                          [formControlName]="'checkbox'"
+                        ></mat-checkbox>
+                      </div>
+                    </mat-form-field>
+                  </ng-container>
+                </div>
+              </div>
+            </form>
+            <div class="button-row">
+              <button
+                type="button"
+                mat-button
+                mat-raised-button
+                matStepperPrevious
+              >
+                Back
+              </button>
+              <button
+                mat-button
+                mat-raised-button
+                [disabled]="
+                  recommendationForm ? !recommendationForm.valid : true
+                "
+                (click)="saveDraft()"
+                color="accent"
+              >
+                Save draft
+              </button>
+              <button
+                type="button"
+                mat-button
+                mat-raised-button
+                matStepperNext
+                [disabled]="
+                  recommendationForm ? !recommendationForm.valid : true
+                "
+                color="primary"
+              >
+                Recommend
+              </button>
+              <span class="spacer"></span>
+              <button
+                type="button"
+                mat-icon-button
+                aria-label="Reset changes"
+                matTooltipPosition="left"
+                color="warn"
+                matTooltip="Reset changes"
+                (click)="resetMatStepper()"
+              >
+                <mat-icon>restore</mat-icon>
+              </button>
+            </div>
+          </mat-step>
+
+          <mat-step [stepControl]="confirmationForm">
+            <form class="w-100" [formGroup]="confirmationForm">
+              <div
+                class="terms mat-body"
+                [ngSwitch]="recommendationType[action?.value]"
+              >
+                <ng-container *ngSwitchCase="recommendationType.REVALIDATE">
+                  <h2 class="mat-title">
+                    Recommendation: {{ recommendationType.REVALIDATE }}
+                  </h2>
+                  <p>
+                    Made pursuant to The Medical Profession (Responsible
+                    Officer) Regulations and The General Medical Council
+                    (Licence to Practise and Revalidation) Regulations
+                  </p>
+                  <p>
+                    I am the appointed or nominated Responsible Officer for each
+                    medical practitioner named below.
+                  </p>
+                  <p>
+                    I have read the criteria for recommendations to revalidate.
+                  </p>
+                  <p>
+                    In determining my revalidation recommendation to the General
+                    Medical Council for the medical practitioners named below,
+                    it is my judgement that each has:
+                  </p>
+                  <ul>
+                    <li>
+                      participated in either annual appraisal that considers the
+                      whole of their practice and reflects the requirements of
+                      the GMC's Good Medical Practice Framework for appraisal
+                      and revalidation, or where the doctor is a trainee,
+                      participated in the assessments and curriculum
+                      requirements of their training programme; and
+                    </li>
+                    <li>
+                      <p>
+                        presented and discussed appropriate supporting
+                        information at annual appraisals in accordance with the
+                        requirements of the GMC's Supporting information for
+                        appraisal and revalidation, or where the doctor is a
+                        trainee, undertaken and discussed the assessments and
+                        curriculum requirements of their training programme.
+                      </p>
+                      <p>
+                        Based on the outcomes of such appraisal or assessment,
+                        and on other information available to me from relevant
+                        clinical and corporate governance systems, I am
+                        satisfied that:
+                      </p>
+                    </li>
+                    <li>
+                      where relevant, each of the named medical practitioners is
+                      practising in compliance with any conditions imposed by,
+                      or undertakings agreed with, the General Medical Council
+                    </li>
+                    <li>
+                      where relevant, each of the named medical practitioners is
+                      practising in compliance with any conditions agreed
+                      locally
+                    </li>
+                    <li>
+                      there are no unaddressed concerns identified by the above
+                      systems and processes about the fitness to practise of any
+                      of the named medical practitioners.
+                    </li>
+                  </ul>
+                  <p>
+                    In accordance with my statutory duty to make recommendations
+                    about the fitness to practise of licensed doctors, I
+                    recommend that each of the named medical practitioners is
+                    fit to practise and consequently their licence to practise
+                    should be continued.
+                  </p>
+                </ng-container>
+                <ng-container *ngSwitchCase="recommendationType.DEFER">
+                  <h2 class="mat-title">
+                    Recommendation: {{ recommendationType.DEFER }}
+                  </h2>
+                  <p>
+                    Made pursuant to The Medical Profession (Responsible
+                    Officer) Regulations and The General Medical Council
+                    (Licence to Practise and Revalidation) Regulations
+                  </p>
+                  <p>
+                    I am the appointed or nominated Responsible Officer for the
+                    medical practitioner to whom this deferral request applies.
+                  </p>
+                  <p>
+                    I have read the criteria for a deferral and I am satisfied
+                    that:
+                  </p>
+                  <ul>
+                    <li>
+                      the medical practitioner has engaged with the systems and
+                      processes that support revalidation
+                    </li>
+                    <li>
+                      there are no unaddressed concerns about the fitness to
+                      practise of the medical practitioner to whom this deferral
+                      request applies.
+                    </li>
+                  </ul>
+                  <p>
+                    Where there is insufficient evidence to support a
+                    recommendation about the medical practitioner's fitness to
+                    practise:
+                  </p>
+                  <ul>
+                    <li>
+                      I have identified the outstanding evidence required for me
+                      to make an informed decision about the medical
+                      practitioner's fitness to practise.
+                    </li>
+                    <li>
+                      I anticipate being able to make an informed recommendation
+                      about the medical practitioner's fitness to practise once
+                      the outstanding evidence has been collected.
+                    </li>
+                  </ul>
+                  <p>
+                    Where the medical practitioner is participating in an
+                    ongoing process:
+                  </p>
+                  <ul>
+                    <li>
+                      I will consider the outcome of this process when making a
+                      recommendation about their fitness to practise.
+                    </li>
+                    <li>
+                      I anticipate being able to make an informed recommendation
+                      about the medical practitioner's fitness to practise once
+                      the process is concluded.
+                    </li>
+                  </ul>
+                </ng-container>
+                <ng-container *ngSwitchCase="recommendationType.NON_ENGAGEMENT">
+                  <h2 class="mat-title">
+                    Recommendation: {{ recommendationType.NON_ENGAGEMENT }}
+                  </h2>
+                  <p>
+                    Made pursuant to The Medical Profession (Responsible
+                    Officer) Regulations and The General Medical Council
+                    (Licence to Practise and Revalidation) Regulations
+                  </p>
+                  <p>
+                    I am the appointed or nominated Responsible Officer for the
+                    medical practitioner to whom this notification of
+                    non-engagement applies.
+                  </p>
+                  <p>
+                    I have read the criteria for non-engagement and I confirm
+                    that:
+                  </p>
+
+                  <ul>
+                    <li>
+                      The medical practitioner has not engaged in appraisal or
+                      other activities to support a recommendation to
+                      revalidate, or the level of engagement is insufficient to
+                      support a recommendation to revalidate.
+                    </li>
+                    <li>
+                      I do not have and do not anticipate having, sufficient
+                      information on which to base a recommendation about the
+                      medical practitioner's fitness to practise. I have assured
+                      myself that the named medical practitioner does not meet
+                      the criteria for a deferral of a recommendation about
+                      their fitness to practise.
+                    </li>
+                    <li>
+                      The medical practitioner has been provided with sufficient
+                      opportunity and support to engage with revalidation, but
+                      has failed to do so. Based on the information available to
+                      me, there are no extenuating circumstances which account
+                      for their failure to engage.
+                    </li>
+                    <li>
+                      All reasonable local processes have been exhausted in
+                      attempts to rectify the medical practitioner's failure to
+                      engage in revalidation.
+                    </li>
+                    <li>
+                      Where applicable I have notified the GMC of any
+                      outstanding concerns about the fitness to practise of the
+                      named medical practitioner. I have notified the GMC in
+                      accordance with GMC guidance on raising concerns about
+                      doctors.
+                    </li>
+                  </ul>
+                  <p>
+                    Consequently, I cannot recommend the named medical
+                    practitioner is fit to practise.
+                  </p>
+                </ng-container>
+
+                <ng-container *NgSwitchDefault> </ng-container>
+              </div>
+              <mat-divider></mat-divider>
+              <section class="w-100 mt-20">
+                <mat-slide-toggle
+                  class="example-margin"
+                  color="primary"
+                  [required]="true"
+                  formControlName="confirm"
+                >
+                  I confirm all relevant information has been considered
+                </mat-slide-toggle>
+              </section>
+            </form>
+            <div class="button-row">
+              <button mat-button mat-raised-button matStepperPrevious>
+                Back
+              </button>
+              <button
+                mat-button
+                mat-raised-button
+                matStepperNext
+                color="primary"
+                (click)="submitToGMC()"
+                [disabled]="
+                  confirmationForm
+                    ? !confirmationForm.controls['confirm'].value
+                    : true
+                "
+              >
+                Submit to GMC
+              </button>
+              <span class="spacer"></span>
+              <button
+                type="button"
+                mat-icon-button
+                aria-label="Reset changes"
+                color="warn"
+                matTooltipPosition="left"
+                matTooltip="Reset changes"
+                (click)="resetMatStepper()"
+              >
+                <mat-icon>restore</mat-icon>
+              </button>
+            </div>
+          </mat-step>
+        </mat-horizontal-stepper>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>

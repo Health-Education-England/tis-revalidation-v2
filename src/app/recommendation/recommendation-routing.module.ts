@@ -11,12 +11,12 @@ const routes: Routes = [
     path: "",
     component: RecommendationComponent,
     data: { title: "Recommendation summary" },
+    resolve: { recommendation: RecommendationResolver },
     children: [
       {
         path: "",
         component: RecommendationHistoryComponent,
-        data: { title: "Recommendation history" },
-        resolve: { recommendation: RecommendationResolver }
+        data: { title: "Recommendation history" }
       },
       // TODO double check if a guard and/resolver is needed on this route
       {

@@ -11,18 +11,15 @@ export const environment: IEnvironment = {
   supportLink: `https://teams.microsoft.com/l/channel/19%3ac7943c6ffa9c49b881304863bb39ff7b%40thread.skype/General?groupId=102f33a3-f794-4089-8c5a-68e04897e72e&tenantId=ffa7912b-b097-4131-9c0f-d0e80755b2ab`,
   dateFormat: "dd/MM/yyyy",
   appUrls: {
-    login: ``,
     authRedirect: ``,
-    // 5e9ea0ef340000b81a6eee04 = 404 error
-    // 5e997d8a33000062007b2354 = 21 recommendations
-    // 5e997dba33000096297b235d = 0 recommendations to simulate no results found
+    getConcerns: `api/concerns`,
+    getConnections: `api/v1/connections`,
+    getNotes: `mocky/5ea2da614f00006c00d9f540`, // TODO replace with appropriate api url once is available
     getRecommendation: `api/recommendation`,
+    getRecommendations: `api/v1/doctors`,
+    login: ``,
     saveRecommendation: `api/recommendation`,
-    submitToGMC: `api/recommendation/{gmcId}/submit/{recommendationId}`,
-    getNotes: `mocky/45017692-2588-48dc-b6c2-c637cd723625`,
-    getRecommendations: `mocky/81267580-411e-4ce6-8dca-2f65f9d2e485?mocky-delay=700ms`,
-    getConcerns: `mocky/c25f77cf-594a-484b-b50b-562aa9438115?mocky-delay=700ms`,
-    getConnections: `mocky/4a202550-2c45-41c8-ab48-91786f8054eb?mocky-delay=700ms`
+    submitToGMC: `api/recommendation/{gmcId}/submit/{recommendationId}`
   },
   awsConfig: {
     redirectSignIn: "http://localhost:4200",

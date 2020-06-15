@@ -10,13 +10,13 @@ export abstract class IEnvironment {
    * Add api urls here as required
    */
   abstract readonly appUrls: {
-    readonly login: string;
     readonly authRedirect: string;
-    readonly getRecommendations: string;
     readonly getConcerns: string;
-    readonly getRecommendation: string;
-    readonly getNotes: string;
     readonly getConnections: string;
+    readonly getNotes: string;
+    readonly getRecommendation: string;
+    readonly getRecommendations: string;
+    readonly login: string;
     readonly saveRecommendation: string;
     readonly submitToGMC: string;
   };

@@ -1,0 +1,34 @@
+<div
+  class="recommendation-details"
+  [ngClass]="{ 'large-display': (isHandset$ | async) === false }"
+  *ngIf="traineeDetails$ | async as traineeDetails"
+>
+  <mat-list>
+    <mat-list-item *ngIf="traineeDetails.fullName">
+      <div class="mat-caption" mat-line>Name:</div>
+      <div mat-line>{{ traineeDetails.fullName }}</div>
+    </mat-list-item>
+    <mat-list-item *ngIf="traineeDetails.gmcNumber">
+      <div class="mat-caption" mat-line>GMC No:</div>
+      <div mat-line>{{ traineeDetails.gmcNumber }}</div>
+    </mat-list-item>
+    <mat-list-item *ngIf="traineeDetails.programmeMembershipType">
+      <div class="mat-caption" mat-line>Programme membership type:</div>
+      <div mat-line>{{ traineeDetails.programmeMembershipType }}</div>
+    </mat-list-item>
+    <mat-list-item *ngIf="traineeDetails.currentGrade">
+      <div class="mat-caption" mat-line>Current grade:</div>
+      <div mat-line>{{ traineeDetails.currentGrade }}</div>
+    </mat-list-item>
+    <mat-list-item *ngIf="traineeDetails.cctDate">
+      <div class="mat-caption" mat-line>CCT date:</div>
+      <div mat-line>{{ traineeDetails.cctDate | date: dateFormat }}</div>
+    </mat-list-item>
+  </mat-list>
+  <mat-divider></mat-divider>
+  <mat-nav-list>
+    <a mat-list-item href="" *ngFor="let link of sideLinks">
+      {{ link.text }}
+    </a>
+  </mat-nav-list>
+</div>

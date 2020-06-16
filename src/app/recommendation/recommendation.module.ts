@@ -3,7 +3,6 @@ import { CommonModule } from "@angular/common";
 import { DetailsModule } from "../shared/details/details.module";
 
 import { RecommendationRoutingModule } from "./recommendation-routing.module";
-import { RecommendationComponent } from "./recommendation.component";
 import { MaterialModule } from "../shared/material/material.module";
 import { SharedModule } from "../shared/shared.module";
 import { NgxsModule } from "@ngxs/store";
@@ -19,7 +18,6 @@ import { ConfirmRecommendationComponent } from "./confirm-recommendation/confirm
 
 @NgModule({
   declarations: [
-    RecommendationComponent,
     RecommendationHistoryComponent,
     RecommendationNotesComponent,
     RecommendationTableComponent,

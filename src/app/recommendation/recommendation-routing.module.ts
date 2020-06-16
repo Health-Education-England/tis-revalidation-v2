@@ -1,15 +1,15 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
+import { RecordDetailsComponent } from "../shared/details/record-details/record-details.component";
 import { ConfirmRecommendationComponent } from "./confirm-recommendation/confirm-recommendation.component";
 import { CreateRecommendationComponent } from "./create-recommendation/create-recommendation.component";
-import { RecommendationComponent } from "./recommendation.component";
 import { RecommendationHistoryComponent } from "./recommendation-history/recommendation-history.component";
 import { RecommendationResolver } from "./recommendation.resolver";
 
 const routes: Routes = [
   {
     path: "",
-    component: RecommendationComponent,
+    component: RecordDetailsComponent,
     data: { title: "Recommendation summary" },
     resolve: { recommendation: RecommendationResolver },
     children: [

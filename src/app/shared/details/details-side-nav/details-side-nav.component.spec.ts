@@ -1,13 +1,12 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { DetailsSideNavComponent } from "./details-side-nav.component";
-import { NgxsModule, Store } from "@ngxs/store";
+import { NgxsModule } from "@ngxs/store";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { MaterialModule } from "src/app/shared/material/material.module";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { DetailsSideNavState } from "./state/details-side-nav.state";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
 import { RecommendationHistoryRespone2 } from "src/app/recommendation/mock-data/recommendation-spec-data";
 import { DetailsSideNavService } from "./service/details-side-nav.service";
 import { of } from "rxjs";

@@ -13,7 +13,7 @@ export const environment: IEnvironment = {
     getRecommendations: `api/v1/doctors`,
     getConcerns: `api/concerns`,
     getRecommendation: `api/recommendation`,
-    getNotes: `mocky/5ea2da614f00006c00d9f540`,
+    getNotes: `mocky/5ea2da614f00006c00d9f540`, // TODO replace with appropriate api url once is available
     getConnections: `api/v1/connections`,
     submitToGMC: `api/recommendation/{gmcId}/submit/{recommendationId}`,
     saveRecommendation: `api/recommendation`,

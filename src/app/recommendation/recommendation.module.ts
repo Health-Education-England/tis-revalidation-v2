@@ -3,7 +3,6 @@ import { CommonModule } from "@angular/common";
 import { DetailsModule } from "../shared/details/details.module";
 
 import { RecommendationRoutingModule } from "./recommendation-routing.module";
-import { RecommendationComponent } from "./recommendation.component";
 import { MaterialModule } from "../shared/material/material.module";
 import { SharedModule } from "../shared/shared.module";
 import { NgxsModule } from "@ngxs/store";
@@ -14,13 +13,16 @@ import { RecommendationNotesState } from "./state/recommendation-notes.state";
 import { RecommendationTableComponent } from "./recommendation-table/recommendation-table.component";
 import { RecommendationHistoryComponent } from "./recommendation-history/recommendation-history.component";
 import { RecommendationNotesComponent } from "./recommendation-notes/recommendation-notes.component";
+import { CreateRecommendationComponent } from "./create-recommendation/create-recommendation.component";
+import { ConfirmRecommendationComponent } from "./confirm-recommendation/confirm-recommendation.component";
 
 @NgModule({
   declarations: [
-    RecommendationComponent,
     RecommendationHistoryComponent,
     RecommendationNotesComponent,
-    RecommendationTableComponent
+    RecommendationTableComponent,
+    CreateRecommendationComponent,
+    ConfirmRecommendationComponent
   ],
   imports: [
     MaterialModule,

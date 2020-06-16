@@ -21,8 +21,8 @@ export const environment: IEnvironment = {
     getRecommendation: `mocky/c3bdf0a2-66b6-4d95-8d07-62337f737100`,
     getRecommendations: `mocky/81267580-411e-4ce6-8dca-2f65f9d2e485?mocky-delay=700ms`,
     login: ``,
-    saveRecommendation: `api/recommendation`,
-    submitToGMC: `api/recommendation/{gmcId}/submit/{recommendationId}`,
+    saveRecommendation: `api/recommendation`, // TODO mock these
+    submitToGMC: `api/recommendation/{gmcId}/submit/{recommendationId}`, // TODO mock these
     getDetails: `mocky/c3bdf0a2-66b6-4d95-8d07-62337f737100`
   },
   awsConfig: {

@@ -24,9 +24,7 @@ export class RecommendationResolver implements Resolve<IRecommendationHistory> {
     const gmcID: number = Number(route.params.gmcId);
     return forkJoin([
       this.store.dispatch(new GetRecommendationHistory(gmcID)).pipe(
-        catchError((err: any) => {
-          return this.router.navigate(["/404"]);
-        })
+        catchError(() => this.router.navigate(["/404"]))
       ),
       this.store.dispatch(new GetRecommendationNotes(gmcID)),
       this.store.dispatch(new DetailsSideNavAction(gmcID))

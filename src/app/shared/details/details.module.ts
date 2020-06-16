@@ -9,9 +9,13 @@ import { NgxsModule } from "@ngxs/store";
 import { DetailsSideNavState } from "./details-side-nav/state/details-side-nav.state";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { AuthInterceptor } from "src/app/core/auth/auth.interceptor";
+import { RecordDetailsComponent } from "./record-details/record-details.component";
 
 @NgModule({
-  declarations: [NavBarComponent, DetailsSideNavComponent],
+  // TODO double check if NavBarComponent, DetailsSideNavComponent
+  // are needed to be imported and/or exported as the RecordDetailsComponent
+  // already encapsulate both of them
+  declarations: [NavBarComponent, DetailsSideNavComponent, RecordDetailsComponent],
   imports: [
     CommonModule,
     MaterialModule,
@@ -23,6 +27,6 @@ import { AuthInterceptor } from "src/app/core/auth/auth.interceptor";
     DetailsSideNavService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
-  exports: [NavBarComponent, DetailsSideNavComponent]
+  exports: [NavBarComponent, DetailsSideNavComponent, RecordDetailsComponent]
 })
 export class DetailsModule {}

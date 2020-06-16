@@ -11,7 +11,7 @@ export const environment: IEnvironment = {
     authRedirect: ``,
     getConcerns: `api/concerns`,
     getConnections: `api/v1/connections`,
-    getNotes: `mocky/5ea2da614f00006c00d9f540`,
+    getNotes: `mocky/5ea2da614f00006c00d9f540`, // TODO replace with appropriate api url once is available
     getRecommendation: `api/recommendation`,
     getRecommendations: `api/v1/doctors`,
     login: ``,

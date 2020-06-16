@@ -16,8 +16,9 @@ import { CommonModule } from "@angular/common";
 describe("DetailsSideNavComponent", () => {
   let component: DetailsSideNavComponent;
   let fixture: ComponentFixture<DetailsSideNavComponent>;
-  let httpClient: HttpClient;
-  let store: Store;
+  // TODO: uncomment to add data to tests rendering component when service is split
+  // let httpClient: HttpClient;
+  // let store: Store;
   let service: DetailsSideNavService;
 
   beforeEach(async(() => {
@@ -33,9 +34,9 @@ describe("DetailsSideNavComponent", () => {
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [DetailsSideNavService]
     }).compileComponents();
-
-    store = TestBed.inject(Store);
-    httpClient = TestBed.inject(HttpClient);
+    // TODO: uncomment to add data to tests rendering component when service is split
+    // store = TestBed.inject(Store);
+    // httpClient = TestBed.inject(HttpClient);
     service = TestBed.inject(DetailsSideNavService);
     spyOn(service, "getDetails").and.returnValue(
       of(RecommendationHistoryRespone2)

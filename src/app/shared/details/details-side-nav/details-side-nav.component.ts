@@ -1,9 +1,11 @@
 import { Component, OnInit } from "@angular/core";
-import { Select } from "@ngxs/store";
+import { ActivatedRoute } from "@angular/router";
+import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { Breakpoints, BreakpointObserver } from "@angular/cdk/layout";
 import { map, shareReplay } from "rxjs/operators";
 import { environment } from "@environment";
+import { Get } from "./state/details-side-nav.actions";
 import { DetailsSideNavState } from "./state/details-side-nav.state";
 import { IRecommendationHistory } from "src/app/recommendation/recommendation-history.interface";
 
@@ -43,7 +45,14 @@ export class DetailsSideNavComponent implements OnInit {
       text: "Form R"
     }
   ];
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private store: Store,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const gmcId: number = Number(this.activatedRoute.snapshot.params.gmcId);
+    this.store.dispatch(new Get(gmcId));
+  }
 }

@@ -1,2 +1,35 @@
 <app-nav-bar></app-nav-bar>
-<router-outlet></router-outlet>
+
+<ng-container *ngIf="{ isHandset: isHandset$ | async }; let device">
+  <div class="record-details" [ngClass]="{ 'd-grid': !device.isHandset }">
+    <div class="left-nav" *ngIf="!device.isHandset">
+      <app-details-side-nav></app-details-side-nav>
+    </div>
+
+    <mat-divider *ngIf="!device.isHandset" [vertical]="true"></mat-divider>
+
+    <div class="main-col d-grid bg-white">
+      <mat-toolbar class="sticky-toolbar">
+        <ng-container *ngIf="device.isHandset">
+          <mat-menu #recommendationMenu="matMenu">
+            <app-details-side-nav></app-details-side-nav>
+          </mat-menu>
+
+          <button
+            mat-icon-button
+            aria-label="Recommendation details"
+            [matMenuTriggerFor]="recommendationMenu"
+          >
+            <mat-icon aria-label="Recommendation details">account_box</mat-icon>
+          </button>
+        </ng-container>
+
+        <span class="spacer"></span>
+
+        <router-outlet name="toolbar-outlet"></router-outlet>
+      </mat-toolbar>
+
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</ng-container>

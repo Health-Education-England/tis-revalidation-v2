@@ -11,7 +11,6 @@ import { catchError } from "rxjs/operators";
 import { Injectable } from "@angular/core";
 import { Get as GetRecommendationHistory } from "./state/recommendation-history.actions";
 import { GetRecommendationNotes } from "./state/recommendation-notes.actions";
-import { Get as DetailsSideNavAction } from "../shared/details/details-side-nav/state/details-side-nav.actions";
 
 @Injectable()
 export class RecommendationResolver implements Resolve<IRecommendationHistory> {
@@ -23,11 +22,10 @@ export class RecommendationResolver implements Resolve<IRecommendationHistory> {
   ): Observable<IRecommendationHistory> | Observable<any> {
     const gmcID: number = Number(route.params.gmcId);
     return forkJoin([
-      this.store.dispatch(new GetRecommendationHistory(gmcID)).pipe(
-        catchError(() => this.router.navigate(["/404"]))
-      ),
-      this.store.dispatch(new GetRecommendationNotes(gmcID)),
-      this.store.dispatch(new DetailsSideNavAction(gmcID))
+      this.store
+        .dispatch(new GetRecommendationHistory(gmcID))
+        .pipe(catchError(() => this.router.navigate(["/404"]))),
+      this.store.dispatch(new GetRecommendationNotes(gmcID))
     ]);
   }
 }

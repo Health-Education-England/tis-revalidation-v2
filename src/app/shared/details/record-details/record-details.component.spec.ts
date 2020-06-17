@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { MaterialModule } from "../../material/material.module";
 
 import { RecordDetailsComponent } from "./record-details.component";
 
@@ -8,7 +9,8 @@ describe("RecordDetailsComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RecordDetailsComponent]
+      declarations: [RecordDetailsComponent],
+      imports: [MaterialModule]
     }).compileComponents();
   }));
 

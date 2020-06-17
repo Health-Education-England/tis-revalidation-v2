@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { RouterTestingModule } from "@angular/router/testing";
 
 import { DetailsSideNavComponent } from "./details-side-nav.component";
 import { NgxsModule } from "@ngxs/store";
@@ -27,6 +28,7 @@ describe("DetailsSideNavComponent", () => {
         MaterialModule,
         NgxsModule.forRoot([DetailsSideNavState]),
         HttpClientTestingModule,
+        RouterTestingModule,
         CommonModule
       ],
       declarations: [DetailsSideNavComponent],

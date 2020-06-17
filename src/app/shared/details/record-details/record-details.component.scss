@@ -1,0 +1,15 @@
+.main-col {
+  grid-template-rows: 64px 0 auto;
+}
+
+.record-details {
+  grid-template-columns: 280px 1px auto;
+  min-height: calc(100vh - 64px - 48px);
+
+  .mat-horizontal-stepper-header-container {
+    display: none;
+  }
+  .record-content-container {
+    padding: 24px 16px;
+  }
+}

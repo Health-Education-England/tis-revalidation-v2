@@ -3,7 +3,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { RecordDetailsComponent } from "../shared/details/record-details/record-details.component";
 import { ConfirmRecommendationComponent } from "./confirm-recommendation/confirm-recommendation.component";
 import { CreateRecommendationComponent } from "./create-recommendation/create-recommendation.component";
-import { RecommendationHistoryComponent } from "./recommendation-history/recommendation-history.component";
+import { RecommendationTableComponent } from "./recommendation-table/recommendation-table.component";
 import { RecommendationResolver } from "./recommendation.resolver";
 
 const routes: Routes = [
@@ -15,7 +15,7 @@ const routes: Routes = [
     children: [
       {
         path: "",
-        component: RecommendationHistoryComponent,
+        component: RecommendationTableComponent,
         data: { title: "Recommendation history" }
       },
       // TODO double check if a guard and/resolver is needed on this route

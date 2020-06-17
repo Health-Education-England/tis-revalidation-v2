@@ -1,9 +1,5 @@
 @import "~@angular/material/core/style/variables";
 
-.main-col {
-  grid-template-rows: 64px auto;
-}
-
 .button-row {
   margin: 48px 0;
   display: flex;
@@ -26,17 +22,6 @@
 .mat-stepper-horizontal {
   overflow: hidden;
   width: 100%;
-}
-.recommendation-history {
-  grid-template-columns: 280px 1px auto;
-  min-height: calc(100vh - 64px - 48px);
-
-  .mat-horizontal-stepper-header-container {
-    display: none;
-  }
-  .mat-horizontal-content-container {
-    padding: 24px 16px;
-  }
 }
 
 .recommendation-form {

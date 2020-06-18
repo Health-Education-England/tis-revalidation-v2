@@ -16,7 +16,6 @@ import {
 import { Select } from "@ngxs/store";
 import { RecommendationHistoryState } from "../state/recommendation-history.state";
 import { Observable } from "rxjs";
-import { Router } from "@angular/router";
 
 @Component({
   selector: "app-recommendation-table",

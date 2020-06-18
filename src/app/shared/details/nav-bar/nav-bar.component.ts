@@ -12,19 +12,19 @@ export class NavBarComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
-    const gmcId: number = this.activatedRoute.snapshot.params.gmcId;
+    const gmcNumber: number = this.activatedRoute.snapshot.params.gmcNumber;
     this.navLinks = [
       {
         label: "Recommendation",
-        path: `/recommendation/${gmcId}`
+        path: `/recommendation/${gmcNumber}`
       },
       {
         label: "Concern",
-        path: `/concern/${gmcId}`
+        path: `/concern/${gmcNumber}`
       },
       {
         label: "Connection",
-        path: `/connection/${gmcId}`
+        path: `/connection/${gmcNumber}`
       }
     ];
   }

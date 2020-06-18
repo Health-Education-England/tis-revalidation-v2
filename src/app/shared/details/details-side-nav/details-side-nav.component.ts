@@ -52,7 +52,9 @@ export class DetailsSideNavComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const gmcId: number = Number(this.activatedRoute.snapshot.params.gmcId);
-    this.store.dispatch(new Get(gmcId));
+    const gmcNumber: number = Number(
+      this.activatedRoute.snapshot.params.gmcNumber
+    );
+    this.store.dispatch(new Get(gmcNumber));
   }
 }

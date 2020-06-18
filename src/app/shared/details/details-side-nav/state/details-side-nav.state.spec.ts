@@ -26,12 +26,12 @@ describe("DetailsSideNav actions", () => {
   }));
 
   it("should create an action and add an item", fakeAsync(() => {
-    const gmcId = 1234;
+    const gmcNumber = 1234;
 
-    store.dispatch(new DetailsSideNavAction(gmcId));
+    store.dispatch(new DetailsSideNavAction(gmcNumber));
 
     const req = httpMock.expectOne(
-      `${environment.appUrls.getDetails}/${gmcId}`
+      `${environment.appUrls.getDetails}/${gmcNumber}`
     );
     expect(req.request.method).toEqual("GET");
     req.flush(RecommendationHistoryRespone2);

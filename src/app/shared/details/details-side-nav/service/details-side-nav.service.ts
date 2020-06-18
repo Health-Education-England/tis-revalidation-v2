@@ -10,10 +10,10 @@ import { HttpClient } from "@angular/common/http";
 export class DetailsSideNavService {
   constructor(private http: HttpClient) {}
 
-  getDetails(gmcId: number): Observable<IRecommendationHistory | any> {
+  getDetails(gmcNumber: number): Observable<IRecommendationHistory | any> {
     // TODO: ammend url when split services
     return this.http.get<IRecommendationHistory>(
-      `${environment.appUrls.getDetails}/${gmcId}`
+      `${environment.appUrls.getDetails}/${gmcNumber}`
     );
   }
 }

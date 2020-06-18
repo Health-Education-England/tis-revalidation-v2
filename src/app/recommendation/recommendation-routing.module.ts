@@ -24,6 +24,11 @@ const routes: Routes = [
         component: CreateRecommendationComponent,
         data: { title: "Create recommendation" } // TODO double check if a guard is needed here
       },
+      {
+        path: "edit",
+        component: CreateRecommendationComponent,
+        data: { title: "Create recommendation" } // TODO double check if a guard is needed here
+      },
       // TODO double check if a guard and/resolver is needed on this route
       {
         path: "confirm",

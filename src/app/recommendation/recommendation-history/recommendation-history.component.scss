@@ -1,45 +1,8 @@
 @import "~@angular/material/core/style/variables";
 
-.button-row {
-  margin: 48px 0;
-  display: flex;
-  flex-direction: row;
-
-  @media screen and (#{$mat-small}) {
-    margin: 32px 0 16px;
-  }
-
-  & button {
-    display: table-cell;
-    margin-right: 8px;
-
-    &:last-of-type,
-    &:last-child {
-      margin-right: 0px;
-    }
-  }
-}
 .mat-stepper-horizontal {
   overflow: hidden;
   width: 100%;
-}
-
-.recommendation-form {
-  min-width: 150px;
-  max-width: calc(100% - 52px);
-
-  @media screen and (#{$mat-small}) {
-    max-width: 100%;
-  }
-
-  .mat-form-field {
-    max-width: 550px;
-    display: block;
-
-    &.full-width {
-      max-width: 100%;
-    }
-  }
 }
 
 .terms {
@@ -72,24 +35,5 @@
 
   .mat-checkbox {
     margin-right: 12px;
-  }
-}
-.comments-section {
-  position: relative;
-
-  .mat-checkbox {
-    margin-right: 12px;
-  }
-
-  .select-control {
-    position: absolute;
-    right: -10px;
-    bottom: 5px;
-  }
-
-  .comments {
-    textarea.mat-input-element {
-      width: calc(100% - 32px);
-    }
   }
 }

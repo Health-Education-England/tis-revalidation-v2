@@ -16,6 +16,7 @@ import {
 import { Select } from "@ngxs/store";
 import { RecommendationHistoryState } from "../state/recommendation-history.state";
 import { Observable } from "rxjs";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-recommendation-table",
@@ -47,6 +48,10 @@ export class RecommendationTableComponent implements OnInit {
   recommendationStatus = RecommendationStatus;
   @Select(RecommendationHistoryState.recommendationSummary)
   recommendationHistory$: Observable<IRecommendationSummary[]>;
+  @Select(RecommendationHistoryState.enableRecommendation)
+  enableRecommendation$: Observable<boolean>;
+  @Select(RecommendationHistoryState.editRecommendation)
+  editRecommendation$: Observable<boolean>;
 
   constructor() {}
 

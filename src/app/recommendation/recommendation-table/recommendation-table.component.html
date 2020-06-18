@@ -141,4 +141,23 @@
       [ngClass]="{ hide: recommendationHistory?.length > 0 }"
     ></tr>
   </table>
+
+  <div class="button-row" *ngIf="enableRecommendation$ | async">
+    <button
+      mat-button
+      mat-raised-button
+      color="primary"
+      *ngIf="{ editRecommendation: editRecommendation$ | async }; let trainee"
+      [routerLink]="trainee.editRecommendation ? 'edit' : 'create'"
+    >
+      <ng-container *ngIf="trainee.editRecommendation; else createMode">
+        Edit recommendation
+      </ng-container>
+
+      <ng-template #createMode>
+        Create recommendation
+      </ng-template>
+    </button>
+    <span class="spacer"></span>
+  </div>
 </div>

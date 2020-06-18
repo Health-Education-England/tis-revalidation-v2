@@ -34,12 +34,12 @@ describe("RecommendationHistory actions", () => {
   }));
 
   it("should create an action RecommendationHistoryAction to get reval history", () => {
-    const gmcId = 1234;
+    const gmcNumber = 1234;
 
-    store.dispatch(new RecommendationHistoryAction(gmcId));
+    store.dispatch(new RecommendationHistoryAction(gmcNumber));
 
     const req = httpMock.expectOne(
-      `${environment.appUrls.getRecommendation}/${gmcId}`
+      `${environment.appUrls.getRecommendation}/${gmcNumber}`
     );
     expect(req.request.method).toEqual("GET");
     req.flush(RecommendationHistoryRespone2);
@@ -52,13 +52,13 @@ describe("RecommendationHistory actions", () => {
   });
 
   it("should throw an error is id is not a number", fakeAsync(() => {
-    const gmcId = Number("test");
+    const gmcNumber = Number("test");
     const errorHandler = TestBed.inject(ErrorHandler);
 
-    store.dispatch(new RecommendationHistoryAction(gmcId));
+    store.dispatch(new RecommendationHistoryAction(gmcNumber));
 
     expect(errorHandler.handleError).toHaveBeenCalledWith(
-      new Error(`gmcNo ${gmcId} must be of type number`)
+      new Error(`gmcNumber ${gmcNumber} must be of type number`)
     );
   }));
 

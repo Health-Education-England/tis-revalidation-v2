@@ -26,12 +26,12 @@ describe("RecommendationNotes actions", () => {
   }));
 
   it("should create an action and edit a note", () => {
-    const gmcId = 1234;
+    const gmcNumber = 1234;
 
-    store.dispatch(new GetRecommendationNotes(gmcId));
+    store.dispatch(new GetRecommendationNotes(gmcNumber));
 
     const req = httpMock.expectOne(
-      `${environment.appUrls.getNotes}?id=${gmcId}`
+      `${environment.appUrls.getNotes}?id=${gmcNumber}`
     );
     expect(req.request.method).toEqual("GET");
     req.flush(notesResponse1);

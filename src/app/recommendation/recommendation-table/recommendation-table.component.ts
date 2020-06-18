@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import {
   IRecommendationSummary,
   RecommendationGmcOutcome,
@@ -32,7 +32,7 @@ import { Observable } from "rxjs";
     ])
   ]
 })
-export class RecommendationTableComponent implements OnInit {
+export class RecommendationTableComponent {
   columnsToDisplay = [
     "recommendationType",
     "gmcOutcome",
@@ -52,11 +52,7 @@ export class RecommendationTableComponent implements OnInit {
   @Select(RecommendationHistoryState.editRecommendation)
   editRecommendation$: Observable<boolean>;
 
-  constructor() {}
-
   currentExpanded(element: any) {
     this.expandedElement = this.expandedElement === element ? null : element;
   }
-
-  ngOnInit(): void {}
 }

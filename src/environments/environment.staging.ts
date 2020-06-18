@@ -15,7 +15,7 @@ export const environment: IEnvironment = {
     getRecommendation: `api/recommendation`,
     getNotes: `mocky/5ea2da614f00006c00d9f540`, // TODO replace with appropriate api url once is available
     getConnections: `api/v1/connections`,
-    submitToGMC: `api/recommendation/{gmcId}/submit/{recommendationId}`,
+    submitToGMC: `api/recommendation/{gmcNumber}/submit/{recommendationId}`,
     saveRecommendation: `api/recommendation`,
     getDetails: `api/recommendation`
   },

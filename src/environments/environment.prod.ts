@@ -17,7 +17,7 @@ export const environment: IEnvironment = {
     login: ``,
     saveRecommendation: `api/recommendation`,
     getDetails: `api/recommendation`,
-    submitToGMC: `api/recommendation/{gmcId}/submit/{recommendationId}`
+    submitToGMC: `api/recommendation/{gmcNumber}/submit/{recommendationId}`
   },
   // TODO add correct prod values below
   awsConfig: {

@@ -77,7 +77,6 @@ export class RecommendationHistoryState {
     return state.item.underNotice.toLowerCase() === "yes";
   }
 
-  // TODO: delete when deleting history component
   @Selector()
   public static currentRecommendation(
     state: RecommendationHistoryStateModel
@@ -88,6 +87,14 @@ export class RecommendationHistoryState {
         RecommendationStatus.SUBMITTED_TO_GMC
       );
     });
+  }
+
+  @Selector([RecommendationHistoryState.currentRecommendation])
+  public static currentRecommendationType(
+    state: RecommendationHistoryState,
+    currentRecommendation: IRecommendationSummary
+  ): string {
+    return currentRecommendation.recommendationType;
   }
 
   @Selector()

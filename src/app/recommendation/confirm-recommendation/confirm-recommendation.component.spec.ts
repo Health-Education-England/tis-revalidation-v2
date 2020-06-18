@@ -1,4 +1,10 @@
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ReactiveFormsModule } from "@angular/forms";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgxsModule } from "@ngxs/store";
+import { MaterialModule } from "../../shared/material/material.module";
+import { RecommendationHistoryState } from "../state/recommendation-history.state";
 
 import { ConfirmRecommendationComponent } from "./confirm-recommendation.component";
 
@@ -8,7 +14,14 @@ describe("ConfirmRecommendationComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ConfirmRecommendationComponent]
+      declarations: [ConfirmRecommendationComponent],
+      imports: [
+        MaterialModule,
+        RouterTestingModule,
+        ReactiveFormsModule,
+        HttpClientTestingModule,
+        NgxsModule.forRoot([RecommendationHistoryState])
+      ]
     }).compileComponents();
   }));
 

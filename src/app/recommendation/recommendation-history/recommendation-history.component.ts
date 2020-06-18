@@ -40,7 +40,7 @@
 //   SimpleSnackBar
 // } from "@angular/material/snack-bar";
 // import { RecommendationNotesComponent } from "../recommendation-notes/recommendation-notes.component";
-
+//
 // @Component({
 //   selector: "app-recommendation-history",
 //   templateUrl: "./recommendation-history.component.html",
@@ -50,22 +50,22 @@
 // export class RecommendationHistoryComponent implements OnInit, OnDestroy {
 //   @Select(RecommendationHistoryState.recommendationHistory)
 //   recommendationHistory$: Observable<IRecommendationHistory>;
-
+//
 //   @Select(RecommendationNotesState.recommendationNotes)
 //   recommendationNotes$: Observable<INote[]>;
-
+//
 //   @Select(RecommendationHistoryState.currentRecommendation)
 //   recommendation$: Observable<IRecommendationSummary>;
-
+//
 //   isHandset$: Observable<boolean> = this.breakpointObserver
 //     .observe(Breakpoints.Handset)
 //     .pipe(
 //       map((result) => result.matches),
 //       shareReplay()
 //     );
-
+//
 //   @ViewChild("stepper") stepper: MatHorizontalStepper;
-
+//
 //   recommendationForm: FormGroup;
 //   confirmationForm: FormGroup;
 //   action: FormControl;
@@ -89,7 +89,7 @@
 //   editRecommendation$: Observable<boolean>;
 //   deferSelected: boolean;
 //   gmcNumber: number;
-
+//
 //   constructor(
 //     private bottomSheet: MatBottomSheet,
 //     private breakpointObserver: BreakpointObserver,
@@ -109,7 +109,7 @@
 //         )
 //         .subscribe()
 //     );
-
+//
 //     this.componentSubscriptions.push(
 //       this.recommendation$
 //         .pipe(
@@ -123,15 +123,15 @@
 //         .subscribe()
 //     );
 //   }
-
+//
 //   ngOnInit(): void {}
-
+//
 //   ngOnDestroy(): void {
 //     this.componentSubscriptions.forEach((subscription) => {
 //       subscription.unsubscribe();
 //     });
 //   }
-
+//
 //   saveDraft(submit?: boolean): void {
 //     if (this.recommendationForm.valid) {
 //       // map form data
@@ -148,17 +148,17 @@
 //       this.recommendation.deferralReason = formValue.deferralReason;
 //       this.recommendation.deferralSubReason = formValue.deferralSubReason;
 //       this.recommendation.gmcNumber = this.gmcNumber;
-
+//
 //       // set success snackbar message
 //       const successMessage = submit
 //         ? "your recommendation was successfully submitted to GMC"
 //         : "your recommendation was successfully saved";
-
+//
 //       const errorFnc = (err: any) => {
 //         this.openSnackBar(`An error occurred! please retry`);
 //         return of(err);
 //       };
-
+//
 //       const successResponse = (res: any) => {
 //         this.openSnackBar(successMessage);
 //         this.resetMatStepper();
@@ -192,22 +192,22 @@
 //         });
 //     }
 //   }
-
+//
 //   resetMatStepper(): void {
 //     this.stepper.reset();
 //     this.recommendationForm.reset();
 //     this.confirmationForm.reset();
 //     this.bindFormControl();
 //   }
-
+//
 //   openNotes(): void {
 //     this.bottomSheet.open(RecommendationNotesComponent);
 //   }
-
+//
 //   submitToGMC(): void {
 //     this.saveDraft(true);
 //   }
-
+//
 //   addCommentControl(commentText?: string): void {
 //     const commentControl = new FormGroup({
 //       comment: new FormControl(commentText ? commentText : ""),
@@ -215,7 +215,7 @@
 //     });
 //     this.comments.push(commentControl);
 //   }
-
+//
 //   /**
 //    * filters checkbox FormControls marked for deletion
 //    * deletes appropriate controls
@@ -235,7 +235,7 @@
 //       this.allComments.patchValue(false, { onlySelf: true, emitEvent: false });
 //     }
 //   }
-
+//
 //   /**
 //    * submission date + 60 days < new deferral date < submission date + 365 days
 //    */
@@ -252,7 +252,7 @@
 //       dateReference().setFullYear(dateReference().getFullYear() + 1)
 //     );
 //   }
-
+//
 //   private bindFormControl(): void {
 //     this.confirmationForm = new FormGroup({
 //       confirm: new FormControl(false, Validators.requiredTrue)
@@ -264,7 +264,7 @@
 //     this.createAllCommentsControl();
 //     this.subscribeToActions();
 //   }
-
+//
 //   /**
 //    * creates deferralReason, deferralSubReason and deferralDate controls
 //    * bind show sub reasons based on reason data selected
@@ -274,35 +274,35 @@
 //       this.recommendation.deferralReason,
 //       Validators.required
 //     );
-
+//
 //     this.deferralSubReason = new FormControl(
 //       this.recommendation.deferralSubReason,
 //       Validators.required
 //     );
-
+//
 //     this.deferralDate = new FormControl(
 //       this.recommendation.deferralDate,
 //       Validators.required
 //     );
-
+//
 //     const setDeferralSubReasons = (val: number) => {
 //       const selectedReason = this.deferralReasons.find(
 //         (reason: DeferralReason) => {
 //           return reason.code === val;
 //         }
 //       );
-
+//
 //       this.deferralSubReasons = selectedReason?.subReasons
 //         ? selectedReason.subReasons
 //         : [];
 //     };
-
+//
 //     this.componentSubscriptions.push(
 //       this.deferralReason.valueChanges
 //         .pipe(distinctUntilChanged())
 //         .subscribe((val) => {
 //           setDeferralSubReasons(val);
-
+//
 //           if (this.deferralSubReasons.length > 0) {
 //             this.deferralSubReason.setValidators(Validators.required);
 //           } else {
@@ -313,7 +313,7 @@
 //           this.deferralSubReason.reset();
 //         })
 //     );
-
+//
 //     this.recommendationForm.addControl("deferralReason", this.deferralReason);
 //     this.recommendationForm.addControl(
 //       "deferralSubReason",
@@ -329,7 +329,7 @@
 //       this.deferralSubReason.setValue(this.recommendation.deferralSubReason);
 //     }
 //   }
-
+//
 //   /**
 //    * creates a comments FormGroup for each comment
 //    * adds an empty comment FormGroup for readily adding comment
@@ -344,7 +344,7 @@
 //     this.addCommentControl();
 //     this.recommendationForm.addControl("comments", this.comments);
 //   }
-
+//
 //   /**
 //    * Creates all comments checkbox
 //    * ticks and un-ticks checkboxes besides individual comments for delete functionality
@@ -364,7 +364,7 @@
 //       })
 //     );
 //   }
-
+//
 //   /**
 //    * build recommendation action formControl
 //    * add subscription of action control to subscription array
@@ -395,7 +395,7 @@
 //         this.deferralReason.updateValueAndValidity();
 //         this.deferralDate.updateValueAndValidity();
 //         this.deferralSubReason.updateValueAndValidity();
-
+//
 //         const opts = { onlySelf: true, emitEvent: false };
 //         if (val) {
 //           this.allComments.enable(opts);
@@ -407,7 +407,7 @@
 //     this.action.updateValueAndValidity();
 //     this.recommendationForm.addControl("action", this.action);
 //   }
-
+//
 //   private openSnackBar(message: string): MatSnackBarRef<SimpleSnackBar> {
 //     return this._snackBar.open(message, "Close", {
 //       duration: 5000

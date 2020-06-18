@@ -47,6 +47,10 @@ export class RecommendationTableComponent implements OnInit {
   recommendationStatus = RecommendationStatus;
   @Select(RecommendationHistoryState.recommendationSummary)
   recommendationHistory$: Observable<IRecommendationSummary[]>;
+  @Select(RecommendationHistoryState.enableRecommendation)
+  enableRecommendation$: Observable<boolean>;
+  @Select(RecommendationHistoryState.editRecommendation)
+  editRecommendation$: Observable<boolean>;
 
   constructor() {}
 

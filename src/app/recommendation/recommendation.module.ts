@@ -11,14 +11,12 @@ import { RecommendationHistoryState } from "./state/recommendation-history.state
 import { RecommendationHistoryService } from "./services/recommendation-history.service";
 import { RecommendationNotesState } from "./state/recommendation-notes.state";
 import { RecommendationTableComponent } from "./recommendation-table/recommendation-table.component";
-import { RecommendationHistoryComponent } from "./recommendation-history/recommendation-history.component";
 import { RecommendationNotesComponent } from "./recommendation-notes/recommendation-notes.component";
 import { CreateRecommendationComponent } from "./create-recommendation/create-recommendation.component";
 import { ConfirmRecommendationComponent } from "./confirm-recommendation/confirm-recommendation.component";
 
 @NgModule({
   declarations: [
-    RecommendationHistoryComponent,
     RecommendationNotesComponent,
     RecommendationTableComponent,
     CreateRecommendationComponent,

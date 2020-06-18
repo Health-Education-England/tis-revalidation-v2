@@ -14,10 +14,10 @@ export class RecommendationHistoryService {
   constructor(private http: HttpClient) {}
 
   getrecommendationHistory(
-    gmcId: number
+    gmcNumber: number
   ): Observable<IRecommendationHistory | any> {
     return this.http.get<IRecommendationHistory>(
-      `${environment.appUrls.getRecommendation}/${gmcId}`
+      `${environment.appUrls.getRecommendation}/${gmcNumber}`
     );
   }
 
@@ -40,15 +40,15 @@ export class RecommendationHistoryService {
   }
 
   submitRecommendationToGMC(
-    gmcId: number,
+    gmcNumber: number,
     recommendationId: string
   ): Observable<any> {
-    if (!(!!gmcId && !!recommendationId)) {
-      return throwError("gmcId and recommendationId are required");
+    if (!(!!gmcNumber && !!recommendationId)) {
+      return throwError("gmcNumber and recommendationId are required");
     }
 
     const submitUrl = `${environment.appUrls.submitToGMC}`
-      .replace(/{gmcId}/, gmcId.toString())
+      .replace(/{gmcNumber}/, gmcNumber.toString())
       .replace(/{recommendationId}/, recommendationId);
     return this.http.post(submitUrl, {});
   }

@@ -12,6 +12,7 @@ import { RecommendationHistoryRespone2 } from "src/app/recommendation/mock-data/
 import { DetailsSideNavService } from "./service/details-side-nav.service";
 import { of } from "rxjs";
 import { CommonModule } from "@angular/common";
+import { ActivatedRoute } from "@angular/router";
 
 describe("DetailsSideNavComponent", () => {
   let component: DetailsSideNavComponent;
@@ -20,6 +21,9 @@ describe("DetailsSideNavComponent", () => {
   // let httpClient: HttpClient;
   // let store: Store;
   let service: DetailsSideNavService;
+  const activatedRoute = {
+    snapshot: { params: { gmcNumber: 0 } }
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -33,7 +37,13 @@ describe("DetailsSideNavComponent", () => {
       ],
       declarations: [DetailsSideNavComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      providers: [DetailsSideNavService]
+      providers: [
+        DetailsSideNavService,
+        {
+          provide: ActivatedRoute,
+          useValue: activatedRoute
+        }
+      ]
     }).compileComponents();
     // TODO: uncomment to add data to tests rendering component when service is split
     // store = TestBed.inject(Store);

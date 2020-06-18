@@ -24,7 +24,7 @@ import { MatSelectModule } from "@angular/material/select";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatNativeDateModule, MAT_DATE_LOCALE } from "@angular/material/core";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
-import { MatStepperModule } from "@angular/material/stepper";
+import { MatStepperModule } from "@angular/material/stepper"; // TODO: remove
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 

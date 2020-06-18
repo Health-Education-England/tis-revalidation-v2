@@ -1,4 +1,4 @@
 export class Get {
   static readonly type = "[detailssidenav] Get";
-  constructor(public gmcId: number) {}
+  constructor(public gmcNumber: number) {}
 }

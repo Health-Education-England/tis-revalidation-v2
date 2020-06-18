@@ -77,6 +77,7 @@ export class RecommendationHistoryState {
     return state.item.underNotice.toLowerCase() === "yes";
   }
 
+  // TODO: delete when deleting history component
   @Selector()
   public static currentRecommendation(
     state: RecommendationHistoryStateModel
@@ -102,7 +103,7 @@ export class RecommendationHistoryState {
     // throw error if NotANumber NaN is passed as query parameter
     if (isNaN(action.payload)) {
       const err: Error = new Error(
-        `gmcNo ${action.payload} must be of type number`
+        `gmcNumber ${action.payload} must be of type number`
       );
       throw err;
     }
@@ -136,7 +137,7 @@ export class RecommendationHistoryState {
   @Action(Post, { cancelUncompleted: true })
   post(_ctx: StateContext<any>, action: Post) {
     return this.service.submitRecommendationToGMC(
-      action.gmcId,
+      action.gmcNumber,
       action.recommendationId
     );
   }

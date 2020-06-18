@@ -39,15 +39,17 @@ export class DetailsSideNavState {
   @Action(DetailsSideNavAction)
   get(
     ctx: StateContext<DetailsSideNavStateModel>,
-    { gmcId }: DetailsSideNavAction
+    { gmcNumber }: DetailsSideNavAction
   ) {
     // throw error if NotANumber NaN is passed as query parameter
-    if (isNaN(gmcId)) {
-      const err: Error = new Error(`gmcNo ${gmcId} must be of type number`);
+    if (isNaN(gmcNumber)) {
+      const err: Error = new Error(
+        `gmcNumber ${gmcNumber} must be of type number`
+      );
       throw err;
     }
 
-    return this.service.getDetails(gmcId).pipe(
+    return this.service.getDetails(gmcNumber).pipe(
       tap((result: IRecommendationHistory) => {
         ctx.patchState({
           item: result

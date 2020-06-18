@@ -20,12 +20,12 @@ export class RecommendationResolver implements Resolve<IRecommendationHistory> {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<IRecommendationHistory> | Observable<any> {
-    const gmcID: number = Number(route.params.gmcId);
+    const gmcNumber: number = Number(route.params.gmcNumber);
     return forkJoin([
       this.store
-        .dispatch(new GetRecommendationHistory(gmcID))
+        .dispatch(new GetRecommendationHistory(gmcNumber))
         .pipe(catchError(() => this.router.navigate(["/404"]))),
-      this.store.dispatch(new GetRecommendationNotes(gmcID))
+      this.store.dispatch(new GetRecommendationNotes(gmcNumber))
     ]);
   }
 }

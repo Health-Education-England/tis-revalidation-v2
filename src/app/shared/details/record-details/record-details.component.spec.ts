@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { MaterialModule } from "../../material/material.module";
 
 import { RecordDetailsComponent } from "./record-details.component";
+import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 
 describe("RecordDetailsComponent", () => {
   let component: RecordDetailsComponent;
@@ -10,7 +11,8 @@ describe("RecordDetailsComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RecordDetailsComponent],
-      imports: [MaterialModule]
+      imports: [MaterialModule],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));
 

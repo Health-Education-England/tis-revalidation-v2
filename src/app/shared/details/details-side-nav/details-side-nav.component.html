@@ -4,9 +4,11 @@
   *ngIf="traineeDetails$ | async as traineeDetails"
 >
   <mat-list>
-    <mat-list-item *ngIf="traineeDetails.fullName">
+    <mat-list-item *ngIf="traineeDetails.forenames || traineeDetails.surname">
       <div class="mat-caption" mat-line>Name:</div>
-      <div mat-line>{{ traineeDetails.fullName }}</div>
+      <div mat-line>
+        {{ traineeDetails.forenames }} {{ traineeDetails.surname }}
+      </div>
     </mat-list-item>
     <mat-list-item *ngIf="traineeDetails.gmcNumber">
       <div class="mat-caption" mat-line>GMC No:</div>
@@ -15,6 +17,10 @@
     <mat-list-item *ngIf="traineeDetails.programmeMembershipType">
       <div class="mat-caption" mat-line>Programme membership type:</div>
       <div mat-line>{{ traineeDetails.programmeMembershipType }}</div>
+    </mat-list-item>
+    <mat-list-item *ngIf="traineeDetails.programmeName">
+      <div class="mat-caption" mat-line>Programme name:</div>
+      <div mat-line>{{ traineeDetails.programmeName }}</div>
     </mat-list-item>
     <mat-list-item *ngIf="traineeDetails.currentGrade">
       <div class="mat-caption" mat-line>Current grade:</div>

@@ -18,12 +18,12 @@ export const environment: IEnvironment = {
     getConcerns: `mocky/c25f77cf-594a-484b-b50b-562aa9438115?mocky-delay=700ms`,
     getConnections: `mocky/4a202550-2c45-41c8-ab48-91786f8054eb?mocky-delay=700ms`,
     getNotes: `mocky/45017692-2588-48dc-b6c2-c637cd723625`,
-    getRecommendation: `mocky/c3bdf0a2-66b6-4d95-8d07-62337f737100`,
+    getRecommendation: `mocky/6fd60c05-b4d0-462d-87a8-87402d57bd2e`,
     getRecommendations: `mocky/81267580-411e-4ce6-8dca-2f65f9d2e485?mocky-delay=700ms`,
     login: ``,
     saveRecommendation: `api/recommendation`, // TODO mock these
     submitToGMC: `api/recommendation/{gmcId}/submit/{recommendationId}`, // TODO mock these
-    getDetails: `mocky/c3bdf0a2-66b6-4d95-8d07-62337f737100`
+    getDetails: `mocky/298f7e18-12d4-4e1b-9195-0bba7feb56b0`
   },
   awsConfig: {
     userPoolWebClientId: "3adscm2usl3lop510nfijpr12f",

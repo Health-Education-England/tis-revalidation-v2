@@ -1,10 +1,10 @@
 import { TestBed, async, fakeAsync } from "@angular/core/testing";
 import { NgxsModule, Store } from "@ngxs/store";
+import { IDetailsSideNav } from "../details-side-nav.interfaces";
 import { DetailsSideNavState } from "./details-side-nav.state";
 import { Get as DetailsSideNavAction } from "./details-side-nav.actions";
 import { environment } from "@environment";
-import { RecommendationHistoryRespone2 } from "src/app/recommendation/mock-data/recommendation-spec-data";
-import { IRecommendationHistory } from "src/app/recommendation/recommendation-history.interface";
+import { detailsSideNavResponse } from "src/app/recommendation/mock-data/recommendation-spec-data";
 import {
   HttpTestingController,
   HttpClientTestingModule
@@ -34,13 +34,13 @@ describe("DetailsSideNav actions", () => {
       `${environment.appUrls.getDetails}/${gmcNumber}`
     );
     expect(req.request.method).toEqual("GET");
-    req.flush(RecommendationHistoryRespone2);
+    req.flush(detailsSideNavResponse);
 
-    const item: IRecommendationHistory = store.selectSnapshot(
+    const item: IDetailsSideNav = store.selectSnapshot(
       (state) => state.traineeDetails.item
     );
 
-    expect(item).toEqual(RecommendationHistoryRespone2);
+    expect(item).toEqual(detailsSideNavResponse);
   }));
 
   afterEach(() => {

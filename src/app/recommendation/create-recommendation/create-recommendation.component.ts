@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Subscription, Observable, of } from "rxjs";
 import { Select, Store } from "@ngxs/store";
 import {
@@ -21,12 +21,13 @@ import {
 } from "@angular/material/snack-bar";
 
 import { Set, Get } from "../state/recommendation-history.actions";
+import { CommentsService } from "src/app/shared/details/comments-tool-bar/comments.service";
 
 @Component({
   selector: "app-create-recommendation",
   templateUrl: "./create-recommendation.component.html"
 })
-export class CreateRecommendationComponent implements OnInit {
+export class CreateRecommendationComponent implements OnInit, OnDestroy {
   @Select(RecommendationHistoryState.deferralReasons)
   deferralReasons$: Observable<DeferralReason[]>;
   @Select(RecommendationHistoryState.currentRecommendation)
@@ -55,11 +56,18 @@ export class CreateRecommendationComponent implements OnInit {
     private store: Store,
     private activatedRoute: ActivatedRoute,
     private _snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private commentsService: CommentsService
   ) {}
 
   ngOnInit(): void {
     this.initComponent();
+  }
+
+  ngOnDestroy(): void {
+    this.componentSubscriptions.forEach((subscription) => {
+      subscription.unsubscribe();
+    });
   }
 
   initComponent(): void {
@@ -111,33 +119,26 @@ export class CreateRecommendationComponent implements OnInit {
       this.recommendation.gmcNumber = this.gmcNumber;
 
       const redirectUrl = procced ? "../confirm" : "../";
-
-      this.store
-        .dispatch(new Set(this.recommendation))
-        .pipe(
-          tap((res) => {
-            if (!procced) {
-              this.successResponse(res);
-            }
-          }),
-          catchError(this.errorFnc)
-        )
-        .subscribe(() => {
-          this.store.dispatch(new Get(this.gmcNumber)).subscribe(() => {
-            this.router.navigate([redirectUrl], {
-              relativeTo: this.activatedRoute
+      this.componentSubscriptions.push(
+        this.store
+          .dispatch(new Set(this.recommendation))
+          .pipe(
+            tap((res) => {
+              if (!procced) {
+                this.successResponse(res);
+              }
+            }),
+            catchError(this.errorFnc)
+          )
+          .subscribe(() => {
+            this.store.dispatch(new Get(this.gmcNumber)).subscribe(() => {
+              this.router.navigate([redirectUrl], {
+                relativeTo: this.activatedRoute
+              });
             });
-          });
-        });
+          })
+      );
     }
-  }
-
-  addCommentControl(commentText?: string): void {
-    const commentControl = new FormGroup({
-      comment: new FormControl(commentText ? commentText : ""),
-      checkbox: new FormControl(false)
-    });
-    this.comments.push(commentControl);
   }
 
   private setGmcNumber(): void {
@@ -241,12 +242,13 @@ export class CreateRecommendationComponent implements OnInit {
    */
   private createCommentControls(): void {
     this.comments = new FormArray([]);
+    this.commentsService.comments = this.comments;
     if (this.recommendation.comments) {
       for (const comment of this.recommendation.comments) {
-        this.addCommentControl(comment);
+        this.commentsService.addCommentControl(comment);
       }
     }
-    this.addCommentControl();
+    this.commentsService.addCommentControl();
     this.recommendationForm.addControl("comments", this.comments);
   }
 

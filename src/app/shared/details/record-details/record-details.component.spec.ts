@@ -3,6 +3,7 @@ import { MaterialModule } from "../../material/material.module";
 
 import { RecordDetailsComponent } from "./record-details.component";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { RouterTestingModule } from "@angular/router/testing";
 
 describe("RecordDetailsComponent", () => {
   let component: RecordDetailsComponent;
@@ -11,7 +12,7 @@ describe("RecordDetailsComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RecordDetailsComponent],
-      imports: [MaterialModule],
+      imports: [MaterialModule, RouterTestingModule],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));

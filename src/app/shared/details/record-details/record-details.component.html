@@ -24,9 +24,17 @@
           </button>
         </ng-container>
 
+        <ng-container *ngIf="showToolbar$ | async">
+          <app-comments-tool-bar
+            class="comments-tool-bar"
+          ></app-comments-tool-bar>
+        </ng-container>
+
         <span class="spacer"></span>
 
-        <router-outlet name="toolbar-outlet"></router-outlet>
+        <ng-container *ngIf="showNotes$ | async">
+          <app-notes-tool-bar></app-notes-tool-bar>
+        </ng-container>
       </mat-toolbar>
 
       <div class="record-content-container">

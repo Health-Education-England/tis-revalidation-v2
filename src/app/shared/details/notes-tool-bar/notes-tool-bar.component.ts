@@ -8,8 +8,7 @@ import { RecommendationNotesComponent } from "src/app/recommendation/recommendat
 
 @Component({
   selector: "app-notes-tool-bar",
-  templateUrl: "./notes-tool-bar.component.html",
-  styleUrls: ["./notes-tool-bar.component.scss"]
+  templateUrl: "./notes-tool-bar.component.html"
 })
 export class NotesToolBarComponent implements OnInit {
   @Select(RecommendationNotesState.recommendationNotes)

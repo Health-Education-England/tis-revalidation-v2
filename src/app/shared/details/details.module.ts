@@ -16,7 +16,6 @@ import {
 } from "./comments-tool-bar/comments-tool-bar.component";
 import { NotesToolBarComponent } from "./notes-tool-bar/notes-tool-bar.component";
 import { CommentsService } from "./comments-tool-bar/comments.service";
-import { MatDialogModule } from "@angular/material/dialog";
 
 @NgModule({
   // TODO double check if NavBarComponent, DetailsSideNavComponent

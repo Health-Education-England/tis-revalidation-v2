@@ -1,0 +1,15 @@
+<button mat-icon-button aria-label="Add notes" (click)="openNotes()">
+  <mat-icon
+    *ngIf="recommendationNotes$ | async as notes; else noNotes"
+    color="primary"
+    matBadgeColor="warn"
+    matBadge="{{ notes.length }}"
+    [matBadgeHidden]="notes.length === 0"
+  >
+    speaker_notes
+  </mat-icon>
+
+  <ng-template #noNotes>
+    <mat-icon color="primary">speaker_notes</mat-icon>
+  </ng-template>
+</button>

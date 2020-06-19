@@ -50,7 +50,12 @@
     }
   }
 }
-
+.comments-tool-bar {
+  width: calc(100% - 40px);
+  @media screen and (#{$mat-small}) {
+    width: 100%;
+  }
+}
 .comments-section {
   position: relative;
 

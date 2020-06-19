@@ -5,9 +5,9 @@ import { Observable } from "rxjs";
 import { Breakpoints, BreakpointObserver } from "@angular/cdk/layout";
 import { map, shareReplay } from "rxjs/operators";
 import { environment } from "@environment";
+import { IDetailsSideNav } from "./details-side-nav.interfaces";
 import { Get } from "./state/details-side-nav.actions";
 import { DetailsSideNavState } from "./state/details-side-nav.state";
-import { IRecommendationHistory } from "src/app/recommendation/recommendation-history.interface";
 
 @Component({
   selector: "app-details-side-nav",
@@ -16,7 +16,7 @@ import { IRecommendationHistory } from "src/app/recommendation/recommendation-hi
 })
 export class DetailsSideNavComponent implements OnInit {
   @Select(DetailsSideNavState.traineeDetails)
-  traineeDetails$: Observable<IRecommendationHistory>;
+  traineeDetails$: Observable<IDetailsSideNav>;
 
   dateFormat = environment.dateFormat;
 

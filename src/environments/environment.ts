@@ -20,7 +20,7 @@ export const environment: IEnvironment = {
     saveRecommendation: `api/recommendation`,
     getRecommendations: `api/v1/doctors`,
     getConcerns: `api/concerns`,
-    getDetails: `api/recommendation`
+    getDetails: `api/trainee`
   },
   awsConfig: {
     redirectSignIn: "http://localhost:4200",

@@ -16,7 +16,7 @@ export const environment: IEnvironment = {
     getRecommendations: `api/v1/doctors`,
     login: ``,
     saveRecommendation: `api/recommendation`,
-    getDetails: `api/recommendation`,
+    getDetails: `api/trainee`,
     submitToGMC: `api/recommendation/{gmcNumber}/submit/{recommendationId}`
   },
   // TODO add correct prod values below

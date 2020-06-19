@@ -1,26 +1,24 @@
 import { Injectable } from "@angular/core";
-import { State, Action, StateContext, Selector } from "@ngxs/store";
-import { Get as DetailsSideNavAction } from "./details-side-nav.actions";
-import { IRecommendationHistory } from "src/app/recommendation/recommendation-history.interface";
-import { defaultRecommendation } from "src/app/recommendation/state/recommendation-history.state"; // TODO: delete on splity services
-import { DetailsSideNavService } from "../service/details-side-nav.service";
+import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { tap } from "rxjs/operators";
+import { IDetailsSideNav } from "../details-side-nav.interfaces";
+import { DetailsSideNavService } from "../service/details-side-nav.service";
+import { Get as DetailsSideNavAction } from "./details-side-nav.actions";
 
 export class DetailsSideNavStateModel {
-  public item: IRecommendationHistory;
+  public item: IDetailsSideNav;
 }
 @State<DetailsSideNavStateModel>({
   name: "traineeDetails",
   defaults: {
     item: {
       gmcNumber: null,
-      fullName: null,
+      forenames: null,
+      surname: null,
       cctDate: null,
       programmeMembershipType: null,
-      currentGrade: null,
-      deferralReasons: [],
-      underNotice: null,
-      revalidations: [defaultRecommendation]
+      programmeName: null,
+      currentGrade: null
     }
   }
 })
@@ -31,8 +29,7 @@ export class DetailsSideNavState {
   @Selector()
   public static traineeDetails(
     state: DetailsSideNavStateModel
-  ): IRecommendationHistory {
-    // TODO: change model when service split
+  ): IDetailsSideNav {
     return state.item;
   }
 
@@ -50,7 +47,7 @@ export class DetailsSideNavState {
     }
 
     return this.service.getDetails(gmcNumber).pipe(
-      tap((result: IRecommendationHistory) => {
+      tap((result: IDetailsSideNav) => {
         ctx.patchState({
           item: result
         });

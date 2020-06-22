@@ -70,16 +70,19 @@ export class ConfirmRecommendationComponent implements OnInit {
         )
       )
       .subscribe(() => {
-        this.store.dispatch(new Get(this.gmcNumber)).subscribe(() =>
-          this.router.navigate(["../"], {
-            relativeTo: this.activatedRoute
-          })
-        );
+        this.store
+          .dispatch(new Get(this.gmcNumber))
+          .subscribe(() => this.navigateToParent());
       });
   }
 
   public reset(): void {
     this.form.reset();
+    this.navigateToParent();
+  }
+
+  private navigateToParent(): void {
+    this.router.navigate(["../"], { relativeTo: this.activatedRoute });
   }
 
   private getCurrentRecommendation(): void {

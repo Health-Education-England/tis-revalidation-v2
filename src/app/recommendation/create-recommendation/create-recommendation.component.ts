@@ -97,6 +97,11 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
     this.setGmcNumber();
   }
 
+  resetForm(): void {
+    this.recommendationForm.reset();
+    this.router.navigate(["../"], { relativeTo: this.activatedRoute });
+  }
+
   /**
    * saves form changes as draft
    * @param procced if procced to confirmation is set to true

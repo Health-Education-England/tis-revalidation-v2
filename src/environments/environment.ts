@@ -1,4 +1,5 @@
 // This file can be replaced during build by using the `fileReplacements` array.
+import { APP_URLS_CONFIG } from "./constants";
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 import { IEnvironment } from "./environment.interface";
@@ -10,18 +11,7 @@ export const environment: IEnvironment = {
   adminsUIHostUri: `https://dev-apps.tis.nhs.uk/`,
   supportLink: `https://teams.microsoft.com/l/channel/19%3ac7943c6ffa9c49b881304863bb39ff7b%40thread.skype/General?groupId=102f33a3-f794-4089-8c5a-68e04897e72e&tenantId=ffa7912b-b097-4131-9c0f-d0e80755b2ab`,
   dateFormat: "dd/MM/yyyy",
-  appUrls: {
-    login: ``,
-    authRedirect: ``,
-    getRecommendation: `api/recommendation`,
-    getNotes: `mocky/5ea2da614f00006c00d9f540`, // TODO replace with appropriate api url once is available
-    getConnections: `api/v1/connections`,
-    submitToGMC: `api/recommendation/{gmcNumber}/submit/{recommendationId}`,
-    saveRecommendation: `api/recommendation`,
-    getRecommendations: `api/v1/doctors`,
-    getConcerns: `api/concerns`,
-    getDetails: `api/trainee`
-  },
+  appUrls: APP_URLS_CONFIG,
   awsConfig: {
     redirectSignIn: "http://localhost:4200",
     redirectSignOut: "http://localhost:4200",

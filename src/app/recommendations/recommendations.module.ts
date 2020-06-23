@@ -24,7 +24,6 @@ import { RecommendationsFiltersComponent } from "./recommendations-filters/recom
     SharedModule,
     RecommendationsRoutingModule,
     NgxsModule.forFeature([RecommendationsState])
-  ],
-  providers: []
+  ]
 })
 export class RecommendationsModule {}

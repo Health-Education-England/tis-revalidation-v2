@@ -3,41 +3,45 @@ import { Injectable } from "@angular/core";
 import { environment } from "@environment";
 import { Action, State, StateContext } from "@ngxs/store";
 import { catchError, finalize, map, switchMap, take } from "rxjs/operators";
+import { RecommendationStatus } from "../../recommendation/recommendation-history.interface";
+import { DEFAULT_SORT } from "../../shared/records/constants";
 import { RecordsService } from "../../shared/records/services/records.service";
 import {
   defaultRecordsState,
   RecordsState,
   RecordsStateModel
 } from "../../shared/records/state/records.state";
-import { RecommendationStatus } from "../../recommendation/recommendation-history.interface";
-import { DEFAULT_SORT } from "../../shared/records/constants";
-import {
-  ClearSearch,
-  Filter,
-  Paginate,
-  ResetPaginator,
-  ResetSort,
-  Search,
-  Sort,
-  Get,
-  GetError,
-  GetSuccess
-} from "./concerns.actions";
 import {
   ConcernsFilterType,
   IConcern,
   IGetConcernsResponse
 } from "../concerns.interfaces";
 import { ConcernsService } from "../services/concerns.service";
+import {
+  ClearSearch,
+  Filter,
+  Get,
+  GetError,
+  GetSuccess,
+  Paginate,
+  ResetFilter,
+  ResetPaginator,
+  ResetSort,
+  Search,
+  Sort
+} from "./concerns.actions";
 
 export class ConcernsStateModel extends RecordsStateModel<
   ConcernsFilterType,
   IConcern[]
-> {}
+> {
+  public filter: ConcernsFilterType;
+}
 
 @State<ConcernsStateModel>({
   name: "concerns",
   defaults: {
+    filter: ConcernsFilterType.OPEN,
     ...defaultRecordsState
   }
 })
@@ -125,5 +129,10 @@ export class ConcernsState extends RecordsState {
   @Action(Filter)
   filter(ctx: StateContext<ConcernsStateModel>, action: Filter) {
     return super.filterHandler(ctx, action);
+  }
+
+  @Action(ResetFilter)
+  resetFilter(ctx: StateContext<ConcernsStateModel>) {
+    return super.resetFilterHandler(ctx, ConcernsFilterType.OPEN);
   }
 }

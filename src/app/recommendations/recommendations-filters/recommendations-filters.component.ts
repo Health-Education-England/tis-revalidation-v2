@@ -4,13 +4,7 @@ import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
 import { RecordsService } from "../../shared/records/services/records.service";
 import { RecommendationsFilterType } from "../recommendations.interfaces";
-import {
-  Filter,
-  ClearSearch,
-  Get,
-  ResetPaginator,
-  ResetSort
-} from "../state/recommendations.actions";
+import { Filter } from "../state/recommendations.actions";
 import { RecommendationsState } from "../state/recommendations.state";
 
 @Component({
@@ -23,7 +17,7 @@ export class RecommendationsFiltersComponent {
     number
   >;
   @Select(RecommendationsState.filter<RecommendationsFilterType>())
-  filter$: Observable<RecommendationsFilterType>;
+  public filter$: Observable<RecommendationsFilterType>;
   public allDoctors: RecommendationsFilterType =
     RecommendationsFilterType.ALL_DOCTORS;
   public underNotice: RecommendationsFilterType =
@@ -42,11 +36,8 @@ export class RecommendationsFiltersComponent {
   }
 
   public getRecommendations(): void {
-    this.store.dispatch(new ResetSort());
-    this.store.dispatch(new ResetPaginator());
-    this.store.dispatch(new ClearSearch());
-    this.store
-      .dispatch(new Get())
+    this.recordsService
+      .resetSortPageAndSearch()
       .pipe(take(1))
       .subscribe(() => this.recordsService.updateRoute());
   }

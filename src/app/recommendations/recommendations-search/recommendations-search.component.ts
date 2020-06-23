@@ -6,7 +6,6 @@ import { Observable, Subscription } from "rxjs";
 import { filter, take } from "rxjs/operators";
 import { RecordsService } from "../../shared/records/services/records.service";
 import {
-  Get,
   ResetPaginator,
   ResetSort,
   Search
@@ -76,9 +75,8 @@ export class RecommendationsSearchComponent implements OnInit, OnDestroy {
   public submitForm(searchQuery: string): void {
     this.store.dispatch(new Search(searchQuery));
     this.store.dispatch(new ResetSort());
-    this.store.dispatch(new ResetPaginator());
     this.store
-      .dispatch(new Get())
+      .dispatch(new ResetPaginator())
       .pipe(take(1))
       .subscribe(() => this.recordsService.updateRoute());
   }

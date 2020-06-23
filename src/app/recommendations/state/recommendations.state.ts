@@ -24,6 +24,7 @@ import {
   GetError,
   GetSuccess,
   Paginate,
+  ResetFilter,
   ResetPaginator,
   ResetSort,
   Search,
@@ -43,6 +44,7 @@ export class RecommendationsStateModel extends RecordsStateModel<
   defaults: {
     countTotal: null,
     countUnderNotice: null,
+    filter: RecommendationsFilterType.UNDER_NOTICE,
     ...defaultRecordsState
   }
 })
@@ -145,5 +147,13 @@ export class RecommendationsState extends RecordsState {
   @Action(Filter)
   filter(ctx: StateContext<RecommendationsStateModel>, action: Filter) {
     return super.filterHandler(ctx, action);
+  }
+
+  @Action(ResetFilter)
+  resetFilter(ctx: StateContext<RecommendationsStateModel>) {
+    return super.resetFilterHandler(
+      ctx,
+      RecommendationsFilterType.UNDER_NOTICE
+    );
   }
 }

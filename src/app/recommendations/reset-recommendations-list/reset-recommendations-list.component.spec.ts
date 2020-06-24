@@ -1,29 +1,28 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
-import { Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
-import { NgxsModule, Store } from "@ngxs/store";
-import { of } from "rxjs";
+import { NgxsModule } from "@ngxs/store";
 import { MaterialModule } from "../../shared/material/material.module";
 import { RecordsService } from "../../shared/records/services/records.service";
-import { RecommendationsFilterType } from "../recommendations.interfaces";
 import {
   ClearSearch,
+  Filter,
   Get,
+  Paginate,
+  ResetFilter,
   ResetPaginator,
   ResetSort,
-  Filter
+  Search,
+  Sort
 } from "../state/recommendations.actions";
 import { RecommendationsState } from "../state/recommendations.state";
 
 import { ResetRecommendationsListComponent } from "./reset-recommendations-list.component";
 
 describe("ResetRecommendationsListComponent", () => {
-  let store: Store;
   let component: ResetRecommendationsListComponent;
   let fixture: ComponentFixture<ResetRecommendationsListComponent>;
-  let router: Router;
   let recordsService: RecordsService;
 
   beforeEach(async(() => {
@@ -39,8 +38,6 @@ describe("ResetRecommendationsListComponent", () => {
         HttpClientTestingModule
       ]
     }).compileComponents();
-    store = TestBed.inject(Store);
-    router = TestBed.inject(Router);
     recordsService = TestBed.inject(RecordsService);
   }));
 
@@ -49,6 +46,17 @@ describe("ResetRecommendationsListComponent", () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     recordsService.stateName = "recommendations";
+    recordsService.setActions(
+      ClearSearch,
+      Filter,
+      Get,
+      Paginate,
+      ResetFilter,
+      ResetPaginator,
+      ResetSort,
+      Search,
+      Sort
+    );
   });
 
   it("should create", () => {
@@ -61,23 +69,13 @@ describe("ResetRecommendationsListComponent", () => {
     expect(recordsService.resetSearchForm$.next).toHaveBeenCalledWith(true);
   });
 
-  it("should dispatch relevant actions to reset recommendations list", () => {
-    spyOn(store, "dispatch").and.returnValue(of({}));
-    spyOn(router, "navigate");
-
+  it("should invoke `recordsService.resetRecordsState()` to reset recommendations list", () => {
+    spyOn(recordsService, "resetRecordsState").and.callThrough();
     component.resetRecommendationsList();
-
-    expect(store.dispatch).toHaveBeenCalledTimes(5);
-    expect(store.dispatch).toHaveBeenCalledWith(new ResetSort());
-    expect(store.dispatch).toHaveBeenCalledWith(new ResetPaginator());
-    expect(store.dispatch).toHaveBeenCalledWith(
-      new Filter(RecommendationsFilterType.UNDER_NOTICE)
-    );
-    expect(store.dispatch).toHaveBeenCalledWith(new ClearSearch());
-    expect(store.dispatch).toHaveBeenCalledWith(new Get());
+    expect(recordsService.resetRecordsState).toHaveBeenCalled();
   });
 
-  it("should invoke `updateRoute()` on resetRecommendationsList()", () => {
+  it("should invoke `recordsService.updateRoute()` on resetRecommendationsList()", () => {
     spyOn(recordsService, "updateRoute");
     component.resetRecommendationsList();
     expect(recordsService.updateRoute).toHaveBeenCalled();

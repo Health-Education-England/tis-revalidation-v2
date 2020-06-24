@@ -13,13 +13,13 @@ import { RecordsService } from "../services/records.service";
   templateUrl: "./record-list.component.html"
 })
 export class RecordListComponent implements OnChanges {
-  @Input() public stateName: string;
-  @Input() public detailsRoute: string;
-  @Input() public dateColumns: string[];
   @Input() public columnData: IRecordDataCell[];
+  @Input() public dateColumns: string[];
+  @Input() public detailsRoute: string;
+  @Input() public stateName: string;
 
   public dateFormat: string = environment.dateFormat;
-  public params: Params = this.route.snapshot.queryParams;
+  public params: Params;
 
   public loading$: Observable<boolean> = this.store.select(
     (state) => state[this.stateName].loading
@@ -38,24 +38,17 @@ export class RecordListComponent implements OnChanges {
   );
 
   constructor(
+    protected activatedRoute: ActivatedRoute,
     protected recordsService: RecordsService,
-    protected route: ActivatedRoute,
     protected router: Router,
     protected store: Store
   ) {}
 
   /**
-   * Set state name,
-   * Then check if query params exist
-   * Then dispatch appropriate events
-   * And update store accordingly
+   * Set state name
    */
   ngOnChanges(changes: SimpleChanges): void {
     this.recordsService.stateName = this.stateName;
-    this.setupInitialSorting();
-    this.setupInitialPagination();
-    this.checkInitialSearchQuery();
-    this.recordsService.get();
   }
 
   public get columnNames(): string[] {
@@ -67,33 +60,10 @@ export class RecordListComponent implements OnChanges {
     return this.router.navigate([this.detailsRoute, row.gmcReferenceNumber]);
   }
 
-  public setupInitialSorting(): void {
-    if (this.params.active && this.params.direction) {
-      this.recordsService.sort(this.params.active, this.params.direction);
-    } else {
-      this.recordsService.resetSort();
-    }
-  }
-
-  public setupInitialPagination(): void {
-    if (this.params.pageIndex) {
-      this.recordsService.paginate(this.params.pageIndex);
-    } else {
-      this.recordsService.resetPaginator();
-    }
-  }
-
-  public checkInitialSearchQuery(): void {
-    if (this.params.searchQuery) {
-      this.recordsService.search(this.params.searchQuery);
-    }
-  }
-
   public sort(event: ISort): void {
     this.recordsService.sort(event.active, event.direction);
-    this.recordsService.resetPaginator();
     this.recordsService
-      .get()
+      .resetPaginator()
       .pipe(take(1))
       .subscribe(() => this.recordsService.updateRoute());
   }

@@ -5,11 +5,9 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
-import { of } from "rxjs";
-import { RecordsService } from "../../shared/records/services/records.service";
 import { MaterialModule } from "../../shared/material/material.module";
+import { RecordsService } from "../../shared/records/services/records.service";
 import {
-  Get,
   ResetPaginator,
   ResetSort,
   Search
@@ -109,7 +107,7 @@ describe("RecommendationsSearchComponent", () => {
   });
 
   it("should dispatch relevant actions on valid form submission", () => {
-    spyOn(store, "dispatch").and.returnValue(of({}));
+    spyOn(store, "dispatch").and.callThrough();
     spyOn(recordsService, "updateRoute");
 
     component.params = {
@@ -118,13 +116,12 @@ describe("RecommendationsSearchComponent", () => {
     component.setupForm();
     component.submitForm(component.params.searchQuery);
 
-    expect(store.dispatch).toHaveBeenCalledTimes(4);
+    expect(store.dispatch).toHaveBeenCalledTimes(3);
     expect(store.dispatch).toHaveBeenCalledWith(
       new Search(component.params.searchQuery)
     );
     expect(store.dispatch).toHaveBeenCalledWith(new ResetSort());
     expect(store.dispatch).toHaveBeenCalledWith(new ResetPaginator());
-    expect(store.dispatch).toHaveBeenCalledWith(new Get());
     expect(recordsService.updateRoute).toHaveBeenCalled();
   });
 

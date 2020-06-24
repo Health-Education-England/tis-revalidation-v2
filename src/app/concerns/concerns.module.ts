@@ -5,6 +5,7 @@ import { SharedModule } from "../shared/shared.module";
 import { ConcernListComponent } from "./concern-list/concern-list.component";
 import { ConcernsRoutingModule } from "./concerns-routing.module";
 import { ConcernsComponent } from "./concerns.component";
+import { ConcernsResolver } from "./concerns.resolver";
 import { ConcernsState } from "./state/concerns.state";
 
 @NgModule({
@@ -14,6 +15,7 @@ import { ConcernsState } from "./state/concerns.state";
     SharedModule,
     ConcernsRoutingModule,
     NgxsModule.forFeature([ConcernsState])
-  ]
+  ],
+  providers: [ConcernsResolver]
 })
 export class ConcernsModule {}

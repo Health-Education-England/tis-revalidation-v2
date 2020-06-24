@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute, Params } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { Select, Store } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
 import { filter, take } from "rxjs/operators";
@@ -22,7 +22,6 @@ export class RecommendationsSearchComponent implements OnInit, OnDestroy {
     string
   >;
   public form: FormGroup;
-  public params: Params = this.route.snapshot.queryParams;
   public subscriptions: Subscription = new Subscription();
   @ViewChild("ngForm") public ngForm;
 
@@ -40,7 +39,7 @@ export class RecommendationsSearchComponent implements OnInit, OnDestroy {
 
   public setupForm(): void {
     this.form = this.formBuilder.group({
-      searchQuery: [this.params.searchQuery || "", [Validators.required]]
+      searchQuery: [null, [Validators.required]]
     });
   }
 

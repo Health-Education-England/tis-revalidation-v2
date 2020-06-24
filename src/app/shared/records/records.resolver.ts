@@ -48,11 +48,17 @@ export class RecordsResolver {
     }
   }
 
+  /**
+   * If searchQuery is not present in url
+   * Then dispatch clearSearch event to update store
+   * Otherwise ensure the searchQuery value matches store
+   * @param queryParams Params
+   * @param state any
+   */
   private checkSearchQuery(queryParams: Params, state: any): void {
-    if (
-      queryParams.searchQuery &&
-      queryParams.searchQuery !== state.searchQuery
-    ) {
+    if (!queryParams.searchQuery) {
+      this.recordsService.clearSearch();
+    } else if (queryParams.searchQuery !== state.searchQuery) {
       this.recordsService.search(queryParams.searchQuery);
     }
   }

@@ -1,28 +1,23 @@
-import { HttpParams } from "@angular/common/http";
+import { HttpParams, HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Store } from "@ngxs/store";
-import { RecordsService } from "../../shared/records/services/records.service";
-import { RecommendationsStateModel } from "../state/recommendations.state";
-import { RecommendationsFilterType } from "../recommendations.interfaces";
+import { environment } from "@environment";
+import { Observable } from "rxjs";
+import { IRecommendationsResponse } from "../recommendations.interfaces";
 
 @Injectable({
   providedIn: "root"
 })
 export class RecommendationsService {
-  constructor(private store: Store, private recordsService: RecordsService) {}
+  constructor(private http: HttpClient) {}
 
-  public generateParams(): HttpParams {
-    const snapshot: RecommendationsStateModel = this.store.snapshot()
-      .recommendations;
-    let params: HttpParams = this.recordsService.generateParams(snapshot);
-
-    params = params.append(
-      RecommendationsFilterType.UNDER_NOTICE,
-      snapshot.filter === RecommendationsFilterType.UNDER_NOTICE
-        ? "true"
-        : "false"
+  public getRecommendations(
+    httpParams: HttpParams
+  ): Observable<IRecommendationsResponse> {
+    return this.http.get<IRecommendationsResponse>(
+      environment.appUrls.getRecommendations,
+      {
+        params: httpParams
+      }
     );
-
-    return params;
   }
 }

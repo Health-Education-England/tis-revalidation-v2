@@ -1,8 +1,9 @@
-import { IGetRecordsResponse } from "../shared/records/records.interfaces";
-
 // TODO subject to change once BE work is complete
-export interface IGetConnectionsResponse extends IGetRecordsResponse {
+export interface IGetConnectionsResponse {
   connectionsInfo: IConnection[];
+  countTotal: number;
+  totalPages: number;
+  totalResults: number;
 }
 
 // TODO subject to change once BE work is complete

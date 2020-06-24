@@ -115,3 +115,10 @@ $colour-values: (
     opacity: 1;
   }
 }
+
+.loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -50px 0 0 -50px;
+}

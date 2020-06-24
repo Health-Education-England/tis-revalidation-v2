@@ -1,0 +1,16 @@
+<nav
+  mat-tab-nav-bar
+  *ngIf="traineeService.navigationLinks$ | async as navigationLinks"
+>
+  <a
+    mat-tab-link
+    *ngFor="let link of navigationLinks"
+    [routerLink]="[]"
+    [queryParams]="link.filter"
+    routerLinkActive
+    #rla="routerLinkActive"
+    [active]="rla.isActive"
+  >
+    {{ link.linktext }}
+  </a>
+</nav>

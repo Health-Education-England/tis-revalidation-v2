@@ -1,4 +1,3 @@
-import { IGetRecordsResponse } from "../shared/records/records.interfaces";
 import { RecommendationStatus } from "../recommendation/recommendation-history.interface";
 
 export interface IRecommendation {
@@ -17,13 +16,10 @@ export interface IRecommendation {
   underNotice: string;
 }
 
-export interface IGetRecommendationsResponse extends IGetRecordsResponse {
+export interface IRecommendationsResponse {
   countTotal: number;
   countUnderNotice: number;
   traineeInfo: IRecommendation[];
-}
-
-export enum RecommendationsFilterType {
-  UNDER_NOTICE = "underNotice",
-  ALL_DOCTORS = "allDoctors"
+  totalResults: number;
+  totalPages: number;
 }

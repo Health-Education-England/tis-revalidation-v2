@@ -18,7 +18,7 @@ export class RecommendationResolver implements Resolve<IRecommendationHistory> {
 
   resolve(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
+    _state: RouterStateSnapshot
   ): Observable<IRecommendationHistory> | Observable<any> {
     const gmcNumber: number = Number(route.params.gmcNumber);
     return forkJoin([

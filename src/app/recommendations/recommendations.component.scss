@@ -1,11 +1,36 @@
-@import "~@angular/material/core/style/variables";
-@import "~nhsuk-frontend/packages/core/settings/colours";
+@import "src/scss/utilities/spacing-helpers";
 
-.recommendations-top-section {
-  grid-template-columns: auto minmax(0, 1fr);
-  background: $color_nhsuk-white;
-
-  @media screen and (#{$mat-xsmall}) {
-    grid-template-columns: auto;
-  }
-}
+@include mat-table-columns(
+  (
+    doctorFirstName: (
+      width: 180px
+    ),
+    doctorLastName: (
+      width: 180px
+    ),
+    gmcReferenceNumber: (
+      width: 80px
+    ),
+    submissionDate: (
+      width: 180px
+    ),
+    doctorStatus: (
+      width: 100px
+    ),
+    programmeName: (
+      width: 160px
+    ),
+    programmeMembershipType: (
+      width: 180px
+    ),
+    cctDate: (
+      width: 110px
+    ),
+    admin: (
+      width: 150px
+    ),
+    lastUpdatedDate: (
+      width: 110px
+    )
+  )
+);

@@ -1,7 +1,8 @@
-import { IGetRecordsResponse } from "../shared/records/records.interfaces";
-
-export interface IGetConcernsResponse extends IGetRecordsResponse {
+export interface IGetConcernsResponse {
   concernTrainees: IConcern[];
+  countTotal: number;
+  totalPages: number;
+  totalResults: number;
 }
 
 export interface IConcern {
@@ -19,9 +20,4 @@ export interface IConcern {
   source: string;
   status: string;
   type: string;
-}
-
-export enum ConcernsFilterType {
-  OPEN = "Open",
-  CLOSED = "Closed"
 }

@@ -3,28 +3,21 @@ import { NgxsModule } from "@ngxs/store";
 import { MaterialModule } from "../shared/material/material.module";
 import { SharedModule } from "../shared/shared.module";
 import { RecommendationsState } from "./state/recommendations.state";
-import { RecommendationsListComponent } from "./recommendations-list/recommendations-list.component";
 import { RecommendationsRoutingModule } from "./recommendations-routing.module";
+import { TraineesModule } from "../shared/trainees/trainees.module";
+import { RecommendationsResolver } from "./recommendations.resolver";
+import { RecommendationsService } from "./services/recommendations.service";
 import { RecommendationsComponent } from "./recommendations.component";
-import { ResetRecommendationsListComponent } from "./reset-recommendations-list/reset-recommendations-list.component";
-import { RecommendationsListPaginatorComponent } from "./recommendations-list-paginator/recommendations-list-paginator.component";
-import { RecommendationsSearchComponent } from "./recommendations-search/recommendations-search.component";
-import { RecommendationsFiltersComponent } from "./recommendations-filters/recommendations-filters.component";
+
 @NgModule({
-  declarations: [
-    RecommendationsComponent,
-    RecommendationsListComponent,
-    ResetRecommendationsListComponent,
-    RecommendationsListPaginatorComponent,
-    RecommendationsSearchComponent,
-    RecommendationsFiltersComponent
-  ],
+  declarations: [RecommendationsComponent],
   imports: [
     MaterialModule,
     SharedModule,
+    TraineesModule,
     RecommendationsRoutingModule,
     NgxsModule.forFeature([RecommendationsState])
   ],
-  providers: []
+  providers: [RecommendationsResolver, RecommendationsService]
 })
 export class RecommendationsModule {}

@@ -3,6 +3,11 @@ import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { MaterialModule } from "../shared/material/material.module";
 import { RecommendationsComponent } from "./recommendations.component";
+import { TraineesService } from "../shared/trainees/trainees.service";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgxsModule } from "@ngxs/store";
+import { RecommendationsState } from "./state/recommendations.state";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 
 describe("RecommendationsComponent", () => {
   let component: RecommendationsComponent;
@@ -10,8 +15,15 @@ describe("RecommendationsComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [MaterialModule, NoopAnimationsModule],
+      imports: [
+        MaterialModule,
+        NoopAnimationsModule,
+        RouterTestingModule,
+        HttpClientTestingModule,
+        NgxsModule.forRoot([RecommendationsState])
+      ],
       declarations: [RecommendationsComponent],
+      providers: [TraineesService],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));

@@ -1,16 +1,19 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 
-import { CommentsService } from './comments.service';
+import { CommentsService } from "./comments.service";
+import { ReactiveFormsModule } from "@angular/forms";
 
-describe('CommentsService', () => {
+describe("CommentsService", () => {
   let service: CommentsService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [ReactiveFormsModule]
+    });
     service = TestBed.inject(CommentsService);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(service).toBeTruthy();
   });
 });

@@ -1,8 +1,9 @@
 // This file can be replaced during build by using the `fileReplacements` array.
-import { APP_URLS_CONFIG } from "./constants";
+import { APP_URLS_CONFIG, AWS_CONFIG } from "./constants";
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 import { IEnvironment } from "./environment.interface";
+
 export const environment: IEnvironment = {
   production: false,
   siteIds: ["UA-40570867-6"],
@@ -13,16 +14,10 @@ export const environment: IEnvironment = {
   dateFormat: "dd/MM/yyyy",
   appUrls: APP_URLS_CONFIG,
   awsConfig: {
+    ...AWS_CONFIG,
+    mandatorySignIn: false,
     redirectSignIn: "http://localhost:4200",
-    redirectSignOut: "http://localhost:4200",
-    responseType: "token",
-    region: "eu-west-2",
-    userPoolId: "eu-west-2_hkwYIoHu3",
-    userPoolWebClientId: "3adscm2usl3lop510nfijpr12f",
-    authenticationFlowType: "USER_PASSWORD_AUTH",
-    domain: "stage-auth.tis.nhs.uk",
-    scope: ["openid", "aws.cognito.signin.user.admin"],
-    mandatorySignIn: false
+    redirectSignOut: "http://localhost:4200"
   }
 };
 

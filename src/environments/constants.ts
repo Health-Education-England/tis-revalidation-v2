@@ -12,3 +12,16 @@ export const APP_URLS_CONFIG: IEnvironment["appUrls"] = {
   saveRecommendation: `api/recommendation`,
   submitToGMC: `api/recommendation/{gmcNumber}/submit/{recommendationId}`
 };
+
+export const AWS_CONFIG: IEnvironment["awsConfig"] = {
+  authenticationFlowType: "USER_PASSWORD_AUTH",
+  domain: "stage-auth.tis.nhs.uk",
+  mandatorySignIn: null,
+  redirectSignIn: "",
+  redirectSignOut: "",
+  region: "eu-west-2",
+  responseType: "token",
+  scope: ["openid", "aws.cognito.signin.user.admin"],
+  userPoolId: "eu-west-2_hkwYIoHu3",
+  userPoolWebClientId: "3adscm2usl3lop510nfijpr12f"
+};

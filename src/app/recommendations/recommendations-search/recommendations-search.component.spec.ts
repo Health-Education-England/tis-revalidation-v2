@@ -5,11 +5,9 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
-import { of } from "rxjs";
-import { RecordsService } from "../../shared/records/services/records.service";
 import { MaterialModule } from "../../shared/material/material.module";
+import { RecordsService } from "../../shared/records/services/records.service";
 import {
-  Get,
   ResetPaginator,
   ResetSort,
   Search
@@ -63,26 +61,12 @@ describe("RecommendationsSearchComponent", () => {
     expect(component.setupSubscription).toHaveBeenCalled();
   });
 
-  it("should create form, form control with value from query params", () => {
-    component.params = {
-      searchQuery: "john"
-    };
-    component.setupForm();
-    expect(component.form.value.searchQuery).toEqual(
-      component.params.searchQuery
-    );
-  });
-
   it("should create form, form control with default value", () => {
-    component.params = {};
     component.setupForm();
-    expect(component.form.value.searchQuery).toEqual("");
+    expect(component.form.value.searchQuery).toBeNull();
   });
 
   it("form should be invalid if no characters entered", () => {
-    component.params = {
-      searchQuery: ""
-    };
     component.setupForm();
     expect(component.form.invalid).toBeTruthy();
   });
@@ -98,33 +82,24 @@ describe("RecommendationsSearchComponent", () => {
 
   it("form is only submitted if valid", () => {
     spyOn(component, "submitForm");
-    component.params = {
-      searchQuery: "john"
-    };
     component.setupForm();
+    component.form.get("searchQuery").setValue("carl");
     component.checkForm();
-    expect(component.submitForm).toHaveBeenCalledWith(
-      component.params.searchQuery
-    );
+    expect(component.submitForm).toHaveBeenCalledWith("carl");
   });
 
   it("should dispatch relevant actions on valid form submission", () => {
-    spyOn(store, "dispatch").and.returnValue(of({}));
+    spyOn(store, "dispatch").and.callThrough();
     spyOn(recordsService, "updateRoute");
 
-    component.params = {
-      searchQuery: "87723113"
-    };
     component.setupForm();
-    component.submitForm(component.params.searchQuery);
+    component.form.get("searchQuery").setValue("87723113");
+    component.submitForm("87723113");
 
-    expect(store.dispatch).toHaveBeenCalledTimes(4);
-    expect(store.dispatch).toHaveBeenCalledWith(
-      new Search(component.params.searchQuery)
-    );
+    expect(store.dispatch).toHaveBeenCalledTimes(3);
+    expect(store.dispatch).toHaveBeenCalledWith(new Search("87723113"));
     expect(store.dispatch).toHaveBeenCalledWith(new ResetSort());
     expect(store.dispatch).toHaveBeenCalledWith(new ResetPaginator());
-    expect(store.dispatch).toHaveBeenCalledWith(new Get());
     expect(recordsService.updateRoute).toHaveBeenCalled();
   });
 

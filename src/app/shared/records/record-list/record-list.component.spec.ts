@@ -1,33 +1,30 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { SimpleChange, SimpleChanges } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { Sort as ISort } from "@angular/material/sort/sort";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
-import { of } from "rxjs";
 import { COLUMN_DATA } from "../../../concerns/constants";
 import { RecommendationStatus } from "../../../recommendation/recommendation-history.interface";
+import { IRecommendation } from "../../../recommendations/recommendations.interfaces";
 import { mockRecommendationsResponse } from "../../../recommendations/services/recommendations.service.spec";
 import {
+  ClearSearch,
+  Filter,
   Get,
   Paginate,
+  ResetFilter,
   ResetPaginator,
   ResetSort,
   Search,
   Sort
 } from "../../../recommendations/state/recommendations.actions";
 import { RecommendationsState } from "../../../recommendations/state/recommendations.state";
-import { IRecommendation } from "../../../recommendations/recommendations.interfaces";
 import { MaterialModule } from "../../material/material.module";
 import { DEFAULT_SORT, generateColumnData } from "../constants";
 import { RecordsService } from "../services/records.service";
 import { RecordListComponent } from "./record-list.component";
-
-const mockSimpleChanges: SimpleChanges = {
-  stateName: new SimpleChange(null, "recommendations", null)
-};
 
 describe("RecordListComponent", () => {
   let store: Store;
@@ -56,12 +53,15 @@ describe("RecordListComponent", () => {
     fixture = TestBed.createComponent(RecordListComponent);
     component = fixture.componentInstance;
     recordsService.setActions(
+      ClearSearch,
+      Filter,
       Get,
-      Sort,
-      ResetSort,
       Paginate,
+      ResetFilter,
       ResetPaginator,
-      Search
+      ResetSort,
+      Search,
+      Sort
     );
     fixture.detectChanges();
   });
@@ -93,99 +93,10 @@ describe("RecordListComponent", () => {
     });
   });
 
-  it("should invoke 'setupInitialSorting' on init", () => {
-    spyOn(component, "setupInitialSorting");
-    component.ngOnChanges(mockSimpleChanges);
-    expect(component.setupInitialSorting).toHaveBeenCalled();
-  });
-
-  it("should invoke 'setupInitialPagination' on init", () => {
-    spyOn(component, "setupInitialPagination");
-    component.ngOnChanges(mockSimpleChanges);
-    expect(component.setupInitialPagination).toHaveBeenCalled();
-  });
-
-  it("should invoke 'checkInitialSearchQuery' on init", () => {
-    spyOn(component, "checkInitialSearchQuery");
-    component.ngOnChanges(mockSimpleChanges);
-    expect(component.checkInitialSearchQuery).toHaveBeenCalled();
-  });
-
-  it("should invoke 'recordsService.get()' on ngOnChanges", () => {
-    spyOn(recordsService, "get");
-    component.ngOnChanges(mockSimpleChanges);
-    expect(recordsService.get).toHaveBeenCalled();
-  });
-
   it("`columnNames()` should return an array of strings", () => {
     component.columnData = generateColumnData(COLUMN_DATA);
     expect(component.columnNames).toBeInstanceOf(Array);
     expect(component.columnNames[0]).toEqual("doctorFirstName");
-  });
-
-  it("'setupInitialSorting()' should invoke 'recordsService.sort()' if both params exist", () => {
-    spyOn(recordsService, "sort");
-    spyOn(recordsService, "resetSort");
-
-    component.params = {
-      active: "doctorFirstName",
-      direction: "asc"
-    };
-    component.setupInitialSorting();
-
-    expect(recordsService.sort).toHaveBeenCalledWith(
-      component.params.active,
-      component.params.direction
-    );
-    expect(recordsService.resetSort).not.toHaveBeenCalled();
-  });
-
-  it("'setupInitialSorting()' should invoke 'recordsService.resetSort()' if both params don't exist", () => {
-    spyOn(recordsService, "sort");
-    spyOn(recordsService, "resetSort");
-
-    component.params = {};
-    component.setupInitialSorting();
-
-    expect(recordsService.sort).not.toHaveBeenCalled();
-    expect(recordsService.resetSort).toHaveBeenCalled();
-  });
-
-  it("'setupInitialPagination()' should invoke 'recordsService.paginate()' if param exists", () => {
-    spyOn(recordsService, "paginate");
-    spyOn(recordsService, "resetPaginator");
-
-    component.params = { pageIndex: 4 };
-    component.setupInitialPagination();
-
-    expect(recordsService.paginate).toHaveBeenCalledWith(
-      component.params.pageIndex
-    );
-    expect(recordsService.resetPaginator).not.toHaveBeenCalled();
-  });
-
-  it("'setupInitialPagination()' should invoke 'recordsService.resetPaginator()' if param does not exist", () => {
-    spyOn(recordsService, "resetPaginator");
-    spyOn(recordsService, "paginate");
-
-    component.params = {};
-    component.setupInitialPagination();
-
-    expect(recordsService.resetPaginator).toHaveBeenCalled();
-    expect(recordsService.paginate).not.toHaveBeenCalledWith(
-      component.params.pageIndex
-    );
-  });
-
-  it("'checkInitialSearchQuery()' should invoke 'recordsService.search()' if param exists", () => {
-    spyOn(recordsService, "search");
-
-    component.params = { searchQuery: "429123" };
-    component.ngOnChanges(mockSimpleChanges);
-
-    expect(recordsService.search).toHaveBeenCalledWith(
-      component.params.searchQuery
-    );
   });
 
   it("'navigateToDetails()' should navigate to details route", () => {
@@ -224,8 +135,7 @@ describe("RecordListComponent", () => {
     };
 
     spyOn(recordsService, "sort");
-    spyOn(recordsService, "resetPaginator");
-    spyOn(recordsService, "get").and.returnValue(of({}));
+    spyOn(recordsService, "resetPaginator").and.callThrough();
     spyOn(recordsService, "updateRoute");
 
     component.stateName = "recommendations";
@@ -236,7 +146,6 @@ describe("RecordListComponent", () => {
       mockSortEvent.direction
     );
     expect(recordsService.resetPaginator).toHaveBeenCalled();
-    expect(recordsService.get).toHaveBeenCalled();
     expect(recordsService.updateRoute).toHaveBeenCalled();
   });
 });

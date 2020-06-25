@@ -4,8 +4,7 @@ import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
 import { RecordsService } from "../../shared/records/services/records.service";
-import { RecommendationsService } from "../services/recommendations.service";
-import { Get, Paginate } from "../state/recommendations.actions";
+import { Paginate } from "../state/recommendations.actions";
 import { RecommendationsState } from "../state/recommendations.state";
 
 @Component({
@@ -14,21 +13,21 @@ import { RecommendationsState } from "../state/recommendations.state";
 })
 export class RecommendationsListPaginatorComponent {
   @Select(RecommendationsState.totalResults<number>())
-  totalResults$: Observable<number>;
-  @Select(RecommendationsState.pageIndex<number>()) pageIndex$: Observable<
-    number
-  >;
+  public totalResults$: Observable<number>;
+  @Select(RecommendationsState.pageIndex<number>())
+  public pageIndex$: Observable<number>;
 
-  constructor(
-    private store: Store,
-    private recommendationsService: RecommendationsService,
-    private recordsService: RecordsService
-  ) {}
+  constructor(private store: Store, private recordsService: RecordsService) {}
 
-  public paginate(event: PageEvent) {
-    this.store.dispatch(new Paginate(event.pageIndex));
+  /**
+   * Leverage angular materials paginator
+   * And dispatch event to store to update pageIndex
+   * Then update route with new query param values
+   * @param event PageEvent
+   */
+  public paginate(event: PageEvent): void {
     this.store
-      .dispatch(new Get())
+      .dispatch(new Paginate(Number(event.pageIndex)))
       .pipe(take(1))
       .subscribe(() => this.recordsService.updateRoute());
   }

@@ -26,17 +26,21 @@ import {
   Sort,
   Get,
   GetError,
-  GetSuccess
+  GetSuccess,
+  ResetFilter
 } from "./connections.actions";
 
 export class ConnectionsStateModel extends RecordsStateModel<
   ConnectionsFilterType,
   IConnection[]
-> {}
+> {
+  public filter: ConnectionsFilterType;
+}
 
 @State<ConnectionsStateModel>({
   name: "connections",
   defaults: {
+    filter: ConnectionsFilterType.ALL,
     ...defaultRecordsState
   }
 })
@@ -117,5 +121,10 @@ export class ConnectionsState extends RecordsState {
   @Action(Filter)
   filter(ctx: StateContext<ConnectionsStateModel>, action: Filter) {
     return super.filterHandler(ctx, action);
+  }
+
+  @Action(ResetFilter)
+  resetFilter(ctx: StateContext<ConnectionsStateModel>) {
+    return super.resetFilterHandler(ctx, ConnectionsFilterType.ALL);
   }
 }

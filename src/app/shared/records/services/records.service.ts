@@ -2,7 +2,8 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { Store } from "@ngxs/store";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, forkJoin, Observable } from "rxjs";
+import { switchMap, take } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root"
@@ -12,33 +13,42 @@ export class RecordsService {
   public stateName: string;
 
   // TODO type these
+  public clearSearchAction: any;
+  public filterAction: any;
   public getAction: any;
-  public sortAction: any;
-  public resetSortAction: any;
   public paginateAction: any;
+  public resetFilterAction: any;
   public resetPaginatorAction: any;
+  public resetSortAction: any;
   public searchAction: any;
+  public sortAction: any;
 
   constructor(
-    private store: Store,
+    private http: HttpClient,
     private router: Router,
-    private http: HttpClient
+    private store: Store
   ) {}
 
   public setActions(
+    clearSearchAction,
+    filterAction,
     getAction,
-    sortAction,
-    resetSortAction,
     paginateAction,
+    resetFilterAction,
     resetPaginatorAction,
-    searchAction
+    resetSortAction,
+    searchAction,
+    sortAction
   ): void {
+    this.clearSearchAction = clearSearchAction;
+    this.filterAction = filterAction;
     this.getAction = getAction;
-    this.sortAction = sortAction;
-    this.resetSortAction = resetSortAction;
     this.paginateAction = paginateAction;
+    this.resetFilterAction = resetFilterAction;
     this.resetPaginatorAction = resetPaginatorAction;
+    this.resetSortAction = resetSortAction;
     this.searchAction = searchAction;
+    this.sortAction = sortAction;
   }
 
   public getRecords<T>(endPoint: string, params?: HttpParams): Observable<T> {
@@ -60,8 +70,8 @@ export class RecordsService {
 
   /**
    * This method gets the current state and current route,
-   * Then reloads the current route by updating the query params,
-   * And hence updates the url in the browser
+   * Then updates the current route by amending the query params,
+   * Which is reflected in the browser url
    *
    * Note: Same route navigation doesn't re trigger angular life cycle hooks
    * which effectively means the components do not get reinstantiated
@@ -127,5 +137,44 @@ export class RecordsService {
     }
 
     return this.store.dispatch(new this.searchAction(searchQuery));
+  }
+
+  public clearSearch(): Observable<any> {
+    if (!this.clearSearchAction) {
+      throw new Error("clearSearchAction must be defined");
+    }
+
+    return this.store.dispatch(new this.clearSearchAction());
+  }
+
+  public filter(filter: any): Observable<any> {
+    if (!this.filterAction) {
+      throw new Error("filterAction must be defined");
+    }
+
+    return this.store.dispatch(new this.filterAction(filter));
+  }
+
+  public resetFilter(): Observable<any> {
+    if (!this.resetFilterAction) {
+      throw new Error("resetFilterAction must be defined");
+    }
+
+    return this.store.dispatch(new this.resetFilterAction());
+  }
+
+  public resetSortPageAndSearch(): Observable<any> {
+    return forkJoin([
+      this.resetSort(),
+      this.resetPaginator(),
+      this.clearSearch()
+    ]);
+  }
+
+  public resetRecordsState(): Observable<any> {
+    return this.resetSortPageAndSearch().pipe(
+      take(1),
+      switchMap(() => this.resetFilter())
+    );
   }
 }

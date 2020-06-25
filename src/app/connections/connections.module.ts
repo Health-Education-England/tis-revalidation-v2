@@ -5,6 +5,7 @@ import { SharedModule } from "../shared/shared.module";
 import { ConnectionListComponent } from "./connection-list/connection-list.component";
 import { ConnectionsRoutingModule } from "./connections-routing.module";
 import { ConnectionsComponent } from "./connections.component";
+import { ConnectionsResolver } from "./connections.resolver";
 import { ConnectionsState } from "./state/connections.state";
 
 @NgModule({
@@ -14,6 +15,7 @@ import { ConnectionsState } from "./state/connections.state";
     SharedModule,
     ConnectionsRoutingModule,
     NgxsModule.forFeature([ConnectionsState])
-  ]
+  ],
+  providers: [ConnectionsResolver]
 })
 export class ConnectionsModule {}

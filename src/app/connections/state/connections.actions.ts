@@ -37,6 +37,10 @@ export class Filter extends FilterPayload<ConnectionsFilterType> {
   static readonly type = `${label} Filter`;
 }
 
+export class ResetFilter {
+  static readonly type = `${label} Reset Filter`;
+}
+
 export class Search extends SearchPayload {
   static readonly type = `${label} Search`;
 }

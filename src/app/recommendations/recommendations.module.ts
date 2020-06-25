@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { NgxsModule } from "@ngxs/store";
 import { MaterialModule } from "../shared/material/material.module";
 import { SharedModule } from "../shared/shared.module";
+import { RecommendationsResolver } from "./recommendations.resolver";
 import { RecommendationsState } from "./state/recommendations.state";
 import { RecommendationsListComponent } from "./recommendations-list/recommendations-list.component";
 import { RecommendationsRoutingModule } from "./recommendations-routing.module";
@@ -25,6 +26,6 @@ import { RecommendationsFiltersComponent } from "./recommendations-filters/recom
     RecommendationsRoutingModule,
     NgxsModule.forFeature([RecommendationsState])
   ],
-  providers: []
+  providers: [RecommendationsResolver]
 })
 export class RecommendationsModule {}

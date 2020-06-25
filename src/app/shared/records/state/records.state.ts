@@ -1,6 +1,7 @@
 import { Sort } from "@angular/material/sort";
 import { Sort as ISort } from "@angular/material/sort/sort";
 import { createSelector, StateContext } from "@ngxs/store";
+import { DEFAULT_SORT } from "../constants";
 import { RecordsService } from "../services/records.service";
 
 export class RecordsStateModel<T, F> {
@@ -16,16 +17,12 @@ export class RecordsStateModel<T, F> {
 }
 
 export const defaultRecordsState = {
-  filter: null,
   items: null,
   loading: null,
   pageIndex: 0,
   searchQuery: null,
   totalPages: null,
-  sort: {
-    active: null,
-    direction: null
-  },
+  sort: DEFAULT_SORT,
   totalResults: null
 };
 
@@ -145,5 +142,9 @@ export class RecordsState {
 
   protected filterHandler(ctx: StateContext<any>, action: any) {
     ctx.patchState(action);
+  }
+
+  protected resetFilterHandler(ctx: StateContext<any>, action: any) {
+    ctx.patchState({ filter: action });
   }
 }

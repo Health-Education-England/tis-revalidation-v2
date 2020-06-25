@@ -1,8 +1,11 @@
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { NoopAnimationsModule } from "@angular/platform-browser/animations";
+import { NgxsModule } from "@ngxs/store";
+import { RecommendationNotesState } from "../../../recommendation/state/recommendation-notes.state";
+import { MaterialModule } from "../../material/material.module";
 
 import { NotesToolBarComponent } from "./notes-tool-bar.component";
-import { MaterialModule } from "../../material/material.module";
-import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 
 describe("NotesToolBarComponent", () => {
   let component: NotesToolBarComponent;
@@ -10,7 +13,12 @@ describe("NotesToolBarComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [MaterialModule, NoopAnimationsModule],
+      imports: [
+        MaterialModule,
+        NoopAnimationsModule,
+        HttpClientTestingModule,
+        NgxsModule.forRoot([RecommendationNotesState])
+      ],
       declarations: [NotesToolBarComponent]
     }).compileComponents();
   }));

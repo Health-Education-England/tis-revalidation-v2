@@ -11,7 +11,11 @@ import {
   ClearSearch,
   Get,
   ResetPaginator,
-  ResetSort
+  ResetSort,
+  Paginate,
+  ResetFilter,
+  Search,
+  Sort
 } from "../state/recommendations.actions";
 import { RecommendationsState } from "../state/recommendations.state";
 
@@ -45,6 +49,17 @@ describe("RecommendationsFiltersComponent", () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     recordsService.stateName = "recommendations";
+    recordsService.setActions(
+      ClearSearch,
+      Filter,
+      Get,
+      Paginate,
+      ResetFilter,
+      ResetPaginator,
+      ResetSort,
+      Search,
+      Sort
+    );
   });
 
   it("should create", () => {
@@ -79,16 +94,10 @@ describe("RecommendationsFiltersComponent", () => {
     expect(component.getRecommendations).toHaveBeenCalled();
   });
 
-  it("`getRecommendations()` should dispatch relevant events", () => {
-    spyOn(store, "dispatch").and.callThrough();
-
+  it("`getRecommendations()` should invoke `recordsService.resetSortPageAndSearch()`", () => {
+    spyOn(recordsService, "resetSortPageAndSearch").and.callThrough();
     component.getRecommendations();
-
-    expect(store.dispatch).toHaveBeenCalledTimes(4);
-    expect(store.dispatch).toHaveBeenCalledWith(new ResetSort());
-    expect(store.dispatch).toHaveBeenCalledWith(new ResetPaginator());
-    expect(store.dispatch).toHaveBeenCalledWith(new ClearSearch());
-    expect(store.dispatch).toHaveBeenCalledWith(new Get());
+    expect(recordsService.resetSortPageAndSearch).toHaveBeenCalled();
   });
 
   it("`getRecommendations()` should invoke `updateRoute()`", () => {

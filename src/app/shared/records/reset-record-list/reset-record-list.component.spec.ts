@@ -3,8 +3,8 @@ import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule } from "@ngxs/store";
-import { MaterialModule } from "../../shared/material/material.module";
-import { RecordsService } from "../../shared/records/services/records.service";
+import { MaterialModule } from "../../material/material.module";
+import { RecordsService } from "../services/records.service";
 import {
   ClearSearch,
   Filter,
@@ -15,24 +15,23 @@ import {
   ResetSort,
   Search,
   Sort
-} from "../state/recommendations.actions";
-import { RecommendationsState } from "../state/recommendations.state";
+} from "../../../recommendations/state/recommendations.actions";
+import { RecommendationsState } from "../../../recommendations/state/recommendations.state";
+import { ResetRecordListComponent } from "./reset-record-list.component";
 
-import { ResetRecommendationsListComponent } from "./reset-recommendations-list.component";
-
-describe("ResetRecommendationsListComponent", () => {
-  let component: ResetRecommendationsListComponent;
-  let fixture: ComponentFixture<ResetRecommendationsListComponent>;
+describe("ResetRecordListComponent", () => {
+  let component: ResetRecordListComponent;
+  let fixture: ComponentFixture<ResetRecordListComponent>;
   let recordsService: RecordsService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ResetRecommendationsListComponent],
+      declarations: [ResetRecordListComponent],
       imports: [
         MaterialModule,
         NoopAnimationsModule,
         RouterTestingModule.withRoutes([
-          { path: "", component: ResetRecommendationsListComponent }
+          { path: "", component: ResetRecordListComponent }
         ]),
         NgxsModule.forRoot([RecommendationsState]),
         HttpClientTestingModule
@@ -42,7 +41,7 @@ describe("ResetRecommendationsListComponent", () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ResetRecommendationsListComponent);
+    fixture = TestBed.createComponent(ResetRecordListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
     recordsService.stateName = "recommendations";
@@ -63,21 +62,21 @@ describe("ResetRecommendationsListComponent", () => {
     expect(component).toBeTruthy();
   });
 
-  it("should emit `resetSearchForm$` event on resetRecommendationsList()", () => {
+  it("should emit `resetSearchForm$` event on resetRecordList()", () => {
     spyOn(recordsService.resetSearchForm$, "next").and.callThrough();
-    component.resetRecommendationsList();
+    component.resetRecordList();
     expect(recordsService.resetSearchForm$.next).toHaveBeenCalledWith(true);
   });
 
   it("should invoke `recordsService.resetRecordsState()` to reset recommendations list", () => {
     spyOn(recordsService, "resetRecordsState").and.callThrough();
-    component.resetRecommendationsList();
+    component.resetRecordList();
     expect(recordsService.resetRecordsState).toHaveBeenCalled();
   });
 
-  it("should invoke `recordsService.updateRoute()` on resetRecommendationsList()", () => {
+  it("should invoke `recordsService.updateRoute()` on resetRecordList()", () => {
     spyOn(recordsService, "updateRoute");
-    component.resetRecommendationsList();
+    component.resetRecordList();
     expect(recordsService.updateRoute).toHaveBeenCalled();
   });
 });

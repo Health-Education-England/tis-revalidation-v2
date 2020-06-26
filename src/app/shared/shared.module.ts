@@ -6,13 +6,12 @@ import { environment } from "@environment";
 import { NgxsReduxDevtoolsPluginModule } from "@ngxs/devtools-plugin";
 import { NgxsLoggerPluginModule } from "@ngxs/logger-plugin";
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
-import { RecordListComponent } from "./records/record-list/record-list.component";
 import { MaterialModule } from "./material/material.module";
 import { RecordsService } from "./records/services/records.service";
 import { StripHtmlPipe } from "./strip-html.pipe";
 
 @NgModule({
-  declarations: [PageNotFoundComponent, RecordListComponent, StripHtmlPipe],
+  declarations: [PageNotFoundComponent, StripHtmlPipe],
   imports: [
     CommonModule,
     MaterialModule,
@@ -22,11 +21,6 @@ import { StripHtmlPipe } from "./strip-html.pipe";
     NgxsLoggerPluginModule.forRoot({ disabled: environment.production })
   ],
   providers: [RecordsService],
-  exports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RecordListComponent,
-    StripHtmlPipe
-  ]
+  exports: [CommonModule, ReactiveFormsModule, StripHtmlPipe]
 })
 export class SharedModule {}

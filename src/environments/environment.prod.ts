@@ -1,4 +1,4 @@
-import { APP_URLS_CONFIG } from "./constants";
+import { APP_URLS_CONFIG, AWS_CONFIG } from "./constants";
 import { IEnvironment } from "./environment.interface";
 export const environment: IEnvironment = {
   production: true,
@@ -11,15 +11,9 @@ export const environment: IEnvironment = {
   appUrls: APP_URLS_CONFIG,
   // TODO add correct prod values below
   awsConfig: {
-    userPoolWebClientId: "3adscm2usl3lop510nfijpr12f",
-    authenticationFlowType: "USER_PASSWORD_AUTH",
-    region: "eu-west-2",
-    userPoolId: "eu-west-2_hkwYIoHu3",
-    domain: "stage-auth.tis.nhs.uk",
-    scope: ["openid", "aws.cognito.signin.user.admin"],
+    ...AWS_CONFIG,
+    mandatorySignIn: true,
     redirectSignIn: "https://revalidation.tis.nhs.uk",
-    redirectSignOut: "https://revalidation.tis.nhs.uk",
-    responseType: "token",
-    mandatorySignIn: true
+    redirectSignOut: "https://revalidation.tis.nhs.uk"
   }
 };

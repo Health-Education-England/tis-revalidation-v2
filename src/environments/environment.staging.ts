@@ -1,4 +1,4 @@
-import { APP_URLS_CONFIG } from "./constants";
+import { APP_URLS_CONFIG, AWS_CONFIG } from "./constants";
 import { IEnvironment } from "./environment.interface";
 export const environment: IEnvironment = {
   production: true,
@@ -10,15 +10,9 @@ export const environment: IEnvironment = {
   dateFormat: "dd/MM/yyyy",
   appUrls: APP_URLS_CONFIG,
   awsConfig: {
-    region: "eu-west-2",
-    userPoolId: "eu-west-2_hkwYIoHu3",
-    scope: ["openid", "aws.cognito.signin.user.admin"],
+    ...AWS_CONFIG,
+    mandatorySignIn: true,
     redirectSignIn: "https://stage-revalidation.tis.nhs.uk",
-    userPoolWebClientId: "3adscm2usl3lop510nfijpr12f",
-    authenticationFlowType: "USER_PASSWORD_AUTH",
-    domain: "stage-auth.tis.nhs.uk",
-    redirectSignOut: "https://stage-revalidation.tis.nhs.uk",
-    responseType: "token",
-    mandatorySignIn: true
+    redirectSignOut: "https://stage-revalidation.tis.nhs.uk"
   }
 };

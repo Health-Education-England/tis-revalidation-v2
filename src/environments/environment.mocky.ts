@@ -1,4 +1,5 @@
 // This file can be replaced during build by using the `fileReplacements` array.
+import { AWS_CONFIG } from "./constants";
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 import { IEnvironment } from "./environment.interface";
@@ -26,16 +27,10 @@ export const environment: IEnvironment = {
     getDetails: `mocky/298f7e18-12d4-4e1b-9195-0bba7feb56b0`
   },
   awsConfig: {
-    userPoolWebClientId: "3adscm2usl3lop510nfijpr12f",
-    authenticationFlowType: "USER_PASSWORD_AUTH",
-    domain: "stage-auth.tis.nhs.uk",
-    scope: ["openid", "aws.cognito.signin.user.admin"],
+    ...AWS_CONFIG,
+    mandatorySignIn: true,
     redirectSignIn: "http://localhost:4200",
-    redirectSignOut: "http://localhost:4200",
-    responseType: "token",
-    region: "eu-west-2",
-    userPoolId: "eu-west-2_hkwYIoHu3",
-    mandatorySignIn: true
+    redirectSignOut: "http://localhost:4200"
   }
 };
 

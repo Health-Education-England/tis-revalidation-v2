@@ -22,6 +22,7 @@ import {
 
 import { Set, Get } from "../state/recommendation-history.actions";
 import { CommentsService } from "src/app/shared/details/comments-tool-bar/comments.service";
+import { AuthService } from "src/app/core/auth/auth.service";
 
 @Component({
   selector: "app-create-recommendation",
@@ -57,7 +58,8 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private _snackBar: MatSnackBar,
     private router: Router,
-    private commentsService: CommentsService
+    private commentsService: CommentsService,
+    private auth: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -110,6 +112,7 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
     if (this.recommendationForm.valid) {
       // map form data
       const formValue = this.recommendationForm.value;
+      this.recommendation.admin = this.auth.userName;
       this.recommendation.recommendationType = formValue.action;
       this.recommendation.comments = formValue.comments
         .filter((comments: { comment: string; checkbox: boolean }) => {

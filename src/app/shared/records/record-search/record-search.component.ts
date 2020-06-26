@@ -1,26 +1,21 @@
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
-import { Select, Store } from "@ngxs/store";
+import { Store } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
 import { filter, take } from "rxjs/operators";
-import { RecordsService } from "../../shared/records/services/records.service";
-import {
-  ResetPaginator,
-  ResetSort,
-  Search
-} from "../state/recommendations.actions";
-import { RecommendationsState } from "../state/recommendations.state";
+import { RecordsService } from "../services/records.service";
 
 @Component({
-  selector: "app-recommendations-search",
-  templateUrl: "./recommendations-search.component.html",
-  styleUrls: ["./recommendations-search.component.scss"]
+  selector: "app-record-search",
+  templateUrl: "./record-search.component.html",
+  styleUrls: ["./record-search.component.scss"]
 })
-export class RecommendationsSearchComponent implements OnInit, OnDestroy {
-  @Select(RecommendationsState.searchQuery<string>()) searchQuery$: Observable<
-    string
-  >;
+export class RecordSearchComponent implements OnInit, OnDestroy {
+  public searchQuery$: Observable<string> = this.store.select(
+    (state) => state[this.recordsService.stateName].searchQuery
+  );
+
   public form: FormGroup;
   public subscriptions: Subscription = new Subscription();
   @ViewChild("ngForm") public ngForm;
@@ -72,10 +67,10 @@ export class RecommendationsSearchComponent implements OnInit, OnDestroy {
   }
 
   public submitForm(searchQuery: string): void {
-    this.store.dispatch(new Search(searchQuery));
-    this.store.dispatch(new ResetSort());
-    this.store
-      .dispatch(new ResetPaginator())
+    this.recordsService.search(searchQuery);
+    this.recordsService.resetSort();
+    this.recordsService
+      .resetPaginator()
       .pipe(take(1))
       .subscribe(() => this.recordsService.updateRoute());
   }

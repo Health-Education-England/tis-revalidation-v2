@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { Sort as ISort } from "@angular/material/sort/sort";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { environment } from "@environment";
@@ -12,29 +12,28 @@ import { RecordsService } from "../services/records.service";
   selector: "app-record-list",
   templateUrl: "./record-list.component.html"
 })
-export class RecordListComponent implements OnChanges {
+export class RecordListComponent {
   @Input() public columnData: IRecordDataCell[];
   @Input() public dateColumns: string[];
   @Input() public detailsRoute: string;
-  @Input() public stateName: string;
 
   public dateFormat: string = environment.dateFormat;
   public params: Params;
 
   public loading$: Observable<boolean> = this.store.select(
-    (state) => state[this.stateName].loading
+    (state) => state[this.recordsService.stateName].loading
   );
   public items$: Observable<any[]> = this.store.select(
-    (state) => state[this.stateName].items
+    (state) => state[this.recordsService.stateName].items
   );
   public totalResults$: Observable<number> = this.store.select(
-    (state) => state[this.stateName].totalResults
+    (state) => state[this.recordsService.stateName].totalResults
   );
   public sort$: Observable<ISort> = this.store.select(
-    (state) => state[this.stateName].sort
+    (state) => state[this.recordsService.stateName].sort
   );
   public error$: Observable<string> = this.store.select(
-    (state) => state[this.stateName].error
+    (state) => state[this.recordsService.stateName].error
   );
 
   constructor(
@@ -43,13 +42,6 @@ export class RecordListComponent implements OnChanges {
     protected router: Router,
     protected store: Store
   ) {}
-
-  /**
-   * Set state name
-   */
-  ngOnChanges(changes: SimpleChanges): void {
-    this.recordsService.stateName = this.stateName;
-  }
 
   public get columnNames(): string[] {
     return this.columnData.map((i) => i.name);

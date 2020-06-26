@@ -1,0 +1,6 @@
+.record-search {
+  grid-template-columns: auto minmax(0, 1fr);
+  ::ng-deep .mat-form-field-infix {
+    width: auto;
+  }
+}

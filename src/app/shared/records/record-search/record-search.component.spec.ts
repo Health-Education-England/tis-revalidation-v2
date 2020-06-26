@@ -5,26 +5,31 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
-import { MaterialModule } from "../../shared/material/material.module";
-import { RecordsService } from "../../shared/records/services/records.service";
+import { MaterialModule } from "../../material/material.module";
+import { RecordsService } from "../services/records.service";
 import {
+  ClearSearch,
+  Filter,
+  Get,
+  Paginate,
+  ResetFilter,
   ResetPaginator,
   ResetSort,
-  Search
-} from "../state/recommendations.actions";
-import { RecommendationsState } from "../state/recommendations.state";
+  Search,
+  Sort
+} from "../../../recommendations/state/recommendations.actions";
+import { RecommendationsState } from "../../../recommendations/state/recommendations.state";
+import { RecordSearchComponent } from "./record-search.component";
 
-import { RecommendationsSearchComponent } from "./recommendations-search.component";
-
-describe("RecommendationsSearchComponent", () => {
+describe("RecordSearchComponent", () => {
   let store: Store;
-  let component: RecommendationsSearchComponent;
-  let fixture: ComponentFixture<RecommendationsSearchComponent>;
+  let component: RecordSearchComponent;
+  let fixture: ComponentFixture<RecordSearchComponent>;
   let recordsService: RecordsService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RecommendationsSearchComponent],
+      declarations: [RecordSearchComponent],
       imports: [
         MaterialModule,
         NgxsModule.forRoot([RecommendationsState]),
@@ -40,8 +45,20 @@ describe("RecommendationsSearchComponent", () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RecommendationsSearchComponent);
+    fixture = TestBed.createComponent(RecordSearchComponent);
     component = fixture.componentInstance;
+    recordsService.stateName = "recommendations";
+    recordsService.setActions(
+      ClearSearch,
+      Filter,
+      Get,
+      Paginate,
+      ResetFilter,
+      ResetPaginator,
+      ResetSort,
+      Search,
+      Sort
+    );
     fixture.detectChanges();
   });
 

@@ -52,6 +52,7 @@ describe("RecordListComponent", () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RecordListComponent);
     component = fixture.componentInstance;
+    recordsService.stateName = "recommendations";
     recordsService.setActions(
       ClearSearch,
       Filter,
@@ -71,7 +72,6 @@ describe("RecordListComponent", () => {
   });
 
   it("should select 'items$' from state", () => {
-    component.stateName = "recommendations";
     store.reset({
       recommendations: { items: mockRecommendationsResponse.traineeInfo }
     });
@@ -83,7 +83,6 @@ describe("RecordListComponent", () => {
   });
 
   it("should select 'sort$' from state", () => {
-    component.stateName = "recommendations";
     store.reset({ recommendations: { sort: DEFAULT_SORT } });
 
     component.sort$.subscribe((value) => {
@@ -138,7 +137,6 @@ describe("RecordListComponent", () => {
     spyOn(recordsService, "resetPaginator").and.callThrough();
     spyOn(recordsService, "updateRoute");
 
-    component.stateName = "recommendations";
     component.sort(mockSortEvent);
 
     expect(recordsService.sort).toHaveBeenCalledWith(

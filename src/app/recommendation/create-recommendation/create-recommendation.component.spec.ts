@@ -10,6 +10,7 @@ import { ActivatedRoute } from "@angular/router";
 import { Component } from "@angular/core";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { ReactiveFormsModule } from "@angular/forms";
+import { AuthService } from "src/app/core/auth/auth.service";
 
 @Component({
   template: `blank`
@@ -33,6 +34,7 @@ describe("CreateRecommendationComponent", () => {
         NgxsModule.forRoot([RecommendationHistoryState])
       ],
       providers: [
+        AuthService,
         {
           provide: ActivatedRoute,
           useValue: activatedRoute

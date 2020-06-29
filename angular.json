@@ -145,7 +145,8 @@
               "browserTarget": "revalidation:build:staging"
             },
             "mocky": {
-              "browserTarget": "revalidation:build:mocky"
+              "browserTarget": "revalidation:build:mocky",
+              "proxyConfig": "proxy.conf.json"
             }
           }
         },

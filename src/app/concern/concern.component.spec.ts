@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { ConcernComponent } from "./concern.component";
-import { Store, NgxsModule } from "@ngxs/store";
+import { NgxsModule } from "@ngxs/store";
 import { ConcernState } from "./state/concern.state";
 import { ConcernService } from "./service/concern.service";
 import { HttpClientTestingModule } from "@angular/common/http/testing";

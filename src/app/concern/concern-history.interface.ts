@@ -1,5 +1,3 @@
-import { Interface } from "readline";
-
 export interface IConcernHistory {
   gmcNumber: number;
   concerns: IConcernSummary[];

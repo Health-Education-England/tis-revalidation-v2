@@ -12,7 +12,6 @@ import { RouterTestingModule } from "@angular/router/testing";
 describe("ConcernComponent", () => {
   let component: ConcernComponent;
   let fixture: ComponentFixture<ConcernComponent>;
-  let store: Store;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -26,7 +25,6 @@ describe("ConcernComponent", () => {
       providers: [ConcernService],
       declarations: [ConcernComponent]
     }).compileComponents();
-    store = TestBed.inject(Store);
   }));
 
   beforeEach(() => {

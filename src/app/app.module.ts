@@ -10,6 +10,7 @@ import { AnalyticsModule, HotJarModule } from "hee-shared";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { AWS_CONFIG } from "./core/auth/aws-config";
+import { AdminsState } from "./shared/admins/state/admins.state";
 import { MainNavigationModule } from "./shared/main-navigation/main-navigation.module";
 import { MaterialModule } from "./shared/material/material.module";
 import { SharedModule } from "./shared/shared.module";
@@ -42,7 +43,9 @@ Amplify.configure(AWS_CONFIG);
       hotJarSv: environment.hotJarSv,
       enabled: environment.production
     }),
-    NgxsModule.forRoot([], { developmentMode: !environment.production }),
+    NgxsModule.forRoot([AdminsState], {
+      developmentMode: !environment.production
+    }),
     MainNavigationModule
   ],
   providers: [

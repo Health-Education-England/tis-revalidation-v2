@@ -115,9 +115,9 @@
       *matRowDef="let element; columns: columnsToDisplay"
       class="element-row"
       [class.expanded-row]="expandedElement === element"
-      (click)="currentExpanded(element)"
-      (keyup.enter)="currentExpanded(element)"
-      (keyup.space)="currentExpanded(element)"
+      (click)="currentExpanded(element, $event)"
+      (keyup.enter)="currentExpanded(element, $event)"
+      (keyup.space)="currentExpanded(element, $event)"
       [class.highlight-row-success]="
         recommendationStatus[element.recommendationStatus] !==
         recommendationStatus.SUBMITTED_TO_GMC

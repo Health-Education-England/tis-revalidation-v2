@@ -55,7 +55,8 @@ export class RecommendationTableComponent {
   @Select(RecommendationHistoryState.editRecommendation)
   editRecommendation$: Observable<boolean>;
 
-  currentExpanded(element: any) {
+  currentExpanded(element: any, event: Event) {
+    event.stopPropagation();
     this.expandedElement = this.expandedElement === element ? null : element;
   }
 }

@@ -32,7 +32,7 @@ describe("Concern actions", () => {
     httpMock = TestBed.inject(HttpTestingController);
   }));
 
-  it("should create an action and add an item", fakeAsync(() => {
+  it("should create a get concerns action", fakeAsync(() => {
     const gmcNumber = 1234;
 
     store.dispatch(new Get(gmcNumber));
@@ -50,7 +50,7 @@ describe("Concern actions", () => {
     expect(item).toEqual(ConcernHistoryResponse2);
   }));
 
-  it("should throw an error is id is not a number", fakeAsync(() => {
+  it("should throw an error if get id is not a number", fakeAsync(() => {
     const gmcNumber = Number("test");
     const errorHandler = TestBed.inject(ErrorHandler);
 

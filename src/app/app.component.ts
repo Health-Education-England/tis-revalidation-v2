@@ -10,6 +10,6 @@ export class AppComponent implements OnInit {
   constructor(private store: Store) {}
 
   ngOnInit(): void {
-    this.store.dispatch(new Get());
+    this.store.dispatch(new Get("site-admin-group"));
   }
 }

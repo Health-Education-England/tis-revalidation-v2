@@ -19,10 +19,10 @@ import { GetError, GetSuccess } from "../state/admins.actions";
 export class AdminsService {
   constructor(private store: Store, private snackBar: MatSnackBar) {}
 
-  public get listUsersInGroupRequest(): ListUsersInGroupRequest {
+  public listUsersInGroupRequest(groupName: string): ListUsersInGroupRequest {
     return {
       UserPoolId: environment.awsConfig.userPoolId,
-      GroupName: "site-admin-group"
+      GroupName: groupName
     };
   }
 
@@ -36,9 +36,9 @@ export class AdminsService {
     });
   }
 
-  public getAdminUsers(): void {
+  public getAdminUsers(groupName: string): void {
     this.awsCognito.listUsersInGroup(
-      this.listUsersInGroupRequest,
+      this.listUsersInGroupRequest(groupName),
       (error: AWSError, response: ListUsersResponse) => {
         if (error) {
           const errorMsg = `Error: ${error.message}`;

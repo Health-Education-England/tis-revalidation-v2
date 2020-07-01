@@ -30,8 +30,8 @@ export class AdminsState {
   }
 
   @Action(Get)
-  get() {
-    return this.adminsService.getAdminUsers();
+  get(action: Get) {
+    return this.adminsService.getAdminUsers(action.groupName);
   }
 
   @Action(GetSuccess)

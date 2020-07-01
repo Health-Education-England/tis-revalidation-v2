@@ -34,7 +34,7 @@ describe("Admins state", () => {
   it("should dispatch 'Get' and invoke `adminsService.getAdminUsers()`", () => {
     spyOn(adminsService, "getAdminUsers");
     store
-      .dispatch(new Get())
+      .dispatch(new Get("site-admin-group"))
       .subscribe(() => expect(adminsService.getAdminUsers).toHaveBeenCalled());
   });
 

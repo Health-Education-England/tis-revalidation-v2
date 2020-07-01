@@ -4,6 +4,7 @@ const label = `[Admins]`;
 
 export class Get {
   static readonly type = `${label} Get`;
+  constructor(public groupName: string) {}
 }
 
 export class GetSuccess {

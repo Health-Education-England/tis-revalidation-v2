@@ -34,5 +34,7 @@ export abstract class IEnvironment {
     readonly redirectSignOut: string;
     readonly responseType: string;
     readonly mandatorySignIn: boolean;
+    readonly accessKeyId: string;
+    readonly secretAccessKey: string;
   };
 }

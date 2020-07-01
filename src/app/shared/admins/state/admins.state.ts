@@ -30,7 +30,7 @@ export class AdminsState {
   }
 
   @Action(Get)
-  get(action: Get) {
+  get(ctx: StateContext<AdminsStateModel>, action: Get) {
     return this.adminsService.getAdminUsers(action.groupName);
   }
 

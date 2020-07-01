@@ -1,0 +1,42 @@
+@import "../../scss/utilities/spacing-helpers";
+
+@include mat-table-columns(
+  (
+    concernId: (
+      width: 60px
+    ),
+    dateOfIncident: (
+      width: 120px
+    ),
+    concernType: (
+      width: 200px
+    ),
+    source: (
+      width: 120px
+    ),
+    dateReported: (
+      width: 120px
+    ),
+    employer: (
+      width: 200px
+    ),
+    site: (
+      width: 200px
+    ),
+    grade: (
+      width: 200px
+    ),
+    status: (
+      width: 120px
+    ),
+    admin: (
+      width: 200px
+    ),
+    followUpDate: (
+      width: 120px
+    ),
+    lastUpdatedDate: (
+      width: 120px
+    )
+  )
+);

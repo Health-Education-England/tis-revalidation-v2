@@ -20,7 +20,10 @@ import { Observable } from "rxjs";
 @Component({
   selector: "app-recommendation-table",
   templateUrl: "./recommendation-table.component.html",
-  styleUrls: ["./recommendation-table.component.scss"],
+  styleUrls: [
+    "./recommendation-table.component.scss",
+    "../../shared/details/details.table.scss"
+  ],
   animations: [
     trigger("detailExpand", [
       state("collapsed", style({ height: "0px", minHeight: "0" })),
@@ -52,7 +55,8 @@ export class RecommendationTableComponent {
   @Select(RecommendationHistoryState.editRecommendation)
   editRecommendation$: Observable<boolean>;
 
-  currentExpanded(element: any) {
+  currentExpanded(element: any, event: Event) {
+    event.stopPropagation();
     this.expandedElement = this.expandedElement === element ? null : element;
   }
 }

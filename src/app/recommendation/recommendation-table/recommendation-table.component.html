@@ -83,24 +83,24 @@
             element == expandedElement ? 'expanded' : 'collapsed'
           "
         >
-          <div class="element-submission-status">
-            <h2 class="mat-h2">
+          <div class="element-expanded">
+            <h3 class="mat-h3">
               Submission Status:
               <span>
                 {{ recommendationStatus[element.recommendationStatus] }}
               </span>
-            </h2>
+            </h3>
           </div>
           <h3 class="mat-h3" *ngIf="element.comments?.length > 0">Comments:</h3>
           <ng-container *ngFor="let comment of element.comments">
             <mat-divider></mat-divider>
-            <div class="element-notes">
+            <div class="element-expanded">
               {{ comment }}
             </div>
           </ng-container>
           <ng-container *ngIf="element.deferralComment">
             <mat-divider></mat-divider>
-            <div class="element-notes">
+            <div class="element-expanded">
               {{ element.deferralComment | stripHtml }}
             </div>
           </ng-container>
@@ -115,9 +115,9 @@
       *matRowDef="let element; columns: columnsToDisplay"
       class="element-row"
       [class.expanded-row]="expandedElement === element"
-      (click)="currentExpanded(element)"
-      (keyup.enter)="currentExpanded(element)"
-      (keyup.space)="currentExpanded(element)"
+      (click)="currentExpanded(element, $event)"
+      (keyup.enter)="currentExpanded(element, $event)"
+      (keyup.space)="currentExpanded(element, $event)"
       [class.highlight-row-success]="
         recommendationStatus[element.recommendationStatus] !==
         recommendationStatus.SUBMITTED_TO_GMC

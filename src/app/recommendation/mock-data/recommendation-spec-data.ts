@@ -18,3 +18,8 @@ export const notesResponse1 = JSON.parse(`[
     {"id": "3", "note": "Donec laoreet sapien a eros commodo ultricies."},
     {"id": "99", "note": "Maecenas ac dui dignissim, faucibus lectus sit amet, feugiat neque. et massa quis urna elementum interdum in ac neque. Vestibulum ut justo mattis, eleifend neque et, vulputate neque. Duis ornare leo at posuere feugiat."}
   ]`);
+
+export const ConcernHistoryResponse1 = {};
+export const ConcernHistoryResponse2 = JSON.parse(
+  `{"gmcNumber":"65477888","concerns":[{"concernId":"70244","gmcNumber":"65477888","dateOfIncident":"2020-06-28","concernType":"AAAA","source":"BBBBB","dateReported":"2020-06-29","employer":"Royal London Hospital Trust","site":"AAAAA","grade":"Academic Clinical Fellow","status":"AAAAA","admin":"AAAAA","followUpDate":"2020-07-05","lastUpdatedDate":"2020-06-24","comments":["This is a test comment","and more"]},{"concernId":"70245","gmcNumber":"65477888","dateOfIncident":"2020-76-28","concernType":"AAAA","source":"BBBBB","dateReported":"2020-06-29","employer":"Royal London Hospital Trust","site":"AAAAA","grade":"Academic Clinical Fellow","status":"AAAAA","admin":"AAAAA","followUpDate":"2020-07-05","lastUpdatedDate":"2020-06-24","comments":["This is a test comment","and less","and very less"]}]}`
+);

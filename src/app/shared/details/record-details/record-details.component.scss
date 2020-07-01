@@ -1,7 +1,7 @@
 @import "~@angular/material/core/style/variables";
 
 .main-col {
-  grid-template-rows: 64px 0 auto;
+  grid-template-rows: 64px auto;
 }
 
 .record-details {
@@ -10,6 +10,7 @@
 
   .record-content-container {
     padding: 24px 16px;
+    overflow: hidden;
   }
 }
 

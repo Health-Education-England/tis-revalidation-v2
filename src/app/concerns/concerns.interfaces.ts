@@ -20,8 +20,3 @@ export interface IConcern {
   status: string;
   type: string;
 }
-
-export enum ConcernsFilterType {
-  OPEN = "Open",
-  CLOSED = "Closed"
-}

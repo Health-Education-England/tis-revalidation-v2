@@ -61,11 +61,11 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
   public listenToAllocateAdminsEvent(): void {
     this.subscriptions.add(
       this.enableAllocateAdmin$
-        .pipe(filter(Boolean))
+        .pipe(filter((value) => value !== undefined))
         .subscribe((enableAllocateAdmin: boolean) => {
-          if (enableAllocateAdmin) {
+          if (enableAllocateAdmin === true) {
             this.form.disable();
-          } else {
+          } else if (enableAllocateAdmin === false) {
             this.form.enable();
           }
         })

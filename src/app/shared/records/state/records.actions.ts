@@ -24,3 +24,7 @@ export class SearchPayload {
 export class PaginatePayload {
   constructor(public pageIndex: number) {}
 }
+
+export class EnableAllocateAdminPayload {
+  constructor(public enableAllocateAdmin: boolean) {}
+}

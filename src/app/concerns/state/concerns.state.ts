@@ -16,6 +16,7 @@ import { IConcern, IGetConcernsResponse } from "../concerns.interfaces";
 import { ConcernsService } from "../services/concerns.service";
 import {
   ClearSearch,
+  EnableAllocateAdmin,
   Filter,
   Get,
   GetError,
@@ -131,5 +132,13 @@ export class ConcernsState extends RecordsState {
   @Action(ResetFilter)
   resetFilter(ctx: StateContext<ConcernsStateModel>) {
     return super.resetFilterHandler(ctx, ConcernStatus.OPEN);
+  }
+
+  @Action(EnableAllocateAdmin)
+  enableAllocateAdmin(
+    ctx: StateContext<ConcernsStateModel>,
+    action: EnableAllocateAdmin
+  ) {
+    return super.enableAllocateAdminHandler(ctx, action.enableAllocateAdmin);
   }
 }

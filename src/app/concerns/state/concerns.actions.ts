@@ -1,5 +1,6 @@
 import { ConcernStatus } from "../../concern/concern-history.interface";
 import {
+  EnableAllocateAdminPayload,
   FilterPayload,
   GetErrorPayload,
   GetSuccessPayload,
@@ -53,4 +54,8 @@ export class Paginate extends PaginatePayload {
 
 export class ResetPaginator {
   static readonly type = `${label} Reset Paginator`;
+}
+
+export class EnableAllocateAdmin extends EnableAllocateAdminPayload {
+  static readonly type = `${label} Enable Allocate Admin`;
 }

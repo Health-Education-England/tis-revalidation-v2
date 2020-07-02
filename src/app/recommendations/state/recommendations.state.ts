@@ -19,6 +19,7 @@ import {
 } from "../recommendations.interfaces";
 import {
   ClearSearch,
+  EnableAllocateAdmin,
   Filter,
   Get,
   GetError,
@@ -155,5 +156,13 @@ export class RecommendationsState extends RecordsState {
       ctx,
       RecommendationsFilterType.UNDER_NOTICE
     );
+  }
+
+  @Action(EnableAllocateAdmin)
+  enableAllocateAdmin(
+    ctx: StateContext<RecommendationsStateModel>,
+    action: EnableAllocateAdmin
+  ) {
+    return super.enableAllocateAdminHandler(ctx, action.enableAllocateAdmin);
   }
 }

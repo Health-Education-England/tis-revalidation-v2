@@ -13,7 +13,8 @@ import {
   ResetPaginator,
   ResetSort,
   Search,
-  Sort
+  Sort,
+  EnableAllocateAdmin
 } from "./state/concerns.actions";
 
 @Injectable()
@@ -33,7 +34,8 @@ export class ConcernsResolver extends RecordsResolver implements Resolve<any> {
       ResetPaginator,
       ResetSort,
       Search,
-      Sort
+      Sort,
+      EnableAllocateAdmin
     );
   }
 

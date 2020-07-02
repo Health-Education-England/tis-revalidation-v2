@@ -22,6 +22,7 @@ export class RecordsService {
   public resetSortAction: any;
   public searchAction: any;
   public sortAction: any;
+  public enableAllocateAdminAction: any;
 
   constructor(
     private http: HttpClient,
@@ -38,7 +39,8 @@ export class RecordsService {
     resetPaginatorAction,
     resetSortAction,
     searchAction,
-    sortAction
+    sortAction,
+    enableAllocateAdminAction
   ): void {
     this.clearSearchAction = clearSearchAction;
     this.filterAction = filterAction;
@@ -49,6 +51,7 @@ export class RecordsService {
     this.resetSortAction = resetSortAction;
     this.searchAction = searchAction;
     this.sortAction = sortAction;
+    this.enableAllocateAdminAction = enableAllocateAdminAction;
   }
 
   public getRecords<T>(endPoint: string, params?: HttpParams): Observable<T> {
@@ -175,6 +178,16 @@ export class RecordsService {
     return this.resetSortPageAndSearch().pipe(
       take(1),
       switchMap(() => this.resetFilter())
+    );
+  }
+
+  public enableAllocateAdmin(enableAllocateAdmin: boolean): Observable<any> {
+    if (!this.enableAllocateAdminAction) {
+      throw new Error("enableAllocateAdminAction must be defined");
+    }
+
+    return this.store.dispatch(
+      new this.enableAllocateAdminAction(enableAllocateAdmin)
     );
   }
 }

@@ -11,6 +11,7 @@ import { IRecommendation } from "../../../recommendations/recommendations.interf
 import { mockRecommendationsResponse } from "../../../recommendations/services/recommendations.service.spec";
 import {
   ClearSearch,
+  EnableAllocateAdmin,
   Filter,
   Get,
   Paginate,
@@ -62,7 +63,8 @@ describe("RecordListComponent", () => {
       ResetPaginator,
       ResetSort,
       Search,
-      Sort
+      Sort,
+      EnableAllocateAdmin
     );
     fixture.detectChanges();
   });

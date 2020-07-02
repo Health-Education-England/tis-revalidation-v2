@@ -7,6 +7,7 @@ import { MaterialModule } from "../../material/material.module";
 import { RecordsService } from "../services/records.service";
 import {
   ClearSearch,
+  EnableAllocateAdmin,
   Filter,
   Get,
   Paginate,
@@ -54,7 +55,8 @@ describe("ResetRecordListComponent", () => {
       ResetPaginator,
       ResetSort,
       Search,
-      Sort
+      Sort,
+      EnableAllocateAdmin
     );
   });
 

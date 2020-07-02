@@ -35,6 +35,9 @@ export class RecordListComponent {
   public error$: Observable<string> = this.store.select(
     (state) => state[this.recordsService.stateName].error
   );
+  public enableAllocateAdmin$: Observable<boolean> = this.store.select(
+    (state) => state[this.recordsService.stateName].enableAllocateAdmin
+  );
 
   constructor(
     protected activatedRoute: ActivatedRoute,

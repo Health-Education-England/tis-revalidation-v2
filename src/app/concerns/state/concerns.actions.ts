@@ -1,3 +1,4 @@
+import { ConcernStatus } from "../../concern/concern-history.interface";
 import {
   FilterPayload,
   GetErrorPayload,
@@ -6,10 +7,7 @@ import {
   SearchPayload,
   SortPayload
 } from "../../shared/records/state/records.actions";
-import {
-  ConcernsFilterType,
-  IGetConcernsResponse
-} from "../concerns.interfaces";
+import { IGetConcernsResponse } from "../concerns.interfaces";
 
 const label = `[Concerns]`;
 
@@ -33,7 +31,7 @@ export class ResetSort {
   static readonly type = `${label} Reset Sort`;
 }
 
-export class Filter extends FilterPayload<ConcernsFilterType> {
+export class Filter extends FilterPayload<ConcernStatus> {
   static readonly type = `${label} Filter`;
 }
 

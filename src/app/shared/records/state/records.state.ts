@@ -5,6 +5,7 @@ import { DEFAULT_SORT } from "../constants";
 import { RecordsService } from "../services/records.service";
 
 export class RecordsStateModel<T, F> {
+  public enableAllocateAdmin?: boolean;
   public error?: string;
   public filter: T;
   public items: F;
@@ -21,8 +22,8 @@ export const defaultRecordsState = {
   loading: null,
   pageIndex: 0,
   searchQuery: null,
-  totalPages: null,
   sort: DEFAULT_SORT,
+  totalPages: null,
   totalResults: null
 };
 
@@ -74,6 +75,12 @@ export class RecordsState {
   static filter<T>() {
     return createSelector([this], (state: { filter: T }) => {
       return state.filter;
+    });
+  }
+
+  static enableAllocateAdmin<T>() {
+    return createSelector([this], (state: { enableAllocateAdmin: boolean }) => {
+      return state.enableAllocateAdmin;
     });
   }
 
@@ -146,5 +153,11 @@ export class RecordsState {
 
   protected resetFilterHandler(ctx: StateContext<any>, action: any) {
     ctx.patchState({ filter: action });
+  }
+
+  protected enableAllocateAdminHandler(ctx: StateContext<any>, action: any) {
+    ctx.patchState({
+      enableAllocateAdmin: action
+    });
   }
 }

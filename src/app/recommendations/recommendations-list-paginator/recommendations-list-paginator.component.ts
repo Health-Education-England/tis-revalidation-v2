@@ -16,6 +16,9 @@ export class RecommendationsListPaginatorComponent {
   public totalResults$: Observable<number>;
   @Select(RecommendationsState.pageIndex<number>())
   public pageIndex$: Observable<number>;
+  public enableAllocateAdmin$: Observable<boolean> = this.store.select(
+    (state) => state[this.recordsService.stateName].enableAllocateAdmin
+  );
 
   constructor(private store: Store, private recordsService: RecordsService) {}
 

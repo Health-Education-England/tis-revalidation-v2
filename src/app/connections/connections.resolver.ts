@@ -13,7 +13,8 @@ import {
   ResetPaginator,
   ResetSort,
   Search,
-  Sort
+  Sort,
+  EnableAllocateAdmin
 } from "./state/connections.actions";
 
 @Injectable()
@@ -34,7 +35,8 @@ export class ConnectionsResolver extends RecordsResolver
       ResetPaginator,
       ResetSort,
       Search,
-      Sort
+      Sort,
+      EnableAllocateAdmin
     );
   }
 

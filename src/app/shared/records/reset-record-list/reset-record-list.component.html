@@ -1,3 +1,8 @@
-<button mat-menu-item (click)="resetRecordList()" aria-label="Clear all">
+<button
+  mat-menu-item
+  (click)="resetRecordList()"
+  aria-label="Clear all"
+  [disabled]="enableAllocateAdmin$ | async"
+>
   Clear all
 </button>

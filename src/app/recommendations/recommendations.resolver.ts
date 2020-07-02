@@ -6,6 +6,7 @@ import { RecordsResolver } from "../shared/records/records.resolver";
 import { RecordsService } from "../shared/records/services/records.service";
 import {
   ClearSearch,
+  EnableAllocateAdmin,
   Filter,
   Get,
   Paginate,
@@ -34,7 +35,8 @@ export class RecommendationsResolver extends RecordsResolver
       ResetPaginator,
       ResetSort,
       Search,
-      Sort
+      Sort,
+      EnableAllocateAdmin
     );
   }
 

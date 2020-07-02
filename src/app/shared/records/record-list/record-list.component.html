@@ -29,7 +29,8 @@
             mat-table
             *ngIf="{
               sort: sort$ | async,
-              items: items$ | async
+              items: items$ | async,
+              enableAllocateAdmin: enableAllocateAdmin$ | async
             } as data"
             class="w-100"
             [dataSource]="data.items"
@@ -52,6 +53,7 @@
                   *matHeaderCellDef
                   [mat-sort-header]="i.name"
                   scope="col"
+                  [disabled]="data.enableAllocateAdmin"
                 >
                   {{ i.label }}
                 </th>

@@ -15,6 +15,9 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
   public searchQuery$: Observable<string> = this.store.select(
     (state) => state[this.recordsService.stateName].searchQuery
   );
+  public enableAllocateAdmin$: Observable<boolean> = this.store.select(
+    (state) => state[this.recordsService.stateName].enableAllocateAdmin
+  );
 
   public form: FormGroup;
   public subscriptions: Subscription = new Subscription();
@@ -29,7 +32,8 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.setupForm();
-    this.setupSubscription();
+    this.listenToClearAllEvent();
+    this.listenToAllocateAdminsEvent();
   }
 
   public setupForm(): void {
@@ -46,11 +50,25 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
    * so therefore form must be reset by resetForm() instead of FormGroup's reset()
    * https://github.com/angular/components/issues/4190
    */
-  public setupSubscription(): void {
+  public listenToClearAllEvent(): void {
     this.subscriptions.add(
       this.recordsService.resetSearchForm$
         .pipe(filter(Boolean))
         .subscribe(() => this.ngForm.resetForm())
+    );
+  }
+
+  public listenToAllocateAdminsEvent(): void {
+    this.subscriptions.add(
+      this.enableAllocateAdmin$
+        .pipe(filter(Boolean))
+        .subscribe((enableAllocateAdmin: boolean) => {
+          if (enableAllocateAdmin) {
+            this.form.disable();
+          } else {
+            this.form.enable();
+          }
+        })
     );
   }
 

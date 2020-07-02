@@ -18,6 +18,9 @@ export class RecommendationsFiltersComponent {
   >;
   @Select(RecommendationsState.filter<RecommendationsFilterType>())
   public filter$: Observable<RecommendationsFilterType>;
+  public enableAllocateAdmin$: Observable<boolean> = this.store.select(
+    (state) => state[this.recordsService.stateName].enableAllocateAdmin
+  );
   public allDoctors: RecommendationsFilterType =
     RecommendationsFilterType.ALL_DOCTORS;
   public underNotice: RecommendationsFilterType =

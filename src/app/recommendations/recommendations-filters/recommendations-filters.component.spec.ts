@@ -15,7 +15,8 @@ import {
   Paginate,
   ResetFilter,
   Search,
-  Sort
+  Sort,
+  EnableAllocateAdmin
 } from "../state/recommendations.actions";
 import { RecommendationsState } from "../state/recommendations.state";
 
@@ -58,7 +59,8 @@ describe("RecommendationsFiltersComponent", () => {
       ResetPaginator,
       ResetSort,
       Search,
-      Sort
+      Sort,
+      EnableAllocateAdmin
     );
   });
 

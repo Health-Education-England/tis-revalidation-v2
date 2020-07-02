@@ -1,5 +1,4 @@
 import { Component } from "@angular/core";
-import { Sort } from "@angular/material/sort";
 import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
@@ -10,11 +9,8 @@ import { RecordsService } from "../services/records.service";
   templateUrl: "./reset-record-list.component.html"
 })
 export class ResetRecordListComponent {
-  public sort$: Observable<Sort> = this.store.select(
-    (state) => state[this.recordsService.stateName].sort
-  );
-  public pageIndex$: Observable<number> = this.store.select(
-    (state) => state[this.recordsService.stateName].pageIndex
+  public enableAllocateAdmin$: Observable<boolean> = this.store.select(
+    (state) => state[this.recordsService.stateName].enableAllocateAdmin
   );
 
   constructor(private store: Store, private recordsService: RecordsService) {}

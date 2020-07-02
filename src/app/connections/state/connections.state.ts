@@ -18,6 +18,7 @@ import { DEFAULT_SORT } from "../../shared/records/constants";
 import { ConnectionsService } from "../services/connections.service";
 import {
   ClearSearch,
+  EnableAllocateAdmin,
   Filter,
   Paginate,
   ResetPaginator,
@@ -126,5 +127,13 @@ export class ConnectionsState extends RecordsState {
   @Action(ResetFilter)
   resetFilter(ctx: StateContext<ConnectionsStateModel>) {
     return super.resetFilterHandler(ctx, ConnectionsFilterType.ALL);
+  }
+
+  @Action(EnableAllocateAdmin)
+  enableAllocateAdmin(
+    ctx: StateContext<ConnectionsStateModel>,
+    action: EnableAllocateAdmin
+  ) {
+    return super.enableAllocateAdminHandler(ctx, action.enableAllocateAdmin);
   }
 }

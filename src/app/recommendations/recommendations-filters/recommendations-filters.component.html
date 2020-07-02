@@ -2,7 +2,8 @@
   *ngIf="{
     countTotal: countTotal$ | async,
     countUnderNotice: countUnderNotice$ | async,
-    filter: filter$ | async
+    filter: filter$ | async,
+    enableAllocateAdmin: enableAllocateAdmin$ | async
   } as data"
 >
   <nav mat-tab-nav-bar>
@@ -11,6 +12,7 @@
       [active]="data.filter === allDoctors"
       aria-label="Filter all doctors"
       (click)="filterByAllDoctors()"
+      [disabled]="data.enableAllocateAdmin"
     >
       ALL DOCTORS - {{ data.countTotal }}
     </a>
@@ -19,6 +21,7 @@
       [active]="data.filter === underNotice"
       aria-label="Filter under notice"
       (click)="filterByUnderNotice()"
+      [disabled]="data.enableAllocateAdmin"
     >
       UNDER NOTICE - {{ data.countUnderNotice }}
     </a>

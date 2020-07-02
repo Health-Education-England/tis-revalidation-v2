@@ -9,6 +9,7 @@ import { MaterialModule } from "../../material/material.module";
 import { RecordsService } from "../services/records.service";
 import {
   ClearSearch,
+  EnableAllocateAdmin,
   Filter,
   Get,
   Paginate,
@@ -57,7 +58,8 @@ describe("RecordSearchComponent", () => {
       ResetPaginator,
       ResetSort,
       Search,
-      Sort
+      Sort,
+      EnableAllocateAdmin
     );
     fixture.detectChanges();
   });
@@ -73,9 +75,9 @@ describe("RecordSearchComponent", () => {
   });
 
   it("should invoke setupSubscription() on `ngOnInit()`", () => {
-    spyOn(component, "setupSubscription");
+    spyOn(component, "listenToClearAllEvent");
     component.ngOnInit();
-    expect(component.setupSubscription).toHaveBeenCalled();
+    expect(component.listenToClearAllEvent).toHaveBeenCalled();
   });
 
   it("should create form, form control with default value", () => {
@@ -92,7 +94,7 @@ describe("RecordSearchComponent", () => {
     spyOn(component.ngForm, "resetForm");
 
     recordsService.resetSearchForm$.next(true);
-    component.setupSubscription();
+    component.listenToClearAllEvent();
 
     expect(component.ngForm.resetForm).toHaveBeenCalled();
   });

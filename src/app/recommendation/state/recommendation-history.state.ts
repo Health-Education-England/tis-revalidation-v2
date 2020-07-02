@@ -14,22 +14,7 @@ import { RecommendationHistoryService } from "../services/recommendation-history
 export class RecommendationHistoryStateModel {
   public item: IRecommendationHistory;
 }
-export const defaultRecommendation: IRecommendationSummary = {
-  actualSubmissionDate: null,
-  admin: null,
-  comments: [],
-  deferralComment: null,
-  deferralDate: null,
-  deferralReason: null,
-  deferralSubReason: null,
-  gmcNumber: null,
-  gmcOutcome: null,
-  gmcRevalidationId: null,
-  gmcSubmissionDate: null,
-  recommendationId: null,
-  recommendationStatus: null,
-  recommendationType: null
-};
+
 @State<RecommendationHistoryStateModel>({
   name: "recommendationHistory",
   defaults: {
@@ -41,7 +26,7 @@ export const defaultRecommendation: IRecommendationSummary = {
       currentGrade: null,
       deferralReasons: [],
       underNotice: null,
-      revalidations: [defaultRecommendation]
+      revalidations: []
     }
   }
 })

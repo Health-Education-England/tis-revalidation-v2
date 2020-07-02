@@ -124,7 +124,11 @@
       </td>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr
+      mat-header-row
+      *matHeaderRowDef="columnsToDisplay"
+      [ngClass]="{ hide: concernHistory?.length === 0 }"
+    ></tr>
     <tr
       tabindex="0"
       mat-row
@@ -145,14 +149,15 @@
     ></tr>
 
     <ng-container matColumnDef="noRecord">
-      <td colspan="5" mat-footer-cell class="centered" *matFooterCellDef>
-        <em class="icon-red">No history available.</em>
+      <td colspan="12" mat-footer-cell class="centered" *matFooterCellDef>
+        <em class="icon-warn">No history available.</em>
       </td>
     </ng-container>
 
     <tr
       mat-footer-row
       *matFooterRowDef="['noRecord']"
+      class="highlight-row-warn"
       [ngClass]="{ hide: concernHistory?.length > 0 }"
     ></tr>
   </table>

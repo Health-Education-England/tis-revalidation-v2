@@ -15,7 +15,7 @@ export const APP_URLS_CONFIG: IEnvironment["appUrls"] = {
 };
 
 export const AWS_CONFIG: IEnvironment["awsConfig"] = {
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  accessKeyId: "AKIAWISJGQ6JUF3LSWMO",
   authenticationFlowType: "USER_PASSWORD_AUTH",
   domain: "stage-auth.tis.nhs.uk",
   mandatorySignIn: null,
@@ -24,7 +24,7 @@ export const AWS_CONFIG: IEnvironment["awsConfig"] = {
   region: "eu-west-2",
   responseType: "token",
   scope: ["openid", "aws.cognito.signin.user.admin"],
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  secretAccessKey: "hriPPZQppD+5DM02iE+wVX1+jOCUyXkqK34Fzfl4",
   userPoolId: "eu-west-2_hkwYIoHu3",
   userPoolWebClientId: "3adscm2usl3lop510nfijpr12f"
 };

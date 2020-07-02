@@ -4,8 +4,6 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Pre requisite
 
-- Once you have acquired aws access and credentials you must create `AWS_SECRET_ACCESS_KEY` and `AWS_ACCESS_KEY_ID`
-  system environment variables in order for the application to read there values.
 - Clone this repo and then run `npm install` in order to get all dependencies.
 
 ## Development server

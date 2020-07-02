@@ -88,12 +88,14 @@ export class ConfirmRecommendationComponent implements OnInit {
   private getCurrentRecommendation(): void {
     this.currentRecommendation$
       .pipe(
-        filter((res) => res.recommendationId !== null),
+        filter((res) => res && res.recommendationId !== null),
         take(1)
       )
       .subscribe((currentRecommendation: IRecommendationSummary) => {
-        this.recommendationId = currentRecommendation.recommendationId;
-        this.gmcNumber = Number(currentRecommendation.gmcNumber);
+        if (currentRecommendation) {
+          this.recommendationId = currentRecommendation.recommendationId;
+          this.gmcNumber = Number(currentRecommendation.gmcNumber);
+        }
       });
   }
 

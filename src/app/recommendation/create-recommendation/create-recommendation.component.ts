@@ -1,14 +1,12 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Subscription, Observable, of } from "rxjs";
 import { Select, Store } from "@ngxs/store";
-import {
-  RecommendationHistoryState,
-  defaultRecommendation
-} from "../state/recommendation-history.state";
+import { RecommendationHistoryState } from "../state/recommendation-history.state";
 import {
   DeferralReason,
   IRecommendationSummary,
-  RecommendationType
+  RecommendationType,
+  defaultRecommendation
 } from "../recommendation-history.interface";
 import { tap, distinctUntilChanged, catchError } from "rxjs/operators";
 import { FormGroup, FormControl, FormArray, Validators } from "@angular/forms";

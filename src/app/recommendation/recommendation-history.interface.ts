@@ -61,3 +61,20 @@ export interface DeferralReason {
   reason: string;
   subReasons: DeferralReason[] | any;
 }
+
+export const defaultRecommendation: IRecommendationSummary = {
+  actualSubmissionDate: null,
+  admin: null,
+  comments: [],
+  deferralComment: null,
+  deferralDate: null,
+  deferralReason: null,
+  deferralSubReason: null,
+  gmcNumber: null,
+  gmcOutcome: null,
+  gmcRevalidationId: null,
+  gmcSubmissionDate: null,
+  recommendationId: null,
+  recommendationStatus: null,
+  recommendationType: null
+};

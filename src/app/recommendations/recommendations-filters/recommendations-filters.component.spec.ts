@@ -16,7 +16,9 @@ import {
   ResetFilter,
   Search,
   Sort,
-  EnableAllocateAdmin
+  EnableAllocateAdmin,
+  ToggleAllCheckboxes,
+  ToggleCheckbox
 } from "../state/recommendations.actions";
 import { RecommendationsState } from "../state/recommendations.state";
 
@@ -60,7 +62,9 @@ describe("RecommendationsFiltersComponent", () => {
       ResetSort,
       Search,
       Sort,
-      EnableAllocateAdmin
+      EnableAllocateAdmin,
+      ToggleAllCheckboxes,
+      ToggleCheckbox
     );
   });
 

@@ -4,7 +4,8 @@ export interface IGetRecordsResponse {
 }
 
 export interface IRecordDataCell {
-  label: string;
+  isCheckbox?: boolean;
+  label?: string;
   name: string;
-  enableSort: boolean;
+  enableSort?: boolean;
 }

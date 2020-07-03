@@ -8,6 +8,7 @@ export interface IGetConnectionsResponse extends IGetRecordsResponse {
 // TODO subject to change once BE work is complete
 export interface IConnection {
   currentConnection: string;
+  checked?: boolean;
   designatedBody: string;
   doctorFirstName: string;
   doctorLastName: string;

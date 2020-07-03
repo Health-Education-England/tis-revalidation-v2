@@ -30,7 +30,9 @@
             *ngIf="{
               sort: sort$ | async,
               items: items$ | async,
-              enableAllocateAdmin: enableAllocateAdmin$ | async
+              enableAllocateAdmin: enableAllocateAdmin$ | async,
+              allChecked: allChecked$ | async,
+              someChecked: someChecked$ | async
             } as data"
             class="w-100"
             [dataSource]="data.items"
@@ -47,6 +49,7 @@
               *ngFor="let i of columnData"
               matColumnDef="{{ i.name }}"
             >
+              <!-- Header cells -->
               <ng-container *ngIf="i.enableSort; else disabledSort">
                 <th
                   mat-header-cell
@@ -65,13 +68,41 @@
                   [mat-sort-header]="i.name"
                   scope="col"
                   disabled
+                  [class.checkbox]="data.enableAllocateAdmin"
                 >
-                  {{ i.label }}
+                  <!-- toggle all checkboxes -->
+                  <ng-container
+                    *ngIf="
+                      data.enableAllocateAdmin && i.isCheckbox;
+                      else nonCheckbox
+                    "
+                  >
+                    <mat-checkbox
+                      [checked]="data.allChecked"
+                      [indeterminate]="data.someChecked"
+                      (change)="toggleAllCheckboxes()"
+                    >
+                    </mat-checkbox>
+                  </ng-container>
+
+                  <!-- header label -->
+                  <ng-template #nonCheckbox>
+                    {{ i.label }}
+                  </ng-template>
                 </th>
               </ng-template>
 
               <!-- mat cell -->
               <td mat-cell *matCellDef="let element">
+                <!-- checkbox -->
+                <ng-container *ngIf="data.enableAllocateAdmin && i.isCheckbox">
+                  <mat-checkbox
+                    [checked]="element.checked"
+                    (change)="toggleCheckbox(element.gmcReferenceNumber)"
+                  ></mat-checkbox>
+                </ng-container>
+
+                <!-- cell value -->
                 <ng-container
                   *ngIf="dateColumns.includes(i.name); else noPipe"
                   >{{ element[i.name] | date: dateFormat }}</ng-container
@@ -84,10 +115,15 @@
             <tr
               mat-row
               *matRowDef="let row; columns: columnNames"
-              (click)="navigateToDetails($event, row)"
-              (keyup.enter)="navigateToDetails($event, row)"
-              (keyup.space)="navigateToDetails($event, row)"
+              (click)="navigateToDetails($event, row, data.enableAllocateAdmin)"
+              (keyup.enter)="
+                navigateToDetails($event, row, data.enableAllocateAdmin)
+              "
+              (keyup.space)="
+                navigateToDetails($event, row, data.enableAllocateAdmin)
+              "
               [class.highlight-row-warn]="row.underNotice === 'YES'"
+              [class.cursor-auto]="data.enableAllocateAdmin"
               tabindex="0"
             ></tr>
           </table>

@@ -14,7 +14,9 @@ import {
   ResetPaginator,
   ResetSort,
   Search,
-  Sort
+  Sort,
+  ToggleCheckbox,
+  ToggleAllCheckboxes
 } from "./state/recommendations.actions";
 
 @Injectable()
@@ -36,7 +38,9 @@ export class RecommendationsResolver extends RecordsResolver
       ResetSort,
       Search,
       Sort,
-      EnableAllocateAdmin
+      EnableAllocateAdmin,
+      ToggleCheckbox,
+      ToggleAllCheckboxes
     );
   }
 

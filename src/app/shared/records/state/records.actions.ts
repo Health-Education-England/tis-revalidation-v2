@@ -28,3 +28,7 @@ export class PaginatePayload {
 export class EnableAllocateAdminPayload {
   constructor(public enableAllocateAdmin: boolean) {}
 }
+
+export class ToggleCheckboxPayload {
+  constructor(public gmcReferenceNumber: string) {}
+}

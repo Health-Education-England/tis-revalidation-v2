@@ -14,7 +14,9 @@ import {
   ResetSort,
   Search,
   Sort,
-  EnableAllocateAdmin
+  EnableAllocateAdmin,
+  ToggleCheckbox,
+  ToggleAllCheckboxes
 } from "./state/concerns.actions";
 
 @Injectable()
@@ -35,7 +37,9 @@ export class ConcernsResolver extends RecordsResolver implements Resolve<any> {
       ResetSort,
       Search,
       Sort,
-      EnableAllocateAdmin
+      EnableAllocateAdmin,
+      ToggleCheckbox,
+      ToggleAllCheckboxes
     );
   }
 

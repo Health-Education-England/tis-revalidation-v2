@@ -6,7 +6,8 @@ import {
   GetSuccessPayload,
   PaginatePayload,
   SearchPayload,
-  SortPayload
+  SortPayload,
+  ToggleCheckboxPayload
 } from "../../shared/records/state/records.actions";
 import { IGetConcernsResponse } from "../concerns.interfaces";
 
@@ -58,4 +59,12 @@ export class ResetPaginator {
 
 export class EnableAllocateAdmin extends EnableAllocateAdminPayload {
   static readonly type = `${label} Enable Allocate Admin`;
+}
+
+export class ToggleCheckbox extends ToggleCheckboxPayload {
+  static readonly type = `${label} Toggle Checkbox`;
+}
+
+export class ToggleAllCheckboxes {
+  static readonly type = `${label} Toggle All Checkboxes`;
 }

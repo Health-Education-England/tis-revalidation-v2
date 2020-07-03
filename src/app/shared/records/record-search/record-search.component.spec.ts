@@ -17,7 +17,9 @@ import {
   ResetPaginator,
   ResetSort,
   Search,
-  Sort
+  Sort,
+  ToggleAllCheckboxes,
+  ToggleCheckbox
 } from "../../../recommendations/state/recommendations.actions";
 import { RecommendationsState } from "../../../recommendations/state/recommendations.state";
 import { RecordSearchComponent } from "./record-search.component";
@@ -59,7 +61,9 @@ describe("RecordSearchComponent", () => {
       ResetSort,
       Search,
       Sort,
-      EnableAllocateAdmin
+      EnableAllocateAdmin,
+      ToggleAllCheckboxes,
+      ToggleCheckbox
     );
     fixture.detectChanges();
   });

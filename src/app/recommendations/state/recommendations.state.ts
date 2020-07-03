@@ -29,7 +29,9 @@ import {
   ResetPaginator,
   ResetSort,
   Search,
-  Sort
+  Sort,
+  ToggleAllCheckboxes,
+  ToggleCheckbox
 } from "./recommendations.actions";
 
 export class RecommendationsStateModel extends RecordsStateModel<
@@ -164,5 +166,18 @@ export class RecommendationsState extends RecordsState {
     action: EnableAllocateAdmin
   ) {
     return super.enableAllocateAdminHandler(ctx, action.enableAllocateAdmin);
+  }
+
+  @Action(ToggleCheckbox)
+  toggleCheckbox(
+    ctx: StateContext<RecommendationsStateModel>,
+    action: ToggleCheckbox
+  ) {
+    return super.toggleCheckboxHandler(ctx, action);
+  }
+
+  @Action(ToggleAllCheckboxes)
+  toggleAllCheckboxes(ctx: StateContext<RecommendationsStateModel>) {
+    return super.toggleAllCheckboxesHandler(ctx);
   }
 }

@@ -23,6 +23,8 @@ export class RecordsService {
   public searchAction: any;
   public sortAction: any;
   public enableAllocateAdminAction: any;
+  public toggleCheckboxAction: any;
+  public toggleAllCheckboxesAction: any;
 
   constructor(
     private http: HttpClient,
@@ -40,7 +42,9 @@ export class RecordsService {
     resetSortAction,
     searchAction,
     sortAction,
-    enableAllocateAdminAction
+    enableAllocateAdminAction,
+    toggleCheckboxAction,
+    toggleAllCheckboxesAction
   ): void {
     this.clearSearchAction = clearSearchAction;
     this.filterAction = filterAction;
@@ -52,6 +56,8 @@ export class RecordsService {
     this.searchAction = searchAction;
     this.sortAction = sortAction;
     this.enableAllocateAdminAction = enableAllocateAdminAction;
+    this.toggleCheckboxAction = toggleCheckboxAction;
+    this.toggleAllCheckboxesAction = toggleAllCheckboxesAction;
   }
 
   public getRecords<T>(endPoint: string, params?: HttpParams): Observable<T> {
@@ -189,5 +195,23 @@ export class RecordsService {
     return this.store.dispatch(
       new this.enableAllocateAdminAction(enableAllocateAdmin)
     );
+  }
+
+  public toggleCheckbox(gmcReferenceNumber: string): Observable<any> {
+    if (!this.toggleCheckboxAction) {
+      throw new Error("toggleCheckboxAction must be defined");
+    }
+
+    return this.store.dispatch(
+      new this.toggleCheckboxAction(gmcReferenceNumber)
+    );
+  }
+
+  public toggleAllCheckboxes(): Observable<any> {
+    if (!this.toggleAllCheckboxesAction) {
+      throw new Error("toggleAllCheckboxesAction must be defined");
+    }
+
+    return this.store.dispatch(new this.toggleAllCheckboxesAction());
   }
 }

@@ -6,6 +6,7 @@ export interface IGetConcernsResponse extends IGetRecordsResponse {
 
 export interface IConcern {
   admin: string;
+  checked?: boolean;
   closedDate: string;
   concernsStatus: string;
   dateAdded: string;

@@ -14,8 +14,10 @@ import {
   ResetSort,
   Search,
   Sort,
-  EnableAllocateAdmin
-} from "./state/connections.actions";
+  EnableAllocateAdmin,
+  ToggleCheckbox,
+  ToggleAllCheckboxes
+} from "../shared/records/state/records.actions";
 
 @Injectable()
 export class ConnectionsResolver extends RecordsResolver
@@ -36,7 +38,9 @@ export class ConnectionsResolver extends RecordsResolver
       ResetSort,
       Search,
       Sort,
-      EnableAllocateAdmin
+      EnableAllocateAdmin,
+      ToggleCheckbox,
+      ToggleAllCheckboxes
     );
   }
 

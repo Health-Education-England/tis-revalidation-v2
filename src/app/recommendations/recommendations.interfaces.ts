@@ -4,6 +4,7 @@ import { RecommendationStatus } from "../recommendation/recommendation-history.i
 export interface IRecommendation {
   admin: string;
   cctDate: string;
+  checked?: boolean;
   dateAdded: string;
   doctorFirstName: string;
   doctorLastName: string;

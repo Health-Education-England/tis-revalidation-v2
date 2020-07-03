@@ -15,8 +15,10 @@ import {
   ResetPaginator,
   ResetSort,
   Search,
-  Sort
-} from "../../../recommendations/state/recommendations.actions";
+  Sort,
+  ToggleAllCheckboxes,
+  ToggleCheckbox
+} from "../state/records.actions";
 import { RecommendationsState } from "../../../recommendations/state/recommendations.state";
 import { ResetRecordListComponent } from "./reset-record-list.component";
 
@@ -56,7 +58,9 @@ describe("ResetRecordListComponent", () => {
       ResetSort,
       Search,
       Sort,
-      EnableAllocateAdmin
+      EnableAllocateAdmin,
+      ToggleAllCheckboxes,
+      ToggleCheckbox
     );
   });
 

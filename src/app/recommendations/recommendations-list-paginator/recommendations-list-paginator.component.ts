@@ -4,7 +4,7 @@ import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
 import { RecordsService } from "../../shared/records/services/records.service";
-import { Paginate } from "../state/recommendations.actions";
+import { Paginate } from "../../shared/records/state/records.actions";
 import { RecommendationsState } from "../state/recommendations.state";
 
 @Component({

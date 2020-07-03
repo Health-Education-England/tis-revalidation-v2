@@ -19,8 +19,10 @@ import {
   ResetPaginator,
   ResetSort,
   Search,
-  Sort
-} from "../../../recommendations/state/recommendations.actions";
+  Sort,
+  ToggleAllCheckboxes,
+  ToggleCheckbox
+} from "../state/records.actions";
 import { RecommendationsState } from "../../../recommendations/state/recommendations.state";
 import { MaterialModule } from "../../material/material.module";
 import { DEFAULT_SORT, generateColumnData } from "../constants";
@@ -64,7 +66,9 @@ describe("RecordListComponent", () => {
       ResetSort,
       Search,
       Sort,
-      EnableAllocateAdmin
+      EnableAllocateAdmin,
+      ToggleAllCheckboxes,
+      ToggleCheckbox
     );
     fixture.detectChanges();
   });
@@ -97,7 +101,7 @@ describe("RecordListComponent", () => {
   it("`columnNames()` should return an array of strings", () => {
     component.columnData = generateColumnData(COLUMN_DATA);
     expect(component.columnNames).toBeInstanceOf(Array);
-    expect(component.columnNames[0]).toEqual("doctorFirstName");
+    expect(component.columnNames[1]).toEqual("doctorFirstName");
   });
 
   it("'navigateToDetails()' should navigate to details route", () => {
@@ -122,7 +126,7 @@ describe("RecordListComponent", () => {
     spyOn(router, "navigate");
 
     component.detailsRoute = "/trainee";
-    component.navigateToDetails(mockEvent, mockRecommendation);
+    component.navigateToDetails(mockEvent, mockRecommendation, false);
     expect(router.navigate).toHaveBeenCalledWith([
       component.detailsRoute,
       mockRecommendation.gmcReferenceNumber

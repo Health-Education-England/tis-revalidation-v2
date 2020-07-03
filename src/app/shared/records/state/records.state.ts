@@ -1,11 +1,14 @@
 import { Sort } from "@angular/material/sort";
 import { Sort as ISort } from "@angular/material/sort/sort";
 import { createSelector, StateContext } from "@ngxs/store";
+import { patch, updateItem } from "@ngxs/store/operators";
 import { DEFAULT_SORT } from "../constants";
 import { RecordsService } from "../services/records.service";
 
 export class RecordsStateModel<T, F> {
   public enableAllocateAdmin?: boolean;
+  public allChecked: boolean;
+  public someChecked: boolean;
   public error?: string;
   public filter: T;
   public items: F;
@@ -19,6 +22,8 @@ export class RecordsStateModel<T, F> {
 
 export const defaultRecordsState = {
   items: null,
+  allChecked: false,
+  someChecked: false,
   loading: null,
   pageIndex: 0,
   searchQuery: null,
@@ -29,6 +34,18 @@ export const defaultRecordsState = {
 
 export class RecordsState {
   constructor(protected recordsService: RecordsService) {}
+
+  static allChecked<T>() {
+    return createSelector([this], (state: { allChecked: boolean }) => {
+      return state.allChecked;
+    });
+  }
+
+  static someChecked<T>() {
+    return createSelector([this], (state: { someChecked: boolean }) => {
+      return state.someChecked;
+    });
+  }
 
   static items<T>() {
     return createSelector([this], (state: { items: T[] }) => {
@@ -98,7 +115,9 @@ export class RecordsState {
   ) {
     ctx.patchState({
       items: action.response[sliceName],
-      totalResults: action.response.totalResults
+      totalResults: action.response.totalResults,
+      allChecked: false,
+      someChecked: false
     });
   }
 
@@ -158,6 +177,53 @@ export class RecordsState {
   protected enableAllocateAdminHandler(ctx: StateContext<any>, action: any) {
     ctx.patchState({
       enableAllocateAdmin: action
+    });
+  }
+
+  protected toggleCheckboxHandler(ctx: StateContext<any>, action: any) {
+    const stateItems: any[] = ctx.getState().items;
+    const currentCheckboxValue: boolean = stateItems.filter(
+      (item) => item.gmcReferenceNumber === action.gmcReferenceNumber
+    )[0].checked;
+
+    ctx.setState(
+      patch({
+        items: updateItem(
+          (item: any) => item.gmcReferenceNumber === action.gmcReferenceNumber,
+          patch({ checked: !currentCheckboxValue })
+        )
+      })
+    );
+
+    this.someCheckedHandler(ctx);
+  }
+
+  protected someCheckedHandler(ctx: StateContext<any>) {
+    const stateItems: any[] = ctx.getState().items;
+    const checkedItems: any[] = stateItems.filter((i) => i.checked);
+
+    ctx.patchState({ someChecked: !!checkedItems.length });
+
+    if (checkedItems.length === stateItems.length) {
+      ctx.patchState({ allChecked: !!checkedItems.length, someChecked: false });
+    }
+  }
+
+  protected toggleAllCheckboxesHandler(ctx: StateContext<any>) {
+    const state: any = ctx.getState();
+    const allChecked: boolean = !state.allChecked;
+
+    ctx.patchState({ allChecked });
+
+    state.items.forEach((i) => {
+      ctx.setState(
+        patch({
+          items: updateItem(
+            (item: any) => item === i,
+            patch({ checked: allChecked })
+          )
+        })
+      );
     });
   }
 }

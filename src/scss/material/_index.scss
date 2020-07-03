@@ -68,6 +68,9 @@ body {
   &:focus {
     background-color: $color_transparent_nhsuk-blue-50;
   }
+  &.cursor-auto {
+    cursor: auto;
+  }
 }
 
 .sticky-toolbar {

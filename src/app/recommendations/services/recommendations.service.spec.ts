@@ -9,7 +9,7 @@ import {
   Filter,
   ResetPaginator,
   Search
-} from "../state/recommendations.actions";
+} from "../../shared/records/state/records.actions";
 import { RecommendationsState } from "../state/recommendations.state";
 import {
   IGetRecommendationsResponse,

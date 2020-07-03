@@ -29,8 +29,10 @@ import {
   ResetPaginator,
   ResetSort,
   Search,
-  Sort
-} from "./recommendations.actions";
+  Sort,
+  ToggleAllCheckboxes,
+  ToggleCheckbox
+} from "../../shared/records/state/records.actions";
 
 export class RecommendationsStateModel extends RecordsStateModel<
   RecommendationsFilterType,
@@ -101,7 +103,10 @@ export class RecommendationsState extends RecordsState {
   }
 
   @Action(GetSuccess)
-  getSuccess(ctx: StateContext<RecommendationsStateModel>, action: GetSuccess) {
+  getSuccess(
+    ctx: StateContext<RecommendationsStateModel>,
+    action: GetSuccess<IGetRecommendationsResponse>
+  ) {
     super.getSuccessHandler(ctx, action, "traineeInfo");
 
     return ctx.patchState({
@@ -146,7 +151,10 @@ export class RecommendationsState extends RecordsState {
   }
 
   @Action(Filter)
-  filter(ctx: StateContext<RecommendationsStateModel>, action: Filter) {
+  filter(
+    ctx: StateContext<RecommendationsStateModel>,
+    action: Filter<RecommendationsFilterType>
+  ) {
     return super.filterHandler(ctx, action);
   }
 
@@ -164,5 +172,18 @@ export class RecommendationsState extends RecordsState {
     action: EnableAllocateAdmin
   ) {
     return super.enableAllocateAdminHandler(ctx, action.enableAllocateAdmin);
+  }
+
+  @Action(ToggleCheckbox)
+  toggleCheckbox(
+    ctx: StateContext<RecommendationsStateModel>,
+    action: ToggleCheckbox
+  ) {
+    return super.toggleCheckboxHandler(ctx, action);
+  }
+
+  @Action(ToggleAllCheckboxes)
+  toggleAllCheckboxes(ctx: StateContext<RecommendationsStateModel>) {
+    return super.toggleAllCheckboxesHandler(ctx);
   }
 }

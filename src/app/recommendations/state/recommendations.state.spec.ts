@@ -19,7 +19,7 @@ import {
   ResetPaginator,
   Search,
   Sort
-} from "./recommendations.actions";
+} from "../../shared/records/state/records.actions";
 import { RecommendationsState } from "./recommendations.state";
 
 describe("Recommendations state", () => {

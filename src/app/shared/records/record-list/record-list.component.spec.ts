@@ -22,7 +22,7 @@ import {
   Sort,
   ToggleAllCheckboxes,
   ToggleCheckbox
-} from "../../../recommendations/state/recommendations.actions";
+} from "../state/records.actions";
 import { RecommendationsState } from "../../../recommendations/state/recommendations.state";
 import { MaterialModule } from "../../material/material.module";
 import { DEFAULT_SORT, generateColumnData } from "../constants";

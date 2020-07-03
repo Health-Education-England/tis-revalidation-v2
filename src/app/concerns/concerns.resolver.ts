@@ -17,7 +17,7 @@ import {
   EnableAllocateAdmin,
   ToggleCheckbox,
   ToggleAllCheckboxes
-} from "./state/concerns.actions";
+} from "../shared/records/state/records.actions";
 
 @Injectable()
 export class ConcernsResolver extends RecordsResolver implements Resolve<any> {

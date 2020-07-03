@@ -3,8 +3,8 @@ import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
 import { RecordsService } from "../../shared/records/services/records.service";
+import { Filter } from "../../shared/records/state/records.actions";
 import { RecommendationsFilterType } from "../recommendations.interfaces";
-import { Filter } from "../state/recommendations.actions";
 import { RecommendationsState } from "../state/recommendations.state";
 
 @Component({

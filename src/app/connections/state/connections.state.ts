@@ -29,7 +29,7 @@ import {
   GetError,
   GetSuccess,
   ResetFilter
-} from "./connections.actions";
+} from "../../shared/records/state/records.actions";
 
 export class ConnectionsStateModel extends RecordsStateModel<
   ConnectionsFilterType,
@@ -80,7 +80,10 @@ export class ConnectionsState extends RecordsState {
   }
 
   @Action(GetSuccess)
-  getSuccess(ctx: StateContext<ConnectionsStateModel>, action: GetSuccess) {
+  getSuccess(
+    ctx: StateContext<ConnectionsStateModel>,
+    action: GetSuccess<IGetConnectionsResponse>
+  ) {
     return super.getSuccessHandler(ctx, action, "connectionsInfo");
   }
 
@@ -120,7 +123,10 @@ export class ConnectionsState extends RecordsState {
   }
 
   @Action(Filter)
-  filter(ctx: StateContext<ConnectionsStateModel>, action: Filter) {
+  filter(
+    ctx: StateContext<ConnectionsStateModel>,
+    action: Filter<ConnectionsFilterType>
+  ) {
     return super.filterHandler(ctx, action);
   }
 

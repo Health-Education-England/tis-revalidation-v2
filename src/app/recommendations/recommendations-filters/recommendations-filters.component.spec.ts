@@ -19,7 +19,7 @@ import {
   EnableAllocateAdmin,
   ToggleAllCheckboxes,
   ToggleCheckbox
-} from "../state/recommendations.actions";
+} from "../../shared/records/state/records.actions";
 import { RecommendationsState } from "../state/recommendations.state";
 
 import { RecommendationsFiltersComponent } from "./recommendations-filters.component";

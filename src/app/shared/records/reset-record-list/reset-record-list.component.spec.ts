@@ -18,7 +18,7 @@ import {
   Sort,
   ToggleAllCheckboxes,
   ToggleCheckbox
-} from "../../../recommendations/state/recommendations.actions";
+} from "../state/records.actions";
 import { RecommendationsState } from "../../../recommendations/state/recommendations.state";
 import { ResetRecordListComponent } from "./reset-record-list.component";
 

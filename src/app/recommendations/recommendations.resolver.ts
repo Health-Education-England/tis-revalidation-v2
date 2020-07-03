@@ -17,7 +17,7 @@ import {
   Sort,
   ToggleCheckbox,
   ToggleAllCheckboxes
-} from "./state/recommendations.actions";
+} from "../shared/records/state/records.actions";
 
 @Injectable()
 export class RecommendationsResolver extends RecordsResolver

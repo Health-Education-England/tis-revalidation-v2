@@ -20,7 +20,7 @@ import {
   Sort,
   ToggleAllCheckboxes,
   ToggleCheckbox
-} from "../../../recommendations/state/recommendations.actions";
+} from "../state/records.actions";
 import { RecommendationsState } from "../../../recommendations/state/recommendations.state";
 import { RecordSearchComponent } from "./record-search.component";
 

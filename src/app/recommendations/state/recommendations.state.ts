@@ -32,7 +32,7 @@ import {
   Sort,
   ToggleAllCheckboxes,
   ToggleCheckbox
-} from "./recommendations.actions";
+} from "../../shared/records/state/records.actions";
 
 export class RecommendationsStateModel extends RecordsStateModel<
   RecommendationsFilterType,
@@ -103,7 +103,10 @@ export class RecommendationsState extends RecordsState {
   }
 
   @Action(GetSuccess)
-  getSuccess(ctx: StateContext<RecommendationsStateModel>, action: GetSuccess) {
+  getSuccess(
+    ctx: StateContext<RecommendationsStateModel>,
+    action: GetSuccess<IGetRecommendationsResponse>
+  ) {
     super.getSuccessHandler(ctx, action, "traineeInfo");
 
     return ctx.patchState({
@@ -148,7 +151,10 @@ export class RecommendationsState extends RecordsState {
   }
 
   @Action(Filter)
-  filter(ctx: StateContext<RecommendationsStateModel>, action: Filter) {
+  filter(
+    ctx: StateContext<RecommendationsStateModel>,
+    action: Filter<RecommendationsFilterType>
+  ) {
     return super.filterHandler(ctx, action);
   }
 

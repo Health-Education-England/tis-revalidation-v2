@@ -17,7 +17,7 @@ import {
   EnableAllocateAdmin,
   ToggleCheckbox,
   ToggleAllCheckboxes
-} from "./state/connections.actions";
+} from "../shared/records/state/records.actions";
 
 @Injectable()
 export class ConnectionsResolver extends RecordsResolver

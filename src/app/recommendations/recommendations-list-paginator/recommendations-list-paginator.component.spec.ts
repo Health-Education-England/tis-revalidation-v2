@@ -7,7 +7,8 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { DEFAULT_SORT } from "../../shared/records/constants";
 import { RecordsService } from "../../shared/records/services/records.service";
-import { Paginate } from "../state/recommendations.actions";
+import { Paginate } from "../../shared/records/state/records.actions";
+
 import { RecommendationsState } from "../state/recommendations.state";
 
 import { RecommendationsListPaginatorComponent } from "./recommendations-list-paginator.component";

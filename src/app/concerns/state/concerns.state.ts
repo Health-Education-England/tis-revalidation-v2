@@ -27,7 +27,7 @@ import {
   ResetSort,
   Search,
   Sort
-} from "./concerns.actions";
+} from "../../shared/records/state/records.actions";
 
 export class ConcernsStateModel extends RecordsStateModel<
   ConcernStatus,
@@ -85,7 +85,10 @@ export class ConcernsState extends RecordsState {
   }
 
   @Action(GetSuccess)
-  getSuccess(ctx: StateContext<ConcernsStateModel>, action: GetSuccess) {
+  getSuccess(
+    ctx: StateContext<ConcernsStateModel>,
+    action: GetSuccess<IGetConcernsResponse>
+  ) {
     return super.getSuccessHandler(ctx, action, "concernTrainees");
   }
 
@@ -125,7 +128,7 @@ export class ConcernsState extends RecordsState {
   }
 
   @Action(Filter)
-  filter(ctx: StateContext<ConcernsStateModel>, action: Filter) {
+  filter(ctx: StateContext<ConcernsStateModel>, action: Filter<ConcernStatus>) {
     return super.filterHandler(ctx, action);
   }
 

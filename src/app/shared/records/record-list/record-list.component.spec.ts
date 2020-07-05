@@ -10,19 +10,19 @@ import { RecommendationStatus } from "../../../recommendation/recommendation-his
 import { IRecommendation } from "../../../recommendations/recommendations.interfaces";
 import { mockRecommendationsResponse } from "../../../recommendations/services/recommendations.service.spec";
 import {
-  ClearSearch,
-  EnableAllocateAdmin,
-  Filter,
-  Get,
-  Paginate,
-  ResetFilter,
-  ResetPaginator,
-  ResetSort,
-  Search,
-  Sort,
-  ToggleAllCheckboxes,
-  ToggleCheckbox
-} from "../state/records.actions";
+  ClearRecommendationsSearch,
+  EnableRecommendationsAllocateAdmin,
+  FilterRecommendations,
+  GetRecommendations,
+  PaginateRecommendations,
+  ResetRecommendationsFilter,
+  ResetRecommendationsPaginator,
+  ResetRecommendationsSort,
+  RecommendationsSearch,
+  SortRecommendations,
+  ToggleAllRecommendationsCheckboxes,
+  ToggleRecommendationsCheckbox
+} from "../../../recommendations/state/recommendations.actions";
 import { RecommendationsState } from "../../../recommendations/state/recommendations.state";
 import { MaterialModule } from "../../material/material.module";
 import { DEFAULT_SORT, generateColumnData } from "../constants";
@@ -57,18 +57,18 @@ describe("RecordListComponent", () => {
     component = fixture.componentInstance;
     recordsService.stateName = "recommendations";
     recordsService.setActions(
-      ClearSearch,
-      Filter,
-      Get,
-      Paginate,
-      ResetFilter,
-      ResetPaginator,
-      ResetSort,
-      Search,
-      Sort,
-      EnableAllocateAdmin,
-      ToggleAllCheckboxes,
-      ToggleCheckbox
+      ClearRecommendationsSearch,
+      FilterRecommendations,
+      GetRecommendations,
+      PaginateRecommendations,
+      ResetRecommendationsFilter,
+      ResetRecommendationsPaginator,
+      ResetRecommendationsSort,
+      RecommendationsSearch,
+      SortRecommendations,
+      EnableRecommendationsAllocateAdmin,
+      ToggleAllRecommendationsCheckboxes,
+      ToggleRecommendationsCheckbox
     );
     fixture.detectChanges();
   });

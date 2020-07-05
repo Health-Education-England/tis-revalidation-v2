@@ -15,19 +15,21 @@ import {
 import { IConcern, IGetConcernsResponse } from "../concerns.interfaces";
 import { ConcernsService } from "../services/concerns.service";
 import {
-  ClearSearch,
-  EnableAllocateAdmin,
-  Filter,
-  Get,
-  GetError,
-  GetSuccess,
-  Paginate,
-  ResetFilter,
-  ResetPaginator,
-  ResetSort,
-  Search,
-  Sort
-} from "../../shared/records/state/records.actions";
+  ClearConcernsSearch,
+  EnableConcernsAllocateAdmin,
+  FilterConcerns,
+  GetConcerns,
+  GetConcernsError,
+  GetConcernsSuccess,
+  PaginateConcerns,
+  ResetConcernsFilter,
+  ResetConcernsPaginator,
+  ResetConcernsSort,
+  ConcernsSearch,
+  SortConcerns,
+  ToggleAllConcernsCheckboxes,
+  ToggleConcernsCheckbox
+} from "./concerns.actions";
 
 export class ConcernsStateModel extends RecordsStateModel<
   ConcernStatus,
@@ -52,7 +54,7 @@ export class ConcernsState extends RecordsState {
     super(recordsService);
   }
 
-  @Action(Get)
+  @Action(GetConcerns)
   get(ctx: StateContext<ConcernsStateModel>) {
     const params: HttpParams = this.concernsService.generateParams();
     const endPoint = `${environment.appUrls.getConcerns}`;
@@ -70,10 +72,10 @@ export class ConcernsState extends RecordsState {
           return response;
         }),
         switchMap((response: IGetConcernsResponse) =>
-          ctx.dispatch(new GetSuccess(response))
+          ctx.dispatch(new GetConcernsSuccess(response))
         ),
         catchError((error: HttpErrorResponse) =>
-          ctx.dispatch(new GetError(error))
+          ctx.dispatch(new GetConcernsError(error))
         ),
         finalize(() =>
           ctx.patchState({
@@ -84,64 +86,77 @@ export class ConcernsState extends RecordsState {
       .subscribe();
   }
 
-  @Action(GetSuccess)
+  @Action(GetConcernsSuccess)
   getSuccess(
     ctx: StateContext<ConcernsStateModel>,
-    action: GetSuccess<IGetConcernsResponse>
+    action: GetConcernsSuccess
   ) {
     return super.getSuccessHandler(ctx, action, "concernTrainees");
   }
 
-  @Action(GetError)
-  getError(ctx: StateContext<ConcernsStateModel>, action: GetError) {
+  @Action(GetConcernsError)
+  getError(ctx: StateContext<ConcernsStateModel>, action: GetConcernsError) {
     return super.getErrorHandler(ctx, action);
   }
 
-  @Action(Sort)
-  sort(ctx: StateContext<ConcernsStateModel>, action: Sort) {
+  @Action(SortConcerns)
+  sort(ctx: StateContext<ConcernsStateModel>, action: SortConcerns) {
     return super.sortHandler(ctx, action);
   }
 
-  @Action(ResetSort)
+  @Action(ResetConcernsSort)
   resetSort(ctx: StateContext<ConcernsStateModel>) {
     return super.resetSortHandler(ctx, DEFAULT_SORT);
   }
 
-  @Action(Paginate)
-  paginate(ctx: StateContext<ConcernsStateModel>, action: Paginate) {
+  @Action(PaginateConcerns)
+  paginate(ctx: StateContext<ConcernsStateModel>, action: PaginateConcerns) {
     return super.paginateHandler(ctx, action);
   }
 
-  @Action(ResetPaginator)
+  @Action(ResetConcernsPaginator)
   resetPaginator(ctx: StateContext<ConcernsStateModel>) {
     return super.resetPaginatorHandler(ctx);
   }
 
-  @Action(Search)
-  search(ctx: StateContext<ConcernsStateModel>, action: Search) {
+  @Action(ConcernsSearch)
+  search(ctx: StateContext<ConcernsStateModel>, action: ConcernsSearch) {
     return super.searchHandler(ctx, action);
   }
 
-  @Action(ClearSearch)
+  @Action(ClearConcernsSearch)
   clearSearch(ctx: StateContext<ConcernsStateModel>) {
     return super.clearSearchHandler(ctx);
   }
 
-  @Action(Filter)
-  filter(ctx: StateContext<ConcernsStateModel>, action: Filter<ConcernStatus>) {
+  @Action(FilterConcerns)
+  filter(ctx: StateContext<ConcernsStateModel>, action: FilterConcerns) {
     return super.filterHandler(ctx, action);
   }
 
-  @Action(ResetFilter)
+  @Action(ResetConcernsFilter)
   resetFilter(ctx: StateContext<ConcernsStateModel>) {
     return super.resetFilterHandler(ctx, ConcernStatus.OPEN);
   }
 
-  @Action(EnableAllocateAdmin)
+  @Action(EnableConcernsAllocateAdmin)
   enableAllocateAdmin(
     ctx: StateContext<ConcernsStateModel>,
-    action: EnableAllocateAdmin
+    action: EnableConcernsAllocateAdmin
   ) {
     return super.enableAllocateAdminHandler(ctx, action.enableAllocateAdmin);
+  }
+
+  @Action(ToggleConcernsCheckbox)
+  toggleCheckbox(
+    ctx: StateContext<ConcernsStateModel>,
+    action: ToggleConcernsCheckbox
+  ) {
+    return super.toggleCheckboxHandler(ctx, action);
+  }
+
+  @Action(ToggleAllConcernsCheckboxes)
+  toggleAllCheckboxes(ctx: StateContext<ConcernsStateModel>) {
+    return super.toggleAllCheckboxesHandler(ctx);
   }
 }

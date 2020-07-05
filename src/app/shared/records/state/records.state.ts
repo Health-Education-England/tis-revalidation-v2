@@ -201,12 +201,12 @@ export class RecordsState {
   protected someCheckedHandler(ctx: StateContext<any>) {
     const stateItems: any[] = ctx.getState().items;
     const checkedItems: any[] = stateItems.filter((i) => i.checked);
+    const someChecked: boolean =
+      !!checkedItems.length && checkedItems.length !== stateItems.length;
+    const allChecked: boolean =
+      !!checkedItems.length && checkedItems.length === stateItems.length;
 
-    ctx.patchState({ someChecked: !!checkedItems.length });
-
-    if (checkedItems.length === stateItems.length) {
-      ctx.patchState({ allChecked: !!checkedItems.length, someChecked: false });
-    }
+    ctx.patchState({ allChecked, someChecked });
   }
 
   protected toggleAllCheckboxesHandler(ctx: StateContext<any>) {
@@ -225,5 +225,7 @@ export class RecordsState {
         })
       );
     });
+
+    this.someCheckedHandler(ctx);
   }
 }

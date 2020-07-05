@@ -5,19 +5,19 @@ import { Observable } from "rxjs";
 import { RecordsResolver } from "../shared/records/records.resolver";
 import { RecordsService } from "../shared/records/services/records.service";
 import {
-  ClearSearch,
-  EnableAllocateAdmin,
-  Filter,
-  Get,
-  Paginate,
-  ResetFilter,
-  ResetPaginator,
-  ResetSort,
-  Search,
-  Sort,
-  ToggleCheckbox,
-  ToggleAllCheckboxes
-} from "../shared/records/state/records.actions";
+  ClearRecommendationsSearch,
+  EnableRecommendationsAllocateAdmin,
+  FilterRecommendations,
+  GetRecommendations,
+  PaginateRecommendations,
+  ResetRecommendationsFilter,
+  ResetRecommendationsPaginator,
+  ResetRecommendationsSort,
+  RecommendationsSearch,
+  SortRecommendations,
+  ToggleRecommendationsCheckbox,
+  ToggleAllRecommendationsCheckboxes
+} from "./state/recommendations.actions";
 
 @Injectable()
 export class RecommendationsResolver extends RecordsResolver
@@ -29,18 +29,18 @@ export class RecommendationsResolver extends RecordsResolver
     super(store, recordsService);
     this.recordsService.stateName = "recommendations";
     this.recordsService.setActions(
-      ClearSearch,
-      Filter,
-      Get,
-      Paginate,
-      ResetFilter,
-      ResetPaginator,
-      ResetSort,
-      Search,
-      Sort,
-      EnableAllocateAdmin,
-      ToggleCheckbox,
-      ToggleAllCheckboxes
+      ClearRecommendationsSearch,
+      FilterRecommendations,
+      GetRecommendations,
+      PaginateRecommendations,
+      ResetRecommendationsFilter,
+      ResetRecommendationsPaginator,
+      ResetRecommendationsSort,
+      RecommendationsSearch,
+      SortRecommendations,
+      EnableRecommendationsAllocateAdmin,
+      ToggleRecommendationsCheckbox,
+      ToggleAllRecommendationsCheckboxes
     );
   }
 

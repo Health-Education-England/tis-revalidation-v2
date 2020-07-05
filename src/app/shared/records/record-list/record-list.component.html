@@ -102,12 +102,26 @@
                   ></mat-checkbox>
                 </ng-container>
 
-                <!-- cell value -->
-                <ng-container
-                  *ngIf="dateColumns.includes(i.name); else noPipe"
-                  >{{ element[i.name] | date: dateFormat }}</ng-container
-                >
-                <ng-template #noPipe>{{ element[i.name] }}</ng-template>
+                <!-- cell value | format date -->
+                <ng-container *ngIf="dateColumns.includes(i.name); else noPipe">
+                  {{ element[i.name] | date: dateFormat }}
+                </ng-container>
+
+                <!-- cell value | no formatting needed -->
+                <ng-template #noPipe>
+                  <!-- render allocate admin component -->
+                  <ng-container
+                    *ngIf="
+                      data.enableAllocateAdmin && i.name === 'admin';
+                      else renderData
+                    "
+                  >
+                    <app-allocate-admin-autocomplete></app-allocate-admin-autocomplete>
+                  </ng-container>
+
+                  <!-- render data -->
+                  <ng-template #renderData>{{ element[i.name] }}</ng-template>
+                </ng-template>
               </td>
             </ng-container>
 

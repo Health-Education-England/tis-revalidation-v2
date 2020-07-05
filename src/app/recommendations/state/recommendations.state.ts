@@ -18,21 +18,21 @@ import {
   RecommendationsFilterType
 } from "../recommendations.interfaces";
 import {
-  ClearSearch,
-  EnableAllocateAdmin,
-  Filter,
-  Get,
-  GetError,
-  GetSuccess,
-  Paginate,
-  ResetFilter,
-  ResetPaginator,
-  ResetSort,
-  Search,
-  Sort,
-  ToggleAllCheckboxes,
-  ToggleCheckbox
-} from "../../shared/records/state/records.actions";
+  ClearRecommendationsSearch,
+  EnableRecommendationsAllocateAdmin,
+  FilterRecommendations,
+  GetRecommendations,
+  GetRecommendationsError,
+  GetRecommendationsSuccess,
+  PaginateRecommendations,
+  ResetRecommendationsFilter,
+  ResetRecommendationsPaginator,
+  ResetRecommendationsSort,
+  RecommendationsSearch,
+  SortRecommendations,
+  ToggleAllRecommendationsCheckboxes,
+  ToggleRecommendationsCheckbox
+} from "./recommendations.actions";
 
 export class RecommendationsStateModel extends RecordsStateModel<
   RecommendationsFilterType,
@@ -70,7 +70,7 @@ export class RecommendationsState extends RecordsState {
     return state.countUnderNotice;
   }
 
-  @Action(Get)
+  @Action(GetRecommendations)
   get(ctx: StateContext<RecommendationsStateModel>) {
     const params: HttpParams = this.recommendationsService.generateParams();
     const endPoint = `${environment.appUrls.getRecommendations}`;
@@ -88,10 +88,10 @@ export class RecommendationsState extends RecordsState {
           return response;
         }),
         switchMap((response: IGetRecommendationsResponse) =>
-          ctx.dispatch(new GetSuccess(response))
+          ctx.dispatch(new GetRecommendationsSuccess(response))
         ),
         catchError((error: HttpErrorResponse) =>
-          ctx.dispatch(new GetError(error))
+          ctx.dispatch(new GetRecommendationsError(error))
         ),
         finalize(() =>
           ctx.patchState({
@@ -102,10 +102,10 @@ export class RecommendationsState extends RecordsState {
       .subscribe();
   }
 
-  @Action(GetSuccess)
+  @Action(GetRecommendationsSuccess)
   getSuccess(
     ctx: StateContext<RecommendationsStateModel>,
-    action: GetSuccess<IGetRecommendationsResponse>
+    action: GetRecommendationsSuccess
   ) {
     super.getSuccessHandler(ctx, action, "traineeInfo");
 
@@ -115,50 +115,62 @@ export class RecommendationsState extends RecordsState {
     });
   }
 
-  @Action(GetError)
-  getError(ctx: StateContext<RecommendationsStateModel>, action: GetError) {
+  @Action(GetRecommendationsError)
+  getError(
+    ctx: StateContext<RecommendationsStateModel>,
+    action: GetRecommendationsError
+  ) {
     return super.getErrorHandler(ctx, action);
   }
 
-  @Action(Sort)
-  sort(ctx: StateContext<RecommendationsStateModel>, action: Sort) {
+  @Action(SortRecommendations)
+  sort(
+    ctx: StateContext<RecommendationsStateModel>,
+    action: SortRecommendations
+  ) {
     return super.sortHandler(ctx, action);
   }
 
-  @Action(ResetSort)
+  @Action(ResetRecommendationsSort)
   resetSort(ctx: StateContext<RecommendationsStateModel>) {
     return super.resetSortHandler(ctx, DEFAULT_SORT);
   }
 
-  @Action(Paginate)
-  paginate(ctx: StateContext<RecommendationsStateModel>, action: Paginate) {
+  @Action(PaginateRecommendations)
+  paginate(
+    ctx: StateContext<RecommendationsStateModel>,
+    action: PaginateRecommendations
+  ) {
     return super.paginateHandler(ctx, action);
   }
 
-  @Action(ResetPaginator)
+  @Action(ResetRecommendationsPaginator)
   resetPaginator(ctx: StateContext<RecommendationsStateModel>) {
     return super.resetPaginatorHandler(ctx);
   }
 
-  @Action(Search)
-  search(ctx: StateContext<RecommendationsStateModel>, action: Search) {
+  @Action(RecommendationsSearch)
+  search(
+    ctx: StateContext<RecommendationsStateModel>,
+    action: RecommendationsSearch
+  ) {
     return super.searchHandler(ctx, action);
   }
 
-  @Action(ClearSearch)
+  @Action(ClearRecommendationsSearch)
   clearSearch(ctx: StateContext<RecommendationsStateModel>) {
     return super.clearSearchHandler(ctx);
   }
 
-  @Action(Filter)
+  @Action(FilterRecommendations)
   filter(
     ctx: StateContext<RecommendationsStateModel>,
-    action: Filter<RecommendationsFilterType>
+    action: FilterRecommendations
   ) {
     return super.filterHandler(ctx, action);
   }
 
-  @Action(ResetFilter)
+  @Action(ResetRecommendationsFilter)
   resetFilter(ctx: StateContext<RecommendationsStateModel>) {
     return super.resetFilterHandler(
       ctx,
@@ -166,23 +178,23 @@ export class RecommendationsState extends RecordsState {
     );
   }
 
-  @Action(EnableAllocateAdmin)
+  @Action(EnableRecommendationsAllocateAdmin)
   enableAllocateAdmin(
     ctx: StateContext<RecommendationsStateModel>,
-    action: EnableAllocateAdmin
+    action: EnableRecommendationsAllocateAdmin
   ) {
     return super.enableAllocateAdminHandler(ctx, action.enableAllocateAdmin);
   }
 
-  @Action(ToggleCheckbox)
+  @Action(ToggleRecommendationsCheckbox)
   toggleCheckbox(
     ctx: StateContext<RecommendationsStateModel>,
-    action: ToggleCheckbox
+    action: ToggleRecommendationsCheckbox
   ) {
     return super.toggleCheckboxHandler(ctx, action);
   }
 
-  @Action(ToggleAllCheckboxes)
+  @Action(ToggleAllRecommendationsCheckboxes)
   toggleAllCheckboxes(ctx: StateContext<RecommendationsStateModel>) {
     return super.toggleAllCheckboxesHandler(ctx);
   }

@@ -1,0 +1,74 @@
+import {
+  EnableAllocateAdminPayload,
+  FilterPayload,
+  GetErrorPayload,
+  GetSuccessPayload,
+  PaginatePayload,
+  SearchPayload,
+  SortPayload,
+  ToggleCheckboxPayload
+} from "../../shared/records/state/records.actions";
+import {
+  IGetRecommendationsResponse,
+  RecommendationsFilterType
+} from "../recommendations.interfaces";
+
+export class GetRecommendations {
+  static readonly type = `[Recommendations] Get`;
+}
+
+export class GetRecommendationsSuccess extends GetSuccessPayload<
+  IGetRecommendationsResponse
+> {
+  static readonly type = `[Recommendations] Get Success`;
+}
+
+export class GetRecommendationsError extends GetErrorPayload {
+  static readonly type = `[Recommendations] Get Error`;
+}
+
+export class SortRecommendations extends SortPayload {
+  static readonly type = `[Recommendations] Sort`;
+}
+
+export class ResetRecommendationsSort {
+  static readonly type = `[Recommendations] Reset Sort`;
+}
+
+export class FilterRecommendations extends FilterPayload<
+  RecommendationsFilterType
+> {
+  static readonly type = `[Recommendations] Filter`;
+}
+
+export class ResetRecommendationsFilter {
+  static readonly type = `[Recommendations] Reset Filter`;
+}
+
+export class RecommendationsSearch extends SearchPayload {
+  static readonly type = `[Recommendations] Search`;
+}
+
+export class ClearRecommendationsSearch {
+  static readonly type = `[Recommendations] Clear Search`;
+}
+
+export class PaginateRecommendations extends PaginatePayload {
+  static readonly type = `[Recommendations] Paginate`;
+}
+
+export class ResetRecommendationsPaginator {
+  static readonly type = `[Recommendations] Reset Paginator`;
+}
+
+export class EnableRecommendationsAllocateAdmin extends EnableAllocateAdminPayload {
+  static readonly type = `[Recommendations] Enable Allocate Admin`;
+}
+
+export class ToggleRecommendationsCheckbox extends ToggleCheckboxPayload {
+  static readonly type = `[Recommendations] Toggle Checkbox`;
+}
+
+export class ToggleAllRecommendationsCheckboxes {
+  static readonly type = `[Recommendations] Toggle All Checkboxes`;
+}

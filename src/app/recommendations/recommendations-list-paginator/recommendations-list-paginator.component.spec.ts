@@ -7,7 +7,7 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { DEFAULT_SORT } from "../../shared/records/constants";
 import { RecordsService } from "../../shared/records/services/records.service";
-import { Paginate } from "../../shared/records/state/records.actions";
+import { PaginateRecommendations } from "../state/recommendations.actions";
 
 import { RecommendationsState } from "../state/recommendations.state";
 
@@ -58,7 +58,7 @@ describe("RecommendationsListPaginatorComponent", () => {
     component.paginate(mockPageEvent);
     expect(store.dispatch).toHaveBeenCalledTimes(1);
     expect(store.dispatch).toHaveBeenCalledWith(
-      new Paginate(mockPageEvent.pageIndex)
+      new PaginateRecommendations(mockPageEvent.pageIndex)
     );
   });
 

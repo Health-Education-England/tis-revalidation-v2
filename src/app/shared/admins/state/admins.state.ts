@@ -1,23 +1,39 @@
+import { HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
+import { append, patch, removeItem } from "@ngxs/store/operators";
 import { UserType } from "aws-sdk/clients/cognitoidentityserviceprovider";
+import { catchError, switchMap, take } from "rxjs/operators";
+import { IAllocateAdmin } from "../admins.interfaces";
 import { AdminsService } from "../services/admins.service";
-import { Get, GetError, GetSuccess } from "./admins.actions";
+import {
+  AddToAllocateList,
+  ClearAllocateList,
+  Get,
+  GetError,
+  GetSuccess,
+  RemoveFromAllocateList,
+  SubmitAllocateList,
+  SubmitAllocateListError,
+  SubmitAllocateListSuccess
+} from "./admins.actions";
 
 export class AdminsStateModel {
   public error?: string;
   public items: UserType[];
+  public allocateList: IAllocateAdmin[];
 }
 
 @State<AdminsStateModel>({
   name: "admins",
   defaults: {
-    items: null
+    items: null,
+    allocateList: []
   }
 })
 @Injectable()
 export class AdminsState {
-  constructor(protected adminsService: AdminsService) {}
+  constructor(private adminsService: AdminsService) {}
 
   @Selector()
   public static items(state: AdminsStateModel) {
@@ -45,6 +61,75 @@ export class AdminsState {
   getError(ctx: StateContext<AdminsStateModel>, action: GetError) {
     return ctx.patchState({
       error: action.error
+    });
+  }
+
+  @Action(AddToAllocateList)
+  addToAllocateList(
+    ctx: StateContext<AdminsStateModel>,
+    action: AddToAllocateList
+  ) {
+    const allocateList: IAllocateAdmin[] = ctx.getState().allocateList;
+    const alreadyExists: boolean = !!allocateList.filter(
+      (item: IAllocateAdmin) => item.gmcNumber === action.gmcNumber
+    ).length;
+
+    if (!alreadyExists) {
+      return ctx.setState(
+        patch({
+          allocateList: append([action])
+        })
+      );
+    }
+  }
+
+  @Action(RemoveFromAllocateList)
+  removeFromAllocateList(
+    ctx: StateContext<AdminsStateModel>,
+    action: RemoveFromAllocateList
+  ) {
+    return ctx.setState(
+      patch({
+        allocateList: removeItem((item: IAllocateAdmin) => item === action)
+      })
+    );
+  }
+
+  @Action(ClearAllocateList)
+  clearAllocateList(ctx: StateContext<AdminsStateModel>) {
+    return ctx.patchState({
+      allocateList: []
+    });
+  }
+
+  @Action(SubmitAllocateList)
+  submitAllocateList(ctx: StateContext<AdminsStateModel>) {
+    return this.adminsService
+      .submitAllocateList(ctx.getState().allocateList)
+      .pipe(
+        take(1),
+        switchMap((response: any) =>
+          ctx.dispatch(new SubmitAllocateListSuccess(response))
+        ),
+        catchError((error: HttpErrorResponse) =>
+          ctx.dispatch(new SubmitAllocateListError(error))
+        )
+      )
+      .subscribe();
+  }
+
+  @Action(SubmitAllocateListSuccess)
+  submitAllocateListSuccess(ctx: StateContext<AdminsStateModel>) {
+    return ctx.dispatch(new ClearAllocateList());
+  }
+
+  @Action(SubmitAllocateListError)
+  submitAllocateListError(
+    ctx: StateContext<AdminsStateModel>,
+    action: SubmitAllocateListError
+  ) {
+    return ctx.patchState({
+      error: `Error: ${action.error.message}`
     });
   }
 }

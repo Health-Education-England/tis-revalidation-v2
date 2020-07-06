@@ -1,0 +1,53 @@
+<form class="records-form" [formGroup]="concernForm">
+  <h1 class="mat-subheading-1">Upload supporting documents</h1>
+  <div class="button-row">
+    <button
+      mat-button
+      color="accent"
+      mat-mini-fab
+      (click)="imgFileInput.click()"
+    >
+      <mat-icon>attachment</mat-icon>
+    </button>
+    <input hidden type="file" #imgFileInput (change)="previewImage($event)" />
+  </div>
+  <mat-divider></mat-divider>
+  <mat-list>
+    <div mat-subheader>Uploaded documents</div>
+    <mat-list-item
+      *ngFor="let file of uploadedFiles"
+      (click)="downloadDocument($event)"
+    >
+      <mat-icon mat-list-icon *ngIf="file.type === 'doc'">note</mat-icon>
+      <mat-icon mat-list-icon *ngIf="file.type === 'pdf'"
+        >picture_as_pdf</mat-icon
+      >
+      <mat-icon mat-list-icon *ngIf="file.type === 'image'">photo</mat-icon>
+
+      <div mat-line>{{ file.name }}</div>
+      <div mat-line>{{ file.updated | date: dateFormat }}</div>
+    </mat-list-item>
+  </mat-list>
+  <mat-divider></mat-divider>
+  <div class="comments-section">
+    <div formArrayName="comments" class="comments">
+      <ng-container
+        *ngFor="let comment of comments.controls; let i = index"
+        [formGroupName]="i"
+      >
+        <mat-form-field class="full-width">
+          <mat-label>Leave a comment</mat-label>
+          <textarea
+            matInput
+            [formControlName]="'comment'"
+            placeholder="comments..."
+            rows="10"
+          ></textarea>
+          <div class="select-control">
+            <mat-checkbox [formControlName]="'checkbox'"></mat-checkbox>
+          </div>
+        </mat-form-field>
+      </ng-container>
+    </div>
+  </div>
+</form>

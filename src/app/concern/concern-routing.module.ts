@@ -3,6 +3,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { RecordDetailsComponent } from "../shared/details/record-details/record-details.component";
 import { ConcernComponent } from "./concern.component";
 import { ConcernResolver } from "./concern.resolver";
+import { CreateConcernComponent } from "./create-concern/create-concern.component";
 
 const routes: Routes = [
   {
@@ -15,6 +16,24 @@ const routes: Routes = [
         path: "",
         component: ConcernComponent,
         data: { title: "Concern history" }
+      },
+      {
+        path: "create",
+        component: CreateConcernComponent,
+        data: {
+          title: "Create concern",
+          showToolbar: true,
+          showNotes: false
+        }
+      },
+      {
+        path: "edit/:concernId",
+        component: CreateConcernComponent,
+        data: {
+          title: "Edit concern",
+          showToolbar: true,
+          showNotes: false
+        }
       }
     ]
   }

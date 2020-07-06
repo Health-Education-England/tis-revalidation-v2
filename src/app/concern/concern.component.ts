@@ -10,6 +10,7 @@ import { IConcernSummary, ConcernStatus } from "./concern-history.interface";
 import { environment } from "@environment";
 import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
+import { IConcern } from "../concerns/concerns.interfaces";
 
 @Component({
   selector: "app-concern",
@@ -47,7 +48,7 @@ export class ConcernComponent {
   expandedElement: IConcernSummary | null;
   dateFormat = environment.dateFormat;
   concernStatus = ConcernStatus;
-  public concernHistory$: Observable<boolean> = this.store.select(
+  public concernHistory$: Observable<IConcern[]> = this.store.select(
     (concernState) => concernState.concern.item.concerns
   );
 

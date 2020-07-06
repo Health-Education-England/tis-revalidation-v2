@@ -6,12 +6,13 @@ import {
   IRecommendationSummary
 } from "../recommendation-history.interface";
 import { environment } from "@environment";
+import { Router, RouterStateSnapshot } from "@angular/router";
 
 @Injectable({
   providedIn: "root"
 })
 export class RecommendationHistoryService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   getrecommendationHistory(
     gmcNumber: number
@@ -51,5 +52,12 @@ export class RecommendationHistoryService {
       .replace(/{gmcNumber}/, gmcNumber.toString())
       .replace(/{recommendationId}/, recommendationId);
     return this.http.post(submitUrl, {});
+  }
+
+  navigateToParentState(state: RouterStateSnapshot): void {
+    const arr = state.url.split("/");
+    arr.pop();
+    const url = arr.join("/");
+    this.router.navigate([url]);
   }
 }

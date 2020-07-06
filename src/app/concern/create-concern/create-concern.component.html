@@ -9,13 +9,13 @@
     >
       <mat-icon>attachment</mat-icon>
     </button>
-    <input hidden type="file" #imgFileInput (change)="previewImage($event)" />
+    <input hidden type="file" #imgFileInput (change)="fileChange($event)" />
   </div>
   <mat-divider></mat-divider>
   <mat-list>
     <div mat-subheader>Uploaded documents</div>
     <mat-list-item
-      *ngFor="let file of uploadedFiles"
+      *ngFor="let file of downloadFiles"
       (click)="downloadDocument($event)"
     >
       <mat-icon mat-list-icon *ngIf="file.type === 'doc'">note</mat-icon>

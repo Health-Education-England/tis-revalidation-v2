@@ -11,7 +11,8 @@ export const APP_URLS_CONFIG: IEnvironment["appUrls"] = {
   getRecommendations: `api/v1/doctors`,
   login: ``,
   saveRecommendation: `api/recommendation`,
-  submitToGMC: `api/recommendation/{gmcNumber}/submit/{recommendationId}`
+  submitToGMC: `api/recommendation/{gmcNumber}/submit/{recommendationId}`,
+  uploadConcernDocuments: ``
 };
 
 export const AWS_CONFIG: IEnvironment["awsConfig"] = {

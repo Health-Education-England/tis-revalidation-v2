@@ -25,7 +25,8 @@ export const environment: IEnvironment = {
     login: ``,
     saveRecommendation: `api/recommendation`, // TODO mock these
     submitToGMC: `api/recommendation/{gmcId}/submit/{recommendationId}`, // TODO mock these
-    getDetails: `mocky/298f7e18-12d4-4e1b-9195-0bba7feb56b0`
+    getDetails: `mocky/298f7e18-12d4-4e1b-9195-0bba7feb56b0`,
+    uploadConcernDocuments: ``
   },
   awsConfig: {
     ...AWS_CONFIG,

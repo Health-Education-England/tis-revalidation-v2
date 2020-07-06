@@ -7,6 +7,7 @@ import { ActivatedRoute } from "@angular/router";
 import { tap } from "rxjs/operators";
 import { defaultConcern, IConcernSummary } from "../concern-history.interface";
 import { environment } from "@environment";
+import { ConcernService } from "../service/concern.service";
 
 @Component({
   selector: "app-create-concern",
@@ -15,7 +16,7 @@ import { environment } from "@environment";
 })
 export class CreateConcernComponent implements OnInit {
   dateFormat = environment.dateFormat;
-  uploadedFiles = [
+  downloadFiles = [
     {
       name: "Photos",
       updated: new Date("1/1/20"),
@@ -34,6 +35,7 @@ export class CreateConcernComponent implements OnInit {
   ];
   concernForm: FormGroup;
   comments: FormArray;
+  uploadedFiles: Array<File>;
   concernId: number;
   editMode: boolean;
   public concern$: Observable<
@@ -47,7 +49,8 @@ export class CreateConcernComponent implements OnInit {
   constructor(
     private commentsService: CommentsService,
     private store: Store,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private concernService: ConcernService
   ) {}
 
   downloadDocument(event: Event): void {
@@ -55,8 +58,22 @@ export class CreateConcernComponent implements OnInit {
     (window as any).alert("Your download should resume by next sprint 😀");
   }
 
+  fileChange(element: any): void {
+    this.uploadedFiles = element.target.files;
+  }
+
   ngOnInit(): void {
     this.initialiseData();
+  }
+
+  upload() {
+    const formData = new FormData();
+    this.uploadedFiles.forEach((uploadedFile: File) => {
+      formData.append("uploads[]", uploadedFile, uploadedFile.name);
+    });
+    this.concernService.uploadFiles(formData).subscribe((response: any) => {
+      // TODO: plug endpoint and show message on success / failure
+    });
   }
 
   private initialiseData(): void {

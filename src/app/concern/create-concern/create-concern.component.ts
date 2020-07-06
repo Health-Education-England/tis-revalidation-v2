@@ -4,7 +4,7 @@ import { CommentsService } from "src/app/shared/details/comments-tool-bar/commen
 import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
-import { map, tap } from "rxjs/operators";
+import { tap } from "rxjs/operators";
 import { defaultConcern, IConcernSummary } from "../concern-history.interface";
 import { environment } from "@environment";
 

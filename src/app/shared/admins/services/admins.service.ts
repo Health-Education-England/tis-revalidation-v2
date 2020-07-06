@@ -1,3 +1,4 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import {
   MatSnackBar,
@@ -11,13 +12,18 @@ import {
   ListUsersInGroupRequest,
   ListUsersResponse
 } from "aws-sdk/clients/cognitoidentityserviceprovider";
+import { IAllocateAdmin } from "../admins.interfaces";
 import { GetError, GetSuccess } from "../state/admins.actions";
 
 @Injectable({
   providedIn: "root"
 })
 export class AdminsService {
-  constructor(private store: Store, private snackBar: MatSnackBar) {}
+  constructor(
+    private store: Store,
+    private http: HttpClient,
+    private snackBar: MatSnackBar
+  ) {}
 
   public listUsersInGroupRequest(groupName: string): ListUsersInGroupRequest {
     return {
@@ -49,6 +55,12 @@ export class AdminsService {
         }
       }
     );
+  }
+
+  public submitAllocateList(payload: IAllocateAdmin[]) {
+    return this.http.post(`${environment.appUrls.allocateAdmin}`, {
+      traineeAdmins: payload
+    });
   }
 
   private openSnackBar(message: string): MatSnackBarRef<SimpleSnackBar> {

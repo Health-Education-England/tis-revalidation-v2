@@ -1,6 +1,11 @@
 import { Component } from "@angular/core";
 import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
+import { take } from "rxjs/operators";
+import {
+  ClearAllocateList,
+  SubmitAllocateList
+} from "../../admins/state/admins.actions";
 import { RecordsService } from "../services/records.service";
 
 @Component({
@@ -14,13 +19,16 @@ export class AllocateAdminActionsComponent {
 
   constructor(private store: Store, private recordsService: RecordsService) {}
 
-  // TODO add logic
   public cancel(): void {
     this.recordsService.enableAllocateAdmin(false);
+    this.store.dispatch(new ClearAllocateList());
   }
 
-  // TODO add logic
   public save(): void {
     this.recordsService.enableAllocateAdmin(false);
+    this.store
+      .dispatch(new SubmitAllocateList())
+      .pipe(take(1))
+      .subscribe(() => this.recordsService.get());
   }
 }

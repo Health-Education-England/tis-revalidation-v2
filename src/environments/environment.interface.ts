@@ -22,6 +22,7 @@ export abstract class IEnvironment {
     readonly saveRecommendation: string;
     readonly submitToGMC: string;
     readonly getDetails: string;
+    readonly allocateAdmin: string;
   };
 
   abstract readonly awsConfig: {

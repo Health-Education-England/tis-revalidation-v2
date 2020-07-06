@@ -116,7 +116,9 @@
                       else renderData
                     "
                   >
-                    <app-allocate-admin-autocomplete></app-allocate-admin-autocomplete>
+                    <app-allocate-admin-autocomplete
+                      [gmcNumber]="element.gmcReferenceNumber"
+                    ></app-allocate-admin-autocomplete>
                   </ng-container>
 
                   <!-- render data -->

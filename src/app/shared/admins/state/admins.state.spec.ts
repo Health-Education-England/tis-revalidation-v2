@@ -1,6 +1,7 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { async, TestBed } from "@angular/core/testing";
+import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { MaterialModule } from "../../material/material.module";
 import { AdminsService } from "../services/admins.service";
@@ -16,6 +17,7 @@ describe("Admins state", () => {
     TestBed.configureTestingModule({
       imports: [
         MaterialModule,
+        RouterTestingModule,
         NgxsModule.forRoot([AdminsState]),
         HttpClientTestingModule
       ],

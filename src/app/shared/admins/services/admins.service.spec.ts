@@ -1,4 +1,6 @@
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { TestBed } from "@angular/core/testing";
+import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule } from "@ngxs/store";
 import { ListUsersResponse } from "aws-sdk/clients/cognitoidentityserviceprovider";
 import { MaterialModule } from "../../material/material.module";
@@ -27,7 +29,12 @@ describe("AdminsService", () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [MaterialModule, NgxsModule.forRoot([AdminsState])]
+      imports: [
+        MaterialModule,
+        HttpClientTestingModule,
+        RouterTestingModule,
+        NgxsModule.forRoot([AdminsState])
+      ]
     });
     service = TestBed.inject(AdminsService);
   });

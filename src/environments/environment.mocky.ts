@@ -23,10 +23,11 @@ export const environment: IEnvironment = {
     getRecommendation: `mocky/6fd60c05-b4d0-462d-87a8-87402d57bd2e`,
     getRecommendations: `mocky/81267580-411e-4ce6-8dca-2f65f9d2e485?mocky-delay=700ms`,
     login: ``,
-    saveRecommendation: `api/recommendation`, // TODO mock these
-    submitToGMC: `api/recommendation/{gmcId}/submit/{recommendationId}`, // TODO mock these
+    saveRecommendation: `api/recommendation`, // TODO mock this
+    submitToGMC: `api/recommendation/{gmcId}/submit/{recommendationId}`, // TODO mock this
     getDetails: `mocky/298f7e18-12d4-4e1b-9195-0bba7feb56b0`,
-    uploadConcernDocuments: ``
+    uploadConcernDocuments: ``,
+    allocateAdmin: `api/v1/doctors/assignAdmin` // TODO mock this
   },
   awsConfig: {
     ...AWS_CONFIG,

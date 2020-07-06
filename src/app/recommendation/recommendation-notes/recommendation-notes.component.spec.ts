@@ -8,6 +8,7 @@ import { RecommendationHistoryState } from "../state/recommendation-history.stat
 import { RecommendationNotesComponent } from "./recommendation-notes.component";
 import { MaterialModule } from "src/app/shared/material/material.module";
 import { MatBottomSheetRef } from "@angular/material/bottom-sheet";
+import { RouterTestingModule } from "@angular/router/testing";
 
 describe("RecommendationNotesComponent", () => {
   let component: RecommendationNotesComponent;
@@ -19,6 +20,7 @@ describe("RecommendationNotesComponent", () => {
         NoopAnimationsModule,
         MaterialModule,
         HttpClientTestingModule,
+        RouterTestingModule,
         NgxsModule.forRoot([RecommendationHistoryState])
       ],
       declarations: [RecommendationNotesComponent],

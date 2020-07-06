@@ -15,4 +15,8 @@ export class ConcernService {
       `${environment.appUrls.getConcern}/${gmcNumber}`
     );
   }
+
+  uploadFiles(formData: FormData) {
+    return this.http.post(environment.appUrls.uploadConcernDocuments, formData);
+  }
 }

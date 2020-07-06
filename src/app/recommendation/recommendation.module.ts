@@ -14,6 +14,8 @@ import { RecommendationTableComponent } from "./recommendation-table/recommendat
 import { RecommendationNotesComponent } from "./recommendation-notes/recommendation-notes.component";
 import { CreateRecommendationComponent } from "./create-recommendation/create-recommendation.component";
 import { ConfirmRecommendationComponent } from "./confirm-recommendation/confirm-recommendation.component";
+import { UnderNoticeGuard } from "./guards/under-notice.gaurd";
+import { NotSubmittedGuard } from "./guards/not-submitted.guard";
 
 @NgModule({
   declarations: [
@@ -31,6 +33,11 @@ import { ConfirmRecommendationComponent } from "./confirm-recommendation/confirm
     NgxsModule.forFeature([RecommendationHistoryState]),
     NgxsModule.forFeature([RecommendationNotesState])
   ],
-  providers: [RecommendationHistoryService, RecommendationResolver]
+  providers: [
+    RecommendationHistoryService,
+    RecommendationResolver,
+    UnderNoticeGuard,
+    NotSubmittedGuard
+  ]
 })
 export class RecommendationModule {}

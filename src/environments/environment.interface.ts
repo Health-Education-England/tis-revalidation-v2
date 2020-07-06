@@ -13,6 +13,7 @@ export abstract class IEnvironment {
     readonly authRedirect: string;
     readonly getConcerns: string;
     readonly getConcern: string;
+    readonly uploadConcernDocuments: string;
     readonly getConnections: string;
     readonly getNotes: string;
     readonly getRecommendation: string;

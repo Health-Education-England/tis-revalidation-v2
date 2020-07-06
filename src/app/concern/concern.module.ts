@@ -8,9 +8,10 @@ import { NgxsModule } from "@ngxs/store";
 import { ConcernState } from "./state/concern.state";
 import { ConcernsService } from "../concerns/services/concerns.service";
 import { ConcernResolver } from "./concern.resolver";
+import { CreateConcernComponent } from './create-concern/create-concern.component';
 
 @NgModule({
-  declarations: [ConcernComponent],
+  declarations: [ConcernComponent, CreateConcernComponent],
   imports: [
     MaterialModule,
     SharedModule,

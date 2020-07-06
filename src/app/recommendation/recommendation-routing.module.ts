@@ -5,6 +5,8 @@ import { ConfirmRecommendationComponent } from "./confirm-recommendation/confirm
 import { CreateRecommendationComponent } from "./create-recommendation/create-recommendation.component";
 import { RecommendationTableComponent } from "./recommendation-table/recommendation-table.component";
 import { RecommendationResolver } from "./recommendation.resolver";
+import { UnderNoticeGuard } from "./guards/under-notice.gaurd";
+import { NotSubmittedGuard } from "./guards/not-submitted.guard";
 
 const routes: Routes = [
   {
@@ -18,7 +20,6 @@ const routes: Routes = [
         component: RecommendationTableComponent,
         data: { title: "Recommendation history", showNotes: false }
       },
-      // TODO double check if a guard and/resolver is needed on this route
       {
         path: "create",
         component: CreateRecommendationComponent,
@@ -26,7 +27,8 @@ const routes: Routes = [
           title: "Create recommendation",
           showToolbar: true,
           showNotes: false
-        } // TODO double check if a guard is needed here
+        },
+        canActivate: [UnderNoticeGuard]
       },
       {
         path: "edit",
@@ -35,13 +37,14 @@ const routes: Routes = [
           title: "Edit recommendation",
           showToolbar: true,
           showNotes: false
-        } // TODO double check if a guard is needed here
+        },
+        canActivate: [UnderNoticeGuard, NotSubmittedGuard]
       },
-      // TODO double check if a guard and/resolver is needed on this route
       {
         path: "confirm",
         component: ConfirmRecommendationComponent,
-        data: { title: "Confirm recommendation", showNotes: false }
+        data: { title: "Confirm recommendation", showNotes: false },
+        canActivate: [UnderNoticeGuard]
       }
     ]
   }

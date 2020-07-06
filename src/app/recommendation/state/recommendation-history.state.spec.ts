@@ -11,6 +11,7 @@ import { ErrorHandler } from "@angular/core";
 import { IRecommendationHistory } from "../recommendation-history.interface";
 import { environment } from "@environment";
 import { MaterialModule } from "src/app/shared/material/material.module";
+import { RouterTestingModule } from "@angular/router/testing";
 
 describe("RecommendationHistory actions", () => {
   let store: Store;
@@ -25,7 +26,8 @@ describe("RecommendationHistory actions", () => {
       imports: [
         MaterialModule,
         NgxsModule.forRoot([RecommendationHistoryState]),
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        RouterTestingModule
       ],
       providers: [{ provide: ErrorHandler, useFactory: errorHandlerSpy }]
     }).compileComponents();

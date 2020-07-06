@@ -11,15 +11,15 @@ import { DEFAULT_SORT } from "../../shared/records/constants";
 import { mockRecommendationsResponse } from "../services/recommendations.service.spec";
 import { RecommendationsFilterType } from "../recommendations.interfaces";
 import {
-  ClearSearch,
-  Filter,
-  Get,
-  GetError,
-  Paginate,
-  ResetPaginator,
-  Search,
-  Sort
-} from "../../shared/records/state/records.actions";
+  ClearRecommendationsSearch,
+  FilterRecommendations,
+  GetRecommendations,
+  GetRecommendationsError,
+  PaginateRecommendations,
+  ResetRecommendationsPaginator,
+  RecommendationsSearch,
+  SortRecommendations
+} from "./recommendations.actions";
 import { RecommendationsState } from "./recommendations.state";
 
 describe("Recommendations state", () => {
@@ -49,7 +49,7 @@ describe("Recommendations state", () => {
   it("should dispatch 'Get' and invoke `getHandler`", () => {
     spyOn(recordsService, "getRecords").and.returnValue(of({}));
     store
-      .dispatch(new Get())
+      .dispatch(new GetRecommendations())
       .subscribe(() => expect(recordsService.getRecords).toHaveBeenCalled());
   });
 
@@ -58,7 +58,7 @@ describe("Recommendations state", () => {
       of(mockRecommendationsResponse)
     );
 
-    store.dispatch(new Get()).subscribe(() => {
+    store.dispatch(new GetRecommendations()).subscribe(() => {
       const items = store.snapshot().recommendations.items;
       expect(items.length).toEqual(2);
       expect(items[0].doctorFirstName).toEqual("Bobby");
@@ -70,7 +70,7 @@ describe("Recommendations state", () => {
       of(mockRecommendationsResponse)
     );
 
-    store.dispatch(new Get()).subscribe(() => {
+    store.dispatch(new GetRecommendations()).subscribe(() => {
       const countTotal = store.snapshot().recommendations.countTotal;
       expect(countTotal).toEqual(21312);
     });
@@ -86,49 +86,55 @@ describe("Recommendations state", () => {
       }
     });
 
-    store.dispatch(new GetError(mockError));
+    store.dispatch(new GetRecommendationsError(mockError));
     const error = store.snapshot().recommendations.error;
     expect(error).toEqual(`Error: ${mockError.error.message}`);
   });
 
   it("should dispatch 'Sort' and update store", () => {
-    store.dispatch(new Sort(DEFAULT_SORT.active, DEFAULT_SORT.direction));
+    store.dispatch(
+      new SortRecommendations(DEFAULT_SORT.active, DEFAULT_SORT.direction)
+    );
     const sort = store.snapshot().recommendations.sort;
     expect(sort).toEqual(DEFAULT_SORT);
   });
 
   it("should dispatch 'Paginate' and update store", () => {
-    store.dispatch(new Paginate(34));
+    store.dispatch(new PaginateRecommendations(34));
     const pageIndex = store.snapshot().recommendations.pageIndex;
     expect(pageIndex).toEqual(34);
   });
 
   it("should dispatch 'ResetPaginator' and update store", () => {
-    store.dispatch(new ResetPaginator());
+    store.dispatch(new ResetRecommendationsPaginator());
     const pageIndex = store.snapshot().recommendations.pageIndex;
     expect(pageIndex).toEqual(0);
   });
 
   it("should dispatch 'Search' and update store", () => {
-    store.dispatch(new Search("smith"));
+    store.dispatch(new RecommendationsSearch("smith"));
     const searchQuery = store.snapshot().recommendations.searchQuery;
     expect(searchQuery).toEqual("smith");
   });
 
   it("should dispatch 'ClearSearch' and update store", () => {
-    store.dispatch(new ClearSearch());
+    store.dispatch(new ClearRecommendationsSearch());
     const searchQuery = store.snapshot().recommendations.searchQuery;
     expect(searchQuery).toBeNull();
   });
 
   it("should dispatch 'Filter' with `underNotice` and update store", () => {
-    store.dispatch(new Filter(RecommendationsFilterType.UNDER_NOTICE));
+    store.dispatch(
+      new FilterRecommendations(RecommendationsFilterType.UNDER_NOTICE)
+    );
     const filter = store.snapshot().recommendations.filter;
     expect(filter).toEqual(RecommendationsFilterType.UNDER_NOTICE);
   });
 
   it("should dispatch 'Filter' with `allDoctors` and update store", () => {
-    store.dispatch(new Filter(RecommendationsFilterType.ALL_DOCTORS));
+    store.dispatch(
+      new FilterRecommendations(RecommendationsFilterType.ALL_DOCTORS)
+    );
     const filter = store.snapshot().recommendations.filter;
     expect(filter).toEqual(RecommendationsFilterType.ALL_DOCTORS);
   });

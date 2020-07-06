@@ -5,19 +5,19 @@ import { Observable } from "rxjs";
 import { RecordsResolver } from "../shared/records/records.resolver";
 import { RecordsService } from "../shared/records/services/records.service";
 import {
-  ClearSearch,
-  Filter,
-  Get,
-  Paginate,
-  ResetFilter,
-  ResetPaginator,
-  ResetSort,
-  Search,
-  Sort,
-  EnableAllocateAdmin,
-  ToggleCheckbox,
-  ToggleAllCheckboxes
-} from "../shared/records/state/records.actions";
+  ClearConnectionsSearch,
+  FilterConnections,
+  GetConnections,
+  PaginateConnections,
+  ResetConnectionsFilter,
+  ResetConnectionsPaginator,
+  ResetConnectionsSort,
+  ConnectionsSearch,
+  SortConnections,
+  EnableConnectionsAllocateAdmin,
+  ToggleConnectionsCheckbox,
+  ToggleAllConnectionsCheckboxes
+} from "./state/connections.actions";
 
 @Injectable()
 export class ConnectionsResolver extends RecordsResolver
@@ -29,18 +29,18 @@ export class ConnectionsResolver extends RecordsResolver
     super(store, recordsService);
     this.recordsService.stateName = "connections";
     this.recordsService.setActions(
-      ClearSearch,
-      Filter,
-      Get,
-      Paginate,
-      ResetFilter,
-      ResetPaginator,
-      ResetSort,
-      Search,
-      Sort,
-      EnableAllocateAdmin,
-      ToggleCheckbox,
-      ToggleAllCheckboxes
+      ClearConnectionsSearch,
+      FilterConnections,
+      GetConnections,
+      PaginateConnections,
+      ResetConnectionsFilter,
+      ResetConnectionsPaginator,
+      ResetConnectionsSort,
+      ConnectionsSearch,
+      SortConnections,
+      EnableConnectionsAllocateAdmin,
+      ToggleConnectionsCheckbox,
+      ToggleAllConnectionsCheckboxes
     );
   }
 

@@ -5,19 +5,19 @@ import { Observable } from "rxjs";
 import { RecordsResolver } from "../shared/records/records.resolver";
 import { RecordsService } from "../shared/records/services/records.service";
 import {
-  ClearSearch,
-  Filter,
-  Get,
-  Paginate,
-  ResetFilter,
-  ResetPaginator,
-  ResetSort,
-  Search,
-  Sort,
-  EnableAllocateAdmin,
-  ToggleCheckbox,
-  ToggleAllCheckboxes
-} from "../shared/records/state/records.actions";
+  ClearConcernsSearch,
+  FilterConcerns,
+  GetConcerns,
+  PaginateConcerns,
+  ResetConcernsFilter,
+  ResetConcernsPaginator,
+  ResetConcernsSort,
+  ConcernsSearch,
+  SortConcerns,
+  EnableConcernsAllocateAdmin,
+  ToggleConcernsCheckbox,
+  ToggleAllConcernsCheckboxes
+} from "./state/concerns.actions";
 
 @Injectable()
 export class ConcernsResolver extends RecordsResolver implements Resolve<any> {
@@ -28,18 +28,18 @@ export class ConcernsResolver extends RecordsResolver implements Resolve<any> {
     super(store, recordsService);
     this.recordsService.stateName = "concerns";
     this.recordsService.setActions(
-      ClearSearch,
-      Filter,
-      Get,
-      Paginate,
-      ResetFilter,
-      ResetPaginator,
-      ResetSort,
-      Search,
-      Sort,
-      EnableAllocateAdmin,
-      ToggleCheckbox,
-      ToggleAllCheckboxes
+      ClearConcernsSearch,
+      FilterConcerns,
+      GetConcerns,
+      PaginateConcerns,
+      ResetConcernsFilter,
+      ResetConcernsPaginator,
+      ResetConcernsSort,
+      ConcernsSearch,
+      SortConcerns,
+      EnableConcernsAllocateAdmin,
+      ToggleConcernsCheckbox,
+      ToggleAllConcernsCheckboxes
     );
   }
 

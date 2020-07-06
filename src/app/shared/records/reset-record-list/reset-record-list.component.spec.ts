@@ -6,19 +6,19 @@ import { NgxsModule } from "@ngxs/store";
 import { MaterialModule } from "../../material/material.module";
 import { RecordsService } from "../services/records.service";
 import {
-  ClearSearch,
-  EnableAllocateAdmin,
-  Filter,
-  Get,
-  Paginate,
-  ResetFilter,
-  ResetPaginator,
-  ResetSort,
-  Search,
-  Sort,
-  ToggleAllCheckboxes,
-  ToggleCheckbox
-} from "../state/records.actions";
+  ClearRecommendationsSearch,
+  EnableRecommendationsAllocateAdmin,
+  FilterRecommendations,
+  GetRecommendations,
+  PaginateRecommendations,
+  ResetRecommendationsFilter,
+  ResetRecommendationsPaginator,
+  ResetRecommendationsSort,
+  RecommendationsSearch,
+  SortRecommendations,
+  ToggleAllRecommendationsCheckboxes,
+  ToggleRecommendationsCheckbox
+} from "../../../recommendations/state/recommendations.actions";
 import { RecommendationsState } from "../../../recommendations/state/recommendations.state";
 import { ResetRecordListComponent } from "./reset-record-list.component";
 
@@ -49,18 +49,18 @@ describe("ResetRecordListComponent", () => {
     fixture.detectChanges();
     recordsService.stateName = "recommendations";
     recordsService.setActions(
-      ClearSearch,
-      Filter,
-      Get,
-      Paginate,
-      ResetFilter,
-      ResetPaginator,
-      ResetSort,
-      Search,
-      Sort,
-      EnableAllocateAdmin,
-      ToggleAllCheckboxes,
-      ToggleCheckbox
+      ClearRecommendationsSearch,
+      FilterRecommendations,
+      GetRecommendations,
+      PaginateRecommendations,
+      ResetRecommendationsFilter,
+      ResetRecommendationsPaginator,
+      ResetRecommendationsSort,
+      RecommendationsSearch,
+      SortRecommendations,
+      EnableRecommendationsAllocateAdmin,
+      ToggleAllRecommendationsCheckboxes,
+      ToggleRecommendationsCheckbox
     );
   });
 

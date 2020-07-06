@@ -8,19 +8,19 @@ import { NgxsModule, Store } from "@ngxs/store";
 import { MaterialModule } from "../../material/material.module";
 import { RecordsService } from "../services/records.service";
 import {
-  ClearSearch,
-  EnableAllocateAdmin,
-  Filter,
-  Get,
-  Paginate,
-  ResetFilter,
-  ResetPaginator,
-  ResetSort,
-  Search,
-  Sort,
-  ToggleAllCheckboxes,
-  ToggleCheckbox
-} from "../state/records.actions";
+  ClearRecommendationsSearch,
+  EnableRecommendationsAllocateAdmin,
+  FilterRecommendations,
+  GetRecommendations,
+  PaginateRecommendations,
+  ResetRecommendationsFilter,
+  ResetRecommendationsPaginator,
+  ResetRecommendationsSort,
+  RecommendationsSearch,
+  SortRecommendations,
+  ToggleAllRecommendationsCheckboxes,
+  ToggleRecommendationsCheckbox
+} from "../../../recommendations/state/recommendations.actions";
 import { RecommendationsState } from "../../../recommendations/state/recommendations.state";
 import { RecordSearchComponent } from "./record-search.component";
 
@@ -52,18 +52,18 @@ describe("RecordSearchComponent", () => {
     component = fixture.componentInstance;
     recordsService.stateName = "recommendations";
     recordsService.setActions(
-      ClearSearch,
-      Filter,
-      Get,
-      Paginate,
-      ResetFilter,
-      ResetPaginator,
-      ResetSort,
-      Search,
-      Sort,
-      EnableAllocateAdmin,
-      ToggleAllCheckboxes,
-      ToggleCheckbox
+      ClearRecommendationsSearch,
+      FilterRecommendations,
+      GetRecommendations,
+      PaginateRecommendations,
+      ResetRecommendationsFilter,
+      ResetRecommendationsPaginator,
+      ResetRecommendationsSort,
+      RecommendationsSearch,
+      SortRecommendations,
+      EnableRecommendationsAllocateAdmin,
+      ToggleAllRecommendationsCheckboxes,
+      ToggleRecommendationsCheckbox
     );
     fixture.detectChanges();
   });
@@ -120,9 +120,13 @@ describe("RecordSearchComponent", () => {
     component.submitForm("87723113");
 
     expect(store.dispatch).toHaveBeenCalledTimes(3);
-    expect(store.dispatch).toHaveBeenCalledWith(new Search("87723113"));
-    expect(store.dispatch).toHaveBeenCalledWith(new ResetSort());
-    expect(store.dispatch).toHaveBeenCalledWith(new ResetPaginator());
+    expect(store.dispatch).toHaveBeenCalledWith(
+      new RecommendationsSearch("87723113")
+    );
+    expect(store.dispatch).toHaveBeenCalledWith(new ResetRecommendationsSort());
+    expect(store.dispatch).toHaveBeenCalledWith(
+      new ResetRecommendationsPaginator()
+    );
     expect(recordsService.updateRoute).toHaveBeenCalled();
   });
 

@@ -7,19 +7,19 @@ import { MaterialModule } from "../../shared/material/material.module";
 import { RecordsService } from "../../shared/records/services/records.service";
 import { RecommendationsFilterType } from "../recommendations.interfaces";
 import {
-  Filter,
-  ClearSearch,
-  Get,
-  ResetPaginator,
-  ResetSort,
-  Paginate,
-  ResetFilter,
-  Search,
-  Sort,
-  EnableAllocateAdmin,
-  ToggleAllCheckboxes,
-  ToggleCheckbox
-} from "../../shared/records/state/records.actions";
+  FilterRecommendations,
+  ClearRecommendationsSearch,
+  GetRecommendations,
+  ResetRecommendationsPaginator,
+  ResetRecommendationsSort,
+  PaginateRecommendations,
+  ResetRecommendationsFilter,
+  RecommendationsSearch,
+  SortRecommendations,
+  EnableRecommendationsAllocateAdmin,
+  ToggleAllRecommendationsCheckboxes,
+  ToggleRecommendationsCheckbox
+} from "../state/recommendations.actions";
 import { RecommendationsState } from "../state/recommendations.state";
 
 import { RecommendationsFiltersComponent } from "./recommendations-filters.component";
@@ -53,18 +53,18 @@ describe("RecommendationsFiltersComponent", () => {
     fixture.detectChanges();
     recordsService.stateName = "recommendations";
     recordsService.setActions(
-      ClearSearch,
-      Filter,
-      Get,
-      Paginate,
-      ResetFilter,
-      ResetPaginator,
-      ResetSort,
-      Search,
-      Sort,
-      EnableAllocateAdmin,
-      ToggleAllCheckboxes,
-      ToggleCheckbox
+      ClearRecommendationsSearch,
+      FilterRecommendations,
+      GetRecommendations,
+      PaginateRecommendations,
+      ResetRecommendationsFilter,
+      ResetRecommendationsPaginator,
+      ResetRecommendationsSort,
+      RecommendationsSearch,
+      SortRecommendations,
+      EnableRecommendationsAllocateAdmin,
+      ToggleAllRecommendationsCheckboxes,
+      ToggleRecommendationsCheckbox
     );
   });
 
@@ -76,7 +76,7 @@ describe("RecommendationsFiltersComponent", () => {
     spyOn(store, "dispatch").and.callThrough();
     component.filterByAllDoctors();
     expect(store.dispatch).toHaveBeenCalledWith(
-      new Filter(RecommendationsFilterType.ALL_DOCTORS)
+      new FilterRecommendations(RecommendationsFilterType.ALL_DOCTORS)
     );
   });
 
@@ -90,7 +90,7 @@ describe("RecommendationsFiltersComponent", () => {
     spyOn(store, "dispatch").and.callThrough();
     component.filterByUnderNotice();
     expect(store.dispatch).toHaveBeenCalledWith(
-      new Filter(RecommendationsFilterType.UNDER_NOTICE)
+      new FilterRecommendations(RecommendationsFilterType.UNDER_NOTICE)
     );
   });
 

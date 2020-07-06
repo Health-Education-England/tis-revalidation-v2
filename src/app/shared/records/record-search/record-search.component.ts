@@ -37,9 +37,12 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
   }
 
   public setupForm(): void {
-    this.form = this.formBuilder.group({
-      searchQuery: [null, [Validators.required]]
-    });
+    this.form = this.formBuilder.group(
+      {
+        searchQuery: [null, [Validators.required]]
+      },
+      { updateOn: "submit" }
+    );
   }
 
   /**

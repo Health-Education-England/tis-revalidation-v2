@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { LayoutModule } from "@angular/cdk/layout";
+import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatChipsModule } from "@angular/material/chips";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatSortModule } from "@angular/material/sort";
@@ -56,7 +57,8 @@ const materialModules = [
   MatChipsModule,
   MatStepperModule,
   MatCheckboxModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatAutocompleteModule
 ];
 
 @NgModule({

@@ -6,10 +6,10 @@ import { NgxsModule, Store } from "@ngxs/store";
 import { BehaviorSubject, Observable, of } from "rxjs";
 import { RecommendationStatus } from "../../recommendation/recommendation-history.interface";
 import {
-  Filter,
-  ResetPaginator,
-  Search
-} from "../../shared/records/state/records.actions";
+  FilterRecommendations,
+  ResetRecommendationsPaginator,
+  RecommendationsSearch
+} from "../state/recommendations.actions";
 import { RecommendationsState } from "../state/recommendations.state";
 import {
   IGetRecommendationsResponse,
@@ -90,8 +90,10 @@ describe("RecommendationsService", () => {
   });
 
   it("`generateParams()` should generate and return HttpParams", () => {
-    store.dispatch(new ResetPaginator());
-    store.dispatch(new Filter(RecommendationsFilterType.UNDER_NOTICE));
+    store.dispatch(new ResetRecommendationsPaginator());
+    store.dispatch(
+      new FilterRecommendations(RecommendationsFilterType.UNDER_NOTICE)
+    );
 
     const params: HttpParams = recommendationsService.generateParams();
 
@@ -99,9 +101,11 @@ describe("RecommendationsService", () => {
   });
 
   it("`generateParams()` should include search query if its set on store", () => {
-    store.dispatch(new Search("lisa"));
-    store.dispatch(new ResetPaginator());
-    store.dispatch(new Filter(RecommendationsFilterType.UNDER_NOTICE));
+    store.dispatch(new RecommendationsSearch("lisa"));
+    store.dispatch(new ResetRecommendationsPaginator());
+    store.dispatch(
+      new FilterRecommendations(RecommendationsFilterType.UNDER_NOTICE)
+    );
 
     const params: HttpParams = recommendationsService.generateParams();
 

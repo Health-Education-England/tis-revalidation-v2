@@ -34,6 +34,7 @@
         color="primary"
         aria-label="Recommendations search"
         type="submit"
+        [disabled]="enableAllocateAdmin$ | async"
       >
         <mat-icon aria-label="search icon">search</mat-icon>
       </button>

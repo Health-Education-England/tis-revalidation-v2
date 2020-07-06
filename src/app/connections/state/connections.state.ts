@@ -17,19 +17,21 @@ import {
 import { DEFAULT_SORT } from "../../shared/records/constants";
 import { ConnectionsService } from "../services/connections.service";
 import {
-  ClearSearch,
-  EnableAllocateAdmin,
-  Filter,
-  Paginate,
-  ResetPaginator,
-  ResetSort,
-  Search,
-  Sort,
-  Get,
-  GetError,
-  GetSuccess,
-  ResetFilter
-} from "../../shared/records/state/records.actions";
+  ClearConnectionsSearch,
+  EnableConnectionsAllocateAdmin,
+  FilterConnections,
+  PaginateConnections,
+  ResetConnectionsPaginator,
+  ResetConnectionsSort,
+  ConnectionsSearch,
+  SortConnections,
+  GetConnections,
+  GetConnectionsError,
+  GetConnectionsSuccess,
+  ResetConnectionsFilter,
+  ToggleAllConnectionsCheckboxes,
+  ToggleConnectionsCheckbox
+} from "./connections.actions";
 
 export class ConnectionsStateModel extends RecordsStateModel<
   ConnectionsFilterType,
@@ -54,7 +56,7 @@ export class ConnectionsState extends RecordsState {
     super(recordsService);
   }
 
-  @Action(Get)
+  @Action(GetConnections)
   get(ctx: StateContext<ConnectionsStateModel>) {
     const params: HttpParams = this.connectionsService.generateParams();
     const endPoint = `${environment.appUrls.getConnections}`;
@@ -65,10 +67,10 @@ export class ConnectionsState extends RecordsState {
       .pipe(
         take(1),
         switchMap((response: IGetConnectionsResponse) =>
-          ctx.dispatch(new GetSuccess(response))
+          ctx.dispatch(new GetConnectionsSuccess(response))
         ),
         catchError((error: HttpErrorResponse) =>
-          ctx.dispatch(new GetError(error))
+          ctx.dispatch(new GetConnectionsError(error))
         ),
         finalize(() =>
           ctx.patchState({
@@ -79,67 +81,83 @@ export class ConnectionsState extends RecordsState {
       .subscribe();
   }
 
-  @Action(GetSuccess)
+  @Action(GetConnectionsSuccess)
   getSuccess(
     ctx: StateContext<ConnectionsStateModel>,
-    action: GetSuccess<IGetConnectionsResponse>
+    action: GetConnectionsSuccess
   ) {
     return super.getSuccessHandler(ctx, action, "connectionsInfo");
   }
 
-  @Action(GetError)
-  getError(ctx: StateContext<ConnectionsStateModel>, action: GetError) {
+  @Action(GetConnectionsError)
+  getError(
+    ctx: StateContext<ConnectionsStateModel>,
+    action: GetConnectionsError
+  ) {
     return super.getErrorHandler(ctx, action);
   }
 
-  @Action(Sort)
-  sort(ctx: StateContext<ConnectionsStateModel>, action: Sort) {
+  @Action(SortConnections)
+  sort(ctx: StateContext<ConnectionsStateModel>, action: SortConnections) {
     return super.sortHandler(ctx, action);
   }
 
-  @Action(ResetSort)
+  @Action(ResetConnectionsSort)
   resetSort(ctx: StateContext<ConnectionsStateModel>) {
     return super.resetSortHandler(ctx, DEFAULT_SORT);
   }
 
-  @Action(Paginate)
-  paginate(ctx: StateContext<ConnectionsStateModel>, action: Paginate) {
+  @Action(PaginateConnections)
+  paginate(
+    ctx: StateContext<ConnectionsStateModel>,
+    action: PaginateConnections
+  ) {
     return super.paginateHandler(ctx, action);
   }
 
-  @Action(ResetPaginator)
+  @Action(ResetConnectionsPaginator)
   resetPaginator(ctx: StateContext<ConnectionsStateModel>) {
     return super.resetPaginatorHandler(ctx);
   }
 
-  @Action(Search)
-  search(ctx: StateContext<ConnectionsStateModel>, action: Search) {
+  @Action(ConnectionsSearch)
+  search(ctx: StateContext<ConnectionsStateModel>, action: ConnectionsSearch) {
     return super.searchHandler(ctx, action);
   }
 
-  @Action(ClearSearch)
+  @Action(ClearConnectionsSearch)
   clearSearch(ctx: StateContext<ConnectionsStateModel>) {
     return super.clearSearchHandler(ctx);
   }
 
-  @Action(Filter)
-  filter(
-    ctx: StateContext<ConnectionsStateModel>,
-    action: Filter<ConnectionsFilterType>
-  ) {
+  @Action(FilterConnections)
+  filter(ctx: StateContext<ConnectionsStateModel>, action: FilterConnections) {
     return super.filterHandler(ctx, action);
   }
 
-  @Action(ResetFilter)
+  @Action(ResetConnectionsFilter)
   resetFilter(ctx: StateContext<ConnectionsStateModel>) {
     return super.resetFilterHandler(ctx, ConnectionsFilterType.ALL);
   }
 
-  @Action(EnableAllocateAdmin)
+  @Action(EnableConnectionsAllocateAdmin)
   enableAllocateAdmin(
     ctx: StateContext<ConnectionsStateModel>,
-    action: EnableAllocateAdmin
+    action: EnableConnectionsAllocateAdmin
   ) {
     return super.enableAllocateAdminHandler(ctx, action.enableAllocateAdmin);
+  }
+
+  @Action(ToggleConnectionsCheckbox)
+  toggleCheckbox(
+    ctx: StateContext<ConnectionsStateModel>,
+    action: ToggleConnectionsCheckbox
+  ) {
+    return super.toggleCheckboxHandler(ctx, action);
+  }
+
+  @Action(ToggleAllConnectionsCheckboxes)
+  toggleAllCheckboxes(ctx: StateContext<ConnectionsStateModel>) {
+    return super.toggleAllCheckboxesHandler(ctx);
   }
 }

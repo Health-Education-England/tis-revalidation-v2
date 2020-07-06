@@ -3,7 +3,7 @@ import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
 import { RecordsService } from "../../shared/records/services/records.service";
-import { Filter } from "../../shared/records/state/records.actions";
+import { FilterRecommendations } from "../state/recommendations.actions";
 import { RecommendationsFilterType } from "../recommendations.interfaces";
 import { RecommendationsState } from "../state/recommendations.state";
 
@@ -29,12 +29,12 @@ export class RecommendationsFiltersComponent {
   constructor(private store: Store, private recordsService: RecordsService) {}
 
   public filterByAllDoctors(): void {
-    this.store.dispatch(new Filter(this.allDoctors));
+    this.store.dispatch(new FilterRecommendations(this.allDoctors));
     this.getRecommendations();
   }
 
   public filterByUnderNotice(): void {
-    this.store.dispatch(new Filter(this.underNotice));
+    this.store.dispatch(new FilterRecommendations(this.underNotice));
     this.getRecommendations();
   }
 

@@ -4,7 +4,7 @@ import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
 import { RecordsService } from "../../shared/records/services/records.service";
-import { Paginate } from "../../shared/records/state/records.actions";
+import { PaginateRecommendations } from "../state/recommendations.actions";
 import { RecommendationsState } from "../state/recommendations.state";
 
 @Component({
@@ -30,7 +30,7 @@ export class RecommendationsListPaginatorComponent {
    */
   public paginate(event: PageEvent): void {
     this.store
-      .dispatch(new Paginate(Number(event.pageIndex)))
+      .dispatch(new PaginateRecommendations(Number(event.pageIndex)))
       .pipe(take(1))
       .subscribe(() => this.recordsService.updateRoute());
   }

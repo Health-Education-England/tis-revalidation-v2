@@ -16,6 +16,7 @@ import { ConcernService } from "../service/concern.service";
 })
 export class CreateConcernComponent implements OnInit {
   dateFormat = environment.dateFormat;
+  acceptedFileTypes = `image/*,.pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain,text/csv`;
   downloadFiles = [
     {
       name: "Photos",
@@ -91,8 +92,13 @@ export class CreateConcernComponent implements OnInit {
 
   upload() {
     const formData = new FormData();
+    const filesAllowed = this.acceptedFileTypes.split(",");
     Array.from(this.uploadedFiles).forEach((uploadedFile: File) => {
-      formData.append("uploads[]", uploadedFile, uploadedFile.name);
+      if (filesAllowed.includes(uploadedFile.type)) {
+        formData.append("uploads[]", uploadedFile, uploadedFile.name);
+      } else {
+        // add filetype to array and inform user of not allowed types
+      }
     });
     (window as any).alert("Your upload should resume by next sprint 😀");
     this.concernService.uploadFiles(formData).subscribe(() => {

@@ -7,7 +7,9 @@
     (dragleave)="preventDefaults($event); unhighlight()"
     (drop)="preventDefaults($event); unhighlight(); handleDrop($event)"
   >
-    <p class="pr-10">Upload supporting documents:</p>
+    <p class="pr-10">
+      Drag and drop supporting documents, or click attach icon to upload:
+    </p>
     <button
       mat-button
       color="accent"
@@ -21,9 +23,14 @@
       type="file"
       multiple
       #imgFileInput
+      [accept]="acceptedFileTypes"
       (change)="fileChange($event)"
     />
+    <p class="mat-caption">
+      Allowed files include: images, pdf, word and excel
+    </p>
   </div>
+
   <mat-divider></mat-divider>
   <mat-list>
     <div mat-subheader>Uploaded documents</div>

@@ -52,7 +52,8 @@ export class CreateConcernComponent implements OnInit {
   constructor(
     private commentsService: CommentsService,
     private store: Store,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private concernService: ConcernService
   ) {}
 
   preventDefaults(e: Event) {
@@ -94,10 +95,9 @@ export class CreateConcernComponent implements OnInit {
       formData.append("uploads[]", uploadedFile, uploadedFile.name);
     });
     (window as any).alert("Your upload should resume by next sprint 😀");
-    // this.concernService.uploadFiles(formData).subscribe((response: any) => {
-    //   // TODO: plug endpoint and show message on success / failure
-
-    // });
+    this.concernService.uploadFiles(formData).subscribe(() => {
+      // TODO: plug endpoint and show message on success / failure
+    });
   }
 
   private initialiseData(): void {

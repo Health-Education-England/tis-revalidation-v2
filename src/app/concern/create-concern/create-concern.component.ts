@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { FormGroup, FormArray } from "@angular/forms";
 import { CommentsService } from "src/app/shared/details/comments-tool-bar/comments.service";
 import { Store } from "@ngxs/store";
@@ -45,13 +45,34 @@ export class CreateConcernComponent implements OnInit {
       (concern: IConcernSummary) => concern.concernId === this.concernId
     )
   );
+
+  @ViewChild("dropArea") dropArea: ElementRef;
+
   private concern: IConcernSummary;
   constructor(
     private commentsService: CommentsService,
     private store: Store,
-    private activatedRoute: ActivatedRoute,
-    private concernService: ConcernService
+    private activatedRoute: ActivatedRoute
   ) {}
+
+  preventDefaults(e: Event) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
+  highlight() {
+    this.dropArea.nativeElement.classList.add("highlight");
+  }
+
+  unhighlight() {
+    this.dropArea.nativeElement.classList.remove("highlight");
+  }
+
+  handleDrop(e: any) {
+    let dt = e.dataTransfer;
+    this.uploadedFiles = dt.files;
+    this.upload();
+  }
 
   downloadDocument(event: Event): void {
     event.preventDefault();
@@ -60,6 +81,7 @@ export class CreateConcernComponent implements OnInit {
 
   fileChange(element: any): void {
     this.uploadedFiles = element.target.files;
+    this.upload();
   }
 
   ngOnInit(): void {
@@ -68,12 +90,14 @@ export class CreateConcernComponent implements OnInit {
 
   upload() {
     const formData = new FormData();
-    this.uploadedFiles.forEach((uploadedFile: File) => {
+    Array.from(this.uploadedFiles).forEach((uploadedFile: File) => {
       formData.append("uploads[]", uploadedFile, uploadedFile.name);
     });
-    this.concernService.uploadFiles(formData).subscribe((response: any) => {
-      // TODO: plug endpoint and show message on success / failure
-    });
+    (window as any).alert("Your upload should resume by next sprint 😀");
+    // this.concernService.uploadFiles(formData).subscribe((response: any) => {
+    //   // TODO: plug endpoint and show message on success / failure
+
+    // });
   }
 
   private initialiseData(): void {

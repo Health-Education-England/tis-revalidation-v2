@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { FormGroup, FormArray } from "@angular/forms";
 import { CommentsService } from "src/app/shared/details/comments-tool-bar/comments.service";
 import { Store } from "@ngxs/store";
@@ -16,6 +16,7 @@ import { ConcernService } from "../service/concern.service";
 })
 export class CreateConcernComponent implements OnInit {
   dateFormat = environment.dateFormat;
+  acceptedFileTypes = `image/*,.pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain,text/csv`;
   downloadFiles = [
     {
       name: "Photos",
@@ -45,6 +46,9 @@ export class CreateConcernComponent implements OnInit {
       (concern: IConcernSummary) => concern.concernId === this.concernId
     )
   );
+
+  @ViewChild("dropArea") dropArea: ElementRef;
+
   private concern: IConcernSummary;
   constructor(
     private commentsService: CommentsService,
@@ -53,6 +57,25 @@ export class CreateConcernComponent implements OnInit {
     private concernService: ConcernService
   ) {}
 
+  preventDefaults(e: Event) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
+  highlight() {
+    this.dropArea.nativeElement.classList.add("highlight");
+  }
+
+  unhighlight() {
+    this.dropArea.nativeElement.classList.remove("highlight");
+  }
+
+  handleDrop(e: any) {
+    const dt = e.dataTransfer;
+    this.uploadedFiles = dt.files;
+    this.upload();
+  }
+
   downloadDocument(event: Event): void {
     event.preventDefault();
     (window as any).alert("Your download should resume by next sprint 😀");
@@ -60,6 +83,7 @@ export class CreateConcernComponent implements OnInit {
 
   fileChange(element: any): void {
     this.uploadedFiles = element.target.files;
+    this.upload();
   }
 
   ngOnInit(): void {
@@ -68,10 +92,16 @@ export class CreateConcernComponent implements OnInit {
 
   upload() {
     const formData = new FormData();
-    this.uploadedFiles.forEach((uploadedFile: File) => {
-      formData.append("uploads[]", uploadedFile, uploadedFile.name);
+    const filesAllowed = this.acceptedFileTypes.split(",");
+    Array.from(this.uploadedFiles).forEach((uploadedFile: File) => {
+      if (filesAllowed.includes(uploadedFile.type)) {
+        formData.append("uploads[]", uploadedFile, uploadedFile.name);
+      } else {
+        // add filetype to array and inform user of not allowed types
+      }
     });
-    this.concernService.uploadFiles(formData).subscribe((response: any) => {
+    (window as any).alert("Your upload should resume by next sprint 😀");
+    this.concernService.uploadFiles(formData).subscribe(() => {
       // TODO: plug endpoint and show message on success / failure
     });
   }

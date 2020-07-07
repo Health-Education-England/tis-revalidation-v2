@@ -1,6 +1,15 @@
 <form class="records-form" [formGroup]="concernForm">
-  <h1 class="mat-subheading-1">Upload supporting documents</h1>
-  <div class="button-row">
+  <div
+    class="button-row upload centered pt-20 pb-20"
+    #dropArea
+    (dragenter)="preventDefaults($event); highlight()"
+    (dragover)="preventDefaults($event); highlight()"
+    (dragleave)="preventDefaults($event); unhighlight()"
+    (drop)="preventDefaults($event); unhighlight(); handleDrop($event)"
+  >
+    <p class="pr-10">
+      Drag and drop supporting documents, or click attach icon to upload:
+    </p>
     <button
       mat-button
       color="accent"
@@ -9,8 +18,19 @@
     >
       <mat-icon>attachment</mat-icon>
     </button>
-    <input hidden type="file" #imgFileInput (change)="fileChange($event)" />
+    <input
+      hidden
+      type="file"
+      multiple
+      #imgFileInput
+      [accept]="acceptedFileTypes"
+      (change)="fileChange($event)"
+    />
+    <p class="mat-caption">
+      Allowed files include: images, pdf, word and excel
+    </p>
   </div>
+
   <mat-divider></mat-divider>
   <mat-list>
     <div mat-subheader>Uploaded documents</div>

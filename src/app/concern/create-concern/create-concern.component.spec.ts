@@ -7,6 +7,7 @@ import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { MaterialModule } from "src/app/shared/material/material.module";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
+import { ReactiveFormsModule } from "@angular/forms";
 
 describe("CreateConcernComponent", () => {
   let component: CreateConcernComponent;
@@ -20,6 +21,7 @@ describe("CreateConcernComponent", () => {
         HttpClientTestingModule,
         MaterialModule,
         NoopAnimationsModule,
+        ReactiveFormsModule,
         RouterTestingModule
       ]
     }).compileComponents();

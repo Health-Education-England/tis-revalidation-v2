@@ -69,7 +69,7 @@ export class CreateConcernComponent implements OnInit {
   }
 
   handleDrop(e: any) {
-    let dt = e.dataTransfer;
+    const dt = e.dataTransfer;
     this.uploadedFiles = dt.files;
     this.upload();
   }

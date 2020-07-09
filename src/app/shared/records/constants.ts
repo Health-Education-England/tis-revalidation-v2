@@ -8,10 +8,6 @@ export const DEFAULT_SORT: Sort = {
 
 export const RECORDS_COLUMN_DATA: IRecordDataCell[] = [
   {
-    isCheckbox: true,
-    name: "checkbox"
-  },
-  {
     label: "First name",
     name: "doctorFirstName",
     enableSort: true

@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { ConcernComponent } from "./concern.component";
 import { NgxsModule } from "@ngxs/store";
 import { ConcernState } from "./state/concern.state";
-import { ConcernService } from "./service/concern.service";
+import { ConcernService } from "./services/concern/concern.service";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { MaterialModule } from "../shared/material/material.module";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";

@@ -1,15 +1,16 @@
 import { TestBed, async, fakeAsync } from "@angular/core/testing";
 import { NgxsModule, Store } from "@ngxs/store";
+import { IConcernHistory } from "../concern.interfaces";
 import { ConcernState } from "./concern.state";
 import { Get } from "./concern.actions";
-import { ConcernService } from "../service/concern.service";
+import { ConcernService } from "../services/concern/concern.service";
 import {
   HttpClientTestingModule,
   HttpTestingController
 } from "@angular/common/http/testing";
 import { environment } from "@environment";
 import { ConcernHistoryResponse2 } from "src/app/recommendation/mock-data/recommendation-spec-data";
-import { IConcernHistory } from "../concern-history.interface";
+
 import { ErrorHandler } from "@angular/core";
 
 describe("Concern actions", () => {

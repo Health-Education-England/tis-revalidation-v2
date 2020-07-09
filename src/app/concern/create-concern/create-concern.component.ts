@@ -5,9 +5,10 @@ import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
 import { tap } from "rxjs/operators";
-import { defaultConcern, IConcernSummary } from "../concern-history.interface";
 import { environment } from "@environment";
-import { ConcernService } from "../service/concern.service";
+import { IConcernSummary } from "../concern.interfaces";
+import { defaultConcern } from "../constants";
+import { UploadService } from "../services/upload/upload.service";
 
 @Component({
   selector: "app-create-concern",
@@ -54,7 +55,7 @@ export class CreateConcernComponent implements OnInit {
     private commentsService: CommentsService,
     private store: Store,
     private activatedRoute: ActivatedRoute,
-    private concernService: ConcernService
+    private uploadService: UploadService
   ) {}
 
   preventDefaults(e: Event) {
@@ -101,7 +102,7 @@ export class CreateConcernComponent implements OnInit {
       }
     });
     (window as any).alert("Your upload should resume by next sprint 😀");
-    this.concernService.uploadFiles(formData).subscribe(() => {
+    this.uploadService.upload(formData).subscribe(() => {
       // TODO: plug endpoint and show message on success / failure
     });
   }

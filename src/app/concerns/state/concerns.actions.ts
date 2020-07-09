@@ -1,4 +1,4 @@
-import { ConcernStatus } from "../../concern/concern-history.interface";
+import { ConcernStatus } from "../../concern/concern.interfaces";
 import {
   EnableAllocateAdminPayload,
   FilterPayload,

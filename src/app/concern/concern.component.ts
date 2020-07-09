@@ -6,11 +6,12 @@ import {
   transition,
   animate
 } from "@angular/animations";
-import { IConcernSummary, ConcernStatus } from "./concern-history.interface";
+
 import { environment } from "@environment";
 import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { IConcern } from "../concerns/concerns.interfaces";
+import { ConcernStatus, IConcernSummary } from "./concern.interfaces";
 
 @Component({
   selector: "app-concern",

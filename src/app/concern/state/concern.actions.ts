@@ -1,4 +1,4 @@
-import { IConcernSummary } from "../concern-history.interface";
+import { IConcernSummary } from "../concern.interfaces";
 
 export class Get {
   static readonly type = "[concern] Get";

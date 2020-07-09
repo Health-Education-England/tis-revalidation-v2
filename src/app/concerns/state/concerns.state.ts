@@ -3,7 +3,8 @@ import { Injectable } from "@angular/core";
 import { environment } from "@environment";
 import { Action, State, StateContext } from "@ngxs/store";
 import { catchError, finalize, map, switchMap, take } from "rxjs/operators";
-import { ConcernStatus } from "../../concern/concern-history.interface";
+import { ConcernStatus } from "../../concern/concern.interfaces";
+
 import { RecommendationStatus } from "../../recommendation/recommendation-history.interface";
 import { DEFAULT_SORT } from "../../shared/records/constants";
 import { RecordsService } from "../../shared/records/services/records.service";

@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { State, Action, StateContext } from "@ngxs/store";
+import { IConcernHistory } from "../concern.interfaces";
 import { Get } from "./concern.actions";
-import { ConcernService } from "../service/concern.service";
-import { IConcernHistory } from "../concern-history.interface";
+import { ConcernService } from "../services/concern/concern.service";
 import { tap } from "rxjs/operators";
 
 export class ConcernStateModel {

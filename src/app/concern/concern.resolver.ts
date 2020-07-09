@@ -8,7 +8,8 @@ import { Observable } from "rxjs";
 import { Store } from "@ngxs/store";
 import { catchError } from "rxjs/operators";
 import { Injectable } from "@angular/core";
-import { IConcernHistory } from "./concern-history.interface";
+import { IConcernHistory } from "./concern.interfaces";
+
 import { Get } from "./state/concern.actions";
 
 @Injectable()

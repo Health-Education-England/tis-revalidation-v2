@@ -49,57 +49,45 @@
               *ngFor="let i of columnData"
               matColumnDef="{{ i.name }}"
             >
-              <!-- Header cells -->
-              <ng-container *ngIf="i.enableSort; else disabledSort">
-                <th
-                  mat-header-cell
-                  *matHeaderCellDef
-                  [mat-sort-header]="i.name"
-                  scope="col"
-                  [disabled]="data.enableAllocateAdmin"
+              <!-- header cell -->
+              <th
+                mat-header-cell
+                *matHeaderCellDef
+                [mat-sort-header]="i.name"
+                scope="col"
+                [disabled]="data.enableAllocateAdmin || !i.enableSort"
+              >
+                <mat-checkbox
+                  *ngIf="
+                    data.enableAllocateAdmin && i.name === 'doctorFirstName'
+                  "
+                  [checked]="data.allChecked"
+                  [indeterminate]="data.someChecked"
+                  (change)="toggleAllCheckboxes()"
+                  class="pr-20"
                 >
-                  {{ i.label }}
-                </th>
-              </ng-container>
-              <ng-template #disabledSort>
-                <th
-                  mat-header-cell
-                  *matHeaderCellDef
-                  [mat-sort-header]="i.name"
-                  scope="col"
-                  disabled
-                  [class.checkbox]="data.enableAllocateAdmin"
-                >
-                  <!-- toggle all checkboxes -->
-                  <ng-container
-                    *ngIf="
-                      data.enableAllocateAdmin && i.isCheckbox;
-                      else nonCheckbox
-                    "
-                  >
-                    <mat-checkbox
-                      [checked]="data.allChecked"
-                      [indeterminate]="data.someChecked"
-                      (change)="toggleAllCheckboxes()"
-                    >
-                    </mat-checkbox>
-                  </ng-container>
-
-                  <!-- header label -->
-                  <ng-template #nonCheckbox>
-                    {{ i.label }}
-                  </ng-template>
-                </th>
-              </ng-template>
+                </mat-checkbox>
+                {{ i.label }}
+              </th>
 
               <!-- mat cell -->
               <td mat-cell *matCellDef="let element">
-                <!-- checkbox -->
-                <ng-container *ngIf="data.enableAllocateAdmin && i.isCheckbox">
-                  <mat-checkbox
-                    [checked]="element.checked"
-                    (change)="toggleCheckbox(element.gmcReferenceNumber)"
-                  ></mat-checkbox>
+                <ng-container *ngIf="data.enableAllocateAdmin">
+                  <!-- checkbox -->
+                  <ng-container *ngIf="i.name === 'doctorFirstName'">
+                    <mat-checkbox
+                      class="pr-20"
+                      [checked]="element.checked"
+                      (change)="toggleCheckbox(element.gmcReferenceNumber)"
+                    ></mat-checkbox>
+                  </ng-container>
+
+                  <!-- render allocate admin component -->
+                  <ng-container *ngIf="i.name === 'admin'">
+                    <app-allocate-admin-autocomplete
+                      [gmcNumber]="element.gmcReferenceNumber"
+                    ></app-allocate-admin-autocomplete>
+                  </ng-container>
                 </ng-container>
 
                 <!-- cell value | format date -->
@@ -108,22 +96,7 @@
                 </ng-container>
 
                 <!-- cell value | no formatting needed -->
-                <ng-template #noPipe>
-                  <!-- render allocate admin component -->
-                  <ng-container
-                    *ngIf="
-                      data.enableAllocateAdmin && i.name === 'admin';
-                      else renderData
-                    "
-                  >
-                    <app-allocate-admin-autocomplete
-                      [gmcNumber]="element.gmcReferenceNumber"
-                    ></app-allocate-admin-autocomplete>
-                  </ng-container>
-
-                  <!-- render data -->
-                  <ng-template #renderData>{{ element[i.name] }}</ng-template>
-                </ng-template>
+                <ng-template #noPipe>{{ element[i.name] }}</ng-template>
               </td>
             </ng-container>
 

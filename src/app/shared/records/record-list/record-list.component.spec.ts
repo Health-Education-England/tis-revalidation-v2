@@ -101,7 +101,7 @@ describe("RecordListComponent", () => {
   it("`columnNames()` should return an array of strings", () => {
     component.columnData = generateColumnData(COLUMN_DATA);
     expect(component.columnNames).toBeInstanceOf(Array);
-    expect(component.columnNames[1]).toEqual("doctorFirstName");
+    expect(component.columnNames[0]).toEqual("doctorFirstName");
   });
 
   it("'navigateToDetails()' should navigate to details route", () => {

@@ -1,17 +1,17 @@
-import { Component } from "@angular/core";
 import {
-  trigger,
+  animate,
   state,
   style,
   transition,
-  animate
+  trigger
 } from "@angular/animations";
+import { Component } from "@angular/core";
 
 import { environment } from "@environment";
-import { Store } from "@ngxs/store";
+import { Select } from "@ngxs/store";
 import { Observable } from "rxjs";
-import { IConcern } from "../concerns/concerns.interfaces";
 import { ConcernStatus, IConcernSummary } from "./concern.interfaces";
+import { ConcernState } from "./state/concern.state";
 
 @Component({
   selector: "app-concern",
@@ -49,11 +49,7 @@ export class ConcernComponent {
   expandedElement: IConcernSummary | null;
   dateFormat = environment.dateFormat;
   concernStatus = ConcernStatus;
-  public concernHistory$: Observable<IConcern[]> = this.store.select(
-    (concernState) => concernState.concern.item.concerns
-  );
-
-  constructor(private store: Store) {}
+  @Select(ConcernState.history) public history$: Observable<IConcernSummary[]>;
 
   currentExpanded(element: any, event: Event) {
     event.stopPropagation();

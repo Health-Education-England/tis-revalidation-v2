@@ -1,3 +1,4 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { CreateConcernComponent } from "./create-concern.component";
@@ -23,7 +24,8 @@ describe("CreateConcernComponent", () => {
         NoopAnimationsModule,
         ReactiveFormsModule,
         RouterTestingModule
-      ]
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));
 

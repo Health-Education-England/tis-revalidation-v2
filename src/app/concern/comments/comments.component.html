@@ -1,0 +1,23 @@
+<form class="w-100" [formGroup]="form">
+  <div class="comments-section">
+    <div formArrayName="comments" class="comments">
+      <ng-container
+        *ngFor="let comment of comments.controls; let i = index"
+        [formGroupName]="i"
+      >
+        <mat-form-field class="w-100">
+          <mat-label>Leave a comment</mat-label>
+          <textarea
+            matInput
+            [formControlName]="'comment'"
+            placeholder="comments..."
+            rows="10"
+          ></textarea>
+          <div class="select-control">
+            <mat-checkbox [formControlName]="'checkbox'"></mat-checkbox>
+          </div>
+        </mat-form-field>
+      </ng-container>
+    </div>
+  </div>
+</form>

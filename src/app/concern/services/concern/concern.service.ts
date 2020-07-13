@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 
 import { Observable } from "rxjs";
 import { environment } from "@environment";
-import { IConcernHistory } from "../../concern.interfaces";
+import { IGetConcernResponse } from "../../concern.interfaces";
 
 @Injectable({
   providedIn: "root"
@@ -11,8 +11,8 @@ import { IConcernHistory } from "../../concern.interfaces";
 export class ConcernService {
   constructor(private http: HttpClient) {}
 
-  getConcernHistory(gmcNumber: number): Observable<IConcernHistory | any> {
-    return this.http.get<IConcernHistory>(
+  getConcernHistory(gmcNumber: number): Observable<IGetConcernResponse | any> {
+    return this.http.get<IGetConcernResponse>(
       `${environment.appUrls.getConcern}/${gmcNumber}`
     );
   }

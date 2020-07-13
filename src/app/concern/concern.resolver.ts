@@ -8,18 +8,18 @@ import { Observable } from "rxjs";
 import { Store } from "@ngxs/store";
 import { catchError } from "rxjs/operators";
 import { Injectable } from "@angular/core";
-import { IConcernHistory } from "./concern.interfaces";
+import { IGetConcernResponse } from "./concern.interfaces";
 
 import { Get } from "./state/concern.actions";
 
 @Injectable()
-export class ConcernResolver implements Resolve<IConcernHistory> {
+export class ConcernResolver implements Resolve<IGetConcernResponse> {
   constructor(private store: Store, private router: Router) {}
 
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<IConcernHistory> | Observable<any> {
+  ): Observable<IGetConcernResponse> | Observable<any> {
     const gmcNumber: number = Number(route.params.gmcNumber);
     return this.store
       .dispatch(new Get(gmcNumber))

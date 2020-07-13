@@ -1,22 +1,22 @@
-export interface IConcernHistory {
+export interface IGetConcernResponse {
   gmcNumber: number;
   concerns: IConcernSummary[];
 }
 export interface IConcernSummary {
+  admin: string;
+  comments: string[];
   concernId: number;
-  gmcNumber: number;
-  dateOfIncident: Date;
   concernType: string; // TODO: use enum ConcernType
-  source: string;
+  dateOfIncident: Date;
   dateReported: Date;
   employer: string;
-  site: string;
-  grade: string;
-  status: ConcernStatus;
-  admin: string;
   followUpDate: Date;
+  gmcNumber: number;
+  grade: string;
   lastUpdatedDate: Date;
-  comments: string[];
+  site: string;
+  source: string;
+  status: ConcernStatus;
 }
 export enum ConcernStatus {
   OPEN = "Open",

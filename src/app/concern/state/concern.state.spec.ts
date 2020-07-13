@@ -1,6 +1,6 @@
 import { TestBed, async, fakeAsync } from "@angular/core/testing";
 import { NgxsModule, Store } from "@ngxs/store";
-import { IConcernHistory } from "../concern.interfaces";
+import { IGetConcernResponse } from "../concern.interfaces";
 import { ConcernState } from "./concern.state";
 import { Get } from "./concern.actions";
 import { ConcernService } from "../services/concern/concern.service";
@@ -44,11 +44,11 @@ describe("Concern actions", () => {
     expect(req.request.method).toEqual("GET");
     req.flush(ConcernHistoryResponse2);
 
-    const item: IConcernHistory = store.selectSnapshot(
-      (state) => state.concern.item
+    const history: IGetConcernResponse = store.selectSnapshot(
+      (state) => state.concern.history
     );
 
-    expect(item).toEqual(ConcernHistoryResponse2);
+    expect(history).toEqual(ConcernHistoryResponse2.concerns);
   }));
 
   it("should throw an error if get id is not a number", fakeAsync(() => {

@@ -1,26 +1,37 @@
 import { Injectable } from "@angular/core";
-import { State, Action, StateContext } from "@ngxs/store";
-import { IConcernHistory } from "../concern.interfaces";
+import { State, Action, StateContext, Selector } from "@ngxs/store";
+import { IGetConcernResponse, IConcernSummary } from "../concern.interfaces";
 import { Get } from "./concern.actions";
 import { ConcernService } from "../services/concern/concern.service";
 import { tap } from "rxjs/operators";
 
 export class ConcernStateModel {
-  public item: IConcernHistory;
+  public concernId?: number;
+  public gmcNumber: number;
+  public history: IConcernSummary[];
+  public selected?: IConcernSummary;
 }
 
 @State<ConcernStateModel>({
   name: "concern",
   defaults: {
-    item: {
-      gmcNumber: null,
-      concerns: []
-    }
+    gmcNumber: null,
+    history: []
   }
 })
 @Injectable()
 export class ConcernState {
   constructor(private service: ConcernService) {}
+
+  @Selector()
+  public static history(state: ConcernStateModel) {
+    return state.history;
+  }
+
+  @Selector()
+  public static selected(state: ConcernStateModel) {
+    return state.selected;
+  }
 
   @Action(Get)
   get({ patchState }: StateContext<ConcernStateModel>, { payload }: Get) {
@@ -29,11 +40,12 @@ export class ConcernState {
     }
 
     return this.service.getConcernHistory(payload).pipe(
-      tap((result: IConcernHistory) => {
+      tap((response: IGetConcernResponse) =>
         patchState({
-          item: result
-        });
-      })
+          gmcNumber: response.gmcNumber || payload,
+          history: response.concerns
+        })
+      )
     );
   }
 }

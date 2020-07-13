@@ -1,0 +1,34 @@
+<form class="records-form" [formGroup]="form">
+  <div
+    class="button-row upload centered pt-20 pb-20"
+    #dropArea
+    (dragenter)="preventDefaults($event); highlight()"
+    (dragover)="preventDefaults($event); highlight()"
+    (dragleave)="preventDefaults($event); unhighlight()"
+    (drop)="preventDefaults($event); unhighlight(); handleDrop($event)"
+  >
+    <p class="pr-10">
+      Drag and drop supporting documents, or click attach icon to upload:
+    </p>
+    <button
+      mat-button
+      color="accent"
+      mat-mini-fab
+      (click)="fileUploader.click()"
+    >
+      <mat-icon>attachment</mat-icon>
+    </button>
+    <input
+      hidden
+      type="file"
+      multiple
+      #fileUploader
+      [formControlName]="'fileUploader'"
+      [accept]="acceptedFileTypes"
+      (change)="onFilesSelection($event)"
+    />
+    <p class="mat-caption">
+      Allowed files include: images, pdf, word and excel
+    </p>
+  </div>
+</form>

@@ -1,0 +1,16 @@
+<mat-list>
+  <div mat-subheader>Uploaded documents</div>
+  <mat-list-item
+    *ngFor="let file of uploadedFiles"
+    (click)="downloadFile($event)"
+  >
+    <mat-icon mat-list-icon *ngIf="file.type === 'doc'">note</mat-icon>
+    <mat-icon mat-list-icon *ngIf="file.type === 'pdf'"
+      >picture_as_pdf</mat-icon
+    >
+    <mat-icon mat-list-icon *ngIf="file.type === 'image'">photo</mat-icon>
+
+    <div mat-line>{{ file.name }}</div>
+    <div mat-line>{{ file.updated | date: dateFormat }}</div>
+  </mat-list-item>
+</mat-list>

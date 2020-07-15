@@ -5,6 +5,7 @@ import { AWS_CONFIG } from "./constants";
 import { IEnvironment } from "./environment.interface";
 export const environment: IEnvironment = {
   production: false,
+  name: "dev",
   siteIds: ["UA-40570867-6"],
   hotJarId: 1662399,
   hotJarSv: 6,

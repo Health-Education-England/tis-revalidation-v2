@@ -1,5 +1,6 @@
 export abstract class IEnvironment {
   abstract readonly production: boolean; // build mode
+  abstract readonly name: string; // environment name
   abstract readonly siteIds: string[]; // Google analytics site id's
   abstract readonly hotJarId: number;
   abstract readonly hotJarSv: number;

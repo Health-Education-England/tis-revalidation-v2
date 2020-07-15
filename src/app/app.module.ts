@@ -1,5 +1,5 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
-import { NgModule, APP_INITIALIZER } from "@angular/core";
+import { NgModule, APP_INITIALIZER, ErrorHandler } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ServiceWorkerModule } from "@angular/service-worker";
@@ -17,6 +17,7 @@ import { SharedModule } from "./shared/shared.module";
 import { AuthInterceptor } from "./core/auth/auth.interceptor";
 import { AuthService } from "./core/auth/auth.service";
 import { initializeApplication } from "./core/auth/auth.initializer";
+import { errorHandlerFactory } from "./factories/error-handler.factory";
 import { Router } from "@angular/router";
 
 /* Configure Amplify resources */
@@ -56,7 +57,8 @@ Amplify.configure(AWS_CONFIG);
       useFactory: initializeApplication,
       multi: true,
       deps: [AuthService, Router]
-    }
+    },
+    { provide: ErrorHandler, useFactory: errorHandlerFactory }
   ],
   bootstrap: [AppComponent]
 })

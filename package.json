@@ -41,7 +41,7 @@
     "angulartics2": "^9.1.0",
     "aws-amplify": "^3.0.18",
     "browserslist": "^4.13.0",
-    "aws-sdk": "^2.709.0",
+    "aws-sdk": "^2.713.0",
     "caniuse-lite": "^1.0.30001099",
     "nhsuk-frontend": "^3.1.0",
     "rxjs": "~6.6.0",

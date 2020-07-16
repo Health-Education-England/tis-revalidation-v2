@@ -13,7 +13,23 @@ import { ConcernState } from "../state/concern.state";
   styleUrls: ["./file-uploader.component.scss"]
 })
 export class FileUploaderComponent implements OnInit {
-  public acceptedFileTypes = `image/apng,image/bmp,image/gif,image/jpeg,image/png,image/svg+xml,image/tiff,image/webp,.pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain,text/csv`;
+  public acceptedFileTypes: string[] = [
+    "image/apng",
+    "image/bmp",
+    "image/gif",
+    "image/jpeg",
+    "image/png",
+    "image/svg+xml",
+    "image/tiff",
+    "image/webp",
+    ".pdf",
+    ".doc",
+    ".docx",
+    "application/msword",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "text/plain",
+    "text/csv"
+  ];
   public form: FormGroup;
   public gmcNumber: number = this.store.selectSnapshot(ConcernState.gmcNumber);
   @ViewChild("dropArea") dropArea: ElementRef;
@@ -47,12 +63,13 @@ export class FileUploaderComponent implements OnInit {
   }
 
   public handleDrop($event: DragEvent): void {
-    const itemList: DataTransferItem[] = Array.from($event.dataTransfer.items);
-    const filesAllowed: string[] = this.acceptedFileTypes.split(",");
+    const itemList: DataTransferItem[] = $event.dataTransfer.items
+      ? Array.from($event.dataTransfer.items)
+      : [];
     const droppedFiles: File[] = [];
     const invalidFiles: string[] = [];
 
-    if (itemList && itemList.length) {
+    if (itemList.length) {
       // TODO remove check once multiple file upload is supported by BE
       if (itemList.length > 1) {
         this.snackBarService.openSnackBar(`Please select one file at a time`);
@@ -60,7 +77,7 @@ export class FileUploaderComponent implements OnInit {
       }
 
       itemList.forEach((i: DataTransferItem) => {
-        if (filesAllowed.includes(i.type)) {
+        if (this.acceptedFileTypes.includes(i.type)) {
           droppedFiles.push(i.getAsFile());
         } else {
           invalidFiles.push(i.getAsFile().name);

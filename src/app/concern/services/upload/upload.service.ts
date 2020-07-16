@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "@environment";
 import { Observable, of } from "rxjs";
@@ -28,9 +28,16 @@ export class UploadService {
     return of({});
   }
 
-  // TODO placeholder method
-  public list(): Observable<any> {
-    return of({});
+  public generateParams(gmcNumber: number): HttpParams {
+    const params: HttpParams = new HttpParams()
+      .set("bucketName", "tis-test-bucket-2020")
+      .set("folderPath", `${gmcNumber}/${gmcNumber}`);
+
+    return params;
+  }
+
+  public list(params: HttpParams): Observable<any> {
+    return this.http.get(environment.appUrls.fileList, { params });
   }
 
   // TODO placeholder method

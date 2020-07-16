@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { Store } from "@ngxs/store";
+import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
 import { UploadService } from "../services/upload/upload.service";
@@ -32,6 +32,9 @@ export class FileUploaderComponent implements OnInit {
   ];
   public form: FormGroup;
   public gmcNumber: number = this.store.selectSnapshot(ConcernState.gmcNumber);
+  @Select(ConcernState.uploadInProgress) public uploadInProgress$: Observable<
+    boolean
+  >;
   @ViewChild("dropArea") dropArea: ElementRef;
 
   constructor(
@@ -103,6 +106,7 @@ export class FileUploaderComponent implements OnInit {
   }
 
   public upload(payload: File[]): Observable<any> {
+    this.form.reset();
     return this.store.dispatch(new Upload(this.gmcNumber, payload));
   }
 }

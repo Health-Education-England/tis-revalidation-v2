@@ -30,11 +30,17 @@ export class UploadSuccess {
   static readonly type = "[Concern] Upload Success";
 }
 
-export class UploadError {
-  static readonly type = "[Concern] Upload Error";
+export class ApiError {
+  static readonly type = "[Concern] Api Error";
   constructor(public error: HttpErrorResponse) {}
 }
 
-export class GetUploadedFiles {
-  static readonly type = "[Concern] Get Uploaded Files";
+export class GetFiles {
+  static readonly type = "[Concern] Get Files";
+  constructor(public gmcNumber: number) {}
+}
+
+export class GetFilesSuccess {
+  static readonly type = "[Concern] Get Files Success";
+  constructor(public uploadedFiles: any[]) {}
 }

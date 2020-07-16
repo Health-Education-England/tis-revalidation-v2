@@ -52,7 +52,7 @@ export class FileUploaderComponent implements OnInit {
     const droppedFiles: File[] = [];
     const invalidFiles: string[] = [];
 
-    if (itemList.length) {
+    if (itemList && itemList.length) {
       // TODO remove check once multiple file upload is supported by BE
       if (itemList.length > 1) {
         this.snackBarService.openSnackBar(`Please select one file at a time`);

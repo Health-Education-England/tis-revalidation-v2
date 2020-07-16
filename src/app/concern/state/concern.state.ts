@@ -1,9 +1,18 @@
+import { HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { State, Action, StateContext, Selector } from "@ngxs/store";
-import { IGetConcernResponse, IConcernSummary } from "../concern.interfaces";
-import { Get } from "./concern.actions";
+import { Action, Selector, State, StateContext } from "@ngxs/store";
+import { catchError, switchMap, take, tap } from "rxjs/operators";
+import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
+import { IConcernSummary, IGetConcernResponse } from "../concern.interfaces";
 import { ConcernService } from "../services/concern/concern.service";
-import { tap } from "rxjs/operators";
+import { UploadService } from "../services/upload/upload.service";
+import {
+  Get,
+  GetUploadedFiles,
+  Upload,
+  UploadError,
+  UploadSuccess
+} from "./concern.actions";
 
 export class ConcernStateModel {
   public concernId?: number;
@@ -21,7 +30,16 @@ export class ConcernStateModel {
 })
 @Injectable()
 export class ConcernState {
-  constructor(private service: ConcernService) {}
+  constructor(
+    private service: ConcernService,
+    private uploadService: UploadService,
+    private snackBarService: SnackBarService
+  ) {}
+
+  @Selector()
+  public static gmcNumber(state: ConcernStateModel) {
+    return state.gmcNumber;
+  }
 
   @Selector()
   public static history(state: ConcernStateModel) {
@@ -47,5 +65,32 @@ export class ConcernState {
         })
       )
     );
+  }
+
+  @Action(Upload)
+  upload(ctx: StateContext<ConcernStateModel>, action: Upload) {
+    return this.uploadService
+      .upload(
+        this.uploadService.generateRequest(action.gmcNumber, action.payload)
+      )
+      .pipe(
+        take(1),
+        switchMap(() => ctx.dispatch(new UploadSuccess())),
+        catchError((error: HttpErrorResponse) =>
+          ctx.dispatch(new UploadError(error))
+        )
+      )
+      .subscribe();
+  }
+
+  @Action(UploadSuccess)
+  uploadSuccess(ctx: StateContext<ConcernStateModel>) {
+    this.snackBarService.openSnackBar(`Upload success`);
+    return ctx.dispatch(new GetUploadedFiles());
+  }
+
+  @Action(UploadError)
+  uploadError(ctx: StateContext<ConcernStateModel>, action: UploadError) {
+    return this.snackBarService.openSnackBar(`Error: ${action.error.message}`);
   }
 }

@@ -1,9 +1,13 @@
 import { IEnvironment } from "./environment.interface";
 
 export const APP_URLS_CONFIG: IEnvironment["appUrls"] = {
+  allocateAdmin: `api/v1/doctors/assign-admin`,
   authRedirect: ``,
-  getConcerns: `api/concerns`,
+  fileDownload: `api/storage/download`,
+  fileList: `api/storage/list`,
+  fileUpload: `api/storage/upload`,
   getConcern: `/api/concerns`,
+  getConcerns: `api/concerns`,
   getConnections: `api/v1/connections`,
   getDetails: `api/trainee`,
   getNotes: `mocky/5ea2da614f00006c00d9f540`, // TODO replace with appropriate api url once is available
@@ -11,9 +15,7 @@ export const APP_URLS_CONFIG: IEnvironment["appUrls"] = {
   getRecommendations: `api/v1/doctors`,
   login: ``,
   saveRecommendation: `api/recommendation`,
-  submitToGMC: `api/recommendation/{gmcNumber}/submit/{recommendationId}`,
-  uploadConcernDocuments: ``,
-  allocateAdmin: `api/v1/doctors/assign-admin`
+  submitToGMC: `api/recommendation/{gmcNumber}/submit/{recommendationId}`
 };
 
 export const AWS_CONFIG: IEnvironment["awsConfig"] = {

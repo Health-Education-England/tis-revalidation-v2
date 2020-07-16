@@ -4,6 +4,7 @@ import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { append, patch, removeItem } from "@ngxs/store/operators";
 import { UserType } from "aws-sdk/clients/cognitoidentityserviceprovider";
 import { catchError, switchMap, take } from "rxjs/operators";
+import { SnackBarService } from "../../services/snack-bar/snack-bar.service";
 import { IAllocateAdmin } from "../admins.interfaces";
 import { AdminsService } from "../services/admins.service";
 import {
@@ -33,7 +34,10 @@ export class AdminsStateModel {
 })
 @Injectable()
 export class AdminsState {
-  constructor(private adminsService: AdminsService) {}
+  constructor(
+    private adminsService: AdminsService,
+    private snackBarService: SnackBarService
+  ) {}
 
   @Selector()
   public static items(state: AdminsStateModel) {
@@ -59,6 +63,7 @@ export class AdminsState {
 
   @Action(GetError)
   getError(ctx: StateContext<AdminsStateModel>, action: GetError) {
+    this.snackBarService.openSnackBar(action.error);
     return ctx.patchState({
       error: action.error
     });

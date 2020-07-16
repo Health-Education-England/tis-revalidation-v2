@@ -2,6 +2,7 @@ export interface IGetConcernResponse {
   gmcNumber: number;
   concerns: IConcernSummary[];
 }
+
 export interface IConcernSummary {
   admin: string;
   comments: string[];
@@ -18,6 +19,7 @@ export interface IConcernSummary {
   source: string;
   status: ConcernStatus;
 }
+
 export enum ConcernStatus {
   OPEN = "Open",
   CLOSED = "closed"

@@ -1,14 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import {
-  MatSnackBar,
-  MatSnackBarRef,
-  SimpleSnackBar
-} from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Select, Store } from "@ngxs/store";
 import { Observable, of } from "rxjs";
 import { catchError, filter, take, tap } from "rxjs/operators";
+import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
 import {
   IRecommendationSummary,
   RecommendationType
@@ -36,11 +32,11 @@ export class ConfirmRecommendationComponent implements OnInit {
   public currentRecommendation$: Observable<IRecommendationSummary>;
 
   constructor(
-    private _snackBar: MatSnackBar,
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private router: Router,
-    private store: Store
+    private store: Store,
+    private snackBarService: SnackBarService
   ) {}
 
   ngOnInit(): void {
@@ -59,11 +55,13 @@ export class ConfirmRecommendationComponent implements OnInit {
       .dispatch(new Post(this.gmcNumber, this.recommendationId))
       .pipe(
         catchError(() =>
-          of(this.openSnackBar("An error occurred! please retry"))
+          of(
+            this.snackBarService.openSnackBar("An error occurred! please retry")
+          )
         ),
         tap(() =>
           of(
-            this.openSnackBar(
+            this.snackBarService.openSnackBar(
               "Your recommendation was successfully submitted to GMC"
             )
           )
@@ -97,11 +95,5 @@ export class ConfirmRecommendationComponent implements OnInit {
           this.gmcNumber = Number(currentRecommendation.gmcNumber);
         }
       });
-  }
-
-  private openSnackBar(message: string): MatSnackBarRef<SimpleSnackBar> {
-    return this._snackBar.open(message, "Close", {
-      duration: 5000
-    });
   }
 }

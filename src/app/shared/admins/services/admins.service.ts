@@ -1,10 +1,5 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import {
-  MatSnackBar,
-  MatSnackBarRef,
-  SimpleSnackBar
-} from "@angular/material/snack-bar";
 import { environment } from "@environment";
 import { Store } from "@ngxs/store";
 import { AWSError, CognitoIdentityServiceProvider } from "aws-sdk";
@@ -19,11 +14,7 @@ import { GetError, GetSuccess } from "../state/admins.actions";
   providedIn: "root"
 })
 export class AdminsService {
-  constructor(
-    private store: Store,
-    private http: HttpClient,
-    private snackBar: MatSnackBar
-  ) {}
+  constructor(private store: Store, private http: HttpClient) {}
 
   public listUsersInGroupRequest(groupName: string): ListUsersInGroupRequest {
     return {
@@ -48,7 +39,6 @@ export class AdminsService {
       (error: AWSError, response: ListUsersResponse) => {
         if (error) {
           const errorMsg = `Error: ${error.message}`;
-          this.openSnackBar(errorMsg);
           this.store.dispatch(new GetError(errorMsg));
         } else {
           this.store.dispatch(new GetSuccess(response.Users));
@@ -60,12 +50,6 @@ export class AdminsService {
   public submitAllocateList(payload: IAllocateAdmin[]) {
     return this.http.post(`${environment.appUrls.allocateAdmin}`, {
       traineeAdmins: payload
-    });
-  }
-
-  private openSnackBar(message: string): MatSnackBarRef<SimpleSnackBar> {
-    return this.snackBar.open(message, "Close", {
-      duration: 5000
     });
   }
 }

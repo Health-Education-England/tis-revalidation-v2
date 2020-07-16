@@ -1,24 +1,28 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
-import { catchError, switchMap, take, tap } from "rxjs/operators";
+import { catchError, finalize, switchMap, take, tap } from "rxjs/operators";
 import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
 import { IConcernSummary, IGetConcernResponse } from "../concern.interfaces";
 import { ConcernService } from "../services/concern/concern.service";
 import { UploadService } from "../services/upload/upload.service";
 import {
   Get,
-  GetUploadedFiles,
+  GetFiles,
   Upload,
-  UploadError,
-  UploadSuccess
+  ApiError,
+  UploadSuccess,
+  GetFilesSuccess
 } from "./concern.actions";
 
 export class ConcernStateModel {
   public concernId?: number;
+  public getFilesInProgress?: boolean;
   public gmcNumber: number;
   public history: IConcernSummary[];
   public selected?: IConcernSummary;
+  public uploadedFiles?: any[];
+  public uploadInProgress?: boolean;
 }
 
 @State<ConcernStateModel>({
@@ -35,6 +39,21 @@ export class ConcernState {
     private uploadService: UploadService,
     private snackBarService: SnackBarService
   ) {}
+
+  @Selector()
+  public static uploadInProgress(state: ConcernStateModel) {
+    return state.uploadInProgress;
+  }
+
+  @Selector()
+  public static getFilesInProgress(state: ConcernStateModel) {
+    return state.getFilesInProgress;
+  }
+
+  @Selector()
+  public static uploadedFiles(state: ConcernStateModel) {
+    return state.uploadedFiles;
+  }
 
   @Selector()
   public static gmcNumber(state: ConcernStateModel) {
@@ -69,6 +88,10 @@ export class ConcernState {
 
   @Action(Upload)
   upload(ctx: StateContext<ConcernStateModel>, action: Upload) {
+    ctx.patchState({
+      uploadInProgress: true
+    });
+
     return this.uploadService
       .upload(
         this.uploadService.generateRequest(action.gmcNumber, action.payload)
@@ -77,7 +100,12 @@ export class ConcernState {
         take(1),
         switchMap(() => ctx.dispatch(new UploadSuccess())),
         catchError((error: HttpErrorResponse) =>
-          ctx.dispatch(new UploadError(error))
+          ctx.dispatch(new ApiError(error))
+        ),
+        finalize(() =>
+          ctx.patchState({
+            uploadInProgress: false
+          })
         )
       )
       .subscribe();
@@ -86,11 +114,45 @@ export class ConcernState {
   @Action(UploadSuccess)
   uploadSuccess(ctx: StateContext<ConcernStateModel>) {
     this.snackBarService.openSnackBar(`Upload success`);
-    return ctx.dispatch(new GetUploadedFiles());
+    return ctx.dispatch(new GetFiles(ctx.getState().gmcNumber));
   }
 
-  @Action(UploadError)
-  uploadError(ctx: StateContext<ConcernStateModel>, action: UploadError) {
+  // TODO move to a generic place so other states can also re use
+  @Action(ApiError)
+  apiError(ctx: StateContext<ConcernStateModel>, action: ApiError) {
     return this.snackBarService.openSnackBar(`Error: ${action.error.message}`);
+  }
+
+  @Action(GetFiles)
+  getFiles(ctx: StateContext<ConcernStateModel>, action: GetFiles) {
+    ctx.patchState({
+      getFilesInProgress: true
+    });
+
+    return this.uploadService
+      .list(this.uploadService.generateParams(action.gmcNumber))
+      .pipe(
+        take(1),
+        switchMap((response: any[]) =>
+          ctx.dispatch(new GetFilesSuccess(response))
+        ),
+        catchError((error: HttpErrorResponse) =>
+          ctx.dispatch(new ApiError(error))
+        ),
+        finalize(() =>
+          ctx.patchState({
+            getFilesInProgress: false
+          })
+        )
+      )
+      .subscribe();
+  }
+
+  @Action(GetFilesSuccess)
+  getFilesSuccess(
+    ctx: StateContext<ConcernStateModel>,
+    action: GetFilesSuccess
+  ) {
+    return ctx.patchState(action);
   }
 }

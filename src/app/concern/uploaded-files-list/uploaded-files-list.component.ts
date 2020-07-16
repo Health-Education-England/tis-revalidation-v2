@@ -1,5 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { environment } from "@environment";
+import { Select, Store } from "@ngxs/store";
+import { Observable } from "rxjs";
+import { UploadService } from "../services/upload/upload.service";
+import { GetFiles } from "../state/concern.actions";
+import { ConcernState } from "../state/concern.state";
 
 @Component({
   selector: "app-uploaded-files-list",
@@ -7,31 +12,24 @@ import { environment } from "@environment";
   styleUrls: ["./uploaded-files-list.component.scss"]
 })
 export class UploadedFilesListComponent implements OnInit {
-  // TODO type the array and select from store
-  public uploadedFiles: Array<any> = [
-    {
-      name: "Photos",
-      updated: new Date("1/1/20"),
-      type: "image"
-    },
-    {
-      name: "Document",
-      updated: new Date("1/17/19"),
-      type: "doc"
-    },
-    {
-      name: "Portable document format",
-      updated: new Date("1/28/18"),
-      type: "pdf"
-    }
-  ];
   public dateFormat = environment.dateFormat;
-  constructor() {}
+  public gmcNumber: number = this.store.selectSnapshot(ConcernState.gmcNumber);
+  @Select(ConcernState.getFilesInProgress)
+  public getFilesInProgress$: Observable<boolean>;
+  @Select(ConcernState.uploadedFiles) public uploadedFiles$: Observable<any[]>;
 
-  ngOnInit(): void {}
+  constructor(private uploadService: UploadService, private store: Store) {}
+
+  ngOnInit(): void {
+    this.getFiles();
+  }
 
   public downloadFile(event: Event): void {
     event.preventDefault();
     (window as any).alert("Your download should resume by next sprint 😀");
+  }
+
+  public getFiles(): Observable<any> {
+    return this.store.dispatch(new GetFiles(this.gmcNumber));
   }
 }

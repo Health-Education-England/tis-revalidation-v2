@@ -1,5 +1,6 @@
 import { TestBed, async, fakeAsync } from "@angular/core/testing";
 import { NgxsModule, Store } from "@ngxs/store";
+import { MaterialModule } from "../../shared/material/material.module";
 import { IGetConcernResponse } from "../concern.interfaces";
 import { ConcernState } from "./concern.state";
 import { Get } from "./concern.actions";
@@ -23,7 +24,11 @@ describe("Concern actions", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [NgxsModule.forRoot([ConcernState]), HttpClientTestingModule],
+      imports: [
+        NgxsModule.forRoot([ConcernState]),
+        MaterialModule,
+        HttpClientTestingModule
+      ],
       providers: [
         ConcernService,
         { provide: ErrorHandler, useFactory: errorHandlerSpy }

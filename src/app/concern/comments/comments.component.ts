@@ -3,6 +3,7 @@ import { FormArray, FormGroup } from "@angular/forms";
 import { Store } from "@ngxs/store";
 import { CommentsService } from "../../shared/details/comments-tool-bar/comments.service";
 import { IConcernSummary } from "../concern.interfaces";
+import { ConcernState } from "../state/concern.state";
 
 @Component({
   selector: "app-comments",
@@ -10,7 +11,7 @@ import { IConcernSummary } from "../concern.interfaces";
 })
 export class CommentsComponent implements OnInit {
   public selected: IConcernSummary = this.store.selectSnapshot(
-    (state) => state.concern.selected
+    ConcernState.selected
   );
   public form: FormGroup;
   public comments: FormArray;

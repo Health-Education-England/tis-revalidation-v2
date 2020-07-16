@@ -1,6 +1,7 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { async, TestBed } from "@angular/core/testing";
+import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { MaterialModule } from "../../material/material.module";
@@ -18,6 +19,7 @@ describe("Admins state", () => {
       imports: [
         MaterialModule,
         RouterTestingModule,
+        NoopAnimationsModule,
         NgxsModule.forRoot([AdminsState]),
         HttpClientTestingModule
       ],
@@ -49,8 +51,9 @@ describe("Admins state", () => {
 
   it("should dispatch 'GetError' and select 'error' slice", () => {
     const errorMsg = `Error: Missing credentials in config, if using AWS_CONFIG_FILE, set AWS_SDK_LOAD_CONFIG=1`;
-    store.dispatch(new GetError(errorMsg));
-    const error = store.selectSnapshot(AdminsState.error);
-    expect(error).toEqual(errorMsg);
+    store.dispatch(new GetError(errorMsg)).subscribe(() => {
+      const error = store.selectSnapshot(AdminsState.error);
+      expect(error).toEqual(errorMsg);
+    });
   });
 });

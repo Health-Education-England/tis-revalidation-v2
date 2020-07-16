@@ -1,26 +1,22 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { Subscription, Observable, of } from "rxjs";
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
+import { environment } from "@environment";
 import { Select, Store } from "@ngxs/store";
-import { RecommendationHistoryState } from "../state/recommendation-history.state";
+import { Observable, of, Subscription } from "rxjs";
+import { catchError, distinctUntilChanged, tap } from "rxjs/operators";
+import { AuthService } from "src/app/core/auth/auth.service";
+import { CommentsService } from "src/app/shared/details/comments-tool-bar/comments.service";
+import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
 import {
+  defaultRecommendation,
   DeferralReason,
   IRecommendationSummary,
-  RecommendationType,
-  defaultRecommendation
+  RecommendationType
 } from "../recommendation-history.interface";
-import { tap, distinctUntilChanged, catchError } from "rxjs/operators";
-import { FormGroup, FormControl, FormArray, Validators } from "@angular/forms";
-import { environment } from "@environment";
-import { ActivatedRoute, Router } from "@angular/router";
-import {
-  MatSnackBarRef,
-  MatSnackBar,
-  SimpleSnackBar
-} from "@angular/material/snack-bar";
 
-import { Set, Get } from "../state/recommendation-history.actions";
-import { CommentsService } from "src/app/shared/details/comments-tool-bar/comments.service";
-import { AuthService } from "src/app/core/auth/auth.service";
+import { Get, Set } from "../state/recommendation-history.actions";
+import { RecommendationHistoryState } from "../state/recommendation-history.state";
 
 @Component({
   selector: "app-create-recommendation",
@@ -54,7 +50,7 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store,
     private activatedRoute: ActivatedRoute,
-    private _snackBar: MatSnackBar,
+    private snackBarService: SnackBarService,
     private router: Router,
     private commentsService: CommentsService,
     private auth: AuthService
@@ -294,18 +290,14 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
     this.recommendationForm.addControl("action", this.action);
   }
   private errorFnc(err: any): Observable<any> {
-    this.openSnackBar(`An error occurred! please retry`);
+    this.snackBarService.openSnackBar(`An error occurred! please retry`);
     return of(err);
   }
 
   private successResponse(res: any): Observable<any> {
-    this.openSnackBar("our recommendation was successfully saved");
+    this.snackBarService.openSnackBar(
+      "our recommendation was successfully saved"
+    );
     return of(res);
-  }
-
-  private openSnackBar(message: string): MatSnackBarRef<SimpleSnackBar> {
-    return this._snackBar.open(message, "Close", {
-      duration: 5000
-    });
   }
 }

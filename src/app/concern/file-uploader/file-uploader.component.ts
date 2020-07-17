@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
+import { ACCEPTED_IMAGE_FILE_TYPES } from "../constants";
 import { UploadService } from "../services/upload/upload.service";
 import { Upload } from "../state/concern.actions";
 import { ConcernState } from "../state/concern.state";
@@ -14,14 +15,7 @@ import { ConcernState } from "../state/concern.state";
 })
 export class FileUploaderComponent implements OnInit {
   public acceptedFileTypes: string[] = [
-    "image/apng",
-    "image/bmp",
-    "image/gif",
-    "image/jpeg",
-    "image/png",
-    "image/svg+xml",
-    "image/tiff",
-    "image/webp",
+    ...ACCEPTED_IMAGE_FILE_TYPES,
     ".pdf",
     ".doc",
     ".docx",

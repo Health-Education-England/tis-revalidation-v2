@@ -153,6 +153,8 @@ export class ConcernState {
     ctx: StateContext<ConcernStateModel>,
     action: GetFilesSuccess
   ) {
-    return ctx.patchState(action);
+    return ctx.patchState({
+      uploadedFiles: action.uploadedFiles
+    });
   }
 }

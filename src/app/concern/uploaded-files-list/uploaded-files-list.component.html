@@ -8,20 +8,49 @@
 </div>
 
 <ng-template #notLoading>
-  <mat-list *ngIf="uploadedFiles$ | async as uploadedFiles">
-    <div mat-subheader>Uploaded documents</div>
-    <mat-list-item
-      *ngFor="let file of uploadedFiles"
-      (click)="downloadFile($event)"
-    >
-      <mat-icon mat-list-icon *ngIf="file.type === 'doc'">note</mat-icon>
-      <mat-icon mat-list-icon *ngIf="file.type === 'pdf'"
-        >picture_as_pdf</mat-icon
-      >
-      <mat-icon mat-list-icon *ngIf="file.type === 'image'">photo</mat-icon>
+  <div class="pt-25 pb-25" *ngIf="uploadedFiles$ | async as uploadedFiles">
+    <ng-container *ngIf="uploadedFiles.length">
+      <div class="pb-25">Uploaded documents</div>
+      <div class="d-grid grid-container">
+        <ng-container *ngFor="let file of uploadedFiles">
+          <div
+            *ngIf="{
+              isPdf: file.fileType === 'pdf',
+              isImage: acceptedImageTypes.includes('.' + file.fileType)
+            } as data"
+            class="d-grid align-items-center uploaded-file"
+          >
+            <!-- generic doc icon -->
+            <mat-icon mat-list-icon *ngIf="!data.isImage && !data.isPdf">
+              note
+            </mat-icon>
+            <!-- pdf icon -->
+            <mat-icon mat-list-icon *ngIf="data.isPdf">picture_as_pdf</mat-icon>
+            <!-- image icon -->
+            <mat-icon mat-list-icon *ngIf="data.isImage">photo</mat-icon>
 
-      <div mat-line>{{ file.key }}</div>
-      <div mat-line>{{ file.lastModified | date: dateFormat }}</div>
-    </mat-list-item>
-  </mat-list>
+            <div>{{ file.fileName }}</div>
+            <mat-icon
+              mat-list-icon
+              (click)="downloadFile($event)"
+              class="cursor-pointer"
+            >
+              cloud_download
+            </mat-icon>
+            <mat-icon
+              mat-list-icon
+              (click)="deleteFile($event)"
+              class="cursor-pointer"
+              >delete</mat-icon
+            >
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+
+    <!-- No uploaded files message -->
+    <div *ngIf="!uploadedFiles.length" class="highlight-row-warn left-border">
+      <em mat-subheader class="icon-warn centered">No documents available.</em>
+    </div>
+  </div>
 </ng-template>

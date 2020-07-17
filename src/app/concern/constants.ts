@@ -1,5 +1,6 @@
 import { IConcernSummary } from "./concern.interfaces";
 
+// TODO check if being used in app and maybe remove
 export const defaultConcern: IConcernSummary = {
   concernId: null,
   gmcNumber: null,
@@ -16,3 +17,14 @@ export const defaultConcern: IConcernSummary = {
   lastUpdatedDate: null,
   comments: []
 };
+
+export const ACCEPTED_IMAGE_FILE_TYPES: string[] = [
+  ".apng",
+  ".bmp",
+  ".gif",
+  ".jpeg",
+  ".png",
+  ".svg+xml",
+  ".tiff",
+  ".webp"
+];

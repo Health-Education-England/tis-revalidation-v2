@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { environment } from "@environment";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
+import { ACCEPTED_IMAGE_FILE_TYPES } from "../constants";
 import { UploadService } from "../services/upload/upload.service";
 import { GetFiles } from "../state/concern.actions";
 import { ConcernState } from "../state/concern.state";
@@ -17,6 +18,7 @@ export class UploadedFilesListComponent implements OnInit {
   @Select(ConcernState.getFilesInProgress)
   public getFilesInProgress$: Observable<boolean>;
   @Select(ConcernState.uploadedFiles) public uploadedFiles$: Observable<any[]>;
+  public acceptedImageTypes: string[] = ACCEPTED_IMAGE_FILE_TYPES;
 
   constructor(private uploadService: UploadService, private store: Store) {}
 
@@ -27,6 +29,11 @@ export class UploadedFilesListComponent implements OnInit {
   public downloadFile(event: Event): void {
     event.preventDefault();
     (window as any).alert("Your download should resume by next sprint 😀");
+  }
+
+  public deleteFile(event: Event): void {
+    event.preventDefault();
+    (window as any).alert("Your file will be deleted shortly 😀");
   }
 
   public getFiles(): Observable<any> {

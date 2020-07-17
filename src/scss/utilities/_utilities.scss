@@ -71,6 +71,7 @@ $colour-values: (
         background-color: tint($att-value, 90);
       }
 
+      &.left-border,
       td:first-child {
         border-left: 4px solid $att-value;
       }

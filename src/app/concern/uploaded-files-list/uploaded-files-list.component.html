@@ -1,7 +1,7 @@
 <!-- spinner -->
 <div
   class="d-flex align-items-center mb-25 mt-25"
-  *ngIf="getFilesInProgress$ | async; else notLoading"
+  *ngIf="listFilesInProgress$ | async; else notLoading"
 >
   <mat-spinner [diameter]="50"></mat-spinner>
   <span class="pl-15">Fetching uploaded files...</span>
@@ -32,15 +32,15 @@
             <div>{{ file.fileName }}</div>
             <mat-icon
               mat-list-icon
-              (click)="downloadFile($event)"
-              class="cursor-pointer"
+              (click)="downloadFile(file.fileName, file.key)"
+              class="cursor-pointer justify-self-end"
             >
               cloud_download
             </mat-icon>
             <mat-icon
               mat-list-icon
               (click)="deleteFile($event)"
-              class="cursor-pointer"
+              class="cursor-pointer justify-self-end"
               >delete</mat-icon
             >
           </div>

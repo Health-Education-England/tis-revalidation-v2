@@ -38,16 +38,17 @@
     "@angular/service-worker": "^9.1.11",
     "@ngxs/logger-plugin": "^3.6.2",
     "@ngxs/store": "^3.6.2",
+    "@sentry/browser": "^5.11.0",
     "angulartics2": "^9.1.0",
     "aws-amplify": "^3.0.18",
-    "browserslist": "^4.13.0",
     "aws-sdk": "^2.714.0",
+    "browserslist": "^4.13.0",
     "caniuse-lite": "^1.0.30001099",
+    "file-saver": "^2.0.2",
     "nhsuk-frontend": "^3.1.0",
     "rxjs": "~6.6.0",
     "tslib": "^1.13.0",
-    "zone.js": "~0.10.3",
-    "@sentry/browser": "^5.11.0"
+    "zone.js": "~0.10.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.901.11",

@@ -16,7 +16,7 @@ import { ConcernState } from "../state/concern.state";
 export class FileUploaderComponent implements OnInit {
   public acceptedFileTypes: string[] = [
     ...ACCEPTED_IMAGE_FILE_TYPES,
-    ".pdf",
+    "application/pdf",
     ".doc",
     ".docx",
     "application/msword",
@@ -26,9 +26,8 @@ export class FileUploaderComponent implements OnInit {
   ];
   public form: FormGroup;
   public gmcNumber: number = this.store.selectSnapshot(ConcernState.gmcNumber);
-  @Select(ConcernState.uploadInProgress) public uploadInProgress$: Observable<
-    boolean
-  >;
+  @Select(ConcernState.uploadFileInProgress)
+  public uploadFileInProgress$: Observable<boolean>;
   @ViewChild("dropArea") dropArea: ElementRef;
 
   constructor(
@@ -46,16 +45,16 @@ export class FileUploaderComponent implements OnInit {
     this.form = this.formBuilder.group({ fileUploader: null });
   }
 
-  public preventDefaults(e: Event): void {
-    e.preventDefault();
-    e.stopPropagation();
+  public preventDefaults($event: Event): void {
+    $event.preventDefault();
+    $event.stopPropagation();
   }
 
   public highlight(): void {
     this.dropArea.nativeElement.classList.add("highlight");
   }
 
-  public unhighlight(): void {
+  public unHighlight(): void {
     this.dropArea.nativeElement.classList.remove("highlight");
   }
 

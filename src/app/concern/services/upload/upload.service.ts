@@ -2,6 +2,8 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "@environment";
 import { Observable, of } from "rxjs";
+import { IListFile } from "../../concern.interfaces";
+import { FILE_BUCKET_NAME } from "../../constants";
 
 @Injectable({
   providedIn: "root"
@@ -9,9 +11,9 @@ import { Observable, of } from "rxjs";
 export class UploadService {
   constructor(private http: HttpClient) {}
 
-  public generateRequest(gmcNumber: number, payload: File[]): FormData {
+  public createUploadRequest(gmcNumber: number, payload: File[]): FormData {
     const formData: FormData = new FormData();
-    formData.append("bucketName", "tis-test-bucket-2020");
+    formData.append("bucketName", FILE_BUCKET_NAME);
     // TODO once we can create a concern (FE & BE work not implemented yet)
     // swap out second gmcNumber with concernId
     formData.append("folderPath", `${gmcNumber}/${gmcNumber}`);
@@ -20,28 +22,38 @@ export class UploadService {
   }
 
   public upload(payload: FormData): Observable<any> {
-    return this.http.post(environment.appUrls.fileUpload, payload);
+    return this.http.post(environment.appUrls.upload, payload);
   }
 
-  // TODO placeholder method
-  public download(): Observable<any> {
-    return of({});
-  }
-
-  public generateParams(gmcNumber: number): HttpParams {
+  public createDownloadFileParams(key: string): HttpParams {
     const params: HttpParams = new HttpParams()
-      .set("bucketName", "tis-test-bucket-2020")
+      .set("bucketName", FILE_BUCKET_NAME)
+      .set("key", key);
+
+    return params;
+  }
+
+  public downloadFile(params: HttpParams): Observable<Blob> {
+    return this.http.get(environment.appUrls.downloadFile, {
+      params,
+      responseType: "blob"
+    });
+  }
+
+  public createListFilesParams(gmcNumber: number): HttpParams {
+    const params: HttpParams = new HttpParams()
+      .set("bucketName", FILE_BUCKET_NAME)
       .set("folderPath", `${gmcNumber}/${gmcNumber}`);
 
     return params;
   }
 
-  public list(params: HttpParams): Observable<any> {
-    return this.http.get(environment.appUrls.fileList, { params });
+  public listFiles(params: HttpParams): Observable<IListFile[] | any> {
+    return this.http.get(environment.appUrls.listFiles, { params });
   }
 
   // TODO placeholder method
-  public delete(): Observable<any> {
+  public deleteFile(): Observable<any> {
     return of({});
   }
 }

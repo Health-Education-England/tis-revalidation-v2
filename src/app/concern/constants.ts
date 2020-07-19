@@ -28,3 +28,5 @@ export const ACCEPTED_IMAGE_FILE_TYPES: string[] = [
   ".tiff",
   ".webp"
 ];
+
+export const FILE_BUCKET_NAME = "tis-test-bucket-2020";

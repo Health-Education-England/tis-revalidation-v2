@@ -13,9 +13,7 @@ export abstract class IEnvironment {
   abstract readonly appUrls: {
     readonly allocateAdmin: string;
     readonly authRedirect: string;
-    readonly fileDownload: string;
-    readonly fileList: string;
-    readonly fileUpload: string;
+    readonly downloadFile: string;
     readonly getConcern: string;
     readonly getConcerns: string;
     readonly getConnections: string;
@@ -23,9 +21,11 @@ export abstract class IEnvironment {
     readonly getNotes: string;
     readonly getRecommendation: string;
     readonly getRecommendations: string;
+    readonly listFiles: string;
     readonly login: string;
     readonly saveRecommendation: string;
     readonly submitToGMC: string;
+    readonly upload: string;
   };
 
   abstract readonly awsConfig: {

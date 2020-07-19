@@ -3,6 +3,13 @@ export interface IGetConcernResponse {
   concerns: IConcernSummary[];
 }
 
+export interface IListFile {
+  bucketName: string;
+  fileName: string;
+  fileType: string;
+  key: string;
+}
+
 export interface IConcernSummary {
   admin: string;
   comments: string[];

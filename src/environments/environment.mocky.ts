@@ -18,7 +18,7 @@ export const environment: IEnvironment = {
     // 5e997dba33000096297b235d = 0 recommendations to simulate no results found
     allocateAdmin: `api/v1/doctors/assignAdmin`, // TODO mock this
     authRedirect: ``,
-    fileUpload: `mocky/c25f77cf-594a-484b-b50b-562aa9438115?mocky-delay=700ms`, // TODO mock this
+    downloadFile: ``, // TODO mock this
     getConcern: `mocky/0a459279-bdca-4b1b-9e07-d55c7f38630e`,
     getConcerns: `mocky/c25f77cf-594a-484b-b50b-562aa9438115?mocky-delay=700ms`,
     getConnections: `mocky/4a202550-2c45-41c8-ab48-91786f8054eb?mocky-delay=700ms`,
@@ -26,9 +26,11 @@ export const environment: IEnvironment = {
     getNotes: `mocky/45017692-2588-48dc-b6c2-c637cd723625`,
     getRecommendation: `mocky/6fd60c05-b4d0-462d-87a8-87402d57bd2e`,
     getRecommendations: `mocky/81267580-411e-4ce6-8dca-2f65f9d2e485?mocky-delay=700ms`,
+    listFiles: ``, // TODO mock this
     login: ``,
     saveRecommendation: `api/recommendation`, // TODO mock this
-    submitToGMC: `api/recommendation/{gmcId}/submit/{recommendationId}` // TODO mock this
+    submitToGMC: `api/recommendation/{gmcId}/submit/{recommendationId}`, // TODO mock this
+    upload: `mocky/c25f77cf-594a-484b-b50b-562aa9438115?mocky-delay=700ms` // TODO mock this
   },
   awsConfig: {
     ...AWS_CONFIG,

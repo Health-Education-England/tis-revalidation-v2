@@ -1,7 +1,7 @@
 <!-- spinner -->
 <div
   class="d-flex align-items-center mb-25"
-  *ngIf="uploadInProgress$ | async; else notLoading"
+  *ngIf="uploadFileInProgress$ | async; else notLoading"
 >
   <mat-spinner [diameter]="50"></mat-spinner>
   <span class="pl-15">Upload in progress...</span>
@@ -14,8 +14,8 @@
       #dropArea
       (dragenter)="preventDefaults($event); highlight()"
       (dragover)="preventDefaults($event); highlight()"
-      (dragleave)="preventDefaults($event); unhighlight()"
-      (drop)="preventDefaults($event); unhighlight(); handleDrop($event)"
+      (dragleave)="preventDefaults($event); unHighlight()"
+      (drop)="preventDefaults($event); unHighlight(); handleDrop($event)"
     >
       <p class="pr-10">
         Drag and drop supporting documents, or click attach icon to upload:

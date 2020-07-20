@@ -51,7 +51,10 @@ export class UploadService {
     return this.http.get(environment.appUrls.listFiles, { params });
   }
 
-  public deleteFile(params: HttpParams): Observable<any> {
-    return this.http.delete(environment.appUrls.deleteFile, { params });
+  public deleteFile(params: HttpParams): Observable<string> {
+    return this.http.delete(environment.appUrls.deleteFile, {
+      params,
+      responseType: "text"
+    });
   }
 }

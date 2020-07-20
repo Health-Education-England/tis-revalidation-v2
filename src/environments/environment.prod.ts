@@ -13,6 +13,7 @@ export const environment: IEnvironment = {
   // TODO add correct prod values below
   awsConfig: {
     ...AWS_CONFIG,
+    bucketName: "tis-revalidation-concerns-upload-preprod",
     mandatorySignIn: true,
     redirectSignIn: "https://revalidation.tis.nhs.uk",
     redirectSignOut: "https://revalidation.tis.nhs.uk"

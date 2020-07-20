@@ -18,7 +18,9 @@ import {
   UploadSuccess,
   ListFilesSuccess,
   DownloadFile,
-  DownloadFileSuccess
+  DownloadFileSuccess,
+  DeleteFile,
+  DeleteFileSuccess
 } from "./concern.actions";
 import { saveAs } from "file-saver";
 
@@ -101,7 +103,7 @@ export class ConcernState {
 
     return this.uploadService
       .upload(
-        this.uploadService.createUploadRequest(action.gmcNumber, action.payload)
+        this.uploadService.createFormData(action.gmcNumber, action.payload)
       )
       .pipe(
         take(1),
@@ -168,7 +170,7 @@ export class ConcernState {
   @Action(DownloadFile)
   downloadFile(ctx: StateContext<ConcernStateModel>, action: DownloadFile) {
     return this.uploadService
-      .downloadFile(this.uploadService.createDownloadFileParams(action.key))
+      .downloadFile(this.uploadService.createRequestParams(action.key))
       .pipe(
         take(1),
         switchMap((blob: Blob) =>
@@ -187,5 +189,28 @@ export class ConcernState {
     action: DownloadFileSuccess
   ) {
     saveAs(action.blob, action.fileName);
+  }
+
+  @Action(DeleteFile)
+  deleteFile(ctx: StateContext<ConcernStateModel>, action: DeleteFile) {
+    return this.uploadService
+      .deleteFile(this.uploadService.createRequestParams(action.key))
+      .pipe(
+        take(1),
+        switchMap(() => ctx.dispatch(new DeleteFileSuccess(action.fileName))),
+        catchError((error: HttpErrorResponse) =>
+          ctx.dispatch(new ApiError(error))
+        )
+      )
+      .subscribe();
+  }
+
+  @Action(DeleteFileSuccess)
+  deleteFileSuccess(
+    ctx: StateContext<ConcernStateModel>,
+    action: DeleteFileSuccess
+  ) {
+    this.snackBarService.openSnackBar(`${action.fileName} has been deleted`);
+    return ctx.dispatch(new ListFiles(ctx.getState().gmcNumber));
   }
 }

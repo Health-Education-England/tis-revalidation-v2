@@ -3,7 +3,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { MaterialModule } from "../../shared/material/material.module";
-import { DownloadFile } from "../state/concern.actions";
+import { DeleteFile, DownloadFile, ListFiles } from "../state/concern.actions";
 import { ConcernState } from "../state/concern.state";
 
 import { UploadedFilesListComponent } from "./uploaded-files-list.component";
@@ -12,6 +12,8 @@ describe("UploadedFilesListComponent", () => {
   let store: Store;
   let component: UploadedFilesListComponent;
   let fixture: ComponentFixture<UploadedFilesListComponent>;
+  const mockFileName = "mockfile.txt";
+  const mockKey = "119389/8119389/mockfile.txt";
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -24,6 +26,7 @@ describe("UploadedFilesListComponent", () => {
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
     store = TestBed.inject(Store);
+    store.reset({ concern: { gmcNumber: 8140126 } });
   }));
 
   beforeEach(() => {
@@ -44,12 +47,23 @@ describe("UploadedFilesListComponent", () => {
 
   it("downloadFile() should dispatch event", () => {
     spyOn(store, "dispatch");
-    const mockFileName = "mockfile.txt";
-    const mockKey = "119389/8119389/mockfile.txt";
-
     component.downloadFile(mockFileName, mockKey);
     expect(store.dispatch).toHaveBeenCalledWith(
       new DownloadFile(mockFileName, mockKey)
     );
+  });
+
+  it("deleteFile() should dispatch event", () => {
+    spyOn(store, "dispatch");
+    component.deleteFile(mockFileName, mockKey);
+    expect(store.dispatch).toHaveBeenCalledWith(
+      new DeleteFile(mockFileName, mockKey)
+    );
+  });
+
+  it("deleteFile() should dispatch event", () => {
+    spyOn(store, "dispatch");
+    component.listFiles();
+    expect(store.dispatch).toHaveBeenCalledWith(new ListFiles(8140126));
   });
 });

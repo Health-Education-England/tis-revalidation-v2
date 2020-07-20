@@ -13,6 +13,7 @@ export abstract class IEnvironment {
   abstract readonly appUrls: {
     readonly allocateAdmin: string;
     readonly authRedirect: string;
+    readonly deleteFile: string;
     readonly downloadFile: string;
     readonly getConcern: string;
     readonly getConcerns: string;
@@ -31,6 +32,7 @@ export abstract class IEnvironment {
   abstract readonly awsConfig: {
     readonly accessKeyId: string;
     readonly authenticationFlowType: string;
+    readonly bucketName: string;
     readonly domain: string;
     readonly mandatorySignIn: boolean;
     readonly redirectSignIn: string;

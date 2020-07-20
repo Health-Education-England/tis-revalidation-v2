@@ -18,6 +18,7 @@ export const environment: IEnvironment = {
     // 5e997dba33000096297b235d = 0 recommendations to simulate no results found
     allocateAdmin: `api/v1/doctors/assignAdmin`, // TODO mock this
     authRedirect: ``,
+    deleteFile: ``, // TODO mock this,
     downloadFile: ``, // TODO mock this
     getConcern: `mocky/0a459279-bdca-4b1b-9e07-d55c7f38630e`,
     getConcerns: `mocky/c25f77cf-594a-484b-b50b-562aa9438115?mocky-delay=700ms`,
@@ -34,6 +35,7 @@ export const environment: IEnvironment = {
   },
   awsConfig: {
     ...AWS_CONFIG,
+    bucketName: "tis-revalidation-concerns-upload-preprod",
     mandatorySignIn: true,
     redirectSignIn: "http://localhost:4200",
     redirectSignOut: "http://localhost:4200"

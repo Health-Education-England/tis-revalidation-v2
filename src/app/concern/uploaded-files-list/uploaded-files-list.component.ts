@@ -4,7 +4,7 @@ import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { ACCEPTED_IMAGE_FILE_TYPES } from "../constants";
 import { UploadService } from "../services/upload/upload.service";
-import { DownloadFile, ListFiles } from "../state/concern.actions";
+import { DeleteFile, DownloadFile, ListFiles } from "../state/concern.actions";
 import { ConcernState } from "../state/concern.state";
 
 @Component({
@@ -30,9 +30,8 @@ export class UploadedFilesListComponent implements OnInit {
     return this.store.dispatch(new DownloadFile(fileName, key));
   }
 
-  public deleteFile(event: Event): void {
-    event.preventDefault();
-    (window as any).alert("Your file will be deleted shortly 😀");
+  public deleteFile(fileName: string, key: string): Observable<any> {
+    return this.store.dispatch(new DeleteFile(fileName, key));
   }
 
   public listFiles(): Observable<any> {

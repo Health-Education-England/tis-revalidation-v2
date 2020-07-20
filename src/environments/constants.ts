@@ -3,6 +3,7 @@ import { IEnvironment } from "./environment.interface";
 export const APP_URLS_CONFIG: IEnvironment["appUrls"] = {
   allocateAdmin: `api/v1/doctors/assign-admin`,
   authRedirect: ``,
+  deleteFile: `api/storage/delete`,
   downloadFile: `api/storage/download`,
   getConcern: `/api/concerns`,
   getConcerns: `api/concerns`,
@@ -21,6 +22,7 @@ export const APP_URLS_CONFIG: IEnvironment["appUrls"] = {
 export const AWS_CONFIG: IEnvironment["awsConfig"] = {
   accessKeyId: "AKIAWISJGQ6JUF3LSWMO",
   authenticationFlowType: "USER_PASSWORD_AUTH",
+  bucketName: "",
   domain: "stage-auth.tis.nhs.uk",
   mandatorySignIn: null,
   redirectSignIn: "",

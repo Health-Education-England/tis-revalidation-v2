@@ -12,6 +12,7 @@ export const environment: IEnvironment = {
   appUrls: APP_URLS_CONFIG,
   awsConfig: {
     ...AWS_CONFIG,
+    bucketName: "tis-revalidation-concerns-upload-preprod",
     mandatorySignIn: true,
     redirectSignIn: "https://stage-revalidation.tis.nhs.uk",
     redirectSignOut: "https://stage-revalidation.tis.nhs.uk"

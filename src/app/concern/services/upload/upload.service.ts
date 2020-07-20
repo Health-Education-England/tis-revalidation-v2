@@ -1,9 +1,8 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "@environment";
-import { Observable, of } from "rxjs";
+import { Observable } from "rxjs";
 import { IListFile } from "../../concern.interfaces";
-import { FILE_BUCKET_NAME } from "../../constants";
 
 @Injectable({
   providedIn: "root"
@@ -11,9 +10,9 @@ import { FILE_BUCKET_NAME } from "../../constants";
 export class UploadService {
   constructor(private http: HttpClient) {}
 
-  public createUploadRequest(gmcNumber: number, payload: File[]): FormData {
+  public createFormData(gmcNumber: number, payload: File[]): FormData {
     const formData: FormData = new FormData();
-    formData.append("bucketName", FILE_BUCKET_NAME);
+    formData.append("bucketName", environment.awsConfig.bucketName);
     // TODO once we can create a concern (FE & BE work not implemented yet)
     // swap out second gmcNumber with concernId
     formData.append("folderPath", `${gmcNumber}/${gmcNumber}`);
@@ -25,9 +24,9 @@ export class UploadService {
     return this.http.post(environment.appUrls.upload, payload);
   }
 
-  public createDownloadFileParams(key: string): HttpParams {
+  public createRequestParams(key: string): HttpParams {
     const params: HttpParams = new HttpParams()
-      .set("bucketName", FILE_BUCKET_NAME)
+      .set("bucketName", environment.awsConfig.bucketName)
       .set("key", key);
 
     return params;
@@ -42,7 +41,7 @@ export class UploadService {
 
   public createListFilesParams(gmcNumber: number): HttpParams {
     const params: HttpParams = new HttpParams()
-      .set("bucketName", FILE_BUCKET_NAME)
+      .set("bucketName", environment.awsConfig.bucketName)
       .set("folderPath", `${gmcNumber}/${gmcNumber}`);
 
     return params;
@@ -52,8 +51,7 @@ export class UploadService {
     return this.http.get(environment.appUrls.listFiles, { params });
   }
 
-  // TODO placeholder method
-  public deleteFile(): Observable<any> {
-    return of({});
+  public deleteFile(params: HttpParams): Observable<any> {
+    return this.http.delete(environment.appUrls.deleteFile, { params });
   }
 }

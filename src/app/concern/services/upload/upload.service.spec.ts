@@ -12,6 +12,8 @@ describe("UploadService", () => {
   let http: HttpTestingController;
   let params: HttpParams;
   const mockKey = "119389/8119389/mockfile.txt";
+  const bucketName: string = environment.awsConfig.bucketName;
+  const queryParams = `?bucketName=${bucketName}&key=${mockKey}`;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -19,7 +21,7 @@ describe("UploadService", () => {
     });
     service = TestBed.inject(UploadService);
     http = TestBed.inject(HttpTestingController);
-    params = service.createDownloadFileParams(mockKey);
+    params = service.createRequestParams(mockKey);
   });
 
   it("should be created", () => {
@@ -32,14 +34,22 @@ describe("UploadService", () => {
   });
 
   it("`downloadFile()` should call api", () => {
-    const endPoint = `${environment.appUrls.downloadFile}`;
-    service.downloadFile(service.createDownloadFileParams(mockKey)).subscribe();
+    service.downloadFile(service.createRequestParams(mockKey)).subscribe();
 
-    const mockHttp = http.expectOne(
-      `${endPoint}?bucketName=tis-test-bucket-2020&key=${mockKey}`
-    );
+    const endPoint: string = environment.appUrls.downloadFile;
+    const mockHttp = http.expectOne(`${endPoint}${queryParams}`);
+
     expect(mockHttp.request.method).toBe("GET");
+    http.verify();
+  });
 
+  it("`deleteFile()` should call api", () => {
+    service.deleteFile(service.createRequestParams(mockKey)).subscribe();
+
+    const endPoint: string = environment.appUrls.deleteFile;
+    const mockHttp = http.expectOne(`${endPoint}${queryParams}`);
+
+    expect(mockHttp.request.method).toBe("DELETE");
     http.verify();
   });
 });

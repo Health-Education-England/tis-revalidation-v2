@@ -54,3 +54,13 @@ export class DownloadFileSuccess {
   static readonly type = "[Concern] Download File Success";
   constructor(public blob: Blob, public fileName: string) {}
 }
+
+export class DeleteFile {
+  static readonly type = "[Concern] Delete File";
+  constructor(public fileName: string, public key: string) {}
+}
+
+export class DeleteFileSuccess {
+  static readonly type = "[Concern] Delete File Success";
+  constructor(public fileName: string) {}
+}

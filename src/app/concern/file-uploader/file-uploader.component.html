@@ -32,6 +32,7 @@
         hidden
         type="file"
         #fileUploader
+        multiple
         [formControlName]="'fileUploader'"
         [accept]="acceptedFileTypes"
         (change)="onFilesSelection($event)"

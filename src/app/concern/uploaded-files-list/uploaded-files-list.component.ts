@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { environment } from "@environment";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
-import { ACCEPTED_IMAGE_FILE_TYPES } from "../constants";
+import { ACCEPTED_IMAGE_EXTENSIONS } from "../constants";
 import { UploadService } from "../services/upload/upload.service";
 import { DeleteFile, DownloadFile, ListFiles } from "../state/concern.actions";
 import { ConcernState } from "../state/concern.state";
@@ -18,7 +18,7 @@ export class UploadedFilesListComponent implements OnInit {
   @Select(ConcernState.listFilesInProgress)
   public listFilesInProgress$: Observable<boolean>;
   @Select(ConcernState.uploadedFiles) public uploadedFiles$: Observable<any[]>;
-  public acceptedImageTypes: string[] = ACCEPTED_IMAGE_FILE_TYPES;
+  public acceptedImageExtensions: string[] = ACCEPTED_IMAGE_EXTENSIONS;
 
   constructor(private uploadService: UploadService, private store: Store) {}
 

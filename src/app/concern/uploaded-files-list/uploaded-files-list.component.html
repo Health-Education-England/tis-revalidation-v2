@@ -16,7 +16,7 @@
           <div
             *ngIf="{
               isPdf: file.fileType === 'pdf',
-              isImage: acceptedImageTypes.includes('.' + file.fileType)
+              isImage: acceptedImageExtensions.includes(file.fileType)
             } as data"
             class="d-grid align-items-center uploaded-file"
           >

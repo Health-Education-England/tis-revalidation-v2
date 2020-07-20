@@ -16,7 +16,7 @@ export class UploadService {
     // TODO once we can create a concern (FE & BE work not implemented yet)
     // swap out second gmcNumber with concernId
     formData.append("folderPath", `${gmcNumber}/${gmcNumber}`);
-    formData.append("file", payload[0]);
+    payload.forEach((file: File) => formData.append("files", file));
     return formData;
   }
 

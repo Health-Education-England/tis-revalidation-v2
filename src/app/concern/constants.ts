@@ -18,13 +18,25 @@ export const defaultConcern: IConcernSummary = {
   comments: []
 };
 
-export const ACCEPTED_IMAGE_FILE_TYPES: string[] = [
-  ".apng",
+export const ACCEPTED_IMAGE_EXTENSIONS: string[] = [
   ".bmp",
   ".gif",
   ".jpeg",
   ".png",
-  ".svg+xml",
+  ".svg",
   ".tiff",
   ".webp"
+];
+
+export const ACCEPTED_IMAGE_MIMES: string[] = [
+  "image/apng",
+  "image/bmp",
+  "image/gif",
+  "image/jpeg",
+  "image/png",
+  "image/svg+xml",
+  "image/tiff",
+  "image/webp",
+  "image/x-icon",
+  "image/x-png"
 ];

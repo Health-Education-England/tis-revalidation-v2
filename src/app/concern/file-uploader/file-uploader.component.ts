@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
-import { ACCEPTED_IMAGE_FILE_TYPES } from "../constants";
+import { ACCEPTED_IMAGE_MIMES } from "../constants";
 import { UploadService } from "../services/upload/upload.service";
 import { Upload } from "../state/concern.actions";
 import { ConcernState } from "../state/concern.state";
@@ -15,10 +15,10 @@ import { ConcernState } from "../state/concern.state";
 })
 export class FileUploaderComponent implements OnInit {
   public acceptedFileTypes: string[] = [
-    ...ACCEPTED_IMAGE_FILE_TYPES,
+    ...ACCEPTED_IMAGE_MIMES,
     "application/pdf",
-    ".doc",
-    ".docx",
+    "application/vnd.ms-excel",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     "application/msword",
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
     "text/plain",
@@ -66,12 +66,6 @@ export class FileUploaderComponent implements OnInit {
     const invalidFiles: string[] = [];
 
     if (itemList.length) {
-      // TODO remove check once multiple file upload is supported by BE
-      if (itemList.length > 1) {
-        this.snackBarService.openSnackBar(`Please select one file at a time`);
-        return;
-      }
-
       itemList.forEach((i: DataTransferItem) => {
         if (this.acceptedFileTypes.includes(i.type)) {
           droppedFiles.push(i.getAsFile());

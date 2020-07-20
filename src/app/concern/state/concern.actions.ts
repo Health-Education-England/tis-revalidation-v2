@@ -35,12 +35,22 @@ export class ApiError {
   constructor(public error: HttpErrorResponse) {}
 }
 
-export class GetFiles {
-  static readonly type = "[Concern] Get Files";
+export class ListFiles {
+  static readonly type = "[Concern] List Files";
   constructor(public gmcNumber: number) {}
 }
 
-export class GetFilesSuccess {
-  static readonly type = "[Concern] Get Files Success";
+export class ListFilesSuccess {
+  static readonly type = "[Concern] List Files Success";
   constructor(public uploadedFiles: any[]) {}
+}
+
+export class DownloadFile {
+  static readonly type = "[Concern] Download File";
+  constructor(public fileName: string, public key: string) {}
+}
+
+export class DownloadFileSuccess {
+  static readonly type = "[Concern] Download File Success";
+  constructor(public blob: Blob, public fileName: string) {}
 }

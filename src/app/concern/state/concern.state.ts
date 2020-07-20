@@ -3,26 +3,33 @@ import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { catchError, finalize, switchMap, take, tap } from "rxjs/operators";
 import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
-import { IConcernSummary, IGetConcernResponse } from "../concern.interfaces";
+import {
+  IConcernSummary,
+  IGetConcernResponse,
+  IListFile
+} from "../concern.interfaces";
 import { ConcernService } from "../services/concern/concern.service";
 import { UploadService } from "../services/upload/upload.service";
 import {
   Get,
-  GetFiles,
+  ListFiles,
   Upload,
   ApiError,
   UploadSuccess,
-  GetFilesSuccess
+  ListFilesSuccess,
+  DownloadFile,
+  DownloadFileSuccess
 } from "./concern.actions";
+import { saveAs } from "file-saver";
 
 export class ConcernStateModel {
   public concernId?: number;
-  public getFilesInProgress?: boolean;
   public gmcNumber: number;
   public history: IConcernSummary[];
+  public listFilesInProgress?: boolean;
   public selected?: IConcernSummary;
   public uploadedFiles?: any[];
-  public uploadInProgress?: boolean;
+  public uploadFileInProgress?: boolean;
 }
 
 @State<ConcernStateModel>({
@@ -41,13 +48,13 @@ export class ConcernState {
   ) {}
 
   @Selector()
-  public static uploadInProgress(state: ConcernStateModel) {
-    return state.uploadInProgress;
+  public static uploadFileInProgress(state: ConcernStateModel) {
+    return state.uploadFileInProgress;
   }
 
   @Selector()
-  public static getFilesInProgress(state: ConcernStateModel) {
-    return state.getFilesInProgress;
+  public static listFilesInProgress(state: ConcernStateModel) {
+    return state.listFilesInProgress;
   }
 
   @Selector()
@@ -89,12 +96,12 @@ export class ConcernState {
   @Action(Upload)
   upload(ctx: StateContext<ConcernStateModel>, action: Upload) {
     ctx.patchState({
-      uploadInProgress: true
+      uploadFileInProgress: true
     });
 
     return this.uploadService
       .upload(
-        this.uploadService.generateRequest(action.gmcNumber, action.payload)
+        this.uploadService.createUploadRequest(action.gmcNumber, action.payload)
       )
       .pipe(
         take(1),
@@ -104,7 +111,7 @@ export class ConcernState {
         ),
         finalize(() =>
           ctx.patchState({
-            uploadInProgress: false
+            uploadFileInProgress: false
           })
         )
       )
@@ -114,7 +121,7 @@ export class ConcernState {
   @Action(UploadSuccess)
   uploadSuccess(ctx: StateContext<ConcernStateModel>) {
     this.snackBarService.openSnackBar(`Upload success`);
-    return ctx.dispatch(new GetFiles(ctx.getState().gmcNumber));
+    return ctx.dispatch(new ListFiles(ctx.getState().gmcNumber));
   }
 
   // TODO move to a generic place so other states can also re use
@@ -123,38 +130,62 @@ export class ConcernState {
     return this.snackBarService.openSnackBar(`Error: ${action.error.message}`);
   }
 
-  @Action(GetFiles)
-  getFiles(ctx: StateContext<ConcernStateModel>, action: GetFiles) {
+  @Action(ListFiles)
+  listFiles(ctx: StateContext<ConcernStateModel>, action: ListFiles) {
     ctx.patchState({
-      getFilesInProgress: true
+      listFilesInProgress: true
     });
 
     return this.uploadService
-      .list(this.uploadService.generateParams(action.gmcNumber))
+      .listFiles(this.uploadService.createListFilesParams(action.gmcNumber))
       .pipe(
         take(1),
-        switchMap((response: any[]) =>
-          ctx.dispatch(new GetFilesSuccess(response))
+        switchMap((response: IListFile[]) =>
+          ctx.dispatch(new ListFilesSuccess(response))
         ),
         catchError((error: HttpErrorResponse) =>
           ctx.dispatch(new ApiError(error))
         ),
         finalize(() =>
           ctx.patchState({
-            getFilesInProgress: false
+            listFilesInProgress: false
           })
         )
       )
       .subscribe();
   }
 
-  @Action(GetFilesSuccess)
-  getFilesSuccess(
+  @Action(ListFilesSuccess)
+  listFilesSuccess(
     ctx: StateContext<ConcernStateModel>,
-    action: GetFilesSuccess
+    action: ListFilesSuccess
   ) {
     return ctx.patchState({
       uploadedFiles: action.uploadedFiles
     });
+  }
+
+  @Action(DownloadFile)
+  downloadFile(ctx: StateContext<ConcernStateModel>, action: DownloadFile) {
+    return this.uploadService
+      .downloadFile(this.uploadService.createDownloadFileParams(action.key))
+      .pipe(
+        take(1),
+        switchMap((blob: Blob) =>
+          ctx.dispatch(new DownloadFileSuccess(blob, action.fileName))
+        ),
+        catchError((error: HttpErrorResponse) =>
+          ctx.dispatch(new ApiError(error))
+        )
+      )
+      .subscribe();
+  }
+
+  @Action(DownloadFileSuccess)
+  downloadFileSuccess(
+    ctx: StateContext<ConcernStateModel>,
+    action: DownloadFileSuccess
+  ) {
+    saveAs(action.blob, action.fileName);
   }
 }

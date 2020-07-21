@@ -2,13 +2,13 @@ import { ConcernStatus } from "../../concern/concern.interfaces";
 import {
   EnableAllocateAdminPayload,
   FilterPayload,
-  HttpErrorPayload,
   GetSuccessPayload,
   PaginatePayload,
   SearchPayload,
   SortPayload,
   ToggleCheckboxPayload
 } from "../../shared/records/state/records.actions";
+import { HttpErrorPayload } from "../../shared/services/http-error/http-error.service";
 import { IGetConcernsResponse } from "../concerns.interfaces";
 
 export class GetConcerns {

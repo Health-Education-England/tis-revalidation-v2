@@ -1,4 +1,4 @@
-import { HttpErrorPayload } from "../../shared/records/state/records.actions";
+import { HttpErrorPayload } from "../../shared/services/http-error/http-error.service";
 import { IConcernSummary } from "../concern.interfaces";
 
 export class Get {

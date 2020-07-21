@@ -15,3 +15,7 @@ export class HttpErrorService {
     return throwError(message);
   }
 }
+
+export class HttpErrorPayload {
+  constructor(public error: string) {}
+}

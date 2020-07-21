@@ -4,10 +4,6 @@ export class GetSuccessPayload<T> {
   constructor(public response: T) {}
 }
 
-export class HttpErrorPayload {
-  constructor(public error: string) {}
-}
-
 export class SortPayload {
   constructor(public column: string, public direction: SortDirection) {}
 }

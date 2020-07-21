@@ -1,13 +1,13 @@
 import {
   EnableAllocateAdminPayload,
   FilterPayload,
-  HttpErrorPayload,
   GetSuccessPayload,
   PaginatePayload,
   SearchPayload,
   SortPayload,
   ToggleCheckboxPayload
 } from "../../shared/records/state/records.actions";
+import { HttpErrorPayload } from "../../shared/services/http-error/http-error.service";
 import {
   IGetRecommendationsResponse,
   RecommendationsFilterType

@@ -1,5 +1,5 @@
-import { HttpErrorResponse } from "@angular/common/http";
 import { UserType } from "aws-sdk/clients/cognitoidentityserviceprovider";
+import { HttpErrorPayload } from "../../services/http-error/http-error.service";
 
 const label = `[Admins]`;
 
@@ -13,9 +13,8 @@ export class GetSuccess {
   constructor(public response: UserType[]) {}
 }
 
-export class GetError {
+export class GetError extends HttpErrorPayload {
   static readonly type = `${label} Get Error`;
-  constructor(public error: string) {}
 }
 
 export class AddToAllocateList {
@@ -41,7 +40,6 @@ export class SubmitAllocateListSuccess {
   constructor(public response: any) {}
 }
 
-export class SubmitAllocateListError {
+export class SubmitAllocateListError extends HttpErrorPayload {
   static readonly type = `${label} Submit Allocate List Error`;
-  constructor(public error: HttpErrorResponse) {}
 }

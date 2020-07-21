@@ -1,13 +1,13 @@
 import {
   EnableAllocateAdminPayload,
   FilterPayload,
-  GetErrorPayload,
   GetSuccessPayload,
   PaginatePayload,
   SearchPayload,
   SortPayload,
   ToggleCheckboxPayload
 } from "../../shared/records/state/records.actions";
+import { HttpErrorPayload } from "../../shared/services/http-error/http-error.service";
 import {
   ConnectionsFilterType,
   IGetConnectionsResponse
@@ -23,7 +23,7 @@ export class GetConnectionsSuccess extends GetSuccessPayload<
   static readonly type = `[Connections] Get Success`;
 }
 
-export class GetConnectionsError extends GetErrorPayload {
+export class GetConnectionsError extends HttpErrorPayload {
   static readonly type = `[Connections] Get Error`;
 }
 

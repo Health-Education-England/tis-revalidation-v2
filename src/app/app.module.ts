@@ -13,6 +13,7 @@ import { AWS_CONFIG } from "./core/auth/aws-config";
 import { AdminsState } from "./shared/admins/state/admins.state";
 import { MainNavigationModule } from "./shared/main-navigation/main-navigation.module";
 import { MaterialModule } from "./shared/material/material.module";
+import { HttpErrorService } from "./shared/services/http-error/http-error.service";
 import { SharedModule } from "./shared/shared.module";
 import { AuthInterceptor } from "./core/auth/auth.interceptor";
 import { AuthService } from "./core/auth/auth.service";
@@ -51,6 +52,7 @@ Amplify.configure(AWS_CONFIG);
   ],
   providers: [
     AuthService,
+    HttpErrorService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     {
       provide: APP_INITIALIZER,

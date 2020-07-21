@@ -13,7 +13,8 @@ export const environment: IEnvironment = {
   supportLink: `https://teams.microsoft.com/l/channel/19%3ac7943c6ffa9c49b881304863bb39ff7b%40thread.skype/General?groupId=102f33a3-f794-4089-8c5a-68e04897e72e&tenantId=ffa7912b-b097-4131-9c0f-d0e80755b2ab`,
   dateFormat: "dd/MM/yyyy",
   appUrls: {
-    // 5e9ea0ef340000b81a6eee04 = 404 error
+    // 665938a6-29d2-4199-a2d8-364f520b298c = 404 error
+    // 0681fad7-c7b3-4543-83fa-dd4c3ed14e4a = 500 error
     // 5e997d8a33000062007b2354 = 21 recommendations
     // 5e997dba33000096297b235d = 0 recommendations to simulate no results found
     allocateAdmin: `api/v1/doctors/assignAdmin`, // TODO mock this

@@ -123,7 +123,7 @@ export class RecordsState {
 
   protected getErrorHandler(ctx: StateContext<any>, action: any) {
     ctx.patchState({
-      error: `Error: ${action.error.message}`
+      error: action.error
     });
   }
 

@@ -1,12 +1,7 @@
-import { HttpErrorResponse } from "@angular/common/http";
 import { SortDirection } from "@angular/material/sort/sort-direction";
 
 export class GetSuccessPayload<T> {
   constructor(public response: T) {}
-}
-
-export class GetErrorPayload {
-  constructor(public error: HttpErrorResponse) {}
 }
 
 export class SortPayload {

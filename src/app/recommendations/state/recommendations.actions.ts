@@ -1,13 +1,13 @@
 import {
   EnableAllocateAdminPayload,
   FilterPayload,
-  GetErrorPayload,
   GetSuccessPayload,
   PaginatePayload,
   SearchPayload,
   SortPayload,
   ToggleCheckboxPayload
 } from "../../shared/records/state/records.actions";
+import { HttpErrorPayload } from "../../shared/services/http-error/http-error.service";
 import {
   IGetRecommendationsResponse,
   RecommendationsFilterType
@@ -23,7 +23,7 @@ export class GetRecommendationsSuccess extends GetSuccessPayload<
   static readonly type = `[Recommendations] Get Success`;
 }
 
-export class GetRecommendationsError extends GetErrorPayload {
+export class GetRecommendationsError extends HttpErrorPayload {
   static readonly type = `[Recommendations] Get Error`;
 }
 

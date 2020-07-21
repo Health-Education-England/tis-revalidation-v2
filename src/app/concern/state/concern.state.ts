@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { catchError, finalize, switchMap, take, tap } from "rxjs/operators";
@@ -108,9 +107,7 @@ export class ConcernState {
       .pipe(
         take(1),
         switchMap(() => ctx.dispatch(new UploadSuccess())),
-        catchError((error: HttpErrorResponse) =>
-          ctx.dispatch(new ApiError(error))
-        ),
+        catchError((error: string) => ctx.dispatch(new ApiError(error))),
         finalize(() =>
           ctx.patchState({
             uploadFileInProgress: false
@@ -129,7 +126,7 @@ export class ConcernState {
   // TODO move to a generic place so other states can also re use
   @Action(ApiError)
   apiError(ctx: StateContext<ConcernStateModel>, action: ApiError) {
-    return this.snackBarService.openSnackBar(`Error: ${action.error.message}`);
+    return this.snackBarService.openSnackBar(action.error);
   }
 
   @Action(ListFiles)
@@ -145,9 +142,7 @@ export class ConcernState {
         switchMap((response: IListFile[]) =>
           ctx.dispatch(new ListFilesSuccess(response))
         ),
-        catchError((error: HttpErrorResponse) =>
-          ctx.dispatch(new ApiError(error))
-        ),
+        catchError((error: string) => ctx.dispatch(new ApiError(error))),
         finalize(() =>
           ctx.patchState({
             listFilesInProgress: false
@@ -176,9 +171,7 @@ export class ConcernState {
         switchMap((blob: Blob) =>
           ctx.dispatch(new DownloadFileSuccess(blob, action.fileName))
         ),
-        catchError((error: HttpErrorResponse) =>
-          ctx.dispatch(new ApiError(error))
-        )
+        catchError((error: string) => ctx.dispatch(new ApiError(error)))
       )
       .subscribe();
   }
@@ -198,9 +191,7 @@ export class ConcernState {
       .pipe(
         take(1),
         switchMap(() => ctx.dispatch(new DeleteFileSuccess(action.fileName))),
-        catchError((error: HttpErrorResponse) =>
-          ctx.dispatch(new ApiError(error))
-        )
+        catchError((error: string) => ctx.dispatch(new ApiError(error)))
       )
       .subscribe();
   }

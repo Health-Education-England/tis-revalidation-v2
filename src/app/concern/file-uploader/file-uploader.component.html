@@ -8,16 +8,16 @@
 </div>
 
 <ng-template #notLoading>
-  <form class="records-form" [formGroup]="form">
+  <form [formGroup]="form">
     <div
-      class="button-row upload centered pt-20 pb-20"
+      class="button-row upload centered p-20"
       #dropArea
       (dragenter)="preventDefaults($event); highlight()"
       (dragover)="preventDefaults($event); highlight()"
       (dragleave)="preventDefaults($event); unHighlight()"
       (drop)="preventDefaults($event); unHighlight(); handleDrop($event)"
     >
-      <p class="pr-10">
+      <p>
         Drag and drop supporting documents, or click attach icon to upload:
       </p>
       <button

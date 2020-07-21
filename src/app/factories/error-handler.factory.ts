@@ -5,7 +5,8 @@ import { environment } from "src/environments/environment";
 export class SentryErrorHandler implements ErrorHandler {
   constructor() {
     Sentry.init({
-      dsn: "https://2e7ac4b21a544f158c46b4320e7cfd45@sentry.io/5320173",
+      dsn:
+        "https://80334068f6354467ba7d59a42e9cecd8@o323095.ingest.sentry.io/5320173",
       environment: environment.name
     } as Sentry.BrowserOptions);
   }

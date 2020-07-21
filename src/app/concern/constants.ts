@@ -19,13 +19,13 @@ export const defaultConcern: IConcernSummary = {
 };
 
 export const ACCEPTED_IMAGE_EXTENSIONS: string[] = [
-  ".bmp",
-  ".gif",
-  ".jpeg",
-  ".png",
-  ".svg",
-  ".tiff",
-  ".webp"
+  "bmp",
+  "gif",
+  "jpeg",
+  "png",
+  "svg",
+  "tiff",
+  "webp"
 ];
 
 export const ACCEPTED_IMAGE_MIMES: string[] = [

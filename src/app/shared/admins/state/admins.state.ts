@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { append, patch, removeItem } from "@ngxs/store/operators";
@@ -116,7 +115,7 @@ export class AdminsState {
         switchMap((response: any) =>
           ctx.dispatch(new SubmitAllocateListSuccess(response))
         ),
-        catchError((error: HttpErrorResponse) =>
+        catchError((error: string) =>
           ctx.dispatch(new SubmitAllocateListError(error))
         )
       )
@@ -134,7 +133,7 @@ export class AdminsState {
     action: SubmitAllocateListError
   ) {
     return ctx.patchState({
-      error: `Error: ${action.error.message}`
+      error: action.error
     });
   }
 }

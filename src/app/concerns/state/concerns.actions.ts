@@ -2,7 +2,7 @@ import { ConcernStatus } from "../../concern/concern.interfaces";
 import {
   EnableAllocateAdminPayload,
   FilterPayload,
-  GetErrorPayload,
+  HttpErrorPayload,
   GetSuccessPayload,
   PaginatePayload,
   SearchPayload,
@@ -21,7 +21,7 @@ export class GetConcernsSuccess extends GetSuccessPayload<
   static readonly type = `[Concerns] Get Success`;
 }
 
-export class GetConcernsError extends GetErrorPayload {
+export class GetConcernsError extends HttpErrorPayload {
   static readonly type = `[Concerns] Get Error`;
 }
 

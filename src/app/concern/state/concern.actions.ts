@@ -1,4 +1,4 @@
-import { HttpErrorResponse } from "@angular/common/http";
+import { HttpErrorPayload } from "../../shared/records/state/records.actions";
 import { IConcernSummary } from "../concern.interfaces";
 
 export class Get {
@@ -30,9 +30,8 @@ export class UploadSuccess {
   static readonly type = "[Concern] Upload Success";
 }
 
-export class ApiError {
+export class ApiError extends HttpErrorPayload {
   static readonly type = "[Concern] Api Error";
-  constructor(public error: HttpErrorResponse) {}
 }
 
 export class ListFiles {

@@ -1,7 +1,7 @@
 import {
   EnableAllocateAdminPayload,
   FilterPayload,
-  GetErrorPayload,
+  HttpErrorPayload,
   GetSuccessPayload,
   PaginatePayload,
   SearchPayload,
@@ -23,7 +23,7 @@ export class GetConnectionsSuccess extends GetSuccessPayload<
   static readonly type = `[Connections] Get Success`;
 }
 
-export class GetConnectionsError extends GetErrorPayload {
+export class GetConnectionsError extends HttpErrorPayload {
   static readonly type = `[Connections] Get Error`;
 }
 

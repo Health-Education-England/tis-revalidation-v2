@@ -1,4 +1,4 @@
-import { HttpErrorResponse, HttpParams } from "@angular/common/http";
+import { HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "@environment";
 import { Action, State, StateContext } from "@ngxs/store";
@@ -75,7 +75,7 @@ export class ConcernsState extends RecordsState {
         switchMap((response: IGetConcernsResponse) =>
           ctx.dispatch(new GetConcernsSuccess(response))
         ),
-        catchError((error: HttpErrorResponse) =>
+        catchError((error: string) =>
           ctx.dispatch(new GetConcernsError(error))
         ),
         finalize(() =>

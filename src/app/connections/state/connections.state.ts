@@ -1,4 +1,4 @@
-import { HttpErrorResponse, HttpParams } from "@angular/common/http";
+import { HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "@environment";
 import { Action, State, StateContext } from "@ngxs/store";
@@ -69,7 +69,7 @@ export class ConnectionsState extends RecordsState {
         switchMap((response: IGetConnectionsResponse) =>
           ctx.dispatch(new GetConnectionsSuccess(response))
         ),
-        catchError((error: HttpErrorResponse) =>
+        catchError((error: string) =>
           ctx.dispatch(new GetConnectionsError(error))
         ),
         finalize(() =>

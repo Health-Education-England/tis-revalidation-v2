@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from "@angular/common/http";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { async, TestBed } from "@angular/core/testing";
@@ -77,18 +76,12 @@ describe("Recommendations state", () => {
   });
 
   it("should dispatch 'GetError' and select 'error' slice", () => {
-    const mockError = new HttpErrorResponse({
-      status: 404,
-      statusText: "Not Found",
-      url: "/recommendations",
-      error: {
-        message: "Http failure response for /recommendations: 404 Not Found"
-      }
-    });
+    const mockError =
+      "Http failure response for /recommendations: 404 Not Found";
 
     store.dispatch(new GetRecommendationsError(mockError));
     const error = store.snapshot().recommendations.error;
-    expect(error).toEqual(`Error: ${mockError.error.message}`);
+    expect(error).toEqual(mockError);
   });
 
   it("should dispatch 'Sort' and update store", () => {

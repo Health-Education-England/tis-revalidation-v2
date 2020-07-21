@@ -1,7 +1,7 @@
 import {
   EnableAllocateAdminPayload,
   FilterPayload,
-  GetErrorPayload,
+  HttpErrorPayload,
   GetSuccessPayload,
   PaginatePayload,
   SearchPayload,
@@ -23,7 +23,7 @@ export class GetRecommendationsSuccess extends GetSuccessPayload<
   static readonly type = `[Recommendations] Get Success`;
 }
 
-export class GetRecommendationsError extends GetErrorPayload {
+export class GetRecommendationsError extends HttpErrorPayload {
   static readonly type = `[Recommendations] Get Error`;
 }
 

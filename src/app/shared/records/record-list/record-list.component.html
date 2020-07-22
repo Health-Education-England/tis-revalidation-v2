@@ -72,31 +72,39 @@
 
               <!-- mat cell -->
               <td mat-cell *matCellDef="let element">
-                <ng-container *ngIf="data.enableAllocateAdmin">
-                  <!-- checkbox -->
-                  <ng-container *ngIf="i.name === 'doctorFirstName'">
-                    <mat-checkbox
-                      class="pr-20"
-                      [checked]="element.checked"
-                      (change)="toggleCheckbox(element.gmcReferenceNumber)"
-                    ></mat-checkbox>
-                  </ng-container>
+                <!-- checkbox -->
+                <mat-checkbox
+                  *ngIf="
+                    data.enableAllocateAdmin && i.name === 'doctorFirstName'
+                  "
+                  class="pr-20"
+                  [checked]="element.checked"
+                  (change)="toggleCheckbox(element.gmcReferenceNumber)"
+                ></mat-checkbox>
 
-                  <!-- render allocate admin component -->
-                  <ng-container *ngIf="i.name === 'admin'">
-                    <app-allocate-admin-autocomplete
-                      [gmcNumber]="element.gmcReferenceNumber"
-                    ></app-allocate-admin-autocomplete>
-                  </ng-container>
+                <!-- render allocate admin component or admin name -->
+                <ng-container *ngIf="i.name === 'admin'; else notAdminCell">
+                  <app-allocate-admin-autocomplete
+                    *ngIf="data.enableAllocateAdmin; else renderAdminName"
+                    [gmcNumber]="element.gmcReferenceNumber"
+                  ></app-allocate-admin-autocomplete>
+                  <ng-template #renderAdminName>{{
+                    element[i.name]
+                  }}</ng-template>
                 </ng-container>
 
-                <!-- cell value | format date -->
-                <ng-container *ngIf="dateColumns.includes(i.name); else noPipe">
-                  {{ element[i.name] | date: dateFormat }}
-                </ng-container>
+                <!-- remaining cells -->
+                <ng-template #notAdminCell>
+                  <!-- cell value | format date -->
+                  <ng-container
+                    *ngIf="dateColumns.includes(i.name); else noPipe"
+                  >
+                    {{ element[i.name] | date: dateFormat }}
+                  </ng-container>
 
-                <!-- cell value | no formatting needed -->
-                <ng-template #noPipe>{{ element[i.name] }}</ng-template>
+                  <!-- cell value | no formatting needed -->
+                  <ng-template #noPipe>{{ element[i.name] }}</ng-template>
+                </ng-template>
               </td>
             </ng-container>
 

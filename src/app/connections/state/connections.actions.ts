@@ -7,7 +7,7 @@ import {
   SortPayload,
   ToggleCheckboxPayload
 } from "../../shared/records/state/records.actions";
-import { HttpErrorPayload } from "../../shared/services/http-error/http-error.service";
+import { HttpErrorPayload } from "../../shared/services/error/error.service";
 import {
   ConnectionsFilterType,
   IGetConnectionsResponse

@@ -1,5 +1,5 @@
 import { UserType } from "aws-sdk/clients/cognitoidentityserviceprovider";
-import { HttpErrorPayload } from "../../services/http-error/http-error.service";
+import { HttpErrorPayload } from "../../services/error/error.service";
 
 const label = `[Admins]`;
 

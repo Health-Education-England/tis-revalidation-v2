@@ -3,20 +3,15 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor,
-  HttpErrorResponse
+  HttpInterceptor
 } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 import { switchMap, catchError } from "rxjs/operators";
-import { HttpErrorService } from "../../shared/services/http-error/http-error.service";
 import { AuthService } from "./auth.service";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(
-    private authService: AuthService,
-    private httpErrorService: HttpErrorService
-  ) {}
+  constructor(private authService: AuthService) {}
 
   intercept(
     request: HttpRequest<unknown>,
@@ -32,9 +27,7 @@ export class AuthInterceptor implements HttpInterceptor {
         });
         return next.handle(request);
       }),
-      catchError((error: HttpErrorResponse) =>
-        this.httpErrorService.handleHttpError(error)
-      )
+      catchError((error: any) => of(error))
     );
   }
 }

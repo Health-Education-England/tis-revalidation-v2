@@ -7,15 +7,17 @@ import { AllocateAdminAutocompleteComponent } from "./allocate-admin-autocomplet
 import { AllocateAdminBtnComponent } from "./allocate-admin-btn/allocate-admin-btn.component";
 import { RecordListComponent } from "./record-list/record-list.component";
 import { RecordSearchComponent } from "./record-search/record-search.component";
+import { RefreshDataBtnComponent } from "./refresh-data-btn/refresh-data-btn.component";
 import { ResetRecordListComponent } from "./reset-record-list/reset-record-list.component";
 
 const components: any[] = [
+  AllocateAdminActionsComponent,
+  AllocateAdminAutocompleteComponent,
+  AllocateAdminBtnComponent,
   RecordListComponent,
   RecordSearchComponent,
-  ResetRecordListComponent,
-  AllocateAdminBtnComponent,
-  AllocateAdminActionsComponent,
-  AllocateAdminAutocompleteComponent
+  RefreshDataBtnComponent,
+  ResetRecordListComponent
 ];
 
 @NgModule({

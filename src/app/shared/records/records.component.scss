@@ -2,7 +2,7 @@
 @import "~nhsuk-frontend/packages/core/settings/colours";
 
 .records-top-section {
-  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-columns: auto auto minmax(0, 1fr);
   background: $color_nhsuk-white;
 
   @media screen and (#{$mat-xsmall}) {

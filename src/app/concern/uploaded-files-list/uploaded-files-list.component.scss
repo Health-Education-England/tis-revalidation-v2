@@ -1,11 +1,8 @@
 @import "~@angular/material/core/style/variables";
+@import "src/scss/utilities/mixins";
 
 .mat-list-icon {
-  color: rgba(0, 0, 0, 0.54);
-
-  &:hover {
-    color: rgba(0, 0, 0, 1);
-  }
+  @include subtle-color-and-hover();
 }
 
 .grid-container {

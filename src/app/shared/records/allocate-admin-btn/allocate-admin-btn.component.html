@@ -1,7 +1,19 @@
-<button
-  mat-menu-item
-  (click)="enableAllocateAdmin()"
-  aria-label="Allocate admin"
->
-  Allocate admin
-</button>
+<ng-container *ngIf="enableAllocateAdmin$ | async; else isDisabled">
+  <button
+    mat-menu-item
+    aria-label="Disable allocate admin"
+    (click)="disableAllocateAdmin()"
+  >
+    Disable allocate admin
+  </button>
+</ng-container>
+
+<ng-template #isDisabled>
+  <button
+    mat-menu-item
+    aria-label="Enable allocate admin"
+    (click)="enableAllocateAdmin()"
+  >
+    Enable allocate admin
+  </button>
+</ng-template>

@@ -64,7 +64,9 @@ export class AnalyticsModule {
     }
   }
 
-  static forRoot(config: AnalyticsConfig): ModuleWithProviders {
+  static forRoot(
+    config: AnalyticsConfig
+  ): ModuleWithProviders<AnalyticsModule> {
     return {
       ngModule: AnalyticsModule,
       providers: [{ provide: AnalyticsConfigValue, useValue: config }]

@@ -23,7 +23,7 @@ const HotJarConfigValue = new InjectionToken<HotJarConfig>("HotJarConfig");
 export class HotJarModule {
   private hotJarScript: HTMLScriptElement;
 
-  static forRoot(config: HotJarConfig): ModuleWithProviders {
+  static forRoot(config: HotJarConfig): ModuleWithProviders<HotJarModule> {
     return {
       ngModule: HotJarModule,
       providers: [{ provide: HotJarConfigValue, useValue: config }]

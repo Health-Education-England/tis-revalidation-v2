@@ -19,7 +19,6 @@ describe("ErrorService", () => {
       error: new ErrorEvent("error", { message: "There has been an error" })
     });
     const message: string = service.generateErrorMsg(error);
-    console.log(message);
     expect(message).toBeInstanceOf(String);
     expect(message).toEqual(`Error: ${error.error.message}`);
   });

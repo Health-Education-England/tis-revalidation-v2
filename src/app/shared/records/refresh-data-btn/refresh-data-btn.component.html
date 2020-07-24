@@ -1,3 +1,8 @@
-<mat-icon class="cursor-pointer" (click)="refreshData()">
-  refresh
-</mat-icon>
+<button
+  mat-icon-button
+  aria-label="Refresh data"
+  [disabled]="enableAllocateAdmin$ | async"
+  (click)="refreshData()"
+>
+  <mat-icon>refresh</mat-icon>
+</button>

@@ -76,7 +76,21 @@ describe("FileUploaderComponent", () => {
     expect(dropArea.classList.contains("highlight")).toBeFalse();
   });
 
-  it("handleDrop() should invoke `upload()` if valid files have been dropped", () => {
+  it("handleDrop() should invoke `processFiles()`", () => {
+    spyOn(component, "processFiles");
+
+    const mockFile = new File([""], "mockfile.txt", { type: "text/plain" });
+    const mockEvt = {
+      dataTransfer: {
+        items: [{ type: mockFile.type, getAsFile: () => mockFile }]
+      }
+    };
+
+    component.handleDrop(mockEvt as any);
+    expect(component.processFiles).toHaveBeenCalled();
+  });
+
+  it("processFiles() should invoke `upload()` if valid files have been dropped", () => {
     spyOn(component, "upload");
 
     const mockFile = new File([""], "mockfile.txt", { type: "text/plain" });
@@ -90,7 +104,7 @@ describe("FileUploaderComponent", () => {
     expect(component.upload).toHaveBeenCalledWith([mockFile]);
   });
 
-  it("handleDrop() should invoke `snackBarService.openSnackBar()` if invalid files have been dropped", () => {
+  it("processFiles() should invoke `snackBarService.openSnackBar()` if invalid files have been dropped", () => {
     spyOn(snackBarService, "openSnackBar");
 
     const mockFile = new File([""], "mockfile.zip", {
@@ -108,14 +122,14 @@ describe("FileUploaderComponent", () => {
     );
   });
 
-  it("onFilesSelection() should invoke `upload()`", () => {
-    spyOn(component, "upload");
+  it("onFilesSelection() should invoke `processFiles()`", () => {
+    spyOn(component, "processFiles");
 
     const mockFile = new File([""], "filename", { type: "text/html" });
     const mockEvt = { target: { files: [mockFile] } };
 
     component.onFilesSelection(mockEvt as any);
-    expect(component.upload).toHaveBeenCalledWith([mockFile]);
+    expect(component.processFiles).toHaveBeenCalledWith([mockFile]);
   });
 
   it("upload() should reset form", () => {

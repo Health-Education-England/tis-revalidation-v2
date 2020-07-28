@@ -11,7 +11,7 @@
   <div class="pt-25 pb-25" *ngIf="uploadedFiles$ | async as uploadedFiles">
     <ng-container *ngIf="uploadedFiles.length">
       <div class="pb-25">Uploaded documents</div>
-      <div class="d-grid grid-container">
+      <div class="d-grid grid-container-2-col">
         <ng-container *ngFor="let file of uploadedFiles">
           <div
             *ngIf="{

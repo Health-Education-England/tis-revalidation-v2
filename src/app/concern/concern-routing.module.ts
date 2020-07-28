@@ -22,7 +22,7 @@ const routes: Routes = [
         component: CreateConcernComponent,
         data: {
           title: "Create concern",
-          showToolbar: true,
+          showToolbar: false,
           showNotes: false
         }
       },
@@ -31,7 +31,7 @@ const routes: Routes = [
         component: CreateConcernComponent,
         data: {
           title: "Edit concern",
-          showToolbar: true,
+          showToolbar: false,
           showNotes: false
         }
       }

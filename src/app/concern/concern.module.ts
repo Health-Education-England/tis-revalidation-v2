@@ -12,6 +12,7 @@ import { NgModule } from "@angular/core";
 import { NgxsModule } from "@ngxs/store";
 import { SharedModule } from "../shared/shared.module";
 import { UploadedFilesListComponent } from "./uploaded-files-list/uploaded-files-list.component";
+import { ConcernDetailComponent } from './create-concern-forms/concern-detail/concern-detail.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { UploadedFilesListComponent } from "./uploaded-files-list/uploaded-files
     ConcernComponent,
     CreateConcernComponent,
     FileUploaderComponent,
-    UploadedFilesListComponent
+    UploadedFilesListComponent,
+    ConcernDetailComponent
   ],
   imports: [
     MaterialModule,

@@ -118,8 +118,7 @@ export class AdminsState {
         catchError((error: string) =>
           ctx.dispatch(new SubmitAllocateListError(error))
         )
-      )
-      .subscribe();
+      );
   }
 
   @Action(SubmitAllocateListSuccess)

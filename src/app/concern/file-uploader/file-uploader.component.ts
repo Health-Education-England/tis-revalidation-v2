@@ -62,15 +62,22 @@ export class FileUploaderComponent implements OnInit {
     const itemList: DataTransferItem[] = $event.dataTransfer.items
       ? Array.from($event.dataTransfer.items)
       : [];
-    const droppedFiles: File[] = [];
+
+    this.processFiles(itemList);
+  }
+
+  public processFiles(files: any[]): void {
+    const processedFiles: File[] = [];
     const invalidFiles: string[] = [];
 
-    if (itemList.length) {
-      itemList.forEach((i: DataTransferItem) => {
+    if (files.length) {
+      files.forEach((i: any) => {
+        const file: any = i.name ? i : i.getAsFile();
+
         if (this.acceptedFileTypes.includes(i.type)) {
-          droppedFiles.push(i.getAsFile());
+          processedFiles.push(file);
         } else {
-          invalidFiles.push(i.getAsFile().name);
+          invalidFiles.push(file.name);
         }
       });
 
@@ -81,15 +88,15 @@ export class FileUploaderComponent implements OnInit {
         return;
       }
 
-      if (droppedFiles.length) {
-        this.upload(droppedFiles);
+      if (processedFiles.length) {
+        this.upload(processedFiles);
       }
     }
   }
 
   public onFilesSelection($event: Event): void {
     const selectedFiles: File[] = Array.from($event.target[`files`]);
-    this.upload(selectedFiles);
+    this.processFiles(selectedFiles);
   }
 
   public upload(payload: File[]): Observable<any> {

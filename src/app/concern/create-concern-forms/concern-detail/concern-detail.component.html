@@ -79,7 +79,7 @@
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>Follow-up date</mat-label>
+      <mat-label>Follow up date</mat-label>
       <input
         matInput
         [min]="greaterThanToday"
@@ -87,7 +87,7 @@
         [matDatepicker]="followupDatePicker"
       />
       <mat-error *ngIf="followupDate?.hasError('required')">
-        Follow-up date is required
+        Follow up date is required
       </mat-error>
       <mat-datepicker-toggle
         matSuffix

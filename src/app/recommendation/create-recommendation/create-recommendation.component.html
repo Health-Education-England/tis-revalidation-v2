@@ -1,64 +1,68 @@
 <form class="records-form" [formGroup]="recommendationForm">
-  <mat-form-field>
-    <mat-label>Make a recommendation</mat-label>
-    <mat-select formControlName="action">
-      <mat-option
-        *ngFor="let revalType of recommendationType | keyvalue"
-        [value]="revalType.key"
-      >
-        {{ revalType.value }}
-      </mat-option>
-    </mat-select>
-    <mat-error *ngIf="action?.hasError('required')">
-      Please make a recommendation
-    </mat-error>
-  </mat-form-field>
+  <div class="d-grid grid-container-2-col">
+    <mat-form-field>
+      <mat-label>Make a recommendation</mat-label>
+      <mat-select formControlName="action">
+        <mat-option
+          *ngFor="let revalType of recommendationType | keyvalue"
+          [value]="revalType.key"
+        >
+          {{ revalType.value }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="action?.hasError('required')">
+        Please make a recommendation
+      </mat-error>
+    </mat-form-field>
 
-  <mat-form-field *ngIf="deferSelected">
-    <mat-label>Choose a date</mat-label>
-    <input
-      matInput
-      formControlName="deferralDate"
-      [min]="minReferralDate"
-      [max]="maxReferralDate"
-      [matDatepicker]="picker"
-    />
-    <mat-error *ngIf="deferralDate?.hasError('required')">
-      Date is required and must be between
-      {{ minReferralDate | date: dateFormat }} and
-      {{ maxReferralDate | date: dateFormat }}
-    </mat-error>
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker touchUi #picker></mat-datepicker>
-  </mat-form-field>
+    <mat-form-field *ngIf="deferSelected">
+      <mat-label>Choose a date</mat-label>
+      <input
+        matInput
+        formControlName="deferralDate"
+        [min]="minReferralDate"
+        [max]="maxReferralDate"
+        [matDatepicker]="picker"
+      />
+      <mat-error *ngIf="deferralDate?.hasError('required')">
+        Date is required and must be between
+        {{ minReferralDate | date: dateFormat }} and
+        {{ maxReferralDate | date: dateFormat }}
+      </mat-error>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker touchUi #picker></mat-datepicker>
+    </mat-form-field>
 
-  <mat-form-field *ngIf="deferSelected">
-    <mat-label>Reason</mat-label>
-    <mat-select formControlName="deferralReason">
-      <mat-option *ngFor="let reason of deferralReasons" [value]="reason.code">
-        {{ reason.reason }}
-      </mat-option>
-    </mat-select>
-    <mat-error *ngIf="deferralReason?.hasError('required')">
-      Reason must be provided
-    </mat-error>
-  </mat-form-field>
+    <mat-form-field *ngIf="deferSelected">
+      <mat-label>Reason</mat-label>
+      <mat-select formControlName="deferralReason">
+        <mat-option
+          *ngFor="let reason of deferralReasons"
+          [value]="reason.code"
+        >
+          {{ reason.reason }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="deferralReason?.hasError('required')">
+        Reason must be provided
+      </mat-error>
+    </mat-form-field>
 
-  <mat-form-field *ngIf="deferSelected && deferralSubReasons.length > 0">
-    <mat-label>Sub reason</mat-label>
-    <mat-select formControlName="deferralSubReason">
-      <mat-option
-        *ngFor="let reason of deferralSubReasons"
-        [value]="reason.code"
-      >
-        {{ reason.reason }}
-      </mat-option>
-    </mat-select>
-    <mat-error *ngIf="deferralSubReason?.hasError('required')">
-      Sub reason must be provided
-    </mat-error>
-  </mat-form-field>
-
+    <mat-form-field *ngIf="deferSelected && deferralSubReasons.length > 0">
+      <mat-label>Sub reason</mat-label>
+      <mat-select formControlName="deferralSubReason">
+        <mat-option
+          *ngFor="let reason of deferralSubReasons"
+          [value]="reason.code"
+        >
+          {{ reason.reason }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="deferralSubReason?.hasError('required')">
+        Sub reason must be provided
+      </mat-error>
+    </mat-form-field>
+  </div>
   <div class="comments-section">
     <div formArrayName="comments" class="comments">
       <ng-container

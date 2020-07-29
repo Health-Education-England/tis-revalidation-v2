@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Auth } from "aws-amplify";
-import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth/lib/types";
+import { CognitoHostedUIIdentityProvider } from "../../../../node_modules/@aws-amplify/auth/lib/types";
 import { CognitoUserSession, CognitoIdToken } from "amazon-cognito-identity-js";
 import { Observable, from } from "rxjs";
 import { tap } from "rxjs/operators";
@@ -14,6 +14,7 @@ export class AuthService {
   public email = "";
   public userGroups: string[] = [];
   public userRoles: string[] = [];
+  private identityProvider = CognitoHostedUIIdentityProvider;
 
   constructor() {}
 
@@ -31,7 +32,7 @@ export class AuthService {
 
   signIn(): Promise<any> {
     return Auth.federatedSignIn({
-      provider: CognitoHostedUIIdentityProvider.Cognito
+      provider: this.identityProvider.Cognito
     });
   }
 

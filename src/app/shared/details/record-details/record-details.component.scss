@@ -41,11 +41,6 @@
   @media screen and (#{$mat-small}) {
     max-width: 100%;
   }
-
-  .mat-form-field {
-    max-width: 550px;
-    display: block;
-  }
 }
 .comments-tool-bar {
   width: calc(100% - 40px);

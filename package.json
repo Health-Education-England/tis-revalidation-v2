@@ -40,7 +40,7 @@
     "@ngxs/store": "^3.6.2",
     "@sentry/browser": "^5.20.1",
     "angulartics2": "^10.0.0",
-    "aws-amplify": "^3.0.18",
+    "aws-amplify": "^3.0.22",
     "aws-sdk": "^2.715.0",
     "browserslist": "^4.13.0",
     "caniuse-lite": "^1.0.30001107",

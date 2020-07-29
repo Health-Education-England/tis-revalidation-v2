@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Auth } from "aws-amplify";
-import { CognitoHostedUIIdentityProvider } from "../../../../node_modules/@aws-amplify/auth/lib/types";
+import { CognitoHostedUIIdentityProvider } from "node_modules/@aws-amplify/auth/lib/types";
 import { CognitoUserSession, CognitoIdToken } from "amazon-cognito-identity-js";
 import { Observable, from } from "rxjs";
 import { tap } from "rxjs/operators";

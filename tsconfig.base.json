@@ -15,7 +15,8 @@
     "lib": ["es2018", "dom"],
     "paths": {
       "hee-shared": ["dist/hee-shared/hee-shared", "dist/hee-shared"],
-      "@environment": ["src/environments/environment"]
+      "@environment": ["src/environments/environment"],
+      "@aws-amplify": ["node_modules/@aws-amplify"]
     }
   },
   "angularCompilerOptions": {

@@ -1,0 +1,51 @@
+<form [formGroup]="formGroup">
+  <!--// grade -->
+  <!--// admin -->
+  <!--// site -->
+  <!--// employer -->
+  <div class="d-grid grid-container-2-col">
+    <mat-form-field>
+      <mat-label>Grade</mat-label>
+      <mat-select formControlName="grade">
+        <mat-option *ngFor="let grade of grades" [value]="grade">
+          {{ grade }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="grade?.hasError('required')">
+        Grade must be provided
+      </mat-error>
+    </mat-form-field>
+
+    <app-allocate-admin-autocomplete></app-allocate-admin-autocomplete>
+
+    <mat-form-field>
+      <mat-label>Site</mat-label>
+      <mat-select formControlName="site">
+        <mat-option *ngFor="let site of sites" [value]="site">
+          {{ site }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="site?.hasError('required')">
+        Site must be provided
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Employer</mat-label>
+      <mat-select formControlName="employer">
+        <mat-option *ngFor="let employer of employers" [value]="employer">
+          {{ employer }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="employer?.hasError('required')">
+        Employer must be provided
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="button-row">
+    <button mat-button mat-raised-button color="primary" matStepperNext>
+      Next
+    </button>
+  </div>
+</form>

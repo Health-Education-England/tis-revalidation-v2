@@ -1,3 +1,4 @@
+import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { NgxsModule } from "@ngxs/store";
 import { MaterialModule } from "../shared/material/material.module";
@@ -12,8 +13,8 @@ import { ConcernsState } from "./state/concerns.state";
 @NgModule({
   declarations: [ConcernsComponent, ConcernListComponent],
   imports: [
+    CommonModule,
     MaterialModule,
-    SharedModule,
     RecordsModule,
     ConcernsRoutingModule,
     NgxsModule.forFeature([ConcernsState])

@@ -12,16 +12,18 @@ import { NgModule } from "@angular/core";
 import { NgxsModule } from "@ngxs/store";
 import { SharedModule } from "../shared/shared.module";
 import { UploadedFilesListComponent } from "./uploaded-files-list/uploaded-files-list.component";
-import { ConcernDetailComponent } from './create-concern-forms/concern-detail/concern-detail.component';
+import { ConcernDetailComponent } from "./create-concern-forms/concern-detail/concern-detail.component";
+import { TraineeDetailComponent } from "./create-concern-forms/trainee-detail/trainee-detail.component";
 
 @NgModule({
   declarations: [
     CommentsComponent,
     ConcernComponent,
+    ConcernDetailComponent,
     CreateConcernComponent,
     FileUploaderComponent,
-    UploadedFilesListComponent,
-    ConcernDetailComponent
+    TraineeDetailComponent,
+    UploadedFilesListComponent
   ],
   imports: [
     MaterialModule,

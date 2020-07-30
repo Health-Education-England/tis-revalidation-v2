@@ -1,3 +1,4 @@
+import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { NgxsModule } from "@ngxs/store";
 import { MaterialModule } from "../shared/material/material.module";
@@ -12,8 +13,8 @@ import { ConnectionsState } from "./state/connections.state";
 @NgModule({
   declarations: [ConnectionsComponent, ConnectionListComponent],
   imports: [
+    CommonModule,
     MaterialModule,
-    SharedModule,
     RecordsModule,
     ConnectionsRoutingModule,
     NgxsModule.forFeature([ConnectionsState])

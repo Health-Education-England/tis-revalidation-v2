@@ -14,7 +14,7 @@ export interface IConcernSummary {
   admin: string;
   comments: string[];
   concernId: number;
-  concernType: string; // TODO: use enum ConcernType
+  concernType: string; // TODO: use enum IncidentType, check with BE
   dateOfIncident: Date;
   dateReported: Date;
   employer: string;
@@ -32,5 +32,22 @@ export enum ConcernStatus {
   CLOSED = "closed"
 }
 
-// TODO: fill out types of concerns
-export enum ConcernType {}
+export interface IncidentType {
+  code: string;
+  label: string;
+}
+
+export interface IGrade {
+  gradeId: number;
+  gradeName: string;
+}
+
+export interface ISite {
+  siteId: number;
+  siteName: string;
+}
+
+export interface IEmployer {
+  employerId: number;
+  employerName: string;
+}

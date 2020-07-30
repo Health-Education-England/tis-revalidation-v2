@@ -2,7 +2,7 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { NgxsModule } from "@ngxs/store";
 import { MaterialModule } from "../shared/material/material.module";
-import { RecordsModule } from "../shared/records/records.module";
+import { RecordsModule } from "../records/records.module";
 import { SharedModule } from "../shared/shared.module";
 import { RecommendationsResolver } from "./recommendations.resolver";
 import { RecommendationsState } from "./state/recommendations.state";

@@ -6,13 +6,13 @@ import { catchError, finalize, map, switchMap, take } from "rxjs/operators";
 import { ConcernStatus } from "../../concern/concern.interfaces";
 
 import { RecommendationStatus } from "../../recommendation/recommendation-history.interface";
-import { DEFAULT_SORT } from "../../shared/records/constants";
-import { RecordsService } from "../../shared/records/services/records.service";
+import { DEFAULT_SORT } from "../../records/constants";
+import { RecordsService } from "../../records/services/records.service";
 import {
   defaultRecordsState,
   RecordsState,
   RecordsStateModel
-} from "../../shared/records/state/records.state";
+} from "../../records/state/records.state";
 import { IConcern, IGetConcernsResponse } from "../concerns.interfaces";
 import { ConcernsService } from "../services/concerns.service";
 import {

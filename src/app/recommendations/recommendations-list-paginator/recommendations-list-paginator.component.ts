@@ -3,7 +3,7 @@ import { PageEvent } from "@angular/material/paginator/paginator";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
-import { RecordsService } from "../../shared/records/services/records.service";
+import { RecordsService } from "../../records/services/records.service";
 import { PaginateRecommendations } from "../state/recommendations.actions";
 import { RecommendationsState } from "../state/recommendations.state";
 

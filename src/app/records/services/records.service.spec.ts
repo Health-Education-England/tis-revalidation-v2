@@ -10,7 +10,7 @@ import { NgxsModule, Store } from "@ngxs/store";
 import {
   RecommendationsState,
   RecommendationsStateModel
-} from "../../../recommendations/state/recommendations.state";
+} from "../../recommendations/state/recommendations.state";
 
 import { RecordsService } from "./records.service";
 

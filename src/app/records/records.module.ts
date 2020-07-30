@@ -1,10 +1,10 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
-import { MaterialModule } from "../material/material.module";
-import { SharedModule } from "../shared.module";
-import { AllocateAdminActionsComponent } from "../admins/allocate-admin-actions/allocate-admin-actions.component";
-import { AllocateAdminBtnComponent } from "../admins/allocate-admin-btn/allocate-admin-btn.component";
+import { MaterialModule } from "../shared/material/material.module";
+import { SharedModule } from "../shared/shared.module";
+import { AllocateAdminActionsComponent } from "../shared/admins/allocate-admin-actions/allocate-admin-actions.component";
+import { AllocateAdminBtnComponent } from "../shared/admins/allocate-admin-btn/allocate-admin-btn.component";
 import { RecordListComponent } from "./record-list/record-list.component";
 import { RecordSearchComponent } from "./record-search/record-search.component";
 import { RefreshDataBtnComponent } from "./refresh-data-btn/refresh-data-btn.component";

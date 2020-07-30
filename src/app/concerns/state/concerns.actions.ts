@@ -7,7 +7,7 @@ import {
   SearchPayload,
   SortPayload,
   ToggleCheckboxPayload
-} from "../../shared/records/state/records.actions";
+} from "../../records/state/records.actions";
 import { HttpErrorPayload } from "../../shared/services/error/error.service";
 import { IGetConcernsResponse } from "../concerns.interfaces";
 

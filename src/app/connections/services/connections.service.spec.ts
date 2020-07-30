@@ -2,8 +2,8 @@ import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { TestBed } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
-import { RecordsService } from "../../shared/records/services/records.service";
-import { defaultRecordsState } from "../../shared/records/state/records.state";
+import { RecordsService } from "../../records/services/records.service";
+import { defaultRecordsState } from "../../records/state/records.state";
 import { ConnectionsState } from "../state/connections.state";
 import { ConnectionsService } from "./connections.service";
 

@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
-import { MaterialModule } from "../../material/material.module";
+import { MaterialModule } from "../../shared/material/material.module";
 import { RecordsService } from "../services/records.service";
 import {
   ClearRecommendationsSearch,
@@ -20,8 +20,8 @@ import {
   SortRecommendations,
   ToggleAllRecommendationsCheckboxes,
   ToggleRecommendationsCheckbox
-} from "../../../recommendations/state/recommendations.actions";
-import { RecommendationsState } from "../../../recommendations/state/recommendations.state";
+} from "../../recommendations/state/recommendations.actions";
+import { RecommendationsState } from "../../recommendations/state/recommendations.state";
 import { RecordSearchComponent } from "./record-search.component";
 
 describe("RecordSearchComponent", () => {

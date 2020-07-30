@@ -3,7 +3,7 @@ import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
 import { ClearAllocateList, SubmitAllocateList } from "../state/admins.actions";
-import { RecordsService } from "../../records/services/records.service";
+import { RecordsService } from "../../../records/services/records.service";
 
 @Component({
   selector: "app-allocate-admin-actions",

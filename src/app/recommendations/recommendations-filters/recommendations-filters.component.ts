@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
-import { RecordsService } from "../../shared/records/services/records.service";
+import { RecordsService } from "../../records/services/records.service";
 import { FilterRecommendations } from "../state/recommendations.actions";
 import { RecommendationsFilterType } from "../recommendations.interfaces";
 import { RecommendationsState } from "../state/recommendations.state";

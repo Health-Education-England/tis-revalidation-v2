@@ -1,4 +1,4 @@
-import { IGetRecordsResponse } from "../shared/records/records.interfaces";
+import { IGetRecordsResponse } from "../records/records.interfaces";
 
 // TODO subject to change once BE work is complete
 export interface IGetConnectionsResponse extends IGetRecordsResponse {

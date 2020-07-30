@@ -1,5 +1,5 @@
-@import "~@angular/material/core/style/variables";
-@import "~nhsuk-frontend/packages/core/settings/colours";
+@import "../../../node_modules/@angular/material/core/style/variables";
+@import "../../../node_modules/nhsuk-frontend/packages/core/settings/colours";
 
 .records-top-section {
   grid-template-columns: minmax(0, 1fr) auto auto;

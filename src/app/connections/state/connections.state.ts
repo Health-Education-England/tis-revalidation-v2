@@ -3,18 +3,18 @@ import { Injectable } from "@angular/core";
 import { environment } from "@environment";
 import { Action, State, StateContext } from "@ngxs/store";
 import { catchError, finalize, switchMap, take } from "rxjs/operators";
-import { RecordsService } from "../../shared/records/services/records.service";
+import { RecordsService } from "../../records/services/records.service";
 import {
   defaultRecordsState,
   RecordsState,
   RecordsStateModel
-} from "../../shared/records/state/records.state";
+} from "../../records/state/records.state";
 import {
   ConnectionsFilterType,
   IConnection,
   IGetConnectionsResponse
 } from "../connections.interfaces";
-import { DEFAULT_SORT } from "../../shared/records/constants";
+import { DEFAULT_SORT } from "../../records/constants";
 import { ConnectionsService } from "../services/connections.service";
 import {
   ClearConnectionsSearch,

@@ -5,10 +5,10 @@ import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
-import { COLUMN_DATA } from "../../../concerns/constants";
-import { RecommendationStatus } from "../../../recommendation/recommendation-history.interface";
-import { IRecommendation } from "../../../recommendations/recommendations.interfaces";
-import { mockRecommendationsResponse } from "../../../recommendations/services/recommendations.service.spec";
+import { COLUMN_DATA } from "../../concerns/constants";
+import { RecommendationStatus } from "../../recommendation/recommendation-history.interface";
+import { IRecommendation } from "../../recommendations/recommendations.interfaces";
+import { mockRecommendationsResponse } from "../../recommendations/services/recommendations.service.spec";
 import {
   ClearRecommendationsSearch,
   EnableRecommendationsAllocateAdmin,
@@ -22,9 +22,9 @@ import {
   SortRecommendations,
   ToggleAllRecommendationsCheckboxes,
   ToggleRecommendationsCheckbox
-} from "../../../recommendations/state/recommendations.actions";
-import { RecommendationsState } from "../../../recommendations/state/recommendations.state";
-import { MaterialModule } from "../../material/material.module";
+} from "../../recommendations/state/recommendations.actions";
+import { RecommendationsState } from "../../recommendations/state/recommendations.state";
+import { MaterialModule } from "../../shared/material/material.module";
 import { DEFAULT_SORT, generateColumnData } from "../constants";
 import { RecordsService } from "../services/records.service";
 import { RecordListComponent } from "./record-list.component";

@@ -1,4 +1,4 @@
-import { IGetRecordsResponse } from "../shared/records/records.interfaces";
+import { IGetRecordsResponse } from "../records/records.interfaces";
 
 export interface IGetConcernsResponse extends IGetRecordsResponse {
   concernTrainees: IConcern[];

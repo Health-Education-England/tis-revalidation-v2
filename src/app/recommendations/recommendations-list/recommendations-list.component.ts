@@ -1,9 +1,9 @@
 import { Component, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Store } from "@ngxs/store";
-import { generateColumnData } from "../../shared/records/constants";
-import { RecordListComponent } from "../../shared/records/record-list/record-list.component";
-import { RecordsService } from "../../shared/records/services/records.service";
+import { generateColumnData } from "../../records/constants";
+import { RecordListComponent } from "../../records/record-list/record-list.component";
+import { RecordsService } from "../../records/services/records.service";
 import { COLUMN_DATA } from "../constants";
 
 @Component({

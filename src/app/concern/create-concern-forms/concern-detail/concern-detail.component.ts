@@ -1,7 +1,9 @@
 import { Component, OnDestroy } from "@angular/core";
 import { FormGroup, Validators, FormControl } from "@angular/forms";
-import { Subscription } from "rxjs";
-import { IncidentType } from "../../concern.interfaces";
+import { Subscription, Observable } from "rxjs";
+import { IncidentType, IConcernSummary } from "../../concern.interfaces";
+import { Select } from "@ngxs/store";
+import { ConcernState } from "../../state/concern.state";
 
 @Component({
   selector: "app-concern-detail",
@@ -18,7 +20,9 @@ export class ConcernDetailComponent implements OnDestroy {
   statusText: string;
   lessThanEqualToday: Date;
   greaterThanToday: Date;
-  subcriptions: Subscription[] = [];
+  subsciptions: Subscription[] = [];
+  @Select(ConcernState.selected)
+  selectedConcern$: Observable<IConcernSummary>;
 
   incidentTypes: IncidentType[] = [
     { code: "COMPLAINT", label: "Complaint" },
@@ -47,7 +51,7 @@ export class ConcernDetailComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subcriptions.forEach((subscribed: Subscription) => {
+    this.subsciptions.forEach((subscribed: Subscription) => {
       if (subscribed.closed === false) {
         subscribed.unsubscribe();
       }
@@ -64,7 +68,7 @@ export class ConcernDetailComponent implements OnDestroy {
     this.reportedDate = new FormControl("", [Validators.required]);
     this.followupDate = new FormControl("", [Validators.required]);
     this.concernStatus = new FormControl("", [Validators.required]);
-    this.subcriptions.push(
+    this.subsciptions.push(
       this.concernStatus.valueChanges.subscribe((val) => {
         this.statusText = val ? "Open" : "Closed";
       })

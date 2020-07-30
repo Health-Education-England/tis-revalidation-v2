@@ -1,8 +1,15 @@
-import { Component, ViewEncapsulation } from "@angular/core";
+import { Component, ViewEncapsulation, OnDestroy } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { Store } from "@ngxs/store";
+import { Store, Select } from "@ngxs/store";
 import { AdminsState } from "../../../admins/state/admins.state";
-import { IEmployer, IGrade, ISite } from "../../concern.interfaces";
+import {
+  IEmployer,
+  IGrade,
+  ISite,
+  IConcernSummary
+} from "../../concern.interfaces";
+import { ConcernState } from "../../state/concern.state";
+import { Observable, Subscription } from "rxjs";
 
 @Component({
   selector: "app-trainee-detail",
@@ -10,7 +17,7 @@ import { IEmployer, IGrade, ISite } from "../../concern.interfaces";
   styleUrls: ["./trainee-detail.component.scss"],
   encapsulation: ViewEncapsulation.None
 })
-export class TraineeDetailComponent {
+export class TraineeDetailComponent implements OnDestroy {
   public formGroup: FormGroup;
   public grade: FormControl;
   public site: FormControl;
@@ -39,12 +46,25 @@ export class TraineeDetailComponent {
     }
   ];
 
+  @Select(ConcernState.selected)
+  selectedConcern$: Observable<IConcernSummary>;
+
+  subsciptions: Subscription[] = [];
+
   public get form() {
     return this.formGroup.controls;
   }
 
   constructor(private store: Store) {
     this.initialiseFormControls();
+  }
+
+  ngOnDestroy(): void {
+    this.subsciptions.forEach((subscribed: Subscription) => {
+      if (subscribed.closed === false) {
+        subscribed.unsubscribe();
+      }
+    });
   }
 
   /**
@@ -54,9 +74,24 @@ export class TraineeDetailComponent {
     // TODO only make site, employer mandatory if source = LET
     this.formGroup = new FormGroup({
       grade: new FormControl(""),
-      site: new FormControl("", [Validators.required]),
-      employer: new FormControl("", [Validators.required])
+      site: new FormControl(""),
+      employer: new FormControl("")
     });
+  }
+
+  public checkRequiredFeilds(): void {
+    this.subsciptions.push(
+      this.selectedConcern$.subscribe((concern: IConcernSummary) => {
+        // TODO: change value to code when BE code value is available
+        if (concern.source === "Lead Employer Trust (LET)") {
+          this.form.site.setValidators([Validators.required]);
+          this.form.employer.setValidators([Validators.required]);
+        } else {
+          this.form.site.clearValidators();
+          this.form.employer.clearValidators();
+        }
+      })
+    );
   }
 
   // TODO dispatch event and save form values on store

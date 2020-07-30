@@ -6,7 +6,7 @@ import { Select, Store } from "@ngxs/store";
 import { Observable, of, Subscription } from "rxjs";
 import { catchError, distinctUntilChanged, tap } from "rxjs/operators";
 import { AuthService } from "src/app/core/auth/auth.service";
-import { CommentsService } from "src/app/shared/details/comments-tool-bar/comments.service";
+import { CommentsService } from "src/app/details/comments-tool-bar/comments.service";
 import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
 import {
   defaultRecommendation,

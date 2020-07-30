@@ -8,7 +8,7 @@ import { ConcernRoutingModule } from "./concern-routing.module";
 import { ConcernsService } from "../concerns/services/concerns.service";
 import { ConcernState } from "./state/concern.state";
 import { CreateConcernComponent } from "./create-concern/create-concern.component";
-import { DetailsModule } from "../shared/details/details.module";
+import { DetailsModule } from "../details/details.module";
 import { FileUploaderComponent } from "./file-uploader/file-uploader.component";
 import { MaterialModule } from "../shared/material/material.module";
 import { NgModule } from "@angular/core";

@@ -67,5 +67,7 @@ export class TraineeDetailComponent {
       this.formGroup.value,
       this.store.selectSnapshot(AdminsState).allocateList[0].admin
     );
+
+    // TODO save form and then dispatch `ClearAllocateList`
   }
 }

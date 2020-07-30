@@ -8,7 +8,7 @@ import { ConcernState } from "../../state/concern.state";
 
 import { TraineeDetailComponent } from "./trainee-detail.component";
 
-fdescribe("TraineeDetailComponent", () => {
+describe("TraineeDetailComponent", () => {
   let component: TraineeDetailComponent;
   let fixture: ComponentFixture<TraineeDetailComponent>;
 

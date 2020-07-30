@@ -39,14 +39,13 @@ export class TraineeDetailComponent {
   }
 
   /**
-   * Initialises all form controls and adds to FormGroup
+   * Initialise FormGroup
    */
   public initialiseFormControls(): void {
-    this.grade = new FormControl("", [Validators.required]);
-    this.site = new FormControl("", [Validators.required]);
-    this.employer = new FormControl("", [Validators.required]);
-    this.formGroup.addControl("grade", this.grade);
-    this.formGroup.addControl("site", this.site);
-    this.formGroup.addControl("employer", this.employer);
+    this.formGroup = new FormGroup({
+      grade: new FormControl("", [Validators.required]),
+      site: new FormControl("", [Validators.required]),
+      employer: new FormControl("", [Validators.required])
+    });
   }
 }

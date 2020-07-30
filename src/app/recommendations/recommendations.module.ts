@@ -1,3 +1,4 @@
+import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { NgxsModule } from "@ngxs/store";
 import { MaterialModule } from "../shared/material/material.module";
@@ -18,8 +19,8 @@ import { RecommendationsFiltersComponent } from "./recommendations-filters/recom
     RecommendationsFiltersComponent
   ],
   imports: [
+    CommonModule,
     MaterialModule,
-    SharedModule,
     RecordsModule,
     RecommendationsRoutingModule,
     NgxsModule.forFeature([RecommendationsState])

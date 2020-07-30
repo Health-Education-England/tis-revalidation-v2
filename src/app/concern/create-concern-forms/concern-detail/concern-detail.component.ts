@@ -1,11 +1,8 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 import { FormGroup, Validators, FormControl } from "@angular/forms";
 import { Subscription } from "rxjs";
+import { IncidentType } from "../../concern.interfaces";
 
-interface IncidentType {
-  code: string;
-  label: string;
-}
 @Component({
   selector: "app-concern-detail",
   templateUrl: "./concern-detail.component.html"
@@ -48,9 +45,12 @@ export class ConcernDetailComponent implements OnDestroy {
     this.InitialiseFormControls();
     this.InitialiseMaxMinDates();
   }
+
   ngOnDestroy(): void {
     this.subcriptions.forEach((subscribed: Subscription) => {
-      subscribed.unsubscribe();
+      if (subscribed.closed === false) {
+        subscribed.unsubscribe();
+      }
     });
   }
 

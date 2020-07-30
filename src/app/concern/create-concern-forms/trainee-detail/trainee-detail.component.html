@@ -7,8 +7,8 @@
     <mat-form-field>
       <mat-label>Grade</mat-label>
       <mat-select formControlName="grade">
-        <mat-option *ngFor="let grade of grades" [value]="grade">
-          {{ grade }}
+        <mat-option *ngFor="let grade of grades" [value]="grade.gradeId">
+          {{ grade.gradeName }}
         </mat-option>
       </mat-select>
       <mat-error *ngIf="grade?.hasError('required')">
@@ -21,8 +21,8 @@
     <mat-form-field>
       <mat-label>Site</mat-label>
       <mat-select formControlName="site">
-        <mat-option *ngFor="let site of sites" [value]="site">
-          {{ site }}
+        <mat-option *ngFor="let site of sites" [value]="site.siteId">
+          {{ site.siteName }}
         </mat-option>
       </mat-select>
       <mat-error *ngIf="site?.hasError('required')">
@@ -33,8 +33,11 @@
     <mat-form-field>
       <mat-label>Employer</mat-label>
       <mat-select formControlName="employer">
-        <mat-option *ngFor="let employer of employers" [value]="employer">
-          {{ employer }}
+        <mat-option
+          *ngFor="let employer of employers"
+          [value]="employer.employerId"
+        >
+          {{ employer.employerName }}
         </mat-option>
       </mat-select>
       <mat-error *ngIf="employer?.hasError('required')">

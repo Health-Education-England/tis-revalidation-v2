@@ -2,11 +2,8 @@ import { Component } from "@angular/core";
 import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
-import {
-  ClearAllocateList,
-  SubmitAllocateList
-} from "../../admins/state/admins.actions";
-import { RecordsService } from "../services/records.service";
+import { ClearAllocateList, SubmitAllocateList } from "../state/admins.actions";
+import { RecordsService } from "../../records/services/records.service";
 
 @Component({
   selector: "app-allocate-admin-actions",

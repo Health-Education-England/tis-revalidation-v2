@@ -7,7 +7,7 @@ import { NgxsReduxDevtoolsPluginModule } from "@ngxs/devtools-plugin";
 import { NgxsLoggerPluginModule } from "@ngxs/logger-plugin";
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
 import { MaterialModule } from "./material/material.module";
-import { AllocateAdminAutocompleteComponent } from "./records/allocate-admin-autocomplete/allocate-admin-autocomplete.component";
+import { AllocateAdminAutocompleteComponent } from "./admins/allocate-admin-autocomplete/allocate-admin-autocomplete.component";
 import { RecordsService } from "./records/services/records.service";
 import { StripHtmlPipe } from "./strip-html.pipe";
 

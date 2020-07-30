@@ -2,8 +2,8 @@ import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
-import { RecommendationsState } from "../../../recommendations/state/recommendations.state";
-import { RecordsService } from "../../../records/services/records.service";
+import { RecommendationsState } from "../../recommendations/state/recommendations.state";
+import { RecordsService } from "../../records/services/records.service";
 
 import { AllocateAdminBtnComponent } from "./allocate-admin-btn.component";
 

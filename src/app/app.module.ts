@@ -11,7 +11,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { AWS_CONFIG } from "./core/auth/aws-config";
 import { HttpErrorInterceptor } from "./core/http-error/http-error.interceptor";
-import { AdminsState } from "./shared/admins/state/admins.state";
+import { AdminsState } from "./admins/state/admins.state";
 import { MainNavigationModule } from "./shared/main-navigation/main-navigation.module";
 import { MaterialModule } from "./shared/material/material.module";
 import { SharedModule } from "./shared/shared.module";

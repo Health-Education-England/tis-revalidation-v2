@@ -11,9 +11,6 @@
           {{ grade.gradeName }}
         </mat-option>
       </mat-select>
-      <mat-error *ngIf="grade?.hasError('required')">
-        Grade must be provided
-      </mat-error>
     </mat-form-field>
 
     <app-allocate-admin-autocomplete></app-allocate-admin-autocomplete>
@@ -25,7 +22,7 @@
           {{ site.siteName }}
         </mat-option>
       </mat-select>
-      <mat-error *ngIf="site?.hasError('required')">
+      <mat-error *ngIf="formGroup.get('site').hasError('required')">
         Site must be provided
       </mat-error>
     </mat-form-field>
@@ -40,7 +37,7 @@
           {{ employer.employerName }}
         </mat-option>
       </mat-select>
-      <mat-error *ngIf="employer?.hasError('required')">
+      <mat-error *ngIf="formGroup.get('employer').hasError('required')">
         Employer must be provided
       </mat-error>
     </mat-form-field>

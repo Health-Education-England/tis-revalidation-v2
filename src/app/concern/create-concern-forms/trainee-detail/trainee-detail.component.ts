@@ -1,10 +1,12 @@
-import { Component } from "@angular/core";
+import { Component, ViewEncapsulation } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { IEmployer, IGrade, ISite } from "../../concern.interfaces";
 
 @Component({
   selector: "app-trainee-detail",
-  templateUrl: "./trainee-detail.component.html"
+  templateUrl: "./trainee-detail.component.html",
+  styleUrls: ["./trainee-detail.component.scss"],
+  encapsulation: ViewEncapsulation.None
 })
 export class TraineeDetailComponent {
   public formGroup: FormGroup;
@@ -42,8 +44,9 @@ export class TraineeDetailComponent {
    * Initialise FormGroup
    */
   public initialiseFormControls(): void {
+    // TODO only make site, employer mandatory if source = LET
     this.formGroup = new FormGroup({
-      grade: new FormControl("", [Validators.required]),
+      grade: new FormControl(""),
       site: new FormControl("", [Validators.required]),
       employer: new FormControl("", [Validators.required])
     });

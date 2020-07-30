@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { MaterialModule } from "../../material/material.module";
+import { MaterialModule } from "../../shared/material/material.module";
 
 import { RecordDetailsComponent } from "./record-details.component";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";

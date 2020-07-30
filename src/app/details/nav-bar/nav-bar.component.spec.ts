@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
-import { MaterialModule } from "../../material/material.module";
+import { MaterialModule } from "../../shared/material/material.module";
 import { INavLink } from "../details.interfaces";
 
 import { NavBarComponent } from "./nav-bar.component";

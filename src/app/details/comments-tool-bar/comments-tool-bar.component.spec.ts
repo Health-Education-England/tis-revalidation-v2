@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { CommentsToolBarComponent } from "./comments-tool-bar.component";
-import { MaterialModule } from "../../material/material.module";
+import { MaterialModule } from "../../shared/material/material.module";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 
 describe("CommentsToolBarComponent", () => {

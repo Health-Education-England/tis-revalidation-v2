@@ -63,3 +63,8 @@ export class DeleteFileSuccess {
   static readonly type = "[Concern] Delete File Success";
   constructor(public fileName: string) {}
 }
+
+export class SetSelectedConcern {
+  static readonly type = "[Concern] set selected concern";
+  constructor(public concern: IConcernSummary) {}
+}

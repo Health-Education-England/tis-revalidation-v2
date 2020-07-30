@@ -5,8 +5,8 @@ import { Select, Store } from "@ngxs/store";
 import { UserType } from "aws-sdk/clients/cognitoidentityserviceprovider";
 import { Observable } from "rxjs";
 import { distinctUntilChanged, map, startWith, take } from "rxjs/operators";
-import { AddToAllocateList } from "../../admins/state/admins.actions";
-import { AdminsState } from "../../admins/state/admins.state";
+import { AddToAllocateList } from "../state/admins.actions";
+import { AdminsState } from "../state/admins.state";
 
 @Component({
   selector: "app-allocate-admin-autocomplete",

@@ -1,3 +1,6 @@
+import { CommonModule } from "@angular/common";
+import { ReactiveFormsModule } from "@angular/forms";
+import { AdminsModule } from "../admins/admins.module";
 import { CommentsComponent } from "./comments/comments.component";
 import { ConcernComponent } from "./concern.component";
 import { ConcernResolver } from "./concern.resolver";
@@ -26,8 +29,11 @@ import { TraineeDetailComponent } from "./create-concern-forms/trainee-detail/tr
     UploadedFilesListComponent
   ],
   imports: [
+    CommonModule,
+    ReactiveFormsModule,
     MaterialModule,
     SharedModule,
+    AdminsModule,
     ConcernRoutingModule,
     DetailsModule,
     NgxsModule.forFeature([ConcernState])

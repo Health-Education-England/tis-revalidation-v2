@@ -4,6 +4,8 @@ import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { environment } from "@environment";
+import { NgxsReduxDevtoolsPluginModule } from "@ngxs/devtools-plugin";
+import { NgxsLoggerPluginModule } from "@ngxs/logger-plugin";
 import { NgxsModule } from "@ngxs/store";
 import Amplify from "aws-amplify";
 import { AnalyticsModule, HotJarModule } from "hee-shared";
@@ -48,6 +50,8 @@ Amplify.configure(AWS_CONFIG);
     NgxsModule.forRoot([AdminsState], {
       developmentMode: !environment.production
     }),
+    NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production }),
+    NgxsLoggerPluginModule.forRoot({ disabled: environment.production }),
     MainNavigationModule
   ],
   providers: [

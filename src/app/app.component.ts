@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Store } from "@ngxs/store";
-import { Get } from "./shared/admins/state/admins.actions";
+import { Get } from "./admins/state/admins.actions";
 
 @Component({
   selector: "app-root",

@@ -4,7 +4,7 @@ import { async, TestBed } from "@angular/core/testing";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
-import { MaterialModule } from "../../material/material.module";
+import { MaterialModule } from "../../shared/material/material.module";
 import { AdminsService } from "../services/admins.service";
 import { mockAdminsResponse } from "../services/admins.service.spec";
 import { Get, GetError, GetSuccess } from "./admins.actions";

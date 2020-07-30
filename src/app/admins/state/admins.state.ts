@@ -3,7 +3,7 @@ import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { append, patch, removeItem } from "@ngxs/store/operators";
 import { UserType } from "aws-sdk/clients/cognitoidentityserviceprovider";
 import { catchError, switchMap, take } from "rxjs/operators";
-import { SnackBarService } from "../../services/snack-bar/snack-bar.service";
+import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
 import { IAllocateAdmin } from "../admins.interfaces";
 import { AdminsService } from "../services/admins.service";
 import {

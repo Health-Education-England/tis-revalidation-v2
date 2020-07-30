@@ -1,8 +1,4 @@
-<form [formGroup]="formGroup">
-  <!--// grade -->
-  <!--// admin -->
-  <!--// site -->
-  <!--// employer -->
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
   <div class="d-grid grid-container-2-col">
     <mat-form-field>
       <mat-label>Grade</mat-label>
@@ -22,7 +18,7 @@
           {{ site.siteName }}
         </mat-option>
       </mat-select>
-      <mat-error *ngIf="formGroup.get('site').hasError('required')">
+      <mat-error *ngIf="form.site.hasError('required')">
         Site must be provided
       </mat-error>
     </mat-form-field>
@@ -37,7 +33,7 @@
           {{ employer.employerName }}
         </mat-option>
       </mat-select>
-      <mat-error *ngIf="formGroup.get('employer').hasError('required')">
+      <mat-error *ngIf="form.employer.hasError('required')">
         Employer must be provided
       </mat-error>
     </mat-form-field>

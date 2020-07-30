@@ -1,5 +1,7 @@
 import { Component, ViewEncapsulation } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { Store } from "@ngxs/store";
+import { AdminsState } from "../../../admins/state/admins.state";
 import { IEmployer, IGrade, ISite } from "../../concern.interfaces";
 
 @Component({
@@ -13,6 +15,7 @@ export class TraineeDetailComponent {
   public grade: FormControl;
   public site: FormControl;
   public employer: FormControl;
+  // TODO bind with BE once ready
   public grades: IGrade[] = [
     {
       gradeId: 288,
@@ -36,7 +39,11 @@ export class TraineeDetailComponent {
     }
   ];
 
-  constructor() {
+  public get form() {
+    return this.formGroup.controls;
+  }
+
+  constructor(private store: Store) {
     this.initialiseFormControls();
   }
 
@@ -50,5 +57,15 @@ export class TraineeDetailComponent {
       site: new FormControl("", [Validators.required]),
       employer: new FormControl("", [Validators.required])
     });
+  }
+
+  // TODO dispatch event and save form values on store
+  public onSubmit(): void {
+    console.log(
+      "%c onSubmit fired ",
+      "background:red; color:white",
+      this.formGroup.value,
+      this.store.selectSnapshot(AdminsState).allocateList[0].admin
+    );
   }
 }

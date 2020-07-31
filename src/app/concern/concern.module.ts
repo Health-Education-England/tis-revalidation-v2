@@ -17,6 +17,7 @@ import { SharedModule } from "../shared/shared.module";
 import { UploadedFilesListComponent } from "./uploaded-files-list/uploaded-files-list.component";
 import { ConcernDetailComponent } from "./create-concern-forms/concern-detail/concern-detail.component";
 import { TraineeDetailComponent } from "./create-concern-forms/trainee-detail/trainee-detail.component";
+import { UploadDocumentsComponent } from './create-concern-forms/upload-documents/upload-documents.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { TraineeDetailComponent } from "./create-concern-forms/trainee-detail/tr
     CreateConcernComponent,
     FileUploaderComponent,
     TraineeDetailComponent,
-    UploadedFilesListComponent
+    UploadedFilesListComponent,
+    UploadDocumentsComponent
   ],
   imports: [
     CommonModule,

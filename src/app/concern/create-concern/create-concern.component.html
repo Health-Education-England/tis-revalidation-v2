@@ -10,7 +10,11 @@
     <ng-template matStepLabel>Trainee details</ng-template>
     <app-trainee-detail #traineeDetail [stepper]="stepper"></app-trainee-detail>
   </mat-step>
-  <mat-step>
+  <mat-step [stepControl]="uploadDocuments.formGroup">
     <ng-template matStepLabel>Upload documents</ng-template>
+    <app-upload-documents
+      #uploadDocuments
+      [stepper]="stepper"
+    ></app-upload-documents>
   </mat-step>
 </mat-horizontal-stepper>

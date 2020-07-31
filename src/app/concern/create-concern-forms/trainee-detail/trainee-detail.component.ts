@@ -10,6 +10,7 @@ import {
 } from "../../concern.interfaces";
 import { ConcernState } from "../../state/concern.state";
 import { Observable, Subscription } from "rxjs";
+import { IAllocateAdmin } from "src/app/admins/admins.interfaces";
 
 @Component({
   selector: "app-trainee-detail",
@@ -57,6 +58,7 @@ export class TraineeDetailComponent implements OnDestroy {
 
   constructor(private store: Store) {
     this.initialiseFormControls();
+    this.setRequiredFields();
   }
 
   ngOnDestroy(): void {
@@ -78,8 +80,10 @@ export class TraineeDetailComponent implements OnDestroy {
       employer: new FormControl("")
     });
   }
-
-  public checkRequiredFeilds(): void {
+  /**
+   * set fields needed to be required or not
+   */
+  public setRequiredFields(): void {
     this.subsciptions.push(
       this.selectedConcern$.subscribe((concern: IConcernSummary) => {
         // TODO: change value to code when BE code value is available
@@ -90,19 +94,17 @@ export class TraineeDetailComponent implements OnDestroy {
           this.form.site.clearValidators();
           this.form.employer.clearValidators();
         }
+        this.form.site.updateValueAndValidity();
+        this.form.employer.updateValueAndValidity();
       })
     );
   }
 
   // TODO dispatch event and save form values on store
   public onSubmit(): void {
-    console.log(
-      "%c onSubmit fired ",
-      "background:red; color:white",
-      this.formGroup.value,
-      this.store.selectSnapshot(AdminsState).allocateList[0].admin
-    );
-
+    const admins: IAllocateAdmin[] = this.store.selectSnapshot(AdminsState)
+      .allocateList;
+    const admin = admins.length > 0 ? admins[0] : null;
     // TODO save form and then dispatch `ClearAllocateList`
   }
 }

@@ -11,16 +11,17 @@ import { FormGroup } from "@angular/forms";
 })
 export class UploadDocumentsComponent implements OnInit {
   @Input() stepper: MatStepper;
-  formGroup: FormGroup;
+  formGroup: FormGroup = new FormGroup({});
 
-  constructor(private commentsService: CommentsService) {
-    this.formGroup = new FormGroup({});
-  }
+  constructor(private commentsService: CommentsService) {}
 
   ngOnInit(): void {
     this.initialiseToolBarSettings();
   }
 
+  /**
+   * show hide toolbar based on stepped selection
+   */
   initialiseToolBarSettings() {
     this.stepper.selectionChange.subscribe(
       (stepEvent: StepperSelectionEvent) => {
@@ -32,4 +33,6 @@ export class UploadDocumentsComponent implements OnInit {
       }
     );
   }
+
+  saveConcern(): void {}
 }

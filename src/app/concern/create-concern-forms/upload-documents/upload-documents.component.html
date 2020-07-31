@@ -3,3 +3,11 @@
 <app-uploaded-files-list></app-uploaded-files-list>
 <mat-divider></mat-divider>
 <app-comments></app-comments>
+<div class="button-row">
+  <button mat-button mat-raised-button (click)="stepper.previous()">
+    Back
+  </button>
+  <button mat-button mat-raised-button color="primary" (click)="saveConcern()">
+    Save Concern
+  </button>
+</div>

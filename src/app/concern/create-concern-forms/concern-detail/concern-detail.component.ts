@@ -46,7 +46,7 @@ export class ConcernDetailComponent implements OnDestroy {
     "Other"
   ];
 
-  @Input("stepper") stepper: MatStepper;
+  @Input() stepper: MatStepper;
 
   constructor() {
     this.InitialiseFormControls();

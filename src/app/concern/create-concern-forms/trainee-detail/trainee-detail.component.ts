@@ -57,7 +57,7 @@ export class TraineeDetailComponent implements OnDestroy {
     return this.formGroup.controls;
   }
 
-  @Input("stepper") stepper: MatStepper;
+  @Input() stepper: MatStepper;
 
   constructor(private store: Store) {
     this.initialiseFormControls();

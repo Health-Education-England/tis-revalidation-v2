@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, OnDestroy } from "@angular/core";
+import { Component, ViewEncapsulation, OnDestroy, Input } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Store, Select } from "@ngxs/store";
 import { AdminsState } from "../../../admins/state/admins.state";
@@ -11,6 +11,7 @@ import {
 import { ConcernState } from "../../state/concern.state";
 import { Observable, Subscription } from "rxjs";
 import { IAllocateAdmin } from "src/app/admins/admins.interfaces";
+import { MatStepper } from "@angular/material/stepper";
 
 @Component({
   selector: "app-trainee-detail",
@@ -56,6 +57,8 @@ export class TraineeDetailComponent implements OnDestroy {
     return this.formGroup.controls;
   }
 
+  @Input("stepper") stepper: MatStepper;
+
   constructor(private store: Store) {
     this.initialiseFormControls();
     this.setRequiredFields();
@@ -87,15 +90,17 @@ export class TraineeDetailComponent implements OnDestroy {
     this.subsciptions.push(
       this.selectedConcern$.subscribe((concern: IConcernSummary) => {
         // TODO: change value to code when BE code value is available
-        if (concern.source === "Lead Employer Trust (LET)") {
-          this.form.site.setValidators([Validators.required]);
-          this.form.employer.setValidators([Validators.required]);
-        } else {
-          this.form.site.clearValidators();
-          this.form.employer.clearValidators();
+        if (concern) {
+          if (concern.source === "Lead Employer Trust (LET)") {
+            this.form.site.setValidators([Validators.required]);
+            this.form.employer.setValidators([Validators.required]);
+          } else {
+            this.form.site.clearValidators();
+            this.form.employer.clearValidators();
+          }
+          this.form.site.updateValueAndValidity();
+          this.form.employer.updateValueAndValidity();
         }
-        this.form.site.updateValueAndValidity();
-        this.form.employer.updateValueAndValidity();
       })
     );
   }

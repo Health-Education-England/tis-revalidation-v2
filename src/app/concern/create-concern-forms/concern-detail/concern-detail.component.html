@@ -92,7 +92,12 @@
   </div>
 
   <div class="button-row">
-    <button mat-button mat-raised-button color="primary" matStepperNext>
+    <button
+      mat-button
+      mat-raised-button
+      color="primary"
+      (click)="stepper.next()"
+    >
       Next
     </button>
   </div>

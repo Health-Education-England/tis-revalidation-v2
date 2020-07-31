@@ -4,11 +4,11 @@
     errorMessage="Concern details required"
   >
     <ng-template matStepLabel>Concern details</ng-template>
-    <app-concern-detail #concernDetail></app-concern-detail>
+    <app-concern-detail #concernDetail [stepper]="stepper"></app-concern-detail>
   </mat-step>
   <mat-step errorMessage="Trainee details required">
     <ng-template matStepLabel>Trainee details</ng-template>
-    <app-trainee-detail #traineeDetail></app-trainee-detail>
+    <app-trainee-detail #traineeDetail [stepper]="stepper"></app-trainee-detail>
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Upload documents</ng-template>

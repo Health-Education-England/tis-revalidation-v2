@@ -7,6 +7,8 @@ import { NgxsModule } from "@ngxs/store";
 import { MaterialModule } from "../../shared/material/material.module";
 import { ConnectionsState } from "../state/connections.state";
 import { ConnectionListComponent } from "./connection-list.component";
+import { AdminsModule } from "../../admins/admins.module";
+import { AdminsState } from "../../admins/state/admins.state";
 
 describe("ConnectionListComponent", () => {
   let component: ConnectionListComponent;
@@ -20,7 +22,8 @@ describe("ConnectionListComponent", () => {
         HttpClientTestingModule,
         MaterialModule,
         NoopAnimationsModule,
-        NgxsModule.forRoot([ConnectionsState])
+        AdminsModule,
+        NgxsModule.forRoot([ConnectionsState, AdminsState])
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();

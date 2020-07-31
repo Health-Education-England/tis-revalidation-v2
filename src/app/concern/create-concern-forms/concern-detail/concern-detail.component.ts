@@ -1,9 +1,10 @@
-import { Component, OnDestroy } from "@angular/core";
+import { Component, OnDestroy, Input } from "@angular/core";
 import { FormGroup, Validators, FormControl } from "@angular/forms";
 import { Subscription, Observable } from "rxjs";
 import { IncidentType, IConcernSummary } from "../../concern.interfaces";
 import { Select } from "@ngxs/store";
 import { ConcernState } from "../../state/concern.state";
+import { MatStepper } from "@angular/material/stepper";
 
 @Component({
   selector: "app-concern-detail",
@@ -44,6 +45,8 @@ export class ConcernDetailComponent implements OnDestroy {
     "GMC",
     "Other"
   ];
+
+  @Input("stepper") stepper: MatStepper;
 
   constructor() {
     this.InitialiseFormControls();

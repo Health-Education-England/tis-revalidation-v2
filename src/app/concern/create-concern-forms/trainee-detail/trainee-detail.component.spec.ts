@@ -7,6 +7,8 @@ import { MaterialModule } from "../../../shared/material/material.module";
 import { ConcernState } from "../../state/concern.state";
 
 import { TraineeDetailComponent } from "./trainee-detail.component";
+import { ReactiveFormsModule } from "@angular/forms";
+import { AdminsModule } from "src/app/admins/admins.module";
 
 describe("TraineeDetailComponent", () => {
   let component: TraineeDetailComponent;
@@ -16,9 +18,11 @@ describe("TraineeDetailComponent", () => {
     TestBed.configureTestingModule({
       declarations: [TraineeDetailComponent],
       imports: [
+        ReactiveFormsModule,
         MaterialModule,
         NoopAnimationsModule,
         HttpClientTestingModule,
+        AdminsModule,
         NgxsModule.forRoot([ConcernState, AdminsState])
       ]
     }).compileComponents();

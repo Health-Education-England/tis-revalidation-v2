@@ -28,6 +28,8 @@ import { MaterialModule } from "../../shared/material/material.module";
 import { DEFAULT_SORT, generateColumnData } from "../constants";
 import { RecordsService } from "../services/records.service";
 import { RecordListComponent } from "./record-list.component";
+import { AdminsModule } from "../../admins/admins.module";
+import { AdminsState } from "../../admins/state/admins.state";
 
 describe("RecordListComponent", () => {
   let store: Store;
@@ -44,7 +46,8 @@ describe("RecordListComponent", () => {
         NoopAnimationsModule,
         HttpClientTestingModule,
         RouterTestingModule,
-        NgxsModule.forRoot([RecommendationsState])
+        AdminsModule,
+        NgxsModule.forRoot([RecommendationsState, AdminsState])
       ]
     }).compileComponents();
     store = TestBed.inject(Store);

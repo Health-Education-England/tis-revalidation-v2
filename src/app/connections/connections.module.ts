@@ -1,8 +1,9 @@
+import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { NgxsModule } from "@ngxs/store";
+import { AdminsModule } from "../admins/admins.module";
 import { MaterialModule } from "../shared/material/material.module";
-import { RecordsModule } from "../shared/records/records.module";
-import { SharedModule } from "../shared/shared.module";
+import { RecordsModule } from "../records/records.module";
 import { ConnectionListComponent } from "./connection-list/connection-list.component";
 import { ConnectionsRoutingModule } from "./connections-routing.module";
 import { ConnectionsComponent } from "./connections.component";
@@ -12,8 +13,9 @@ import { ConnectionsState } from "./state/connections.state";
 @NgModule({
   declarations: [ConnectionsComponent, ConnectionListComponent],
   imports: [
+    CommonModule,
     MaterialModule,
-    SharedModule,
+    AdminsModule,
     RecordsModule,
     ConnectionsRoutingModule,
     NgxsModule.forFeature([ConnectionsState])

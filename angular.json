@@ -18,14 +18,15 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": [
-              "@aws-sdk/eventstream-serde-config-resolver",
-              "@aws-sdk/credential-provider-cognito-identity",
+              "@aws-amplify/auth/lib-esm/types",
+              "@aws-amplify/core/lib-esm",
               "@aws-crypto/sha256-browser",
               "@aws-crypto/sha256-js",
               "@aws-sdk/config-resolver",
-              "@aws-sdk/config-resolver",
+              "@aws-sdk/credential-provider-cognito-identity",
               "@aws-sdk/eventstream-marshaller",
               "@aws-sdk/eventstream-serde-browser",
+              "@aws-sdk/eventstream-serde-config-resolver",
               "@aws-sdk/fetch-http-handler",
               "@aws-sdk/hash-blob-browser",
               "@aws-sdk/md5-js",

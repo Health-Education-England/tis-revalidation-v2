@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { RecordDetailsComponent } from "../shared/details/record-details/record-details.component";
+import { RecordDetailsComponent } from "../details/record-details/record-details.component";
 import { ConfirmRecommendationComponent } from "./confirm-recommendation/confirm-recommendation.component";
 import { CreateRecommendationComponent } from "./create-recommendation/create-recommendation.component";
 import { RecommendationTableComponent } from "./recommendation-table/recommendation-table.component";

@@ -5,8 +5,8 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { of } from "rxjs";
 import { MaterialModule } from "../../shared/material/material.module";
-import { RecordsService } from "../../shared/records/services/records.service";
-import { DEFAULT_SORT } from "../../shared/records/constants";
+import { RecordsService } from "../../records/services/records.service";
+import { DEFAULT_SORT } from "../../records/constants";
 import { mockRecommendationsResponse } from "../services/recommendations.service.spec";
 import { RecommendationsFilterType } from "../recommendations.interfaces";
 import {

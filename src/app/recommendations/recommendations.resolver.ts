@@ -2,8 +2,8 @@ import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, Resolve } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
-import { RecordsResolver } from "../shared/records/records.resolver";
-import { RecordsService } from "../shared/records/services/records.service";
+import { RecordsResolver } from "../records/records.resolver";
+import { RecordsService } from "../records/services/records.service";
 import {
   ClearRecommendationsSearch,
   EnableRecommendationsAllocateAdmin,

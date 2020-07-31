@@ -4,7 +4,7 @@ import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { MaterialModule } from "../../shared/material/material.module";
-import { RecordsService } from "../../shared/records/services/records.service";
+import { RecordsService } from "../../records/services/records.service";
 import { RecommendationsFilterType } from "../recommendations.interfaces";
 import {
   FilterRecommendations,

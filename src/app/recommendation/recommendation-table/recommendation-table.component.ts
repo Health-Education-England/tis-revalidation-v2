@@ -22,7 +22,7 @@ import { Observable } from "rxjs";
   templateUrl: "./recommendation-table.component.html",
   styleUrls: [
     "./recommendation-table.component.scss",
-    "../../shared/details/details.table.scss"
+    "../../details/details.table.scss"
   ],
   animations: [
     trigger("detailExpand", [

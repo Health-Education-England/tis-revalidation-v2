@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormArray, FormGroup } from "@angular/forms";
 import { Store } from "@ngxs/store";
-import { CommentsService } from "../../shared/details/comments-tool-bar/comments.service";
+import { CommentsService } from "../../details/comments-tool-bar/comments.service";
 import { IConcernSummary } from "../concern.interfaces";
 import { ConcernState } from "../state/concern.state";
 

@@ -1,5 +1,16 @@
-<app-file-uploader></app-file-uploader>
-<mat-divider></mat-divider>
-<app-uploaded-files-list></app-uploaded-files-list>
-<mat-divider></mat-divider>
-<app-comments></app-comments>
+<mat-horizontal-stepper #stepper>
+  <mat-step
+    [stepControl]="concernDetail.formGroup"
+    errorMessage="Concern details required"
+  >
+    <ng-template matStepLabel>Concern details</ng-template>
+    <app-concern-detail #concernDetail [stepper]="stepper"></app-concern-detail>
+  </mat-step>
+  <mat-step errorMessage="Trainee details required">
+    <ng-template matStepLabel>Trainee details</ng-template>
+    <app-trainee-detail #traineeDetail [stepper]="stepper"></app-trainee-detail>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Upload documents</ng-template>
+  </mat-step>
+</mat-horizontal-stepper>

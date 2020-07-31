@@ -19,7 +19,8 @@ import {
   DownloadFile,
   DownloadFileSuccess,
   DeleteFile,
-  DeleteFileSuccess
+  DeleteFileSuccess,
+  SetSelectedConcern
 } from "./concern.actions";
 import { saveAs } from "file-saver";
 
@@ -92,6 +93,16 @@ export class ConcernState {
         })
       )
     );
+  }
+
+  @Action(SetSelectedConcern)
+  setSelected(
+    { patchState }: StateContext<ConcernStateModel>,
+    { concern }: SetSelectedConcern
+  ) {
+    patchState({
+      selected: concern
+    });
   }
 
   @Action(Upload)

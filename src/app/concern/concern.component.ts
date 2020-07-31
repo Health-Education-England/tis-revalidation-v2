@@ -16,10 +16,7 @@ import { ConcernState } from "./state/concern.state";
 @Component({
   selector: "app-concern",
   templateUrl: "./concern.component.html",
-  styleUrls: [
-    "./concern.component.scss",
-    "../../app/shared/details/details.table.scss"
-  ],
+  styleUrls: ["./concern.component.scss", "../details/details.table.scss"],
   animations: [
     trigger("detailExpand", [
       state("collapsed", style({ height: "0px", minHeight: "0" })),

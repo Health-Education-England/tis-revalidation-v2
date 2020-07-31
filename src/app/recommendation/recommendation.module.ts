@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { DetailsModule } from "../shared/details/details.module";
+import { ReactiveFormsModule } from "@angular/forms";
+import { DetailsModule } from "../details/details.module";
 
 import { RecommendationRoutingModule } from "./recommendation-routing.module";
 import { MaterialModule } from "../shared/material/material.module";
@@ -26,6 +27,7 @@ import { NotSubmittedGuard } from "./guards/not-submitted.guard";
   ],
   imports: [
     MaterialModule,
+    ReactiveFormsModule,
     SharedModule,
     DetailsModule,
     CommonModule,

@@ -4,6 +4,8 @@ import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { environment } from "@environment";
+import { NgxsReduxDevtoolsPluginModule } from "@ngxs/devtools-plugin";
+import { NgxsLoggerPluginModule } from "@ngxs/logger-plugin";
 import { NgxsModule } from "@ngxs/store";
 import Amplify from "aws-amplify";
 import { AnalyticsModule, HotJarModule } from "hee-shared";
@@ -11,7 +13,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { AWS_CONFIG } from "./core/auth/aws-config";
 import { HttpErrorInterceptor } from "./core/http-error/http-error.interceptor";
-import { AdminsState } from "./shared/admins/state/admins.state";
+import { AdminsState } from "./admins/state/admins.state";
 import { MainNavigationModule } from "./shared/main-navigation/main-navigation.module";
 import { MaterialModule } from "./shared/material/material.module";
 import { SharedModule } from "./shared/shared.module";
@@ -48,6 +50,8 @@ Amplify.configure(AWS_CONFIG);
     NgxsModule.forRoot([AdminsState], {
       developmentMode: !environment.production
     }),
+    NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production }),
+    NgxsLoggerPluginModule.forRoot({ disabled: environment.production }),
     MainNavigationModule
   ],
   providers: [

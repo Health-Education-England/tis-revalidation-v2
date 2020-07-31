@@ -13,11 +13,18 @@ import { Observable, Subscription } from "rxjs";
 import { IAllocateAdmin } from "src/app/admins/admins.interfaces";
 import { MatStepper } from "@angular/material/stepper";
 import { SetSelectedConcern } from "../../state/concern.actions";
+import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
 
 @Component({
   selector: "app-trainee-detail",
   templateUrl: "./trainee-detail.component.html",
   styleUrls: ["./trainee-detail.component.scss"],
+  providers: [
+    {
+      provide: STEPPER_GLOBAL_OPTIONS,
+      useValue: { showError: true }
+    }
+  ],
   encapsulation: ViewEncapsulation.None
 })
 export class TraineeDetailComponent implements OnDestroy {
@@ -97,6 +104,7 @@ export class TraineeDetailComponent implements OnDestroy {
           site: new FormControl(cs.site),
           employer: new FormControl(cs.employer)
         });
+        debugger;
         if (this.concern) {
           if (this.concern.source === "Lead Employer Trust (LET)") {
             this.form.site.setValidators([Validators.required]);

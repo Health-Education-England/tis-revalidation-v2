@@ -6,7 +6,10 @@
     <ng-template matStepLabel>Concern details</ng-template>
     <app-concern-detail #concernDetail [stepper]="stepper"></app-concern-detail>
   </mat-step>
-  <mat-step errorMessage="Trainee details required">
+  <mat-step
+    [stepControl]="traineeDetail.formGroup"
+    errorMessage="Trainee details required"
+  >
     <ng-template matStepLabel>Trainee details</ng-template>
     <app-trainee-detail #traineeDetail [stepper]="stepper"></app-trainee-detail>
   </mat-step>

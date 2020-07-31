@@ -1,7 +1,11 @@
 import { Component, OnDestroy, Input } from "@angular/core";
 import { FormGroup, Validators, FormControl } from "@angular/forms";
 import { Subscription, Observable } from "rxjs";
-import { IncidentType, IConcernSummary } from "../../concern.interfaces";
+import {
+  IncidentType,
+  IConcernSummary,
+  ConcernStatus
+} from "../../concern.interfaces";
 import { Select, Store } from "@ngxs/store";
 import { ConcernState } from "../../state/concern.state";
 import { MatStepper } from "@angular/material/stepper";
@@ -67,34 +71,54 @@ export class ConcernDetailComponent implements OnDestroy {
    * Initialises all form controls and adds to FormGroup
    */
   InitialiseFormControls(): void {
-    this.selectedConcern$.subscribe((cs: IConcernSummary) => {
-      this.concern = cs;
-      this.dateOfIncident = new FormControl(cs.dateOfIncident, [
-        Validators.required
-      ]);
-      this.concernType = new FormControl(cs.concernType, [Validators.required]);
-      this.source = new FormControl(cs.source, [Validators.required]);
-      this.dateReported = new FormControl(cs.dateReported, [
-        Validators.required
-      ]);
-      this.followUpDate = new FormControl(cs.followUpDate, [
-        Validators.required
-      ]);
-      this.status = new FormControl(cs.status, [Validators.required]);
-      this.subsciptions.push(
-        this.status.valueChanges.subscribe((val) => {
-          this.statusText = val ? "Open" : "Closed";
-        })
-      );
-      // bind concernstatus
-      this.status.setValue(true);
-      this.formGroup.addControl("dateOfIncident", this.dateOfIncident);
-      this.formGroup.addControl("concernType", this.concernType);
-      this.formGroup.addControl("source", this.source);
-      this.formGroup.addControl("dateReported", this.dateReported);
-      this.formGroup.addControl("followUpDate", this.followUpDate);
-      this.formGroup.addControl("status", this.status);
-    });
+    this.subsciptions.push(
+      this.selectedConcern$.subscribe((cs: IConcernSummary) => {
+        this.concern = cs;
+        this.dateOfIncident = new FormControl(cs.dateOfIncident, [
+          Validators.required
+        ]);
+        this.concernType = new FormControl(cs.concernType, [
+          Validators.required
+        ]);
+        this.source = new FormControl(cs.source, [Validators.required]);
+        this.dateReported = new FormControl(cs.dateReported, [
+          Validators.required
+        ]);
+        this.followUpDate = new FormControl(cs.followUpDate, [
+          Validators.required
+        ]);
+        this.status = new FormControl(cs.status, [Validators.required]);
+        this.subscribeToStatusChanges();
+        this.addFormControls();
+        this.bindDefaultStatus(cs.status);
+      })
+    );
+  }
+
+  subscribeToStatusChanges(): void {
+    this.subsciptions.push(
+      this.status.valueChanges.subscribe((val) => {
+        this.statusText = val ? "Open" : "Closed";
+      })
+    );
+  }
+
+  addFormControls(): void {
+    this.formGroup.addControl("dateOfIncident", this.dateOfIncident);
+    this.formGroup.addControl("concernType", this.concernType);
+    this.formGroup.addControl("source", this.source);
+    this.formGroup.addControl("dateReported", this.dateReported);
+    this.formGroup.addControl("followUpDate", this.followUpDate);
+    this.formGroup.addControl("status", this.status);
+  }
+
+  bindDefaultStatus(status: ConcernStatus): void {
+    const statusValue: boolean = status
+      ? status === ConcernStatus.OPEN
+        ? true
+        : false
+      : true;
+    this.status.setValue(statusValue);
   }
 
   InitialiseMaxMinDates(): void {

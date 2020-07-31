@@ -18,8 +18,6 @@ import { defaultConcern } from "../constants";
   ]
 })
 export class CreateConcernComponent {
-  // TODO cater for edit mode
-  public editMode: boolean;
   constructor(private store: Store, private activatedRoute: ActivatedRoute) {
     const concernId = this.activatedRoute.snapshot.params.concernId;
     if (concernId) {

@@ -11,7 +11,11 @@ import { COLUMN_DATA } from "../constants";
   templateUrl: "./connection-list.component.html"
 })
 export class ConnectionListComponent extends RecordListComponent {
-  public dateColumns = ["gmcSubmissionDate", "endDate", "startDate"];
+  public dateColumns = [
+    "submissionDate",
+    "programmeMembershipStartDate",
+    "programmeMembershipEndDate"
+  ];
   public columnData = generateColumnData(COLUMN_DATA);
 
   constructor(

@@ -1,24 +1,22 @@
 import { IGetRecordsResponse } from "../records/records.interfaces";
 
-// TODO subject to change once BE work is complete
 export interface IGetConnectionsResponse extends IGetRecordsResponse {
   connectionsInfo: IConnection[];
 }
 
-// TODO subject to change once BE work is complete
 export interface IConnection {
-  currentConnection: string;
   checked?: boolean;
+  connectionStatus: string;
   designatedBody: string;
   doctorFirstName: string;
   doctorLastName: string;
-  endDate: string;
   gmcReferenceNumber: string;
-  gmcSubmissionDate: string;
-  programmeMembership: string;
+  programmeMembershipEndDate: string;
+  programmeMembershipStartDate: string;
+  programmeMembershipType: string;
   programmeName: string;
   programmeOwner: string;
-  startDate: string;
+  submissionDate: string;
 }
 
 export enum ConnectionsFilterType {

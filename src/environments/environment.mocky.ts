@@ -23,7 +23,7 @@ export const environment: IEnvironment = {
     downloadFile: ``, // TODO mock this
     getConcern: `mocky/0a459279-bdca-4b1b-9e07-d55c7f38630e`,
     getConcerns: `mocky/c25f77cf-594a-484b-b50b-562aa9438115?mocky-delay=700ms`,
-    getConnections: `mocky/4a202550-2c45-41c8-ab48-91786f8054eb?mocky-delay=700ms`,
+    getConnections: `mocky/8e9b38d0-5d33-479e-bea7-e23b781b5c23?mocky-delay=700ms`,
     getDetails: `mocky/298f7e18-12d4-4e1b-9195-0bba7feb56b0`,
     getNotes: `mocky/45017692-2588-48dc-b6c2-c637cd723625`,
     getRecommendation: `mocky/6fd60c05-b4d0-462d-87a8-87402d57bd2e`,

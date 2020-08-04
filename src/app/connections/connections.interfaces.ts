@@ -1,7 +1,7 @@
 import { IGetRecordsResponse } from "../records/records.interfaces";
 
 export interface IGetConnectionsResponse extends IGetRecordsResponse {
-  connectionsInfo: IConnection[];
+  connections: IConnection[];
 }
 
 export interface IConnection {

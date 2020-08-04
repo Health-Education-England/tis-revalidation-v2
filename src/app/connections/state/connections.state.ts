@@ -86,7 +86,7 @@ export class ConnectionsState extends RecordsState {
     ctx: StateContext<ConnectionsStateModel>,
     action: GetConnectionsSuccess
   ) {
-    return super.getSuccessHandler(ctx, action, "connectionsInfo");
+    return super.getSuccessHandler(ctx, action, "connections");
   }
 
   @Action(GetConnectionsError)

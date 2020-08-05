@@ -13,7 +13,7 @@ import {
   IConcernSummary,
   IGetConcernResponse,
   IListFile,
-  IFileUploadeProgress
+  IFileUploadProgress
 } from "../concern.interfaces";
 import { ConcernService } from "../services/concern/concern.service";
 import { UploadService } from "../services/upload/upload.service";
@@ -48,7 +48,7 @@ export class ConcernStateModel {
   public selected?: IConcernSummary;
   public uploadedFiles?: any[];
   public uploadFileInProgress?: boolean;
-  public filesInUploadProgress?: IFileUploadeProgress[];
+  public filesInUploadProgress?: IFileUploadProgress[];
 }
 
 @State<ConcernStateModel>({
@@ -160,7 +160,7 @@ export class ConcernState {
                 case HttpEventType.UploadProgress:
                   ctx.setState(
                     patch({
-                      filesInUploadProgress: updateItem<IFileUploadeProgress>(
+                      filesInUploadProgress: updateItem<IFileUploadProgress>(
                         (item) => item.file === upFile,
                         {
                           file: upFile,

@@ -10,7 +10,7 @@ export interface IListFile {
   key: string;
 }
 
-export interface IFileUploadeProgress {
+export interface IFileUploadProgress {
   file: File;
   progress?: number;
 }

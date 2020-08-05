@@ -3,11 +3,10 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
-import { ACCEPTED_IMAGE_MIMES, defaultConcern } from "../constants";
-import { UploadService } from "../services/upload/upload.service";
+import { ACCEPTED_IMAGE_MIMES } from "../constants";
 import { Upload, SetSelectedConcern } from "../state/concern.actions";
 import { ConcernState } from "../state/concern.state";
-import { IFileUploadeProgress } from "../concern.interfaces";
+import { IFileUploadProgress } from "../concern.interfaces";
 
 @Component({
   selector: "app-file-uploader",
@@ -32,7 +31,7 @@ export class FileUploaderComponent implements OnInit {
   @Select(ConcernState.uploadFileInProgress)
   public uploadFileInProgress$: Observable<boolean>;
   @Select(ConcernState.filesInUploadProgress)
-  public filesInUploadProgress$: Observable<IFileUploadeProgress[]>;
+  public filesInUploadProgress$: Observable<IFileUploadProgress[]>;
   @ViewChild("dropArea") dropArea: ElementRef;
 
   constructor(

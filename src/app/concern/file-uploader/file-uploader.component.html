@@ -1,15 +1,20 @@
-<!-- spinner -->
-<div class="p-20" *ngIf="uploadFileInProgress$ | async; else notLoading">
+<!-- spinner  -->
+<div *ngIf="uploadFileInProgress$ | async; else notLoading">
   <div *ngFor="let fileInProgress of filesInUploadProgress$ | async">
-    <div class="mb-10">
-      <span>
+    <mat-card>
+      <mat-card-title>
         {{ fileInProgress.file.name }}
-      </span>
-      <mat-progress-bar
-        color="success"
-        [value]="fileInProgress.progress"
-      ></mat-progress-bar>
-    </div>
+      </mat-card-title>
+      <mat-card-subtitle>
+        <div class="d-flex justify-content-between">
+          <span>{{ fileInProgress.file.size | fileBytes }}</span>
+          <span>{{ fileInProgress.progress / 100 | percent }}</span>
+        </div>
+      </mat-card-subtitle>
+      <mat-card-content>
+        <mat-progress-bar [value]="fileInProgress.progress"></mat-progress-bar>
+      </mat-card-content>
+    </mat-card>
   </div>
 </div>
 
@@ -46,7 +51,7 @@
       <p class="mat-caption">
         Supported files include: Images (.png. jpg), PDF, Word (.doc .docx) and
         excel (.xlxs .xls). Max file size
-        <strong>{{ acceptedFileSize / (1024 * 1024) }} MB</strong>
+        <strong>{{ acceptedFileSize | fileBytes }}</strong>
       </p>
     </div>
   </form>

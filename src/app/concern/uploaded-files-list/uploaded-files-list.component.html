@@ -1,58 +1,47 @@
-<!-- spinner -->
-<div
-  class="d-flex align-items-center mb-25 mt-25"
-  *ngIf="listFilesInProgress$ | async; else notLoading"
->
-  <mat-spinner [diameter]="50"></mat-spinner>
-  <span class="pl-15">Fetching uploaded files...</span>
-</div>
+<div class="pt-25 pb-25" *ngIf="uploadedFiles$ | async as uploadedFiles">
+  <ng-container *ngIf="uploadedFiles.length">
+    <div class="pb-25">Uploaded documents</div>
+    <div class="d-grid grid-container-2-col">
+      <ng-container *ngFor="let file of uploadedFiles">
+        <div
+          *ngIf="{
+            isPdf: file.fileType === 'pdf',
+            isImage: acceptedImageExtensions.includes(file.fileType)
+          } as data"
+          class="d-grid align-items-center uploaded-file"
+        >
+          <!-- generic doc icon -->
+          <mat-icon mat-list-icon *ngIf="!data.isImage && !data.isPdf">
+            note
+          </mat-icon>
+          <!-- pdf icon -->
+          <mat-icon mat-list-icon *ngIf="data.isPdf">picture_as_pdf</mat-icon>
+          <!-- image icon -->
+          <mat-icon mat-list-icon *ngIf="data.isImage">photo</mat-icon>
 
-<ng-template #notLoading>
-  <div class="pt-25 pb-25" *ngIf="uploadedFiles$ | async as uploadedFiles">
-    <ng-container *ngIf="uploadedFiles.length">
-      <div class="pb-25">Uploaded documents</div>
-      <div class="d-grid grid-container-2-col">
-        <ng-container *ngFor="let file of uploadedFiles">
-          <div
-            *ngIf="{
-              isPdf: file.fileType === 'pdf',
-              isImage: acceptedImageExtensions.includes(file.fileType)
-            } as data"
-            class="d-grid align-items-center uploaded-file"
+          <div>{{ file.fileName }}</div>
+          <mat-icon
+            mat-list-icon
+            (click)="downloadFile(file.fileName, file.key)"
+            class="cursor-pointer justify-self-end"
           >
-            <!-- generic doc icon -->
-            <mat-icon mat-list-icon *ngIf="!data.isImage && !data.isPdf">
-              note
-            </mat-icon>
-            <!-- pdf icon -->
-            <mat-icon mat-list-icon *ngIf="data.isPdf">picture_as_pdf</mat-icon>
-            <!-- image icon -->
-            <mat-icon mat-list-icon *ngIf="data.isImage">photo</mat-icon>
-
-            <div>{{ file.fileName }}</div>
-            <mat-icon
-              mat-list-icon
-              (click)="downloadFile(file.fileName, file.key)"
-              class="cursor-pointer justify-self-end"
-            >
-              cloud_download
-            </mat-icon>
-            <mat-icon
-              mat-list-icon
-              (click)="deleteFile(file.fileName, file.key)"
-              class="cursor-pointer justify-self-end"
-              >delete</mat-icon
-            >
-          </div>
-        </ng-container>
-      </div>
-    </ng-container>
-
-    <!-- No uploaded files message -->
-    <div *ngIf="!uploadedFiles.length" class="highlight-row-accent left-border">
-      <em mat-subheader class="icon-accent centered">
-        No documents available.
-      </em>
+            cloud_download
+          </mat-icon>
+          <mat-icon
+            mat-list-icon
+            (click)="deleteFile(file.fileName, file.key)"
+            class="cursor-pointer justify-self-end"
+            >delete</mat-icon
+          >
+        </div>
+      </ng-container>
     </div>
+  </ng-container>
+
+  <!-- No uploaded files message -->
+  <div *ngIf="!uploadedFiles.length" class="highlight-row-accent left-border">
+    <em mat-subheader class="icon-accent centered">
+      No documents available.
+    </em>
   </div>
-</ng-template>
+</div>

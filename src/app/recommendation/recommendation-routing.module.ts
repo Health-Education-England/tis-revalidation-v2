@@ -24,9 +24,7 @@ const routes: Routes = [
         path: "create",
         component: CreateRecommendationComponent,
         data: {
-          title: "Create recommendation",
-          showToolbar: true,
-          showNotes: false
+          title: "Create recommendation"
         },
         canActivate: [UnderNoticeGuard]
       },
@@ -34,9 +32,7 @@ const routes: Routes = [
         path: "edit",
         component: CreateRecommendationComponent,
         data: {
-          title: "Edit recommendation",
-          showToolbar: true,
-          showNotes: false
+          title: "Edit recommendation"
         },
         canActivate: [UnderNoticeGuard, NotSubmittedGuard]
       },

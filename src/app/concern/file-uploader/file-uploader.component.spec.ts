@@ -6,16 +6,56 @@ import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { NgxsModule, Store } from "@ngxs/store";
 import { MaterialModule } from "../../shared/material/material.module";
 import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
-import { Upload } from "../state/concern.actions";
+import { Upload, SetSelectedConcern } from "../state/concern.actions";
 import { ConcernState } from "../state/concern.state";
 import { FileUploaderComponent } from "./file-uploader.component";
+import { defaultConcern } from "../constants";
 
 describe("FileUploaderComponent", () => {
   let store: Store;
   let component: FileUploaderComponent;
   let fixture: ComponentFixture<FileUploaderComponent>;
   let snackBarService: SnackBarService;
+  const mockConcernId = 8119389;
+  const createFile = (
+    filename: string,
+    filetype: string,
+    fileKBsize: number
+  ): File => {
+    const newfile = new File([""], filename, { type: filetype });
+    Object.defineProperty(newfile, "size", {
+      value: 1024 * fileKBsize,
+      writable: false
+    });
+    return newfile;
+  };
 
+  const createMokEvent = (mockFile: File) => {
+    const mockEvt = {
+      dataTransfer: {
+        items: [
+          {
+            type: mockFile.type,
+            size: mockFile.size,
+            getAsFile: () => mockFile
+          }
+        ]
+      }
+    };
+    return mockEvt;
+  };
+
+  const MockTextFile = createFile("mockfile.txt", "text/plain", 1);
+  const MockZipFile = createFile("mockfile.zip", "application/zip", 1);
+
+  const setDefaultSelectedConcern = () => {
+    store.dispatch(
+      new SetSelectedConcern({
+        ...defaultConcern,
+        ...{ concernId: mockConcernId }
+      })
+    );
+  };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [FileUploaderComponent],
@@ -31,6 +71,7 @@ describe("FileUploaderComponent", () => {
     store = TestBed.inject(Store);
     snackBarService = TestBed.inject(SnackBarService);
     store.reset({ concern: { gmcNumber: 8119389 } });
+    setDefaultSelectedConcern();
   }));
 
   beforeEach(() => {
@@ -79,12 +120,8 @@ describe("FileUploaderComponent", () => {
   it("handleDrop() should invoke `processFiles()`", () => {
     spyOn(component, "processFiles");
 
-    const mockFile = new File([""], "mockfile.txt", { type: "text/plain" });
-    const mockEvt = {
-      dataTransfer: {
-        items: [{ type: mockFile.type, getAsFile: () => mockFile }]
-      }
-    };
+    const mockFile = MockTextFile;
+    const mockEvt = createMokEvent(mockFile);
 
     component.handleDrop(mockEvt as any);
     expect(component.processFiles).toHaveBeenCalled();
@@ -93,12 +130,8 @@ describe("FileUploaderComponent", () => {
   it("processFiles() should invoke `upload()` if valid files have been dropped", () => {
     spyOn(component, "upload");
 
-    const mockFile = new File([""], "mockfile.txt", { type: "text/plain" });
-    const mockEvt = {
-      dataTransfer: {
-        items: [{ type: mockFile.type, getAsFile: () => mockFile }]
-      }
-    };
+    const mockFile = MockTextFile;
+    const mockEvt = createMokEvent(mockFile);
 
     component.handleDrop(mockEvt as any);
     expect(component.upload).toHaveBeenCalledWith([mockFile]);
@@ -107,14 +140,9 @@ describe("FileUploaderComponent", () => {
   it("processFiles() should invoke `snackBarService.openSnackBar()` if invalid files have been dropped", () => {
     spyOn(snackBarService, "openSnackBar");
 
-    const mockFile = new File([""], "mockfile.zip", {
-      type: "application/zip"
-    });
-    const mockEvt = {
-      dataTransfer: {
-        items: [{ type: mockFile.type, getAsFile: () => mockFile }]
-      }
-    };
+    const mockFile = MockZipFile;
+
+    const mockEvt = createMokEvent(mockFile);
 
     component.handleDrop(mockEvt as any);
     expect(snackBarService.openSnackBar).toHaveBeenCalledWith(
@@ -125,7 +153,7 @@ describe("FileUploaderComponent", () => {
   it("onFilesSelection() should invoke `processFiles()`", () => {
     spyOn(component, "processFiles");
 
-    const mockFile = new File([""], "filename", { type: "text/html" });
+    const mockFile = MockTextFile;
     const mockEvt = { target: { files: [mockFile] } };
 
     component.onFilesSelection(mockEvt as any);
@@ -141,6 +169,8 @@ describe("FileUploaderComponent", () => {
   it("upload() should dispatch `Upload` event", () => {
     spyOn(store, "dispatch");
     component.upload([]);
-    expect(store.dispatch).toHaveBeenCalledWith(new Upload(8119389, []));
+    expect(store.dispatch).toHaveBeenCalledWith(
+      new Upload(8119389, mockConcernId, [])
+    );
   });
 });

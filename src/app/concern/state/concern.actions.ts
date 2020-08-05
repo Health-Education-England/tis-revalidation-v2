@@ -23,7 +23,11 @@ export class Post {
 
 export class Upload {
   static readonly type = "[Concern] Upload";
-  constructor(public gmcNumber: number, public payload: File[]) {}
+  constructor(
+    public gmcNumber: number,
+    public concernId: number,
+    public payload: File[]
+  ) {}
 }
 
 export class UploadSuccess {
@@ -36,7 +40,7 @@ export class ApiError extends HttpErrorPayload {
 
 export class ListFiles {
   static readonly type = "[Concern] List Files";
-  constructor(public gmcNumber: number) {}
+  constructor(public gmcNumber: number, public concernId: number) {}
 }
 
 export class ListFilesSuccess {

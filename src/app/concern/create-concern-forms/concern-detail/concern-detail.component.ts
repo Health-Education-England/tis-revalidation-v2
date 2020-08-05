@@ -1,29 +1,35 @@
 import { Component, OnDestroy, Input } from "@angular/core";
 import { FormGroup, Validators, FormControl } from "@angular/forms";
 import { Subscription, Observable } from "rxjs";
-import { IncidentType, IConcernSummary } from "../../concern.interfaces";
-import { Select } from "@ngxs/store";
+import {
+  IncidentType,
+  IConcernSummary,
+  ConcernStatus
+} from "../../concern.interfaces";
+import { Select, Store } from "@ngxs/store";
 import { ConcernState } from "../../state/concern.state";
 import { MatStepper } from "@angular/material/stepper";
+import { SetSelectedConcern } from "../../state/concern.actions";
 
 @Component({
   selector: "app-concern-detail",
   templateUrl: "./concern-detail.component.html"
 })
 export class ConcernDetailComponent implements OnDestroy {
-  formGroup: FormGroup;
-  incidentDate: FormControl;
+  formGroup: FormGroup = new FormGroup({});
+  dateOfIncident: FormControl;
   concernType: FormControl;
-  concernSource: FormControl;
-  reportedDate: FormControl;
-  followupDate: FormControl;
-  concernStatus: FormControl;
+  source: FormControl;
+  dateReported: FormControl;
+  followUpDate: FormControl;
+  status: FormControl;
   statusText: string;
   lessThanEqualToday: Date;
   greaterThanToday: Date;
   subsciptions: Subscription[] = [];
   @Select(ConcernState.selected)
   selectedConcern$: Observable<IConcernSummary>;
+  concern: IConcernSummary;
 
   incidentTypes: IncidentType[] = [
     { code: "COMPLAINT", label: "Complaint" },
@@ -48,7 +54,7 @@ export class ConcernDetailComponent implements OnDestroy {
 
   @Input() stepper: MatStepper;
 
-  constructor() {
+  constructor(private store: Store) {
     this.InitialiseFormControls();
     this.InitialiseMaxMinDates();
   }
@@ -65,31 +71,65 @@ export class ConcernDetailComponent implements OnDestroy {
    * Initialises all form controls and adds to FormGroup
    */
   InitialiseFormControls(): void {
-    this.incidentDate = new FormControl("", [Validators.required]);
-    this.concernType = new FormControl("", [Validators.required]);
-    this.concernSource = new FormControl("", [Validators.required]);
-    this.reportedDate = new FormControl("", [Validators.required]);
-    this.followupDate = new FormControl("", [Validators.required]);
-    this.concernStatus = new FormControl("", [Validators.required]);
     this.subsciptions.push(
-      this.concernStatus.valueChanges.subscribe((val) => {
+      this.selectedConcern$.subscribe((cs: IConcernSummary) => {
+        this.concern = cs;
+        this.dateOfIncident = new FormControl(cs.dateOfIncident, [
+          Validators.required
+        ]);
+        this.concernType = new FormControl(cs.concernType, [
+          Validators.required
+        ]);
+        this.source = new FormControl(cs.source, [Validators.required]);
+        this.dateReported = new FormControl(cs.dateReported, [
+          Validators.required
+        ]);
+        this.followUpDate = new FormControl(cs.followUpDate, [
+          Validators.required
+        ]);
+        this.status = new FormControl(cs.status, [Validators.required]);
+        this.subscribeToStatusChanges();
+        this.addFormControls();
+        this.bindDefaultStatus(cs.status);
+      })
+    );
+  }
+
+  subscribeToStatusChanges(): void {
+    this.subsciptions.push(
+      this.status.valueChanges.subscribe((val) => {
         this.statusText = val ? "Open" : "Closed";
       })
     );
-    // bind concernstatus
-    this.concernStatus.setValue(true);
-    this.formGroup = new FormGroup({});
-    this.formGroup.addControl("incidentDate", this.incidentDate);
+  }
+
+  addFormControls(): void {
+    this.formGroup.addControl("dateOfIncident", this.dateOfIncident);
     this.formGroup.addControl("concernType", this.concernType);
-    this.formGroup.addControl("concernSource", this.concernSource);
-    this.formGroup.addControl("reportedDate", this.reportedDate);
-    this.formGroup.addControl("followupDate", this.followupDate);
-    this.formGroup.addControl("concernStatus", this.concernStatus);
+    this.formGroup.addControl("source", this.source);
+    this.formGroup.addControl("dateReported", this.dateReported);
+    this.formGroup.addControl("followUpDate", this.followUpDate);
+    this.formGroup.addControl("status", this.status);
+  }
+
+  bindDefaultStatus(status: ConcernStatus): void {
+    const statusValue: boolean = status
+      ? status === ConcernStatus.OPEN
+        ? true
+        : false
+      : true;
+    this.status.setValue(statusValue);
   }
 
   InitialiseMaxMinDates(): void {
     this.lessThanEqualToday = new Date();
     this.greaterThanToday = new Date();
     this.greaterThanToday.setDate(this.greaterThanToday.getDate() + 1);
+  }
+
+  onSubmit(): void {
+    const newConcern = { ...this.concern, ...this.formGroup.value };
+    this.store.dispatch(new SetSelectedConcern(newConcern));
+    this.stepper.next();
   }
 }

@@ -54,7 +54,9 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
     private router: Router,
     private commentsService: CommentsService,
     private auth: AuthService
-  ) {}
+  ) {
+    this.commentsService.showToolBar$.next(true);
+  }
 
   ngOnInit(): void {
     this.initComponent();
@@ -64,6 +66,7 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
     this.componentSubscriptions.forEach((subscription) => {
       subscription.unsubscribe();
     });
+    this.commentsService.showToolBar$.next(false);
   }
 
   initComponent(): void {

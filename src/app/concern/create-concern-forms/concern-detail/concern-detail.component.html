@@ -1,6 +1,6 @@
-<form [formGroup]="formGroup">
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
   <div class="pb-20 pt-20">
-    <mat-slide-toggle color="primary" formControlName="concernStatus"
+    <mat-slide-toggle color="primary" formControlName="status"
       >Status: {{ statusText }}</mat-slide-toggle
     >
   </div>
@@ -11,17 +11,17 @@
       <input
         matInput
         [max]="lessThanEqualToday"
-        formControlName="incidentDate"
-        [matDatepicker]="incidentDatePicker"
+        formControlName="dateOfIncident"
+        [matDatepicker]="dateOfIncidentPicker"
       />
-      <mat-error *ngIf="incidentDate?.hasError('required')">
+      <mat-error *ngIf="dateOfIncident?.hasError('required')">
         Date of incident is required
       </mat-error>
       <mat-datepicker-toggle
         matSuffix
-        [for]="incidentDatePicker"
+        [for]="dateOfIncidentPicker"
       ></mat-datepicker-toggle>
-      <mat-datepicker touchUi #incidentDatePicker></mat-datepicker>
+      <mat-datepicker touchUi #dateOfIncidentPicker></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field>
@@ -41,7 +41,7 @@
 
     <mat-form-field>
       <mat-label>Source</mat-label>
-      <mat-select formControlName="concernSource">
+      <mat-select formControlName="source">
         <mat-option
           *ngFor="let incidentSource of incidentSources"
           [value]="incidentSource"
@@ -49,7 +49,7 @@
           {{ incidentSource }}
         </mat-option>
       </mat-select>
-      <mat-error *ngIf="concernSource?.hasError('required')">
+      <mat-error *ngIf="source?.hasError('required')">
         Source must be provided
       </mat-error>
     </mat-form-field>
@@ -59,17 +59,17 @@
       <input
         matInput
         [max]="lessThanEqualToday"
-        formControlName="reportedDate"
-        [matDatepicker]="reportedDatePicker"
+        formControlName="dateReported"
+        [matDatepicker]="dateReportedPicker"
       />
-      <mat-error *ngIf="reportedDate?.hasError('required')">
+      <mat-error *ngIf="dateReported?.hasError('required')">
         Date reported is required
       </mat-error>
       <mat-datepicker-toggle
         matSuffix
-        [for]="reportedDatePicker"
+        [for]="dateReportedPicker"
       ></mat-datepicker-toggle>
-      <mat-datepicker touchUi #reportedDatePicker></mat-datepicker>
+      <mat-datepicker touchUi #dateReportedPicker></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field>
@@ -77,27 +77,25 @@
       <input
         matInput
         [min]="greaterThanToday"
-        formControlName="followupDate"
-        [matDatepicker]="followupDatePicker"
+        formControlName="followUpDate"
+        [matDatepicker]="followUpDatePicker"
       />
-      <mat-error *ngIf="followupDate?.hasError('required')">
+      <mat-error *ngIf="followUpDate?.hasError('required')">
         Follow up date is required
       </mat-error>
       <mat-datepicker-toggle
         matSuffix
-        [for]="followupDatePicker"
+        [for]="followUpDatePicker"
       ></mat-datepicker-toggle>
-      <mat-datepicker touchUi #followupDatePicker></mat-datepicker>
+      <mat-datepicker touchUi #followUpDatePicker></mat-datepicker>
     </mat-form-field>
   </div>
 
   <div class="button-row">
-    <button
-      mat-button
-      mat-raised-button
-      color="primary"
-      (click)="stepper.next()"
-    >
+    <button mat-button mat-raised-button [routerLink]="'../'">
+      Back
+    </button>
+    <button mat-button mat-raised-button color="primary" type="submit">
       Next
     </button>
   </div>

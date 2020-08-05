@@ -21,18 +21,14 @@ const routes: Routes = [
         path: "create",
         component: CreateConcernComponent,
         data: {
-          title: "Create concern",
-          showToolbar: false,
-          showNotes: false
+          title: "Create concern"
         }
       },
       {
         path: "edit/:concernId",
         component: CreateConcernComponent,
         data: {
-          title: "Edit concern",
-          showToolbar: false,
-          showNotes: false
+          title: "Edit concern"
         }
       }
     ]

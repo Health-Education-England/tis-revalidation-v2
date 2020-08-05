@@ -18,6 +18,8 @@ export class CommentsService {
   filteredControls: AbstractControl[];
   partialSelection$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   allSelected$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  showToolBar$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  showNotes$: BehaviorSubject<boolean> = new BehaviorSubject(false); // TODO export to notes component / services
 
   constructor() {}
 

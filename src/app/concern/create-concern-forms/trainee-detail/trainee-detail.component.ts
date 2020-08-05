@@ -12,11 +12,19 @@ import { ConcernState } from "../../state/concern.state";
 import { Observable, Subscription } from "rxjs";
 import { IAllocateAdmin } from "src/app/admins/admins.interfaces";
 import { MatStepper } from "@angular/material/stepper";
+import { SetSelectedConcern } from "../../state/concern.actions";
+import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
 
 @Component({
   selector: "app-trainee-detail",
   templateUrl: "./trainee-detail.component.html",
   styleUrls: ["./trainee-detail.component.scss"],
+  providers: [
+    {
+      provide: STEPPER_GLOBAL_OPTIONS,
+      useValue: { showError: true }
+    }
+  ],
   encapsulation: ViewEncapsulation.None
 })
 export class TraineeDetailComponent implements OnDestroy {
@@ -50,6 +58,7 @@ export class TraineeDetailComponent implements OnDestroy {
 
   @Select(ConcernState.selected)
   selectedConcern$: Observable<IConcernSummary>;
+  concern: IConcernSummary;
 
   subsciptions: Subscription[] = [];
 
@@ -88,10 +97,15 @@ export class TraineeDetailComponent implements OnDestroy {
    */
   public setRequiredFields(): void {
     this.subsciptions.push(
-      this.selectedConcern$.subscribe((concern: IConcernSummary) => {
-        // TODO: change value to code when BE code value is available
-        if (concern) {
-          if (concern.source === "Lead Employer Trust (LET)") {
+      this.selectedConcern$.subscribe((cs: IConcernSummary) => {
+        this.concern = cs;
+        this.formGroup = new FormGroup({
+          grade: new FormControl(cs.grade),
+          site: new FormControl(cs.site),
+          employer: new FormControl(cs.employer)
+        });
+        if (this.concern) {
+          if (this.concern.source === "Lead Employer Trust (LET)") {
             this.form.site.setValidators([Validators.required]);
             this.form.employer.setValidators([Validators.required]);
           } else {
@@ -109,7 +123,13 @@ export class TraineeDetailComponent implements OnDestroy {
   public onSubmit(): void {
     const admins: IAllocateAdmin[] = this.store.selectSnapshot(AdminsState)
       .allocateList;
-    const admin = admins.length > 0 ? admins[0] : null;
-    // TODO save form and then dispatch `ClearAllocateList`
+    const admin = { admin: admins.length > 0 ? admins[0].admin : null };
+    const newConcern = {
+      ...this.concern,
+      ...this.formGroup.value,
+      ...admin
+    };
+    this.store.dispatch(new SetSelectedConcern(newConcern));
+    this.stepper.next();
   }
 }

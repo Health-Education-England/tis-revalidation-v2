@@ -1,19 +1,27 @@
-import { Injectable } from "@angular/core";
+import { Injectable, NgZone } from "@angular/core";
 import {
   MatSnackBar,
-  MatSnackBarRef,
-  SimpleSnackBar
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition
 } from "@angular/material/snack-bar";
 
 @Injectable({
   providedIn: "root"
 })
 export class SnackBarService {
-  constructor(private snackBar: MatSnackBar) {}
+  public horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  public verticalPosition: MatSnackBarVerticalPosition = "top";
+  public snackBarDuration = 10000;
 
-  public openSnackBar(message: string): MatSnackBarRef<SimpleSnackBar> {
-    return this.snackBar.open(message, "Close", {
-      duration: 5000
-    });
+  constructor(private snackBar: MatSnackBar, private zone: NgZone) {}
+
+  public openSnackBar(message: string) {
+    this.zone.run(() =>
+      this.snackBar.open(message, "Close", {
+        duration: this.snackBarDuration,
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition
+      })
+    );
   }
 }

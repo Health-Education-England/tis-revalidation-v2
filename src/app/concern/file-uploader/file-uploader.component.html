@@ -1,10 +1,16 @@
 <!-- spinner -->
-<div
-  class="d-flex align-items-center mb-25"
-  *ngIf="uploadFileInProgress$ | async; else notLoading"
->
-  <mat-spinner [diameter]="50"></mat-spinner>
-  <span class="pl-15">Upload in progress...</span>
+<div class="p-20" *ngIf="uploadFileInProgress$ | async; else notLoading">
+  <div *ngFor="let fileInProgress of filesInUploadProgress$ | async">
+    <div class="mb-10">
+      <span>
+        {{ fileInProgress.file.name }}
+      </span>
+      <mat-progress-bar
+        color="success"
+        [value]="fileInProgress.progress"
+      ></mat-progress-bar>
+    </div>
+  </div>
 </div>
 
 <ng-template #notLoading>
@@ -38,7 +44,9 @@
         (change)="onFilesSelection($event)"
       />
       <p class="mat-caption">
-        Allowed files include: images, pdf, word and excel
+        Supported files include: Images (.png. jpg), PDF, Word (.doc .docx) and
+        excel (.xlxs .xls). Max file size
+        <strong>{{ acceptedFileSize / (1024 * 1024) }} MB</strong>
       </p>
     </div>
   </form>

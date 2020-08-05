@@ -21,10 +21,12 @@ describe("Concern actions", () => {
   let store: Store;
   let httpMock: HttpTestingController;
   let uploadService: UploadService;
+
   const errorHandlerSpy = () =>
     jasmine.createSpyObj("ErrorHandler", {
       handleError: undefined
     });
+  const mockFile = new File([""], "mockfile.txt", { type: "text/plain" });
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -76,7 +78,7 @@ describe("Concern actions", () => {
   }));
 
   it("on 'Upload' event `uploadFileInProgress` should be truthy", () => {
-    store.dispatch(new Upload(12132312, []));
+    store.dispatch(new Upload(12132312, 12132312, [mockFile]));
     const uploadFileInProgress = store.selectSnapshot(ConcernState)
       .uploadFileInProgress;
     expect(uploadFileInProgress).toBeTrue();
@@ -84,8 +86,7 @@ describe("Concern actions", () => {
 
   it("on 'Upload' event `uploadService.upload` is invoked", () => {
     spyOn(uploadService, "upload").and.returnValue(of({}));
-
-    store.dispatch(new Upload(12132312, [])).subscribe(() => {
+    store.dispatch(new Upload(12132312, 12132312, [mockFile])).subscribe(() => {
       expect(uploadService.upload).toHaveBeenCalled();
     });
   });
@@ -93,7 +94,7 @@ describe("Concern actions", () => {
   xit("on 'UploadSuccess' event `ListFiles` is event is dispatched", () => {
     store.dispatch(new UploadSuccess()).subscribe(() => {
       spyOn(store, "dispatch");
-      expect(store.dispatch).toHaveBeenCalledWith(new ListFiles(null));
+      expect(store.dispatch).toHaveBeenCalledWith(new ListFiles(null, null));
     });
   });
 });

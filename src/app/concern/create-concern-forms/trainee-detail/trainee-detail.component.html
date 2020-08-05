@@ -40,12 +40,10 @@
   </div>
 
   <div class="button-row">
-    <button
-      mat-button
-      mat-raised-button
-      color="primary"
-      (click)="stepper.next()"
-    >
+    <button mat-button mat-raised-button (click)="stepper.previous()">
+      Back
+    </button>
+    <button mat-button mat-raised-button color="primary" type="submit">
       Next
     </button>
   </div>

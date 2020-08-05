@@ -64,6 +64,8 @@ describe("UploadedFilesListComponent", () => {
   it("deleteFile() should dispatch event", () => {
     spyOn(store, "dispatch");
     component.listFiles();
-    expect(store.dispatch).toHaveBeenCalledWith(new ListFiles(8140126));
+    expect(store.dispatch).toHaveBeenCalledWith(
+      new ListFiles(8140126, 8140126)
+    );
   });
 });

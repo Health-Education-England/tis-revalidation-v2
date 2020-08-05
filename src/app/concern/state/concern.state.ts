@@ -129,12 +129,9 @@ export class ConcernState {
 
   @Action(Upload)
   upload(ctx: StateContext<ConcernStateModel>, action: Upload) {
-    ctx.patchState({
-      uploadFileInProgress: true
-    });
     const uploadFiles: Observable<any>[] = [];
-
     ctx.patchState({
+      uploadFileInProgress: true,
       filesInUploadProgress: []
     });
 

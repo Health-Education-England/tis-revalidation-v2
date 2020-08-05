@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
-import { ACCEPTED_IMAGE_MIMES } from "../constants";
+import { ACCEPTED_IMAGE_MIMES, defaultConcern } from "../constants";
 import { UploadService } from "../services/upload/upload.service";
-import { Upload } from "../state/concern.actions";
+import { Upload, SetSelectedConcern } from "../state/concern.actions";
 import { ConcernState } from "../state/concern.state";
 import { IFileUploadeProgress } from "../concern.interfaces";
 
@@ -39,7 +39,17 @@ export class FileUploaderComponent implements OnInit {
     private formBuilder: FormBuilder,
     private store: Store,
     private snackBarService: SnackBarService
-  ) {}
+  ) {
+    // TODO: *NOTE MUST REMOVE THIS
+    const selectedConcern = this.store.selectSnapshot(ConcernState.selected);
+    this.store.dispatch(
+      new SetSelectedConcern({
+        ...selectedConcern,
+        ...{ concernId: this.gmcNumber }
+      })
+    );
+    // TODO: *NOTE MUST REMOVE THIS
+  }
 
   ngOnInit() {
     this.setupForm();

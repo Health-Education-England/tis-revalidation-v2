@@ -34,7 +34,9 @@ export class UploadedFilesListComponent implements OnInit {
 
   public setConcernId(): void {
     const selectedConcern = this.store.selectSnapshot(ConcernState.selected);
-    this.concernId = selectedConcern.concernId || this.gmcNumber;
+    this.concernId = selectedConcern
+      ? selectedConcern.concernId
+      : this.gmcNumber;
   }
 
   public deleteFile(fileName: string, key: string): Observable<any> {

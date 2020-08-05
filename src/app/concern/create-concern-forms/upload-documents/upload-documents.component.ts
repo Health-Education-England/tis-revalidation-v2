@@ -33,17 +33,19 @@ export class UploadDocumentsComponent implements OnInit, OnDestroy {
    * show hide toolbar based on stepped selection
    */
   initialiseToolBarSettings() {
-    this.subsciptions.push(
-      this.stepper.selectionChange.subscribe(
-        (stepEvent: StepperSelectionEvent) => {
-          if (stepEvent.selectedStep.stepControl === this.formGroup) {
-            this.commentsService.showToolBar$.next(true);
-          } else {
-            this.commentsService.showToolBar$.next(false);
+    if (this.stepper) {
+      this.subsciptions.push(
+        this.stepper.selectionChange.subscribe(
+          (stepEvent: StepperSelectionEvent) => {
+            if (stepEvent.selectedStep.stepControl === this.formGroup) {
+              this.commentsService.showToolBar$.next(true);
+            } else {
+              this.commentsService.showToolBar$.next(false);
+            }
           }
-        }
-      )
-    );
+        )
+      );
+    }
   }
 
   saveConcern(): void {}

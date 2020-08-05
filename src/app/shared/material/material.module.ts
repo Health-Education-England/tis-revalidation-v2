@@ -28,6 +28,7 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatStepperModule } from "@angular/material/stepper";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatProgressBarModule } from "@angular/material/progress-bar";
 
 const materialModules = [
   LayoutModule,
@@ -58,7 +59,8 @@ const materialModules = [
   MatStepperModule,
   MatCheckboxModule,
   MatSnackBarModule,
-  MatAutocompleteModule
+  MatAutocompleteModule,
+  MatProgressBarModule
 ];
 
 @NgModule({

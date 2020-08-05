@@ -49,8 +49,10 @@
     </ng-container>
 
     <!-- No uploaded files message -->
-    <div *ngIf="!uploadedFiles.length" class="highlight-row-warn left-border">
-      <em mat-subheader class="icon-warn centered">No documents available.</em>
+    <div *ngIf="!uploadedFiles.length" class="highlight-row-accent left-border">
+      <em mat-subheader class="icon-accent centered">
+        No documents available.
+      </em>
     </div>
   </div>
 </ng-template>

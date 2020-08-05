@@ -48,11 +48,14 @@ export class AllocateAdminAutocompleteComponent implements OnInit {
     );
   }
 
-  private filter(value: string, items): any {
+  private filter(value: string, items: UserType[]): any {
     const filterValue = value.toLowerCase();
 
-    return items.filter((i: UserType) =>
-      i.Username.toLowerCase().includes(filterValue.toLowerCase())
+    return (
+      items &&
+      items.filter((i: UserType) =>
+        i.Username.toLowerCase().includes(filterValue.toLowerCase())
+      )
     );
   }
 

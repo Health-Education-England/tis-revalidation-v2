@@ -19,10 +19,12 @@ export class UploadedFilesListComponent implements OnInit {
   public listFilesInProgress$: Observable<boolean>;
   @Select(ConcernState.uploadedFiles) public uploadedFiles$: Observable<any[]>;
   public acceptedImageExtensions: string[] = ACCEPTED_IMAGE_EXTENSIONS;
+  public concernId?: number;
 
   constructor(private uploadService: UploadService, private store: Store) {}
 
   ngOnInit(): void {
+    this.setConcernId();
     this.listFiles();
   }
 
@@ -30,11 +32,16 @@ export class UploadedFilesListComponent implements OnInit {
     return this.store.dispatch(new DownloadFile(fileName, key));
   }
 
+  public setConcernId(): void {
+    const selectedConcern = this.store.selectSnapshot(ConcernState.selected);
+    this.concernId = selectedConcern.concernId || this.gmcNumber;
+  }
+
   public deleteFile(fileName: string, key: string): Observable<any> {
     return this.store.dispatch(new DeleteFile(fileName, key));
   }
 
   public listFiles(): Observable<any> {
-    return this.store.dispatch(new ListFiles(this.gmcNumber));
+    return this.store.dispatch(new ListFiles(this.gmcNumber, this.concernId));
   }
 }

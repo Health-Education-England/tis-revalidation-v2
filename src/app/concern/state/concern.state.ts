@@ -1,11 +1,19 @@
 import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
-import { catchError, finalize, switchMap, take, tap } from "rxjs/operators";
+import {
+  catchError,
+  finalize,
+  switchMap,
+  take,
+  tap,
+  map
+} from "rxjs/operators";
 import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
 import {
   IConcernSummary,
   IGetConcernResponse,
-  IListFile
+  IListFile,
+  IFileUploadeProgress
 } from "../concern.interfaces";
 import { ConcernService } from "../services/concern/concern.service";
 import { UploadService } from "../services/upload/upload.service";
@@ -23,6 +31,14 @@ import {
   SetSelectedConcern
 } from "./concern.actions";
 import { saveAs } from "file-saver";
+import {
+  HttpEvent,
+  HttpEventType,
+  HttpProgressEvent,
+  HttpResponse
+} from "@angular/common/http";
+import { forkJoin, Observable, of } from "rxjs";
+import { updateItem, append, patch } from "@ngxs/store/operators";
 
 export class ConcernStateModel {
   public concernId?: number;
@@ -32,6 +48,7 @@ export class ConcernStateModel {
   public selected?: IConcernSummary;
   public uploadedFiles?: any[];
   public uploadFileInProgress?: boolean;
+  public filesInUploadProgress?: IFileUploadeProgress[];
 }
 
 @State<ConcernStateModel>({
@@ -79,6 +96,11 @@ export class ConcernState {
     return state.selected;
   }
 
+  @Selector()
+  public static filesInUploadProgress(state: ConcernStateModel) {
+    return state.filesInUploadProgress;
+  }
+
   @Action(Get)
   get({ patchState }: StateContext<ConcernStateModel>, { payload }: Get) {
     if (isNaN(payload)) {
@@ -110,15 +132,71 @@ export class ConcernState {
     ctx.patchState({
       uploadFileInProgress: true
     });
+    const uploadFiles: Observable<any>[] = [];
 
-    return this.uploadService
-      .upload(
-        this.uploadService.createFormData(action.gmcNumber, action.payload)
-      )
+    ctx.patchState({
+      filesInUploadProgress: []
+    });
+
+    action.payload.map((upFile: File) => {
+      const state = ctx.getState();
+
+      ctx.patchState({
+        filesInUploadProgress: [
+          ...state.filesInUploadProgress,
+          { file: upFile, progress: 0 }
+        ]
+      });
+
+      uploadFiles.push(
+        this.uploadService
+          .upload(
+            this.uploadService.createFormData(
+              action.gmcNumber,
+              action.concernId,
+              upFile
+            )
+          )
+          .pipe(
+            map((event: HttpEvent<HttpProgressEvent>) => {
+              switch (event.type) {
+                case HttpEventType.UploadProgress:
+                  ctx.setState(
+                    patch({
+                      filesInUploadProgress: updateItem<IFileUploadeProgress>(
+                        (item) => item.file === upFile,
+                        {
+                          file: upFile,
+                          progress: Math.round(
+                            (event.loaded * 100) / event.total
+                          )
+                        }
+                      )
+                    })
+                  );
+                  break;
+                case HttpEventType.Response:
+                  return event;
+              }
+            })
+          )
+      );
+    });
+
+    return forkJoin(uploadFiles)
       .pipe(
         take(1),
-        switchMap(() => ctx.dispatch(new UploadSuccess())),
-        catchError((error: string) => ctx.dispatch(new ApiError(error))),
+        tap((val: HttpResponse<any>[]) => {
+          if (val.includes(undefined)) {
+            ctx.dispatch(new UploadSuccess());
+            this.snackBarService.openSnackBar(`An error occured`);
+            return of(null);
+          }
+          return ctx.dispatch(new UploadSuccess());
+        }),
+        catchError((error: string) => {
+          return ctx.dispatch(new ApiError(error));
+        }),
         finalize(() =>
           ctx.patchState({
             uploadFileInProgress: false
@@ -131,12 +209,14 @@ export class ConcernState {
   @Action(UploadSuccess)
   uploadSuccess(ctx: StateContext<ConcernStateModel>) {
     this.snackBarService.openSnackBar(`Upload success`);
-    return ctx.dispatch(new ListFiles(ctx.getState().gmcNumber));
+    const gmcno = ctx.getState().gmcNumber;
+    const conId = ctx.getState().selected?.concernId || gmcno;
+    return ctx.dispatch(new ListFiles(gmcno, conId));
   }
 
   // TODO move to a generic place so other states can also re use
   @Action(ApiError)
-  apiError(ctx: StateContext<ConcernStateModel>, action: ApiError) {
+  apiError(action: ApiError) {
     return this.snackBarService.openSnackBar(action.error);
   }
 
@@ -147,7 +227,12 @@ export class ConcernState {
     });
 
     return this.uploadService
-      .listFiles(this.uploadService.createListFilesParams(action.gmcNumber))
+      .listFiles(
+        this.uploadService.createListFilesParams(
+          action.gmcNumber,
+          action.concernId
+        )
+      )
       .pipe(
         take(1),
         switchMap((response: IListFile[]) =>
@@ -188,10 +273,7 @@ export class ConcernState {
   }
 
   @Action(DownloadFileSuccess)
-  downloadFileSuccess(
-    ctx: StateContext<ConcernStateModel>,
-    action: DownloadFileSuccess
-  ) {
+  downloadFileSuccess(action: DownloadFileSuccess) {
     saveAs(action.blob, action.fileName);
   }
 
@@ -213,6 +295,8 @@ export class ConcernState {
     action: DeleteFileSuccess
   ) {
     this.snackBarService.openSnackBar(`${action.fileName} has been deleted`);
-    return ctx.dispatch(new ListFiles(ctx.getState().gmcNumber));
+    const gmcno = ctx.getState().gmcNumber;
+    const conId = ctx.getState().selected?.concernId || gmcno;
+    return ctx.dispatch(new ListFiles(gmcno, conId));
   }
 }

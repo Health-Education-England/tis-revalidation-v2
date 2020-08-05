@@ -10,6 +10,11 @@ export interface IListFile {
   key: string;
 }
 
+export interface IFileUploadeProgress {
+  file: File;
+  progress?: number;
+}
+
 export interface IConcernSummary {
   admin: string;
   comments: string[];

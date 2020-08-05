@@ -104,7 +104,6 @@ export class TraineeDetailComponent implements OnDestroy {
           site: new FormControl(cs.site),
           employer: new FormControl(cs.employer)
         });
-        debugger;
         if (this.concern) {
           if (this.concern.source === "Lead Employer Trust (LET)") {
             this.form.site.setValidators([Validators.required]);

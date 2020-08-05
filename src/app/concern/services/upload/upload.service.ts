@@ -1,8 +1,15 @@
-import { HttpClient, HttpParams } from "@angular/common/http";
+import {
+  HttpClient,
+  HttpParams,
+  HttpEvent,
+  HttpProgressEvent,
+  HttpEventType
+} from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "@environment";
 import { Observable } from "rxjs";
 import { IListFile } from "../../concern.interfaces";
+import { map } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root"
@@ -10,18 +17,25 @@ import { IListFile } from "../../concern.interfaces";
 export class UploadService {
   constructor(private http: HttpClient) {}
 
-  public createFormData(gmcNumber: number, payload: File[]): FormData {
+  public createFormData(
+    gmcNumber: number,
+    concernId: number,
+    file: File
+  ): FormData {
     const formData: FormData = new FormData();
     formData.append("bucketName", environment.awsConfig.bucketName);
     // TODO once we can create a concern (FE & BE work not implemented yet)
     // swap out second gmcNumber with concernId
-    formData.append("folderPath", `${gmcNumber}/${gmcNumber}`);
-    payload.forEach((file: File) => formData.append("files", file));
+    formData.append("folderPath", `${gmcNumber}/${concernId}`);
+    formData.append("files", file);
     return formData;
   }
 
   public upload(payload: FormData): Observable<any> {
-    return this.http.post(environment.appUrls.upload, payload);
+    return this.http.post(environment.appUrls.upload, payload, {
+      observe: "events",
+      reportProgress: true
+    });
   }
 
   public createRequestParams(key: string): HttpParams {
@@ -39,10 +53,13 @@ export class UploadService {
     });
   }
 
-  public createListFilesParams(gmcNumber: number): HttpParams {
+  public createListFilesParams(
+    gmcNumber: number,
+    concernId: number
+  ): HttpParams {
     const params: HttpParams = new HttpParams()
       .set("bucketName", environment.awsConfig.bucketName)
-      .set("folderPath", `${gmcNumber}/${gmcNumber}`);
+      .set("folderPath", `${gmcNumber}/${concernId}`);
 
     return params;
   }

@@ -7,8 +7,7 @@ import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-upload-documents",
-  templateUrl: "./upload-documents.component.html",
-  styleUrls: ["./upload-documents.component.scss"]
+  templateUrl: "./upload-documents.component.html"
 })
 export class UploadDocumentsComponent implements OnInit, OnDestroy {
   @Input() stepper: MatStepper;

@@ -25,7 +25,7 @@ export class FileUploaderComponent implements OnInit {
     "text/plain",
     "text/csv"
   ];
-  public acceptedFileSize = 1048576;
+  public acceptedFileSize = 10485760;
   public form: FormGroup;
   public gmcNumber: number = this.store.selectSnapshot(ConcernState.gmcNumber);
   public concernId?: number;
@@ -52,7 +52,9 @@ export class FileUploaderComponent implements OnInit {
 
   public setConcernId(): void {
     const selectedConcern = this.store.selectSnapshot(ConcernState.selected);
-    this.concernId = selectedConcern.concernId || this.gmcNumber;
+    this.concernId = selectedConcern
+      ? selectedConcern.concernId
+      : this.gmcNumber; // TODO: MUST REMOVE HERE. FORM MUST BE SAVED FIRST
   }
 
   public preventDefaults($event: Event): void {

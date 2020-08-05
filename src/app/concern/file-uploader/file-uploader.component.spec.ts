@@ -10,6 +10,7 @@ import { Upload, SetSelectedConcern } from "../state/concern.actions";
 import { ConcernState } from "../state/concern.state";
 import { FileUploaderComponent } from "./file-uploader.component";
 import { defaultConcern } from "../constants";
+import { FileBytesPipe } from "src/app/shared/file-bytes.pipe";
 
 describe("FileUploaderComponent", () => {
   let store: Store;
@@ -58,7 +59,7 @@ describe("FileUploaderComponent", () => {
   };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [FileUploaderComponent],
+      declarations: [FileUploaderComponent, FileBytesPipe],
       imports: [
         ReactiveFormsModule,
         MaterialModule,

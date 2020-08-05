@@ -119,7 +119,7 @@
               (keyup.space)="
                 navigateToDetails($event, row, data.enableAllocateAdmin)
               "
-              [class.highlight-row-warn]="row.underNotice === 'YES'"
+              [class.is-under-notice]="row.underNotice === 'YES'"
               [class.cursor-auto]="data.enableAllocateAdmin"
               tabindex="0"
             ></tr>

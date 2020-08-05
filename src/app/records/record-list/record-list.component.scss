@@ -1,5 +1,6 @@
 @import "../../../../node_modules/nhsuk-frontend/packages/core/settings/colours";
 
-.highlight-row-warn td:first-child {
+.is-under-notice td:first-child {
   padding-left: 20px;
+  border-left: solid 4px $color_nhsuk-red;
 }

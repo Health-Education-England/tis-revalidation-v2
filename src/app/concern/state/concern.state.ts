@@ -186,8 +186,7 @@ export class ConcernState {
         tap((val: HttpResponse<any>[]) => {
           if (val.includes(undefined)) {
             ctx.dispatch(new UploadSuccess());
-            this.snackBarService.openSnackBar(`An error occured`);
-            return of(null);
+            return ctx.dispatch(new ApiError(`An error occured`));
           }
           return ctx.dispatch(new UploadSuccess());
         }),
@@ -213,7 +212,7 @@ export class ConcernState {
 
   // TODO move to a generic place so other states can also re use
   @Action(ApiError)
-  apiError(action: ApiError) {
+  apiError(_ctx: StateContext<ConcernStateModel>, action: ApiError) {
     return this.snackBarService.openSnackBar(action.error);
   }
 
@@ -270,7 +269,10 @@ export class ConcernState {
   }
 
   @Action(DownloadFileSuccess)
-  downloadFileSuccess(action: DownloadFileSuccess) {
+  downloadFileSuccess(
+    _ctx: StateContext<ConcernStateModel>,
+    action: DownloadFileSuccess
+  ) {
     saveAs(action.blob, action.fileName);
   }
 

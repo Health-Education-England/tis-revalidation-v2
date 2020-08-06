@@ -43,7 +43,7 @@
     "aws-amplify": "^3.0.22",
     "aws-sdk": "^2.727.1",
     "browserslist": "^4.13.0",
-    "caniuse-lite": "^1.0.30001107",
+    "caniuse-lite": "^1.0.30001111",
     "file-saver": "^2.0.2",
     "nhsuk-frontend": "^3.1.0",
     "rxjs": "~6.6.2",

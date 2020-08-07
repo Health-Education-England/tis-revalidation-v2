@@ -9,8 +9,12 @@
   min-height: calc(100vh - 64px - 48px);
 
   .record-content-container {
-    padding: 24px 16px;
+    padding: 24px 40px;
     overflow: hidden;
+
+    @media screen and (#{$mat-small}) {
+      padding: 24px 16px;
+    }
   }
 }
 
@@ -36,17 +40,7 @@
 
 .records-form {
   min-width: 150px;
-  max-width: calc(100% - 52px);
-
-  @media screen and (#{$mat-small}) {
-    max-width: 100%;
-  }
-}
-.comments-tool-bar {
-  width: calc(100% - 40px);
-  @media screen and (#{$mat-small}) {
-    width: 100%;
-  }
+  max-width: 100%;
 }
 .comments-section {
   position: relative;

@@ -34,13 +34,7 @@ describe("FileUploaderComponent", () => {
   const createMokEvent = (mockFile: File) => {
     const mockEvt = {
       dataTransfer: {
-        items: [
-          {
-            type: mockFile.type,
-            size: mockFile.size,
-            getAsFile: () => mockFile
-          }
-        ]
+        files: [mockFile]
       }
     };
     return mockEvt;

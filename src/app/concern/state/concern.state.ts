@@ -28,7 +28,8 @@ import {
   DownloadFileSuccess,
   DeleteFile,
   DeleteFileSuccess,
-  SetSelectedConcern
+  SetSelectedConcern,
+  SetFileUploadProgress
 } from "./concern.actions";
 import { saveAs } from "file-saver";
 import {
@@ -127,86 +128,105 @@ export class ConcernState {
     });
   }
 
+  @Action(SetFileUploadProgress)
+  setFileUploadProgress(
+    ctx: StateContext<ConcernStateModel>,
+    action: SetFileUploadProgress
+  ) {
+    const state = ctx.getState();
+    const uploadInProgress = action.upFile ? true : false;
+    if (uploadInProgress) {
+      if (action.progress === 0) {
+        ctx.patchState({
+          uploadFileInProgress: uploadInProgress,
+          filesInUploadProgress: [
+            ...state.filesInUploadProgress,
+            { file: action.upFile, progress: action.progress }
+          ]
+        });
+      } else {
+        ctx.setState(
+          patch({
+            filesInUploadProgress: updateItem<IFileUploadProgress>(
+              (item) => item.file === action.upFile,
+              {
+                file: action.upFile,
+                progress: action.progress
+              }
+            )
+          })
+        );
+      }
+    } else {
+      ctx.patchState({
+        uploadFileInProgress: uploadInProgress,
+        filesInUploadProgress: []
+      });
+    }
+  }
+
   @Action(Upload)
   upload(ctx: StateContext<ConcernStateModel>, action: Upload) {
     const uploadFiles: Observable<any>[] = [];
-    ctx.patchState({
-      uploadFileInProgress: true,
-      filesInUploadProgress: []
-    });
+    ctx.dispatch(new SetFileUploadProgress(null, null));
 
     action.payload.map((upFile: File) => {
-      const state = ctx.getState();
-
-      ctx.patchState({
-        filesInUploadProgress: [
-          ...state.filesInUploadProgress,
-          { file: upFile, progress: 0 }
-        ]
-      });
-
-      uploadFiles.push(
-        this.uploadService
-          .upload(
-            this.uploadService.createFormData(
-              action.gmcNumber,
-              action.concernId,
-              upFile
-            )
-          )
-          .pipe(
-            map((event: HttpEvent<HttpProgressEvent>) => {
-              switch (event.type) {
-                case HttpEventType.UploadProgress:
-                  ctx.setState(
-                    patch({
-                      filesInUploadProgress: updateItem<IFileUploadProgress>(
-                        (item) => item.file === upFile,
-                        {
-                          file: upFile,
-                          progress: Math.round(
-                            (event.loaded * 100) / event.total
-                          )
-                        }
-                      )
-                    })
-                  );
-                  break;
-                case HttpEventType.Response:
-                  return event;
-              }
-            })
-          )
-      );
+      ctx.dispatch(new SetFileUploadProgress(upFile, 0));
     });
 
-    return forkJoin(uploadFiles)
-      .pipe(
-        take(1),
-        tap((val: HttpResponse<any>[]) => {
-          if (val.includes(undefined)) {
-            ctx.dispatch(new UploadSuccess());
-            return ctx.dispatch(new ApiError(`An error occured`));
-          }
-          return ctx.dispatch(new UploadSuccess());
-        }),
-        catchError((error: string) => {
-          return ctx.dispatch(new ApiError(error));
-        }),
-        finalize(() =>
-          ctx.patchState({
-            uploadFileInProgress: false
-          })
+    if (action.gmcNumber && action.concernId) {
+      action.payload.map((upFile: File) => {
+        uploadFiles.push(
+          this.uploadService
+            .upload(
+              this.uploadService.createFormData(
+                action.gmcNumber,
+                action.concernId,
+                upFile
+              )
+            )
+            .pipe(
+              map((event: HttpEvent<HttpProgressEvent>) => {
+                switch (event.type) {
+                  case HttpEventType.UploadProgress:
+                    ctx.dispatch(
+                      new SetFileUploadProgress(
+                        upFile,
+                        Math.round((event.loaded * 100) / event.total)
+                      )
+                    );
+                    break;
+                  case HttpEventType.Response:
+                    return event;
+                }
+              })
+            )
+        );
+      });
+      return forkJoin(uploadFiles)
+        .pipe(
+          take(1),
+          tap((val: HttpResponse<any>[]) => {
+            ctx.dispatch(new UploadSuccess()).subscribe(() => {
+              if (val.includes(undefined)) {
+                return ctx.dispatch(new ApiError(`An error occured`));
+              }
+            });
+          }),
+          catchError((error: string) => {
+            return ctx.dispatch(new ApiError(error));
+          }),
+          finalize(() => ctx.dispatch(new SetFileUploadProgress(null, null)))
         )
-      )
-      .subscribe();
+        .subscribe();
+    }
   }
 
   @Action(UploadSuccess)
   uploadSuccess(ctx: StateContext<ConcernStateModel>) {
     this.snackBarService.openSnackBar(`Upload success`);
     const gmcno = ctx.getState().gmcNumber;
-    const conId = ctx.getState().selected?.concernId || gmcno;
+    const conId = ctx.getState().selected?.concernId;
     return ctx.dispatch(new ListFiles(gmcno, conId));
   }
 
@@ -295,7 +315,7 @@ export class ConcernState {
   ) {
     this.snackBarService.openSnackBar(`${action.fileName} has been deleted`);
     const gmcno = ctx.getState().gmcNumber;
-    const conId = ctx.getState().selected?.concernId || gmcno;
+    const conId = ctx.getState().selected?.concernId;
     return ctx.dispatch(new ListFiles(gmcno, conId));
   }
 }

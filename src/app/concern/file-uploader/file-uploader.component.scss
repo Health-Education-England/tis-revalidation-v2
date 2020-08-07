@@ -1,12 +1,8 @@
 @import "~nhsuk-frontend/packages/core/settings/colours";
 
-.button-row {
-  flex-direction: column;
-
+.file {
   &.upload {
     background-color: $color_nhsuk-grey-5;
-    border: 2px solid $color_nhsuk-grey-4;
-    border-radius: 4px;
   }
   &.centered {
     align-items: center;
@@ -14,9 +10,5 @@
   }
   &.highlight {
     background-color: tint($color_nhsuk-green, 95%);
-    border: 2px dashed $color_nhsuk-green;
   }
-}
-.mat-card-title {
-  font-size: 16px;
 }

@@ -1,19 +1,25 @@
-import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+  OnDestroy
+} from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { Select, Store } from "@ngxs/store";
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
 import { ACCEPTED_IMAGE_MIMES } from "../constants";
-import { Upload, SetSelectedConcern } from "../state/concern.actions";
+import { Upload } from "../state/concern.actions";
 import { ConcernState } from "../state/concern.state";
-import { IFileUploadProgress } from "../concern.interfaces";
+import { IFileUploadProgress, IConcernSummary } from "../concern.interfaces";
 
 @Component({
   selector: "app-file-uploader",
   templateUrl: "./file-uploader.component.html",
   styleUrls: ["./file-uploader.component.scss"]
 })
-export class FileUploaderComponent implements OnInit {
+export class FileUploaderComponent implements OnInit, OnDestroy {
   public acceptedFileTypes: string[] = [
     ...ACCEPTED_IMAGE_MIMES,
     "application/pdf",
@@ -32,22 +38,24 @@ export class FileUploaderComponent implements OnInit {
   public uploadFileInProgress$: Observable<boolean>;
   @Select(ConcernState.filesInUploadProgress)
   public filesInUploadProgress$: Observable<IFileUploadProgress[]>;
+  @Select(ConcernState.selected)
+  selectedConcern$: Observable<IConcernSummary>;
   @ViewChild("dropArea") dropArea: ElementRef;
+  subsciptions: Subscription[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private store: Store,
     private snackBarService: SnackBarService
-  ) {
-    // TODO: *NOTE MUST REMOVE THIS
-    const selectedConcern = this.store.selectSnapshot(ConcernState.selected);
-    this.store.dispatch(
-      new SetSelectedConcern({
-        ...selectedConcern,
-        ...{ concernId: this.gmcNumber }
-      })
-    );
-    // TODO: *NOTE MUST REMOVE THIS
+  ) {}
+
+  ngOnDestroy(): void {
+    this.destroyPendingFiles();
+    this.subsciptions.forEach((subscribed: Subscription) => {
+      if (subscribed.closed === false) {
+        subscribed.unsubscribe();
+      }
+    });
   }
 
   ngOnInit() {
@@ -59,11 +67,36 @@ export class FileUploaderComponent implements OnInit {
     this.form = this.formBuilder.group({ fileUploader: null });
   }
 
+  /**
+   * subscribe to each concern change and upload files automatically if files are in progress
+   */
   public setConcernId(): void {
-    const selectedConcern = this.store.selectSnapshot(ConcernState.selected);
-    this.concernId = selectedConcern
-      ? selectedConcern.concernId
-      : this.gmcNumber; // TODO: MUST REMOVE HERE. FORM MUST BE SAVED FIRST
+    this.subsciptions.push(
+      this.selectedConcern$.subscribe((selectedConcern: IConcernSummary) => {
+        this.concernId = selectedConcern.concernId;
+        const filesInProgress = this.store.selectSnapshot(
+          ConcernState.filesInUploadProgress
+        );
+        if (this.concernId && filesInProgress?.length > 0) {
+          const files = filesInProgress.map(
+            (val: IFileUploadProgress) => val.file
+          );
+          this.upload(files);
+        }
+      })
+    );
+  }
+
+  public destroyPendingFiles() {
+    const filesInProgress = this.store.selectSnapshot(
+      ConcernState.filesInUploadProgress
+    );
+    if (filesInProgress?.length > 0) {
+      filesInProgress.map((val: IFileUploadProgress) => {
+        const file = val.file;
+        this.removeProgressFile(file);
+      });
+    }
   }
 
   public preventDefaults($event: Event): void {
@@ -80,42 +113,34 @@ export class FileUploaderComponent implements OnInit {
   }
 
   public handleDrop($event: DragEvent): void {
-    const itemList: DataTransferItem[] = $event.dataTransfer.items
-      ? Array.from($event.dataTransfer.items)
+    const itemList: File[] = $event.dataTransfer.files
+      ? Array.from($event.dataTransfer.files)
       : [];
 
     this.processFiles(itemList);
   }
 
-  public processFiles(files: any[]): void {
+  public processFiles(files: File[]): void {
     const processedFiles: File[] = [];
     const invalidFiles: string[] = [];
-
-    if (files.length) {
-      files.forEach((i: any) => {
-        const file: any = i.name ? i : i.getAsFile();
-        if (
-          this.acceptedFileTypes.includes(i.type) &&
-          i.size < this.acceptedFileSize
-        ) {
-          processedFiles.push(file);
-        } else {
-          invalidFiles.push(file.name);
-        }
-      });
-
-      if (invalidFiles.length) {
-        this.snackBarService.openSnackBar(
-          `${invalidFiles.join(", ")} not valid`
-        );
-        return;
+    files.forEach((file: File) => {
+      if (
+        this.acceptedFileTypes.includes(file.type) &&
+        file.size < this.acceptedFileSize
+      ) {
+        processedFiles.push(file);
+      } else {
+        invalidFiles.push(file.name);
       }
+    });
 
-      if (processedFiles.length) {
-        if (this.concernId) {
-          this.upload(processedFiles);
-        }
-      }
+    if (invalidFiles.length) {
+      this.snackBarService.openSnackBar(`${invalidFiles.join(", ")} not valid`);
+      return;
+    }
+
+    if (processedFiles.length && this.concernId) {
+      this.upload(processedFiles);
     }
   }
 
@@ -129,5 +154,15 @@ export class FileUploaderComponent implements OnInit {
     return this.store.dispatch(
       new Upload(this.gmcNumber, this.concernId, payload)
     );
+  }
+
+  public removeProgressFile(file: File) {
+    const filesInProgress = this.store.selectSnapshot(
+      ConcernState.filesInUploadProgress
+    );
+    const files = filesInProgress
+      .filter((val: IFileUploadProgress) => val.file !== file)
+      .map((val: IFileUploadProgress) => val.file);
+    this.upload(files);
   }
 }

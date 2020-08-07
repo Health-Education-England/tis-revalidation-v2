@@ -3,17 +3,25 @@ import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { MaterialModule } from "../../shared/material/material.module";
-import { DeleteFile, DownloadFile, ListFiles } from "../state/concern.actions";
+import {
+  DeleteFile,
+  DownloadFile,
+  ListFiles,
+  SetSelectedConcern
+} from "../state/concern.actions";
 import { ConcernState } from "../state/concern.state";
 
 import { UploadedFilesListComponent } from "./uploaded-files-list.component";
+import { defaultConcern } from "../constants";
 
 describe("UploadedFilesListComponent", () => {
   let store: Store;
   let component: UploadedFilesListComponent;
   let fixture: ComponentFixture<UploadedFilesListComponent>;
+  const _gmcNumber = 8140126;
+  const _concernId = 119389;
   const mockFileName = "mockfile.txt";
-  const mockKey = "119389/8119389/mockfile.txt";
+  const mockKey = `${_gmcNumber}/${_concernId}/mockfile.txt`;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -26,7 +34,13 @@ describe("UploadedFilesListComponent", () => {
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
     store = TestBed.inject(Store);
-    store.reset({ concern: { gmcNumber: 8140126 } });
+    store.reset({ concern: { gmcNumber: _gmcNumber } });
+    store.dispatch(
+      new SetSelectedConcern({
+        ...defaultConcern,
+        ...{ concernId: _concernId }
+      })
+    );
   }));
 
   beforeEach(() => {
@@ -65,7 +79,7 @@ describe("UploadedFilesListComponent", () => {
     spyOn(store, "dispatch");
     component.listFiles();
     expect(store.dispatch).toHaveBeenCalledWith(
-      new ListFiles(8140126, 8140126)
+      new ListFiles(_gmcNumber, _concernId)
     );
   });
 });

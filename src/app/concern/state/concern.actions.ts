@@ -1,5 +1,6 @@
 import { HttpErrorPayload } from "../../shared/services/error/error.service";
 import { IConcernSummary } from "../concern.interfaces";
+import { HttpEvent, HttpProgressEvent } from "@angular/common/http";
 
 export class Get {
   static readonly type = "[Concern] Get";
@@ -71,4 +72,9 @@ export class DeleteFileSuccess {
 export class SetSelectedConcern {
   static readonly type = "[Concern] set selected concern";
   constructor(public concern: IConcernSummary) {}
+}
+
+export class SetFileUploadProgress {
+  static readonly type = "[Concern] set file upload progress";
+  constructor(public upFile?: File, public progress?: number) {}
 }

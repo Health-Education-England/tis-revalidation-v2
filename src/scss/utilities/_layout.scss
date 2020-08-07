@@ -140,7 +140,7 @@
 
 // grid layouts
 .grid-container-2-col {
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 1fr 1fr;
   grid-gap: 15px;
 
   @media screen and (#{$mat-small}) {

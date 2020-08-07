@@ -14,7 +14,7 @@
       (optionSelected)="onOptionSelected($event)"
     >
       <mat-option *ngFor="let i of filteredItems$ | async" [value]="i">
-        {{ i.Username }}
+        {{ i.fullName }}
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>

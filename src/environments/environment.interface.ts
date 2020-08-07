@@ -23,6 +23,7 @@ export abstract class IEnvironment {
     readonly getRecommendation: string;
     readonly getRecommendations: string;
     readonly listFiles: string;
+    readonly listAdmins: string;
     readonly login: string;
     readonly saveRecommendation: string;
     readonly submitToGMC: string;
@@ -30,7 +31,6 @@ export abstract class IEnvironment {
   };
 
   abstract readonly awsConfig: {
-    readonly accessKeyId: string;
     readonly authenticationFlowType: string;
     readonly bucketName: string;
     readonly domain: string;
@@ -40,7 +40,6 @@ export abstract class IEnvironment {
     readonly region: string;
     readonly responseType: string;
     readonly scope: string[];
-    readonly secretAccessKey: string;
     readonly userPoolId: string;
     readonly userPoolWebClientId: string;
   };

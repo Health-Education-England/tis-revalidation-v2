@@ -1,16 +1,15 @@
-import { UserType } from "aws-sdk/clients/cognitoidentityserviceprovider";
 import { HttpErrorPayload } from "../../shared/services/error/error.service";
+import { IAdmin } from "../admins.interfaces";
 
 const label = `[Admins]`;
 
 export class Get {
   static readonly type = `${label} Get`;
-  constructor(public groupName: string) {}
 }
 
 export class GetSuccess {
   static readonly type = `${label} Get Success`;
-  constructor(public response: UserType[]) {}
+  constructor(public response: IAdmin[]) {}
 }
 
 export class GetError extends HttpErrorPayload {

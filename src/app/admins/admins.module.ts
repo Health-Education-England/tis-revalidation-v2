@@ -21,6 +21,6 @@ const adminComponents = [
 })
 export class AdminsModule {
   constructor(private store: Store) {
-    this.store.dispatch(new Get("reval-site-admin"));
+    this.store.dispatch(new Get());
   }
 }

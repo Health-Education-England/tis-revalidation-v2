@@ -1,4 +1,8 @@
 describe("Recommendations list paginator", () => {
+  before(() => {
+    cy.login();
+  });
+
   it("should allow me to visit the page", () => {
     cy.visit("/recommendations");
   });
@@ -24,18 +28,11 @@ describe("Recommendations list paginator", () => {
     ).should("be.enabled");
   });
 
-  it("should show loading spinner when next page button is clicked", () => {
+  it("should update pageIndex parameter in url when previous next button is clicked", () => {
     cy.get(
       "app-recommendations-list-paginator .mat-paginator-navigation-next"
     ).click();
-    cy.get("mat-spinner");
-  });
 
-  it("should update pageIndex parameter in url when previous page button is clicked", () => {
-    cy.get(
-      "app-recommendations-list-paginator .mat-paginator-navigation-previous"
-    ).click();
-
-    cy.location().should((loc) => expect(loc.search).to.contain("pageIndex=0"));
+    cy.location().should((loc) => expect(loc.search).to.contain("pageIndex=1"));
   });
 });

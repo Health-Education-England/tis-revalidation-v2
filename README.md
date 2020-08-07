@@ -71,6 +71,14 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 ## Running end-to-end tests
 
+Prequisite - set environment variables;
+
+```
+export CYPRESS_username=xxxxxxx
+export CYPRESS_password=xxxxxxx
+export CYPRESS_baseUrl=xxxxxxx
+```
+
 The [Cypress](https://www.cypress.io) e2e tests can be run;
 
 - In headless mode in the electron browser via `npm run cypress` or

@@ -1,4 +1,8 @@
 describe("Recommendations search", () => {
+  before(() => {
+    cy.login();
+  });
+
   const searchForm = "app-record-search form";
 
   it("should allow me to visit the page", () => {
@@ -27,6 +31,7 @@ describe("Recommendations search", () => {
   });
 
   it("should not contain `searchQuery` parameter in url when `Clear all` is clicked", () => {
+    cy.get("app-record-search .mat-menu-trigger").click();
     cy.get("app-reset-record-list button").click();
     cy.location().should((loc) =>
       expect(loc.search).to.not.contain("searchQuery")

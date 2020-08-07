@@ -1,5 +1,9 @@
 describe("Recommendations filters", () => {
-  const buttons = "app-recommendations-filters button";
+  before(() => {
+    cy.login();
+  });
+
+  const buttons = "app-recommendations-filters a";
 
   it("should allow me to visit the page", () => {
     cy.visit("/recommendations");
@@ -12,11 +16,11 @@ describe("Recommendations filters", () => {
   });
 
   it("under notice button should be active by default", () => {
-    cy.get(buttons).eq(1).should("have.class", "mat-primary");
+    cy.get(buttons).eq(1).should("have.class", "mat-tab-label-active");
   });
 
   it("clicking on all doctors button should set it as active", () => {
-    cy.get(buttons).eq(0).click().should("have.class", "mat-primary");
+    cy.get(buttons).eq(0).click().should("have.class", "mat-tab-label-active");
   });
 
   it("clicking on all doctors button should update the query parameter in url", () => {

@@ -13,7 +13,6 @@ describe("Reset recommendations list", () => {
   });
 
   it("should reset recommendations list when `Clear all` is clicked", () => {
-    // cy.get("app-record-search .mat-menu-trigger").click();
     cy.get("app-reset-record-list button").click();
     cy.get(".mat-header-cell")
       .eq(3)

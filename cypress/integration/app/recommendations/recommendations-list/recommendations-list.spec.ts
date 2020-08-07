@@ -1,4 +1,8 @@
 describe("Recommendations list", () => {
+  before(() => {
+    cy.login();
+  });
+
   it("should allow me to visit the page", () => {
     cy.visit("/recommendations");
   });
@@ -13,20 +17,20 @@ describe("Recommendations list", () => {
   });
 
   it("should show recommendations data table with correct column headings", () => {
-    cy.get(".mat-header-cell").eq(0).should("have.text", "First name");
-    cy.get(".mat-header-cell").eq(1).should("have.text", "Last name");
-    cy.get(".mat-header-cell").eq(2).should("have.text", "Gmc no");
+    cy.get(".mat-header-cell").eq(0).should("contain.text", "First name");
+    cy.get(".mat-header-cell").eq(1).should("contain.text", "Last name");
+    cy.get(".mat-header-cell").eq(2).should("contain.text", "GMC No");
     cy.get(".mat-header-cell")
       .eq(3)
-      .should("have.text", "GMC Submission due date");
-    cy.get(".mat-header-cell").eq(4).should("have.text", "Status");
-    cy.get(".mat-header-cell").eq(5).should("have.text", "Programme name");
+      .should("contain.text", "GMC Submission due date");
+    cy.get(".mat-header-cell").eq(4).should("contain.text", "Status");
+    cy.get(".mat-header-cell").eq(5).should("contain.text", "Programme name");
     cy.get(".mat-header-cell")
       .eq(6)
-      .should("have.text", "Programme membership type");
-    cy.get(".mat-header-cell").eq(7).should("have.text", "CCT date");
-    cy.get(".mat-header-cell").eq(8).should("have.text", "Admin");
-    cy.get(".mat-header-cell").eq(9).should("have.text", "Last updated");
+      .should("contain.text", "Programme membership type");
+    cy.get(".mat-header-cell").eq(7).should("contain.text", "CCT date");
+    cy.get(".mat-header-cell").eq(8).should("contain.text", "Admin");
+    cy.get(".mat-header-cell").eq(9).should("contain.text", "Last updated");
   });
 
   it("should show recommendations table with some data", () => {
@@ -42,7 +46,6 @@ describe("Recommendations list", () => {
 
   it("should list recommendations by `First name` when sorted by this column", () => {
     cy.get(".mat-header-cell").eq(0).click();
-    cy.get("mat-spinner");
     cy.get(".mat-header-cell")
       .eq(0)
       .should("have.attr", "aria-sort")

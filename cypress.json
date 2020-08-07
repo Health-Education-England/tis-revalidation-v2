@@ -1,4 +1,3 @@
 {
-  "baseUrl": "https://stage-revalidation.tis.nhs.uk",
   "chromeWebSecurity": false
 }

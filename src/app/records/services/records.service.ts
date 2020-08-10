@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { BehaviorSubject, forkJoin, Observable } from "rxjs";
 import { switchMap, take } from "rxjs/operators";
+import { IRecordDataCell } from "../records.interfaces";
 
 @Injectable({
   providedIn: "root"
@@ -11,6 +12,9 @@ import { switchMap, take } from "rxjs/operators";
 export class RecordsService {
   public resetSearchForm$: BehaviorSubject<boolean> = new BehaviorSubject(null);
   public stateName: string;
+  public dateColumns: string[];
+  public columnData: IRecordDataCell[];
+  public detailsRoute: string;
 
   // TODO type these
   public clearSearchAction: any;

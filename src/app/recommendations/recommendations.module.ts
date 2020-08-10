@@ -6,7 +6,6 @@ import { MaterialModule } from "../shared/material/material.module";
 import { RecordsModule } from "../records/records.module";
 import { RecommendationsResolver } from "./recommendations.resolver";
 import { RecommendationsState } from "./state/recommendations.state";
-import { RecommendationsListComponent } from "./recommendations-list/recommendations-list.component";
 import { RecommendationsRoutingModule } from "./recommendations-routing.module";
 import { RecommendationsComponent } from "./recommendations.component";
 import { RecommendationsListPaginatorComponent } from "./recommendations-list-paginator/recommendations-list-paginator.component";
@@ -14,7 +13,6 @@ import { RecommendationsFiltersComponent } from "./recommendations-filters/recom
 @NgModule({
   declarations: [
     RecommendationsComponent,
-    RecommendationsListComponent,
     RecommendationsListPaginatorComponent,
     RecommendationsFiltersComponent
   ],

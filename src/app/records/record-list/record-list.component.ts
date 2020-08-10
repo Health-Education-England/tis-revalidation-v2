@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component } from "@angular/core";
 import { Sort as ISort } from "@angular/material/sort/sort";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { environment } from "@environment";
@@ -14,9 +14,9 @@ import { RecordsService } from "../services/records.service";
   styleUrls: ["./record-list.component.scss"]
 })
 export class RecordListComponent {
-  @Input() public columnData: IRecordDataCell[];
-  @Input() public dateColumns: string[];
-  @Input() public detailsRoute: string;
+  public columnData: IRecordDataCell[] = this.recordsService.columnData;
+  public dateColumns: string[] = this.recordsService.dateColumns;
+  public detailsRoute: string = this.recordsService.detailsRoute;
 
   public dateFormat: string = environment.dateFormat;
   public params: Params;

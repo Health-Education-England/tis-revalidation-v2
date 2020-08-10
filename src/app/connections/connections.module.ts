@@ -4,14 +4,13 @@ import { NgxsModule } from "@ngxs/store";
 import { AdminsModule } from "../admins/admins.module";
 import { MaterialModule } from "../shared/material/material.module";
 import { RecordsModule } from "../records/records.module";
-import { ConnectionListComponent } from "./connection-list/connection-list.component";
 import { ConnectionsRoutingModule } from "./connections-routing.module";
 import { ConnectionsComponent } from "./connections.component";
 import { ConnectionsResolver } from "./connections.resolver";
 import { ConnectionsState } from "./state/connections.state";
 
 @NgModule({
-  declarations: [ConnectionsComponent, ConnectionListComponent],
+  declarations: [ConnectionsComponent],
   imports: [
     CommonModule,
     MaterialModule,

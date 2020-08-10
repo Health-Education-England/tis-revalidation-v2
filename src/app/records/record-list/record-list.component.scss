@@ -1,6 +1,42 @@
 @import "../../../../node_modules/nhsuk-frontend/packages/core/settings/colours";
+@import "../../../scss/utilities/spacing-helpers";
 
 .is-under-notice td:first-child {
   padding-left: 20px;
   border-left: solid 4px $color_nhsuk-red;
 }
+
+@include mat-table-columns(
+  (
+    doctorFirstName: (
+      width: 180px
+    ),
+    doctorLastName: (
+      width: 180px
+    ),
+    gmcReferenceNumber: (
+      width: 80px
+    ),
+    submissionDate: (
+      width: 180px
+    ),
+    doctorStatus: (
+      width: 100px
+    ),
+    programmeName: (
+      width: 160px
+    ),
+    programmeMembershipType: (
+      width: 180px
+    ),
+    cctDate: (
+      width: 110px
+    ),
+    admin: (
+      width: 180px
+    ),
+    lastUpdatedDate: (
+      width: 110px
+    )
+  )
+);

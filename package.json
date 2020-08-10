@@ -42,7 +42,7 @@
     "angulartics2": "^10.0.0",
     "aws-amplify": "^3.0.22",
     "browserslist": "^4.14.0",
-    "caniuse-lite": "^1.0.30001111",
+    "caniuse-lite": "^1.0.30001112",
     "file-saver": "^2.0.2",
     "nhsuk-frontend": "^3.1.0",
     "rxjs": "~6.6.2",

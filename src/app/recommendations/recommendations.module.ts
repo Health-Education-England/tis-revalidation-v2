@@ -8,14 +8,9 @@ import { RecommendationsResolver } from "./recommendations.resolver";
 import { RecommendationsState } from "./state/recommendations.state";
 import { RecommendationsRoutingModule } from "./recommendations-routing.module";
 import { RecommendationsComponent } from "./recommendations.component";
-import { RecommendationsListPaginatorComponent } from "./recommendations-list-paginator/recommendations-list-paginator.component";
 import { RecommendationsFiltersComponent } from "./recommendations-filters/recommendations-filters.component";
 @NgModule({
-  declarations: [
-    RecommendationsComponent,
-    RecommendationsListPaginatorComponent,
-    RecommendationsFiltersComponent
-  ],
+  declarations: [RecommendationsComponent, RecommendationsFiltersComponent],
   imports: [
     CommonModule,
     MaterialModule,

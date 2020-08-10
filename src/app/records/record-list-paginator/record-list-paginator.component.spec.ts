@@ -5,18 +5,29 @@ import { MatPaginatorModule, PageEvent } from "@angular/material/paginator";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
-import { DEFAULT_SORT } from "../../records/constants";
-import { RecordsService } from "../../records/services/records.service";
-import { PaginateRecommendations } from "../state/recommendations.actions";
+import {
+  ClearRecommendationsSearch,
+  EnableRecommendationsAllocateAdmin,
+  FilterRecommendations,
+  GetRecommendations,
+  PaginateRecommendations,
+  RecommendationsSearch,
+  ResetRecommendationsFilter,
+  ResetRecommendationsPaginator,
+  ResetRecommendationsSort,
+  SortRecommendations,
+  ToggleAllRecommendationsCheckboxes,
+  ToggleRecommendationsCheckbox
+} from "../../recommendations/state/recommendations.actions";
+import { DEFAULT_SORT } from "../constants";
+import { RecordsService } from "../services/records.service";
+import { RecommendationsState } from "../../recommendations/state/recommendations.state";
+import { RecordListPaginatorComponent } from "./record-list-paginator.component";
 
-import { RecommendationsState } from "../state/recommendations.state";
-
-import { RecommendationsListPaginatorComponent } from "./recommendations-list-paginator.component";
-
-describe("RecommendationsListPaginatorComponent", () => {
+describe("RecordListPaginatorComponent", () => {
   let store: Store;
-  let component: RecommendationsListPaginatorComponent;
-  let fixture: ComponentFixture<RecommendationsListPaginatorComponent>;
+  let component: RecordListPaginatorComponent;
+  let fixture: ComponentFixture<RecordListPaginatorComponent>;
   let recordsService: RecordsService;
   const mockPageEvent: PageEvent = {
     pageIndex: 2,
@@ -34,17 +45,31 @@ describe("RecommendationsListPaginatorComponent", () => {
         NgxsModule.forRoot([RecommendationsState]),
         HttpClientTestingModule
       ],
-      declarations: [RecommendationsListPaginatorComponent],
+      declarations: [RecordListPaginatorComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
     store = TestBed.inject(Store);
     recordsService = TestBed.inject(RecordsService);
     recordsService.stateName = "recommendations";
+    recordsService.setActions(
+      ClearRecommendationsSearch,
+      FilterRecommendations,
+      GetRecommendations,
+      PaginateRecommendations,
+      ResetRecommendationsFilter,
+      ResetRecommendationsPaginator,
+      ResetRecommendationsSort,
+      RecommendationsSearch,
+      SortRecommendations,
+      EnableRecommendationsAllocateAdmin,
+      ToggleAllRecommendationsCheckboxes,
+      ToggleRecommendationsCheckbox
+    );
     store.reset({ recommendations: { sort: DEFAULT_SORT } });
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RecommendationsListPaginatorComponent);
+    fixture = TestBed.createComponent(RecordListPaginatorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -54,11 +79,11 @@ describe("RecommendationsListPaginatorComponent", () => {
   });
 
   it("should dispatch 'paginate()' event", () => {
-    spyOn(store, "dispatch").and.callThrough();
+    spyOn(recordsService, "paginate").and.callThrough();
     component.paginate(mockPageEvent);
-    expect(store.dispatch).toHaveBeenCalledTimes(1);
-    expect(store.dispatch).toHaveBeenCalledWith(
-      new PaginateRecommendations(mockPageEvent.pageIndex)
+    expect(recordsService.paginate).toHaveBeenCalledTimes(1);
+    expect(recordsService.paginate).toHaveBeenCalledWith(
+      mockPageEvent.pageIndex
     );
   });
 

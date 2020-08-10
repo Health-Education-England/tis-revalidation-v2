@@ -70,7 +70,6 @@ export class TraineeDetailComponent implements OnDestroy {
 
   constructor(private store: Store) {
     this.initialiseFormControls();
-    this.setRequiredFields();
   }
 
   ngOnDestroy(): void {
@@ -82,20 +81,9 @@ export class TraineeDetailComponent implements OnDestroy {
   }
 
   /**
-   * Initialise FormGroup
+   * Initialise form controls and set fields needed to be required or not
    */
   public initialiseFormControls(): void {
-    // TODO only make site, employer mandatory if source = LET
-    this.formGroup = new FormGroup({
-      grade: new FormControl(""),
-      site: new FormControl(""),
-      employer: new FormControl("")
-    });
-  }
-  /**
-   * set fields needed to be required or not
-   */
-  public setRequiredFields(): void {
     this.subsciptions.push(
       this.selectedConcern$.subscribe((cs: IConcernSummary) => {
         this.concern = cs;
@@ -104,6 +92,7 @@ export class TraineeDetailComponent implements OnDestroy {
           site: new FormControl(cs.site),
           employer: new FormControl(cs.employer)
         });
+
         if (this.concern) {
           if (this.concern.source === "Lead Employer Trust (LET)") {
             this.form.site.setValidators([Validators.required]);
@@ -119,7 +108,6 @@ export class TraineeDetailComponent implements OnDestroy {
     );
   }
 
-  // TODO dispatch event and save form values on store
   public onSubmit(): void {
     const admins: IAllocateAdmin[] = this.store.selectSnapshot(AdminsState)
       .allocateList;
@@ -130,6 +118,8 @@ export class TraineeDetailComponent implements OnDestroy {
       ...admin
     };
     this.store.dispatch(new SetSelectedConcern(newConcern));
-    this.stepper.next();
+    if (this.stepper) {
+      this.stepper.next();
+    }
   }
 }

@@ -34,7 +34,7 @@ export interface IConcernSummary {
 
 export enum ConcernStatus {
   OPEN = "Open",
-  CLOSED = "closed"
+  CLOSED = "Closed"
 }
 
 export interface IncidentType {

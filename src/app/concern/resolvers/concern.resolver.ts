@@ -8,9 +8,9 @@ import { Observable } from "rxjs";
 import { Store } from "@ngxs/store";
 import { catchError } from "rxjs/operators";
 import { Injectable } from "@angular/core";
-import { IGetConcernResponse } from "./concern.interfaces";
+import { IGetConcernResponse } from "../concern.interfaces";
 
-import { Get } from "./state/concern.actions";
+import { Get } from "../state/concern.actions";
 
 @Injectable()
 export class ConcernResolver implements Resolve<IGetConcernResponse> {

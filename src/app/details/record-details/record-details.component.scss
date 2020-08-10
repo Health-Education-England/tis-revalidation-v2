@@ -9,12 +9,8 @@
   min-height: calc(100vh - 64px - 48px);
 
   .record-content-container {
-    padding: 24px 40px;
+    padding: 24px 16px;
     overflow: hidden;
-
-    @media screen and (#{$mat-small}) {
-      padding: 24px 16px;
-    }
   }
 }
 

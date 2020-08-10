@@ -1,21 +1,21 @@
 import { Component } from "@angular/core";
 import { PageEvent } from "@angular/material/paginator/paginator";
-import { Select, Store } from "@ngxs/store";
+import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
-import { RecordsService } from "../../records/services/records.service";
-import { PaginateRecommendations } from "../state/recommendations.actions";
-import { RecommendationsState } from "../state/recommendations.state";
+import { RecordsService } from "../services/records.service";
 
 @Component({
-  selector: "app-recommendations-list-paginator",
-  templateUrl: "./recommendations-list-paginator.component.html"
+  selector: "app-record-list-paginator",
+  templateUrl: "./record-list-paginator.component.html"
 })
-export class RecommendationsListPaginatorComponent {
-  @Select(RecommendationsState.totalResults<number>())
-  public totalResults$: Observable<number>;
-  @Select(RecommendationsState.pageIndex<number>())
-  public pageIndex$: Observable<number>;
+export class RecordListPaginatorComponent {
+  public totalResults$: Observable<number> = this.store.select(
+    (state) => state[this.recordsService.stateName].totalResults
+  );
+  public pageIndex$: Observable<number> = this.store.select(
+    (state) => state[this.recordsService.stateName].pageIndex
+  );
   public enableAllocateAdmin$: Observable<boolean> = this.store.select(
     (state) => state[this.recordsService.stateName].enableAllocateAdmin
   );
@@ -29,8 +29,8 @@ export class RecommendationsListPaginatorComponent {
    * @param event PageEvent
    */
   public paginate(event: PageEvent): void {
-    this.store
-      .dispatch(new PaginateRecommendations(Number(event.pageIndex)))
+    this.recordsService
+      .paginate(Number(event.pageIndex))
       .pipe(take(1))
       .subscribe(() => this.recordsService.updateRoute());
   }

@@ -47,7 +47,7 @@ Amplify.configure(AWS_CONFIG);
       hotJarSv: environment.hotJarSv,
       enabled: environment.production
     }),
-    NgxsModule.forRoot([AdminsState], {
+    NgxsModule.forRoot([], {
       developmentMode: !environment.production
     }),
     NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production }),

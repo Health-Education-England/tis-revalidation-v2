@@ -16,6 +16,7 @@ import { environment } from "@environment";
 import { ConcernHistoryResponse2 } from "src/app/recommendation/mock-data/recommendation-spec-data";
 
 import { ErrorHandler } from "@angular/core";
+import { tap } from "rxjs/operators";
 
 describe("Concern actions", () => {
   let store: Store;
@@ -26,6 +27,7 @@ describe("Concern actions", () => {
     jasmine.createSpyObj("ErrorHandler", {
       handleError: undefined
     });
+
   const mockFile = new File([""], "mockfile.txt", { type: "text/plain" });
 
   beforeEach(async(() => {
@@ -91,10 +93,12 @@ describe("Concern actions", () => {
     });
   });
 
-  xit("on 'UploadSuccess' event `ListFiles` is event is dispatched", () => {
-    store.dispatch(new UploadSuccess()).subscribe(() => {
-      spyOn(store, "dispatch");
-      expect(store.dispatch).toHaveBeenCalledWith(new ListFiles(null, null));
-    });
+  it("on 'UploadSuccess' event `ListFiles` is event is dispatched", () => {
+    spyOn(store, "dispatch").and.callThrough();
+    store.dispatch(new UploadSuccess()).pipe(
+      tap(() => {
+        expect(store.dispatch).toHaveBeenCalledWith(new ListFiles(null, null));
+      })
+    );
   });
 });

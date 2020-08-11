@@ -4,7 +4,6 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule } from "@ngxs/store";
 import { AppComponent } from "./app.component";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
-import { AdminsState } from "./admins/state/admins.state";
 import { MainNavigationModule } from "./shared/main-navigation/main-navigation.module";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 
@@ -19,7 +18,7 @@ describe("AppComponent", () => {
         MainNavigationModule,
         HttpClientTestingModule,
         NoopAnimationsModule, // no operation mock for replacing BrowserAnimationsModule in tests
-        NgxsModule.forRoot([AdminsState])
+        NgxsModule.forRoot([])
       ],
       declarations: [AppComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]

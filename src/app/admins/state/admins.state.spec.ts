@@ -9,6 +9,7 @@ import { AdminsService } from "../services/admins.service";
 import { mockAdminsResponse } from "../services/admins.service.spec";
 import { Get, GetError, GetSuccess } from "./admins.actions";
 import { AdminsState } from "./admins.state";
+import { of } from "rxjs";
 
 describe("Admins state", () => {
   let store: Store;
@@ -35,25 +36,25 @@ describe("Admins state", () => {
     expect(state).toBeTruthy();
   });
 
-  it("should dispatch 'Get' and invoke `adminsService.getAdminUsers()`", () => {
-    spyOn(adminsService, "getAdminUsers").and.callThrough();
-    store
-      .dispatch(new Get())
-      .subscribe(() => expect(adminsService.getAdminUsers).toHaveBeenCalled());
+  it("should dispatch 'Get' and invoke `adminsService.getAdminUsers()`", async () => {
+    spyOn(adminsService, "getAdminUsers").and.returnValues(
+      of(mockAdminsResponse)
+    );
+    await store.dispatch(new Get()).toPromise();
+    expect(adminsService.getAdminUsers).toHaveBeenCalled();
   });
 
-  it("should dispatch 'GetSuccess' and select 'items' slice", () => {
-    store.dispatch(new GetSuccess(mockAdminsResponse));
+  it("should dispatch 'GetSuccess' and select 'items' slice", async () => {
+    await store.dispatch(new GetSuccess(mockAdminsResponse)).toPromise();
     const items = store.selectSnapshot(AdminsState.items);
     expect(items.length).toEqual(2);
     expect(items[0].username).toEqual("siteadmin@hee.nhs.uk");
   });
 
-  it("should dispatch 'GetError' and select 'error' slice", () => {
+  it("should dispatch 'GetError' and select 'error' slice", async () => {
     const errorMsg = `Error: Missing credentials in config, if using AWS_CONFIG_FILE, set AWS_SDK_LOAD_CONFIG=1`;
-    store.dispatch(new GetError(errorMsg)).subscribe(() => {
-      const error = store.selectSnapshot(AdminsState.error);
-      expect(error).toEqual(errorMsg);
-    });
+    await store.dispatch(new GetError(errorMsg)).toPromise();
+    const error = store.selectSnapshot(AdminsState.error);
+    expect(error).toEqual(errorMsg);
   });
 });

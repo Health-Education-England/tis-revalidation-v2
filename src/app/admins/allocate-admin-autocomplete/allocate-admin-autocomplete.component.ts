@@ -3,7 +3,13 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
-import { distinctUntilChanged, map, startWith, take } from "rxjs/operators";
+import {
+  distinctUntilChanged,
+  filter,
+  map,
+  startWith,
+  take
+} from "rxjs/operators";
 import { IAdmin } from "../admins.interfaces";
 import { AddToAllocateList } from "../state/admins.actions";
 import { AdminsState } from "../state/admins.state";
@@ -31,7 +37,7 @@ export class AllocateAdminAutocompleteComponent implements OnInit {
 
   public getItems(): void {
     this.items$
-      .pipe(take(1))
+      .pipe(filter(Boolean), take(1))
       .subscribe((items: IAdmin[]) => this.filterItems(items));
   }
 

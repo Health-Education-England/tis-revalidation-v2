@@ -1,31 +1,63 @@
-<a mat-raised-button color="accent" class="nhsuk-skip-link mat-focus-indicator" href="{{activeUrl}}">
+<a
+  mat-raised-button
+  color="accent"
+  class="nhsuk-skip-link mat-focus-indicator"
+  href="{{ activeUrl }}"
+>
   Skip to main content
 </a>
-<mat-sidenav-container class="sidenav-container" *ngIf="{isHandset : isHandset$ | async}; let device;">
-  <mat-sidenav #drawer [ngClass]="{ hidden: !device.isHandset }" class="sidenav" fixedInViewport="false"
-    [attr.role]="device.isHandset ? 'dialog' : 'navigation'" [mode]="device.isHandset ? 'over' : 'side'"
-    [opened]="!device.isHandset">
+<mat-sidenav-container
+  class="sidenav-container"
+  *ngIf="{ isHandset: isHandset$ | async }; let device"
+>
+  <mat-sidenav
+    #drawer
+    [ngClass]="{ hidden: !device.isHandset }"
+    class="sidenav"
+    fixedInViewport="false"
+    [attr.role]="device.isHandset ? 'dialog' : 'navigation'"
+    [mode]="device.isHandset ? 'over' : 'side'"
+    [opened]="!device.isHandset"
+  >
     <mat-toolbar color="primary">
       <app-status-bar></app-status-bar>
       <span class="fill-space"></span>
-      <button type="button" aria-label="Close side navigation" mat-icon-button (click)="drawer.close()"
-        *ngIf="device.isHandset">
+      <button
+        type="button"
+        aria-label="Close side navigation"
+        mat-icon-button
+        (click)="drawer.close()"
+        *ngIf="device.isHandset"
+      >
         <mat-icon aria-label="Side nav toggle icon">menu_open</mat-icon>
       </button>
     </mat-toolbar>
     <app-mobile-menu (closeMenu)="drawer.close()"></app-mobile-menu>
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      <mat-toolbar-row class="mat-elevation-z2">
-        <a mat-icon-button [routerLink]="'/'" aria-label="NHS Revalidation" class="logo-icon">
-          <mat-icon svgIcon="icon_nhs_logo" [ngClass]="'icon_nhs_logo'">nhs logo</mat-icon>
+    <mat-toolbar color="primary" class="mat-elevation-z2">
+      <mat-toolbar-row class="container">
+        <a
+          mat-icon-button
+          [routerLink]="'/'"
+          aria-label="NHS Revalidation"
+          class="logo-icon"
+        >
+          <mat-icon svgIcon="icon_nhs_logo" [ngClass]="'icon_nhs_logo'"
+            >nhs logo</mat-icon
+          >
         </a>
         <app-desktop-menu *ngIf="!device.isHandset"></app-desktop-menu>
         <span class="fill-space"></span>
         <app-status-bar *ngIf="!device.isHandset"></app-status-bar>
-        <button type="button" [ngClass]="[drawer.opened ? 'hidden' : '']" aria-label="Open side navigation"
-          mat-icon-button (click)="drawer.open()" *ngIf="device.isHandset">
+        <button
+          type="button"
+          [ngClass]="[drawer.opened ? 'hidden' : '']"
+          aria-label="Open side navigation"
+          mat-icon-button
+          (click)="drawer.open()"
+          *ngIf="device.isHandset"
+        >
           <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
         </button>
       </mat-toolbar-row>

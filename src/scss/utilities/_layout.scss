@@ -147,3 +147,17 @@
     grid-template-columns: auto;
   }
 }
+
+// containers max width
+.container {
+  max-width: 1920px;
+  margin: 0 auto;
+}
+
+.main-content {
+  min-height: auto;
+  min-height: calc(100vh - 64px);
+  @media screen and (#{$mat-small}) {
+    min-height: calc(100vh - 72px);
+  }
+}

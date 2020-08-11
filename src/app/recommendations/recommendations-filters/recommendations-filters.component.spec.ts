@@ -6,20 +6,7 @@ import { NgxsModule, Store } from "@ngxs/store";
 import { MaterialModule } from "../../shared/material/material.module";
 import { RecordsService } from "../../records/services/records.service";
 import { RecommendationsFilterType } from "../recommendations.interfaces";
-import {
-  FilterRecommendations,
-  ClearRecommendationsSearch,
-  GetRecommendations,
-  ResetRecommendationsPaginator,
-  ResetRecommendationsSort,
-  PaginateRecommendations,
-  ResetRecommendationsFilter,
-  RecommendationsSearch,
-  SortRecommendations,
-  EnableRecommendationsAllocateAdmin,
-  ToggleAllRecommendationsCheckboxes,
-  ToggleRecommendationsCheckbox
-} from "../state/recommendations.actions";
+import { FilterRecommendations } from "../state/recommendations.actions";
 import { RecommendationsState } from "../state/recommendations.state";
 
 import { RecommendationsFiltersComponent } from "./recommendations-filters.component";
@@ -52,20 +39,7 @@ describe("RecommendationsFiltersComponent", () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     recordsService.stateName = "recommendations";
-    recordsService.setActions(
-      ClearRecommendationsSearch,
-      FilterRecommendations,
-      GetRecommendations,
-      PaginateRecommendations,
-      ResetRecommendationsFilter,
-      ResetRecommendationsPaginator,
-      ResetRecommendationsSort,
-      RecommendationsSearch,
-      SortRecommendations,
-      EnableRecommendationsAllocateAdmin,
-      ToggleAllRecommendationsCheckboxes,
-      ToggleRecommendationsCheckbox
-    );
+    recordsService.setRecommendationsActions();
   });
 
   it("should create", () => {

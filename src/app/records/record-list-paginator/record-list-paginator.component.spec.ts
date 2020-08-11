@@ -5,23 +5,9 @@ import { MatPaginatorModule, PageEvent } from "@angular/material/paginator";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
-import {
-  ClearRecommendationsSearch,
-  EnableRecommendationsAllocateAdmin,
-  FilterRecommendations,
-  GetRecommendations,
-  PaginateRecommendations,
-  RecommendationsSearch,
-  ResetRecommendationsFilter,
-  ResetRecommendationsPaginator,
-  ResetRecommendationsSort,
-  SortRecommendations,
-  ToggleAllRecommendationsCheckboxes,
-  ToggleRecommendationsCheckbox
-} from "../../recommendations/state/recommendations.actions";
+import { RecommendationsState } from "../../recommendations/state/recommendations.state";
 import { DEFAULT_SORT } from "../constants";
 import { RecordsService } from "../services/records.service";
-import { RecommendationsState } from "../../recommendations/state/recommendations.state";
 import { RecordListPaginatorComponent } from "./record-list-paginator.component";
 
 describe("RecordListPaginatorComponent", () => {
@@ -51,20 +37,7 @@ describe("RecordListPaginatorComponent", () => {
     store = TestBed.inject(Store);
     recordsService = TestBed.inject(RecordsService);
     recordsService.stateName = "recommendations";
-    recordsService.setActions(
-      ClearRecommendationsSearch,
-      FilterRecommendations,
-      GetRecommendations,
-      PaginateRecommendations,
-      ResetRecommendationsFilter,
-      ResetRecommendationsPaginator,
-      ResetRecommendationsSort,
-      RecommendationsSearch,
-      SortRecommendations,
-      EnableRecommendationsAllocateAdmin,
-      ToggleAllRecommendationsCheckboxes,
-      ToggleRecommendationsCheckbox
-    );
+    recordsService.setRecommendationsActions();
     store.reset({ recommendations: { sort: DEFAULT_SORT } });
   }));
 

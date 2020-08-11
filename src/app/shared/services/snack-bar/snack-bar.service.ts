@@ -11,7 +11,7 @@ import {
 export class SnackBarService {
   public horizontalPosition: MatSnackBarHorizontalPosition = "center";
   public verticalPosition: MatSnackBarVerticalPosition = "top";
-  public snackBarDuration = 100000;
+  public snackBarDuration = 10000;
 
   constructor(private snackBar: MatSnackBar, private zone: NgZone) {}
 

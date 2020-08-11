@@ -6,20 +6,6 @@ import { generateColumnData } from "../records/constants";
 import { RecordsResolver } from "../records/records.resolver";
 import { RecordsService } from "../records/services/records.service";
 import { COLUMN_DATA } from "./constants";
-import {
-  ClearConcernsSearch,
-  FilterConcerns,
-  GetConcerns,
-  PaginateConcerns,
-  ResetConcernsFilter,
-  ResetConcernsPaginator,
-  ResetConcernsSort,
-  ConcernsSearch,
-  SortConcerns,
-  EnableConcernsAllocateAdmin,
-  ToggleConcernsCheckbox,
-  ToggleAllConcernsCheckboxes
-} from "./state/concerns.actions";
 
 @Injectable()
 export class ConcernsResolver extends RecordsResolver implements Resolve<any> {
@@ -34,20 +20,7 @@ export class ConcernsResolver extends RecordsResolver implements Resolve<any> {
   private initialiseData(): void {
     this.recordsService.stateName = "concerns";
     this.recordsService.detailsRoute = "/concern";
-    this.recordsService.setActions(
-      ClearConcernsSearch,
-      FilterConcerns,
-      GetConcerns,
-      PaginateConcerns,
-      ResetConcernsFilter,
-      ResetConcernsPaginator,
-      ResetConcernsSort,
-      ConcernsSearch,
-      SortConcerns,
-      EnableConcernsAllocateAdmin,
-      ToggleConcernsCheckbox,
-      ToggleAllConcernsCheckboxes
-    );
+    this.recordsService.setConcernsActions();
     this.recordsService.dateColumns = [
       "closedDate",
       "dateRaised",

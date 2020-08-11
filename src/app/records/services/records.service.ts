@@ -4,6 +4,48 @@ import { Router } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { BehaviorSubject, forkJoin, Observable } from "rxjs";
 import { switchMap, take } from "rxjs/operators";
+import {
+  ClearConcernsSearch,
+  ConcernsSearch,
+  EnableConcernsAllocateAdmin,
+  FilterConcerns,
+  GetConcerns,
+  PaginateConcerns,
+  ResetConcernsFilter,
+  ResetConcernsPaginator,
+  ResetConcernsSort,
+  SortConcerns,
+  ToggleAllConcernsCheckboxes,
+  ToggleConcernsCheckbox
+} from "../../concerns/state/concerns.actions";
+import {
+  ClearConnectionsSearch,
+  ConnectionsSearch,
+  EnableConnectionsAllocateAdmin,
+  FilterConnections,
+  GetConnections,
+  PaginateConnections,
+  ResetConnectionsFilter,
+  ResetConnectionsPaginator,
+  ResetConnectionsSort,
+  SortConnections,
+  ToggleAllConnectionsCheckboxes,
+  ToggleConnectionsCheckbox
+} from "../../connections/state/connections.actions";
+import {
+  ClearRecommendationsSearch,
+  EnableRecommendationsAllocateAdmin,
+  FilterRecommendations,
+  GetRecommendations,
+  PaginateRecommendations,
+  RecommendationsSearch,
+  ResetRecommendationsFilter,
+  ResetRecommendationsPaginator,
+  ResetRecommendationsSort,
+  SortRecommendations,
+  ToggleAllRecommendationsCheckboxes,
+  ToggleRecommendationsCheckbox
+} from "../../recommendations/state/recommendations.actions";
 import { IRecordDataCell } from "../records.interfaces";
 
 @Injectable({
@@ -36,32 +78,49 @@ export class RecordsService {
     private store: Store
   ) {}
 
-  public setActions(
-    clearSearchAction,
-    filterAction,
-    getAction,
-    paginateAction,
-    resetFilterAction,
-    resetPaginatorAction,
-    resetSortAction,
-    searchAction,
-    sortAction,
-    enableAllocateAdminAction,
-    toggleCheckboxAction,
-    toggleAllCheckboxesAction
-  ): void {
-    this.clearSearchAction = clearSearchAction;
-    this.filterAction = filterAction;
-    this.getAction = getAction;
-    this.paginateAction = paginateAction;
-    this.resetFilterAction = resetFilterAction;
-    this.resetPaginatorAction = resetPaginatorAction;
-    this.resetSortAction = resetSortAction;
-    this.searchAction = searchAction;
-    this.sortAction = sortAction;
-    this.enableAllocateAdminAction = enableAllocateAdminAction;
-    this.toggleCheckboxAction = toggleCheckboxAction;
-    this.toggleAllCheckboxesAction = toggleAllCheckboxesAction;
+  public setRecommendationsActions(): void {
+    this.clearSearchAction = ClearRecommendationsSearch;
+    this.filterAction = FilterRecommendations;
+    this.getAction = GetRecommendations;
+    this.paginateAction = PaginateRecommendations;
+    this.resetFilterAction = ResetRecommendationsFilter;
+    this.resetPaginatorAction = ResetRecommendationsPaginator;
+    this.resetSortAction = ResetRecommendationsSort;
+    this.searchAction = RecommendationsSearch;
+    this.sortAction = SortRecommendations;
+    this.enableAllocateAdminAction = EnableRecommendationsAllocateAdmin;
+    this.toggleCheckboxAction = ToggleRecommendationsCheckbox;
+    this.toggleAllCheckboxesAction = ToggleAllRecommendationsCheckboxes;
+  }
+
+  public setConcernsActions(): void {
+    this.clearSearchAction = ClearConcernsSearch;
+    this.filterAction = FilterConcerns;
+    this.getAction = GetConcerns;
+    this.paginateAction = PaginateConcerns;
+    this.resetFilterAction = ResetConcernsFilter;
+    this.resetPaginatorAction = ResetConcernsPaginator;
+    this.resetSortAction = ResetConcernsSort;
+    this.searchAction = ConcernsSearch;
+    this.sortAction = SortConcerns;
+    this.enableAllocateAdminAction = EnableConcernsAllocateAdmin;
+    this.toggleCheckboxAction = ToggleConcernsCheckbox;
+    this.toggleAllCheckboxesAction = ToggleAllConcernsCheckboxes;
+  }
+
+  public setConnectionsActions(): void {
+    this.clearSearchAction = ClearConnectionsSearch;
+    this.filterAction = FilterConnections;
+    this.getAction = GetConnections;
+    this.paginateAction = PaginateConnections;
+    this.resetFilterAction = ResetConnectionsFilter;
+    this.resetPaginatorAction = ResetConnectionsPaginator;
+    this.resetSortAction = ResetConnectionsSort;
+    this.searchAction = ConnectionsSearch;
+    this.sortAction = SortConnections;
+    this.enableAllocateAdminAction = EnableConnectionsAllocateAdmin;
+    this.toggleCheckboxAction = ToggleConnectionsCheckbox;
+    this.toggleAllCheckboxesAction = ToggleAllConnectionsCheckboxes;
   }
 
   public getRecords<T>(endPoint: string, params?: HttpParams): Observable<T> {

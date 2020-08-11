@@ -6,20 +6,6 @@ import { generateColumnData } from "../records/constants";
 import { RecordsResolver } from "../records/records.resolver";
 import { RecordsService } from "../records/services/records.service";
 import { COLUMN_DATA } from "./constants";
-import {
-  ClearRecommendationsSearch,
-  EnableRecommendationsAllocateAdmin,
-  FilterRecommendations,
-  GetRecommendations,
-  PaginateRecommendations,
-  ResetRecommendationsFilter,
-  ResetRecommendationsPaginator,
-  ResetRecommendationsSort,
-  RecommendationsSearch,
-  SortRecommendations,
-  ToggleRecommendationsCheckbox,
-  ToggleAllRecommendationsCheckboxes
-} from "./state/recommendations.actions";
 
 @Injectable()
 export class RecommendationsResolver extends RecordsResolver
@@ -35,20 +21,7 @@ export class RecommendationsResolver extends RecordsResolver
   private initialiseData(): void {
     this.recordsService.stateName = "recommendations";
     this.recordsService.detailsRoute = "/recommendation";
-    this.recordsService.setActions(
-      ClearRecommendationsSearch,
-      FilterRecommendations,
-      GetRecommendations,
-      PaginateRecommendations,
-      ResetRecommendationsFilter,
-      ResetRecommendationsPaginator,
-      ResetRecommendationsSort,
-      RecommendationsSearch,
-      SortRecommendations,
-      EnableRecommendationsAllocateAdmin,
-      ToggleRecommendationsCheckbox,
-      ToggleAllRecommendationsCheckboxes
-    );
+    this.recordsService.setRecommendationsActions();
     this.recordsService.dateColumns = [
       "cctDate",
       "submissionDate",

@@ -5,23 +5,9 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
+import { RecommendationsState } from "../../recommendations/state/recommendations.state";
 import { MaterialModule } from "../../shared/material/material.module";
 import { RecordsService } from "../services/records.service";
-import {
-  ClearRecommendationsSearch,
-  EnableRecommendationsAllocateAdmin,
-  FilterRecommendations,
-  GetRecommendations,
-  PaginateRecommendations,
-  ResetRecommendationsFilter,
-  ResetRecommendationsPaginator,
-  ResetRecommendationsSort,
-  RecommendationsSearch,
-  SortRecommendations,
-  ToggleAllRecommendationsCheckboxes,
-  ToggleRecommendationsCheckbox
-} from "../../recommendations/state/recommendations.actions";
-import { RecommendationsState } from "../../recommendations/state/recommendations.state";
 import { RecordSearchComponent } from "./record-search.component";
 
 describe("RecordSearchComponent", () => {
@@ -51,20 +37,7 @@ describe("RecordSearchComponent", () => {
     fixture = TestBed.createComponent(RecordSearchComponent);
     component = fixture.componentInstance;
     recordsService.stateName = "recommendations";
-    recordsService.setActions(
-      ClearRecommendationsSearch,
-      FilterRecommendations,
-      GetRecommendations,
-      PaginateRecommendations,
-      ResetRecommendationsFilter,
-      ResetRecommendationsPaginator,
-      ResetRecommendationsSort,
-      RecommendationsSearch,
-      SortRecommendations,
-      EnableRecommendationsAllocateAdmin,
-      ToggleAllRecommendationsCheckboxes,
-      ToggleRecommendationsCheckbox
-    );
+    recordsService.setRecommendationsActions();
     fixture.detectChanges();
   });
 
@@ -112,21 +85,18 @@ describe("RecordSearchComponent", () => {
   });
 
   it("should dispatch relevant actions on valid form submission", () => {
-    spyOn(store, "dispatch").and.callThrough();
+    spyOn(recordsService, "search");
+    spyOn(recordsService, "resetSort");
+    spyOn(recordsService, "resetPaginator").and.callThrough();
     spyOn(recordsService, "updateRoute");
 
     component.setupForm();
     component.form.get("searchQuery").setValue("87723113");
     component.submitForm("87723113");
 
-    expect(store.dispatch).toHaveBeenCalledTimes(3);
-    expect(store.dispatch).toHaveBeenCalledWith(
-      new RecommendationsSearch("87723113")
-    );
-    expect(store.dispatch).toHaveBeenCalledWith(new ResetRecommendationsSort());
-    expect(store.dispatch).toHaveBeenCalledWith(
-      new ResetRecommendationsPaginator()
-    );
+    expect(recordsService.search).toHaveBeenCalledWith("87723113");
+    expect(recordsService.resetSort).toHaveBeenCalled();
+    expect(recordsService.resetPaginator).toHaveBeenCalled();
     expect(recordsService.updateRoute).toHaveBeenCalled();
   });
 

@@ -5,31 +5,17 @@ import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
+import { AdminsModule } from "../../admins/admins.module";
+import { AdminsState } from "../../admins/state/admins.state";
 import { COLUMN_DATA } from "../../concerns/constants";
 import { RecommendationStatus } from "../../recommendation/recommendation-history.interface";
 import { IRecommendation } from "../../recommendations/recommendations.interfaces";
 import { mockRecommendationsResponse } from "../../recommendations/services/recommendations.service.spec";
-import {
-  ClearRecommendationsSearch,
-  EnableRecommendationsAllocateAdmin,
-  FilterRecommendations,
-  GetRecommendations,
-  PaginateRecommendations,
-  ResetRecommendationsFilter,
-  ResetRecommendationsPaginator,
-  ResetRecommendationsSort,
-  RecommendationsSearch,
-  SortRecommendations,
-  ToggleAllRecommendationsCheckboxes,
-  ToggleRecommendationsCheckbox
-} from "../../recommendations/state/recommendations.actions";
 import { RecommendationsState } from "../../recommendations/state/recommendations.state";
 import { MaterialModule } from "../../shared/material/material.module";
 import { DEFAULT_SORT, generateColumnData } from "../constants";
 import { RecordsService } from "../services/records.service";
 import { RecordListComponent } from "./record-list.component";
-import { AdminsModule } from "../../admins/admins.module";
-import { AdminsState } from "../../admins/state/admins.state";
 
 describe("RecordListComponent", () => {
   let store: Store;
@@ -59,20 +45,7 @@ describe("RecordListComponent", () => {
     fixture = TestBed.createComponent(RecordListComponent);
     component = fixture.componentInstance;
     recordsService.stateName = "recommendations";
-    recordsService.setActions(
-      ClearRecommendationsSearch,
-      FilterRecommendations,
-      GetRecommendations,
-      PaginateRecommendations,
-      ResetRecommendationsFilter,
-      ResetRecommendationsPaginator,
-      ResetRecommendationsSort,
-      RecommendationsSearch,
-      SortRecommendations,
-      EnableRecommendationsAllocateAdmin,
-      ToggleAllRecommendationsCheckboxes,
-      ToggleRecommendationsCheckbox
-    );
+    recordsService.setRecommendationsActions();
     fixture.detectChanges();
   });
 

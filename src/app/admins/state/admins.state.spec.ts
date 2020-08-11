@@ -36,17 +36,17 @@ describe("Admins state", () => {
   });
 
   it("should dispatch 'Get' and invoke `adminsService.getAdminUsers()`", () => {
-    spyOn(adminsService, "getAdminUsers");
+    spyOn(adminsService, "getAdminUsers").and.callThrough();
     store
-      .dispatch(new Get("reval-site-admin"))
+      .dispatch(new Get())
       .subscribe(() => expect(adminsService.getAdminUsers).toHaveBeenCalled());
   });
 
   it("should dispatch 'GetSuccess' and select 'items' slice", () => {
-    store.dispatch(new GetSuccess(mockAdminsResponse.Users));
+    store.dispatch(new GetSuccess(mockAdminsResponse));
     const items = store.selectSnapshot(AdminsState.items);
-    expect(items.length).toEqual(1);
-    expect(items[0].Username).toEqual("siteadmin@hee.nhs.uk");
+    expect(items.length).toEqual(2);
+    expect(items[0].username).toEqual("siteadmin@hee.nhs.uk");
   });
 
   it("should dispatch 'GetError' and select 'error' slice", () => {

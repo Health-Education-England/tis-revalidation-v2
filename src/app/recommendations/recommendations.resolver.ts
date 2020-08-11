@@ -2,22 +2,10 @@ import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, Resolve } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
+import { generateColumnData } from "../records/constants";
 import { RecordsResolver } from "../records/records.resolver";
 import { RecordsService } from "../records/services/records.service";
-import {
-  ClearRecommendationsSearch,
-  EnableRecommendationsAllocateAdmin,
-  FilterRecommendations,
-  GetRecommendations,
-  PaginateRecommendations,
-  ResetRecommendationsFilter,
-  ResetRecommendationsPaginator,
-  ResetRecommendationsSort,
-  RecommendationsSearch,
-  SortRecommendations,
-  ToggleRecommendationsCheckbox,
-  ToggleAllRecommendationsCheckboxes
-} from "./state/recommendations.actions";
+import { COLUMN_DATA } from "./constants";
 
 @Injectable()
 export class RecommendationsResolver extends RecordsResolver
@@ -27,21 +15,20 @@ export class RecommendationsResolver extends RecordsResolver
     protected recordsService: RecordsService
   ) {
     super(store, recordsService);
+    this.initialiseData();
+  }
+
+  private initialiseData(): void {
     this.recordsService.stateName = "recommendations";
-    this.recordsService.setActions(
-      ClearRecommendationsSearch,
-      FilterRecommendations,
-      GetRecommendations,
-      PaginateRecommendations,
-      ResetRecommendationsFilter,
-      ResetRecommendationsPaginator,
-      ResetRecommendationsSort,
-      RecommendationsSearch,
-      SortRecommendations,
-      EnableRecommendationsAllocateAdmin,
-      ToggleRecommendationsCheckbox,
-      ToggleAllRecommendationsCheckboxes
-    );
+    this.recordsService.detailsRoute = "/recommendation";
+    this.recordsService.setRecommendationsActions();
+    this.recordsService.dateColumns = [
+      "cctDate",
+      "submissionDate",
+      "dateAdded",
+      "lastUpdatedDate"
+    ];
+    this.recordsService.columnData = generateColumnData(COLUMN_DATA);
   }
 
   resolve(route: ActivatedRouteSnapshot): Observable<any> {

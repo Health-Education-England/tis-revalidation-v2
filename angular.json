@@ -57,7 +57,6 @@
               "@aws-sdk/util-utf8-browser",
               "@aws-sdk/util-utf8-node",
               "@aws-sdk/xml-builder",
-              "aws-sdk",
               "axios",
               "buffer",
               "crypto-js/enc-base64",

@@ -28,6 +28,7 @@ export const environment: IEnvironment = {
     getNotes: `mocky/45017692-2588-48dc-b6c2-c637cd723625`,
     getRecommendation: `mocky/6fd60c05-b4d0-462d-87a8-87402d57bd2e`,
     getRecommendations: `mocky/81267580-411e-4ce6-8dca-2f65f9d2e485?mocky-delay=700ms`,
+    listAdmins: ``, // TODO mock this
     listFiles: ``, // TODO mock this
     login: ``,
     saveRecommendation: `api/recommendation`, // TODO mock this

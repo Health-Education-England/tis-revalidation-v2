@@ -3,23 +3,9 @@ import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule } from "@ngxs/store";
+import { RecommendationsState } from "../../recommendations/state/recommendations.state";
 import { MaterialModule } from "../../shared/material/material.module";
 import { RecordsService } from "../services/records.service";
-import {
-  ClearRecommendationsSearch,
-  EnableRecommendationsAllocateAdmin,
-  FilterRecommendations,
-  GetRecommendations,
-  PaginateRecommendations,
-  ResetRecommendationsFilter,
-  ResetRecommendationsPaginator,
-  ResetRecommendationsSort,
-  RecommendationsSearch,
-  SortRecommendations,
-  ToggleAllRecommendationsCheckboxes,
-  ToggleRecommendationsCheckbox
-} from "../../recommendations/state/recommendations.actions";
-import { RecommendationsState } from "../../recommendations/state/recommendations.state";
 import { ResetRecordListComponent } from "./reset-record-list.component";
 
 describe("ResetRecordListComponent", () => {
@@ -48,20 +34,7 @@ describe("ResetRecordListComponent", () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     recordsService.stateName = "recommendations";
-    recordsService.setActions(
-      ClearRecommendationsSearch,
-      FilterRecommendations,
-      GetRecommendations,
-      PaginateRecommendations,
-      ResetRecommendationsFilter,
-      ResetRecommendationsPaginator,
-      ResetRecommendationsSort,
-      RecommendationsSearch,
-      SortRecommendations,
-      EnableRecommendationsAllocateAdmin,
-      ToggleAllRecommendationsCheckboxes,
-      ToggleRecommendationsCheckbox
-    );
+    recordsService.setRecommendationsActions();
   });
 
   it("should create", () => {

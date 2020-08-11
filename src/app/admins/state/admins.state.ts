@@ -1,10 +1,9 @@
 import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { append, patch, removeItem } from "@ngxs/store/operators";
-import { UserType } from "aws-sdk/clients/cognitoidentityserviceprovider";
 import { catchError, switchMap, take } from "rxjs/operators";
 import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
-import { IAllocateAdmin } from "../admins.interfaces";
+import { IAdmin, IAllocateAdmin } from "../admins.interfaces";
 import { AdminsService } from "../services/admins.service";
 import {
   AddToAllocateList,
@@ -20,7 +19,7 @@ import {
 
 export class AdminsStateModel {
   public error?: string;
-  public items: UserType[];
+  public items: IAdmin[];
   public allocateList: IAllocateAdmin[];
 }
 
@@ -49,8 +48,12 @@ export class AdminsState {
   }
 
   @Action(Get)
-  get(ctx: StateContext<AdminsStateModel>, action: Get) {
-    return this.adminsService.getAdminUsers(action.groupName);
+  get(ctx: StateContext<AdminsStateModel>) {
+    return this.adminsService.getAdminUsers().pipe(
+      take(1),
+      switchMap((response: IAdmin[]) => ctx.dispatch(new GetSuccess(response))),
+      catchError((error: string) => ctx.dispatch(new GetError(error)))
+    );
   }
 
   @Action(GetSuccess)

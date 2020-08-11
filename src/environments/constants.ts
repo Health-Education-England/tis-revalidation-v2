@@ -12,6 +12,7 @@ export const APP_URLS_CONFIG: IEnvironment["appUrls"] = {
   getNotes: `mocky/5ea2da614f00006c00d9f540`, // TODO replace with appropriate api url once is available
   getRecommendation: `api/recommendation`,
   getRecommendations: `api/v1/doctors`,
+  listAdmins: `api/admins`,
   listFiles: `api/storage/list`,
   login: ``,
   saveRecommendation: `api/recommendation`,
@@ -20,7 +21,6 @@ export const APP_URLS_CONFIG: IEnvironment["appUrls"] = {
 };
 
 export const AWS_CONFIG: IEnvironment["awsConfig"] = {
-  accessKeyId: "AKIAWISJGQ6JUF3LSWMO",
   authenticationFlowType: "USER_PASSWORD_AUTH",
   bucketName: "",
   domain: "stage-auth.tis.nhs.uk",
@@ -30,7 +30,6 @@ export const AWS_CONFIG: IEnvironment["awsConfig"] = {
   region: "eu-west-2",
   responseType: "token",
   scope: ["openid", "aws.cognito.signin.user.admin"],
-  secretAccessKey: "hriPPZQppD+5DM02iE+wVX1+jOCUyXkqK34Fzfl4",
   userPoolId: "eu-west-2_J8SoC9e1Y",
   userPoolWebClientId: "23mvi31orrlq04ugap61mor8bg"
 };

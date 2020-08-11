@@ -41,11 +41,11 @@ describe("ConcernDetailComponent", () => {
   beforeEach(() => {
     spyOn(
       ConcernDetailComponent.prototype,
-      "InitialiseFormControls"
+      "initialiseFormControls"
     ).and.callThrough();
     spyOn(
       ConcernDetailComponent.prototype,
-      "InitialiseMaxMinDates"
+      "initialiseMaxMinDates"
     ).and.callThrough();
   });
 
@@ -60,10 +60,26 @@ describe("ConcernDetailComponent", () => {
   });
 
   it("should initialise form controls", () => {
-    expect(component.InitialiseFormControls).toHaveBeenCalled();
+    expect(component.initialiseFormControls).toHaveBeenCalled();
   });
 
-  it("should check form values", async () => {
+  it("should reflect form values in add mode", () => {
+    fixture.detectChanges();
+    expect(component.dateOfIncident.value).toEqual(
+      defaultConcern.dateOfIncident
+    );
+    expect(component.source.value).toEqual(defaultConcern.source);
+    expect(component.concernType.value).toEqual(defaultConcern.concernType);
+    expect(component.dateReported.value).toEqual(defaultConcern.dateReported);
+    expect(component.followUpDate.value).toEqual(defaultConcern.followUpDate);
+    expect(component.status.value).toEqual(
+      component.getConcernStatus(defaultConcern.status)
+    );
+    expect(component.setConcernStatus(true)).toEqual(ConcernStatus.OPEN);
+    expect(component.setConcernStatus(false)).toEqual(ConcernStatus.CLOSED);
+  });
+
+  it("should reflect form values in edit mode", async () => {
     const newConcern: IConcernSummary = ConcernHistoryResponse2.concerns[0];
     await setSelectedConcern(newConcern).toPromise();
     fixture.detectChanges();
@@ -80,7 +96,7 @@ describe("ConcernDetailComponent", () => {
   });
 
   it("should initialise max and min dates", () => {
-    expect(component.InitialiseMaxMinDates).toHaveBeenCalled();
+    expect(component.initialiseMaxMinDates).toHaveBeenCalled();
   });
 
   it("should merge and save state on submit", () => {

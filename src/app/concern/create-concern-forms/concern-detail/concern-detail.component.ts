@@ -55,8 +55,8 @@ export class ConcernDetailComponent implements OnDestroy {
   @Input() stepper: MatStepper;
 
   constructor(private store: Store) {
-    this.InitialiseFormControls();
-    this.InitialiseMaxMinDates();
+    this.initialiseFormControls();
+    this.initialiseMaxMinDates();
   }
 
   ngOnDestroy(): void {
@@ -70,7 +70,7 @@ export class ConcernDetailComponent implements OnDestroy {
   /**
    * Initialises all form controls and adds to FormGroup
    */
-  InitialiseFormControls(): void {
+  initialiseFormControls(): void {
     this.subsciptions.push(
       this.selectedConcern$.subscribe((cs: IConcernSummary) => {
         this.concern = cs;
@@ -95,7 +95,7 @@ export class ConcernDetailComponent implements OnDestroy {
     );
   }
 
-  InitialiseMaxMinDates(): void {
+  initialiseMaxMinDates(): void {
     this.lessThanEqualToday = new Date();
     this.greaterThanToday = new Date();
     this.greaterThanToday.setDate(this.greaterThanToday.getDate() + 1);

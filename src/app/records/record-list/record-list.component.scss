@@ -6,6 +6,7 @@
   border-left: solid 4px $color_nhsuk-red;
 }
 
+// common columns
 @include mat-table-columns(
   (
     doctorFirstName: (
@@ -17,25 +18,82 @@
     gmcReferenceNumber: (
       width: 80px
     ),
-    submissionDate: (
+    admin: (
       width: 180px
-    ),
-    doctorStatus: (
-      width: 100px
     ),
     programmeName: (
       width: 160px
     ),
     programmeMembershipType: (
       width: 180px
+    )
+  )
+);
+
+// reommendations columns
+@include mat-table-columns(
+  (
+    submissionDate: (
+      width: 180px
+    ),
+    doctorStatus: (
+      width: 100px
     ),
     cctDate: (
       width: 110px
     ),
-    admin: (
+    lastUpdatedDate: (
+      width: 110px
+    )
+  )
+);
+
+// concerns columns
+@include mat-table-columns(
+  (
+    programme: (
+      width: 160px
+    ),
+    dateRaised: (
+      width: 100px
+    ),
+    type: (
+      width: 160px
+    ),
+    site: (
+      width: 160px
+    ),
+    source: (
+      width: 140px
+    ),
+    status: (
+      width: 100px
+    ),
+    followUpDate: (
       width: 180px
     ),
-    lastUpdatedDate: (
+    closedDate: (
+      width: 110px
+    )
+  )
+);
+
+// connections columns
+@include mat-table-columns(
+  (
+    designatedBody: (
+      width: 160px
+    ),
+    programmeOwner: (
+      width: 180px
+    ),
+    connectionStatus: (
+      width: 180px
+    ),
+    programmeMembershipStartDate: (
+      width: 180px
+    ),
+    programmeMembershipEndDate: (
       width: 110px
     )
   )

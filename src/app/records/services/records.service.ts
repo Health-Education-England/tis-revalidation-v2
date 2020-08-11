@@ -164,74 +164,47 @@ export class RecordsService {
   }
 
   public get(): Observable<any> {
-    if (!this.getAction) {
-      throw new Error("getAction must be defined");
-    }
-
+    this.handleUndefinedAction("getAction");
     return this.store.dispatch(new this.getAction());
   }
 
   public sort(active: string, direction): Observable<any> {
-    if (!this.sortAction) {
-      throw new Error("sortActionFunction must be defined");
-    }
-
+    this.handleUndefinedAction("sortActionFunction");
     return this.store.dispatch(new this.sortAction(active, direction));
   }
 
   public resetSort(): Observable<any> {
-    if (!this.resetSortAction) {
-      throw new Error("resetSortAction must be defined");
-    }
-
+    this.handleUndefinedAction("resetSortAction");
     return this.store.dispatch(new this.resetSortAction());
   }
 
   public paginate(pageIndex: number): Observable<any> {
-    if (!this.paginateAction) {
-      throw new Error("paginateAction must be defined");
-    }
-
+    this.handleUndefinedAction("paginateAction");
     return this.store.dispatch(new this.paginateAction(pageIndex));
   }
 
   public resetPaginator(): Observable<any> {
-    if (!this.resetPaginatorAction) {
-      throw new Error("resetPaginatorAction must be defined");
-    }
-
+    this.handleUndefinedAction("resetPaginatorAction");
     return this.store.dispatch(new this.resetPaginatorAction());
   }
 
   public search(searchQuery: string): Observable<any> {
-    if (!this.searchAction) {
-      throw new Error("searchAction must be defined");
-    }
-
+    this.handleUndefinedAction("searchAction");
     return this.store.dispatch(new this.searchAction(searchQuery));
   }
 
   public clearSearch(): Observable<any> {
-    if (!this.clearSearchAction) {
-      throw new Error("clearSearchAction must be defined");
-    }
-
+    this.handleUndefinedAction("clearSearchAction");
     return this.store.dispatch(new this.clearSearchAction());
   }
 
   public filter(filter: any): Observable<any> {
-    if (!this.filterAction) {
-      throw new Error("filterAction must be defined");
-    }
-
+    this.handleUndefinedAction("filterAction");
     return this.store.dispatch(new this.filterAction(filter));
   }
 
   public resetFilter(): Observable<any> {
-    if (!this.resetFilterAction) {
-      throw new Error("resetFilterAction must be defined");
-    }
-
+    this.handleUndefinedAction("resetFilterAction");
     return this.store.dispatch(new this.resetFilterAction());
   }
 
@@ -250,10 +223,14 @@ export class RecordsService {
     );
   }
 
-  public enableAllocateAdmin(enableAllocateAdmin: boolean): Observable<any> {
-    if (!this.enableAllocateAdminAction) {
-      throw new Error("enableAllocateAdminAction must be defined");
+  private handleUndefinedAction(actionName: string): void {
+    if (!this[actionName]) {
+      throw new Error(`${actionName} must be defined`);
     }
+  }
+
+  public enableAllocateAdmin(enableAllocateAdmin: boolean): Observable<any> {
+    this.handleUndefinedAction("enableAllocateAdminAction");
 
     return this.store.dispatch(
       new this.enableAllocateAdminAction(enableAllocateAdmin)
@@ -261,9 +238,7 @@ export class RecordsService {
   }
 
   public toggleCheckbox(gmcReferenceNumber: string): Observable<any> {
-    if (!this.toggleCheckboxAction) {
-      throw new Error("toggleCheckboxAction must be defined");
-    }
+    this.handleUndefinedAction("toggleCheckboxAction");
 
     return this.store.dispatch(
       new this.toggleCheckboxAction(gmcReferenceNumber)
@@ -271,9 +246,7 @@ export class RecordsService {
   }
 
   public toggleAllCheckboxes(): Observable<any> {
-    if (!this.toggleAllCheckboxesAction) {
-      throw new Error("toggleAllCheckboxesAction must be defined");
-    }
+    this.handleUndefinedAction("toggleAllCheckboxesAction");
 
     return this.store.dispatch(new this.toggleAllCheckboxesAction());
   }

@@ -1,14 +1,29 @@
 <!-- spinner  -->
 <div *ngIf="uploadFileInProgress$ | async; else notLoading">
-  <div *ngFor="let fileInProgress of filesInUploadProgress$ | async">
-    <mat-card>
+  <div class="d-grid grid-container-2-col p-5 mb-20">
+    <mat-card
+      *ngFor="let fileInProgress of filesInUploadProgress$ | async"
+      class="file upload highlight"
+    >
       <mat-card-title>
         {{ fileInProgress.file.name }}
       </mat-card-title>
       <mat-card-subtitle>
-        <div class="d-flex justify-content-between">
-          <span>{{ fileInProgress.file.size | fileBytes }}</span>
-          <span>{{ fileInProgress.progress / 100 | percent }}</span>
+        <div class="d-flex justify-content-between align-items-center">
+          <div>{{ fileInProgress.file.size | fileBytes }}</div>
+          <div class="d-flex justify-content-between align-items-center">
+            <span>
+              {{ fileInProgress.progress / 100 | percent }}
+            </span>
+            <mat-icon
+              *ngIf="!concernId"
+              mat-list-icon
+              (click)="removeProgressFile(fileInProgress.file)"
+              class="cursor-pointer justify-self-end"
+            >
+              delete
+            </mat-icon>
+          </div>
         </div>
       </mat-card-subtitle>
       <mat-card-content>
@@ -16,43 +31,54 @@
       </mat-card-content>
     </mat-card>
   </div>
+  <div *ngIf="!concernId">
+    <p class="mat-caption centered">
+      <em>*Uploads will resume when concern is saved.</em>
+    </p>
+  </div>
 </div>
 
 <ng-template #notLoading>
   <form [formGroup]="form">
     <div
-      class="button-row upload centered p-20"
+      class="p-5 mb-20"
       #dropArea
       (dragenter)="preventDefaults($event); highlight()"
       (dragover)="preventDefaults($event); highlight()"
       (dragleave)="preventDefaults($event); unHighlight()"
       (drop)="preventDefaults($event); unHighlight(); handleDrop($event)"
     >
-      <p>
-        Drag and drop supporting documents, or click attach icon to upload:
-      </p>
-      <button
-        mat-button
-        color="accent"
-        mat-mini-fab
-        (click)="fileUploader.click()"
-      >
-        <mat-icon>attachment</mat-icon>
-      </button>
-      <input
-        hidden
-        type="file"
-        #fileUploader
-        multiple
-        [formControlName]="'fileUploader'"
-        [accept]="acceptedFileTypes"
-        (change)="onFilesSelection($event)"
-      />
-      <p class="mat-caption">
-        Supported files include: Images (.png. jpg), PDF, Word (.doc .docx) and
-        excel (.xlxs .xls). Max file size
-        <strong>{{ acceptedFileSize | fileBytes }}</strong>
-      </p>
+      <mat-card class="file centered upload">
+        <mat-card-title>
+          Drag and drop supporting documents, or click attach icon to upload:
+        </mat-card-title>
+        <mat-card-actions>
+          <button
+            mat-button
+            color="accent"
+            mat-mini-fab
+            (click)="fileUploader.click()"
+          >
+            <mat-icon>attachment</mat-icon>
+          </button>
+          <input
+            hidden
+            type="file"
+            #fileUploader
+            multiple
+            [formControlName]="'fileUploader'"
+            [accept]="acceptedFileTypes"
+            (change)="onFilesSelection($event)"
+          />
+        </mat-card-actions>
+        <mat-card-footer>
+          <p class="mat-caption">
+            Supported files include: Images (.png. jpg), PDF, Word (.doc .docx)
+            and excel (.xlxs .xls). Max file size
+            <strong>{{ acceptedFileSize | fileBytes }}</strong>
+          </p>
+        </mat-card-footer>
+      </mat-card>
     </div>
   </form>
 </ng-template>

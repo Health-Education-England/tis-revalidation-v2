@@ -4,9 +4,9 @@ import { NgxsModule, Store } from "@ngxs/store";
 import { RouterTestingModule } from "@angular/router/testing";
 import { Router } from "@angular/router";
 import { Component } from "@angular/core";
-import { ConcernState } from "./state/concern.state";
+import { ConcernState } from "../state/concern.state";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { MaterialModule } from "../shared/material/material.module";
+import { MaterialModule } from "../../shared/material/material.module";
 
 @Component({
   template: `blank`

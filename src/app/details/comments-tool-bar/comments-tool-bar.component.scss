@@ -1,3 +1,5 @@
+@import "../../../../node_modules/@angular/material/core/style/variables";
+
 .comments-toolbar {
   display: flex;
   flex-direction: row;
@@ -8,6 +10,12 @@
   border: 1px solid transparent;
   min-width: 150px;
   max-width: 100%;
+  margin: 0 auto;
+  width: calc(100% - 30px);
+
+  @media screen and (#{$mat-small}) {
+    width: 100%;
+  }
 
   &:hover,
   &:focus {

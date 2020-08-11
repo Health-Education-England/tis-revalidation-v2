@@ -117,3 +117,9 @@ $colour-values: (
     opacity: 1;
   }
 }
+
+.mat-simple-snackbar > span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

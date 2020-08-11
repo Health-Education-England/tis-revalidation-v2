@@ -55,8 +55,8 @@ export class ConcernDetailComponent implements OnDestroy {
   @Input() stepper: MatStepper;
 
   constructor(private store: Store) {
-    this.InitialiseFormControls();
-    this.InitialiseMaxMinDates();
+    this.initialiseFormControls();
+    this.initialiseMaxMinDates();
   }
 
   ngOnDestroy(): void {
@@ -70,7 +70,7 @@ export class ConcernDetailComponent implements OnDestroy {
   /**
    * Initialises all form controls and adds to FormGroup
    */
-  InitialiseFormControls(): void {
+  initialiseFormControls(): void {
     this.subsciptions.push(
       this.selectedConcern$.subscribe((cs: IConcernSummary) => {
         this.concern = cs;
@@ -90,46 +90,46 @@ export class ConcernDetailComponent implements OnDestroy {
         this.status = new FormControl(cs.status, [Validators.required]);
         this.subscribeToStatusChanges();
         this.addFormControls();
-        this.bindDefaultStatus(cs.status);
+        this.status.setValue(this.getConcernStatus(cs.status));
       })
     );
   }
 
-  subscribeToStatusChanges(): void {
+  initialiseMaxMinDates(): void {
+    this.lessThanEqualToday = new Date();
+    this.greaterThanToday = new Date();
+    this.greaterThanToday.setDate(this.greaterThanToday.getDate() + 1);
+  }
+
+  getConcernStatus(status: ConcernStatus): boolean {
+    return status === ConcernStatus.CLOSED ? false : true;
+  }
+  setConcernStatus(status: boolean): ConcernStatus {
+    return status === false ? ConcernStatus.CLOSED : ConcernStatus.OPEN;
+  }
+
+  onSubmit(): void {
+    const newConcern = { ...this.concern, ...this.formGroup.value }; // TODO convert status from boolean here
+    this.store.dispatch(new SetSelectedConcern(newConcern));
+    if (this.stepper) {
+      this.stepper.next();
+    }
+  }
+
+  private subscribeToStatusChanges(): void {
     this.subsciptions.push(
       this.status.valueChanges.subscribe((val) => {
-        this.statusText = val ? "Open" : "Closed";
+        this.statusText = this.setConcernStatus(val);
       })
     );
   }
 
-  addFormControls(): void {
+  private addFormControls(): void {
     this.formGroup.addControl("dateOfIncident", this.dateOfIncident);
     this.formGroup.addControl("concernType", this.concernType);
     this.formGroup.addControl("source", this.source);
     this.formGroup.addControl("dateReported", this.dateReported);
     this.formGroup.addControl("followUpDate", this.followUpDate);
     this.formGroup.addControl("status", this.status);
-  }
-
-  bindDefaultStatus(status: ConcernStatus): void {
-    const statusValue: boolean = status
-      ? status === ConcernStatus.OPEN
-        ? true
-        : false
-      : true;
-    this.status.setValue(statusValue);
-  }
-
-  InitialiseMaxMinDates(): void {
-    this.lessThanEqualToday = new Date();
-    this.greaterThanToday = new Date();
-    this.greaterThanToday.setDate(this.greaterThanToday.getDate() + 1);
-  }
-
-  onSubmit(): void {
-    const newConcern = { ...this.concern, ...this.formGroup.value };
-    this.store.dispatch(new SetSelectedConcern(newConcern));
-    this.stepper.next();
   }
 }

@@ -6,6 +6,7 @@ import { ACCEPTED_IMAGE_EXTENSIONS } from "../constants";
 import { UploadService } from "../services/upload/upload.service";
 import { DeleteFile, DownloadFile, ListFiles } from "../state/concern.actions";
 import { ConcernState } from "../state/concern.state";
+import { IConcernSummary } from "../concern.interfaces";
 
 @Component({
   selector: "app-uploaded-files-list",
@@ -18,14 +19,15 @@ export class UploadedFilesListComponent implements OnInit {
   @Select(ConcernState.listFilesInProgress)
   public listFilesInProgress$: Observable<boolean>;
   @Select(ConcernState.uploadedFiles) public uploadedFiles$: Observable<any[]>;
+  @Select(ConcernState.selected)
+  selectedConcern$: Observable<IConcernSummary>;
   public acceptedImageExtensions: string[] = ACCEPTED_IMAGE_EXTENSIONS;
   public concernId?: number;
 
-  constructor(private uploadService: UploadService, private store: Store) {}
+  constructor(private store: Store) {}
 
   ngOnInit(): void {
     this.setConcernId();
-    this.listFiles();
   }
 
   public downloadFile(fileName: string, key: string): Observable<any> {
@@ -33,14 +35,16 @@ export class UploadedFilesListComponent implements OnInit {
   }
 
   public setConcernId(): void {
-    const selectedConcern = this.store.selectSnapshot(ConcernState.selected);
-    this.concernId = selectedConcern
-      ? selectedConcern.concernId
-      : this.gmcNumber;
+    this.selectedConcern$.subscribe((selectedConcern: IConcernSummary) => {
+      this.concernId = selectedConcern.concernId;
+      this.listFiles();
+    });
   }
 
   public deleteFile(fileName: string, key: string): Observable<any> {
-    return this.store.dispatch(new DeleteFile(fileName, key));
+    return this.store.dispatch(
+      new DeleteFile(encodeURIComponent(fileName), key)
+    );
   }
 
   public listFiles(): Observable<any> {

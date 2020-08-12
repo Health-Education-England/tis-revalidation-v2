@@ -169,7 +169,7 @@ export class RecordsService {
   }
 
   public sort(active: string, direction): Observable<any> {
-    this.handleUndefinedAction("sortActionFunction");
+    this.handleUndefinedAction("sortAction");
     return this.store.dispatch(new this.sortAction(active, direction));
   }
 

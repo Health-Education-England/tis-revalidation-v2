@@ -139,7 +139,7 @@ export class FileUploaderComponent implements OnInit, OnDestroy {
       return;
     }
 
-    if (processedFiles.length && this.concernId) {
+    if (processedFiles.length) {
       this.upload(processedFiles);
     }
   }

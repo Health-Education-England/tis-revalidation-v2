@@ -55,12 +55,11 @@ export class AllocateAdminAutocompleteComponent implements OnInit {
   }
 
   private filter(value: string, items: IAdmin[]): any {
-    return (
-      items &&
-      items.filter((i: IAdmin) =>
+    if (items && items.filter) {
+      return items.filter((i: IAdmin) =>
         i.fullName.toLowerCase().includes(value.toLowerCase())
-      )
-    );
+      );
+    }
   }
 
   public onOptionSelected(event: MatAutocompleteSelectedEvent): void {

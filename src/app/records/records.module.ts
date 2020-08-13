@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { AdminsModule } from "../admins/admins.module";
 import { MaterialModule } from "../shared/material/material.module";
 import { SharedModule } from "../shared/shared.module";
+import { RecordListFiltersComponent } from "./record-list-filters/record-list-filters.component";
 import { RecordListPaginatorComponent } from "./record-list-paginator/record-list-paginator.component";
 import { RecordListComponent } from "./record-list/record-list.component";
 import { RecordSearchComponent } from "./record-search/record-search.component";
@@ -13,6 +14,7 @@ import { RecordsService } from "./services/records.service";
 
 const components: any[] = [
   RecordListComponent,
+  RecordListFiltersComponent,
   RecordListPaginatorComponent,
   RecordSearchComponent,
   RefreshDataBtnComponent,

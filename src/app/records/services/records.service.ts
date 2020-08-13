@@ -198,7 +198,7 @@ export class RecordsService {
     return this.store.dispatch(new this.clearSearchAction());
   }
 
-  public filter(filter: any): Observable<any> {
+  public filter(filter: string): Observable<any> {
     this.handleUndefinedAction("filterAction");
     return this.store.dispatch(new this.filterAction(filter));
   }

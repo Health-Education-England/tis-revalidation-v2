@@ -11,7 +11,7 @@
       mat-tab-link
       [active]="data.filter === allDoctors"
       aria-label="Filter all doctors"
-      (click)="filterByAllDoctors()"
+      (click)="filterRecords(allDoctors)"
       [disabled]="data.enableAllocateAdmin"
     >
       ALL DOCTORS - {{ data.countTotal }}
@@ -20,7 +20,7 @@
       mat-tab-link
       [active]="data.filter === underNotice"
       aria-label="Filter under notice"
-      (click)="filterByUnderNotice()"
+      (click)="filterRecords(underNotice)"
       [disabled]="data.enableAllocateAdmin"
     >
       UNDER NOTICE - {{ data.countUnderNotice }}

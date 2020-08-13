@@ -33,6 +33,7 @@ export class CreateEditConcernResolver implements Resolve<any> {
         return from(this.router.navigate(["/404"]));
       }
     } else {
+      defaultConcern.concernId = Number(route.parent.params.gmcNumber); // TODO: REMOVE AFTER UPLOAD BUG IS RESOLVED
       return this.store.dispatch(new SetSelectedConcern(defaultConcern));
     }
   }

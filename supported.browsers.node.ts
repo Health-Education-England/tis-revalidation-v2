@@ -13,7 +13,8 @@ const fs = require("fs");
 
 const content = `(function() {
   var sb = ${supportedRegEx};
-  if (sb.test(navigator.userAgent) === false) {
+  if (sb.test(navigator.userAgent) === false &&
+  /Chrome-Lighthouse/.test(navigator.userAgent) === false) {
     window.location.replace(
       "assets/browser-support/browser-not-supported.html"
     );
@@ -21,7 +22,7 @@ const content = `(function() {
 })();
 `;
 
-fs.writeFile("supported.browsers.js", content, err => {
+fs.writeFile("supported.browsers.js", content, (err) => {
   if (err) {
     console.error(err);
     return;

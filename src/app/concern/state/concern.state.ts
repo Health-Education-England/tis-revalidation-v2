@@ -13,7 +13,10 @@ import {
   IConcernSummary,
   IGetConcernResponse,
   IListFile,
-  IFileUploadProgress
+  IFileUploadProgress,
+  IGrade,
+  ISite,
+  IEmployer
 } from "../concern.interfaces";
 import { ConcernService } from "../services/concern/concern.service";
 import { UploadService } from "../services/upload/upload.service";
@@ -50,6 +53,9 @@ export class ConcernStateModel {
   public uploadedFiles?: any[];
   public uploadFileInProgress?: boolean;
   public filesInUploadProgress?: IFileUploadProgress[];
+  public employers?: IEmployer[];
+  public grades?: IGrade[];
+  public sites?: ISite[];
 }
 
 @State<ConcernStateModel>({
@@ -66,6 +72,21 @@ export class ConcernState {
     private uploadService: UploadService,
     private snackBarService: SnackBarService
   ) {}
+
+  @Selector()
+  public static employers(state: ConcernStateModel) {
+    return state.employers;
+  }
+
+  @Selector()
+  public static grades(state: ConcernStateModel) {
+    return state.grades;
+  }
+
+  @Selector()
+  public static sites(state: ConcernStateModel) {
+    return state.sites;
+  }
 
   @Selector()
   public static uploadFileInProgress(state: ConcernStateModel) {
@@ -112,7 +133,10 @@ export class ConcernState {
       tap((response: IGetConcernResponse) =>
         patchState({
           gmcNumber: response.gmcNumber || payload,
-          history: response.concerns
+          history: response.concerns,
+          employers: response.employers,
+          grades: response.grades,
+          sites: response.sites
         })
       )
     );

@@ -1,10 +1,17 @@
 <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="trainee-detail">
-  <div class="d-grid grid-container-2-col">
+  <div
+    class="d-grid grid-container-2-col"
+    *ngIf="{
+      grades: grades$ | async,
+      sites: sites$ | async,
+      employers: employers$ | async
+    } as data"
+  >
     <mat-form-field>
       <mat-label>Grade</mat-label>
       <mat-select formControlName="grade">
-        <mat-option *ngFor="let grade of grades" [value]="grade.gradeId">
-          {{ grade.gradeName }}
+        <mat-option *ngFor="let grade of data.grades" [value]="grade.id">
+          {{ grade.name }}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -14,7 +21,7 @@
     <mat-form-field>
       <mat-label>Site</mat-label>
       <mat-select formControlName="site">
-        <mat-option *ngFor="let site of sites" [value]="site.siteId">
+        <mat-option *ngFor="let site of data.sites" [value]="site.id">
           {{ site.siteName }}
         </mat-option>
       </mat-select>
@@ -27,10 +34,10 @@
       <mat-label>Employer</mat-label>
       <mat-select formControlName="employer">
         <mat-option
-          *ngFor="let employer of employers"
-          [value]="employer.employerId"
+          *ngFor="let employer of data.employers"
+          [value]="employer.id"
         >
-          {{ employer.employerName }}
+          {{ employer.trustName }}
         </mat-option>
       </mat-select>
       <mat-error *ngIf="form.employer.hasError('required')">

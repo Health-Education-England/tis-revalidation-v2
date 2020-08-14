@@ -1,6 +1,9 @@
 export interface IGetConcernResponse {
-  gmcNumber: number;
   concerns: IConcernSummary[];
+  employers: IEmployer[];
+  gmcNumber: number;
+  grades: IGrade[];
+  sites: ISite[];
 }
 
 export interface IListFile {
@@ -43,16 +46,44 @@ export interface IncidentType {
 }
 
 export interface IGrade {
-  gradeId: number;
-  gradeName: string;
+  abbreviation: string;
+  id: number;
+  intrepidId: string;
+  label: string;
+  name: string;
+  placementGrade: boolean;
+  postGrade: boolean;
+  status: string;
+  trainingGrade: boolean;
 }
 
 export interface ISite {
-  siteId: number;
+  address: string;
+  endDate: string;
+  id: number;
+  intrepidId: number;
+  localOffice: string;
+  organisationalUnit: string;
+  postCode: string;
+  siteCode: string;
+  siteKnownAs: string;
   siteName: string;
+  siteNumber: number;
+  startDate: string;
+  status: string;
+  trustCode: string;
+  trustId: number;
 }
 
 export interface IEmployer {
-  employerId: number;
-  employerName: string;
+  address: string;
+  code: string;
+  id: number;
+  intrepidId: string;
+  localOffice: string;
+  postCode: string;
+  status: string;
+  trustKnownAs: string;
+  trustName: string;
+  trustNumber: string;
 }

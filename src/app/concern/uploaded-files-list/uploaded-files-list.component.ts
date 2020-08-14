@@ -3,7 +3,6 @@ import { environment } from "@environment";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { ACCEPTED_IMAGE_EXTENSIONS } from "../constants";
-import { UploadService } from "../services/upload/upload.service";
 import { DeleteFile, DownloadFile, ListFiles } from "../state/concern.actions";
 import { ConcernState } from "../state/concern.state";
 import { IConcernSummary } from "../concern.interfaces";

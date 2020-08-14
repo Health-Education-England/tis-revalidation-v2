@@ -32,29 +32,13 @@ export class TraineeDetailComponent implements OnDestroy {
   public grade: FormControl;
   public site: FormControl;
   public employer: FormControl;
-  // TODO bind with BE once ready
-  public grades: IGrade[] = [
-    {
-      gradeId: 288,
-      gradeName: "Specialty Training Year 2"
-    }
-  ];
-  public sites: ISite[] = [
-    {
-      siteId: 12940,
-      siteName: "Leicestershire Partnership NHS Trust Mental Health Services"
-    },
-    {
-      siteId: 12956,
-      siteName: "Glenfield Hospital”"
-    }
-  ];
-  public employers: IEmployer[] = [
-    {
-      employerId: 288,
-      employerName: "Employer 1"
-    }
-  ];
+
+  @Select(ConcernState.grades)
+  public grades$: Observable<IGrade[]>;
+  @Select(ConcernState.sites)
+  public sites$: Observable<ISite[]>;
+  @Select(ConcernState.employers)
+  public employers$: Observable<IEmployer[]>;
 
   @Select(ConcernState.selected)
   selectedConcern$: Observable<IConcernSummary>;

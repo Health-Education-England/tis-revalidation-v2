@@ -4,6 +4,7 @@ import { MatStepper } from "@angular/material/stepper";
 import { Select, Store } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
 import { filter } from "rxjs/operators";
+import { ApiService } from "../../../shared/services/api/api.service";
 import {
   ConcernStatus,
   IConcernSummary,
@@ -40,7 +41,11 @@ export class ConcernDetailComponent implements OnDestroy {
     return this.formGroup.controls;
   }
 
-  constructor(private store: Store, private concernService: ConcernService) {
+  constructor(
+    private store: Store,
+    private apiService: ApiService,
+    private concernService: ConcernService
+  ) {
     this.setupForm();
     this.subscribeToStatusChanges();
     this.updateFormControls();
@@ -92,7 +97,10 @@ export class ConcernDetailComponent implements OnDestroy {
     const newConcern = {
       ...this.concern,
       ...this.formGroup.value,
-      status: this.setConcernStatus(this.form.status.value)
+      status: this.apiService.getEnumKey(
+        ConcernStatus,
+        this.setConcernStatus(this.form.status.value)
+      )
     };
 
     this.store.dispatch(new SetSelectedConcern(newConcern));

@@ -66,10 +66,13 @@ export class ConcernService {
     };
   }
 
-  public addConcern(payload: IConcernSummary): Observable<any> {
-    return this.http.post<any>(
+  public addConcern(payload: IConcernSummary): Observable<string> {
+    return this.http.post(
       environment.appUrls.addConcern,
-      this.generatePayload(payload)
+      this.generatePayload(payload),
+      {
+        responseType: "text"
+      }
     );
   }
 }

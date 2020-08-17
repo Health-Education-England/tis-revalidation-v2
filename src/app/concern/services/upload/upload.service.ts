@@ -1,15 +1,8 @@
-import {
-  HttpClient,
-  HttpParams,
-  HttpEvent,
-  HttpProgressEvent,
-  HttpEventType
-} from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "@environment";
 import { Observable } from "rxjs";
 import { IListFile } from "../../concern.interfaces";
-import { map } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root"

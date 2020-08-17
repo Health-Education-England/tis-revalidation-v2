@@ -1,4 +1,8 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ActivatedRoute } from "@angular/router";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgxsModule } from "@ngxs/store";
+import { ConcernState } from "../../state/concern.state";
 
 import { UploadDocumentsComponent } from "./upload-documents.component";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
@@ -12,6 +16,9 @@ describe("UploadDocumentsComponent", () => {
   let component: UploadDocumentsComponent;
   let fixture: ComponentFixture<UploadDocumentsComponent>;
   let commentsService: CommentsService;
+  const activatedRoute = {
+    parent: { snapshot: { params: { gmcNumber: 0 } } }
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -20,9 +27,17 @@ describe("UploadDocumentsComponent", () => {
         ReactiveFormsModule,
         MaterialModule,
         NoopAnimationsModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        RouterTestingModule,
+        NgxsModule.forRoot([ConcernState])
       ],
-      providers: [CommentsService],
+      providers: [
+        CommentsService,
+        {
+          provide: ActivatedRoute,
+          useValue: activatedRoute
+        }
+      ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));

@@ -1,21 +1,19 @@
 import { IConcernSummary } from "./concern.interfaces";
 
-// TODO check if being used in app and maybe remove
 export const defaultConcern: IConcernSummary = {
-  concernId: null,
-  gmcNumber: null,
-  dateOfIncident: null,
+  admin: null,
+  comments: [],
   concernType: null,
-  source: null,
+  dateOfIncident: null,
   dateReported: null,
   employer: null,
-  site: null,
-  grade: null,
-  status: null,
-  admin: null,
   followUpDate: null,
+  gmcNumber: null,
+  grade: null,
   lastUpdatedDate: null,
-  comments: []
+  site: null,
+  source: null,
+  status: null
 };
 
 export const ACCEPTED_IMAGE_EXTENSIONS: string[] = [

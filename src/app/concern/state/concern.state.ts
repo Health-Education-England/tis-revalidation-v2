@@ -1,61 +1,67 @@
-import { Injectable } from "@angular/core";
-import { Action, Selector, State, StateContext } from "@ngxs/store";
-import {
-  catchError,
-  finalize,
-  switchMap,
-  take,
-  tap,
-  map
-} from "rxjs/operators";
-import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
-import {
-  IConcernSummary,
-  IGetConcernResponse,
-  IListFile,
-  IFileUploadProgress,
-  IGrade,
-  ISite,
-  IEmployer
-} from "../concern.interfaces";
-import { ConcernService } from "../services/concern/concern.service";
-import { UploadService } from "../services/upload/upload.service";
-import {
-  Get,
-  ListFiles,
-  Upload,
-  ApiError,
-  UploadSuccess,
-  ListFilesSuccess,
-  DownloadFile,
-  DownloadFileSuccess,
-  DeleteFile,
-  DeleteFileSuccess,
-  SetSelectedConcern,
-  SetFileUploadProgress
-} from "./concern.actions";
-import { saveAs } from "file-saver";
 import {
   HttpEvent,
   HttpEventType,
   HttpProgressEvent,
   HttpResponse
 } from "@angular/common/http";
-import { forkJoin, Observable, of } from "rxjs";
-import { updateItem, append, patch } from "@ngxs/store/operators";
+import { Injectable } from "@angular/core";
+import { Action, Selector, State, StateContext } from "@ngxs/store";
+import { patch, updateItem } from "@ngxs/store/operators";
+import { saveAs } from "file-saver";
+import { forkJoin, Observable } from "rxjs";
+import {
+  catchError,
+  finalize,
+  map,
+  switchMap,
+  take,
+  tap
+} from "rxjs/operators";
+import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
+import {
+  IConcernSummary,
+  IEmployer,
+  IFileUploadProgress,
+  IGetConcernResponse,
+  IGrade,
+  ISource,
+  IConcernType,
+  IListFile,
+  ISite
+} from "../concern.interfaces";
+import { ConcernService } from "../services/concern/concern.service";
+import { UploadService } from "../services/upload/upload.service";
+import {
+  Save,
+  SaveSuccess,
+  ApiError,
+  DeleteFile,
+  DeleteFileSuccess,
+  DownloadFile,
+  DownloadFileSuccess,
+  Get,
+  ListFiles,
+  ListFilesSuccess,
+  SetFileUploadProgress,
+  SetSelectedConcern,
+  Upload,
+  UploadSuccess
+} from "./concern.actions";
 
 export class ConcernStateModel {
   public concernId?: number;
+  public employers?: IEmployer[];
+  public filesInUploadProgress?: IFileUploadProgress[];
   public gmcNumber: number;
+  public grades?: IGrade[];
   public history: IConcernSummary[];
+  public sources?: ISource[];
+  public concernTypes?: IConcernType[];
   public listFilesInProgress?: boolean;
   public selected?: IConcernSummary;
+  public sites?: ISite[];
   public uploadedFiles?: any[];
   public uploadFileInProgress?: boolean;
-  public filesInUploadProgress?: IFileUploadProgress[];
-  public employers?: IEmployer[];
-  public grades?: IGrade[];
-  public sites?: ISite[];
 }
 
 @State<ConcernStateModel>({
@@ -70,8 +76,19 @@ export class ConcernState {
   constructor(
     private service: ConcernService,
     private uploadService: UploadService,
+    private concernService: ConcernService,
     private snackBarService: SnackBarService
   ) {}
+
+  @Selector()
+  public static concernTypes(state: ConcernStateModel) {
+    return state.concernTypes;
+  }
+
+  @Selector()
+  public static sources(state: ConcernStateModel) {
+    return state.sources;
+  }
 
   @Selector()
   public static employers(state: ConcernStateModel) {
@@ -130,26 +147,43 @@ export class ConcernState {
     }
 
     return this.service.getConcernHistory(payload).pipe(
-      tap((response: IGetConcernResponse) =>
+      tap((response: IGetConcernResponse) => {
         patchState({
-          gmcNumber: response.gmcNumber || payload,
+          gmcNumber: response.gmcNumber,
           history: response.concerns,
           employers: response.employers,
           grades: response.grades,
-          sites: response.sites
-        })
-      )
+          sites: response.sites,
+          sources: response.sources,
+          concernTypes: response.types
+        });
+      })
     );
   }
 
   @Action(SetSelectedConcern)
   setSelected(
-    { patchState }: StateContext<ConcernStateModel>,
+    ctx: StateContext<ConcernStateModel>,
     { concern }: SetSelectedConcern
   ) {
-    patchState({
+    concern.gmcNumber = ctx.getState().gmcNumber;
+    ctx.patchState({
       selected: concern
     });
+  }
+
+  @Action(Save)
+  addConcern(ctx: StateContext<ConcernStateModel>) {
+    return this.concernService.addConcern(ctx.getState().selected).pipe(
+      take(1),
+      switchMap((response: any) => ctx.dispatch(new SaveSuccess(response))),
+      catchError((error: string) => ctx.dispatch(new ApiError(error)))
+    );
+  }
+
+  @Action(SaveSuccess)
+  saveSuccess() {
+    this.snackBarService.openSnackBar("Concern successfully saved.");
   }
 
   @Action(SetFileUploadProgress)

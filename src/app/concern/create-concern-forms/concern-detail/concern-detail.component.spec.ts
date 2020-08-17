@@ -1,26 +1,20 @@
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ReactiveFormsModule } from "@angular/forms";
+import { NoopAnimationsModule } from "@angular/platform-browser/animations";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgxsModule, Store } from "@ngxs/store";
+import { ConcernHistoryResponse2 } from "src/app/recommendation/mock-data/recommendation-spec-data";
+import { MaterialModule } from "src/app/shared/material/material.module";
+import { ConcernStatus, IConcernSummary } from "../../concern.interfaces";
+import { ConcernState } from "../../state/concern.state";
 
 import { ConcernDetailComponent } from "./concern-detail.component";
-import { NgxsModule, Store } from "@ngxs/store";
-import { ConcernState } from "../../state/concern.state";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { MaterialModule } from "src/app/shared/material/material.module";
-import { NoopAnimationsModule } from "@angular/platform-browser/animations";
-import { ReactiveFormsModule } from "@angular/forms";
-import { SetSelectedConcern } from "../../state/concern.actions";
-import { defaultConcern } from "../../constants";
-import { ConcernHistoryResponse2 } from "src/app/recommendation/mock-data/recommendation-spec-data";
-import { Observable } from "rxjs";
-import { IConcernSummary, ConcernStatus } from "../../concern.interfaces";
-import { RouterTestingModule } from "@angular/router/testing";
 
 describe("ConcernDetailComponent", () => {
   let component: ConcernDetailComponent;
   let fixture: ComponentFixture<ConcernDetailComponent>;
   let store: Store;
-  const setSelectedConcern = (concern: IConcernSummary): Observable<any> => {
-    return store.dispatch(new SetSelectedConcern(concern));
-  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -35,13 +29,12 @@ describe("ConcernDetailComponent", () => {
       ]
     }).compileComponents();
     store = TestBed.inject(Store);
-    setSelectedConcern(defaultConcern);
   }));
 
   beforeEach(() => {
     spyOn(
       ConcernDetailComponent.prototype,
-      "initialiseFormControls"
+      "updateFormControls"
     ).and.callThrough();
     spyOn(
       ConcernDetailComponent.prototype,
@@ -59,37 +52,34 @@ describe("ConcernDetailComponent", () => {
     expect(component).toBeTruthy();
   });
 
-  it("should initialise form controls", () => {
-    expect(component.initialiseFormControls).toHaveBeenCalled();
+  it("should update form controls", () => {
+    expect(component.updateFormControls).toHaveBeenCalled();
   });
 
   it("should reflect form values in add mode", () => {
-    fixture.detectChanges();
-    expect(component.dateOfIncident.value).toEqual(
-      defaultConcern.dateOfIncident
-    );
-    expect(component.source.value).toEqual(defaultConcern.source);
-    expect(component.concernType.value).toEqual(defaultConcern.concernType);
-    expect(component.dateReported.value).toEqual(defaultConcern.dateReported);
-    expect(component.followUpDate.value).toEqual(defaultConcern.followUpDate);
-    expect(component.status.value).toEqual(
-      component.getConcernStatus(defaultConcern.status)
-    );
+    expect(component.form.dateOfIncident.value).toBeNull();
+    expect(component.form.source.value).toBeNull();
+    expect(component.form.concernType.value).toBeNull();
+    expect(component.form.dateReported.value).toBeNull();
+    expect(component.form.followUpDate.value).toBeNull();
+    expect(component.form.status.value).toBeNull();
     expect(component.setConcernStatus(true)).toEqual(ConcernStatus.OPEN);
     expect(component.setConcernStatus(false)).toEqual(ConcernStatus.CLOSED);
   });
 
   it("should reflect form values in edit mode", async () => {
-    const newConcern: IConcernSummary = ConcernHistoryResponse2.concerns[0];
-    await setSelectedConcern(newConcern).toPromise();
-    fixture.detectChanges();
-    expect(component.dateOfIncident.value).toEqual(newConcern.dateOfIncident);
-    expect(component.source.value).toEqual(newConcern.source);
-    expect(component.concernType.value).toEqual(newConcern.concernType);
-    expect(component.dateReported.value).toEqual(newConcern.dateReported);
-    expect(component.followUpDate.value).toEqual(newConcern.followUpDate);
-    expect(component.status.value).toEqual(
-      component.getConcernStatus(newConcern.status)
+    const mockConcern: IConcernSummary = ConcernHistoryResponse2.concerns[0];
+    store.reset({ concern: { selected: mockConcern } });
+
+    expect(component.form.dateOfIncident.value).toEqual(
+      mockConcern.dateOfIncident
+    );
+    expect(component.form.source.value).toEqual(mockConcern.source);
+    expect(component.form.concernType.value).toEqual(mockConcern.concernType);
+    expect(component.form.dateReported.value).toEqual(mockConcern.dateReported);
+    expect(component.form.followUpDate.value).toEqual(mockConcern.followUpDate);
+    expect(component.form.status.value).toEqual(
+      component.getConcernStatus(mockConcern.status)
     );
     expect(component.setConcernStatus(true)).toEqual(ConcernStatus.OPEN);
     expect(component.setConcernStatus(false)).toEqual(ConcernStatus.CLOSED);

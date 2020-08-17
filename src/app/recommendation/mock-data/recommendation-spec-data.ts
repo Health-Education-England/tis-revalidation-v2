@@ -21,5 +21,126 @@ export const notesResponse1 = JSON.parse(`[
 
 export const ConcernHistoryResponse1 = {};
 export const ConcernHistoryResponse2 = JSON.parse(
-  `{"gmcNumber":"65477888","concerns":[{"concernId":"70244","gmcNumber":"65477888","dateOfIncident":"2020-06-28","concernType":"AAAA","source":"BBBBB","dateReported":"2020-06-29","employer":"Royal London Hospital Trust","site":"AAAAA","grade":"Academic Clinical Fellow","status":"CLOSED","admin":"AAAAA","followUpDate":"2020-07-05","lastUpdatedDate":"2020-06-24","comments":["This is a test comment","and more"]},{"concernId":"70245","gmcNumber":"65477888","dateOfIncident":"2020-76-28","concernType":"AAAA","source":"BBBBB","dateReported":"2020-06-29","employer":"Royal London Hospital Trust","site":"AAAAA","grade":"Academic Clinical Fellow","status":"OPEN","admin":"AAAAA","followUpDate":"2020-07-05","lastUpdatedDate":"2020-06-24","comments":["This is a test comment","and less","and very less"]}]}`
+  `{
+    "gmcNumber": "65477888",
+    "concerns": [{
+        "concernId": "70244",
+        "gmcNumber": "65477888",
+        "dateOfIncident": "2020-06-28",
+        "concernType": {
+            "id": 1,
+            "code": "SERIOUS_INCIDENT",
+            "label": "Serious Incident"
+        },
+        "source": {
+            "id": 1,
+            "name": "Lead Employer Trust (LET)"
+        },
+        "dateReported": "2020-06-29",
+        "employer": {
+            "id": 1,
+            "code": "509",
+            "localOffice": null,
+            "status": "CURRENT",
+            "trustKnownAs": "Leicester City Council",
+            "trustName": "Leicester City Council",
+            "trustNumber": "509",
+            "address": null,
+            "postCode": null,
+            "intrepidId": "5526"
+        },
+        "site": {
+            "id": 1,
+            "siteCode": null,
+            "startDate": null,
+            "endDate": null,
+            "localOffice": null,
+            "trustCode": null,
+            "trustId": null,
+            "siteName": "Norfolk PCT",
+            "address": "   ",
+            "postCode": null,
+            "siteKnownAs": "Norfolk PCT",
+            "siteNumber": null,
+            "organisationalUnit": null,
+            "status": "INACTIVE",
+            "intrepidId": "16077"
+        },
+        "grade": {
+            "id": 33,
+            "abbreviation": "LCL",
+            "name": "Local Clinical Lecturer - HENW",
+            "label": "Local Clinical Lecturer - HENW",
+            "trainingGrade": true,
+            "postGrade": false,
+            "placementGrade": true,
+            "status": "CURRENT",
+            "intrepidId": "853256"
+        },
+        "status": "CLOSED",
+        "admin": "AAAAA",
+        "followUpDate": "2020-07-05",
+        "lastUpdatedDate": "2020-06-24",
+        "comments": ["This is a test comment", "and more"]
+    }, {
+        "concernId": "70245",
+        "gmcNumber": "65477888",
+        "dateOfIncident": "2020-76-28",
+        "concernType": {
+            "id": 1,
+            "code": "SERIOUS_INCIDENT",
+            "label": "Serious Incident"
+        },
+        "source": {
+            "id": 1,
+            "name": "Lead Employer Trust (LET)"
+        },
+        "dateReported": "2020-06-29",
+        "employer": {
+            "id": 1,
+            "code": "509",
+            "localOffice": null,
+            "status": "CURRENT",
+            "trustKnownAs": "Leicester City Council",
+            "trustName": "Leicester City Council",
+            "trustNumber": "509",
+            "address": null,
+            "postCode": null,
+            "intrepidId": "5526"
+        },
+        "site": {
+            "id": 1,
+            "siteCode": null,
+            "startDate": null,
+            "endDate": null,
+            "localOffice": null,
+            "trustCode": null,
+            "trustId": null,
+            "siteName": "Norfolk PCT",
+            "address": "   ",
+            "postCode": null,
+            "siteKnownAs": "Norfolk PCT",
+            "siteNumber": null,
+            "organisationalUnit": null,
+            "status": "INACTIVE",
+            "intrepidId": "16077"
+        },
+        "grade": {
+            "id": 33,
+            "abbreviation": "LCL",
+            "name": "Local Clinical Lecturer - HENW",
+            "label": "Local Clinical Lecturer - HENW",
+            "trainingGrade": true,
+            "postGrade": false,
+            "placementGrade": true,
+            "status": "CURRENT",
+            "intrepidId": "853256"
+        },
+        "status": "OPEN",
+        "admin": "AAAAA",
+        "followUpDate": "2020-07-05",
+        "lastUpdatedDate": "2020-06-24",
+        "comments": ["This is a test comment", "and less", "and very less"]
+    }]
+}`
 );

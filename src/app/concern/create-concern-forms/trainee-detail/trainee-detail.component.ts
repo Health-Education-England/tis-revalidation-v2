@@ -1,19 +1,21 @@
-import { Component, ViewEncapsulation, OnDestroy, Input } from "@angular/core";
+import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
+import { Component, Input, OnDestroy, ViewEncapsulation } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { Store, Select } from "@ngxs/store";
+import { MatStepper } from "@angular/material/stepper";
+import { Select, Store } from "@ngxs/store";
+import { Observable, Subscription } from "rxjs";
+import { filter } from "rxjs/operators";
+import { IAllocateAdmin } from "src/app/admins/admins.interfaces";
 import { AdminsState } from "../../../admins/state/admins.state";
 import {
+  IConcernSummary,
   IEmployer,
   IGrade,
-  ISite,
-  IConcernSummary
+  ISite
 } from "../../concern.interfaces";
-import { ConcernState } from "../../state/concern.state";
-import { Observable, Subscription } from "rxjs";
-import { IAllocateAdmin } from "src/app/admins/admins.interfaces";
-import { MatStepper } from "@angular/material/stepper";
+import { ConcernService } from "../../services/concern/concern.service";
 import { SetSelectedConcern } from "../../state/concern.actions";
-import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
+import { ConcernState } from "../../state/concern.state";
 
 @Component({
   selector: "app-trainee-detail",
@@ -29,9 +31,6 @@ import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
 })
 export class TraineeDetailComponent implements OnDestroy {
   public formGroup: FormGroup;
-  public grade: FormControl;
-  public site: FormControl;
-  public employer: FormControl;
 
   @Select(ConcernState.grades)
   public grades$: Observable<IGrade[]>;
@@ -43,7 +42,6 @@ export class TraineeDetailComponent implements OnDestroy {
   @Select(ConcernState.selected)
   selectedConcern$: Observable<IConcernSummary>;
   concern: IConcernSummary;
-
   subsciptions: Subscription[] = [];
 
   public get form() {
@@ -52,8 +50,9 @@ export class TraineeDetailComponent implements OnDestroy {
 
   @Input() stepper: MatStepper;
 
-  constructor(private store: Store) {
-    this.initialiseFormControls();
+  constructor(private store: Store, private concernService: ConcernService) {
+    this.setupForm();
+    this.updateFormControls();
   }
 
   ngOnDestroy(): void {
@@ -64,35 +63,47 @@ export class TraineeDetailComponent implements OnDestroy {
     });
   }
 
-  /**
-   * Initialise form controls and set fields needed to be required or not
-   */
-  public initialiseFormControls(): void {
-    this.subsciptions.push(
-      this.selectedConcern$.subscribe((cs: IConcernSummary) => {
-        this.concern = cs;
-        this.formGroup = new FormGroup({
-          grade: new FormControl(cs.grade),
-          site: new FormControl(cs.site),
-          employer: new FormControl(cs.employer)
-        });
+  private setupForm(): void {
+    this.formGroup = new FormGroup({
+      grade: new FormControl(),
+      site: new FormControl(),
+      employer: new FormControl()
+    });
+  }
 
-        if (this.concern) {
-          if (this.concern.source === "Lead Employer Trust (LET)") {
-            this.form.site.setValidators([Validators.required]);
-            this.form.employer.setValidators([Validators.required]);
-          } else {
-            this.form.site.clearValidators();
-            this.form.employer.clearValidators();
-          }
-          this.form.site.updateValueAndValidity();
-          this.form.employer.updateValueAndValidity();
-        }
-      })
+  /**
+   * Update form controls and conditionally set validation rules
+   */
+  public updateFormControls(): void {
+    this.subsciptions.push(
+      this.selectedConcern$
+        .pipe(filter(Boolean))
+        .subscribe((cs: IConcernSummary) => {
+          this.concern = cs;
+          this.form.grade.setValue(cs.grade);
+          this.form.site.setValue(cs.site);
+          this.form.employer.setValue(cs.employer);
+          this.setValidationRules();
+        })
     );
   }
 
-  public onSubmit(): void {
+  private setValidationRules(): void {
+    if (
+      this.concern.source &&
+      this.concern.source.name === "Lead Employer Trust (LET)"
+    ) {
+      this.form.site.setValidators([Validators.required]);
+      this.form.employer.setValidators([Validators.required]);
+    } else {
+      this.form.site.clearValidators();
+      this.form.employer.clearValidators();
+    }
+    this.form.site.updateValueAndValidity();
+    this.form.employer.updateValueAndValidity();
+  }
+
+  public updateState(): Observable<any> | false {
     const admins: IAllocateAdmin[] = this.store.selectSnapshot(AdminsState)
       .allocateList;
     const admin = { admin: admins.length > 0 ? admins[0].admin : null };
@@ -101,9 +112,22 @@ export class TraineeDetailComponent implements OnDestroy {
       ...this.formGroup.value,
       ...admin
     };
+
     this.store.dispatch(new SetSelectedConcern(newConcern));
-    if (this.stepper) {
-      this.stepper.next();
+    this.concernService.isTraineeDetailFormValid.next(this.formGroup.valid);
+
+    if (!this.stepper) {
+      return false;
     }
+  }
+
+  public onSubmit(): void {
+    this.updateState();
+    this.stepper.next();
+  }
+
+  public previous(): void {
+    this.updateState();
+    this.stepper.previous();
   }
 }

@@ -10,8 +10,8 @@
     <mat-form-field>
       <mat-label>Grade</mat-label>
       <mat-select formControlName="grade">
-        <mat-option *ngFor="let grade of data.grades" [value]="grade.id">
-          {{ grade.name }}
+        <mat-option *ngFor="let grade of data.grades" [value]="grade">
+          {{ grade.label }}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -21,7 +21,7 @@
     <mat-form-field>
       <mat-label>Site</mat-label>
       <mat-select formControlName="site">
-        <mat-option *ngFor="let site of data.sites" [value]="site.id">
+        <mat-option *ngFor="let site of data.sites" [value]="site">
           {{ site.siteName }}
         </mat-option>
       </mat-select>
@@ -33,10 +33,7 @@
     <mat-form-field>
       <mat-label>Employer</mat-label>
       <mat-select formControlName="employer">
-        <mat-option
-          *ngFor="let employer of data.employers"
-          [value]="employer.id"
-        >
+        <mat-option *ngFor="let employer of data.employers" [value]="employer">
           {{ employer.trustName }}
         </mat-option>
       </mat-select>
@@ -47,12 +44,7 @@
   </div>
 
   <div class="button-row">
-    <button
-      mat-button
-      mat-raised-button
-      type="button"
-      (click)="stepper.previous()"
-    >
+    <button mat-button mat-raised-button type="button" (click)="previous()">
       Back
     </button>
     <button mat-button mat-raised-button color="primary" type="submit">

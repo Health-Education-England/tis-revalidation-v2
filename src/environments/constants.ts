@@ -1,6 +1,7 @@
 import { IEnvironment } from "./environment.interface";
 
 export const APP_URLS_CONFIG: IEnvironment["appUrls"] = {
+  addConcern: "api/concerns",
   allocateAdmin: `api/v1/doctors/assign-admin`,
   authRedirect: ``,
   deleteFile: `api/storage/delete`,

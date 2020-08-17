@@ -71,7 +71,7 @@ describe("CreateEditConcernResolver", () => {
     expect(new CreateEditConcernResolver(store, router)).toBeTruthy();
   });
 
-  it("should create an default concern instance", async () => {
+  it("should create a default concern instance", async () => {
     req.flush(ConcernHistoryResponse1);
     await router.navigate(["create"]);
     const selectedConcern = store.selectSnapshot(ConcernState.selected);

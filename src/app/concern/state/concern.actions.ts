@@ -1,25 +1,18 @@
 import { HttpErrorPayload } from "../../shared/services/error/error.service";
 import { IConcernSummary } from "../concern.interfaces";
-import { HttpEvent, HttpProgressEvent } from "@angular/common/http";
 
 export class Get {
   static readonly type = "[Concern] Get";
   constructor(public payload: number) {}
 }
 
-export class Set {
-  static readonly type = "[Concern] Set";
-  constructor(public payload: IConcernSummary) {}
+export class Save {
+  static readonly type = "[Concern] Save";
 }
 
-export class Add {
-  static readonly type = "[Concern] Add";
-  constructor(public payload: IConcernSummary) {}
-}
-
-export class Post {
-  static readonly type = "[Concern] Post";
-  constructor(public gmcNumber: number, public concernId: string) {}
+export class SaveSuccess {
+  static readonly type = "[Concern] Save Success";
+  constructor(public payload: any) {}
 }
 
 export class Upload {

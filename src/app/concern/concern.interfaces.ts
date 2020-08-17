@@ -4,6 +4,27 @@ export interface IGetConcernResponse {
   gmcNumber: number;
   grades: IGrade[];
   sites: ISite[];
+  types: IConcernType[];
+  sources: ISource[];
+}
+
+export interface IEntity {
+  id: number;
+  label: string;
+}
+
+/**
+ * TODO ask BE to uniform the return types so that
+ * `types, sources, sites, grades and employers' are the same i.e `ReferenceDto` in the BE
+ * this will help clean up the below interfaces as well as not needing `IAddConcernRequest`
+ */
+export interface IConcernType extends IEntity {
+  code: string;
+}
+
+export interface ISource {
+  id: number;
+  name: string;
 }
 
 export interface IListFile {
@@ -21,28 +42,39 @@ export interface IFileUploadProgress {
 export interface IConcernSummary {
   admin: string;
   comments: string[];
-  concernId: number;
-  concernType: string; // TODO: use enum IncidentType, check with BE
+  concernId?: number;
+  concernType: IConcernType;
   dateOfIncident: Date;
   dateReported: Date;
-  employer: string;
+  employer: IEmployer;
   followUpDate: Date;
   gmcNumber: number;
-  grade: string;
+  grade: IGrade;
   lastUpdatedDate: Date;
-  site: string;
-  source: string;
+  site: ISite;
+  source: ISource;
+  status: ConcernStatus;
+}
+
+export interface IAddConcernRequest {
+  admin: string;
+  comments: string[];
+  concernType: IEntity;
+  dateOfIncident: Date;
+  dateReported: Date;
+  employer: IEntity;
+  followUpDate: Date;
+  gmcNumber: number;
+  grade: IEntity;
+  lastUpdatedDate: Date;
+  site: IEntity;
+  source: IEntity;
   status: ConcernStatus;
 }
 
 export enum ConcernStatus {
   OPEN = "Open",
   CLOSED = "Closed"
-}
-
-export interface IncidentType {
-  code: string;
-  label: string;
 }
 
 export interface IGrade {

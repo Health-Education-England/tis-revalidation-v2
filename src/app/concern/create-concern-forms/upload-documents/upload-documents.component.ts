@@ -1,9 +1,15 @@
-import { Component, OnInit, Input, OnDestroy } from "@angular/core";
-import { MatStepper } from "@angular/material/stepper";
 import { StepperSelectionEvent } from "@angular/cdk/stepper";
-import { CommentsService } from "src/app/details/comments-tool-bar/comments.service";
+import { Component, Input, OnDestroy, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
+import { MatStepper } from "@angular/material/stepper";
+import { ActivatedRoute, Router } from "@angular/router";
+import { Store } from "@ngxs/store";
 import { Subscription } from "rxjs";
+import { take } from "rxjs/operators";
+import { CommentsService } from "src/app/details/comments-tool-bar/comments.service";
+import { SnackBarService } from "../../../shared/services/snack-bar/snack-bar.service";
+import { ConcernService } from "../../services/concern/concern.service";
+import { Save } from "../../state/concern.actions";
 
 @Component({
   selector: "app-upload-documents",
@@ -14,7 +20,14 @@ export class UploadDocumentsComponent implements OnInit, OnDestroy {
   formGroup: FormGroup = new FormGroup({});
   subsciptions: Subscription[] = [];
 
-  constructor(private commentsService: CommentsService) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private commentsService: CommentsService,
+    private concernService: ConcernService,
+    private router: Router,
+    private snackBarService: SnackBarService,
+    private store: Store
+  ) {}
 
   ngOnInit(): void {
     this.initialiseToolBarSettings();
@@ -48,5 +61,19 @@ export class UploadDocumentsComponent implements OnInit, OnDestroy {
     }
   }
 
-  saveConcern(): void {}
+  public saveConcern(): void {
+    const isConcernDetailFormValid: boolean = this.concernService.isConcernDetailFormValid.getValue();
+    const isTraineeDetailFormValid: boolean = this.concernService.isTraineeDetailFormValid.getValue();
+
+    if (isConcernDetailFormValid && isTraineeDetailFormValid) {
+      this.store
+        .dispatch(new Save())
+        .pipe(take(1))
+        .subscribe(() => {
+          this.router.navigate(["../"], { relativeTo: this.activatedRoute });
+        });
+    } else {
+      this.snackBarService.openSnackBar("Please ensure all steps are valid.");
+    }
+  }
 }

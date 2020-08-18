@@ -57,7 +57,6 @@ export class ConcernStateModel {
   public selected?: IConcernSummary;
   public sites?: IEntity[];
   public uploadedFiles?: any[];
-  public filesTobeUploaded?: File[];
   public uploadFileInProgress?: boolean;
 }
 
@@ -289,21 +288,19 @@ export class ConcernState {
         .pipe(
           take(1),
           tap((val: HttpResponse<any>[]) => {
-            ctx.dispatch(new UploadSuccess()).subscribe(() => {
-              if (val.includes(undefined)) {
-                return ctx.dispatch(new ApiError(`An error occured`));
-              }
-            });
+            ctx
+              .dispatch(new UploadSuccess(action.gmcNumber, action.concernId))
+              .subscribe(() => {
+                if (val.includes(undefined)) {
+                  return ctx.dispatch(new ApiError(`An error occured`));
+                }
+              });
           }),
           catchError((error: string) => {
             return ctx.dispatch(new ApiError(error));
           }),
           finalize(() => {
-            return ctx
-              .dispatch(new SetFileUploadProgress(null, null))
-              .subscribe(() =>
-                ctx.dispatch(new ListFiles(action.gmcNumber, action.concernId))
-              );
+            return ctx.dispatch(new SetFileUploadProgress(null, null));
           })
         )
         .subscribe();
@@ -311,12 +308,9 @@ export class ConcernState {
   }
 
   @Action(UploadSuccess)
-  uploadSuccess(ctx: StateContext<ConcernStateModel>) {
+  uploadSuccess(ctx: StateContext<ConcernStateModel>, action: UploadSuccess) {
     this.snackBarService.openSnackBar(`Upload success`);
-
-    ctx.patchState({
-      filesTobeUploaded: []
-    });
+    return ctx.dispatch(new ListFiles(action.gmcNumber, action.concernId));
   }
 
   // TODO move to a generic place so other states can also re use

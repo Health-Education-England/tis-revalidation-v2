@@ -26,6 +26,7 @@ export class Upload {
 
 export class UploadSuccess {
   static readonly type = "[Concern] Upload Success";
+  constructor(public gmcNumber: number, public concernId: string) {}
 }
 
 export class ApiError extends HttpErrorPayload {

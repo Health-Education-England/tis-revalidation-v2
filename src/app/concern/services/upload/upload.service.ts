@@ -26,7 +26,7 @@ export class UploadService {
   public upload(payload: FormData): Observable<any> {
     const headers = new HttpHeaders();
     headers.append("Content-Type", "multipart/form-data");
-    headers.append("Accept", "*/*");
+    // headers.append("Accept", "*/*");
     return this.http.post(environment.appUrls.upload, payload, {
       observe: "events",
       reportProgress: true,

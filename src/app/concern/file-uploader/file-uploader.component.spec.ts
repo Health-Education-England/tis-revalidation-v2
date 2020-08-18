@@ -6,11 +6,7 @@ import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { NgxsModule, Store } from "@ngxs/store";
 import { MaterialModule } from "../../shared/material/material.module";
 import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
-import {
-  Upload,
-  SetSelectedConcern,
-  PrepareUpload
-} from "../state/concern.actions";
+import { Upload, SetSelectedConcern } from "../state/concern.actions";
 import { ConcernState } from "../state/concern.state";
 import { FileUploaderComponent } from "./file-uploader.component";
 import { defaultConcern } from "../constants";
@@ -51,7 +47,7 @@ describe("FileUploaderComponent", () => {
     store.dispatch(
       new SetSelectedConcern({
         ...defaultConcern,
-        ...{ concernId: mockConcernId }
+        ...{ concernId: mockConcernId, gmcNumber: 8119389 }
       })
     );
   };
@@ -69,7 +65,6 @@ describe("FileUploaderComponent", () => {
     }).compileComponents();
     store = TestBed.inject(Store);
     snackBarService = TestBed.inject(SnackBarService);
-    store.reset({ concern: { gmcNumber: 8119389 } });
     setDefaultSelectedConcern();
   }));
 
@@ -126,14 +121,14 @@ describe("FileUploaderComponent", () => {
     expect(component.processFiles).toHaveBeenCalled();
   });
 
-  it("processFiles() should invoke `prepareUpload()` if valid files have been dropped", () => {
-    spyOn(component, "prepareUpload");
+  it("processFiles() should invoke `upload()` if valid files have been dropped", () => {
+    spyOn(component, "upload");
 
     const mockFile = MockTextFile;
     const mockEvt = createMokEvent(mockFile);
 
     component.handleDrop(mockEvt as any);
-    expect(component.prepareUpload).toHaveBeenCalledWith([mockFile]);
+    expect(component.upload).toHaveBeenCalledWith([mockFile]);
   });
 
   it("processFiles() should invoke `snackBarService.openSnackBar()` if invalid files have been dropped", () => {
@@ -159,15 +154,17 @@ describe("FileUploaderComponent", () => {
     expect(component.processFiles).toHaveBeenCalledWith([mockFile]);
   });
 
-  it("prepareUpload() should reset form", () => {
-    spyOn(component.form, "reset");
-    component.prepareUpload([]);
-    expect(component.form.reset).toHaveBeenCalled();
+  it("upload() should setupForm", () => {
+    spyOn(component, "setupForm");
+    component.upload([]);
+    expect(component.setupForm).toHaveBeenCalled();
   });
 
-  it("prepareUpload() should dispatch `PrepareUpload` event", () => {
-    spyOn(store, "dispatch");
-    component.prepareUpload([]);
-    expect(store.dispatch).toHaveBeenCalledWith(new PrepareUpload([]));
+  it("upload() should dispatch `upload` event", () => {
+    spyOn(store, "dispatch").and.callThrough();
+    component.upload([]);
+    expect(store.dispatch).toHaveBeenCalledWith(
+      new Upload(component.gmcNumber, component.concernId, [])
+    );
   });
 });

@@ -1,5 +1,5 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { CUSTOM_ELEMENTS_SCHEMA, NgZone } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { MatPaginatorModule, PageEvent } from "@angular/material/paginator";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
@@ -62,7 +62,8 @@ describe("RecordListPaginatorComponent", () => {
 
   it("should invoke 'recordsService.updateRoute()' method", () => {
     spyOn(recordsService, "updateRoute").and.callThrough();
-    component.paginate(mockPageEvent);
+    new NgZone({}).run(() => component.paginate(mockPageEvent));
+
     expect(recordsService.updateRoute).toHaveBeenCalled();
   });
 });

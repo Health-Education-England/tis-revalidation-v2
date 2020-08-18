@@ -6,6 +6,7 @@ import { ACCEPTED_IMAGE_EXTENSIONS } from "../constants";
 import { DeleteFile, DownloadFile, ListFiles } from "../state/concern.actions";
 import { ConcernState } from "../state/concern.state";
 import { IConcernSummary } from "../concern.interfaces";
+import { filter, take } from "rxjs/operators";
 
 @Component({
   selector: "app-uploaded-files-list",
@@ -27,7 +28,8 @@ export class UploadedFilesListComponent implements OnInit {
   constructor(private store: Store) {}
 
   ngOnInit(): void {
-    this.selectedConcern$.subscribe((sel: IConcernSummary) => {
+    this.selectedConcern$.pipe(take(1)).subscribe((sel: IConcernSummary) => {
+      debugger;
       this.concernId = sel.concernId;
       this.listFiles();
     });
@@ -44,8 +46,6 @@ export class UploadedFilesListComponent implements OnInit {
   }
 
   public listFiles(): Observable<any> {
-    if (this.concernId) {
-      return this.store.dispatch(new ListFiles(this.gmcNumber, this.concernId));
-    }
+    return this.store.dispatch(new ListFiles(this.gmcNumber, this.concernId));
   }
 }

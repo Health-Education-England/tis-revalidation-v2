@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewChild
 } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormGroup, FormControl } from "@angular/forms";
 import { Select, Store } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
 import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
@@ -13,7 +13,7 @@ import { IConcernSummary, IFileUploadProgress } from "../concern.interfaces";
 import { ACCEPTED_IMAGE_MIMES } from "../constants";
 import { ConcernState } from "../state/concern.state";
 import { Upload } from "../state/concern.actions";
-import { tap } from "rxjs/operators";
+import { take } from "rxjs/operators";
 
 @Component({
   selector: "app-file-uploader",
@@ -44,11 +44,7 @@ export class FileUploaderComponent implements OnInit, OnDestroy {
   @ViewChild("dropArea") dropArea: ElementRef;
   subsciptions: Subscription[] = [];
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private store: Store,
-    private snackBarService: SnackBarService
-  ) {}
+  constructor(private store: Store, private snackBarService: SnackBarService) {}
 
   ngOnDestroy(): void {
     this.destroyPendingFiles();
@@ -65,7 +61,7 @@ export class FileUploaderComponent implements OnInit, OnDestroy {
   }
 
   public setupForm(): void {
-    this.form = this.formBuilder.group({ fileUploader: "" });
+    this.form = new FormGroup({ fileUploader: new FormControl("") });
   }
 
   /**
@@ -73,29 +69,29 @@ export class FileUploaderComponent implements OnInit, OnDestroy {
    */
   public setConcernId(): void {
     this.subsciptions.push(
-      this.selectedConcern$.subscribe((selectedConcern: IConcernSummary) => {
-        this.concernId = selectedConcern.concernId;
-        const filesInProgress = this.store.selectSnapshot(
-          ConcernState.filesInUploadProgress
-        );
-        if (this.concernId && filesInProgress?.length > 0) {
-          const files = filesInProgress.map(
-            (val: IFileUploadProgress) => val.file
+      this.selectedConcern$
+        .pipe(take(1))
+        .subscribe((selectedConcern: IConcernSummary) => {
+          this.concernId = selectedConcern.concernId;
+          const filesInProgress = this.store.selectSnapshot(
+            ConcernState.filesInUploadProgress
           );
-          this.upload(files);
-        }
-      })
+          if (this.concernId && filesInProgress?.length > 0) {
+            const files = filesInProgress.map(
+              (val: IFileUploadProgress) => val.file
+            );
+            this.upload(files);
+          }
+        })
     );
   }
 
-  public upload(payload: File[]): Observable<any> {
-    return this.store
+  public upload(payload: File[]): void {
+    this.store
       .dispatch(new Upload(this.gmcNumber, this.concernId, payload))
-      .pipe(
-        tap(() => {
-          // this.setupForm();
-        })
-      );
+      .subscribe(() => {
+        this.setupForm();
+      });
   }
 
   // TODO check if needed why?

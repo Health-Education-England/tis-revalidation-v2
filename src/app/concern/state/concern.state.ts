@@ -1,39 +1,20 @@
-import {
-  HttpEvent,
-  HttpEventType,
-  HttpProgressEvent,
-  HttpResponse
-} from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { patch, updateItem } from "@ngxs/store/operators";
 import { saveAs } from "file-saver";
-import { forkJoin, Observable } from "rxjs";
-import {
-  catchError,
-  finalize,
-  map,
-  switchMap,
-  take,
-  tap
-} from "rxjs/operators";
+import { catchError, finalize, map, switchMap, take } from "rxjs/operators";
 import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
 import {
   IConcernSummary,
-  IEmployer,
+  IEntity,
   IFileUploadProgress,
   IGetConcernResponse,
-  IGrade,
-  ISource,
-  IConcernType,
-  IListFile,
-  ISite
+  IListFile
 } from "../concern.interfaces";
+import { defaultConcern } from "../constants";
 import { ConcernService } from "../services/concern/concern.service";
 import { UploadService } from "../services/upload/upload.service";
 import {
-  Save,
-  SaveSuccess,
   ApiError,
   DeleteFile,
   DeleteFileSuccess,
@@ -42,6 +23,9 @@ import {
   Get,
   ListFiles,
   ListFilesSuccess,
+  PrepareUpload,
+  Save,
+  SaveSuccess,
   SetFileUploadProgress,
   SetSelectedConcern,
   Upload,
@@ -49,18 +33,18 @@ import {
 } from "./concern.actions";
 
 export class ConcernStateModel {
-  public concernId?: number;
-  public employers?: IEmployer[];
+  public employers?: IEntity[];
   public filesInUploadProgress?: IFileUploadProgress[];
   public gmcNumber: number;
-  public grades?: IGrade[];
+  public grades?: IEntity[];
   public history: IConcernSummary[];
-  public sources?: ISource[];
-  public concernTypes?: IConcernType[];
+  public sources?: IEntity[];
+  public concernTypes?: IEntity[];
   public listFilesInProgress?: boolean;
   public selected?: IConcernSummary;
-  public sites?: ISite[];
+  public sites?: IEntity[];
   public uploadedFiles?: any[];
+  public filesTobeUploaded?: File[];
   public uploadFileInProgress?: boolean;
 }
 
@@ -147,15 +131,25 @@ export class ConcernState {
     }
 
     return this.service.getConcernHistory(payload).pipe(
-      tap((response: IGetConcernResponse) => {
+      map((response: IGetConcernResponse) => {
         patchState({
           gmcNumber: response.gmcNumber,
           history: response.concerns,
-          employers: response.employers,
-          grades: response.grades,
-          sites: response.sites,
-          sources: response.sources,
-          concernTypes: response.types
+          employers: this.concernService.massageData(
+            response.employers,
+            "trustName"
+          ),
+          grades: this.concernService.massageData(response.grades, "name"),
+          sites: this.concernService.massageData(response.sites, "siteName"),
+          sources: this.concernService.massageData(response.sources, "name"),
+          concernTypes: this.concernService.massageData(
+            response.types,
+            "label"
+          ),
+          selected: {
+            ...defaultConcern,
+            gmcNumber: response.gmcNumber
+          }
         });
       })
     );
@@ -166,7 +160,6 @@ export class ConcernState {
     ctx: StateContext<ConcernStateModel>,
     { concern }: SetSelectedConcern
   ) {
-    concern.gmcNumber = ctx.getState().gmcNumber;
     ctx.patchState({
       selected: concern
     });
@@ -174,16 +167,38 @@ export class ConcernState {
 
   @Action(Save)
   addConcern(ctx: StateContext<ConcernStateModel>) {
-    return this.concernService.addConcern(ctx.getState().selected).pipe(
-      take(1),
-      switchMap((response: any) => ctx.dispatch(new SaveSuccess(response))),
-      catchError((error: string) => ctx.dispatch(new ApiError(error)))
-    );
+    return this.concernService
+      .addConcern(ctx.getState().selected)
+      .pipe(
+        take(1),
+        catchError((error: string) => ctx.dispatch(new ApiError(error)))
+      )
+      .subscribe((response: string) => {
+        const concernId: string = ctx.getState().selected.concernId || response;
+
+        ctx
+          .dispatch(new SaveSuccess(concernId))
+          .pipe(take(1))
+          .subscribe(() => {
+            const state = ctx.getState();
+
+            if (state.filesTobeUploaded?.length) {
+              ctx.dispatch(new Upload(state.gmcNumber, concernId));
+            }
+          });
+      });
   }
 
   @Action(SaveSuccess)
-  saveSuccess() {
+  saveSuccess(ctx: StateContext<ConcernStateModel>, action: SaveSuccess) {
     this.snackBarService.openSnackBar("Concern successfully saved.");
+
+    ctx.patchState({
+      selected: {
+        ...ctx.getState().selected,
+        concernId: action.payload
+      }
+    });
   }
 
   @Action(SetFileUploadProgress)
@@ -223,69 +238,46 @@ export class ConcernState {
     }
   }
 
+  @Action(PrepareUpload)
+  prepareUpload(ctx: StateContext<ConcernStateModel>, action: PrepareUpload) {
+    ctx.patchState({
+      filesTobeUploaded: action.payload
+    });
+  }
+
   @Action(Upload)
   upload(ctx: StateContext<ConcernStateModel>, action: Upload) {
-    const uploadFiles: Observable<any>[] = [];
-    ctx.dispatch(new SetFileUploadProgress(null, null));
-
-    action.payload.map((upFile: File) => {
-      ctx.dispatch(new SetFileUploadProgress(upFile, 0));
-    });
-
-    if (action.gmcNumber && action.concernId) {
-      action.payload.map((upFile: File) => {
-        uploadFiles.push(
-          this.uploadService
-            .upload(
-              this.uploadService.createFormData(
-                action.gmcNumber,
-                action.concernId,
-                upFile
-              )
-            )
-            .pipe(
-              map((event: HttpEvent<HttpProgressEvent>) => {
-                switch (event.type) {
-                  case HttpEventType.UploadProgress:
-                    ctx.dispatch(
-                      new SetFileUploadProgress(
-                        upFile,
-                        Math.round((event.loaded * 100) / event.total)
-                      )
-                    );
-                    break;
-                  case HttpEventType.Response:
-                    return event;
-                }
-              })
-            )
-        );
-      });
-      return forkJoin(uploadFiles)
-        .pipe(
-          take(1),
-          tap((val: HttpResponse<any>[]) => {
-            ctx.dispatch(new UploadSuccess()).subscribe(() => {
-              if (val.includes(undefined)) {
-                return ctx.dispatch(new ApiError(`An error occured`));
-              }
-            });
-          }),
-          catchError((error: string) => {
-            return ctx.dispatch(new ApiError(error));
-          }),
-          finalize(() => ctx.dispatch(new SetFileUploadProgress(null, null)))
+    return this.uploadService
+      .upload(
+        this.uploadService.createFormData(
+          action.gmcNumber,
+          action.concernId,
+          ctx.getState().filesTobeUploaded
         )
-        .subscribe();
-    }
+      )
+      .pipe(catchError((error: string) => ctx.dispatch(new ApiError(error))))
+      .subscribe(() =>
+        ctx
+          .dispatch(new UploadSuccess())
+          .pipe(take(1))
+          .subscribe(() => {
+            ctx.dispatch(
+              new ListFiles(
+                ctx.getState().gmcNumber,
+                ctx.getState().selected.concernId
+              )
+            );
+          })
+      );
   }
 
   @Action(UploadSuccess)
   uploadSuccess(ctx: StateContext<ConcernStateModel>) {
     this.snackBarService.openSnackBar(`Upload success`);
-    const gmcno = ctx.getState().gmcNumber;
-    const conId = ctx.getState().selected?.concernId;
-    return ctx.dispatch(new ListFiles(gmcno, conId));
+
+    ctx.patchState({
+      filesTobeUploaded: []
+    });
   }
 
   // TODO move to a generic place so other states can also re use
@@ -309,9 +301,6 @@ export class ConcernState {
       )
       .pipe(
         take(1),
-        switchMap((response: IListFile[]) =>
-          ctx.dispatch(new ListFilesSuccess(response))
-        ),
         catchError((error: string) => ctx.dispatch(new ApiError(error))),
         finalize(() =>
           ctx.patchState({
@@ -319,7 +308,9 @@ export class ConcernState {
           })
         )
       )
-      .subscribe();
+      .subscribe((response: IListFile[]) =>
+        ctx.dispatch(new ListFilesSuccess(response))
+      );
   }
 
   @Action(ListFilesSuccess)
@@ -360,10 +351,18 @@ export class ConcernState {
       .deleteFile(this.uploadService.createRequestParams(action.key))
       .pipe(
         take(1),
-        switchMap(() => ctx.dispatch(new DeleteFileSuccess(action.fileName))),
         catchError((error: string) => ctx.dispatch(new ApiError(error)))
       )
-      .subscribe();
+      .subscribe(() =>
+        ctx
+          .dispatch(new DeleteFileSuccess(action.fileName))
+          .pipe(take(1))
+          .subscribe(() => {
+            const gmcno = ctx.getState().gmcNumber;
+            const conId = ctx.getState().selected.concernId;
+            return ctx.dispatch(new ListFiles(gmcno, conId));
+          })
+      );
   }
 
   @Action(DeleteFileSuccess)
@@ -372,8 +371,5 @@ export class ConcernState {
     action: DeleteFileSuccess
   ) {
     this.snackBarService.openSnackBar(`${action.fileName} has been deleted`);
-    const gmcno = ctx.getState().gmcNumber;
-    const conId = ctx.getState().selected?.concernId;
-    return ctx.dispatch(new ListFiles(gmcno, conId));
   }
 }

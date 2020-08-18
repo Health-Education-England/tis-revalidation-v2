@@ -5,7 +5,6 @@ import { MatStepper } from "@angular/material/stepper";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { Subscription } from "rxjs";
-import { take } from "rxjs/operators";
 import { CommentsService } from "src/app/details/comments-tool-bar/comments.service";
 import { SnackBarService } from "../../../shared/services/snack-bar/snack-bar.service";
 import { ConcernService } from "../../services/concern/concern.service";
@@ -66,12 +65,7 @@ export class UploadDocumentsComponent implements OnInit, OnDestroy {
     const isTraineeDetailFormValid: boolean = this.concernService.isTraineeDetailFormValid.getValue();
 
     if (isConcernDetailFormValid && isTraineeDetailFormValid) {
-      this.store
-        .dispatch(new Save())
-        .pipe(take(1))
-        .subscribe(() => {
-          this.router.navigate(["../"], { relativeTo: this.activatedRoute });
-        });
+      this.store.dispatch(new Save());
     } else {
       this.snackBarService.openSnackBar("Please ensure all steps are valid.");
     }

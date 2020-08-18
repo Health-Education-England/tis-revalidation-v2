@@ -15,7 +15,7 @@ import { IConcernSummary } from "../concern.interfaces";
 export class UploadedFilesListComponent implements OnInit {
   public dateFormat = environment.dateFormat;
   public gmcNumber: number = this.store.selectSnapshot(ConcernState.gmcNumber);
-  public concernId: number = this.store.selectSnapshot(ConcernState.selected)
+  public concernId: string = this.store.selectSnapshot(ConcernState.selected)
     .concernId;
   @Select(ConcernState.listFilesInProgress)
   public listFilesInProgress$: Observable<boolean>;

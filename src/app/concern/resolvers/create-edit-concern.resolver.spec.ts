@@ -80,10 +80,10 @@ describe("CreateEditConcernResolver", () => {
 
   it("should create a concern instance of id", async () => {
     req.flush(ConcernHistoryResponse2);
-    const concernId = 70244;
+    const concernId = "xxxxxx-yyyyy-zzzzz";
     await router.navigate(["edit", concernId]);
     const selectedConcern = store.selectSnapshot(ConcernState.selected);
-    expect(Number(selectedConcern.concernId)).toEqual(concernId);
+    expect(selectedConcern.concernId).toEqual(concernId);
   });
 
   it("should redirect to 404", async () => {

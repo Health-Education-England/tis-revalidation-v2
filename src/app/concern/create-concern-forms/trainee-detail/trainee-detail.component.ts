@@ -7,12 +7,7 @@ import { Observable, Subscription } from "rxjs";
 import { filter } from "rxjs/operators";
 import { IAllocateAdmin } from "src/app/admins/admins.interfaces";
 import { AdminsState } from "../../../admins/state/admins.state";
-import {
-  IConcernSummary,
-  IEmployer,
-  IGrade,
-  ISite
-} from "../../concern.interfaces";
+import { IConcernSummary, IEntity } from "../../concern.interfaces";
 import { ConcernService } from "../../services/concern/concern.service";
 import { SetSelectedConcern } from "../../state/concern.actions";
 import { ConcernState } from "../../state/concern.state";
@@ -31,18 +26,22 @@ import { ConcernState } from "../../state/concern.state";
 })
 export class TraineeDetailComponent implements OnDestroy {
   public formGroup: FormGroup;
+  public admin: string;
 
+  @Select(ConcernState.gmcNumber)
+  public gmcNumber$: Observable<number>;
   @Select(ConcernState.grades)
-  public grades$: Observable<IGrade[]>;
+  public grades$: Observable<IEntity[]>;
   @Select(ConcernState.sites)
-  public sites$: Observable<ISite[]>;
+  public sites$: Observable<IEntity[]>;
   @Select(ConcernState.employers)
-  public employers$: Observable<IEmployer[]>;
+  public employers$: Observable<IEntity[]>;
 
   @Select(ConcernState.selected)
   selectedConcern$: Observable<IConcernSummary>;
   concern: IConcernSummary;
   subsciptions: Subscription[] = [];
+  public compareFn = this.concernService.compareFn;
 
   public get form() {
     return this.formGroup.controls;
@@ -80,6 +79,7 @@ export class TraineeDetailComponent implements OnDestroy {
         .pipe(filter(Boolean))
         .subscribe((cs: IConcernSummary) => {
           this.concern = cs;
+          this.admin = cs.admin;
           this.form.grade.setValue(cs.grade);
           this.form.site.setValue(cs.site);
           this.form.employer.setValue(cs.employer);
@@ -91,7 +91,7 @@ export class TraineeDetailComponent implements OnDestroy {
   private setValidationRules(): void {
     if (
       this.concern.source &&
-      this.concern.source.name === "Lead Employer Trust (LET)"
+      this.concern.source.label === "Lead Employer Trust (LET)"
     ) {
       this.form.site.setValidators([Validators.required]);
       this.form.employer.setValidators([Validators.required]);

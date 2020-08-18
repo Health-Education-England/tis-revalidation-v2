@@ -74,7 +74,7 @@ describe("TraineeDetailComponent", () => {
 
   it("should reflect required fields when source is `Lead Employer Trust (LET)` ", async () => {
     const mockConcern: IConcernSummary = ConcernHistoryResponse2.concerns[0];
-    mockConcern.source.name = `Lead Employer Trust (LET)`;
+    mockConcern.source.label = `Lead Employer Trust (LET)`;
     store.reset({ concern: { selected: mockConcern } });
     expect(component.form.site.validator).toBeDefined();
     expect(component.form.employer.validator).toBeDefined();

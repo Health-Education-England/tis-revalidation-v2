@@ -6,7 +6,11 @@ import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { NgxsModule, Store } from "@ngxs/store";
 import { MaterialModule } from "../../shared/material/material.module";
 import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
-import { Upload, SetSelectedConcern } from "../state/concern.actions";
+import {
+  Upload,
+  SetSelectedConcern,
+  PrepareUpload
+} from "../state/concern.actions";
 import { ConcernState } from "../state/concern.state";
 import { FileUploaderComponent } from "./file-uploader.component";
 import { defaultConcern } from "../constants";
@@ -17,7 +21,7 @@ describe("FileUploaderComponent", () => {
   let component: FileUploaderComponent;
   let fixture: ComponentFixture<FileUploaderComponent>;
   let snackBarService: SnackBarService;
-  const mockConcernId = 8119389;
+  const mockConcernId = "xxxxxx-yyyyy-zzzzz";
   const createFile = (
     filename: string,
     filetype: string,
@@ -122,14 +126,14 @@ describe("FileUploaderComponent", () => {
     expect(component.processFiles).toHaveBeenCalled();
   });
 
-  it("processFiles() should invoke `upload()` if valid files have been dropped", () => {
-    spyOn(component, "upload");
+  it("processFiles() should invoke `prepareUpload()` if valid files have been dropped", () => {
+    spyOn(component, "prepareUpload");
 
     const mockFile = MockTextFile;
     const mockEvt = createMokEvent(mockFile);
 
     component.handleDrop(mockEvt as any);
-    expect(component.upload).toHaveBeenCalledWith([mockFile]);
+    expect(component.prepareUpload).toHaveBeenCalledWith([mockFile]);
   });
 
   it("processFiles() should invoke `snackBarService.openSnackBar()` if invalid files have been dropped", () => {
@@ -155,17 +159,15 @@ describe("FileUploaderComponent", () => {
     expect(component.processFiles).toHaveBeenCalledWith([mockFile]);
   });
 
-  it("upload() should reset form", () => {
+  it("prepareUpload() should reset form", () => {
     spyOn(component.form, "reset");
-    component.upload([]);
+    component.prepareUpload([]);
     expect(component.form.reset).toHaveBeenCalled();
   });
 
-  it("upload() should dispatch `Upload` event", () => {
+  it("prepareUpload() should dispatch `PrepareUpload` event", () => {
     spyOn(store, "dispatch");
-    component.upload([]);
-    expect(store.dispatch).toHaveBeenCalledWith(
-      new Upload(8119389, mockConcernId, [])
-    );
+    component.prepareUpload([]);
+    expect(store.dispatch).toHaveBeenCalledWith(new PrepareUpload([]));
   });
 });

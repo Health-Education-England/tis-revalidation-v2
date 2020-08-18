@@ -4,25 +4,29 @@
     *ngIf="{
       grades: grades$ | async,
       sites: sites$ | async,
-      employers: employers$ | async
+      employers: employers$ | async,
+      gmcNumber: gmcNumber$ | async
     } as data"
   >
     <mat-form-field>
       <mat-label>Grade</mat-label>
-      <mat-select formControlName="grade">
+      <mat-select formControlName="grade" [compareWith]="compareFn">
         <mat-option *ngFor="let grade of data.grades" [value]="grade">
           {{ grade.label }}
         </mat-option>
       </mat-select>
     </mat-form-field>
 
-    <app-allocate-admin-autocomplete></app-allocate-admin-autocomplete>
+    <app-allocate-admin-autocomplete
+      [gmcNumber]="data.gmcNumber"
+      [admin]="admin"
+    ></app-allocate-admin-autocomplete>
 
     <mat-form-field>
       <mat-label>Site</mat-label>
-      <mat-select formControlName="site">
+      <mat-select formControlName="site" [compareWith]="compareFn">
         <mat-option *ngFor="let site of data.sites" [value]="site">
-          {{ site.siteName }}
+          {{ site.label }}
         </mat-option>
       </mat-select>
       <mat-error *ngIf="form.site.hasError('required')">
@@ -32,9 +36,9 @@
 
     <mat-form-field>
       <mat-label>Employer</mat-label>
-      <mat-select formControlName="employer">
+      <mat-select formControlName="employer" [compareWith]="compareFn">
         <mat-option *ngFor="let employer of data.employers" [value]="employer">
-          {{ employer.trustName }}
+          {{ employer.label }}
         </mat-option>
       </mat-select>
       <mat-error *ngIf="form.employer.hasError('required')">

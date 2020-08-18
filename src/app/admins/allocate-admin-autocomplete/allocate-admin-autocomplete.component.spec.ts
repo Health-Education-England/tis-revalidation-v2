@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
-import { NgxsModule } from "@ngxs/store";
+import { NgxsModule, Store } from "@ngxs/store";
 import { AdminsState } from "../state/admins.state";
 import { MaterialModule } from "../../shared/material/material.module";
 
@@ -12,6 +12,7 @@ import { AllocateAdminAutocompleteComponent } from "./allocate-admin-autocomplet
 describe("AllocateAdminAutocompleteComponent", () => {
   let component: AllocateAdminAutocompleteComponent;
   let fixture: ComponentFixture<AllocateAdminAutocompleteComponent>;
+  let store: Store;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -25,12 +26,14 @@ describe("AllocateAdminAutocompleteComponent", () => {
         NgxsModule.forRoot([AdminsState])
       ]
     }).compileComponents();
+    store = TestBed.inject(Store);
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AllocateAdminAutocompleteComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    store.reset({ admins: { items: [] } });
   });
 
   it("should create", () => {

@@ -8,8 +8,7 @@ import { ApiService } from "../../../shared/services/api/api.service";
 import {
   ConcernStatus,
   IConcernSummary,
-  ISource,
-  IConcernType
+  IEntity
 } from "../../concern.interfaces";
 import { ConcernService } from "../../services/concern/concern.service";
 import { SetSelectedConcern } from "../../state/concern.actions";
@@ -28,12 +27,13 @@ export class ConcernDetailComponent implements OnDestroy {
   @Select(ConcernState.selected)
   selectedConcern$: Observable<IConcernSummary>;
   concern: IConcernSummary;
+  public compareFn = this.concernService.compareFn;
 
   @Select(ConcernState.concernTypes)
-  public concernTypes$: Observable<IConcernType[]>;
+  public concernTypes$: Observable<IEntity[]>;
 
   @Select(ConcernState.sources)
-  public sources$: Observable<ISource[]>;
+  public sources$: Observable<IEntity[]>;
 
   @Input() stepper: MatStepper;
 

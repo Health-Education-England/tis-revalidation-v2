@@ -19,7 +19,7 @@ describe("UploadedFilesListComponent", () => {
   let component: UploadedFilesListComponent;
   let fixture: ComponentFixture<UploadedFilesListComponent>;
   const _gmcNumber = 8140126;
-  const _concernId = 119389;
+  const _concernId = "xxxxxx-yyyyy-zzzzz";
   const mockFileName = "mockfile.txt";
   const mockKey = `${_gmcNumber}/${_concernId}/mockfile.txt`;
 

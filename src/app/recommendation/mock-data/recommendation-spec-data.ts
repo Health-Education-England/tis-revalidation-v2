@@ -24,58 +24,29 @@ export const ConcernHistoryResponse2 = JSON.parse(
   `{
     "gmcNumber": "65477888",
     "concerns": [{
-        "concernId": "70244",
+        "concernId": "xxxxxx-yyyyy-zzzzz",
         "gmcNumber": "65477888",
         "dateOfIncident": "2020-06-28",
         "concernType": {
             "id": 1,
-            "code": "SERIOUS_INCIDENT",
             "label": "Serious Incident"
         },
         "source": {
             "id": 1,
-            "name": "Lead Employer Trust (LET)"
+            "label": "Lead Employer Trust (LET)"
         },
         "dateReported": "2020-06-29",
         "employer": {
             "id": 1,
-            "code": "509",
-            "localOffice": null,
-            "status": "CURRENT",
-            "trustKnownAs": "Leicester City Council",
-            "trustName": "Leicester City Council",
-            "trustNumber": "509",
-            "address": null,
-            "postCode": null,
-            "intrepidId": "5526"
+            "label": "Leicester City Council"
         },
         "site": {
             "id": 1,
-            "siteCode": null,
-            "startDate": null,
-            "endDate": null,
-            "localOffice": null,
-            "trustCode": null,
-            "trustId": null,
-            "siteName": "Norfolk PCT",
-            "address": "   ",
-            "postCode": null,
-            "siteKnownAs": "Norfolk PCT",
-            "siteNumber": null,
-            "organisationalUnit": null,
-            "status": "INACTIVE",
-            "intrepidId": "16077"
+            "label": "Norfolk PCT"
         },
         "grade": {
             "id": 33,
-            "abbreviation": "LCL",
-            "name": "Local Clinical Lecturer - HENW",
-            "label": "Local Clinical Lecturer - HENW",
-            "trainingGrade": true,
-            "postGrade": false,
-            "placementGrade": true,
-            "status": "CURRENT",
-            "intrepidId": "853256"
+            "label": "Local Clinical Lecturer - HENW"
         },
         "status": "CLOSED",
         "admin": "AAAAA",
@@ -83,58 +54,29 @@ export const ConcernHistoryResponse2 = JSON.parse(
         "lastUpdatedDate": "2020-06-24",
         "comments": ["This is a test comment", "and more"]
     }, {
-        "concernId": "70245",
+        "concernId": "xxxxxx-yyyyy-zzzzz",
         "gmcNumber": "65477888",
         "dateOfIncident": "2020-76-28",
-        "concernType": {
+                "concernType": {
             "id": 1,
-            "code": "SERIOUS_INCIDENT",
             "label": "Serious Incident"
         },
         "source": {
             "id": 1,
-            "name": "Lead Employer Trust (LET)"
+            "label": "Lead Employer Trust (LET)"
         },
         "dateReported": "2020-06-29",
         "employer": {
             "id": 1,
-            "code": "509",
-            "localOffice": null,
-            "status": "CURRENT",
-            "trustKnownAs": "Leicester City Council",
-            "trustName": "Leicester City Council",
-            "trustNumber": "509",
-            "address": null,
-            "postCode": null,
-            "intrepidId": "5526"
+            "label": "Leicester City Council"
         },
         "site": {
             "id": 1,
-            "siteCode": null,
-            "startDate": null,
-            "endDate": null,
-            "localOffice": null,
-            "trustCode": null,
-            "trustId": null,
-            "siteName": "Norfolk PCT",
-            "address": "   ",
-            "postCode": null,
-            "siteKnownAs": "Norfolk PCT",
-            "siteNumber": null,
-            "organisationalUnit": null,
-            "status": "INACTIVE",
-            "intrepidId": "16077"
+            "label": "Norfolk PCT"
         },
         "grade": {
             "id": 33,
-            "abbreviation": "LCL",
-            "name": "Local Clinical Lecturer - HENW",
-            "label": "Local Clinical Lecturer - HENW",
-            "trainingGrade": true,
-            "postGrade": false,
-            "placementGrade": true,
-            "status": "CURRENT",
-            "intrepidId": "853256"
+            "label": "Local Clinical Lecturer - HENW"
         },
         "status": "OPEN",
         "admin": "AAAAA",

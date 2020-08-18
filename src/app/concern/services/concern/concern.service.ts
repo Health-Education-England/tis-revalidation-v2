@@ -3,8 +3,8 @@ import { Injectable } from "@angular/core";
 import { environment } from "@environment";
 import { BehaviorSubject, Observable } from "rxjs";
 import {
-  IAddConcernRequest,
   IConcernSummary,
+  IEntity,
   IGetConcernResponse
 } from "../../concern.interfaces";
 
@@ -28,42 +28,39 @@ export class ConcernService {
   }
 
   /**
-   * This method is needed to massage the POST request data
-   * i.e BE is sending different data type in the GET api
-   * and expect different data type on the POST api
-   * `employer, grade & site` fields are conditionally added as per there validation rules
+   * Conditionally add `employer, grade & site` fields
+   * as per there validation rules
    * @param payload - IAddConcernRequest
    */
-  public generatePayload(payload: IConcernSummary): IAddConcernRequest {
+  public generatePayload(payload: IConcernSummary): IConcernSummary {
     return {
       ...payload,
-      employer: payload.employer
-        ? {
-            id: payload.employer.id,
-            label: payload.employer.trustName
-          }
-        : undefined,
-      grade: payload.grade
-        ? {
-            id: payload.grade.id,
-            label: payload.grade.name
-          }
-        : undefined,
-      site: payload.site
-        ? {
-            id: payload.site.id,
-            label: payload.site.siteName
-          }
-        : undefined,
-      source: {
-        id: payload.source.id,
-        label: payload.source.name
-      },
-      concernType: {
-        id: payload.concernType.id,
-        label: payload.concernType.label
-      }
+      employer: payload.employer ? payload.employer : undefined,
+      grade: payload.grade ? payload.grade : undefined,
+      site: payload.site ? payload.site : undefined,
+      source: payload.source,
+      concernType: payload.concernType
     };
+  }
+
+  /**
+   * This method is needed to massage the data received from the GET api
+   * as BE is sending different data type in the GET api
+   * and expect different data type on the POST api
+   * @param data - any[]
+   * @param labelProperty - string
+   */
+  public massageData(data: any[], labelProperty: string): IEntity[] {
+    if (!data) {
+      return;
+    }
+
+    return data.map((item) => {
+      return {
+        id: item.id,
+        label: item[labelProperty]
+      };
+    });
   }
 
   public addConcern(payload: IConcernSummary): Observable<string> {
@@ -74,5 +71,9 @@ export class ConcernService {
         responseType: "text"
       }
     );
+  }
+
+  public compareFn(optionOne: IEntity, optionTwo: IEntity): boolean {
+    return optionOne && optionTwo ? optionOne.id === optionTwo.id : false;
   }
 }

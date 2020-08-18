@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { HttpClient, HttpParams, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "@environment";
 import { Observable } from "rxjs";
@@ -13,17 +13,25 @@ export class UploadService {
   public createFormData(
     gmcNumber: number,
     concernId: string,
-    payload: File[]
+    payload: File
   ): FormData {
     const formData: FormData = new FormData();
     formData.append("bucketName", environment.awsConfig.bucketName);
     formData.append("folderPath", `${gmcNumber}/${concernId}`);
-    payload.forEach((file: File) => formData.append("files", file));
+    formData.append("files", payload);
+
     return formData;
   }
 
   public upload(payload: FormData): Observable<any> {
-    return this.http.post(environment.appUrls.upload, payload);
+    const headers = new HttpHeaders();
+    headers.append("Content-Type", "multipart/form-data");
+    headers.append("Accept", "*/*");
+    return this.http.post(environment.appUrls.upload, payload, {
+      observe: "events",
+      reportProgress: true,
+      headers: headers
+    });
   }
 
   public createRequestParams(key: string): HttpParams {

@@ -27,7 +27,10 @@ export class UploadedFilesListComponent implements OnInit {
   constructor(private store: Store) {}
 
   ngOnInit(): void {
-    this.listFiles();
+    this.selectedConcern$.subscribe((sel: IConcernSummary) => {
+      this.concernId = sel.concernId;
+      this.listFiles();
+    });
   }
 
   public downloadFile(fileName: string, key: string): Observable<any> {

@@ -11,8 +11,9 @@ import { Observable, Subscription } from "rxjs";
 import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
 import { IConcernSummary, IFileUploadProgress } from "../concern.interfaces";
 import { ACCEPTED_IMAGE_MIMES } from "../constants";
-import { PrepareUpload } from "../state/concern.actions";
 import { ConcernState } from "../state/concern.state";
+import { Upload } from "../state/concern.actions";
+import { tap } from "rxjs/operators";
 
 @Component({
   selector: "app-file-uploader",
@@ -60,10 +61,41 @@ export class FileUploaderComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.setupForm();
+    this.setConcernId();
   }
 
   public setupForm(): void {
-    this.form = this.formBuilder.group({ fileUploader: null });
+    this.form = this.formBuilder.group({ fileUploader: "" });
+  }
+
+  /**
+   * subscribe to each concern change and upload files automatically if files are in progress
+   */
+  public setConcernId(): void {
+    this.subsciptions.push(
+      this.selectedConcern$.subscribe((selectedConcern: IConcernSummary) => {
+        this.concernId = selectedConcern.concernId;
+        const filesInProgress = this.store.selectSnapshot(
+          ConcernState.filesInUploadProgress
+        );
+        if (this.concernId && filesInProgress?.length > 0) {
+          const files = filesInProgress.map(
+            (val: IFileUploadProgress) => val.file
+          );
+          this.upload(files);
+        }
+      })
+    );
+  }
+
+  public upload(payload: File[]): Observable<any> {
+    return this.store
+      .dispatch(new Upload(this.gmcNumber, this.concernId, payload))
+      .pipe(
+        tap(() => {
+          // this.setupForm();
+        })
+      );
   }
 
   // TODO check if needed why?
@@ -120,18 +152,13 @@ export class FileUploaderComponent implements OnInit, OnDestroy {
     }
 
     if (processedFiles.length) {
-      this.prepareUpload(processedFiles);
+      this.upload(processedFiles);
     }
   }
 
   public onFilesSelection($event: Event): void {
     const selectedFiles: File[] = Array.from($event.target[`files`]);
     this.processFiles(selectedFiles);
-  }
-
-  public prepareUpload(payload: File[]): Observable<any> {
-    this.form.reset();
-    return this.store.dispatch(new PrepareUpload(payload));
   }
 
   public removeProgressFile(file: File) {
@@ -141,6 +168,6 @@ export class FileUploaderComponent implements OnInit, OnDestroy {
     const files = filesInProgress
       .filter((val: IFileUploadProgress) => val.file !== file)
       .map((val: IFileUploadProgress) => val.file);
-    this.prepareUpload(files);
+    this.upload(files);
   }
 }

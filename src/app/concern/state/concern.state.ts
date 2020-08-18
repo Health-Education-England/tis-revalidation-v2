@@ -2,7 +2,14 @@ import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { patch, updateItem } from "@ngxs/store/operators";
 import { saveAs } from "file-saver";
-import { catchError, finalize, map, switchMap, take } from "rxjs/operators";
+import {
+  catchError,
+  finalize,
+  map,
+  switchMap,
+  take,
+  tap
+} from "rxjs/operators";
 import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
 import {
   IConcernSummary,
@@ -23,7 +30,6 @@ import {
   Get,
   ListFiles,
   ListFilesSuccess,
-  PrepareUpload,
   Save,
   SaveSuccess,
   SetFileUploadProgress,
@@ -31,6 +37,13 @@ import {
   Upload,
   UploadSuccess
 } from "./concern.actions";
+import { Observable, forkJoin } from "rxjs";
+import {
+  HttpEvent,
+  HttpProgressEvent,
+  HttpEventType,
+  HttpResponse
+} from "@angular/common/http";
 
 export class ConcernStateModel {
   public employers?: IEntity[];
@@ -167,25 +180,23 @@ export class ConcernState {
 
   @Action(Save)
   addConcern(ctx: StateContext<ConcernStateModel>) {
+    const state = ctx.getState();
+    const selectedConcern = state.selected;
     return this.concernService
-      .addConcern(ctx.getState().selected)
+      .addConcern(selectedConcern)
       .pipe(
         take(1),
         catchError((error: string) => ctx.dispatch(new ApiError(error)))
       )
       .subscribe((response: string) => {
-        const concernId: string = ctx.getState().selected.concernId || response;
-
-        ctx
-          .dispatch(new SaveSuccess(concernId))
-          .pipe(take(1))
-          .subscribe(() => {
-            const state = ctx.getState();
-
-            if (state.filesTobeUploaded?.length) {
-              ctx.dispatch(new Upload(state.gmcNumber, concernId));
+        if (!selectedConcern.concernId) {
+          ctx.patchState({
+            selected: {
+              ...selectedConcern,
+              concernId: response
             }
           });
+        }
       });
   }
 
@@ -238,37 +249,65 @@ export class ConcernState {
     }
   }
 
-  @Action(PrepareUpload)
-  prepareUpload(ctx: StateContext<ConcernStateModel>, action: PrepareUpload) {
-    ctx.patchState({
-      filesTobeUploaded: action.payload
-    });
-  }
-
   @Action(Upload)
   upload(ctx: StateContext<ConcernStateModel>, action: Upload) {
-    return this.uploadService
-      .upload(
-        this.uploadService.createFormData(
-          action.gmcNumber,
-          action.concernId,
-          ctx.getState().filesTobeUploaded
-        )
-      )
-      .pipe(catchError((error: string) => ctx.dispatch(new ApiError(error))))
-      .subscribe(() =>
-        ctx
-          .dispatch(new UploadSuccess())
-          .pipe(take(1))
-          .subscribe(() => {
-            ctx.dispatch(
-              new ListFiles(
-                ctx.getState().gmcNumber,
-                ctx.getState().selected.concernId
+    const uploadFiles: Observable<any>[] = [];
+    ctx.dispatch(new SetFileUploadProgress(null, null));
+    action.payload.map((upFile: File) => {
+      ctx.dispatch(new SetFileUploadProgress(upFile, 0));
+    });
+    if (action.gmcNumber && action.concernId) {
+      action.payload.map((upFile: File) => {
+        uploadFiles.push(
+          this.uploadService
+            .upload(
+              this.uploadService.createFormData(
+                action.gmcNumber,
+                action.concernId,
+                upFile
               )
-            );
+            )
+            .pipe(
+              map((event: HttpEvent<HttpProgressEvent>) => {
+                switch (event.type) {
+                  case HttpEventType.UploadProgress:
+                    ctx.dispatch(
+                      new SetFileUploadProgress(
+                        upFile,
+                        Math.round((event.loaded * 100) / event.total)
+                      )
+                    );
+                    break;
+                  case HttpEventType.Response:
+                    return event;
+                }
+              })
+            )
+        );
+      });
+      return forkJoin(uploadFiles)
+        .pipe(
+          take(1),
+          tap((val: HttpResponse<any>[]) => {
+            ctx.dispatch(new UploadSuccess()).subscribe(() => {
+              if (val.includes(undefined)) {
+                return ctx.dispatch(new ApiError(`An error occured`));
+              }
+            });
+          }),
+          catchError((error: string) => {
+            return ctx.dispatch(new ApiError(error));
+          }),
+          finalize(() => {
+            return ctx
+              .dispatch(new SetFileUploadProgress(null, null))
+              .subscribe(() =>
+                ctx.dispatch(new ListFiles(action.gmcNumber, action.concernId))
+              );
           })
-      );
+        )
+        .subscribe();
+    }
   }
 
   @Action(UploadSuccess)
@@ -366,10 +405,7 @@ export class ConcernState {
   }
 
   @Action(DeleteFileSuccess)
-  deleteFileSuccess(
-    ctx: StateContext<ConcernStateModel>,
-    action: DeleteFileSuccess
-  ) {
+  deleteFileSuccess(action: DeleteFileSuccess) {
     this.snackBarService.openSnackBar(`${action.fileName} has been deleted`);
   }
 }

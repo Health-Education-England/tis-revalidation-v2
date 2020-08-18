@@ -17,12 +17,11 @@ export class SaveSuccess {
 
 export class Upload {
   static readonly type = "[Concern] Upload";
-  constructor(public gmcNumber: number, public concernId: string) {}
-}
-
-export class PrepareUpload {
-  static readonly type = "[Concern] Prepare Upload";
-  constructor(public payload: File[]) {}
+  constructor(
+    public gmcNumber: number,
+    public concernId: string,
+    public payload: File[]
+  ) {}
 }
 
 export class UploadSuccess {

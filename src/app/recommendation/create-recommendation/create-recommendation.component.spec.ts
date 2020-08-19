@@ -11,6 +11,7 @@ import { Component } from "@angular/core";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { ReactiveFormsModule } from "@angular/forms";
 import { AuthService } from "src/app/core/auth/auth.service";
+import { DetailsModule } from "src/app/details/details.module";
 
 @Component({
   template: `blank`
@@ -31,6 +32,7 @@ describe("CreateRecommendationComponent", () => {
         HttpClientTestingModule,
         NoopAnimationsModule,
         ReactiveFormsModule,
+        DetailsModule,
         NgxsModule.forRoot([RecommendationHistoryState])
       ],
       providers: [

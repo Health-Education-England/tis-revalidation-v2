@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { ActivatedRoute } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
-import { NgxsModule } from "@ngxs/store";
+import { NgxsModule, Store } from "@ngxs/store";
 import { ConcernState } from "../../state/concern.state";
 
 import { UploadDocumentsComponent } from "./upload-documents.component";
@@ -10,14 +10,31 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { MaterialModule } from "src/app/shared/material/material.module";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { CommentsService } from "../../../details/comments-tool-bar/comments.service";
+import { CommentsService } from "src/app/details/comments/comments.service";
+import { DetailsModule } from "src/app/details/details.module";
+import { SetSelectedConcern } from "../../state/concern.actions";
+import { defaultConcern } from "../../constants";
+import { SnackBarService } from "src/app/shared/services/snack-bar/snack-bar.service";
+import { from } from "rxjs";
 
 describe("UploadDocumentsComponent", () => {
   let component: UploadDocumentsComponent;
   let fixture: ComponentFixture<UploadDocumentsComponent>;
   let commentsService: CommentsService;
+  let store: Store;
+  let snackBarService: SnackBarService;
+
   const activatedRoute = {
     parent: { snapshot: { params: { gmcNumber: 0 } } }
+  };
+
+  const setDefaultSelectedConcern = () => {
+    store.dispatch(
+      new SetSelectedConcern({
+        ...defaultConcern,
+        ...{ concernId: "xxx-111-yyy", gmcNumber: 8119389 }
+      })
+    );
   };
 
   beforeEach(async(() => {
@@ -29,6 +46,7 @@ describe("UploadDocumentsComponent", () => {
         NoopAnimationsModule,
         HttpClientTestingModule,
         RouterTestingModule,
+        DetailsModule,
         NgxsModule.forRoot([ConcernState])
       ],
       providers: [
@@ -40,6 +58,9 @@ describe("UploadDocumentsComponent", () => {
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
+    store = TestBed.inject(Store);
+    snackBarService = TestBed.inject(SnackBarService);
+    setDefaultSelectedConcern();
   }));
 
   beforeEach(() => {

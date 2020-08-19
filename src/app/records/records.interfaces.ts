@@ -9,3 +9,12 @@ export interface IRecordDataCell {
   name: string;
   enableSort?: boolean;
 }
+
+export interface ITotalCounts {
+  [key: string]: number;
+}
+
+export interface IFilter {
+  label: string;
+  name: string;
+}

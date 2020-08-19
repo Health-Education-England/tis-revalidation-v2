@@ -64,14 +64,15 @@ describe("Recommendations state", () => {
     });
   });
 
-  it("should dispatch 'Get' and select 'countTotal' slice", () => {
+  it("should dispatch 'Get' and select 'allDoctors' slice", () => {
     spyOn(recordsService, "getRecords").and.returnValue(
       of(mockRecommendationsResponse)
     );
 
     store.dispatch(new GetRecommendations()).subscribe(() => {
-      const countTotal = store.snapshot().recommendations.countTotal;
-      expect(countTotal).toEqual(21312);
+      const allDoctors = store.snapshot().recommendations.totalCounts
+        .allDoctors;
+      expect(allDoctors).toEqual(21312);
     });
   });
 

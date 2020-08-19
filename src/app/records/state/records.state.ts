@@ -3,37 +3,46 @@ import { Sort as ISort } from "@angular/material/sort/sort";
 import { createSelector, StateContext } from "@ngxs/store";
 import { patch, updateItem } from "@ngxs/store/operators";
 import { DEFAULT_SORT } from "../constants";
+import { ITotalCounts } from "../records.interfaces";
 import { RecordsService } from "../services/records.service";
 
 export class RecordsStateModel<T, F> {
-  public enableAllocateAdmin?: boolean;
   public allChecked: boolean;
-  public someChecked: boolean;
+  public enableAllocateAdmin?: boolean;
   public error?: string;
   public filter: T;
   public items: F;
   public loading: boolean;
   public pageIndex: number;
   public searchQuery: string;
+  public someChecked: boolean;
   public sort: ISort;
   public totalPages: number;
   public totalResults: number;
+  public totalCounts: ITotalCounts;
 }
 
 export const defaultRecordsState = {
-  items: null,
   allChecked: false,
-  someChecked: false,
+  items: null,
   loading: null,
   pageIndex: 0,
   searchQuery: null,
+  someChecked: false,
   sort: DEFAULT_SORT,
   totalPages: null,
-  totalResults: null
+  totalResults: null,
+  totalCounts: null
 };
 
 export class RecordsState {
   constructor(protected recordsService: RecordsService) {}
+
+  static totalCounts<T>() {
+    return createSelector([this], (state: { totalCounts: ITotalCounts }) => {
+      return state.totalCounts;
+    });
+  }
 
   static allChecked<T>() {
     return createSelector([this], (state: { allChecked: boolean }) => {

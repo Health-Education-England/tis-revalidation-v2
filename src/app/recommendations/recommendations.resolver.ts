@@ -6,6 +6,7 @@ import { generateColumnData } from "../records/constants";
 import { RecordsResolver } from "../records/records.resolver";
 import { RecordsService } from "../records/services/records.service";
 import { COLUMN_DATA } from "./constants";
+import { RecommendationsFilterType } from "./recommendations.interfaces";
 
 @Injectable()
 export class RecommendationsResolver extends RecordsResolver
@@ -29,6 +30,16 @@ export class RecommendationsResolver extends RecordsResolver
       "lastUpdatedDate"
     ];
     this.recordsService.columnData = generateColumnData(COLUMN_DATA);
+    this.recordsService.filters = [
+      {
+        label: "ALL DOCTORS",
+        name: RecommendationsFilterType.ALL_DOCTORS
+      },
+      {
+        label: "UNDER NOTICE ",
+        name: RecommendationsFilterType.UNDER_NOTICE
+      }
+    ];
   }
 
   resolve(route: ActivatedRouteSnapshot): Observable<any> {

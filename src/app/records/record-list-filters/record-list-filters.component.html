@@ -1,29 +1,23 @@
 <ng-container
   *ngIf="{
-    countTotal: countTotal$ | async,
-    countUnderNotice: countUnderNotice$ | async,
+    totalCounts: totalCounts$ | async,
     filter: filter$ | async,
     enableAllocateAdmin: enableAllocateAdmin$ | async
   } as data"
 >
   <nav mat-tab-nav-bar>
     <a
+      *ngFor="let i of filters"
       mat-tab-link
-      [active]="data.filter === allDoctors"
-      aria-label="Filter all doctors"
-      (click)="filterRecords(allDoctors)"
+      [active]="data.filter === i.name"
+      [attr.aria-label]="'Filter ' + i.label.toLowerCase() + 'records'"
+      (click)="filterRecords(i.name)"
       [disabled]="data.enableAllocateAdmin"
     >
-      ALL DOCTORS - {{ data.countTotal }}
-    </a>
-    <a
-      mat-tab-link
-      [active]="data.filter === underNotice"
-      aria-label="Filter under notice"
-      (click)="filterRecords(underNotice)"
-      [disabled]="data.enableAllocateAdmin"
-    >
-      UNDER NOTICE - {{ data.countUnderNotice }}
+      {{ i.label }} -
+      <ng-container *ngIf="data.totalCounts?.hasOwnProperty(i.name)">
+        {{ data.totalCounts[i.name] }}
+      </ng-container>
     </a>
   </nav>
 </ng-container>

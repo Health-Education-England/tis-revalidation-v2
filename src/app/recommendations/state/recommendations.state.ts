@@ -1,22 +1,22 @@
 import { HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "@environment";
-import { Action, Selector, State, StateContext } from "@ngxs/store";
-import { catchError, finalize, map, switchMap, take } from "rxjs/operators";
+import { Action, State, StateContext } from "@ngxs/store";
+import { catchError, concatMap, finalize, map, take } from "rxjs/operators";
+import { RecommendationStatus } from "../../recommendation/recommendation-history.interface";
+import { DEFAULT_SORT } from "../../records/constants";
 import { RecordsService } from "../../records/services/records.service";
 import {
   defaultRecordsState,
   RecordsState,
   RecordsStateModel
 } from "../../records/state/records.state";
-import { RecommendationStatus } from "../../recommendation/recommendation-history.interface";
-import { DEFAULT_SORT } from "../../records/constants";
-import { RecommendationsService } from "../services/recommendations.service";
 import {
   IGetRecommendationsResponse,
   IRecommendation,
   RecommendationsFilterType
 } from "../recommendations.interfaces";
+import { RecommendationsService } from "../services/recommendations.service";
 import {
   ClearRecommendationsSearch,
   EnableRecommendationsAllocateAdmin,
@@ -25,10 +25,10 @@ import {
   GetRecommendationsError,
   GetRecommendationsSuccess,
   PaginateRecommendations,
+  RecommendationsSearch,
   ResetRecommendationsFilter,
   ResetRecommendationsPaginator,
   ResetRecommendationsSort,
-  RecommendationsSearch,
   SortRecommendations,
   ToggleAllRecommendationsCheckboxes,
   ToggleRecommendationsCheckbox
@@ -37,16 +37,11 @@ import {
 export class RecommendationsStateModel extends RecordsStateModel<
   RecommendationsFilterType,
   IRecommendation[]
-> {
-  public countTotal: number;
-  public countUnderNotice: number;
-}
+> {}
 
 @State<RecommendationsStateModel>({
   name: "recommendations",
   defaults: {
-    countTotal: null,
-    countUnderNotice: null,
     filter: RecommendationsFilterType.UNDER_NOTICE,
     ...defaultRecordsState
   }
@@ -58,16 +53,6 @@ export class RecommendationsState extends RecordsState {
     protected recordsService: RecordsService
   ) {
     super(recordsService);
-  }
-
-  @Selector()
-  public static countTotal(state: RecommendationsStateModel) {
-    return state.countTotal;
-  }
-
-  @Selector()
-  public static countUnderNotice(state: RecommendationsStateModel) {
-    return state.countUnderNotice;
   }
 
   @Action(GetRecommendations)
@@ -87,7 +72,7 @@ export class RecommendationsState extends RecordsState {
           );
           return response;
         }),
-        switchMap((response: IGetRecommendationsResponse) =>
+        concatMap((response: IGetRecommendationsResponse) =>
           ctx.dispatch(new GetRecommendationsSuccess(response))
         ),
         catchError((error: string) =>
@@ -110,8 +95,10 @@ export class RecommendationsState extends RecordsState {
     super.getSuccessHandler(ctx, action, "traineeInfo");
 
     return ctx.patchState({
-      countTotal: action.response.countTotal,
-      countUnderNotice: action.response.countUnderNotice
+      totalCounts: {
+        allDoctors: action.response.countTotal,
+        underNotice: action.response.countUnderNotice
+      }
     });
   }
 

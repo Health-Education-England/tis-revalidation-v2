@@ -46,7 +46,7 @@ import {
   ToggleAllRecommendationsCheckboxes,
   ToggleRecommendationsCheckbox
 } from "../../recommendations/state/recommendations.actions";
-import { IRecordDataCell } from "../records.interfaces";
+import { IFilter, IRecordDataCell } from "../records.interfaces";
 
 @Injectable({
   providedIn: "root"
@@ -57,6 +57,7 @@ export class RecordsService {
   public dateColumns: string[];
   public columnData: IRecordDataCell[];
   public detailsRoute: string;
+  public filters: IFilter[];
 
   // TODO type these
   public clearSearchAction: any;

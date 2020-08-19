@@ -26,8 +26,7 @@ export class CommentsService {
   /**
    * showToolBar$: BehaviorSubject<boolean> = new BehaviorSubject(false);
    * TODO: uncomment if UX requires for view/edit roles in coming sprints
-   * */
-
+   */
   constructor() {}
 
   addCommentControl(commentText?: string): void {

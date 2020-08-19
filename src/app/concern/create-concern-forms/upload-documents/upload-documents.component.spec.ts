@@ -15,7 +15,6 @@ import { DetailsModule } from "src/app/details/details.module";
 import { SetSelectedConcern } from "../../state/concern.actions";
 import { defaultConcern } from "../../constants";
 import { SnackBarService } from "src/app/shared/services/snack-bar/snack-bar.service";
-import { from } from "rxjs";
 
 describe("UploadDocumentsComponent", () => {
   let component: UploadDocumentsComponent;

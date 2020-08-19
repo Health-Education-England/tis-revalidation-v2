@@ -30,7 +30,7 @@ export class UploadService {
     return this.http.post(environment.appUrls.upload, payload, {
       observe: "events",
       reportProgress: true,
-      headers: headers
+      headers
     });
   }
 

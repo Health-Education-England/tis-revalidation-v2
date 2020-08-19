@@ -12,7 +12,7 @@ import { MatDialogRef, MatDialog } from "@angular/material/dialog";
 export class CommentsComponent implements OnInit {
   public form: FormGroup;
   public comments: FormArray;
-  @Input("feature-comments") featureComments: string[] = [];
+  @Input() featureComments: string[] = [];
   public partialSelection$ = this.commentsService.partialSelection$;
   public allSelected$ = this.commentsService.allSelected$;
 

@@ -12,20 +12,21 @@ export class Save {
 
 export class SaveSuccess {
   static readonly type = "[Concern] Save Success";
-  constructor(public payload: any) {}
+  constructor(public payload: string) {}
 }
 
 export class Upload {
   static readonly type = "[Concern] Upload";
   constructor(
     public gmcNumber: number,
-    public concernId: number,
+    public concernId: string,
     public payload: File[]
   ) {}
 }
 
 export class UploadSuccess {
   static readonly type = "[Concern] Upload Success";
+  constructor(public gmcNumber: number, public concernId: string) {}
 }
 
 export class ApiError extends HttpErrorPayload {
@@ -34,7 +35,7 @@ export class ApiError extends HttpErrorPayload {
 
 export class ListFiles {
   static readonly type = "[Concern] List Files";
-  constructor(public gmcNumber: number, public concernId: number) {}
+  constructor(public gmcNumber: number, public concernId: string) {}
 }
 
 export class ListFilesSuccess {
@@ -63,11 +64,11 @@ export class DeleteFileSuccess {
 }
 
 export class SetSelectedConcern {
-  static readonly type = "[Concern] set selected concern";
+  static readonly type = "[Concern] Set selected concern";
   constructor(public concern: IConcernSummary) {}
 }
 
 export class SetFileUploadProgress {
-  static readonly type = "[Concern] set file upload progress";
+  static readonly type = "[Concern] Set file upload progress";
   constructor(public upFile?: File, public progress?: number) {}
 }

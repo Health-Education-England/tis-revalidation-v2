@@ -6,6 +6,7 @@ import { ACCEPTED_IMAGE_EXTENSIONS } from "../constants";
 import { DeleteFile, DownloadFile, ListFiles } from "../state/concern.actions";
 import { ConcernState } from "../state/concern.state";
 import { IConcernSummary } from "../concern.interfaces";
+import { filter, take } from "rxjs/operators";
 
 @Component({
   selector: "app-uploaded-files-list",
@@ -15,7 +16,7 @@ import { IConcernSummary } from "../concern.interfaces";
 export class UploadedFilesListComponent implements OnInit {
   public dateFormat = environment.dateFormat;
   public gmcNumber: number = this.store.selectSnapshot(ConcernState.gmcNumber);
-  public concernId: number = this.store.selectSnapshot(ConcernState.selected)
+  public concernId: string = this.store.selectSnapshot(ConcernState.selected)
     .concernId;
   @Select(ConcernState.listFilesInProgress)
   public listFilesInProgress$: Observable<boolean>;
@@ -27,7 +28,10 @@ export class UploadedFilesListComponent implements OnInit {
   constructor(private store: Store) {}
 
   ngOnInit(): void {
-    this.listFiles();
+    this.selectedConcern$.pipe(take(1)).subscribe((sel: IConcernSummary) => {
+      this.concernId = sel.concernId;
+      this.listFiles();
+    });
   }
 
   public downloadFile(fileName: string, key: string): Observable<any> {
@@ -41,8 +45,6 @@ export class UploadedFilesListComponent implements OnInit {
   }
 
   public listFiles(): Observable<any> {
-    if (this.concernId) {
-      return this.store.dispatch(new ListFiles(this.gmcNumber, this.concernId));
-    }
+    return this.store.dispatch(new ListFiles(this.gmcNumber, this.concernId));
   }
 }

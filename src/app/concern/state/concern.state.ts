@@ -1,14 +1,7 @@
-import {
-  HttpEvent,
-  HttpEventType,
-  HttpProgressEvent,
-  HttpResponse
-} from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { patch, updateItem } from "@ngxs/store/operators";
 import { saveAs } from "file-saver";
-import { forkJoin, Observable } from "rxjs";
 import {
   catchError,
   finalize,
@@ -20,20 +13,15 @@ import {
 import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
 import {
   IConcernSummary,
-  IEmployer,
+  IEntity,
   IFileUploadProgress,
   IGetConcernResponse,
-  IGrade,
-  ISource,
-  IConcernType,
-  IListFile,
-  ISite
+  IListFile
 } from "../concern.interfaces";
+import { defaultConcern } from "../constants";
 import { ConcernService } from "../services/concern/concern.service";
 import { UploadService } from "../services/upload/upload.service";
 import {
-  Save,
-  SaveSuccess,
   ApiError,
   DeleteFile,
   DeleteFileSuccess,
@@ -42,24 +30,32 @@ import {
   Get,
   ListFiles,
   ListFilesSuccess,
+  Save,
+  SaveSuccess,
   SetFileUploadProgress,
   SetSelectedConcern,
   Upload,
   UploadSuccess
 } from "./concern.actions";
+import { Observable, forkJoin } from "rxjs";
+import {
+  HttpEvent,
+  HttpProgressEvent,
+  HttpEventType,
+  HttpResponse
+} from "@angular/common/http";
 
 export class ConcernStateModel {
-  public concernId?: number;
-  public employers?: IEmployer[];
+  public employers?: IEntity[];
   public filesInUploadProgress?: IFileUploadProgress[];
   public gmcNumber: number;
-  public grades?: IGrade[];
+  public grades?: IEntity[];
   public history: IConcernSummary[];
-  public sources?: ISource[];
-  public concernTypes?: IConcernType[];
+  public sources?: IEntity[];
+  public concernTypes?: IEntity[];
   public listFilesInProgress?: boolean;
   public selected?: IConcernSummary;
-  public sites?: ISite[];
+  public sites?: IEntity[];
   public uploadedFiles?: any[];
   public uploadFileInProgress?: boolean;
 }
@@ -147,15 +143,25 @@ export class ConcernState {
     }
 
     return this.service.getConcernHistory(payload).pipe(
-      tap((response: IGetConcernResponse) => {
+      map((response: IGetConcernResponse) => {
         patchState({
           gmcNumber: response.gmcNumber,
           history: response.concerns,
-          employers: response.employers,
-          grades: response.grades,
-          sites: response.sites,
-          sources: response.sources,
-          concernTypes: response.types
+          employers: this.concernService.massageData(
+            response.employers,
+            "trustName"
+          ),
+          grades: this.concernService.massageData(response.grades, "name"),
+          sites: this.concernService.massageData(response.sites, "siteName"),
+          sources: this.concernService.massageData(response.sources, "name"),
+          concernTypes: this.concernService.massageData(
+            response.types,
+            "label"
+          ),
+          selected: {
+            ...defaultConcern,
+            gmcNumber: response.gmcNumber
+          }
         });
       })
     );
@@ -166,7 +172,6 @@ export class ConcernState {
     ctx: StateContext<ConcernStateModel>,
     { concern }: SetSelectedConcern
   ) {
-    concern.gmcNumber = ctx.getState().gmcNumber;
     ctx.patchState({
       selected: concern
     });
@@ -174,16 +179,36 @@ export class ConcernState {
 
   @Action(Save)
   addConcern(ctx: StateContext<ConcernStateModel>) {
-    return this.concernService.addConcern(ctx.getState().selected).pipe(
-      take(1),
-      switchMap((response: any) => ctx.dispatch(new SaveSuccess(response))),
-      catchError((error: string) => ctx.dispatch(new ApiError(error)))
-    );
+    const state = ctx.getState();
+    const selectedConcern = state.selected;
+    return this.concernService
+      .addConcern(selectedConcern)
+      .pipe(
+        take(1),
+        catchError((error: string) => ctx.dispatch(new ApiError(error)))
+      )
+      .subscribe((response: string) => {
+        if (!selectedConcern.concernId) {
+          ctx.patchState({
+            selected: {
+              ...selectedConcern,
+              concernId: response
+            }
+          });
+        }
+      });
   }
 
   @Action(SaveSuccess)
-  saveSuccess() {
+  saveSuccess(ctx: StateContext<ConcernStateModel>, action: SaveSuccess) {
     this.snackBarService.openSnackBar("Concern successfully saved.");
+
+    ctx.patchState({
+      selected: {
+        ...ctx.getState().selected,
+        concernId: action.payload
+      }
+    });
   }
 
   @Action(SetFileUploadProgress)
@@ -227,11 +252,9 @@ export class ConcernState {
   upload(ctx: StateContext<ConcernStateModel>, action: Upload) {
     const uploadFiles: Observable<any>[] = [];
     ctx.dispatch(new SetFileUploadProgress(null, null));
-
     action.payload.map((upFile: File) => {
       ctx.dispatch(new SetFileUploadProgress(upFile, 0));
     });
-
     if (action.gmcNumber && action.concernId) {
       action.payload.map((upFile: File) => {
         uploadFiles.push(
@@ -265,27 +288,29 @@ export class ConcernState {
         .pipe(
           take(1),
           tap((val: HttpResponse<any>[]) => {
-            ctx.dispatch(new UploadSuccess()).subscribe(() => {
-              if (val.includes(undefined)) {
-                return ctx.dispatch(new ApiError(`An error occured`));
-              }
-            });
+            ctx
+              .dispatch(new UploadSuccess(action.gmcNumber, action.concernId))
+              .subscribe(() => {
+                if (val.includes(undefined)) {
+                  return ctx.dispatch(new ApiError(`An error occured`));
+                }
+              });
           }),
           catchError((error: string) => {
             return ctx.dispatch(new ApiError(error));
           }),
-          finalize(() => ctx.dispatch(new SetFileUploadProgress(null, null)))
+          finalize(() => {
+            return ctx.dispatch(new SetFileUploadProgress(null, null));
+          })
         )
         .subscribe();
     }
   }
 
   @Action(UploadSuccess)
-  uploadSuccess(ctx: StateContext<ConcernStateModel>) {
+  uploadSuccess(ctx: StateContext<ConcernStateModel>, action: UploadSuccess) {
     this.snackBarService.openSnackBar(`Upload success`);
-    const gmcno = ctx.getState().gmcNumber;
-    const conId = ctx.getState().selected?.concernId;
-    return ctx.dispatch(new ListFiles(gmcno, conId));
+    return ctx.dispatch(new ListFiles(action.gmcNumber, action.concernId));
   }
 
   // TODO move to a generic place so other states can also re use
@@ -309,9 +334,6 @@ export class ConcernState {
       )
       .pipe(
         take(1),
-        switchMap((response: IListFile[]) =>
-          ctx.dispatch(new ListFilesSuccess(response))
-        ),
         catchError((error: string) => ctx.dispatch(new ApiError(error))),
         finalize(() =>
           ctx.patchState({
@@ -319,7 +341,9 @@ export class ConcernState {
           })
         )
       )
-      .subscribe();
+      .subscribe((response: IListFile[]) =>
+        ctx.dispatch(new ListFilesSuccess(response))
+      );
   }
 
   @Action(ListFilesSuccess)
@@ -360,20 +384,22 @@ export class ConcernState {
       .deleteFile(this.uploadService.createRequestParams(action.key))
       .pipe(
         take(1),
-        switchMap(() => ctx.dispatch(new DeleteFileSuccess(action.fileName))),
         catchError((error: string) => ctx.dispatch(new ApiError(error)))
       )
-      .subscribe();
+      .subscribe(() =>
+        ctx
+          .dispatch(new DeleteFileSuccess(action.fileName))
+          .pipe(take(1))
+          .subscribe(() => {
+            const gmcno = ctx.getState().gmcNumber;
+            const conId = ctx.getState().selected.concernId;
+            return ctx.dispatch(new ListFiles(gmcno, conId));
+          })
+      );
   }
 
   @Action(DeleteFileSuccess)
-  deleteFileSuccess(
-    ctx: StateContext<ConcernStateModel>,
-    action: DeleteFileSuccess
-  ) {
+  deleteFileSuccess(action: DeleteFileSuccess) {
     this.snackBarService.openSnackBar(`${action.fileName} has been deleted`);
-    const gmcno = ctx.getState().gmcNumber;
-    const conId = ctx.getState().selected?.concernId;
-    return ctx.dispatch(new ListFiles(gmcno, conId));
   }
 }

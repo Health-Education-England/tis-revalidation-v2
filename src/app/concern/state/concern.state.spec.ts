@@ -17,11 +17,13 @@ import { ConcernHistoryResponse2 } from "src/app/recommendation/mock-data/recomm
 
 import { ErrorHandler } from "@angular/core";
 import { tap } from "rxjs/operators";
+import { SnackBarService } from "src/app/shared/services/snack-bar/snack-bar.service";
 
 describe("Concern actions", () => {
   let store: Store;
   let httpMock: HttpTestingController;
   let uploadService: UploadService;
+  let snackBarService: SnackBarService;
 
   const errorHandlerSpy = () =>
     jasmine.createSpyObj("ErrorHandler", {
@@ -46,6 +48,7 @@ describe("Concern actions", () => {
     store = TestBed.inject(Store);
     uploadService = TestBed.inject(UploadService);
     httpMock = TestBed.inject(HttpTestingController);
+    snackBarService = TestBed.inject(SnackBarService);
   }));
 
   it("should create a get concerns action", fakeAsync(() => {
@@ -80,25 +83,30 @@ describe("Concern actions", () => {
   }));
 
   it("on 'Upload' event `uploadFileInProgress` should be truthy", () => {
-    store.dispatch(new Upload(12132312, 12132312, [mockFile]));
+    store.dispatch(new Upload(12132312, "xxxxxx-yyyyy-zzzzz", [mockFile]));
     const uploadFileInProgress = store.selectSnapshot(ConcernState)
       .uploadFileInProgress;
     expect(uploadFileInProgress).toBeTrue();
   });
 
-  it("on 'Upload' event `uploadService.upload` is invoked", () => {
+  it("on 'Upload' event `uploadService.upload` is invoked", async () => {
     spyOn(uploadService, "upload").and.returnValue(of({}));
-    store.dispatch(new Upload(12132312, 12132312, [mockFile])).subscribe(() => {
-      expect(uploadService.upload).toHaveBeenCalled();
-    });
+    await store
+      .dispatch(new Upload(12132312, "xxxxxx-yyyyy-zzzzz", [mockFile]))
+      .toPromise();
+    expect(uploadService.upload).toHaveBeenCalled();
   });
 
-  it("on 'UploadSuccess' event `ListFiles` is event is dispatched", () => {
-    spyOn(store, "dispatch").and.callThrough();
-    store.dispatch(new UploadSuccess()).pipe(
-      tap(() => {
-        expect(store.dispatch).toHaveBeenCalledWith(new ListFiles(null, null));
-      })
+  it("on 'UploadSuccess' event `ListFiles` is event is dispatched", async () => {
+    spyOn(snackBarService, "openSnackBar");
+    spyOn(uploadService, "createListFilesParams").and.callThrough();
+    const gmcId = 12132312;
+    const concId = "xxxxxx-yyyyy-zzzzz";
+    await store.dispatch(new UploadSuccess(gmcId, concId)).toPromise();
+    expect(snackBarService.openSnackBar).toHaveBeenCalled();
+    expect(uploadService.createListFilesParams).toHaveBeenCalledWith(
+      gmcId,
+      concId
     );
   });
 });

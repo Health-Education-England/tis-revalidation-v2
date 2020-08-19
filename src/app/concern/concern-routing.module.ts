@@ -12,6 +12,7 @@ const routes: Routes = [
     component: RecordDetailsComponent,
     data: { title: "Concern summary" },
     resolve: { concern: ConcernResolver },
+    runGuardsAndResolvers: "always",
     children: [
       {
         path: "",

@@ -10,12 +10,14 @@ import { DetailsSideNavState } from "./details-side-nav/state/details-side-nav.s
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { AuthInterceptor } from "src/app/core/auth/auth.interceptor";
 import { RecordDetailsComponent } from "./record-details/record-details.component";
-import {
-  CommentsToolBarComponent,
-  DeleteCommentDialogueComponent
-} from "./comments-tool-bar/comments-tool-bar.component";
 import { NotesToolBarComponent } from "./notes-tool-bar/notes-tool-bar.component";
-import { CommentsService } from "./comments-tool-bar/comments.service";
+import { CommentsService } from "./comments/comments.service";
+import { NotesService } from "./notes-tool-bar/notes.service";
+import {
+  CommentsComponent,
+  DeleteCommentDialogueComponent
+} from "./comments/comments.component";
+import { ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
   // TODO double check if NavBarComponent, DetailsSideNavComponent
@@ -25,27 +27,29 @@ import { CommentsService } from "./comments-tool-bar/comments.service";
     NavBarComponent,
     DetailsSideNavComponent,
     RecordDetailsComponent,
-    CommentsToolBarComponent,
     NotesToolBarComponent,
-    DeleteCommentDialogueComponent
+    DeleteCommentDialogueComponent,
+    CommentsComponent
   ],
   imports: [
     CommonModule,
     MaterialModule,
     RouterModule,
     HttpClientModule,
+    ReactiveFormsModule,
     NgxsModule.forFeature([DetailsSideNavState])
   ],
   providers: [
     DetailsSideNavService,
     CommentsService,
+    NotesService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   exports: [
     NavBarComponent,
     DetailsSideNavComponent,
     RecordDetailsComponent,
-    CommentsToolBarComponent
+    CommentsComponent
   ],
   entryComponents: [DeleteCommentDialogueComponent]
 })

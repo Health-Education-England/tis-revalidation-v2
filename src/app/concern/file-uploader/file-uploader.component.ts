@@ -1,18 +1,19 @@
 import {
   Component,
   ElementRef,
+  OnDestroy,
   OnInit,
-  ViewChild,
-  OnDestroy
+  ViewChild
 } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormGroup, FormControl } from "@angular/forms";
 import { Select, Store } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
 import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
+import { IConcernSummary, IFileUploadProgress } from "../concern.interfaces";
 import { ACCEPTED_IMAGE_MIMES } from "../constants";
-import { Upload } from "../state/concern.actions";
 import { ConcernState } from "../state/concern.state";
-import { IFileUploadProgress, IConcernSummary } from "../concern.interfaces";
+import { Upload } from "../state/concern.actions";
+import { take } from "rxjs/operators";
 
 @Component({
   selector: "app-file-uploader",
@@ -33,7 +34,7 @@ export class FileUploaderComponent implements OnInit, OnDestroy {
   public acceptedFileSize = 10485760;
   public form: FormGroup;
   public gmcNumber: number = this.store.selectSnapshot(ConcernState.gmcNumber);
-  public concernId?: number;
+  public concernId?: string;
   @Select(ConcernState.uploadFileInProgress)
   public uploadFileInProgress$: Observable<boolean>;
   @Select(ConcernState.filesInUploadProgress)
@@ -43,11 +44,7 @@ export class FileUploaderComponent implements OnInit, OnDestroy {
   @ViewChild("dropArea") dropArea: ElementRef;
   subsciptions: Subscription[] = [];
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private store: Store,
-    private snackBarService: SnackBarService
-  ) {}
+  constructor(private store: Store, private snackBarService: SnackBarService) {}
 
   ngOnDestroy(): void {
     this.destroyPendingFiles();
@@ -64,7 +61,7 @@ export class FileUploaderComponent implements OnInit, OnDestroy {
   }
 
   public setupForm(): void {
-    this.form = this.formBuilder.group({ fileUploader: null });
+    this.form = new FormGroup({ fileUploader: new FormControl("") });
   }
 
   /**
@@ -72,21 +69,32 @@ export class FileUploaderComponent implements OnInit, OnDestroy {
    */
   public setConcernId(): void {
     this.subsciptions.push(
-      this.selectedConcern$.subscribe((selectedConcern: IConcernSummary) => {
-        this.concernId = selectedConcern.concernId;
-        const filesInProgress = this.store.selectSnapshot(
-          ConcernState.filesInUploadProgress
-        );
-        if (this.concernId && filesInProgress?.length > 0) {
-          const files = filesInProgress.map(
-            (val: IFileUploadProgress) => val.file
+      this.selectedConcern$
+        .pipe(take(1))
+        .subscribe((selectedConcern: IConcernSummary) => {
+          this.concernId = selectedConcern.concernId;
+          const filesInProgress = this.store.selectSnapshot(
+            ConcernState.filesInUploadProgress
           );
-          this.upload(files);
-        }
-      })
+          if (this.concernId && filesInProgress?.length > 0) {
+            const files = filesInProgress.map(
+              (val: IFileUploadProgress) => val.file
+            );
+            this.upload(files);
+          }
+        })
     );
   }
 
+  public upload(payload: File[]): void {
+    this.store
+      .dispatch(new Upload(this.gmcNumber, this.concernId, payload))
+      .subscribe(() => {
+        this.setupForm();
+      });
+  }
+
+  // TODO check if needed why?
   public destroyPendingFiles() {
     const filesInProgress = this.store.selectSnapshot(
       ConcernState.filesInUploadProgress
@@ -147,13 +155,6 @@ export class FileUploaderComponent implements OnInit, OnDestroy {
   public onFilesSelection($event: Event): void {
     const selectedFiles: File[] = Array.from($event.target[`files`]);
     this.processFiles(selectedFiles);
-  }
-
-  public upload(payload: File[]): Observable<any> {
-    this.form.reset();
-    return this.store.dispatch(
-      new Upload(this.gmcNumber, this.concernId, payload)
-    );
   }
 
   public removeProgressFile(file: File) {

@@ -21,6 +21,9 @@ export class CreateEditConcernResolver implements Resolve<any> {
     _state: RouterStateSnapshot
   ): Observable<any> {
     const concernId = route.params.concernId;
+    const redirectToUnknown = () => {
+      return from(this.router.navigate(["/404"]));
+    };
     if (concernId) {
       const selectedConcern = this.store
         .selectSnapshot(ConcernState)
@@ -30,10 +33,19 @@ export class CreateEditConcernResolver implements Resolve<any> {
       if (selectedConcern) {
         return this.store.dispatch(new SetSelectedConcern(selectedConcern));
       } else {
-        return from(this.router.navigate(["/404"]));
+        return redirectToUnknown();
       }
     } else {
-      return this.store.dispatch(new SetSelectedConcern(defaultConcern));
+      const _gmcNumber = route.parent.params.gmcNumber;
+      if (_gmcNumber) {
+        const concern = {
+          ...defaultConcern,
+          ...{ gmcNumber: Number(_gmcNumber) }
+        };
+        return this.store.dispatch(new SetSelectedConcern(concern));
+      } else {
+        return redirectToUnknown();
+      }
     }
   }
 }

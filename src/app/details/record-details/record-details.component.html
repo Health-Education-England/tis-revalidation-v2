@@ -8,9 +8,18 @@
 
     <mat-divider *ngIf="!device.isHandset" [vertical]="true"></mat-divider>
 
-    <div class="main-col d-grid bg-white">
-      <mat-toolbar class="sticky-toolbar">
-        <ng-container *ngIf="device.isHandset">
+    <div
+      class="main-col d-grid bg-white"
+      *ngIf="{
+        ishandset: device.isHandset,
+        shownotes: showNotes$ | async
+      } as toolbarSettings"
+    >
+      <mat-toolbar
+        class="sticky-toolbar"
+        *ngIf="toolbarSettings.ishandset || toolbarSettings.shownotes"
+      >
+        <ng-container *ngIf="toolbarSettings.ishandset">
           <mat-menu #recommendationMenu="matMenu">
             <app-details-side-nav></app-details-side-nav>
           </mat-menu>
@@ -24,13 +33,9 @@
           </button>
         </ng-container>
 
-        <ng-container *ngIf="showToolbar$ | async">
-          <app-comments-tool-bar class="w-100 d-block"></app-comments-tool-bar>
-        </ng-container>
-
         <span class="spacer"></span>
 
-        <ng-container *ngIf="showNotes$ | async">
+        <ng-container *ngIf="toolbarSettings.shownotes">
           <app-notes-tool-bar></app-notes-tool-bar>
         </ng-container>
       </mat-toolbar>

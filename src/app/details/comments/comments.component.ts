@@ -1,23 +1,49 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
+import { FormArray, FormGroup } from "@angular/forms";
 import { CommentsService } from "./comments.service";
 import { MatCheckboxChange } from "@angular/material/checkbox";
 import { MatDialogRef, MatDialog } from "@angular/material/dialog";
 
 @Component({
-  selector: "app-comments-tool-bar",
-  templateUrl: "./comments-tool-bar.component.html",
-  styleUrls: ["./comments-tool-bar.component.scss"]
+  selector: "app-comments",
+  templateUrl: "./comments.component.html",
+  styleUrls: ["./comments.component.scss"]
 })
-export class CommentsToolBarComponent implements OnInit {
-  partialSelection$ = this.commentsService.partialSelection$;
-  allSelected$ = this.commentsService.allSelected$;
+export class CommentsComponent implements OnInit {
+  public form: FormGroup;
+  public comments: FormArray;
+  @Input() featureComments: string[] = [];
+  public partialSelection$ = this.commentsService.partialSelection$;
+  public allSelected$ = this.commentsService.allSelected$;
 
   constructor(
     private commentsService: CommentsService,
     public dialog: MatDialog
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.setupForm();
+    this.createCommentControls();
+  }
+
+  public setupForm(): void {
+    this.form = new FormGroup({});
+    this.comments = new FormArray([]);
+  }
+
+  /**
+   * creates a comments FormGroup for each comment
+   * adds an empty comment FormGroup for readily adding comment
+   */
+  private createCommentControls(): void {
+    this.commentsService.comments = this.comments;
+    for (const comment of this.featureComments) {
+      this.commentsService.addCommentControl(comment);
+    }
+
+    this.commentsService.addCommentControl();
+    this.form.addControl("comments", this.comments);
+  }
 
   addCommentControl() {
     this.checkForComments();
@@ -47,7 +73,6 @@ export class CommentsToolBarComponent implements OnInit {
     }
   }
 }
-
 @Component({
   selector: "app-delete-comments-dialog",
   template: `<h1 mat-dialog-title>Delete comments</h1>

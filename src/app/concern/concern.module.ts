@@ -1,7 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { ReactiveFormsModule } from "@angular/forms";
 import { AdminsModule } from "../admins/admins.module";
-import { CommentsComponent } from "./comments/comments.component";
 import { ConcernComponent } from "./concern.component";
 import { ConcernResolver } from "./resolvers/concern.resolver";
 import { ConcernRoutingModule } from "./concern-routing.module";
@@ -22,7 +21,6 @@ import { CreateEditConcernResolver } from "./resolvers/create-edit-concern.resol
 
 @NgModule({
   declarations: [
-    CommentsComponent,
     ConcernComponent,
     ConcernDetailComponent,
     CreateConcernComponent,

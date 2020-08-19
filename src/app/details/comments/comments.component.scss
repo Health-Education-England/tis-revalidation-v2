@@ -1,29 +1,33 @@
 @import "../../../../node_modules/@angular/material/core/style/variables";
 
+.comments-section {
+  position: relative;
+
+  .select-control {
+    position: absolute;
+    right: 16px;
+    bottom: 5px;
+  }
+
+  .comments {
+    textarea.mat-input-element {
+      width: 100%;
+      padding: 2px 0 20px 0px;
+    }
+  }
+}
+
 .comments-toolbar {
   display: flex;
   flex-direction: row;
   align-items: center;
   white-space: nowrap;
   opacity: 0.8;
-  border-radius: 4px;
-  border: 1px solid transparent;
-  min-width: 150px;
-  max-width: 100%;
   margin: 0 auto;
-  width: calc(100% - 30px);
-
-  @media screen and (#{$mat-small}) {
-    width: 100%;
-  }
 
   &:hover,
   &:focus {
     opacity: 1;
     transition: opacity 0.25s;
-  }
-
-  .mat-checkbox {
-    margin-right: 12px;
   }
 }

@@ -32,7 +32,7 @@
 
     <mat-form-field>
       <mat-label>Concern type</mat-label>
-      <mat-select formControlName="concernType">
+      <mat-select formControlName="concernType" [compareWith]="compareFn">
         <mat-option
           *ngFor="let concernType of data.concernTypes"
           [value]="concernType"
@@ -47,9 +47,9 @@
 
     <mat-form-field>
       <mat-label>Source</mat-label>
-      <mat-select formControlName="source">
+      <mat-select formControlName="source" [compareWith]="compareFn">
         <mat-option *ngFor="let source of data.sources" [value]="source">
-          {{ source.name }}
+          {{ source.label }}
         </mat-option>
       </mat-select>
       <mat-error *ngIf="form.source?.hasError('required')">

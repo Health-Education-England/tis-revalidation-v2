@@ -19,7 +19,8 @@ import { AdminsState } from "../state/admins.state";
   templateUrl: "./allocate-admin-autocomplete.component.html"
 })
 export class AllocateAdminAutocompleteComponent implements OnInit {
-  @Input() public gmcNumber: any;
+  @Input() public gmcNumber: number;
+  @Input() public admin?: string;
   @Select(AdminsState.items) public items$: Observable<IAdmin[]>;
   public filteredItems$: Observable<IAdmin[]>;
   public form: FormGroup;
@@ -32,7 +33,16 @@ export class AllocateAdminAutocompleteComponent implements OnInit {
   }
 
   public setupForm(): void {
-    this.form = this.formBuilder.group({ autocomplete: null });
+    this.form = this.formBuilder.group({
+      autocomplete: this.prePopulateAdmin()
+    });
+  }
+
+  public prePopulateAdmin(): IAdmin {
+    const admins: IAdmin[] = this.store.selectSnapshot(AdminsState).items;
+    if (admins?.length) {
+      return admins.find((item: IAdmin) => item.username === this.admin);
+    }
   }
 
   public getItems(): void {

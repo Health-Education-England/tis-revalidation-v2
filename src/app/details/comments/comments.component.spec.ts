@@ -4,7 +4,6 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { NgxsModule } from "@ngxs/store";
 import { MaterialModule } from "../../shared/material/material.module";
-import { ConcernState } from "../state/concern.state";
 import { CommentsComponent } from "./comments.component";
 
 describe("CommentsComponent", () => {
@@ -18,8 +17,7 @@ describe("CommentsComponent", () => {
         ReactiveFormsModule,
         MaterialModule,
         NoopAnimationsModule,
-        HttpClientTestingModule,
-        NgxsModule.forRoot([ConcernState])
+        HttpClientTestingModule
       ]
     }).compileComponents();
   }));

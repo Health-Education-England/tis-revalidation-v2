@@ -1,14 +1,8 @@
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { Component, ViewEncapsulation } from "@angular/core";
-import { Observable, of } from "rxjs";
-import { map, shareReplay, filter } from "rxjs/operators";
-import {
-  ActivatedRoute,
-  NavigationEnd,
-  Router,
-  RouterEvent
-} from "@angular/router";
-import { CommentsService } from "../comments-tool-bar/comments.service";
+import { Observable } from "rxjs";
+import { map, shareReplay } from "rxjs/operators";
+import { NotesService } from "../notes-tool-bar/notes.service";
 
 @Component({
   selector: "app-record-details",
@@ -23,11 +17,10 @@ export class RecordDetailsComponent {
       map((result) => result.matches),
       shareReplay()
     );
-  showToolbar$ = this.commentsService.showToolBar$;
-  showNotes$ = this.commentsService.showNotes$;
+  showNotes$ = this.notesService.showNotes$;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private commentsService: CommentsService
+    private notesService: NotesService
   ) {}
 }

@@ -17,7 +17,7 @@ describe("FileUploaderComponent", () => {
   let component: FileUploaderComponent;
   let fixture: ComponentFixture<FileUploaderComponent>;
   let snackBarService: SnackBarService;
-  const mockConcernId = 8119389;
+  const mockConcernId = "xxxxxx-yyyyy-zzzzz";
   const createFile = (
     filename: string,
     filetype: string,
@@ -47,7 +47,7 @@ describe("FileUploaderComponent", () => {
     store.dispatch(
       new SetSelectedConcern({
         ...defaultConcern,
-        ...{ concernId: mockConcernId }
+        ...{ concernId: mockConcernId, gmcNumber: 8119389 }
       })
     );
   };
@@ -65,7 +65,6 @@ describe("FileUploaderComponent", () => {
     }).compileComponents();
     store = TestBed.inject(Store);
     snackBarService = TestBed.inject(SnackBarService);
-    store.reset({ concern: { gmcNumber: 8119389 } });
     setDefaultSelectedConcern();
   }));
 
@@ -155,17 +154,17 @@ describe("FileUploaderComponent", () => {
     expect(component.processFiles).toHaveBeenCalledWith([mockFile]);
   });
 
-  it("upload() should reset form", () => {
-    spyOn(component.form, "reset");
+  it("upload() should setupForm", () => {
+    spyOn(component, "setupForm");
     component.upload([]);
-    expect(component.form.reset).toHaveBeenCalled();
+    expect(component.setupForm).toHaveBeenCalled();
   });
 
-  it("upload() should dispatch `Upload` event", () => {
-    spyOn(store, "dispatch");
+  it("upload() should dispatch `upload` event", () => {
+    spyOn(store, "dispatch").and.callThrough();
     component.upload([]);
     expect(store.dispatch).toHaveBeenCalledWith(
-      new Upload(8119389, mockConcernId, [])
+      new Upload(component.gmcNumber, component.concernId, [])
     );
   });
 });

@@ -1,12 +1,11 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
-import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
+import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { environment } from "@environment";
 import { Select, Store } from "@ngxs/store";
 import { Observable, of, Subscription } from "rxjs";
 import { catchError, distinctUntilChanged, tap } from "rxjs/operators";
 import { AuthService } from "src/app/core/auth/auth.service";
-import { CommentsService } from "src/app/details/comments-tool-bar/comments.service";
 import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
 import {
   defaultRecommendation,
@@ -17,6 +16,7 @@ import {
 
 import { Get, Set } from "../state/recommendation-history.actions";
 import { RecommendationHistoryState } from "../state/recommendation-history.state";
+import { CommentsComponent } from "src/app/details/comments/comments.component";
 
 @Component({
   selector: "app-create-recommendation",
@@ -41,7 +41,7 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
   deferralDate: FormControl;
   deferralReason: FormControl;
   deferralSubReason: FormControl;
-  comments: FormArray;
+  @ViewChild(CommentsComponent) appComments: CommentsComponent;
   minReferralDate: Date;
   maxReferralDate: Date;
   dateFormat = environment.dateFormat;
@@ -52,11 +52,8 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private snackBarService: SnackBarService,
     private router: Router,
-    private commentsService: CommentsService,
     private auth: AuthService
-  ) {
-    this.commentsService.showToolBar$.next(true);
-  }
+  ) {}
 
   ngOnInit(): void {
     this.initComponent();
@@ -66,7 +63,6 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
     this.componentSubscriptions.forEach((subscription) => {
       subscription.unsubscribe();
     });
-    this.commentsService.showToolBar$.next(false);
   }
 
   initComponent(): void {
@@ -111,7 +107,7 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
       const formValue = this.recommendationForm.value;
       this.recommendation.admin = this.auth.userName;
       this.recommendation.recommendationType = formValue.action;
-      this.recommendation.comments = formValue.comments
+      this.recommendation.comments = this.appComments.comments.value
         .filter((comments: { comment: string; checkbox: boolean }) => {
           return !!comments.comment.trim();
         })
@@ -156,7 +152,6 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
     this.recommendationForm = new FormGroup({});
     this.setMinMaxDeferralDates();
     this.createVariableControls();
-    this.createCommentControls();
     this.subscribeToActions();
   }
   /**
@@ -239,22 +234,6 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
       this.deferralReason.updateValueAndValidity();
       this.deferralSubReason.setValue(this.recommendation.deferralSubReason);
     }
-  }
-
-  /**
-   * creates a comments FormGroup for each comment
-   * adds an empty comment FormGroup for readily adding comment
-   */
-  private createCommentControls(): void {
-    this.comments = new FormArray([]);
-    this.commentsService.comments = this.comments;
-    if (this.recommendation.comments) {
-      for (const comment of this.recommendation.comments) {
-        this.commentsService.addCommentControl(comment);
-      }
-    }
-    this.commentsService.addCommentControl();
-    this.recommendationForm.addControl("comments", this.comments);
   }
 
   /**

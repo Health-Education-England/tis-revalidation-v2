@@ -63,26 +63,10 @@
       </mat-error>
     </mat-form-field>
   </div>
-  <div class="comments-section">
-    <div formArrayName="comments" class="comments">
-      <ng-container
-        *ngFor="let comment of comments.controls; let i = index"
-        [formGroupName]="i"
-      >
-        <mat-form-field class="w-100">
-          <mat-label>Leave a comment</mat-label>
-          <textarea
-            matInput
-            [formControlName]="'comment'"
-            placeholder="comments..."
-          ></textarea>
-          <div class="select-control">
-            <mat-checkbox [formControlName]="'checkbox'"></mat-checkbox>
-          </div>
-        </mat-form-field>
-      </ng-container>
-    </div>
-  </div>
+  <app-comments
+    class="d-block mt-20"
+    [feature-comments]="recommendation.comments"
+  ></app-comments>
 </form>
 <div class="button-row">
   <button type="button" mat-button mat-raised-button [routerLink]="['../']">

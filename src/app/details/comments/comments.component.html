@@ -1,0 +1,51 @@
+<form class="w-100" [formGroup]="form">
+  <mat-toolbar>
+    <div class="comments-toolbar fade-in w-100">
+      <button
+        type="button"
+        mat-icon-button
+        (click)="addCommentControl()"
+        matTooltip="Add comment"
+      >
+        <mat-icon aria-hidden="false" aria-label="add comment">add</mat-icon>
+      </button>
+      <span class="spacer"></span>
+      <button
+        type="button"
+        mat-icon-button
+        (click)="deleteCommentControl()"
+        matTooltip="Delete selected comments"
+      >
+        <mat-icon aria-hidden="false" aria-label="delete selected comments"
+          >delete</mat-icon
+        >
+      </button>
+      <mat-checkbox
+        [checked]="allSelected$ | async"
+        [indeterminate]="partialSelection$ | async"
+        (change)="selectAllComments($event)"
+        matTooltip="select or deselect all comments"
+      ></mat-checkbox>
+    </div>
+  </mat-toolbar>
+  <div class="comments-section">
+    <div formArrayName="comments" class="comments">
+      <ng-container
+        *ngFor="let comment of comments.controls; let i = index"
+        [formGroupName]="i"
+      >
+        <mat-form-field class="w-100">
+          <mat-label>Leave a comment</mat-label>
+          <textarea
+            matInput
+            [formControlName]="'comment'"
+            placeholder="comments..."
+          ></textarea>
+          <div class="select-control">
+            <mat-checkbox [formControlName]="'checkbox'"></mat-checkbox>
+          </div>
+        </mat-form-field>
+      </ng-container>
+    </div>
+  </div>
+</form>

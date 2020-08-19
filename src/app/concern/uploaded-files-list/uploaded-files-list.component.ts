@@ -29,7 +29,6 @@ export class UploadedFilesListComponent implements OnInit {
 
   ngOnInit(): void {
     this.selectedConcern$.pipe(take(1)).subscribe((sel: IConcernSummary) => {
-      debugger;
       this.concernId = sel.concernId;
       this.listFiles();
     });

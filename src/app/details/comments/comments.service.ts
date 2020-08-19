@@ -7,8 +7,12 @@ import {
 } from "@angular/forms";
 import { BehaviorSubject } from "rxjs";
 
+/**
+ * https://angular.io/api/core/Injectable
+ * 'any' : Provides a unique instance in each lazy loaded module while all eagerly loaded modules share one instance.
+ */
 @Injectable({
-  providedIn: "root"
+  providedIn: "any"
 })
 /**
  * Add delete comment formControls from tool-bar UI
@@ -18,8 +22,11 @@ export class CommentsService {
   filteredControls: AbstractControl[];
   partialSelection$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   allSelected$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  showToolBar$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  showNotes$: BehaviorSubject<boolean> = new BehaviorSubject(false); // TODO export to notes component / services
+
+  /**
+   * showToolBar$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+   * TODO: uncomment if UX requires for view/edit roles in coming sprints
+   * */
 
   constructor() {}
 

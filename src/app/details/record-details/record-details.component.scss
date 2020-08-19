@@ -1,7 +1,7 @@
 @import "../../../../node_modules/@angular/material/core/style/variables";
 
 .main-col {
-  grid-template-rows: 64px auto;
+  grid-template-rows: auto auto;
 }
 
 .record-details {
@@ -37,23 +37,4 @@
 .records-form {
   min-width: 150px;
   max-width: 100%;
-}
-.comments-section {
-  position: relative;
-
-  .mat-checkbox {
-    margin-right: 12px;
-  }
-
-  .select-control {
-    position: absolute;
-    right: -10px;
-    bottom: 5px;
-  }
-
-  .comments {
-    textarea.mat-input-element {
-      width: calc(100% - 32px);
-    }
-  }
 }

@@ -1,24 +1,21 @@
-import { StepperSelectionEvent } from "@angular/cdk/stepper";
 import {
+  AfterViewInit,
   Component,
   Input,
   OnDestroy,
-  OnInit,
-  ViewChild,
-  AfterViewInit
+  ViewChild
 } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { MatStepper } from "@angular/material/stepper";
-import { Store, Select } from "@ngxs/store";
-import { Subscription, Observable } from "rxjs";
-import { CommentsService } from "src/app/details/comments/comments.service";
+import { Select, Store } from "@ngxs/store";
+import { Observable, Subscription } from "rxjs";
+import { filter } from "rxjs/operators";
+import { CommentsComponent } from "src/app/details/comments/comments.component";
 import { SnackBarService } from "../../../shared/services/snack-bar/snack-bar.service";
+import { IConcernSummary } from "../../concern.interfaces";
 import { ConcernService } from "../../services/concern/concern.service";
 import { Save, SetSelectedConcern } from "../../state/concern.actions";
-import { CommentsComponent } from "src/app/details/comments/comments.component";
 import { ConcernState } from "../../state/concern.state";
-import { IConcernSummary } from "../../concern.interfaces";
-import { take, filter } from "rxjs/operators";
 
 @Component({
   selector: "app-upload-documents",

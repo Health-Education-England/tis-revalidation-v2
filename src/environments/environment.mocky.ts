@@ -15,10 +15,10 @@ export const environment: IEnvironment = {
   appUrls: {
     // 665938a6-29d2-4199-a2d8-364f520b298c = 404 error
     // 0681fad7-c7b3-4543-83fa-dd4c3ed14e4a = 500 error
-    // 5e997d8a33000062007b2354 = 21 recommendations
-    // 5e997dba33000096297b235d = 0 recommendations to simulate no results found
+    // 81267580-411e-4ce6-8dca-2f65f9d2e485 = 21 recommendations
+    // b51bc121-4687-4e3e-a181-a178874121a2 = 0 recommendations to simulate no results found
     addConcern: "", // TODO mock this
-    allocateAdmin: `api/v1/doctors/assignAdmin`, // TODO mock this
+    allocateAdmin: `mocky/0bd1baab-9912-4806-be6d-f680725174b4?mocky-delay=700ms`,
     authRedirect: ``,
     deleteFile: ``, // TODO mock this,
     downloadFile: ``, // TODO mock this
@@ -29,7 +29,7 @@ export const environment: IEnvironment = {
     getNotes: `mocky/45017692-2588-48dc-b6c2-c637cd723625`,
     getRecommendation: `mocky/6fd60c05-b4d0-462d-87a8-87402d57bd2e`,
     getRecommendations: `mocky/81267580-411e-4ce6-8dca-2f65f9d2e485?mocky-delay=700ms`,
-    listAdmins: ``, // TODO mock this
+    listAdmins: `mocky/a087f46e-e788-4d62-b452-f3fec748f51d?mocky-delay=700ms`,
     listFiles: ``, // TODO mock this
     login: ``,
     saveRecommendation: `api/recommendation`, // TODO mock this

@@ -1,10 +1,11 @@
-import { Component } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 import { Sort as ISort } from "@angular/material/sort/sort";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { environment } from "@environment";
 import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
+import { ClearAllocateList } from "../../admins/state/admins.actions";
 import { IRecordDataCell } from "../records.interfaces";
 import { RecordsService } from "../services/records.service";
 
@@ -13,7 +14,7 @@ import { RecordsService } from "../services/records.service";
   templateUrl: "./record-list.component.html",
   styleUrls: ["./record-list.component.scss"]
 })
-export class RecordListComponent {
+export class RecordListComponent implements OnDestroy {
   public columnData: IRecordDataCell[] = this.recordsService.columnData;
   public dateColumns: string[] = this.recordsService.dateColumns;
   public detailsRoute: string = this.recordsService.detailsRoute;
@@ -89,5 +90,9 @@ export class RecordListComponent {
 
   public toggleCheckbox(gmcReferenceNumber: string): void {
     this.recordsService.toggleCheckbox(gmcReferenceNumber);
+  }
+
+  ngOnDestroy() {
+    this.store.dispatch(new ClearAllocateList());
   }
 }

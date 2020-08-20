@@ -6,6 +6,7 @@ import { Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { AdminsModule } from "../../admins/admins.module";
+import { ClearAllocateList } from "../../admins/state/admins.actions";
 import { AdminsState } from "../../admins/state/admins.state";
 import { COLUMN_DATA } from "../../concerns/constants";
 import { RecommendationStatus } from "../../recommendation/recommendation-history.interface";
@@ -127,5 +128,11 @@ describe("RecordListComponent", () => {
     );
     expect(recordsService.resetPaginator).toHaveBeenCalled();
     expect(recordsService.updateRoute).toHaveBeenCalled();
+  });
+
+  it("should dispatch `ClearAllocateList` onDestroy lifecycle", () => {
+    spyOn(store, "dispatch");
+    component.ngOnDestroy();
+    expect(store.dispatch).toHaveBeenCalledWith(new ClearAllocateList());
   });
 });

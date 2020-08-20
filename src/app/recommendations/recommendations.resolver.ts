@@ -36,7 +36,7 @@ export class RecommendationsResolver extends RecordsResolver
         name: RecommendationsFilterType.ALL_DOCTORS
       },
       {
-        label: "UNDER NOTICE ",
+        label: "UNDER NOTICE",
         name: RecommendationsFilterType.UNDER_NOTICE
       }
     ];

@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, Resolve } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
+import { ConcernStatus } from "../concern/concern.interfaces";
 import { generateColumnData } from "../records/constants";
 import { RecordsResolver } from "../records/records.resolver";
 import { RecordsService } from "../records/services/records.service";
@@ -28,6 +29,16 @@ export class ConcernsResolver extends RecordsResolver implements Resolve<any> {
       "followUpDate"
     ];
     this.recordsService.columnData = generateColumnData(COLUMN_DATA);
+    this.recordsService.filters = [
+      {
+        label: "OPEN",
+        name: ConcernStatus.OPEN
+      },
+      {
+        label: "CLOSED",
+        name: ConcernStatus.CLOSED
+      }
+    ];
   }
 
   resolve(route: ActivatedRouteSnapshot): Observable<any> {

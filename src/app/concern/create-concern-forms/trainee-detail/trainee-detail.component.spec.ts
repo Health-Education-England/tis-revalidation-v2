@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { NgxsModule, Store } from "@ngxs/store";
 import { AdminsModule } from "src/app/admins/admins.module";
+import { ClearAllocateList } from "../../../admins/state/admins.actions";
 import { AdminsState } from "../../../admins/state/admins.state";
 import { ConcernHistoryResponse2 } from "../../../recommendation/mock-data/recommendation-spec-data";
 import { MaterialModule } from "../../../shared/material/material.module";
@@ -78,5 +79,11 @@ describe("TraineeDetailComponent", () => {
     store.reset({ concern: { selected: mockConcern } });
     expect(component.form.site.validator).toBeDefined();
     expect(component.form.employer.validator).toBeDefined();
+  });
+
+  it("should dispatch `ClearAllocateList` onDestroy lifecycle", () => {
+    spyOn(store, "dispatch");
+    component.ngOnDestroy();
+    expect(store.dispatch).toHaveBeenCalledWith(new ClearAllocateList());
   });
 });

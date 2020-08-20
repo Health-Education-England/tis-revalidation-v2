@@ -6,6 +6,7 @@ import { Select, Store } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
 import { filter } from "rxjs/operators";
 import { IAllocateAdmin } from "src/app/admins/admins.interfaces";
+import { ClearAllocateList } from "../../../admins/state/admins.actions";
 import { AdminsState } from "../../../admins/state/admins.state";
 import { IConcernSummary, IEntity } from "../../concern.interfaces";
 import { ConcernService } from "../../services/concern/concern.service";
@@ -60,6 +61,8 @@ export class TraineeDetailComponent implements OnDestroy {
         subscribed.unsubscribe();
       }
     });
+
+    this.store.dispatch(new ClearAllocateList());
   }
 
   private setupForm(): void {

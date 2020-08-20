@@ -43,6 +43,11 @@ export class AdminsState {
   }
 
   @Selector()
+  public static allocateList(state: AdminsStateModel) {
+    return state.allocateList;
+  }
+
+  @Selector()
   public static error(state: AdminsStateModel) {
     return state.error;
   }

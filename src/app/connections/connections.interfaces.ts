@@ -20,9 +20,9 @@ export interface IConnection {
 }
 
 export enum ConnectionsFilterType {
-  ADD_CONNECTION = "Add Connection",
-  REMOVE_CONNECTION = "Remove Connection",
-  EXCEPTIONS_QUEUE = "Exceptions Queue",
-  ALL = "All",
-  HIDDEN = "Hidden"
+  ADD_CONNECTION = "addConnection",
+  REMOVE_CONNECTION = "removeConnection",
+  EXCEPTIONS_QUEUE = "exceptionsQueue",
+  ALL = "all",
+  HIDDEN = "hidden"
 }

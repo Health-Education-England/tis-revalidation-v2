@@ -1,4 +1,4 @@
-export const COLUMN_DATA: any[][] = [
+export const COLUMN_DATA: [string, string, boolean][] = [
   ["GMC Submission due date", "submissionDate", true],
   ["Status", "doctorStatus", false],
   ["Programme name", "programmeName", false],

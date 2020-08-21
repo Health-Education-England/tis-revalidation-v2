@@ -5,12 +5,10 @@ import { AdminsModule } from "../admins/admins.module";
 import { MaterialModule } from "../shared/material/material.module";
 import { RecordsModule } from "../records/records.module";
 import { ConnectionsRoutingModule } from "./connections-routing.module";
-import { ConnectionsComponent } from "./connections.component";
 import { ConnectionsResolver } from "./connections.resolver";
 import { ConnectionsState } from "./state/connections.state";
 
 @NgModule({
-  declarations: [ConnectionsComponent],
   imports: [
     CommonModule,
     MaterialModule,

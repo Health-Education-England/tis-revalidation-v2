@@ -17,7 +17,7 @@ export const APP_URLS_CONFIG: IEnvironment["appUrls"] = {
   listFiles: `api/storage/list`,
   login: ``,
   saveRecommendation: `api/recommendation`,
-  submitToGMC: `api/recommendation/{gmcNumber}/submit/{recommendationId}`,
+  submitToGMC: `api/recommendation`,
   upload: `api/storage/upload`
 };
 

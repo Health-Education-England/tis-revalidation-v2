@@ -14,7 +14,7 @@ import { Router, RouterStateSnapshot } from "@angular/router";
 export class RecommendationHistoryService {
   constructor(private http: HttpClient, private router: Router) {}
 
-  getrecommendationHistory(
+  public getRecommendationHistory(
     gmcNumber: number
   ): Observable<IRecommendationHistory | any> {
     return this.http.get<IRecommendationHistory>(
@@ -23,24 +23,24 @@ export class RecommendationHistoryService {
   }
 
   /**
-   * for brand new recommendation we use POST where this is an edit and has @recommendationId we use PUT
-   * @param recommendation the recommendation interface
+   * for brand new recommendation we use POST
+   * where this is an edit and has @recommendationId we use PUT
+   * @param recommendation - IRecommendationSummary
    */
-  saveRecommendation(recommendation: IRecommendationSummary): Observable<any> {
-    if (!!recommendation.recommendationId) {
-      return this.http.put(
-        `${environment.appUrls.saveRecommendation}`,
-        recommendation
-      );
-    } else {
-      return this.http.post(
-        `${environment.appUrls.saveRecommendation}`,
-        recommendation
-      );
-    }
+  public saveRecommendation(
+    recommendation: IRecommendationSummary
+  ): Observable<any> {
+    const method: string = recommendation.recommendationId?.length
+      ? "put"
+      : "post";
+
+    return this.http[method](
+      environment.appUrls.saveRecommendation,
+      recommendation
+    );
   }
 
-  submitRecommendationToGMC(
+  public submitRecommendationToGMC(
     gmcNumber: number,
     recommendationId: string
   ): Observable<any> {
@@ -48,13 +48,11 @@ export class RecommendationHistoryService {
       return throwError("gmcNumber and recommendationId are required");
     }
 
-    const submitUrl = `${environment.appUrls.submitToGMC}`
-      .replace(/{gmcNumber}/, gmcNumber.toString())
-      .replace(/{recommendationId}/, recommendationId);
+    const submitUrl = `${environment.appUrls.submitToGMC}/${gmcNumber}/submit/${recommendationId}`;
     return this.http.post(submitUrl, {});
   }
 
-  navigateToParentState(state: RouterStateSnapshot): void {
+  public navigateToParentState(state: RouterStateSnapshot): void {
     const arr = state.url.split("/");
     arr.pop();
     const url = arr.join("/");

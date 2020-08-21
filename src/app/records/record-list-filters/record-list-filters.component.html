@@ -14,9 +14,9 @@
       (click)="filterRecords(i.name)"
       [disabled]="data.enableAllocateAdmin"
     >
-      {{ i.label }} -
+      {{ i.label }}
       <ng-container *ngIf="data.totalCounts?.hasOwnProperty(i.name)">
-        {{ data.totalCounts[i.name] }}
+        - {{ data.totalCounts[i.name] }}
       </ng-container>
     </a>
   </nav>

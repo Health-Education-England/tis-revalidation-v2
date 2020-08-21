@@ -10,13 +10,17 @@ describe("MockComponent", () => {
   let docHead: HTMLHeadElement;
   let scriptTag: HTMLScriptElement;
   let asyncTag: boolean;
-  const scriptQuerySelector =
-    'script[src^="https://www.google-analytics.com/analytics.js"]';
 
   const setVariables = () => {
     docHead = fixture.debugElement.nativeNode.ownerDocument.head;
-    scriptTag = docHead.querySelector(scriptQuerySelector);
+    scriptTag = docHead.querySelector(
+      'script[src^="https://www.google-analytics.com/analytics.js"]'
+    );
     asyncTag = scriptTag ? scriptTag.hasAttribute("async") : false;
+  };
+
+  const resetVariables = () => {
+    router = fixture = docHead = scriptTag = asyncTag = null;
   };
 
   describe("Analytics Module loader tests", () => {
@@ -25,8 +29,8 @@ describe("MockComponent", () => {
       enabled: true
     };
 
-    beforeEach(async () => {
-      await TestBed.configureTestingModule({
+    beforeEach(async(() => {
+      TestBed.configureTestingModule({
         imports: [
           RouterTestingModule.withRoutes(routes),
           AnalyticsModule.forRoot(analyticsConfig)
@@ -43,7 +47,7 @@ describe("MockComponent", () => {
 
       fixture.detectChanges();
       docHead = scriptTag = asyncTag = null;
-    });
+    }));
 
     beforeEach(() => {
       setVariables();
@@ -68,8 +72,9 @@ describe("MockComponent", () => {
       siteId: ["TEST"],
       enabled: false
     };
-    beforeEach(async () => {
-      await TestBed.configureTestingModule({
+
+    beforeEach(async(() => {
+      TestBed.configureTestingModule({
         imports: [
           RouterTestingModule.withRoutes(routes),
           AnalyticsModule.forRoot(newAnalyticsConfig)
@@ -86,7 +91,7 @@ describe("MockComponent", () => {
 
       fixture.detectChanges();
       docHead = scriptTag = asyncTag = null;
-    });
+    }));
 
     beforeEach(() => {
       setVariables();
@@ -104,5 +109,9 @@ describe("MockComponent", () => {
     it("should not initialise or add script to header", () => {
       expect(asyncTag).toBeFalsy();
     });
+  });
+
+  afterEach(() => {
+    resetVariables();
   });
 });

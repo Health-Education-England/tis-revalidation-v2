@@ -4,7 +4,7 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { Router } from "@angular/router";
 import { AppComponent, MockComponent, routes } from "../mock.test.component";
 
-describe("MockComponent", () => {
+describe("HotJar Module", () => {
   let router: Router;
   let fixture: any;
   let docHead: HTMLHeadElement;
@@ -21,14 +21,19 @@ describe("MockComponent", () => {
     asyncTag = scriptTag ? scriptTag.hasAttribute("async") : false;
   };
 
+  const resetVariables = () => {
+    router = fixture = docHead = scriptTag = asyncTag = scriptSrc = null;
+  };
+
   describe("HotJar Enabled Module loader tests", () => {
-    let hotJarConfig: HotJarConfig = {
+    const hotJarConfig: HotJarConfig = {
       hotJarId: 1,
       hotJarSv: 2,
       enabled: true
     };
-    beforeEach(async () => {
-      await TestBed.configureTestingModule({
+
+    beforeEach(async(() => {
+      TestBed.configureTestingModule({
         imports: [
           RouterTestingModule.withRoutes(routes),
           HotJarModule.forRoot(hotJarConfig)
@@ -44,7 +49,7 @@ describe("MockComponent", () => {
       });
 
       fixture.detectChanges();
-    });
+    }));
 
     beforeEach(() => {
       setVariables();
@@ -82,8 +87,9 @@ describe("MockComponent", () => {
       hotJarSv: 2,
       enabled: false
     };
-    beforeEach(async () => {
-      await TestBed.configureTestingModule({
+
+    beforeEach(async(() => {
+      TestBed.configureTestingModule({
         imports: [
           RouterTestingModule.withRoutes(routes),
           HotJarModule.forRoot(disabledHotJarConfig)
@@ -99,7 +105,7 @@ describe("MockComponent", () => {
       });
 
       fixture.detectChanges();
-    });
+    }));
 
     beforeEach(() => {
       setVariables();
@@ -125,5 +131,9 @@ describe("MockComponent", () => {
     afterEach(() => {
       docHead = scriptTag = asyncTag = scriptSrc = null;
     });
+  });
+
+  afterEach(() => {
+    resetVariables();
   });
 });

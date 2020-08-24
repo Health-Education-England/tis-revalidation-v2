@@ -1,6 +1,6 @@
 import { AnalyticsErrorHandler } from "./analytics.errorhandler";
 import { async, TestBed } from "@angular/core/testing";
-import { ErrorHandler, inject, Injector } from "@angular/core";
+import { ErrorHandler, Injector } from "@angular/core";
 import { Angulartics2GoogleAnalytics } from "angulartics2/ga";
 
 describe("AnalyticsErrorHandler", () => {

@@ -4,55 +4,49 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { Router } from "@angular/router";
 import { AppComponent, MockComponent, routes } from "../mock.test.component";
 
-describe("HotJar Module", () => {
+describe("HotJar", () => {
   let router: Router;
   let fixture: any;
-  let docHead: HTMLHeadElement;
+  let module: HotJarModule;
+  let config: HotJarConfig = {
+    hotJarId: 1,
+    hotJarSv: 2,
+    enabled: true
+  };
+
   let scriptTag: HTMLScriptElement;
   let scriptSrc: string;
   let asyncTag: boolean;
 
-  const setVariables = () => {
-    docHead = fixture.debugElement.nativeNode.ownerDocument.head;
-    scriptTag = docHead.querySelector(
-      'script[src^="https://static.hotjar.com"]'
-    );
-    scriptSrc = scriptTag ? scriptTag.getAttribute("src") : null;
-    asyncTag = scriptTag ? scriptTag.hasAttribute("async") : false;
-  };
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule.withRoutes(routes),
+        HotJarModule.forRoot(config)
+      ],
+      declarations: [AppComponent, MockComponent]
+    })
+      .compileComponents()
+      .then(() => {
+        module = TestBed.inject(HotJarModule);
+        router = TestBed.inject(Router);
+        fixture = TestBed.createComponent(AppComponent);
 
-  const resetVariables = () => {
-    router = fixture = docHead = scriptTag = asyncTag = scriptSrc = null;
-  };
+        fixture.ngZone.run(() => {
+          router.initialNavigation();
+        });
 
-  describe("HotJar Enabled Module loader tests", () => {
-    const hotJarConfig: HotJarConfig = {
-      hotJarId: 1,
-      hotJarSv: 2,
-      enabled: true
-    };
+        fixture.detectChanges();
 
-    beforeEach(async(() => {
-      TestBed.configureTestingModule({
-        imports: [
-          RouterTestingModule.withRoutes(routes),
-          HotJarModule.forRoot(hotJarConfig)
-        ],
-        declarations: [AppComponent, MockComponent]
-      }).compileComponents();
-
-      router = TestBed.inject(Router);
-      fixture = TestBed.createComponent(AppComponent);
-
-      fixture.ngZone.run(() => {
-        router.initialNavigation();
+        scriptTag = module.hotJarScript;
+        scriptSrc = scriptTag ? scriptTag.getAttribute("src") : null;
+        asyncTag = scriptTag ? scriptTag.hasAttribute("async") : false;
       });
+  });
 
-      fixture.detectChanges();
-    }));
-
-    beforeEach(() => {
-      setVariables();
+  describe("Enabled configuration", () => {
+    beforeAll(() => {
+      config.enabled = true;
     });
 
     it("should create the mock component", () => {
@@ -65,75 +59,75 @@ describe("HotJar Module", () => {
     });
 
     it("script tag should contain the injected hotJarId", () => {
-      expect(scriptSrc).toContain(`hotjar-${hotJarConfig.hotJarId}.js`);
+      expect(scriptSrc).toContain(`hotjar-${config.hotJarId}.js`);
     });
 
     it("script tag should contain the injected hotJarVersion", () => {
-      expect(scriptSrc).toContain(`?sv=${hotJarConfig.hotJarSv}`);
+      expect(scriptSrc).toContain(`?sv=${config.hotJarSv}`);
     });
 
     it("script tag should contain the async attribute ", () => {
       expect(asyncTag).toBeTrue();
     });
-
-    afterEach(() => {
-      docHead = scriptTag = asyncTag = scriptSrc = null;
-    });
   });
 
-  describe("HotJar Disabled Module loader tests", () => {
-    const disabledHotJarConfig: HotJarConfig = {
-      hotJarId: 1,
-      hotJarSv: 2,
-      enabled: false
-    };
-
-    beforeEach(async(() => {
-      TestBed.configureTestingModule({
-        imports: [
-          RouterTestingModule.withRoutes(routes),
-          HotJarModule.forRoot(disabledHotJarConfig)
-        ],
-        declarations: [AppComponent, MockComponent]
-      }).compileComponents();
-
-      router = TestBed.inject(Router);
-      fixture = TestBed.createComponent(AppComponent);
-
-      fixture.ngZone.run(() => {
-        router.initialNavigation();
-      });
-
-      fixture.detectChanges();
-    }));
-
-    beforeEach(() => {
-      setVariables();
+  describe("Disabled configuration", () => {
+    beforeAll(() => {
+      config.enabled = false;
     });
 
-    it("should create the mocked component", () => {
+    it("should create the disabled module mock component", () => {
       const app = fixture.componentInstance;
       expect(app).toBeTruthy();
     });
 
-    it("header tag should not contain the script tag", () => {
+    it("header tag should NOT contain the script tag", () => {
       expect(scriptTag).toBeNull();
     });
 
-    it("script tag should not exist", () => {
+    it("script tag should NOT contain the injected hotJarId", () => {
       expect(scriptSrc).toBeNull();
     });
 
-    it("script tag should not contain the async attribute ", () => {
+    it("script tag should NOT contain the async attribute ", () => {
       expect(asyncTag).toBeFalse();
-    });
-
-    afterEach(() => {
-      docHead = scriptTag = asyncTag = scriptSrc = null;
     });
   });
 
-  afterEach(() => {
-    resetVariables();
+  describe("No configuration", () => {
+    let doc: Document;
+
+    beforeAll(() => {
+      config.enabled = true;
+    });
+
+    beforeEach(() => {
+      doc = fixture.debugElement.nativeNode.ownerDocument;
+    });
+
+    it("should remove to script tag", () => {
+      spyOn(HTMLScriptElement.prototype, "remove").and.callThrough();
+      module.InitializeHotJar();
+      expect(HTMLScriptElement.prototype.remove).toHaveBeenCalled();
+    });
+
+    it("New instance of Module should throw error", () => {
+      spyOn(HotJarModule.prototype, "InitializeHotJar").and.callThrough();
+      expect(function () {
+        new HotJarModule(null, null, doc);
+      }).toThrowError(
+        `HotJarModule requires forRoot({ hotJarId: 'hotJar client id', hotJarSv: 'version number of hotJar js to use' })`
+      );
+      expect(HotJarModule.prototype.InitializeHotJar).toHaveBeenCalled();
+    });
+
+    it("New instance with multiple Modules should throw error", () => {
+      spyOn(HotJarModule.prototype, "InitializeHotJar").and.callThrough();
+      expect(function () {
+        new HotJarModule(module, config, doc);
+      }).toThrowError(
+        `HotJarModule is already loaded. Import it in the AppModule only`
+      );
+    });
   });
 });

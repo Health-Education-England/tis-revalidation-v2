@@ -13,10 +13,12 @@ export class AnalyticsErrorHandler implements ErrorHandler {
       const angulartics: Angulartics2GoogleAnalytics = this.injector.get(
         Angulartics2GoogleAnalytics
       );
+
       const properties: any = {
         fatal: false,
         description: error.message || error.stack || error
       };
+
       angulartics.exceptionTrack(properties);
     }
     throw error;

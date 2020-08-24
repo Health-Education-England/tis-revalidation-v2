@@ -12,7 +12,7 @@ describe("Analytics", () => {
   let router: Router;
   let fixture: any;
   let module: AnalyticsModule;
-  let config: AnalyticsConfig = { siteId: ["TEST"], enabled: true };
+  const config: AnalyticsConfig = { siteId: ["TEST"], enabled: true };
   let scriptTag: HTMLScriptElement;
   let scriptSrc: string;
   let asyncTag: boolean;
@@ -108,8 +108,8 @@ describe("Analytics", () => {
 
     it("New instance of Module should throw error", () => {
       spyOn(AnalyticsModule.prototype, "initilialise").and.callThrough();
-      expect(function () {
-        new AnalyticsModule(null, null, null, doc);
+      expect(() => {
+        const newLocal = new AnalyticsModule(null, null, null, doc);
       }).toThrowError(
         `AnalyticsModule requires forRoot({ siteId: [string array of site id's], enabled: true|false })`
       );
@@ -118,8 +118,8 @@ describe("Analytics", () => {
 
     it("New instance with multiple Modules should throw error", () => {
       spyOn(AnalyticsModule.prototype, "initilialise").and.callThrough();
-      expect(function () {
-        new AnalyticsModule(null, module, config, doc);
+      expect(() => {
+        const newLocal2 = new AnalyticsModule(null, module, config, doc);
       }).toThrowError(
         `AnalyticsModule is already loaded. Import it in the AppModule only`
       );

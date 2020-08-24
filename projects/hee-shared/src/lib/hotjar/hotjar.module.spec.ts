@@ -8,7 +8,7 @@ describe("HotJar", () => {
   let router: Router;
   let fixture: any;
   let module: HotJarModule;
-  let config: HotJarConfig = {
+  const config: HotJarConfig = {
     hotJarId: 1,
     hotJarSv: 2,
     enabled: true
@@ -113,8 +113,8 @@ describe("HotJar", () => {
 
     it("New instance of Module should throw error", () => {
       spyOn(HotJarModule.prototype, "InitializeHotJar").and.callThrough();
-      expect(function () {
-        new HotJarModule(null, null, doc);
+      expect(() => {
+        const newLocal = new HotJarModule(null, null, doc);
       }).toThrowError(
         `HotJarModule requires forRoot({ hotJarId: 'hotJar client id', hotJarSv: 'version number of hotJar js to use' })`
       );
@@ -123,8 +123,8 @@ describe("HotJar", () => {
 
     it("New instance with multiple Modules should throw error", () => {
       spyOn(HotJarModule.prototype, "InitializeHotJar").and.callThrough();
-      expect(function () {
-        new HotJarModule(module, config, doc);
+      expect(() => {
+        const newLocal2 = new HotJarModule(module, config, doc);
       }).toThrowError(
         `HotJarModule is already loaded. Import it in the AppModule only`
       );

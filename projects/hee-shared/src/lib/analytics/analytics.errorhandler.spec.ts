@@ -18,8 +18,8 @@ describe("AnalyticsErrorHandler", () => {
         {
           provide: Angulartics2GoogleAnalytics,
           useValue: {
-            exceptionTrack: (error: any) => {
-              console.info("mock-service-error:", error);
+            exceptionTrack: (_err: any) => {
+              // console.info("mock-service-error:", error);
             }
           }
         }
@@ -43,7 +43,7 @@ describe("AnalyticsErrorHandler", () => {
   it("Should proccess error where window.ga is defined", () => {
     (window as any).ga = [];
 
-    expect(function () {
+    expect(() => {
       handler.handleError(error);
     }).toThrowError(error.message);
 
@@ -58,7 +58,7 @@ describe("AnalyticsErrorHandler", () => {
   });
 
   it("Should skip sending to ga when null", () => {
-    expect(function () {
+    expect(() => {
       handler.handleError(error);
     }).toThrowError(error.message);
 
@@ -72,7 +72,7 @@ describe("AnalyticsErrorHandler", () => {
     error.message = null;
     error.stack = `Error: ERROR
     at UserContext.<anonymous> (http://localhost:9876/_karma_webpack_/src/lib/analytics/analytics.errorhandler.spec.ts:62:25)`;
-    expect(function () {
+    expect(() => {
       handler.handleError(error);
     }).toThrowError(error.message);
 
@@ -91,7 +91,7 @@ describe("AnalyticsErrorHandler", () => {
     error.message = error.stack = null;
     error.name = "Just a simple error";
 
-    expect(function () {
+    expect(() => {
       handler.handleError(error);
     }).toThrowError(error.message);
 

@@ -31,6 +31,6 @@ export const AWS_CONFIG: IEnvironment["awsConfig"] = {
   region: "eu-west-2",
   responseType: "token",
   scope: ["openid", "aws.cognito.signin.user.admin"],
-  userPoolId: "eu-west-2_kFfpbYkRN",
-  userPoolWebClientId: "1q9abcg4l3phgoudq3g9fbqp9p"
+  userPoolId: "eu-west-2_DFCjrxYdt",
+  userPoolWebClientId: "1j17qmdo0f5gfgsj07dut1v6pr"
 };

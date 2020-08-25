@@ -1,4 +1,4 @@
-<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+<form [formGroup]="formGroup">
   <div class="pb-20 pt-20">
     <mat-slide-toggle color="primary" formControlName="status"
       >Status: {{ statusText }}</mat-slide-toggle
@@ -68,6 +68,9 @@
       <mat-error *ngIf="form.dateReported?.hasError('required')">
         Date reported is required
       </mat-error>
+      <mat-error *ngIf="form.dateReported?.hasError('greaterThan')">
+        Date reported can't be before the date of incident
+      </mat-error>
       <mat-datepicker-toggle
         matSuffix
         [for]="dateReportedPicker"
@@ -95,10 +98,16 @@
   </div>
 
   <div class="button-row">
-    <button mat-button mat-raised-button [routerLink]="'../'">
+    <button mat-button mat-raised-button [routerLink]="backRoute">
       Back
     </button>
-    <button mat-button mat-raised-button color="primary" type="submit">
+    <button
+      mat-button
+      mat-raised-button
+      color="primary"
+      type="botton"
+      click="stepper.next()"
+    >
       Next
     </button>
   </div>

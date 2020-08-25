@@ -22,28 +22,49 @@ const AnalyticsConfigValue = new InjectionToken<AnalyticsConfig>(
   "AnalyticsConfig"
 );
 
+export const GoogleURI = `https://www.google-analytics.com/analytics.js`;
+
 @NgModule({
   imports: [Angulartics2Module.forRoot()],
   providers: [{ provide: ErrorHandler, useClass: AnalyticsErrorHandler }]
 })
 export class AnalyticsModule {
-  private googleScript: HTMLScriptElement;
+  public get googleScript(): HTMLScriptElement {
+    return this.document.head.querySelector(`script[src^="${GoogleURI}"]`);
+  }
   private gaScript: boolean;
   private win: any;
 
   constructor(
     private angulartics: Angulartics2GoogleAnalytics,
-    @Optional() @SkipSelf() parentModule?: AnalyticsModule,
+    @Optional() @SkipSelf() private parentModule?: AnalyticsModule,
     @Inject(AnalyticsConfigValue) private analyticsConfig?: AnalyticsConfig,
     @Inject(DOCUMENT) private document?: Document
   ) {
-    if (parentModule) {
+    this.initilialise();
+  }
+
+  static forRoot(
+    config: AnalyticsConfig
+  ): ModuleWithProviders<AnalyticsModule> {
+    return {
+      ngModule: AnalyticsModule,
+      providers: [{ provide: AnalyticsConfigValue, useValue: config }]
+    };
+  }
+
+  public initilialise(): void {
+    if (this.googleScript) {
+      this.googleScript.remove();
+    }
+
+    if (this.parentModule) {
       throw new Error(
         `AnalyticsModule is already loaded. Import it in the AppModule only`
       );
     }
 
-    if (!analyticsConfig) {
+    if (!this.analyticsConfig) {
       throw new Error(
         `AnalyticsModule requires forRoot({ siteId: [string array of site id's], enabled: true|false })`
       );
@@ -64,22 +85,12 @@ export class AnalyticsModule {
     }
   }
 
-  static forRoot(
-    config: AnalyticsConfig
-  ): ModuleWithProviders<AnalyticsModule> {
-    return {
-      ngModule: AnalyticsModule,
-      providers: [{ provide: AnalyticsConfigValue, useValue: config }]
-    };
-  }
-
   /**
    * Global site tag (ga) - Google Analytics
    */
   private injectGoogleScript(): void {
     if (!this.googleScript) {
-      const googleSrc = `https://www.google-analytics.com/analytics.js`;
-      this.googleScript = InjectScript(googleSrc, true, this.document);
+      InjectScript(GoogleURI, true, this.document);
     }
   }
 

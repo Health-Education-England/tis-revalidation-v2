@@ -8,11 +8,13 @@ import { AllocateAdminAutocompleteComponent } from "./allocate-admin-autocomplet
 import { AllocateAdminBtnComponent } from "./allocate-admin-btn/allocate-admin-btn.component";
 import { Get } from "./state/admins.actions";
 import { AdminsState } from "./state/admins.state";
+import { AdminsPipe } from "./admins.pipe";
 
 const adminComponents = [
   AllocateAdminAutocompleteComponent,
   AllocateAdminActionsComponent,
-  AllocateAdminBtnComponent
+  AllocateAdminBtnComponent,
+  AdminsPipe
 ];
 
 @NgModule({

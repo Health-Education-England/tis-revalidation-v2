@@ -8,7 +8,9 @@ import { AdminsState } from "./state/admins.state";
 })
 export class AdminsPipe implements PipeTransform {
   private admins: IAdmin[] = this.store.selectSnapshot(AdminsState).items;
+
   constructor(private store: Store) {}
+
   transform(email: string): string {
     if (email && this.admins) {
       const admin: IAdmin = this.admins.find(

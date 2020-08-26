@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "@environment";
-import { BehaviorSubject, Observable } from "rxjs";
+import { Observable } from "rxjs";
 import {
   IConcernSummary,
   IEntity,
@@ -12,13 +12,6 @@ import {
   providedIn: "root"
 })
 export class ConcernService {
-  public isConcernDetailFormValid: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject(false);
-  public isTraineeDetailFormValid: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject(false);
-
   constructor(private http: HttpClient) {}
 
   getConcernHistory(gmcNumber: number): Observable<IGetConcernResponse | any> {

@@ -13,7 +13,7 @@ import { IConcernSummary, IFileUploadProgress } from "../concern.interfaces";
 import { ACCEPTED_IMAGE_MIMES } from "../constants";
 import { ConcernState } from "../state/concern.state";
 import { Upload } from "../state/concern.actions";
-import { take } from "rxjs/operators";
+import { take, filter } from "rxjs/operators";
 
 @Component({
   selector: "app-file-uploader",
@@ -70,7 +70,11 @@ export class FileUploaderComponent implements OnInit, OnDestroy {
   public setConcernId(): void {
     this.subsciptions.push(
       this.selectedConcern$
-        .pipe(take(1))
+        .pipe(
+          filter(
+            (_concern: IConcernSummary) => _concern.concernId !== this.concernId
+          )
+        )
         .subscribe((selectedConcern: IConcernSummary) => {
           this.concernId = selectedConcern.concernId;
           const filesInProgress = this.store.selectSnapshot(

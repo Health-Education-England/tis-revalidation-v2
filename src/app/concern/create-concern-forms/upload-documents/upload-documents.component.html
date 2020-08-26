@@ -2,10 +2,21 @@
 <app-uploaded-files-list></app-uploaded-files-list>
 <app-comments class="d-block mt-20"></app-comments>
 <div class="button-row">
-  <button mat-button mat-raised-button (click)="stepper.previous()">
+  <button
+    mat-button
+    mat-raised-button
+    type="button"
+    (click)="stepper.previous()"
+  >
     Back
   </button>
-  <button mat-button mat-raised-button color="primary" (click)="saveConcern()">
+  <button
+    mat-button
+    mat-raised-button
+    color="primary"
+    type="button"
+    (click)="saveConcern()"
+  >
     Save Concern
   </button>
 </div>

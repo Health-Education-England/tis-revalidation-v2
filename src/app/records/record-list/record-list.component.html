@@ -89,7 +89,7 @@
                     [gmcNumber]="element.gmcReferenceNumber"
                   ></app-allocate-admin-autocomplete>
                   <ng-template #renderAdminName>{{
-                    element[i.name]
+                    element[i.name] | AdminName
                   }}</ng-template>
                 </ng-container>
 
@@ -101,7 +101,6 @@
                   >
                     {{ element[i.name] | date: dateFormat }}
                   </ng-container>
-
                   <!-- cell value | no formatting needed -->
                   <ng-template #noPipe>{{ element[i.name] }}</ng-template>
                 </ng-template>

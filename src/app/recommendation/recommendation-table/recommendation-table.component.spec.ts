@@ -7,6 +7,7 @@ import { NgxsModule } from "@ngxs/store";
 import { RecommendationHistoryState } from "../state/recommendation-history.state";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { RouterTestingModule } from "@angular/router/testing";
+import { AdminsModule } from "src/app/admins/admins.module";
 
 describe("RecommendationTableComponent", () => {
   let component: RecommendationTableComponent;
@@ -20,6 +21,7 @@ describe("RecommendationTableComponent", () => {
         NoopAnimationsModule,
         HttpClientTestingModule,
         RouterTestingModule,
+        AdminsModule,
         NgxsModule.forRoot([RecommendationHistoryState])
       ]
     }).compileComponents();

@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatStepper } from "@angular/material/stepper";
 import { Select, Store } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
-import { filter } from "rxjs/operators";
+import { filter, debounceTime } from "rxjs/operators";
 import { ApiService } from "../../../shared/services/api/api.service";
 import {
   ConcernStatus,
@@ -15,7 +15,6 @@ import { SetSelectedConcern } from "../../state/concern.actions";
 import { ConcernState } from "../../state/concern.state";
 import { StepperSelectionEvent } from "@angular/cdk/stepper";
 import { ActivatedRoute } from "@angular/router";
-import { GreaterThan } from "../../../shared/validators";
 
 @Component({
   selector: "app-concern-detail",
@@ -57,6 +56,8 @@ export class ConcernDetailComponent implements OnDestroy, AfterViewInit {
     this.updateFormControls();
     this.setUpBackRoute();
     this.initialiseMaxMinDates();
+
+    console.log("dateReported:", this.form.dateReported);
   }
 
   ngAfterViewInit(): void {
@@ -146,18 +147,13 @@ export class ConcernDetailComponent implements OnDestroy, AfterViewInit {
   }
 
   private setupForm(): void {
-    this.formGroup = new FormGroup(
-      {
-        dateOfIncident: new FormControl(null, [Validators.required]),
-        concernType: new FormControl(null, [Validators.required]),
-        source: new FormControl(null, [Validators.required]),
-        dateReported: new FormControl(null, [Validators.required]),
-        followUpDate: new FormControl(null, [Validators.required]),
-        status: new FormControl(null, [Validators.required])
-      },
-      {
-        validators: [GreaterThan("dateReported", "dateOfIncident")]
-      }
-    );
+    this.formGroup = new FormGroup({
+      dateOfIncident: new FormControl(null, [Validators.required]),
+      concernType: new FormControl(null, [Validators.required]),
+      source: new FormControl(null, [Validators.required]),
+      dateReported: new FormControl(null, [Validators.required]),
+      followUpDate: new FormControl(null, [Validators.required]),
+      status: new FormControl(null, [Validators.required])
+    });
   }
 }

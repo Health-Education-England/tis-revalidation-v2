@@ -121,7 +121,8 @@ export class TraineeDetailComponent implements OnDestroy, AfterViewInit {
   private setValidationRules(): void {
     if (
       this.concern.source &&
-      this.concern.source.label === "Lead Employer Trust (LET)"
+      (this.concern.source.label === "Lead Employer Trust (LET)" ||
+        this.concern.source.id === 1)
     ) {
       this.form.site.setValidators([Validators.required]);
       this.form.employer.setValidators([Validators.required]);

@@ -44,7 +44,7 @@ export class ConcernService {
    * @param labelProperty - string
    */
   public massageData(data: any[], labelProperty: string): IEntity[] {
-    if (!data) {
+    if (!data || !data.map) {
       return;
     }
 

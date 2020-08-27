@@ -62,13 +62,14 @@
       <input
         matInput
         [max]="lessThanEqualToday"
+        [min]="form.dateOfIncident?.value"
         formControlName="dateReported"
         [matDatepicker]="dateReportedPicker"
       />
       <mat-error *ngIf="form.dateReported?.hasError('required')">
         Date reported is required
       </mat-error>
-      <mat-error *ngIf="form.dateReported?.hasError('greaterThan')">
+      <mat-error *ngIf="form.dateReported?.hasError('matDatepickerMin')">
         Date reported can't be before the date of incident
       </mat-error>
       <mat-datepicker-toggle

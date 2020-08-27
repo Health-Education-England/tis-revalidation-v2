@@ -80,7 +80,11 @@ export class FileUploaderComponent implements OnInit, OnDestroy {
           const filesInProgress = this.store.selectSnapshot(
             ConcernState.filesInUploadProgress
           );
-          if (this.concernId && filesInProgress?.length > 0) {
+          if (
+            this.concernId &&
+            filesInProgress &&
+            filesInProgress?.length > 0
+          ) {
             const files = filesInProgress.map(
               (val: IFileUploadProgress) => val.file
             );

@@ -1,4 +1,8 @@
-<form class="records-form" [formGroup]="recommendationForm">
+<form
+  class="records-form"
+  [formGroup]="recommendationForm"
+  (ngSubmit)="saveDraft(true)"
+>
   <div class="d-grid grid-container-2-col">
     <mat-form-field>
       <mat-label>Make a recommendation</mat-label>
@@ -67,40 +71,41 @@
     class="d-block mt-20"
     [featureComments]="recommendation.comments"
   ></app-comments>
+
+  <div class="button-row">
+    <button type="button" mat-button mat-raised-button [routerLink]="['../']">
+      Back
+    </button>
+    <button
+      mat-button
+      type="button"
+      mat-raised-button
+      [disabled]="recommendationForm ? !recommendationForm.valid : true"
+      (click)="saveDraft(false)"
+      color="accent"
+    >
+      Save draft
+    </button>
+    <button
+      type="submit"
+      mat-button
+      mat-raised-button
+      [disabled]="recommendationForm ? !recommendationForm.valid : true"
+      color="primary"
+    >
+      Make recommendation
+    </button>
+    <span class="spacer"></span>
+    <button
+      type="button"
+      mat-icon-button
+      aria-label="Reset changes"
+      matTooltipPosition="left"
+      color="warn"
+      matTooltip="Reset changes"
+      (click)="resetForm()"
+    >
+      <mat-icon>restore</mat-icon>
+    </button>
+  </div>
 </form>
-<div class="button-row">
-  <button type="button" mat-button mat-raised-button [routerLink]="['../']">
-    Back
-  </button>
-  <button
-    mat-button
-    mat-raised-button
-    [disabled]="recommendationForm ? !recommendationForm.valid : true"
-    (click)="saveDraft(false)"
-    color="accent"
-  >
-    Save draft
-  </button>
-  <button
-    type="button"
-    mat-button
-    mat-raised-button
-    [disabled]="recommendationForm ? !recommendationForm.valid : true"
-    color="primary"
-    (click)="saveDraft(true)"
-  >
-    Make recommendation
-  </button>
-  <span class="spacer"></span>
-  <button
-    type="button"
-    mat-icon-button
-    aria-label="Reset changes"
-    matTooltipPosition="left"
-    color="warn"
-    matTooltip="Reset changes"
-    (click)="resetForm()"
-  >
-    <mat-icon>restore</mat-icon>
-  </button>
-</div>

@@ -56,8 +56,6 @@ export class ConcernDetailComponent implements OnDestroy, AfterViewInit {
     this.updateFormControls();
     this.setUpBackRoute();
     this.initialiseMaxMinDates();
-
-    console.log("dateReported:", this.form.dateReported);
   }
 
   ngAfterViewInit(): void {

@@ -44,6 +44,7 @@ export class UploadDocumentsComponent implements OnDestroy, AfterViewInit {
   ngAfterViewInit(): void {
     this.initialiseCommentsControl();
     this.setUpStepperListener();
+    this.checkForFileInPregress();
   }
 
   ngOnDestroy(): void {
@@ -109,21 +110,23 @@ export class UploadDocumentsComponent implements OnDestroy, AfterViewInit {
     return !stepsValid.includes(false);
   }
 
+  private checkForFileInPregress(): void {
+    this.subsciptions.push(
+      this.filesInprogres
+        .pipe(
+          finalize(() => {
+            this.redirectToSummary();
+          })
+        )
+        .subscribe()
+    );
+  }
+
   private checkForFileUpload(): void {
     const filesInProgress = this.store.selectSnapshot(
       ConcernState.filesInUploadProgress
     );
-    if (filesInProgress && filesInProgress.length > 0) {
-      this.filesInprogres
-        .pipe(
-          finalize(() => {
-            debugger;
-            this.redirectToSummary();
-          })
-        )
-        .subscribe();
-    } else {
-      debugger;
+    if (!(filesInProgress && filesInProgress.length > 0)) {
       this.redirectToSummary();
     }
   }
@@ -133,13 +136,7 @@ export class UploadDocumentsComponent implements OnDestroy, AfterViewInit {
       if (this.concernFormsAllValid) {
         this.store
           .dispatch(new Save())
-          .pipe(
-            finalize(() => this.checkForFileUpload()),
-            catchError((err: any) => {
-              console.log("error", err);
-              return of(err);
-            })
-          )
+          .pipe(finalize(() => this.checkForFileUpload()))
           .subscribe();
       } else {
         this.snackBarService.openSnackBar("Please ensure all steps are valid.");

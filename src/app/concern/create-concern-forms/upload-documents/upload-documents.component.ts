@@ -29,7 +29,7 @@ export class UploadDocumentsComponent implements OnDestroy, AfterViewInit {
   @ViewChild(CommentsComponent) appComments: CommentsComponent;
   @Select(ConcernState.selected)
   selectedConcern$: Observable<IConcernSummary>;
-  @Select(ConcernState.uploadFileInProgress) filesInprogres: Observable<
+  @Select(ConcernState.uploadFileInProgress) filesInProgress: Observable<
     boolean
   >;
   concern: IConcernSummary;
@@ -44,7 +44,9 @@ export class UploadDocumentsComponent implements OnDestroy, AfterViewInit {
   ngAfterViewInit(): void {
     this.initialiseCommentsControl();
     this.setUpStepperListener();
-    this.checkForFileInPregress();
+    if (this.addConcernMode) {
+      this.checkForFileInPregress();
+    }
   }
 
   ngOnDestroy(): void {
@@ -53,6 +55,10 @@ export class UploadDocumentsComponent implements OnDestroy, AfterViewInit {
         subscribed.unsubscribe();
       }
     });
+  }
+
+  public get addConcernMode(): boolean {
+    return !!this.activatedRoute.snapshot.params.concerdId;
   }
 
   private initialiseCommentsControl(): void {
@@ -110,12 +116,15 @@ export class UploadDocumentsComponent implements OnDestroy, AfterViewInit {
     return !stepsValid.includes(false);
   }
 
+  /**
+   * subscribe to upload in progress only in add mode where there's a concernId
+   */
   private checkForFileInPregress(): void {
     this.subsciptions.push(
-      this.filesInprogres
+      this.filesInProgress
         .pipe(
           filter((val: boolean) => val === false),
-          delay(1000),
+          delay(500),
           finalize(() => {
             this.redirectToSummary();
           })
@@ -125,11 +134,12 @@ export class UploadDocumentsComponent implements OnDestroy, AfterViewInit {
   }
 
   private checkForFileUpload(): void {
-    const filesInProgress = this.store.selectSnapshot(
-      ConcernState.filesInUploadProgress
-    );
-    if (!(filesInProgress && filesInProgress.length > 0)) {
+    const fp = this.store.selectSnapshot(ConcernState.uploadFileInProgress);
+    if (!!fp) {
       this.redirectToSummary();
+    } else {
+      // TODO: test edge case file(s) are still uplading and save has been clicked
+      this.checkForFileInPregress();
     }
   }
 
@@ -138,7 +148,10 @@ export class UploadDocumentsComponent implements OnDestroy, AfterViewInit {
       if (this.concernFormsAllValid) {
         this.store
           .dispatch(new Save())
-          .pipe(finalize(() => this.checkForFileUpload()))
+          .pipe(
+            delay(500),
+            finalize(() => this.checkForFileUpload())
+          )
           .subscribe();
       } else {
         this.snackBarService.openSnackBar("Please ensure all steps are valid.");

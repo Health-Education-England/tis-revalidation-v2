@@ -22,7 +22,7 @@ const content = `(function() {
 })();
 `;
 
-fs.writeFile("supported.browsers.js", content, (err: any) => {
+fs.writeFile("supported.browsers.js", content, (err) => {
   if (err) {
     console.error(err);
     return;

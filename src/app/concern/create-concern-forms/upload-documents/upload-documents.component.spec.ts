@@ -22,10 +22,7 @@ describe("UploadDocumentsComponent", () => {
   let commentsService: CommentsService;
   let store: Store;
   let snackBarService: SnackBarService;
-
-  const activatedRoute = {
-    parent: { snapshot: { params: { gmcNumber: 0 } } }
-  };
+  let activatedRoute: ActivatedRoute;
 
   const setDefaultSelectedConcern = () => {
     store.dispatch(
@@ -44,7 +41,7 @@ describe("UploadDocumentsComponent", () => {
         MaterialModule,
         NoopAnimationsModule,
         HttpClientTestingModule,
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([]),
         DetailsModule,
         NgxsModule.forRoot([ConcernState])
       ],
@@ -52,20 +49,27 @@ describe("UploadDocumentsComponent", () => {
         CommentsService,
         {
           provide: ActivatedRoute,
-          useValue: activatedRoute
+          useValue: {
+            snapshot: {
+              params: {
+                concernId: "xxx-111-yyy"
+              }
+            }
+          }
         }
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
     store = TestBed.inject(Store);
     snackBarService = TestBed.inject(SnackBarService);
+    commentsService = TestBed.inject(CommentsService);
+    activatedRoute = TestBed.inject(ActivatedRoute);
     setDefaultSelectedConcern();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(UploadDocumentsComponent);
     component = fixture.componentInstance;
-    commentsService = TestBed.inject(CommentsService);
     fixture.detectChanges();
   });
 

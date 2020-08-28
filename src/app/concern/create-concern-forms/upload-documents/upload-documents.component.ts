@@ -9,7 +9,7 @@ import { FormGroup } from "@angular/forms";
 import { MatStepper } from "@angular/material/stepper";
 import { Select, Store } from "@ngxs/store";
 import { Observable, Subscription, of } from "rxjs";
-import { filter, catchError, finalize } from "rxjs/operators";
+import { filter, catchError, finalize, delay } from "rxjs/operators";
 import { CommentsComponent } from "src/app/details/comments/comments.component";
 import { SnackBarService } from "../../../shared/services/snack-bar/snack-bar.service";
 import { IConcernSummary, IFileUploadProgress } from "../../concern.interfaces";
@@ -29,8 +29,8 @@ export class UploadDocumentsComponent implements OnDestroy, AfterViewInit {
   @ViewChild(CommentsComponent) appComments: CommentsComponent;
   @Select(ConcernState.selected)
   selectedConcern$: Observable<IConcernSummary>;
-  @Select(ConcernState.filesInUploadProgress) filesInprogres: Observable<
-    IFileUploadProgress[]
+  @Select(ConcernState.uploadFileInProgress) filesInprogres: Observable<
+    boolean
   >;
   concern: IConcernSummary;
 
@@ -114,6 +114,8 @@ export class UploadDocumentsComponent implements OnDestroy, AfterViewInit {
     this.subsciptions.push(
       this.filesInprogres
         .pipe(
+          filter((val: boolean) => val === false),
+          delay(1000),
           finalize(() => {
             this.redirectToSummary();
           })

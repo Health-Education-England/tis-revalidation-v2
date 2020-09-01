@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy } from "@angular/core";
+import { Component, Input, OnDestroy, AfterViewInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatStepper } from "@angular/material/stepper";
 import { Select, Store } from "@ngxs/store";
@@ -13,12 +13,14 @@ import {
 import { ConcernService } from "../../services/concern/concern.service";
 import { SetSelectedConcern } from "../../state/concern.actions";
 import { ConcernState } from "../../state/concern.state";
+import { StepperSelectionEvent } from "@angular/cdk/stepper";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-concern-detail",
   templateUrl: "./concern-detail.component.html"
 })
-export class ConcernDetailComponent implements OnDestroy {
+export class ConcernDetailComponent implements OnDestroy, AfterViewInit {
   formGroup: FormGroup;
   statusText: string;
   lessThanEqualToday: Date;
@@ -37,6 +39,8 @@ export class ConcernDetailComponent implements OnDestroy {
 
   @Input() stepper: MatStepper;
 
+  public backRoute: string[];
+
   public get form() {
     return this.formGroup.controls;
   }
@@ -44,12 +48,18 @@ export class ConcernDetailComponent implements OnDestroy {
   constructor(
     private store: Store,
     private apiService: ApiService,
-    private concernService: ConcernService
+    private concernService: ConcernService,
+    private activatedRoute: ActivatedRoute
   ) {
     this.setupForm();
     this.subscribeToStatusChanges();
     this.updateFormControls();
+    this.setUpBackRoute();
     this.initialiseMaxMinDates();
+  }
+
+  ngAfterViewInit(): void {
+    this.setUpStepperListener();
   }
 
   ngOnDestroy(): void {
@@ -79,6 +89,12 @@ export class ConcernDetailComponent implements OnDestroy {
     );
   }
 
+  setUpBackRoute(): void {
+    this.backRoute = this.activatedRoute.snapshot.params.concernId
+      ? ["../../"]
+      : ["../"];
+  }
+
   initialiseMaxMinDates(): void {
     this.lessThanEqualToday = new Date();
     this.greaterThanToday = new Date();
@@ -93,7 +109,7 @@ export class ConcernDetailComponent implements OnDestroy {
     return status === false ? ConcernStatus.CLOSED : ConcernStatus.OPEN;
   }
 
-  onSubmit(): void {
+  private onSubmit(): void {
     const newConcern = {
       ...this.concern,
       ...this.formGroup.value,
@@ -104,10 +120,19 @@ export class ConcernDetailComponent implements OnDestroy {
     };
 
     this.store.dispatch(new SetSelectedConcern(newConcern));
-    this.concernService.isConcernDetailFormValid.next(this.formGroup.valid);
+  }
 
+  private setUpStepperListener(): void {
     if (this.stepper) {
-      this.stepper.next();
+      this.subsciptions.push(
+        this.stepper.selectionChange.subscribe(
+          (step: StepperSelectionEvent) => {
+            if (step.previouslySelectedStep.stepControl === this.formGroup) {
+              this.onSubmit();
+            }
+          }
+        )
+      );
     }
   }
 

@@ -1,4 +1,8 @@
-<form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="trainee-detail">
+<form
+  [formGroup]="formGroup"
+  class="trainee-detail"
+  (ngSubmit)="stepper.next()"
+>
   <div
     class="d-grid grid-container-2-col"
     *ngIf="{
@@ -48,7 +52,12 @@
   </div>
 
   <div class="button-row">
-    <button mat-button mat-raised-button type="button" (click)="previous()">
+    <button
+      mat-button
+      mat-raised-button
+      type="button"
+      (click)="stepper.previous()"
+    >
       Back
     </button>
     <button mat-button mat-raised-button color="primary" type="submit">

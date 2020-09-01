@@ -17,7 +17,7 @@ export const APP_URLS_CONFIG: IEnvironment["appUrls"] = {
   listFiles: `api/storage/list`,
   login: ``,
   saveRecommendation: `api/recommendation`,
-  submitToGMC: `api/recommendation/{gmcNumber}/submit/{recommendationId}`,
+  submitToGMC: `api/recommendation`,
   upload: `api/storage/upload`
 };
 
@@ -31,6 +31,6 @@ export const AWS_CONFIG: IEnvironment["awsConfig"] = {
   region: "eu-west-2",
   responseType: "token",
   scope: ["openid", "aws.cognito.signin.user.admin"],
-  userPoolId: "eu-west-2_J8SoC9e1Y",
-  userPoolWebClientId: "23mvi31orrlq04ugap61mor8bg"
+  userPoolId: "eu-west-2_cV5m5ucVw",
+  userPoolWebClientId: "5fu8mlqrvksvlu4it8iiupcnag"
 };

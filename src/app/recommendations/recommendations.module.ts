@@ -7,10 +7,8 @@ import { RecordsModule } from "../records/records.module";
 import { RecommendationsResolver } from "./recommendations.resolver";
 import { RecommendationsState } from "./state/recommendations.state";
 import { RecommendationsRoutingModule } from "./recommendations-routing.module";
-import { RecommendationsComponent } from "./recommendations.component";
 
 @NgModule({
-  declarations: [RecommendationsComponent],
   imports: [
     CommonModule,
     MaterialModule,

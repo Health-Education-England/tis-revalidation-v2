@@ -1,5 +1,14 @@
-import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
-import { Component, Input, OnDestroy, ViewEncapsulation } from "@angular/core";
+import {
+  STEPPER_GLOBAL_OPTIONS,
+  StepperSelectionEvent
+} from "@angular/cdk/stepper";
+import {
+  Component,
+  Input,
+  OnDestroy,
+  ViewEncapsulation,
+  AfterViewInit
+} from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatStepper } from "@angular/material/stepper";
 import { Select, Store } from "@ngxs/store";
@@ -25,7 +34,7 @@ import { ConcernState } from "../../state/concern.state";
   ],
   encapsulation: ViewEncapsulation.None
 })
-export class TraineeDetailComponent implements OnDestroy {
+export class TraineeDetailComponent implements OnDestroy, AfterViewInit {
   public formGroup: FormGroup;
   public admin: string;
 
@@ -65,12 +74,30 @@ export class TraineeDetailComponent implements OnDestroy {
     this.store.dispatch(new ClearAllocateList());
   }
 
+  ngAfterViewInit(): void {
+    this.setUpStepperListener();
+  }
+
   private setupForm(): void {
     this.formGroup = new FormGroup({
       grade: new FormControl(),
       site: new FormControl(),
       employer: new FormControl()
     });
+  }
+
+  private setUpStepperListener(): void {
+    if (this.stepper) {
+      this.subsciptions.push(
+        this.stepper.selectionChange.subscribe(
+          (step: StepperSelectionEvent) => {
+            if (step.previouslySelectedStep.stepControl === this.formGroup) {
+              this.updateState();
+            }
+          }
+        )
+      );
+    }
   }
 
   /**
@@ -94,7 +121,8 @@ export class TraineeDetailComponent implements OnDestroy {
   private setValidationRules(): void {
     if (
       this.concern.source &&
-      this.concern.source.label === "Lead Employer Trust (LET)"
+      (this.concern.source.label === "Lead Employer Trust (LET)" ||
+        this.concern.source.id === 1)
     ) {
       this.form.site.setValidators([Validators.required]);
       this.form.employer.setValidators([Validators.required]);
@@ -106,31 +134,19 @@ export class TraineeDetailComponent implements OnDestroy {
     this.form.employer.updateValueAndValidity();
   }
 
-  public updateState(): Observable<any> | false {
+  private updateState(): Observable<any> | false {
     const admins: IAllocateAdmin[] = this.store.selectSnapshot(AdminsState)
       .allocateList;
     const admin = { admin: admins.length > 0 ? admins[0].admin : null };
     const newConcern = {
       ...this.concern,
       ...this.formGroup.value,
-      ...admin
+      ...{ admin: admin.admin }
     };
-
     this.store.dispatch(new SetSelectedConcern(newConcern));
-    this.concernService.isTraineeDetailFormValid.next(this.formGroup.valid);
 
     if (!this.stepper) {
       return false;
     }
-  }
-
-  public onSubmit(): void {
-    this.updateState();
-    this.stepper.next();
-  }
-
-  public previous(): void {
-    this.updateState();
-    this.stepper.previous();
   }
 }

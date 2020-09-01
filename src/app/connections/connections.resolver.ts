@@ -5,6 +5,7 @@ import { Observable } from "rxjs";
 import { generateColumnData } from "../records/constants";
 import { RecordsResolver } from "../records/records.resolver";
 import { RecordsService } from "../records/services/records.service";
+import { ConnectionsFilterType } from "./connections.interfaces";
 import { COLUMN_DATA } from "./constants";
 
 @Injectable()
@@ -28,6 +29,28 @@ export class ConnectionsResolver extends RecordsResolver
       "programmeMembershipEndDate"
     ];
     this.recordsService.columnData = generateColumnData(COLUMN_DATA);
+    this.recordsService.filters = [
+      {
+        label: "ADD CONNECTION",
+        name: ConnectionsFilterType.ADD_CONNECTION
+      },
+      {
+        label: "REMOVE CONNECTION",
+        name: ConnectionsFilterType.REMOVE_CONNECTION
+      },
+      {
+        label: "EXCEPTIONS QUEUE",
+        name: ConnectionsFilterType.EXCEPTIONS_QUEUE
+      },
+      {
+        label: "ALL",
+        name: ConnectionsFilterType.ALL
+      },
+      {
+        label: "HIDDEN",
+        name: ConnectionsFilterType.HIDDEN
+      }
+    ];
   }
 
   resolve(route: ActivatedRouteSnapshot): Observable<any> {

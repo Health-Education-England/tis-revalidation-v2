@@ -88,9 +88,15 @@
                     *ngIf="data.enableAllocateAdmin; else renderAdminName"
                     [gmcNumber]="element.gmcReferenceNumber"
                   ></app-allocate-admin-autocomplete>
-                  <ng-template #renderAdminName>{{
-                    element[i.name]
-                  }}</ng-template>
+                  <ng-template #renderAdminName>
+                    <a
+                      [matTooltip]="element[i.name]"
+                      mat-button
+                      (click)="$event.stopPropagation()"
+                      [href]="'mailto:' + element[i.name]"
+                      >{{ element[i.name] | AdminName }}</a
+                    >
+                  </ng-template>
                 </ng-container>
 
                 <!-- remaining cells -->
@@ -101,7 +107,6 @@
                   >
                     {{ element[i.name] | date: dateFormat }}
                   </ng-container>
-
                   <!-- cell value | no formatting needed -->
                   <ng-template #noPipe>{{ element[i.name] }}</ng-template>
                 </ng-template>

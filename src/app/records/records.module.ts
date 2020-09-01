@@ -8,6 +8,7 @@ import { RecordListFiltersComponent } from "./record-list-filters/record-list-fi
 import { RecordListPaginatorComponent } from "./record-list-paginator/record-list-paginator.component";
 import { RecordListComponent } from "./record-list/record-list.component";
 import { RecordSearchComponent } from "./record-search/record-search.component";
+import { RecordsComponent } from "./records.component";
 import { RefreshDataBtnComponent } from "./refresh-data-btn/refresh-data-btn.component";
 import { ResetRecordListComponent } from "./reset-record-list/reset-record-list.component";
 import { RecordsService } from "./services/records.service";
@@ -16,6 +17,7 @@ const components: any[] = [
   RecordListComponent,
   RecordListFiltersComponent,
   RecordListPaginatorComponent,
+  RecordsComponent,
   RecordSearchComponent,
   RefreshDataBtnComponent,
   ResetRecordListComponent

@@ -187,16 +187,7 @@ export class ConcernState {
         take(1),
         catchError((error: string) => ctx.dispatch(new ApiError(error)))
       )
-      .subscribe((response: string) => {
-        if (!selectedConcern.concernId) {
-          ctx.patchState({
-            selected: {
-              ...selectedConcern,
-              concernId: response
-            }
-          });
-        }
-      });
+      .pipe(map((response: string) => ctx.dispatch(new SaveSuccess(response))));
   }
 
   @Action(SaveSuccess)
@@ -300,6 +291,7 @@ export class ConcernState {
             return ctx.dispatch(new ApiError(error));
           }),
           finalize(() => {
+            ctx.dispatch(new ListFiles(action.gmcNumber, action.concernId));
             return ctx.dispatch(new SetFileUploadProgress(null, null));
           })
         )

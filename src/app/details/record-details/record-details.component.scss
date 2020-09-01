@@ -20,12 +20,19 @@
   flex-direction: row;
 
   @media screen and (#{$mat-small}) {
-    margin: 32px 0 16px;
+    flex-direction: column;
+    margin: 32px 0 16px 0px;
   }
 
   & button {
     display: table-cell;
-    margin-right: 8px;
+    margin: 0 8px 0 0;
+
+    @media screen and (#{$mat-small}) {
+      margin: 0 0 16px 0;
+      align-self: center;
+      width: 98%;
+    }
 
     &:last-of-type,
     &:last-child {

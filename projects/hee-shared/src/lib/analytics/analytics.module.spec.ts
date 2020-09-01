@@ -7,6 +7,7 @@ import {
   AnalyticsModule,
   GoogleURI
 } from "./analytics.module";
+import { Angulartics2GoogleAnalytics } from "angulartics2/ga";
 
 describe("Analytics", () => {
   let router: Router;
@@ -23,7 +24,18 @@ describe("Analytics", () => {
         RouterTestingModule.withRoutes(routes),
         AnalyticsModule.forRoot(config)
       ],
-      declarations: [AppComponent, MockComponent]
+      declarations: [AppComponent, MockComponent],
+      providers: [
+        {
+          provide: Angulartics2GoogleAnalytics,
+          useValue: {
+            settings: {
+              additionalAccountNames: null
+            },
+            startTracking: () => {}
+          }
+        }
+      ]
     })
       .compileComponents()
       .then(() => {

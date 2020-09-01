@@ -17,6 +17,7 @@ import { CreateRecommendationComponent } from "./create-recommendation/create-re
 import { ConfirmRecommendationComponent } from "./confirm-recommendation/confirm-recommendation.component";
 import { UnderNoticeGuard } from "./guards/under-notice.gaurd";
 import { NotSubmittedGuard } from "./guards/not-submitted.guard";
+import { AdminsModule } from "../admins/admins.module";
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { NotSubmittedGuard } from "./guards/not-submitted.guard";
     DetailsModule,
     CommonModule,
     RecommendationRoutingModule,
+    AdminsModule,
     NgxsModule.forFeature([RecommendationHistoryState]),
     NgxsModule.forFeature([RecommendationNotesState])
   ],

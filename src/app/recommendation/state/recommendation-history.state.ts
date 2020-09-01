@@ -100,7 +100,7 @@ export class RecommendationHistoryState {
       throw err;
     }
 
-    return this.service.getrecommendationHistory(action.payload).pipe(
+    return this.service.getRecommendationHistory(action.payload).pipe(
       tap((result: IRecommendationHistory) => {
         ctx.patchState({
           item: result

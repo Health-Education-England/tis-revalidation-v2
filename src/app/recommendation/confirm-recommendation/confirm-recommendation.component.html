@@ -2,6 +2,7 @@
   class="w-100"
   [formGroup]="form"
   *ngIf="currentRecommendationType$ | async as currentRecommendationType"
+  (ngSubmit)="submitToGMC()"
 >
   <div
     class="terms mat-body"
@@ -192,35 +193,36 @@
       I confirm all relevant information has been considered
     </mat-slide-toggle>
   </section>
+
+  <div class="button-row">
+    <button
+      mat-button
+      mat-raised-button
+      *ngIf="editRecommendation$ | async as editRecommendation"
+      [routerLink]="editRecommendation ? ['../edit'] : ['../create']"
+    >
+      Back
+    </button>
+    <button
+      mat-button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="form.invalid"
+    >
+      Submit to GMC
+    </button>
+    <span class="spacer"></span>
+    <button
+      type="button"
+      mat-icon-button
+      aria-label="Reset changes"
+      color="warn"
+      matTooltipPosition="left"
+      matTooltip="Reset changes"
+      (click)="reset()"
+    >
+      <mat-icon>restore</mat-icon>
+    </button>
+  </div>
 </form>
-<div class="button-row">
-  <button
-    mat-button
-    mat-raised-button
-    *ngIf="editRecommendation$ | async as editRecommendation"
-    [routerLink]="editRecommendation ? ['../edit'] : ['../create']"
-  >
-    Back
-  </button>
-  <button
-    mat-button
-    mat-raised-button
-    color="primary"
-    (click)="submitToGMC()"
-    [disabled]="form.invalid"
-  >
-    Submit to GMC
-  </button>
-  <span class="spacer"></span>
-  <button
-    type="button"
-    mat-icon-button
-    aria-label="Reset changes"
-    color="warn"
-    matTooltipPosition="left"
-    matTooltip="Reset changes"
-    (click)="reset()"
-  >
-    <mat-icon>restore</mat-icon>
-  </button>
-</div>

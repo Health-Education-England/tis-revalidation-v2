@@ -1,4 +1,4 @@
-<form [formGroup]="formGroup">
+<form [formGroup]="formGroup" (ngSubmit)="stepper.next()">
   <div class="pb-20 pt-20">
     <mat-slide-toggle color="primary" formControlName="status"
       >Status: {{ statusText }}</mat-slide-toggle
@@ -62,13 +62,14 @@
       <input
         matInput
         [max]="lessThanEqualToday"
+        [min]="form.dateOfIncident?.value"
         formControlName="dateReported"
         [matDatepicker]="dateReportedPicker"
       />
       <mat-error *ngIf="form.dateReported?.hasError('required')">
         Date reported is required
       </mat-error>
-      <mat-error *ngIf="form.dateReported?.hasError('greaterThan')">
+      <mat-error *ngIf="form.dateReported?.hasError('matDatepickerMin')">
         Date reported can't be before the date of incident
       </mat-error>
       <mat-datepicker-toggle
@@ -101,13 +102,7 @@
     <button mat-button mat-raised-button [routerLink]="backRoute">
       Back
     </button>
-    <button
-      mat-button
-      mat-raised-button
-      color="primary"
-      type="button"
-      (click)="stepper.next()"
-    >
+    <button mat-button mat-raised-button color="primary" type="submit">
       Next
     </button>
   </div>

@@ -19,7 +19,7 @@
   display: flex;
   flex-direction: row;
 
-  @media screen and (#{$mat-small}) {
+  @media screen and (#{$mat-xsmall}) {
     flex-direction: column;
     margin: 32px 0 16px 0px;
   }
@@ -28,7 +28,7 @@
     display: table-cell;
     margin: 0 8px 0 0;
 
-    @media screen and (#{$mat-small}) {
+    @media screen and (#{$mat-xsmall}) {
       margin: 0 0 16px 0;
       align-self: center;
       width: 98%;

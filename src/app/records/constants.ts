@@ -2,8 +2,8 @@ import { Sort } from "@angular/material/sort";
 import { IRecordDataCell } from "./records.interfaces";
 
 export const DEFAULT_SORT: Sort = {
-  active: "submissionDate",
-  direction: "desc"
+  active: "gmcReferenceNumber",
+  direction: "asc"
 };
 
 export const RECORDS_COLUMN_DATA: IRecordDataCell[] = [

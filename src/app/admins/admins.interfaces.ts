@@ -6,4 +6,5 @@ export interface IAllocateAdmin {
 export interface IAdmin {
   fullName: string;
   username: string;
+  email: string;
 }

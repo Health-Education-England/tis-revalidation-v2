@@ -90,10 +90,11 @@
                   ></app-allocate-admin-autocomplete>
                   <ng-template #renderAdminName>
                     <a
-                      [matTooltip]="element[i.name]"
+                      *ngIf="element[i.name]"
+                      [matTooltip]="element[i.name] | AdminName: 'email'"
                       mat-button
                       (click)="$event.stopPropagation()"
-                      [href]="'mailto:' + element[i.name]"
+                      [href]="'mailto:' + element[i.name] | AdminName: 'email'"
                       >{{ element[i.name] | AdminName }}</a
                     >
                   </ng-template>

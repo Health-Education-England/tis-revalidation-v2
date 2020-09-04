@@ -78,10 +78,10 @@
       <td mat-cell *matCellDef="let element">
         <a
           *ngIf="element.admin"
-          [matTooltip]="element.admin"
+          [matTooltip]="element.admin | AdminName: 'email'"
           mat-button
           (click)="$event.stopPropagation()"
-          [href]="'mailto:' + element.admin"
+          [href]="'mailto:' + element.admin | AdminName: 'email'"
           >{{ element.admin | AdminName }}</a
         >
       </td>

@@ -5,11 +5,18 @@ import { TestBed, async } from "@angular/core/testing";
 describe("AdminsPipe", () => {
   let store: Store;
   let pipe: AdminsPipe;
+  const user1 = {
+    username: "66596851-3b8a-0009",
+    fullName: "Demo1 User",
+    email: "user1@hee.nhs.uk"
+  };
+  const user2 = {
+    username: "b0737686-1aee-4070",
+    fullName: "Demo2 User",
+    email: "user2@hee.nhs.uk"
+  };
   const adminsList = {
-    items: [
-      { username: "user1@hee.nhs.uk", fullName: "Demo1 User" },
-      { username: "user2@hee.nhs.uk", fullName: "Demo2 User" }
-    ]
+    items: [user2, user1]
   };
 
   const emptyList = { items: [] };
@@ -40,8 +47,12 @@ describe("AdminsPipe", () => {
     });
 
     it("should return full name of users", () => {
-      expect(pipe.transform("user1@hee.nhs.uk")).toEqual("Demo1 User");
-      expect(pipe.transform("user2@hee.nhs.uk")).toEqual("Demo2 User");
+      expect(pipe.transform(user1.username)).toEqual(user1.fullName);
+      expect(pipe.transform(user2.username)).toEqual(user2.fullName);
+    });
+    it("should return email of users", () => {
+      expect(pipe.transform(user1.username, "email")).toEqual(user1.email);
+      expect(pipe.transform(user2.username, "email")).toEqual(user2.email);
     });
   });
 
@@ -61,9 +72,9 @@ describe("AdminsPipe", () => {
       expect(pipe.transform(undefined)).toEqual("");
     });
 
-    it("should return full name of users", () => {
-      expect(pipe.transform("user1@hee.nhs.uk")).toEqual("user1@hee.nhs.uk");
-      expect(pipe.transform("user2@hee.nhs.uk")).toEqual("user2@hee.nhs.uk");
+    it("should return same string passed if store is empty", () => {
+      expect(pipe.transform(user1.username)).toEqual(user1.username);
+      expect(pipe.transform(user2.username)).toEqual(user2.username);
     });
   });
 
@@ -84,8 +95,8 @@ describe("AdminsPipe", () => {
     });
 
     it("should return full name of users", () => {
-      expect(pipe.transform("user1@hee.nhs.uk")).toEqual("user1@hee.nhs.uk");
-      expect(pipe.transform("user2@hee.nhs.uk")).toEqual("user2@hee.nhs.uk");
+      expect(pipe.transform(user1.username)).toEqual(user1.username);
+      expect(pipe.transform(user2.username)).toEqual(user2.username);
     });
   });
 });

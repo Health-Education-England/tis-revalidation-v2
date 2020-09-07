@@ -11,15 +11,19 @@ export class AdminsPipe implements PipeTransform {
 
   constructor(private store: Store) {}
 
-  transform(email: string): string {
-    if (email && this.admins) {
+  transform(username: string, format?: string): string {
+    if (username && this.admins) {
       const admin: IAdmin = this.admins.find(
-        (a: IAdmin) => a.username === email
+        (a: IAdmin) => a.username === username
       );
 
-      return admin ? admin.fullName : email;
+      return admin
+        ? format === "email"
+          ? admin.email
+          : admin.fullName
+        : username;
     }
 
-    return email ? email : "";
+    return username ? username : "";
   }
 }

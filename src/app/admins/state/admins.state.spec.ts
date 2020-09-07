@@ -48,7 +48,7 @@ describe("Admins state", () => {
     await store.dispatch(new GetSuccess(mockAdminsResponse)).toPromise();
     const items = store.selectSnapshot(AdminsState.items);
     expect(items.length).toEqual(2);
-    expect(items[0].username).toEqual("siteadmin@hee.nhs.uk");
+    expect(items[0].email).toEqual("siteadmin@hee.nhs.uk");
   });
 
   it("should dispatch 'GetError' and select 'error' slice", async () => {

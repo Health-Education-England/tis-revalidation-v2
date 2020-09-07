@@ -9,12 +9,14 @@ import { AdminsService } from "./admins.service";
 
 export const mockAdminsResponse: IAdmin[] = [
   {
-    username: "siteadmin@hee.nhs.uk",
-    fullName: "siteadmin@hee.nhs.uk"
+    username: "66596851-3b8a-0009",
+    fullName: "Site Admin",
+    email: "siteadmin@hee.nhs.uk"
   },
   {
-    username: "omar_mirza",
-    fullName: "omar_mirza"
+    username: "b0737686-1aee-4070",
+    fullName: "Omar Mirza",
+    email: "omar_mirza@hee.nhs.uk"
   }
 ];
 

@@ -96,7 +96,8 @@ describe("RecordListComponent", () => {
       doctorStatus: RecommendationStatus.NOT_STARTED,
       lastUpdatedDate: "2015-09-08",
       programmeMembershipType: "",
-      programmeName: ""
+      programmeName: "",
+      designatedBody: "2-RTYTRI"
     };
 
     spyOn(mockEvent, "preventDefault");

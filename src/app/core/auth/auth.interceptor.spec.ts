@@ -1,12 +1,13 @@
 import { TestBed } from "@angular/core/testing";
 import { MaterialModule } from "../../shared/material/material.module";
 import { AuthInterceptor } from "./auth.interceptor";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 
-describe("AuthInterceptor", () => {
+fdescribe("AuthInterceptor", () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
       providers: [AuthInterceptor],
-      imports: [MaterialModule]
+      imports: [MaterialModule, HttpClientTestingModule]
     })
   );
 

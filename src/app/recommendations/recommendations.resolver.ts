@@ -7,13 +7,16 @@ import { RecordsResolver } from "../records/records.resolver";
 import { RecordsService } from "../records/services/records.service";
 import { COLUMN_DATA } from "./constants";
 import { RecommendationsFilterType } from "./recommendations.interfaces";
+import { AuthService } from "../core/auth/auth.service";
 
 @Injectable()
-export class RecommendationsResolver extends RecordsResolver
+export class RecommendationsResolver
+  extends RecordsResolver
   implements Resolve<any> {
   constructor(
     protected store: Store,
-    protected recordsService: RecordsService
+    protected recordsService: RecordsService,
+    private authService: AuthService
   ) {
     super(store, recordsService);
     this.initialiseData();
@@ -29,6 +32,17 @@ export class RecommendationsResolver extends RecordsResolver
       "dateAdded",
       "lastUpdatedDate"
     ];
+
+    if (this.authService.inludesLondonDbcs) {
+      const statusIndex = COLUMN_DATA.findIndex((dbc) => dbc[0] === "Status");
+
+      COLUMN_DATA.splice(statusIndex + 1, 0, [
+        "Designated body",
+        "designatedBody",
+        true
+      ]);
+    }
+
     this.recordsService.columnData = generateColumnData(COLUMN_DATA);
     this.recordsService.filters = [
       {

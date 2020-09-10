@@ -15,6 +15,7 @@ export class AuthService {
   public cognitoIdToken: CognitoIdToken;
   public userName = "";
   public email = "";
+  public fullName = "";
   public userGroups: string[] = [];
   public userRoles: string[] = [];
   public userDesignatedBodies: string[] = [];
@@ -29,6 +30,7 @@ export class AuthService {
         this.userName = this.cognitoIdToken.payload[
           "custom:preferred_username"
         ];
+        this.fullName = `${this.cognitoIdToken.payload.given_name} ${this.cognitoIdToken.payload.family_name}`;
         this.email = this.cognitoIdToken.payload.email;
         this.userGroups = this.cognitoIdToken.payload["cognito:groups"];
         this.userRoles = this.cognitoIdToken.payload["cognito:roles"];

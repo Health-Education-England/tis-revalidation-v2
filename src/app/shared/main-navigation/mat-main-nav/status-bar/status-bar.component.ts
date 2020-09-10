@@ -22,7 +22,9 @@ export class StatusBarComponent implements OnInit {
   }
 
   setUsername(): void {
-    this.username = this.authService.userName;
+    this.username = this.authService.userName
+      ? this.authService.userName
+      : this.authService.fullName;
   }
 
   setServiceStatus(): void {

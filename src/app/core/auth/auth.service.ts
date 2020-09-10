@@ -27,8 +27,6 @@ export class AuthService {
     return from(Auth.currentSession()).pipe(
       tap((cognitoUserSession: CognitoUserSession) => {
         this.cognitoIdToken = cognitoUserSession.getIdToken();
-        console.log("this.cognitoIdToken:", this.cognitoIdToken);
-        // TODO: only available using keycloak empty when login with cognito
         this.userName = this.cognitoIdToken.payload[
           "custom:preferred_username"
         ];

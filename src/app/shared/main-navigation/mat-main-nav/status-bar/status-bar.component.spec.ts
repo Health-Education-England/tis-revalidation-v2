@@ -5,6 +5,7 @@ import { MaterialModule } from "src/app/shared/material/material.module";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { RouterTestingModule } from "@angular/router/testing";
 import { AuthService } from "src/app/core/auth/auth.service";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 
 describe("StatusBarComponent", () => {
   let component: StatusBarComponent;
@@ -13,7 +14,12 @@ describe("StatusBarComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [StatusBarComponent],
-      imports: [MaterialModule, NoopAnimationsModule, RouterTestingModule],
+      imports: [
+        MaterialModule,
+        NoopAnimationsModule,
+        RouterTestingModule,
+        HttpClientTestingModule
+      ],
       providers: [AuthService],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();

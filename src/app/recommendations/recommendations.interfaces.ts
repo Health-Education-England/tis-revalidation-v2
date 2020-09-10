@@ -6,6 +6,7 @@ export interface IRecommendation {
   cctDate: string;
   checked?: boolean;
   dateAdded: string;
+  designatedBody: string;
   doctorFirstName: string;
   doctorLastName: string;
   doctorStatus: RecommendationStatus;

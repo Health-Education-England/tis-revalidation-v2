@@ -32,7 +32,8 @@ export const mockRecommendationsResponse: IGetRecommendationsResponse = {
       doctorStatus: RecommendationStatus.SUBMITTED_TO_GMC,
       lastUpdatedDate: "2015-09-08",
       programmeMembershipType: "",
-      programmeName: ""
+      programmeName: "",
+      designatedBody: "2-09876"
     },
     {
       dateAdded: "2017-09-01",
@@ -47,7 +48,8 @@ export const mockRecommendationsResponse: IGetRecommendationsResponse = {
       doctorStatus: RecommendationStatus.READY_TO_REVIEW,
       lastUpdatedDate: "2015-09-08",
       programmeMembershipType: "",
-      programmeName: ""
+      programmeName: "",
+      designatedBody: "1-345678"
     }
   ],
   countTotal: 21312,

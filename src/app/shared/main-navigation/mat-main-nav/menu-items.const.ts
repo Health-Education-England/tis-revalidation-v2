@@ -120,13 +120,13 @@ export const menuItems: IMenuItem[] = JSON.parse(
         "menuItems": [
             {
                 "type": 1,
-                "route": "/admin/reference/college",
+                "route": "admin/reference/college",
                 "name": "College",
                 "description": ""
             },
             {
                 "type": 1,
-                "route": "/admin/reference/country",
+                "route": "admin/reference/country",
                 "name": "Country",
                 "description": ""
             },
@@ -138,145 +138,145 @@ export const menuItems: IMenuItem[] = JSON.parse(
             },
             {
                 "type": 1,
-                "route": "/admin/reference/curriculum-sub-type",
+                "route": "admin/reference/curriculum-sub-type",
                 "name": "Curriculum SubType",
                 "description": ""
             },
             {
                 "type": 1,
-                "route": "/admin/reference/dbc",
+                "route": "admin/reference/dbc",
                 "name": "Dbc",
                 "description": ""
             },
             {
                 "type": 1,
-                "route": "/admin/reference/ethnic-origin",
+                "route": "admin/reference/ethnic-origin",
                 "name": "Ethnic Origin",
                 "description": ""
             },
             {
                 "type": 1,
-                "route": "/admin/reference/funding-issue",
+                "route": "admin/reference/funding-issue",
                 "name": "Funding Issue",
                 "description": ""
             },
             {
                 "type": 1,
-                "route": "/admin/reference/funding-type",
+                "route": "admin/reference/funding-type",
                 "name": "Funding Type",
                 "description": ""
             },
             {
                 "type": 1,
-                "route": "/admin/reference/gdc-status",
+                "route": "admin/reference/gdc-status",
                 "name": "Gdc Status",
                 "description": ""
             },
             {
                 "type": 1,
-                "route": "/admin/reference/gender",
+                "route": "admin/reference/gender",
                 "name": "Gender",
                 "description": ""
             },
             {
                 "type": 1,
-                "route": "/admin/reference/gmc-status",
+                "route": "admin/reference/gmc-status",
                 "name": "Gmc Status",
                 "description": ""
             },
             {
                 "type": 1,
-                "route": "/admin/reference/grade",
+                "route": "admin/reference/grade",
                 "name": "Grade",
                 "description": ""
             },
             {
                 "type": 1,
-                "route": "/admin/reference/inactive-reason",
+                "route": "admin/reference/inactive-reason",
                 "name": "Inactive Reason",
                 "description": ""
             },
             {
                 "type": 1,
-                "route": "/admin/reference/leaving-destination",
+                "route": "admin/reference/leaving-destination",
                 "name": "Leaving Destination",
                 "description": ""
             },
             {
                 "type": 1,
-                "route": "/admin/reference/leaving-reason",
+                "route": "admin/reference/leaving-reason",
                 "name": "Leaving Reason",
                 "description": ""
             },
             {
                 "type": 1,
-                "route": "/admin/reference/local-office",
+                "route": "admin/reference/local-office",
                 "name": "Local Office",
                 "description": ""
             },
             {
                 "type": 1,
-                "route": "/admin/reference/marital-status",
+                "route": "admin/reference/marital-status",
                 "name": "Marital Status",
                 "description": ""
             },
             {
                 "type": 1,
-                "route": "/admin/reference/medical-school",
+                "route": "admin/reference/medical-school",
                 "name": "Medical School",
                 "description": ""
             },
             {
                 "type": 1,
-                "route": "/admin/reference/nationality",
+                "route": "admin/reference/nationality",
                 "name": "Nationality",
                 "description": ""
             },
             {
                 "type": 1,
-                "route": "/admin/reference/placement-type",
+                "route": "admin/reference/placement-type",
                 "name": "Placement Type",
                 "description": ""
             },
             {
                 "type": 1,
-                "route": "/admin/reference/programme-membership-type",
+                "route": "admin/reference/programme-membership-type",
                 "name": "Programme Membership Type",
                 "description": ""
             },
             {
                 "type": 1,
-                "route": "/admin/reference/record-type",
+                "route": "admin/reference/record-type",
                 "name": "Record Type",
                 "description": ""
             },
             {
                 "type": 1,
-                "route": "/admin/reference/religious-belief",
+                "route": "admin/reference/religious-belief",
                 "name": "Religious Belief",
                 "description": ""
             },
             {
                 "type": 1,
-                "route": "/admin/reference/role",
+                "route": "admin/reference/role",
                 "name": "Role",
                 "description": ""
             },
             {
                 "type": 1,
-                "route": "/admin/reference/settled",
+                "route": "admin/reference/settled",
                 "name": "Settled",
                 "description": ""
             },
             {
                 "type": 1,
-                "route": "/admin/reference/sexual-orientation",
+                "route": "admin/reference/sexual-orientation",
                 "name": "Sexual Orientation",
                 "description": ""
             },
             {
                 "type": 1,
-                "route": "/admin/reference/site",
+                "route": "admin/reference/site",
                 "name": "Site",
                 "description": ""
             },
@@ -294,31 +294,31 @@ export const menuItems: IMenuItem[] = JSON.parse(
             },
             {
                 "type": 1,
-                "route": "/admin/reference/status",
+                "route": "admin/reference/status",
                 "name": "Status",
                 "description": ""
             },
             {
                 "type": 1,
-                "route": "/admin/reference/tariff-rate",
+                "route": "admin/reference/tariff-rate",
                 "name": "Tariff Rate",
                 "description": ""
             },
             {
                 "type": 1,
-                "route": "/admin/reference/title",
+                "route": "admin/reference/title",
                 "name": "Title",
                 "description": ""
             },
             {
                 "type": 1,
-                "route": "/admin/reference/training-number-type",
+                "route": "admin/reference/training-number-type",
                 "name": "Training Number Type",
                 "description": ""
             },
             {
                 "type": 1,
-                "route": "/admin/reference/trust",
+                "route": "admin/reference/trust",
                 "name": "Trust",
                 "description": ""
             }

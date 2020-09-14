@@ -43,7 +43,7 @@ export class AuthService {
               LONDON_DBCS.includes(dbc)
             );
 
-            if (this.inludesLondonDbcs) {
+            if (inludesLondonDbcs) {
               dbcs = Array.from(new Set([...LONDON_DBCS, ...dbcs]));
             }
 
@@ -61,7 +61,7 @@ export class AuthService {
   /**
    * gets designated body codes
    */
-  getUserDBCs(): Observable<any> {
+  private getUserDBCs(): Observable<any> {
     return this.http.get<any>(environment.appUrls.getUserDesignatedBodies);
   }
 

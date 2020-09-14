@@ -39,7 +39,7 @@ export class RecommendationsResolver
       COLUMN_DATA.splice(statusIndex + 1, 0, [
         "Designated body",
         "designatedBody",
-        true
+        false
       ]);
     }
 

@@ -26,9 +26,11 @@ import {
   GetRecommendationsSuccess,
   PaginateRecommendations,
   RecommendationsSearch,
+  ResetRecommendationsColumnFilters,
   ResetRecommendationsFilter,
   ResetRecommendationsPaginator,
   ResetRecommendationsSort,
+  SelectRecommendationsColumnFilters,
   SortRecommendations,
   ToggleAllRecommendationsCheckboxes,
   ToggleRecommendationsCheckbox
@@ -53,6 +55,19 @@ export class RecommendationsState extends RecordsState {
     protected recordsService: RecordsService
   ) {
     super(recordsService);
+  }
+
+  @Action(ResetRecommendationsColumnFilters)
+  resetFilters(ctx: StateContext<RecommendationsStateModel>) {
+    return super.resetFiltersHandler(ctx);
+  }
+
+  @Action(SelectRecommendationsColumnFilters)
+  selectFilter(
+    ctx: StateContext<RecommendationsStateModel>,
+    action: SelectRecommendationsColumnFilters
+  ) {
+    return super.selectFilterHandler(ctx, action);
   }
 
   @Action(GetRecommendations)

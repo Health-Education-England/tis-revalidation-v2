@@ -5,11 +5,20 @@ import {
   GetSuccessPayload,
   PaginatePayload,
   SearchPayload,
+  SelectFiltersPayload,
   SortPayload,
   ToggleCheckboxPayload
 } from "../../records/state/records.actions";
 import { HttpErrorPayload } from "../../shared/services/error/error.service";
 import { IGetConcernsResponse } from "../concerns.interfaces";
+
+export class ResetConcernsColumnFilters {
+  static readonly type = `[Concerns] Reset Column Filters`;
+}
+
+export class SelectConcernsColumnFilters extends SelectFiltersPayload {
+  static readonly type = `[Concerns] Select Column Filters`;
+}
 
 export class GetConcerns {
   static readonly type = `[Concerns] Get`;

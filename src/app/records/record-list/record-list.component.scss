@@ -4,6 +4,10 @@
 .is-under-notice td:first-child {
   padding-left: 20px;
   border-left: solid 4px $color_nhsuk-red;
+
+  &.column-filter {
+    padding-left: 60px;
+  }
 }
 
 // common columns

@@ -1,0 +1,9 @@
+:host {
+  grid-column: 5;
+  grid-column-start: 1;
+  grid-column-end: 4;
+
+  .mat-chip-list-wrapper {
+    margin: 10px 0;
+  }
+}

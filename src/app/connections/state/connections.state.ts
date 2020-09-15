@@ -30,7 +30,9 @@ import {
   GetConnectionsSuccess,
   ResetConnectionsFilter,
   ToggleAllConnectionsCheckboxes,
-  ToggleConnectionsCheckbox
+  ToggleConnectionsCheckbox,
+  SelectConnectionsColumnFilters,
+  ResetConnectionsColumnFilters
 } from "./connections.actions";
 
 export class ConnectionsStateModel extends RecordsStateModel<
@@ -54,6 +56,19 @@ export class ConnectionsState extends RecordsState {
     protected recordsService: RecordsService
   ) {
     super(recordsService);
+  }
+
+  @Action(ResetConnectionsColumnFilters)
+  resetFilters(ctx: StateContext<ConnectionsStateModel>) {
+    return super.resetFiltersHandler(ctx);
+  }
+
+  @Action(SelectConnectionsColumnFilters)
+  selectFilter(
+    ctx: StateContext<ConnectionsStateModel>,
+    action: SelectConnectionsColumnFilters
+  ) {
+    return super.selectFilterHandler(ctx, action);
   }
 
   @Action(GetConnections)

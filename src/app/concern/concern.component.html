@@ -36,18 +36,14 @@
     </ng-container>
 
     <ng-container matColumnDef="source">
-      <th mat-header-cell scope="col" *matHeaderCellDef>
-        Source
-      </th>
+      <th mat-header-cell scope="col" *matHeaderCellDef>Source</th>
       <td mat-cell *matCellDef="let element">
         {{ element.source.label }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="dateReported">
-      <th mat-header-cell scope="col" *matHeaderCellDef>
-        Date reported
-      </th>
+      <th mat-header-cell scope="col" *matHeaderCellDef>Date reported</th>
       <td mat-cell *matCellDef="let element">
         {{ element.dateReported | date: dateFormat }}
       </td>
@@ -81,25 +77,21 @@
           [matTooltip]="element.admin | AdminName: 'email'"
           mat-button
           (click)="$event.stopPropagation()"
-          [href]="'mailto:' + element.admin | AdminName: 'email'"
+          [href]="'mailto:' + (element.admin | AdminName: 'email')"
           >{{ element.admin | AdminName }}</a
         >
       </td>
     </ng-container>
 
     <ng-container matColumnDef="followUpDate">
-      <th mat-header-cell scope="col" *matHeaderCellDef>
-        Follow-up date
-      </th>
+      <th mat-header-cell scope="col" *matHeaderCellDef>Follow-up date</th>
       <td mat-cell *matCellDef="let element">
         {{ element.followUpDate | date: dateFormat }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="lastUpdatedDate">
-      <th mat-header-cell scope="col" *matHeaderCellDef>
-        Last updated date
-      </th>
+      <th mat-header-cell scope="col" *matHeaderCellDef>Last updated date</th>
       <td mat-cell *matCellDef="let element">
         {{ element.lastUpdatedDate | date: dateFormat }}
       </td>

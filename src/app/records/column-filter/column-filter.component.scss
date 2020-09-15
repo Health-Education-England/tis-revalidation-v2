@@ -1,0 +1,12 @@
+@import "../../../../node_modules/nhsuk-frontend/packages/core/settings/colours";
+
+.filter-select {
+  position: absolute;
+  top: -2px;
+  bottom: 0;
+  //   right: 0;
+  left: 40px;
+  z-index: 100;
+  text-align: left;
+  background-color: $color_nhsuk-white;
+}

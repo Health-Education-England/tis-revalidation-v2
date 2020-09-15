@@ -1,0 +1,20 @@
+<div class="mt-10 mb-10 pl-20" *ngIf="columnFilters$ | async as columnFilters">
+  <mat-chip-list aria-label="column filters selection">
+    <ng-container *ngFor="let column of columnFilters | keyvalue">
+      <mat-chip
+        *ngFor="let value of column.value"
+        [removable]="true"
+        (removed)="removeFilter(columnFilters, column.key, value)"
+      >
+        {{ value }}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+    </ng-container>
+
+    <mat-chip color="accent" (click)="removeAllFilters()" selected
+      >Clear filters</mat-chip
+    >
+  </mat-chip-list>
+</div>
+
+<mat-divider></mat-divider>

@@ -1,5 +1,13 @@
 import { SortDirection } from "@angular/material/sort/sort-direction";
 
+export class SelectFiltersPayload {
+  constructor(
+    public filter: {
+      [x: string]: any;
+    }
+  ) {}
+}
+
 export class GetSuccessPayload<T> {
   constructor(public response: T) {}
 }

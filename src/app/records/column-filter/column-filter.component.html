@@ -1,0 +1,27 @@
+<button
+  mat-icon-button
+  aria-label="Column filter to filter data"
+  (click)="filterOptions($event)"
+>
+  <mat-icon>filter_alt</mat-icon>
+</button>
+
+<div
+  class="filter-select"
+  (click)="$event.stopPropagation()"
+  *ngIf="showFilter"
+>
+  <mat-form-field appearance="fill">
+    <mat-label>{{ columnDisplayName }}</mat-label>
+    <mat-select
+      [formControl]="columnFilter"
+      multiple
+      (selectionChange)="selectFilter($event)"
+      (openedChange)="matOpenChange($event)"
+    >
+      <mat-option *ngFor="let topping of toppingList" [value]="topping">
+        {{ topping }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

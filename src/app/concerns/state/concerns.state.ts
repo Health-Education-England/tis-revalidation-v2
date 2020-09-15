@@ -4,7 +4,6 @@ import { environment } from "@environment";
 import { Action, State, StateContext } from "@ngxs/store";
 import { catchError, finalize, map, switchMap, take } from "rxjs/operators";
 import { ConcernStatus } from "../../concern/concern.interfaces";
-
 import { RecommendationStatus } from "../../recommendation/recommendation-history.interface";
 import { DEFAULT_SORT } from "../../records/constants";
 import { RecordsService } from "../../records/services/records.service";
@@ -29,7 +28,9 @@ import {
   ConcernsSearch,
   SortConcerns,
   ToggleAllConcernsCheckboxes,
-  ToggleConcernsCheckbox
+  ToggleConcernsCheckbox,
+  SelectConcernsColumnFilters,
+  ResetConcernsColumnFilters
 } from "./concerns.actions";
 
 export class ConcernsStateModel extends RecordsStateModel<
@@ -53,6 +54,19 @@ export class ConcernsState extends RecordsState {
     protected recordsService: RecordsService
   ) {
     super(recordsService);
+  }
+
+  @Action(ResetConcernsColumnFilters)
+  resetFilters(ctx: StateContext<ConcernsStateModel>) {
+    return super.resetFiltersHandler(ctx);
+  }
+
+  @Action(SelectConcernsColumnFilters)
+  selectFilter(
+    ctx: StateContext<ConcernsStateModel>,
+    action: SelectConcernsColumnFilters
+  ) {
+    return super.selectFilterHandler(ctx, action);
   }
 
   @Action(GetConcerns)

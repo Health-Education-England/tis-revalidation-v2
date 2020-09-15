@@ -4,6 +4,7 @@ import {
   GetSuccessPayload,
   PaginatePayload,
   SearchPayload,
+  SelectFiltersPayload,
   SortPayload,
   ToggleCheckboxPayload
 } from "../../records/state/records.actions";
@@ -12,6 +13,14 @@ import {
   ConnectionsFilterType,
   IGetConnectionsResponse
 } from "../connections.interfaces";
+
+export class ResetConnectionsColumnFilters {
+  static readonly type = `[Connections] Reset Column Filters`;
+}
+
+export class SelectConnectionsColumnFilters extends SelectFiltersPayload {
+  static readonly type = `[Connections] Select Column Filters`;
+}
 
 export class GetConnections {
   static readonly type = `[Connections] Get`;

@@ -4,6 +4,7 @@ import {
   GetSuccessPayload,
   PaginatePayload,
   SearchPayload,
+  SelectFiltersPayload,
   SortPayload,
   ToggleCheckboxPayload
 } from "../../records/state/records.actions";
@@ -12,6 +13,14 @@ import {
   IGetRecommendationsResponse,
   RecommendationsFilterType
 } from "../recommendations.interfaces";
+
+export class ResetRecommendationsColumnFilters {
+  static readonly type = `[Recommendations] Reset Column Filters`;
+}
+
+export class SelectRecommendationsColumnFilters extends SelectFiltersPayload {
+  static readonly type = `[Recommendations] Select Column Filters`;
+}
 
 export class GetRecommendations {
   static readonly type = `[Recommendations] Get`;

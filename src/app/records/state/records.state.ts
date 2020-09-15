@@ -20,6 +20,9 @@ export class RecordsStateModel<T, F> {
   public totalPages: number;
   public totalResults: number;
   public totalCounts: ITotalCounts;
+  public columnFilters: {
+    [x: string]: any;
+  }[];
 }
 
 export const defaultRecordsState = {
@@ -32,7 +35,8 @@ export const defaultRecordsState = {
   sort: DEFAULT_SORT,
   totalPages: null,
   totalResults: null,
-  totalCounts: null
+  totalCounts: null,
+  columnFilters: null
 };
 
 export class RecordsState {
@@ -102,6 +106,19 @@ export class RecordsState {
     return createSelector([this], (state: { filter: T }) => {
       return state.filter;
     });
+  }
+
+  static columnFilters() {
+    return createSelector(
+      [this],
+      (state: {
+        columnFilters: {
+          [x: string]: any;
+        }[];
+      }) => {
+        return state.columnFilters;
+      }
+    );
   }
 
   static enableAllocateAdmin<T>() {
@@ -187,6 +204,35 @@ export class RecordsState {
     ctx.patchState({
       enableAllocateAdmin: action
     });
+  }
+
+  protected resetFiltersHandler(ctx: StateContext<any>) {
+    ctx.patchState({
+      columnFilters: null
+    });
+  }
+
+  protected selectFilterHandler(ctx: StateContext<any>, action: any) {
+    // TODO: if only one filter column allowed at a time ctx.patchState({ action.filter })
+    const state = ctx.getState();
+    for (const prop in action.filter) {
+      if (action.filter[prop] && action.filter[prop].length === 0) {
+        let newcolumnFilters = { ...state.columnFilters };
+        delete newcolumnFilters[prop];
+        newcolumnFilters =
+          Object.keys(newcolumnFilters).length === 0 ? null : newcolumnFilters;
+        ctx.patchState({
+          columnFilters: newcolumnFilters
+        });
+      } else {
+        ctx.patchState({
+          columnFilters: {
+            ...state.columnFilters,
+            ...{ [prop]: action.filter[prop] }
+          }
+        });
+      }
+    }
   }
 
   protected toggleCheckboxHandler(ctx: StateContext<any>, action: any) {

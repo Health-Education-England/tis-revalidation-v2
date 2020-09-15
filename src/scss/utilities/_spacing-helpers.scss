@@ -28,16 +28,32 @@ $space-prefixes: (
 @include make-spaces();
 
 @mixin mat-table-columns($columns) {
-  .mat-column- {
-    @each $colName, $props in $columns {
-      $width: map-get($props, "width");
-
+  @each $colName, $props in $columns {
+    $width: map-get($props, "width");
+    .mat-column- {
       &#{$colName} {
         flex: 0 0 $width;
         min-width: $width;
 
+        &.column-filter {
+          flex: 0 0 ($width + 40px);
+          min-width: ($width + 40px);
+
+          .column-header-label {
+            margin-left: 9px;
+          }
+        }
+
         @if map-has-key($props, "color") {
           color: map-get($props, "color");
+        }
+      }
+    }
+
+    td.mat-column- {
+      &#{$colName} {
+        &.column-filter {
+          padding-left: 49px;
         }
       }
     }

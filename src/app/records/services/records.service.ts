@@ -16,7 +16,9 @@ import {
   ResetConcernsSort,
   SortConcerns,
   ToggleAllConcernsCheckboxes,
-  ToggleConcernsCheckbox
+  ToggleConcernsCheckbox,
+  SelectConcernsColumnFilters,
+  ResetConcernsColumnFilters
 } from "../../concerns/state/concerns.actions";
 import {
   ClearConnectionsSearch,
@@ -30,7 +32,9 @@ import {
   ResetConnectionsSort,
   SortConnections,
   ToggleAllConnectionsCheckboxes,
-  ToggleConnectionsCheckbox
+  ToggleConnectionsCheckbox,
+  SelectConnectionsColumnFilters,
+  ResetConnectionsColumnFilters
 } from "../../connections/state/connections.actions";
 import {
   ClearRecommendationsSearch,
@@ -39,9 +43,11 @@ import {
   GetRecommendations,
   PaginateRecommendations,
   RecommendationsSearch,
+  ResetRecommendationsColumnFilters,
   ResetRecommendationsFilter,
   ResetRecommendationsPaginator,
   ResetRecommendationsSort,
+  SelectRecommendationsColumnFilters,
   SortRecommendations,
   ToggleAllRecommendationsCheckboxes,
   ToggleRecommendationsCheckbox
@@ -72,6 +78,8 @@ export class RecordsService {
   public enableAllocateAdminAction: any;
   public toggleCheckboxAction: any;
   public toggleAllCheckboxesAction: any;
+  public selectColumnFiltersAction: any;
+  public resetColumnFiltersAction: any;
 
   constructor(
     private http: HttpClient,
@@ -92,6 +100,8 @@ export class RecordsService {
     this.enableAllocateAdminAction = EnableRecommendationsAllocateAdmin;
     this.toggleCheckboxAction = ToggleRecommendationsCheckbox;
     this.toggleAllCheckboxesAction = ToggleAllRecommendationsCheckboxes;
+    this.selectColumnFiltersAction = SelectRecommendationsColumnFilters;
+    this.resetColumnFiltersAction = ResetRecommendationsColumnFilters;
   }
 
   public setConcernsActions(): void {
@@ -107,6 +117,8 @@ export class RecordsService {
     this.enableAllocateAdminAction = EnableConcernsAllocateAdmin;
     this.toggleCheckboxAction = ToggleConcernsCheckbox;
     this.toggleAllCheckboxesAction = ToggleAllConcernsCheckboxes;
+    this.selectColumnFiltersAction = SelectConcernsColumnFilters;
+    this.resetColumnFiltersAction = ResetConcernsColumnFilters;
   }
 
   public setConnectionsActions(): void {
@@ -122,12 +134,15 @@ export class RecordsService {
     this.enableAllocateAdminAction = EnableConnectionsAllocateAdmin;
     this.toggleCheckboxAction = ToggleConnectionsCheckbox;
     this.toggleAllCheckboxesAction = ToggleAllConnectionsCheckboxes;
+    this.selectColumnFiltersAction = SelectConnectionsColumnFilters;
+    this.resetColumnFiltersAction = ResetConnectionsColumnFilters;
   }
 
   public getRecords<T>(endPoint: string, params?: HttpParams): Observable<T> {
     return this.http.get<T>(endPoint, { params });
   }
 
+  // TODO conditionally set new column filters params
   public generateParams(snapshot: any): HttpParams {
     let params: HttpParams = new HttpParams()
       .set("sortColumn", snapshot.sort.active)
@@ -182,6 +197,16 @@ export class RecordsService {
   public paginate(pageIndex: number): Observable<any> {
     this.handleUndefinedAction("paginateAction");
     return this.store.dispatch(new this.paginateAction(pageIndex));
+  }
+
+  public resetFilters(): Observable<any> {
+    this.handleUndefinedAction("resetColumnFiltersAction");
+    return this.store.dispatch(new this.resetColumnFiltersAction());
+  }
+
+  public selectFilter(filterName: { [x: string]: any }): Observable<any> {
+    this.handleUndefinedAction("selectColumnFiltersAction");
+    return this.store.dispatch(new this.selectColumnFiltersAction(filterName));
   }
 
   public resetPaginator(): Observable<any> {

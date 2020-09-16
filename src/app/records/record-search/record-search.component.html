@@ -1,5 +1,5 @@
 <div class="d-grid record-search">
-  <div class="d-grid align-items-center">
+  <!-- <div class="d-grid align-items-center">
     <button
       mat-icon-button
       [matMenuTriggerFor]="menu"
@@ -11,7 +11,7 @@
       <app-reset-record-list></app-reset-record-list>
       <app-allocate-admin-btn></app-allocate-admin-btn>
     </mat-menu>
-  </div>
+  </div> -->
 
   <form
     (ngSubmit)="checkForm()"
@@ -19,25 +19,25 @@
     #ngForm="ngForm"
     autocomplete="off"
   >
+    <button
+      mat-button
+      matSuffix
+      color="primary"
+      aria-label="Recommendations search"
+      type="submit"
+      [disabled]="enableAllocateAdmin$ | async"
+    >
+      <mat-icon aria-label="search icon">search</mat-icon>
+    </button>
     <mat-form-field>
-      <mat-label>Enter name / GMC no</mat-label>
+      <mat-label>Type Name / GMC No and press Enter</mat-label>
       <input
-        matInput
+        matInput5
         type="text"
         [formControlName]="'searchQuery'"
         [value]="searchQuery$ | async"
+        required="false"
       />
-      <button
-        mat-button
-        matSuffix
-        color="primary"
-        aria-label="Recommendations search"
-        type="submit"
-        [disabled]="enableAllocateAdmin$ | async"
-      >
-        <mat-icon aria-label="search icon">search</mat-icon>
-      </button>
-      <mat-error *ngIf="form.invalid">No search terms entered</mat-error>
     </mat-form-field>
   </form>
 </div>

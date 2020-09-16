@@ -80,15 +80,16 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
    * So that search cannot be invoked with just blank spaces
    */
   public checkForm(): void {
-    const searchQuery = this.form.value.searchQuery;
-
-    if (searchQuery && searchQuery.length && this.form.valid) {
-      this.submitForm(searchQuery.trim());
-    }
+    this.submitForm(this.form.value.searchQuery.trim());
   }
 
   public submitForm(searchQuery: string): void {
-    this.recordsService.search(searchQuery);
+    if (searchQuery && searchQuery.length) {
+      this.recordsService.search(searchQuery);
+    } else {
+      this.recordsService.clearSearch();
+    }
+
     this.recordsService.resetSort();
     this.recordsService
       .resetPaginator()

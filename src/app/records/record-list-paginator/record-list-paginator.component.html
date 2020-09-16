@@ -4,6 +4,7 @@
   [pageIndex]="pageIndex$ | async"
   [pageSize]="20"
   [hidePageSize]="true"
+  [showFirstLastButtons]="true"
   (page)="paginate($event)"
   [disabled]="enableAllocateAdmin$ | async"
 >

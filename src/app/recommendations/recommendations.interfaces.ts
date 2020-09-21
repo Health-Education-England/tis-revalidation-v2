@@ -22,7 +22,7 @@ export interface IRecommendation {
 export interface IGetRecommendationsResponse extends IGetRecordsResponse {
   countTotal: number;
   countUnderNotice: number;
-  traineeInfo: IRecommendation[];
+  recommendationInfo: IRecommendation[];
 }
 
 export enum RecommendationsFilterType {

@@ -66,7 +66,7 @@ export class RecommendationsState extends RecordsState {
       .pipe(
         take(1),
         map((response: IGetRecommendationsResponse) => {
-          response.traineeInfo.forEach(
+          response.recommendationInfo.forEach(
             (item: IRecommendation) =>
               (item.doctorStatus = RecommendationStatus[item.doctorStatus])
           );
@@ -92,7 +92,7 @@ export class RecommendationsState extends RecordsState {
     ctx: StateContext<RecommendationsStateModel>,
     action: GetRecommendationsSuccess
   ) {
-    super.getSuccessHandler(ctx, action, "traineeInfo");
+    super.getSuccessHandler(ctx, action, "recommendationInfo");
 
     return ctx.patchState({
       totalCounts: {

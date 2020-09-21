@@ -56,7 +56,7 @@ describe("RecordListComponent", () => {
 
   it("should select 'items$' from state", () => {
     store.reset({
-      recommendations: { items: mockRecommendationsResponse.traineeInfo }
+      recommendations: { items: mockRecommendationsResponse.recommendationInfo }
     });
 
     component.items$.subscribe((value) => {

@@ -41,7 +41,7 @@ export class AllocateAdminAutocompleteComponent implements OnInit {
   public prePopulateAdmin(): IAdmin {
     const admins: IAdmin[] = this.store.selectSnapshot(AdminsState).items;
     if (admins?.length) {
-      return admins.find((item: IAdmin) => item.username === this.admin);
+      return admins.find((item: IAdmin) => item.fullName === this.admin);
     }
   }
 

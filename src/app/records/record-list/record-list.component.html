@@ -87,6 +87,7 @@
                   <app-allocate-admin-autocomplete
                     *ngIf="data.enableAllocateAdmin; else renderAdminName"
                     [gmcNumber]="element.gmcReferenceNumber"
+                    [admin] = "element[i.name] | AdminName"
                   ></app-allocate-admin-autocomplete>
                   <ng-template #renderAdminName>
                     <a

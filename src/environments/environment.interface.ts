@@ -23,7 +23,6 @@ export abstract class IEnvironment {
     readonly getNotes: string;
     readonly getRecommendation: string;
     readonly getRecommendations: string;
-    readonly getUserDesignatedBodies: string;
     readonly listAdmins: string;
     readonly listFiles: string;
     readonly login: string;

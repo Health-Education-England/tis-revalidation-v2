@@ -13,7 +13,6 @@ export const APP_URLS_CONFIG: IEnvironment["appUrls"] = {
   getNotes: `mocky/5ea2da614f00006c00d9f540`, // TODO replace with appropriate api url once is available
   getRecommendation: `api/recommendation`,
   getRecommendations: `api/v1/doctors`,
-  getUserDesignatedBodies: `/api/admin/profile`,
   listAdmins: `api/admins`,
   listFiles: `api/storage/list`,
   login: ``,

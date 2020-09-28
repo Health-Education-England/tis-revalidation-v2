@@ -1,11 +1,9 @@
-import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth/lib-esm/types";
 import { CognitoIdToken, CognitoUserSession } from "amazon-cognito-identity-js";
-import { Auth, Cache } from "aws-amplify";
-import { from, Observable, of } from "rxjs";
-import { catchError, concatMap, delay, map, tap } from "rxjs/operators";
-import { environment } from "@environment";
+import { Auth } from "aws-amplify";
+import { from, Observable } from "rxjs";
+import { tap } from "rxjs/operators";
 import { LONDON_DBCS } from "src/environments/constants";
 
 @Injectable({
@@ -16,12 +14,11 @@ export class AuthService {
   public userName = "";
   public email = "";
   public fullName = "";
-  public userGroups: string[] = [];
   public userRoles: string[] = [];
   public userDesignatedBodies: string[] = [];
   public inludesLondonDbcs = false;
 
-  constructor(private http: HttpClient) {}
+  constructor() {}
 
   currentSession(): Observable<CognitoUserSession> {
     return from(Auth.currentSession()).pipe(
@@ -32,37 +29,15 @@ export class AuthService {
         ];
         this.fullName = `${this.cognitoIdToken.payload.given_name} ${this.cognitoIdToken.payload.family_name}`;
         this.email = this.cognitoIdToken.payload.email;
-        this.userGroups = this.cognitoIdToken.payload["cognito:groups"];
+        this.userDesignatedBodies = this.cognitoIdToken.payload[
+          "cognito:groups"
+        ];
         this.userRoles = this.cognitoIdToken.payload["cognito:roles"];
-      }),
-      concatMap((data: any) => {
-        return this.getUserDBCs().pipe(
-          tap((response: any) => {
-            let dbcs = response[0].designatedBodyCodes;
-            const inludesLondonDbcs = dbcs.some((dbc: string) =>
-              LONDON_DBCS.includes(dbc)
-            );
-
-            if (inludesLondonDbcs) {
-              dbcs = Array.from(new Set([...LONDON_DBCS, ...dbcs]));
-            }
-
-            this.inludesLondonDbcs = inludesLondonDbcs;
-            this.userDesignatedBodies = dbcs;
-          }),
-          catchError((error: any) => {
-            return of("Designated bodies not available");
-          })
+        this.inludesLondonDbcs = this.userDesignatedBodies.some((dbc: string) =>
+          LONDON_DBCS.includes(dbc)
         );
       })
     );
-  }
-
-  /**
-   * gets designated body codes
-   */
-  private getUserDBCs(): Observable<any> {
-    return this.http.get<any>(environment.appUrls.getUserDesignatedBodies);
   }
 
   signIn(): Promise<any> {

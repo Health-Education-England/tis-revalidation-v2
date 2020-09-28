@@ -3,7 +3,7 @@ import { MaterialModule } from "../../shared/material/material.module";
 import { AuthInterceptor } from "./auth.interceptor";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 
-fdescribe("AuthInterceptor", () => {
+describe("AuthInterceptor", () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
       providers: [AuthInterceptor],

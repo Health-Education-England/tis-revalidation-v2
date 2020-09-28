@@ -26,11 +26,20 @@ export function initializeApplication(
         catchError(() => {
           requestedUrl = `${win.location.pathname}${win.location.search}${win.location.hash}`;
           win.localStorage.setItem(redirectKey, requestedUrl);
-          return authService.signIn();
+          const temp = authService.signIn();
+
+          return temp;
         })
       )
       .toPromise()
-      .then(() => {
-        navigationHandler();
+      .then((response) => {
+        if (authService.userRoles.length > 0) {
+          if (authService.userRoles.includes("HEE Admin Revalidation")) {
+            navigationHandler();
+          } else {
+            alert("Please contact administrator for access");
+            authService.signOut();
+          }
+        }
       });
 }

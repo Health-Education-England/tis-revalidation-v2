@@ -10,7 +10,6 @@ import { LONDON_DBCS } from "src/environments/constants";
   providedIn: "root"
 })
 export class AuthService {
-  public cognitoIdToken: CognitoIdToken;
   public userName = "";
   public email = "";
   public fullName = "";
@@ -23,19 +22,20 @@ export class AuthService {
   currentSession(): Observable<CognitoUserSession> {
     return from(Auth.currentSession()).pipe(
       tap((cognitoUserSession: CognitoUserSession) => {
-        this.cognitoIdToken = cognitoUserSession.getIdToken();
-        this.userName = this.cognitoIdToken.payload[
-          "custom:preferred_username"
-        ];
-        this.fullName = `${this.cognitoIdToken.payload.given_name} ${this.cognitoIdToken.payload.family_name}`;
-        this.email = this.cognitoIdToken.payload.email;
-        this.userDesignatedBodies = this.cognitoIdToken.payload[
-          "cognito:groups"
-        ];
-        this.userRoles = this.cognitoIdToken.payload["cognito:roles"];
-        this.inludesLondonDbcs = this.userDesignatedBodies.some((dbc: string) =>
-          LONDON_DBCS.includes(dbc)
-        );
+        const cognitoIdToken = cognitoUserSession.getIdToken();
+
+        this.userName = cognitoIdToken.payload["custom:preferred_username"];
+        this.fullName = `${cognitoIdToken.payload.given_name} ${cognitoIdToken.payload.family_name}`;
+        this.email = cognitoIdToken.payload.email;
+        this.userRoles = cognitoIdToken.payload["cognito:roles"];
+
+        let dbcs: string[] = cognitoIdToken.payload["cognito:groups"];
+        this.inludesLondonDbcs = dbcs.some((dbc) => LONDON_DBCS.includes(dbc));
+
+        if (this.inludesLondonDbcs) {
+          dbcs = Array.from(new Set([...LONDON_DBCS, ...dbcs]));
+        }
+        this.userDesignatedBodies = dbcs;
       })
     );
   }

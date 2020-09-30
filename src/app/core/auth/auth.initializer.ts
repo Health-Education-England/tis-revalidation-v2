@@ -26,9 +26,7 @@ export function initializeApplication(
         catchError(() => {
           requestedUrl = `${win.location.pathname}${win.location.search}${win.location.hash}`;
           win.localStorage.setItem(redirectKey, requestedUrl);
-          const temp = authService.signIn();
-
-          return temp;
+          return authService.signIn();
         })
       )
       .toPromise()
@@ -38,7 +36,7 @@ export function initializeApplication(
             navigationHandler();
           } else {
             alert("Please contact administrator for access");
-            authService.signOut();
+            return authService.signOut();
           }
         }
       });

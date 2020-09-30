@@ -37,7 +37,7 @@
     "@angular/router": "^10.0.5",
     "@angular/service-worker": "^10.0.5",
     "@ngxs/logger-plugin": "^3.6.2",
-    "@ngxs/store": "^3.6.2",
+    "@ngxs/store": "^3.7.0",
     "@sentry/browser": "^5.24.2",
     "angulartics2": "^10.0.0",
     "aws-amplify": "^3.0.22",

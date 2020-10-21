@@ -3,7 +3,7 @@ import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { append, patch, removeItem } from "@ngxs/store/operators";
 import { catchError, switchMap, take } from "rxjs/operators";
 import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
-import { IAdmin, IAllocateAdmin } from "../admins.interfaces";
+import { IAdmin, IAdminDto, IAllocateAdmin } from "../admins.interfaces";
 import { AdminsService } from "../services/admins.service";
 import {
   AddToAllocateList,
@@ -56,7 +56,9 @@ export class AdminsState {
   get(ctx: StateContext<AdminsStateModel>) {
     return this.adminsService.getAdminUsers().pipe(
       take(1),
-      switchMap((response: IAdmin[]) => ctx.dispatch(new GetSuccess(response))),
+      switchMap((response: IAdminDto[]) =>
+        ctx.dispatch(new GetSuccess(response))
+      ),
       catchError((error: string) => ctx.dispatch(new GetError(error)))
     );
   }
@@ -64,7 +66,13 @@ export class AdminsState {
   @Action(GetSuccess)
   getSuccess(ctx: StateContext<AdminsStateModel>, action: GetSuccess) {
     return ctx.patchState({
-      items: action.response
+      items: action.response.map((res: IAdminDto) => {
+        return {
+          fullName: `${res.firstName} ${res.lastName}`,
+          email: res.emailAddress,
+          username: res.name
+        };
+      })
     });
   }
 

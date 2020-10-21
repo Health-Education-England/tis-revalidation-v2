@@ -8,3 +8,10 @@ export interface IAdmin {
   username: string;
   email: string;
 }
+
+export interface IAdminDto {
+  firstName: string;
+  lastName: string;
+  name: string;
+  emailAddress: string;
+}

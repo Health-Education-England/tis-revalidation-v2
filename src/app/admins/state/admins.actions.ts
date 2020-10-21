@@ -1,5 +1,5 @@
 import { HttpErrorPayload } from "../../shared/services/error/error.service";
-import { IAdmin } from "../admins.interfaces";
+import { IAdmin, IAdminDto } from "../admins.interfaces";
 
 const label = `[Admins]`;
 
@@ -9,7 +9,7 @@ export class Get {
 
 export class GetSuccess {
   static readonly type = `${label} Get Success`;
-  constructor(public response: IAdmin[]) {}
+  constructor(public response: IAdminDto[]) {}
 }
 
 export class GetError extends HttpErrorPayload {

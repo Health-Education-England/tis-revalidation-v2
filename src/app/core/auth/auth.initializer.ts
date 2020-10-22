@@ -31,7 +31,7 @@ export function initializeApplication(
       )
       .toPromise()
       .then((response) => {
-        if (authService.userRoles.length > 0) {
+        if (authService.userRoles && authService.userRoles.length > 0) {
           if (authService.userRoles.includes("HEE Admin Revalidation")) {
             navigationHandler();
           } else {

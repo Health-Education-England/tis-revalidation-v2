@@ -6,7 +6,7 @@ import { Injectable } from "@angular/core";
 })
 export class ErrorService {
   public generateErrorMsg(error: HttpErrorResponse): string {
-    return error.error instanceof ErrorEvent
+    return error.error instanceof ErrorEvent || error.status === 406
       ? `Error: ${error.error.message}`
       : `Error Code: ${error.status}. ${error.statusText}`;
   }

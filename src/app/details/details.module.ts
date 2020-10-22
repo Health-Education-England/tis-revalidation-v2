@@ -18,6 +18,7 @@ import {
   DeleteCommentDialogueComponent
 } from "./comments/comments.component";
 import { ReactiveFormsModule } from "@angular/forms";
+import { HttpErrorInterceptor } from "../core/http-error/http-error.interceptor";
 
 @NgModule({
   // TODO double check if NavBarComponent, DetailsSideNavComponent
@@ -43,7 +44,8 @@ import { ReactiveFormsModule } from "@angular/forms";
     DetailsSideNavService,
     CommentsService,
     NotesService,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }
   ],
   exports: [
     NavBarComponent,

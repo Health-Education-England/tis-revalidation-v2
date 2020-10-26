@@ -138,7 +138,16 @@ jobs:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           service: reval-fe
           cluster: revalidation-preprod
-          wait-for-service-stability: false
+          wait-for-service-stability: true
+
+      - name: Build, tag as stable and push image to Amazon ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: tis-revalidation-v2
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:stable
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY
 
       - name: Slack Notification
         if: success()

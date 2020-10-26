@@ -146,7 +146,6 @@ jobs:
           ECR_REPOSITORY: tis-revalidation-v2
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:stable
           docker push $ECR_REGISTRY/$ECR_REPOSITORY
 

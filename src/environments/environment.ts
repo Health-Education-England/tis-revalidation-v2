@@ -1,7 +1,4 @@
-// This file can be replaced during build by using the `fileReplacements` array.
 import { APP_URLS_CONFIG, AWS_CONFIG } from "./constants";
-// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
 import { IEnvironment } from "./environment.interface";
 
 export const environment: IEnvironment = {
@@ -19,7 +16,11 @@ export const environment: IEnvironment = {
     bucketName: "tis-revalidation-concerns-upload-preprod",
     mandatorySignIn: false,
     redirectSignIn: "http://localhost:4200",
-    redirectSignOut: "http://localhost:4200"
+    redirectSignOut: "http://localhost:4200",
+    userPoolId: "eu-west-2_RbRAiJbHM",
+    userPoolWebClientId: "12ciiltk1e53081oh57lm9591q",
+    domain: "stage-auth.tis.nhs.uk",
+    region: "eu-west-2"
   }
 };
 

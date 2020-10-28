@@ -13,7 +13,6 @@ export abstract class IEnvironment {
   abstract readonly appUrls: {
     readonly addConcern: string;
     readonly allocateAdmin: string;
-    readonly authRedirect: string;
     readonly deleteFile: string;
     readonly downloadFile: string;
     readonly getConcern: string;
@@ -25,7 +24,6 @@ export abstract class IEnvironment {
     readonly getRecommendations: string;
     readonly listAdmins: string;
     readonly listFiles: string;
-    readonly login: string;
     readonly saveRecommendation: string;
     readonly submitToGMC: string;
     readonly upload: string;

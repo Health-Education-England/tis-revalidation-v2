@@ -18,7 +18,7 @@ export interface AnalyticsConfig {
   enabled: boolean;
 }
 
-const AnalyticsConfigValue = new InjectionToken<AnalyticsConfig>(
+export const AnalyticsConfigValue = new InjectionToken<AnalyticsConfig>(
   "AnalyticsConfig"
 );
 
@@ -45,7 +45,7 @@ export class AnalyticsModule {
   }
 
   static forRoot(
-    config: AnalyticsConfig
+    config: AnalyticsConfig = null
   ): ModuleWithProviders<AnalyticsModule> {
     return {
       ngModule: AnalyticsModule,

@@ -15,7 +15,9 @@ export interface HotJarConfig {
   enabled: boolean;
 }
 
-const HotJarConfigValue = new InjectionToken<HotJarConfig>("HotJarConfig");
+export const HotJarConfigValue = new InjectionToken<HotJarConfig>(
+  "HotJarConfig"
+);
 
 const HotJarURI = `https://static.hotjar.com`;
 
@@ -27,7 +29,9 @@ export class HotJarModule {
     return this.document.head.querySelector(`script[src^="${HotJarURI}"]`);
   }
 
-  static forRoot(config: HotJarConfig): ModuleWithProviders<HotJarModule> {
+  static forRoot(
+    config: HotJarConfig = null
+  ): ModuleWithProviders<HotJarModule> {
     return {
       ngModule: HotJarModule,
       providers: [{ provide: HotJarConfigValue, useValue: config }]

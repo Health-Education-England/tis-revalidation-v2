@@ -7,6 +7,7 @@ import {
 } from "../recommendation-history.interface";
 import { environment } from "@environment";
 import { Router, RouterStateSnapshot } from "@angular/router";
+import { catchError } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root"
@@ -37,7 +38,7 @@ export class RecommendationHistoryService {
     return this.http[method](
       environment.appUrls.saveRecommendation,
       recommendation
-    );
+    ).pipe(catchError(this.errorCallback));
   }
 
   public submitRecommendationToGMC(
@@ -57,5 +58,9 @@ export class RecommendationHistoryService {
     arr.pop();
     const url = arr.join("/");
     this.router.navigate([url]);
+  }
+
+  private errorCallback(error: any) {
+    return throwError(error);
   }
 }

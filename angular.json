@@ -112,12 +112,6 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -142,12 +136,6 @@
               "ngswConfigPath": "ngsw-config.json"
             },
             "staging": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.staging.ts"
-                }
-              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -172,12 +160,6 @@
               "ngswConfigPath": "ngsw-config.json"
             },
             "mocky": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.mocky.ts"
-                }
-              ],
               "optimization": false,
               "outputHashing": "all",
               "sourceMap": true,

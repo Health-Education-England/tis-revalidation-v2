@@ -14,9 +14,10 @@ import {
   RecommendationType
 } from "../recommendation-history.interface";
 
-import { Get, Set } from "../state/recommendation-history.actions";
+import { Get } from "../state/recommendation-history.actions";
 import { RecommendationHistoryState } from "../state/recommendation-history.state";
 import { CommentsComponent } from "src/app/details/comments/comments.component";
+import { RecommendationHistoryService } from "../services/recommendation-history.service";
 
 @Component({
   selector: "app-create-recommendation",
@@ -53,7 +54,8 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private snackBarService: SnackBarService,
     private router: Router,
-    private auth: AuthService
+    private auth: AuthService,
+    private recommendationHistoryService: RecommendationHistoryService
   ) {}
 
   ngOnInit(): void {
@@ -121,25 +123,26 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
       this.recommendation.gmcNumber = this.gmcNumber;
 
       const redirectUrl = procced ? "../confirm" : "../";
-      this.componentSubscriptions.push(
-        this.store
-          .dispatch(new Set(this.recommendation))
-          .pipe(
-            tap((res) => {
+      this.recommendationHistoryService
+        .saveRecommendation(this.recommendation)
+        .pipe(
+          tap(
+            (res) => {
               if (!procced) {
                 this.successResponse(res);
               }
-            }),
-            catchError(this.errorFnc)
-          )
-          .subscribe(() => {
-            this.store.dispatch(new Get(this.gmcNumber)).subscribe(() => {
-              this.router.navigate([redirectUrl], {
-                relativeTo: this.activatedRoute
-              });
+            },
+            (error) => this.errorFnc(error)
+          ),
+          catchError(this.errorFnc)
+        )
+        .subscribe(() => {
+          this.store.dispatch(new Get(this.gmcNumber)).subscribe(() => {
+            this.router.navigate([redirectUrl], {
+              relativeTo: this.activatedRoute
             });
-          })
-      );
+          });
+        });
     }
   }
 
@@ -273,7 +276,7 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
     this.recommendationForm.addControl("action", this.action);
   }
   private errorFnc(err: any): Observable<any> {
-    this.snackBarService.openSnackBar(`An error occurred! please retry`);
+    this.snackBarService.openSnackBar(err);
     return of(err);
   }
 

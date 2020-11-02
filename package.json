@@ -44,7 +44,7 @@
     "browserslist": "^4.14.5",
     "caniuse-lite": "^1.0.30001133",
     "file-saver": "^2.0.2",
-    "nhsuk-frontend": "^3.1.0",
+    "nhsuk-frontend": "^4.0.0",
     "rxjs": "~6.6.3",
     "tslib": "^2.0.3",
     "zone.js": "~0.10.3"

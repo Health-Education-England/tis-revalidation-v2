@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, throwError } from "rxjs";
 import {
   IRecommendationHistory,
@@ -43,14 +43,19 @@ export class RecommendationHistoryService {
 
   public submitRecommendationToGMC(
     gmcNumber: number,
-    recommendationId: string
+    recommendationId: string,
+    designatedBody: string
   ): Observable<any> {
-    if (!(!!gmcNumber && !!recommendationId)) {
+    if (!(!!gmcNumber && !!recommendationId && !!designatedBody)) {
       return throwError("gmcNumber and recommendationId are required");
     }
 
+    const headers: HttpHeaders = new HttpHeaders({
+      designatedBodyCode: designatedBody
+    });
+
     const submitUrl = `${environment.appUrls.submitToGMC}/${gmcNumber}/submit/${recommendationId}`;
-    return this.http.post(submitUrl, {});
+    return this.http.post(submitUrl, {}, { headers });
   }
 
   public navigateToParentState(state: RouterStateSnapshot): void {

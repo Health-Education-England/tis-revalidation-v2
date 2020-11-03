@@ -76,7 +76,7 @@ describe("RecommendationHistoryService", () => {
   });
 
   it("should call submit recommendation to GMC api", (done: DoneFn) => {
-    service.submitRecommendationToGMC(null, "").subscribe({
+    service.submitRecommendationToGMC(null, "", "").subscribe({
       error: (err) => {
         expect(err).toEqual("gmcNumber and recommendationId are required");
         done();
@@ -85,12 +85,14 @@ describe("RecommendationHistoryService", () => {
   });
 
   it("should call submit recommendation to GMC api", () => {
+    const designatedBody = "DBC";
     mockRecommendationSummary.recommendationId = "1232323";
     const endPoint = `${environment.appUrls.submitToGMC}/${mockRecommendationSummary.gmcNumber}/submit/${mockRecommendationSummary.recommendationId}`;
     service
       .submitRecommendationToGMC(
         mockRecommendationSummary.gmcNumber,
-        mockRecommendationSummary.recommendationId
+        mockRecommendationSummary.recommendationId,
+        designatedBody
       )
       .subscribe();
 

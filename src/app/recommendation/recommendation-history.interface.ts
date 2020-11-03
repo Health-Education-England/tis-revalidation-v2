@@ -7,6 +7,7 @@ export interface IRecommendationHistory {
   revalidations: IRecommendationSummary[];
   deferralReasons: DeferralReason[];
   underNotice: string;
+  designatedBody: string;
 }
 
 export interface IRecommendationSummary {

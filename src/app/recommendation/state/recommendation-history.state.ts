@@ -26,7 +26,8 @@ export class RecommendationHistoryStateModel {
       currentGrade: null,
       deferralReasons: [],
       underNotice: null,
-      revalidations: []
+      revalidations: [],
+      designatedBody: null
     }
   }
 })
@@ -130,7 +131,8 @@ export class RecommendationHistoryState {
   post(_ctx: StateContext<any>, action: Post) {
     return this.service.submitRecommendationToGMC(
       action.gmcNumber,
-      action.recommendationId
+      action.recommendationId,
+      action.designatedBody
     );
   }
 }

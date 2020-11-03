@@ -17,5 +17,9 @@ export class Add {
 
 export class Post {
   static readonly type = "[recommendation] Post";
-  constructor(public gmcNumber: number, public recommendationId: string) {}
+  constructor(
+    public gmcNumber: number,
+    public recommendationId: string,
+    public designatedBody: string
+  ) {}
 }

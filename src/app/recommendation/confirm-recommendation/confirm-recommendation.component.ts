@@ -6,9 +6,11 @@ import { Observable, of } from "rxjs";
 import { catchError, filter, take, tap } from "rxjs/operators";
 import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
 import {
+  IRecommendationHistory,
   IRecommendationSummary,
   RecommendationType
 } from "../recommendation-history.interface";
+import { RecommendationHistoryService } from "../services/recommendation-history.service";
 import { Get, Post } from "../state/recommendation-history.actions";
 import { RecommendationHistoryState } from "../state/recommendation-history.state";
 
@@ -21,6 +23,7 @@ export class ConfirmRecommendationComponent implements OnInit {
   public gmcNumber: number;
   public recommendationId: string;
   public recommendationType = RecommendationType;
+  public designatedBody: string;
 
   @Select(RecommendationHistoryState.currentRecommendationType)
   public currentRecommendationType$: Observable<string>;
@@ -31,12 +34,16 @@ export class ConfirmRecommendationComponent implements OnInit {
   @Select(RecommendationHistoryState.currentRecommendation)
   public currentRecommendation$: Observable<IRecommendationSummary>;
 
+  @Select(RecommendationHistoryState.recommendationHistory)
+  public recommendationHistory$: Observable<IRecommendationHistory>;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private router: Router,
     private store: Store,
-    private snackBarService: SnackBarService
+    private snackBarService: SnackBarService,
+    private recommendationHistoryService: RecommendationHistoryService
   ) {}
 
   ngOnInit(): void {
@@ -51,8 +58,12 @@ export class ConfirmRecommendationComponent implements OnInit {
   }
 
   public submitToGMC(): void {
-    this.store
-      .dispatch(new Post(this.gmcNumber, this.recommendationId))
+    this.recommendationHistoryService
+      .submitRecommendationToGMC(
+        this.gmcNumber,
+        this.recommendationId,
+        this.designatedBody
+      )
       .pipe(
         catchError(() =>
           of(
@@ -93,6 +104,14 @@ export class ConfirmRecommendationComponent implements OnInit {
         if (currentRecommendation) {
           this.recommendationId = currentRecommendation.recommendationId;
           this.gmcNumber = Number(currentRecommendation.gmcNumber);
+        }
+      });
+
+    this.recommendationHistory$
+      .pipe(take(1))
+      .subscribe((recommendationHistory: IRecommendationHistory) => {
+        if (recommendationHistory) {
+          this.designatedBody = recommendationHistory.designatedBody;
         }
       });
   }

@@ -27,7 +27,8 @@ export class RecommendationHistoryStateModel {
       deferralReasons: [],
       underNotice: null,
       revalidations: [],
-      designatedBody: null
+      designatedBody: null,
+      gmcSubmissionDate: null
     }
   }
 })

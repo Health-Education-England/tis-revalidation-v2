@@ -8,6 +8,7 @@ export interface IRecommendationHistory {
   deferralReasons: DeferralReason[];
   underNotice: string;
   designatedBody: string;
+  gmcSubmissionDate: Date;
 }
 
 export interface IRecommendationSummary {

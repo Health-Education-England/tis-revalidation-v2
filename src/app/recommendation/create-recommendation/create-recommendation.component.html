@@ -29,9 +29,7 @@
         [matDatepicker]="picker"
       />
       <mat-error *ngIf="deferralDate?.hasError('required')">
-        Date is required and must be between
-        {{ minReferralDate | date: dateFormat }} and
-        {{ maxReferralDate | date: dateFormat }}
+        {{ getDeferralDateErrorMessage() }}
       </mat-error>
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker touchUi #picker></mat-datepicker>

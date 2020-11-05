@@ -7,7 +7,8 @@ import {
   IRecommendationHistory,
   IRecommendationSummary,
   RecommendationStatus,
-  DeferralReason
+  DeferralReason,
+  RecommendationGmcOutcome
 } from "../recommendation-history.interface";
 import { RecommendationHistoryService } from "../services/recommendation-history.service";
 
@@ -61,7 +62,13 @@ export class RecommendationHistoryState {
   public static enableRecommendation(
     state: RecommendationHistoryStateModel
   ): boolean {
-    return state.item.underNotice.toLowerCase() === "yes";
+    return (
+      state.item.underNotice.toLowerCase() === "yes" &&
+      !state.item.revalidations.some(
+        (rs: IRecommendationSummary) =>
+          rs.gmcOutcome === RecommendationGmcOutcome.UNDER_REVIEW
+      )
+    );
   }
 
   @Selector()

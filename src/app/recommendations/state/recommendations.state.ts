@@ -4,8 +4,8 @@ import { environment } from "@environment";
 import { Action, State, StateContext } from "@ngxs/store";
 import { catchError, concatMap, finalize, map, take } from "rxjs/operators";
 import { RecommendationStatus } from "../../recommendation/recommendation-history.interface";
-import { DEFAULT_SORT } from "../../records/constants";
 import { RecordsService } from "../../records/services/records.service";
+import { RECOMMENDATION_SORT } from "../constants";
 import {
   defaultRecordsState,
   RecordsState,
@@ -43,6 +43,7 @@ export class RecommendationsStateModel extends RecordsStateModel<
   name: "recommendations",
   defaults: {
     filter: RecommendationsFilterType.UNDER_NOTICE,
+    sort: RECOMMENDATION_SORT,
     ...defaultRecordsState
   }
 })
@@ -120,7 +121,7 @@ export class RecommendationsState extends RecordsState {
 
   @Action(ResetRecommendationsSort)
   resetSort(ctx: StateContext<RecommendationsStateModel>) {
-    return super.resetSortHandler(ctx, DEFAULT_SORT);
+    return super.resetSortHandler(ctx, RECOMMENDATION_SORT);
   }
 
   @Action(PaginateRecommendations)

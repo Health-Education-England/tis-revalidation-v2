@@ -6,7 +6,7 @@ import { NgxsModule, Store } from "@ngxs/store";
 import { of } from "rxjs";
 import { MaterialModule } from "../../shared/material/material.module";
 import { RecordsService } from "../../records/services/records.service";
-import { DEFAULT_SORT } from "../../records/constants";
+import { RECOMMENDATION_SORT } from "../constants";
 import { mockRecommendationsResponse } from "../services/recommendations.service.spec";
 import { RecommendationsFilterType } from "../recommendations.interfaces";
 import {
@@ -87,10 +87,13 @@ describe("Recommendations state", () => {
 
   it("should dispatch 'Sort' and update store", () => {
     store.dispatch(
-      new SortRecommendations(DEFAULT_SORT.active, DEFAULT_SORT.direction)
+      new SortRecommendations(
+        RECOMMENDATION_SORT.active,
+        RECOMMENDATION_SORT.direction
+      )
     );
     const sort = store.snapshot().recommendations.sort;
-    expect(sort).toEqual(DEFAULT_SORT);
+    expect(sort).toEqual(RECOMMENDATION_SORT);
   });
 
   it("should dispatch 'Paginate' and update store", () => {

@@ -1,3 +1,5 @@
+import { Sort } from "@angular/material/sort";
+
 export const COLUMN_DATA: [string, string, boolean][] = [
   ["GMC Submission due date", "submissionDate", true],
   ["Status", "doctorStatus", false],
@@ -7,3 +9,8 @@ export const COLUMN_DATA: [string, string, boolean][] = [
   ["Admin", "admin", false],
   ["Last updated", "lastUpdatedDate", false]
 ];
+
+export const RECOMMENDATION_SORT: Sort = {
+  active: "submissionDate",
+  direction: "desc"
+};

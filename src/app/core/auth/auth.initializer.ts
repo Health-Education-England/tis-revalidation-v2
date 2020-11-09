@@ -22,22 +22,8 @@ export function initializeApplication(
               return router.navigateByUrl(requestedUrl);
             }
           };
-        }),
-        catchError(() => {
-          requestedUrl = `${win.location.pathname}${win.location.search}${win.location.hash}`;
-          win.localStorage.setItem(redirectKey, requestedUrl);
-          return authService.signIn();
         })
       )
       .toPromise()
-      .then((response) => {
-        if (authService.userRoles && authService.userRoles.length > 0) {
-          if (authService.userRoles.includes("HEE Admin Revalidation")) {
-            navigationHandler();
-          } else {
-            alert("Please contact administrator for access");
-            return authService.signOut();
-          }
-        }
-      });
+      .then(() => navigationHandler());
 }

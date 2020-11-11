@@ -1,0 +1,35 @@
+@import "../../scss/utilities/spacing-helpers";
+
+@include mat-table-columns(
+  (
+    programmeName: (
+      width: 180px
+    ),
+    designatedBodyCode: (
+      width: 120px
+    ),
+    programmeOwner: (
+      width: 180px
+    ),
+    connectionStatus: (
+      width: 120px
+    ),
+    programmeMembershipStartDate: (
+      width: 90px
+    ),
+    programmeMembershipEndDate: (
+      width: 90px
+    )
+  )
+);
+
+.mat-card {
+  box-shadow: none !important;
+  margin-top: 30px;
+}
+
+.mat-card-title {
+  font-size: 12px;
+  font-weight: bold;
+  padding-bottom: 10px;
+}

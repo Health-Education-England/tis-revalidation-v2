@@ -88,7 +88,7 @@ export const menuItems: IMenuItem[] = JSON.parse(
         "menuItems": [
             {
                 "type": 0,
-                "route": "/",
+                "route": "/recommendations",
                 "name": "Recommendations",
                 "description": ""
             },

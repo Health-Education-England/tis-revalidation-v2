@@ -1,4 +1,6 @@
 @import "~@angular/material/core/style/variables";
+@import "~nhsuk-frontend/packages/core/settings/colours";
+
 // remove ng-deep if encapsulation is set to none
 ::ng-deep {
   .mat-menu-panel {
@@ -20,5 +22,25 @@
         }
       }
     }
+  }
+}
+
+.active-list-item {
+  font-weight: bold;
+}
+
+.mat-button {
+  line-height: 60px;
+  color: #919ea8 !important;
+
+  &.active {
+    border-bottom: 2px solid white;
+    border-radius: 0;
+    color: white !important;
+  }
+
+  &:hover,
+  &:focus {
+    color: white !important;
   }
 }

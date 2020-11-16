@@ -6,7 +6,7 @@ import { MaterialModule } from "../../shared/material/material.module";
 import { IGetConcernResponse } from "../concern.interfaces";
 import { UploadService } from "../services/upload/upload.service";
 import { ConcernState } from "./concern.state";
-import { Get, ListFiles, Upload, UploadSuccess } from "./concern.actions";
+import { Get, Upload, UploadSuccess } from "./concern.actions";
 import { ConcernService } from "../services/concern/concern.service";
 import {
   HttpClientTestingModule,
@@ -16,7 +16,6 @@ import { environment } from "@environment";
 import { ConcernHistoryResponse2 } from "src/app/recommendation/mock-data/recommendation-spec-data";
 
 import { ErrorHandler } from "@angular/core";
-import { tap } from "rxjs/operators";
 import { SnackBarService } from "src/app/shared/services/snack-bar/snack-bar.service";
 
 describe("Concern actions", () => {

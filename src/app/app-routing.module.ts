@@ -40,6 +40,11 @@ const routes: Routes = [
       )
   },
   {
+    path: "connection/:gmcNumber",
+    loadChildren: () =>
+      import("./connection/connection.module").then((m) => m.ConnectionModule)
+  },
+  {
     path: "404",
     component: PageNotFoundComponent
   },

@@ -148,6 +148,16 @@
   }
 }
 
+// grid layouts
+.grid-container-3-col {
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 15px;
+
+  @media screen and (#{$mat-small}) {
+    grid-template-columns: auto;
+  }
+}
+
 // containers max width
 .container {
   max-width: 1920px;

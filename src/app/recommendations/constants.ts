@@ -14,3 +14,6 @@ export const RECOMMENDATION_SORT: Sort = {
   active: "submissionDate",
   direction: "desc"
 };
+
+export const DEFERRAL_MIN_DAYS = 120;
+export const DEFERRAL_MAX_DAYS = 365;

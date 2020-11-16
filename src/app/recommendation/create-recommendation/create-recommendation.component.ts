@@ -18,6 +18,10 @@ import { Get } from "../state/recommendation-history.actions";
 import { RecommendationHistoryState } from "../state/recommendation-history.state";
 import { CommentsComponent } from "src/app/details/comments/comments.component";
 import { RecommendationHistoryService } from "../services/recommendation-history.service";
+import {
+  DEFERRAL_MAX_DAYS,
+  DEFERRAL_MIN_DAYS
+} from "src/app/recommendations/constants";
 
 @Component({
   selector: "app-create-recommendation",
@@ -190,19 +194,19 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
     this.subscribeToActions();
   }
   /**
-   * submission date + 60 days < new deferral date < submission date + 365 days from GMC Submission date
+   * submission date + X days < new deferral date < submission date + Y days from GMC Submission date
    */
   private setMinMaxDeferralDates(): void {
     const today = new Date();
     const dateReference = (): Date => new Date(this.gmcSubmissionDate);
 
     const minReferralDate = new Date(
-      dateReference().setDate(dateReference().getDate() + 60)
+      dateReference().setDate(dateReference().getDate() + DEFERRAL_MIN_DAYS)
     );
 
     this.minReferralDate = minReferralDate < today ? today : minReferralDate;
     this.maxReferralDate = new Date(
-      dateReference().setDate(dateReference().getDate() + 364)
+      dateReference().setDate(dateReference().getDate() + DEFERRAL_MAX_DAYS - 1)
     );
   }
 

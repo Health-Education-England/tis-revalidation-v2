@@ -1,4 +1,4 @@
-import { TestBed, async, fakeAsync } from "@angular/core/testing";
+import { TestBed, fakeAsync, waitForAsync } from "@angular/core/testing";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { NgxsModule, Store } from "@ngxs/store";
 import { of } from "rxjs";
@@ -31,24 +31,26 @@ describe("Concern actions", () => {
 
   const mockFile = new File([""], "mockfile.txt", { type: "text/plain" });
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        NgxsModule.forRoot([ConcernState]),
-        MaterialModule,
-        NoopAnimationsModule,
-        HttpClientTestingModule
-      ],
-      providers: [
-        ConcernService,
-        { provide: ErrorHandler, useFactory: errorHandlerSpy }
-      ]
-    }).compileComponents();
-    store = TestBed.inject(Store);
-    uploadService = TestBed.inject(UploadService);
-    httpMock = TestBed.inject(HttpTestingController);
-    snackBarService = TestBed.inject(SnackBarService);
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          NgxsModule.forRoot([ConcernState]),
+          MaterialModule,
+          NoopAnimationsModule,
+          HttpClientTestingModule
+        ],
+        providers: [
+          ConcernService,
+          { provide: ErrorHandler, useFactory: errorHandlerSpy }
+        ]
+      }).compileComponents();
+      store = TestBed.inject(Store);
+      uploadService = TestBed.inject(UploadService);
+      httpMock = TestBed.inject(HttpTestingController);
+      snackBarService = TestBed.inject(SnackBarService);
+    })
+  );
 
   it("should create a get concerns action", fakeAsync(() => {
     const gmcNumber = 1234;

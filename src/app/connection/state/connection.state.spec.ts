@@ -1,4 +1,4 @@
-import { TestBed, async, fakeAsync } from "@angular/core/testing";
+import { TestBed, fakeAsync, waitForAsync } from "@angular/core/testing";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { NgxsModule, Store } from "@ngxs/store";
 import {
@@ -23,22 +23,24 @@ describe("Connection actions", () => {
       handleError: undefined
     });
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        NgxsModule.forRoot([ConnectionState]),
-        MaterialModule,
-        NoopAnimationsModule,
-        HttpClientTestingModule
-      ],
-      providers: [
-        ConnectionService,
-        { provide: ErrorHandler, useFactory: errorHandlerSpy }
-      ]
-    }).compileComponents();
-    store = TestBed.inject(Store);
-    httpMock = TestBed.inject(HttpTestingController);
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          NgxsModule.forRoot([ConnectionState]),
+          MaterialModule,
+          NoopAnimationsModule,
+          HttpClientTestingModule
+        ],
+        providers: [
+          ConnectionService,
+          { provide: ErrorHandler, useFactory: errorHandlerSpy }
+        ]
+      }).compileComponents();
+      store = TestBed.inject(Store);
+      httpMock = TestBed.inject(HttpTestingController);
+    })
+  );
 
   it("should create a get connection details action", fakeAsync(() => {
     const gmcNumber = 1234;

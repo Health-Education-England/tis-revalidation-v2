@@ -1,5 +1,5 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule } from "@ngxs/store";
 import { RecommendationsState } from "../../recommendations/state/recommendations.state";
@@ -13,18 +13,20 @@ describe("RefreshDataBtnComponent", () => {
   let fixture: ComponentFixture<RefreshDataBtnComponent>;
   let recordsService: RecordsService;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [RefreshDataBtnComponent],
-      imports: [
-        HttpClientTestingModule,
-        MaterialModule,
-        RouterTestingModule,
-        NgxsModule.forRoot([RecommendationsState])
-      ]
-    }).compileComponents();
-    recordsService = TestBed.inject(RecordsService);
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [RefreshDataBtnComponent],
+        imports: [
+          HttpClientTestingModule,
+          MaterialModule,
+          RouterTestingModule,
+          NgxsModule.forRoot([RecommendationsState])
+        ]
+      }).compileComponents();
+      recordsService = TestBed.inject(RecordsService);
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RefreshDataBtnComponent);

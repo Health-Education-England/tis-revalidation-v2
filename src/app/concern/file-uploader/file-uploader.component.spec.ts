@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { NgxsModule, Store } from "@ngxs/store";
@@ -51,22 +51,24 @@ describe("FileUploaderComponent", () => {
       })
     );
   };
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [FileUploaderComponent, FileBytesPipe],
-      imports: [
-        ReactiveFormsModule,
-        MaterialModule,
-        HttpClientTestingModule,
-        NoopAnimationsModule,
-        NgxsModule.forRoot([ConcernState])
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    }).compileComponents();
-    store = TestBed.inject(Store);
-    snackBarService = TestBed.inject(SnackBarService);
-    setDefaultSelectedConcern();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [FileUploaderComponent, FileBytesPipe],
+        imports: [
+          ReactiveFormsModule,
+          MaterialModule,
+          HttpClientTestingModule,
+          NoopAnimationsModule,
+          NgxsModule.forRoot([ConcernState])
+        ],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      }).compileComponents();
+      store = TestBed.inject(Store);
+      snackBarService = TestBed.inject(SnackBarService);
+      setDefaultSelectedConcern();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(FileUploaderComponent);

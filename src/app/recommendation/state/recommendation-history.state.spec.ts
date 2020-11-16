@@ -1,4 +1,4 @@
-import { TestBed, async, fakeAsync } from "@angular/core/testing";
+import { TestBed, fakeAsync, waitForAsync } from "@angular/core/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { RecommendationHistoryState } from "./recommendation-history.state";
 import { Get as RecommendationHistoryAction } from "./recommendation-history.actions";
@@ -21,19 +21,21 @@ describe("RecommendationHistory actions", () => {
       handleError: undefined
     });
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        MaterialModule,
-        NgxsModule.forRoot([RecommendationHistoryState]),
-        HttpClientTestingModule,
-        RouterTestingModule
-      ],
-      providers: [{ provide: ErrorHandler, useFactory: errorHandlerSpy }]
-    }).compileComponents();
-    store = TestBed.inject(Store);
-    httpMock = TestBed.inject(HttpTestingController);
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          MaterialModule,
+          NgxsModule.forRoot([RecommendationHistoryState]),
+          HttpClientTestingModule,
+          RouterTestingModule
+        ],
+        providers: [{ provide: ErrorHandler, useFactory: errorHandlerSpy }]
+      }).compileComponents();
+      store = TestBed.inject(Store);
+      httpMock = TestBed.inject(HttpTestingController);
+    })
+  );
 
   it("should create an action RecommendationHistoryAction to get reval history", () => {
     const gmcNumber = 1234;

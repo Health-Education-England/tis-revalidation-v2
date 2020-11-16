@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 
 import { DetailsSideNavComponent } from "./details-side-nav.component";
@@ -25,34 +25,36 @@ describe("DetailsSideNavComponent", () => {
     snapshot: { params: { gmcNumber: 0 } }
   };
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        NoopAnimationsModule,
-        MaterialModule,
-        NgxsModule.forRoot([DetailsSideNavState]),
-        HttpClientTestingModule,
-        RouterTestingModule,
-        CommonModule
-      ],
-      declarations: [DetailsSideNavComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      providers: [
-        DetailsSideNavService,
-        {
-          provide: ActivatedRoute,
-          useValue: activatedRoute
-        }
-      ]
-    }).compileComponents();
-    // TODO: uncomment to add data to tests rendering component when service is split
-    // store = TestBed.inject(Store);
-    // httpClient = TestBed.inject(HttpClient);
-    service = TestBed.inject(DetailsSideNavService);
-    spyOn(service, "getDetails").and.returnValue(
-      of(RecommendationHistoryRespone2)
-    );
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          NoopAnimationsModule,
+          MaterialModule,
+          NgxsModule.forRoot([DetailsSideNavState]),
+          HttpClientTestingModule,
+          RouterTestingModule,
+          CommonModule
+        ],
+        declarations: [DetailsSideNavComponent],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA],
+        providers: [
+          DetailsSideNavService,
+          {
+            provide: ActivatedRoute,
+            useValue: activatedRoute
+          }
+        ]
+      }).compileComponents();
+      // TODO: uncomment to add data to tests rendering component when service is split
+      // store = TestBed.inject(Store);
+      // httpClient = TestBed.inject(HttpClient);
+      service = TestBed.inject(DetailsSideNavService);
+      spyOn(service, "getDetails").and.returnValue(
+        of(RecommendationHistoryRespone2)
+      );
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DetailsSideNavComponent);

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { CreateRecommendationComponent } from "./create-recommendation.component";
 import { MaterialModule } from "src/app/shared/material/material.module";
@@ -24,27 +24,29 @@ describe("CreateRecommendationComponent", () => {
   const activatedRoute = {
     parent: { snapshot: { params: { gmcNumber: 0 } } }
   };
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        MaterialModule,
-        RouterTestingModule,
-        HttpClientTestingModule,
-        NoopAnimationsModule,
-        ReactiveFormsModule,
-        DetailsModule,
-        NgxsModule.forRoot([RecommendationHistoryState])
-      ],
-      providers: [
-        AuthService,
-        {
-          provide: ActivatedRoute,
-          useValue: activatedRoute
-        }
-      ],
-      declarations: [CreateRecommendationComponent]
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          MaterialModule,
+          RouterTestingModule,
+          HttpClientTestingModule,
+          NoopAnimationsModule,
+          ReactiveFormsModule,
+          DetailsModule,
+          NgxsModule.forRoot([RecommendationHistoryState])
+        ],
+        providers: [
+          AuthService,
+          {
+            provide: ActivatedRoute,
+            useValue: activatedRoute
+          }
+        ],
+        declarations: [CreateRecommendationComponent]
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CreateRecommendationComponent);

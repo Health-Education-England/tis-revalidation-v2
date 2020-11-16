@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { MaterialModule } from "../../shared/material/material.module";
 import {
@@ -23,25 +23,27 @@ describe("UploadedFilesListComponent", () => {
   const mockFileName = "mockfile.txt";
   const mockKey = `${_gmcNumber}/${_concernId}/mockfile.txt`;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [UploadedFilesListComponent],
-      imports: [
-        MaterialModule,
-        HttpClientTestingModule,
-        NgxsModule.forRoot([ConcernState])
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    }).compileComponents();
-    store = TestBed.inject(Store);
-    store.reset({ concern: { gmcNumber: _gmcNumber } });
-    store.dispatch(
-      new SetSelectedConcern({
-        ...defaultConcern,
-        ...{ concernId: _concernId }
-      })
-    );
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [UploadedFilesListComponent],
+        imports: [
+          MaterialModule,
+          HttpClientTestingModule,
+          NgxsModule.forRoot([ConcernState])
+        ],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      }).compileComponents();
+      store = TestBed.inject(Store);
+      store.reset({ concern: { gmcNumber: _gmcNumber } });
+      store.dispatch(
+        new SetSelectedConcern({
+          ...defaultConcern,
+          ...{ concernId: _concernId }
+        })
+      );
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(UploadedFilesListComponent);

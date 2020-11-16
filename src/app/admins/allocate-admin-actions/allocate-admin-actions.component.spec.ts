@@ -1,5 +1,5 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { RecommendationsState } from "../../recommendations/state/recommendations.state";
@@ -15,20 +15,22 @@ describe("AllocateAdminActionsComponent", () => {
   let store: Store;
   let recordsService: RecordsService;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [AllocateAdminActionsComponent],
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule,
-        NgxsModule.forRoot([RecommendationsState])
-      ],
-      providers: [RecordsService]
-    }).compileComponents();
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [AllocateAdminActionsComponent],
+        imports: [
+          HttpClientTestingModule,
+          RouterTestingModule,
+          NgxsModule.forRoot([RecommendationsState])
+        ],
+        providers: [RecordsService]
+      }).compileComponents();
 
-    store = TestBed.inject(Store);
-    recordsService = TestBed.inject(RecordsService);
-  }));
+      store = TestBed.inject(Store);
+      recordsService = TestBed.inject(RecordsService);
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AllocateAdminActionsComponent);

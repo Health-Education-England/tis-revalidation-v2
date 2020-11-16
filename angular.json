@@ -20,6 +20,7 @@
             "allowedCommonJsDependencies": [
               "@aws-amplify/auth/lib-esm/types",
               "@aws-amplify/core/lib-esm",
+              "@aws-amplify/auth/lib-esm/auth.js",
               "@aws-crypto/sha256-browser",
               "@aws-crypto/sha256-js",
               "@aws-sdk/config-resolver",
@@ -68,6 +69,7 @@
               "js-cookie",
               "lodash",
               "ulid",
+              "url",
               "uuid",
               "zen-observable",
               "zen-push",
@@ -93,7 +95,7 @@
             "scripts": [
               {
                 "input": "supported.browsers.js",
-                "inject": false,
+                "inject": true,
                 "bundleName": "supported.browsers"
               }
             ],
@@ -115,7 +117,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -139,7 +140,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -163,7 +163,6 @@
               "optimization": false,
               "outputHashing": "all",
               "sourceMap": true,
-              "extractCss": true,
               "aot": true,
               "buildOptimizer": false
             }
@@ -234,7 +233,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/hee-shared/tsconfig.lib.json",
             "project": "projects/hee-shared/ng-package.json"

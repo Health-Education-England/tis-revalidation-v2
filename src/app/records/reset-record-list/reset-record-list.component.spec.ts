@@ -1,5 +1,5 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule } from "@ngxs/store";
@@ -13,21 +13,23 @@ describe("ResetRecordListComponent", () => {
   let fixture: ComponentFixture<ResetRecordListComponent>;
   let recordsService: RecordsService;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ResetRecordListComponent],
-      imports: [
-        MaterialModule,
-        NoopAnimationsModule,
-        RouterTestingModule.withRoutes([
-          { path: "", component: ResetRecordListComponent }
-        ]),
-        NgxsModule.forRoot([RecommendationsState]),
-        HttpClientTestingModule
-      ]
-    }).compileComponents();
-    recordsService = TestBed.inject(RecordsService);
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [ResetRecordListComponent],
+        imports: [
+          MaterialModule,
+          NoopAnimationsModule,
+          RouterTestingModule.withRoutes([
+            { path: "", component: ResetRecordListComponent }
+          ]),
+          NgxsModule.forRoot([RecommendationsState]),
+          HttpClientTestingModule
+        ]
+      }).compileComponents();
+      recordsService = TestBed.inject(RecordsService);
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ResetRecordListComponent);

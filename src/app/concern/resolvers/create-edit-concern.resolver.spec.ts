@@ -1,7 +1,7 @@
 import { CreateEditConcernResolver } from "./create-edit-concern.resolver";
 import { Router } from "@angular/router";
 import { Store, NgxsModule } from "@ngxs/store";
-import { TestBed, async } from "@angular/core/testing";
+import { TestBed, waitForAsync } from "@angular/core/testing";
 import { MaterialModule } from "src/app/shared/material/material.module";
 import { ConcernState } from "../state/concern.state";
 import {
@@ -26,46 +26,48 @@ describe("CreateEditConcernResolver", () => {
   const gmcNumber = 65477888;
   let req: TestRequest;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        MaterialModule,
-        NgxsModule.forRoot([ConcernState]),
-        HttpClientTestingModule,
-        RouterTestingModule.withRoutes([
-          {
-            path: ":gmcNumber",
-            component: BlankComponent,
-            runGuardsAndResolvers: "always",
-            children: [
-              {
-                path: "create",
-                component: BlankComponent,
-                resolve: { test: CreateEditConcernResolver }
-              },
-              {
-                path: "edit/:concernId",
-                component: BlankComponent,
-                resolve: { test: CreateEditConcernResolver }
-              }
-            ]
-          },
-          {
-            path: "404",
-            component: BlankComponent
-          },
-          {
-            path: "**",
-            redirectTo: "404"
-          }
-        ])
-      ],
-      providers: [CreateEditConcernResolver]
-    }).compileComponents();
-    store = TestBed.inject(Store);
-    router = TestBed.inject(Router);
-    httpMock = TestBed.inject(HttpTestingController);
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          MaterialModule,
+          NgxsModule.forRoot([ConcernState]),
+          HttpClientTestingModule,
+          RouterTestingModule.withRoutes([
+            {
+              path: ":gmcNumber",
+              component: BlankComponent,
+              runGuardsAndResolvers: "always",
+              children: [
+                {
+                  path: "create",
+                  component: BlankComponent,
+                  resolve: { test: CreateEditConcernResolver }
+                },
+                {
+                  path: "edit/:concernId",
+                  component: BlankComponent,
+                  resolve: { test: CreateEditConcernResolver }
+                }
+              ]
+            },
+            {
+              path: "404",
+              component: BlankComponent
+            },
+            {
+              path: "**",
+              redirectTo: "404"
+            }
+          ])
+        ],
+        providers: [CreateEditConcernResolver]
+      }).compileComponents();
+      store = TestBed.inject(Store);
+      router = TestBed.inject(Router);
+      httpMock = TestBed.inject(HttpTestingController);
+    })
+  );
 
   beforeEach(() => {
     store.dispatch(new Get(gmcNumber));

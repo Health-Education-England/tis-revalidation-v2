@@ -1,5 +1,5 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { NgxsModule, Store } from "@ngxs/store";
@@ -18,20 +18,22 @@ describe("TraineeDetailComponent", () => {
   let fixture: ComponentFixture<TraineeDetailComponent>;
   let store: Store;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [TraineeDetailComponent],
-      imports: [
-        ReactiveFormsModule,
-        MaterialModule,
-        NoopAnimationsModule,
-        HttpClientTestingModule,
-        AdminsModule,
-        NgxsModule.forRoot([ConcernState, AdminsState])
-      ]
-    }).compileComponents();
-    store = TestBed.inject(Store);
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [TraineeDetailComponent],
+        imports: [
+          ReactiveFormsModule,
+          MaterialModule,
+          NoopAnimationsModule,
+          HttpClientTestingModule,
+          AdminsModule,
+          NgxsModule.forRoot([ConcernState, AdminsState])
+        ]
+      }).compileComponents();
+      store = TestBed.inject(Store);
+    })
+  );
 
   beforeEach(() => {
     spyOn(

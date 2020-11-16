@@ -1,5 +1,5 @@
 import { AnalyticsErrorHandler } from "./analytics.errorhandler";
-import { async, TestBed } from "@angular/core/testing";
+import { TestBed, waitForAsync } from "@angular/core/testing";
 import { ErrorHandler, Injector } from "@angular/core";
 import { Angulartics2GoogleAnalytics } from "angulartics2/ga";
 
@@ -11,24 +11,26 @@ describe("AnalyticsErrorHandler", () => {
   let errorSpy: jasmine.Spy<any>;
   let error: Error;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        AnalyticsErrorHandler,
-        {
-          provide: Angulartics2GoogleAnalytics,
-          useValue: {
-            exceptionTrack: (_err: any) => {
-              // console.info("mock-service-error:", error);
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        providers: [
+          AnalyticsErrorHandler,
+          {
+            provide: Angulartics2GoogleAnalytics,
+            useValue: {
+              exceptionTrack: (_err: any) => {
+                // console.info("mock-service-error:", error);
+              }
             }
           }
-        }
-      ]
-    }).compileComponents();
-    handler = TestBed.inject(AnalyticsErrorHandler);
-    angulartics = TestBed.inject(Angulartics2GoogleAnalytics);
-    InjectorInstance = TestBed.inject(Injector);
-  }));
+        ]
+      }).compileComponents();
+      handler = TestBed.inject(AnalyticsErrorHandler);
+      angulartics = TestBed.inject(Angulartics2GoogleAnalytics);
+      InjectorInstance = TestBed.inject(Injector);
+    })
+  );
 
   beforeEach(() => {
     (window as any).ga = null;

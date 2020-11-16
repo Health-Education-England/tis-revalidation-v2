@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
@@ -16,22 +16,24 @@ describe("RecordSearchComponent", () => {
   let fixture: ComponentFixture<RecordSearchComponent>;
   let recordsService: RecordsService;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [RecordSearchComponent],
-      imports: [
-        MaterialModule,
-        NgxsModule.forRoot([RecommendationsState]),
-        RouterTestingModule,
-        HttpClientTestingModule,
-        ReactiveFormsModule,
-        NoopAnimationsModule
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    }).compileComponents();
-    store = TestBed.inject(Store);
-    recordsService = TestBed.inject(RecordsService);
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [RecordSearchComponent],
+        imports: [
+          MaterialModule,
+          NgxsModule.forRoot([RecommendationsState]),
+          RouterTestingModule,
+          HttpClientTestingModule,
+          ReactiveFormsModule,
+          NoopAnimationsModule
+        ],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      }).compileComponents();
+      store = TestBed.inject(Store);
+      recordsService = TestBed.inject(RecordsService);
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RecordSearchComponent);

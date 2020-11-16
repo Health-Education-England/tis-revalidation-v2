@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { CUSTOM_ELEMENTS_SCHEMA, NgZone } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { MatPaginatorModule, PageEvent } from "@angular/material/paginator";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
@@ -22,24 +22,26 @@ describe("RecordListPaginatorComponent", () => {
     length: 20
   };
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        MatPaginatorModule,
-        NoopAnimationsModule,
-        NgxsModule.forRoot([RecommendationsState]),
-        HttpClientTestingModule
-      ],
-      declarations: [RecordListPaginatorComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    }).compileComponents();
-    store = TestBed.inject(Store);
-    recordsService = TestBed.inject(RecordsService);
-    recordsService.stateName = "recommendations";
-    recordsService.setRecommendationsActions();
-    store.reset({ recommendations: { sort: DEFAULT_SORT } });
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          RouterTestingModule,
+          MatPaginatorModule,
+          NoopAnimationsModule,
+          NgxsModule.forRoot([RecommendationsState]),
+          HttpClientTestingModule
+        ],
+        declarations: [RecordListPaginatorComponent],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      }).compileComponents();
+      store = TestBed.inject(Store);
+      recordsService = TestBed.inject(RecordsService);
+      recordsService.stateName = "recommendations";
+      recordsService.setRecommendationsActions();
+      store.reset({ recommendations: { sort: DEFAULT_SORT } });
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RecordListPaginatorComponent);

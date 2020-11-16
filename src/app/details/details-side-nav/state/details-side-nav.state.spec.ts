@@ -1,4 +1,4 @@
-import { TestBed, async, fakeAsync } from "@angular/core/testing";
+import { TestBed, fakeAsync, waitForAsync } from "@angular/core/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { IDetailsSideNav } from "../details-side-nav.interfaces";
 import { DetailsSideNavState } from "./details-side-nav.state";
@@ -14,16 +14,18 @@ describe("DetailsSideNav actions", () => {
   let store: Store;
   let httpMock: HttpTestingController;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        NgxsModule.forRoot([DetailsSideNavState])
-      ]
-    }).compileComponents();
-    store = TestBed.inject(Store);
-    httpMock = TestBed.inject(HttpTestingController);
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          HttpClientTestingModule,
+          NgxsModule.forRoot([DetailsSideNavState])
+        ]
+      }).compileComponents();
+      store = TestBed.inject(Store);
+      httpMock = TestBed.inject(HttpTestingController);
+    })
+  );
 
   it("should create an action and add an item", fakeAsync(() => {
     const gmcNumber = 1234;

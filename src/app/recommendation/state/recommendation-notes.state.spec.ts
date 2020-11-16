@@ -1,4 +1,4 @@
-import { TestBed, async } from "@angular/core/testing";
+import { TestBed, waitForAsync } from "@angular/core/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { RecommendationNotesState } from "./recommendation-notes.state";
 import { GetRecommendationNotes } from "./recommendation-notes.actions";
@@ -14,16 +14,18 @@ describe("RecommendationNotes actions", () => {
   let store: Store;
   let httpMock: HttpTestingController;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        NgxsModule.forRoot([RecommendationNotesState]),
-        HttpClientTestingModule
-      ]
-    }).compileComponents();
-    store = TestBed.inject(Store);
-    httpMock = TestBed.inject(HttpTestingController);
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          NgxsModule.forRoot([RecommendationNotesState]),
+          HttpClientTestingModule
+        ]
+      }).compileComponents();
+      store = TestBed.inject(Store);
+      httpMock = TestBed.inject(HttpTestingController);
+    })
+  );
 
   it("should create an action and edit a note", () => {
     const gmcNumber = 1234;

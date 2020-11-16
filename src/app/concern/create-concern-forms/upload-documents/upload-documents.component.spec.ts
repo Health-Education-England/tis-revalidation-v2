@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { ActivatedRoute } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
@@ -33,39 +33,41 @@ describe("UploadDocumentsComponent", () => {
     );
   };
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [UploadDocumentsComponent],
-      imports: [
-        ReactiveFormsModule,
-        MaterialModule,
-        NoopAnimationsModule,
-        HttpClientTestingModule,
-        RouterTestingModule.withRoutes([]),
-        DetailsModule,
-        NgxsModule.forRoot([ConcernState])
-      ],
-      providers: [
-        CommentsService,
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            snapshot: {
-              params: {
-                concernId: "xxx-111-yyy"
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [UploadDocumentsComponent],
+        imports: [
+          ReactiveFormsModule,
+          MaterialModule,
+          NoopAnimationsModule,
+          HttpClientTestingModule,
+          RouterTestingModule.withRoutes([]),
+          DetailsModule,
+          NgxsModule.forRoot([ConcernState])
+        ],
+        providers: [
+          CommentsService,
+          {
+            provide: ActivatedRoute,
+            useValue: {
+              snapshot: {
+                params: {
+                  concernId: "xxx-111-yyy"
+                }
               }
             }
           }
-        }
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    }).compileComponents();
-    store = TestBed.inject(Store);
-    snackBarService = TestBed.inject(SnackBarService);
-    commentsService = TestBed.inject(CommentsService);
-    activatedRoute = TestBed.inject(ActivatedRoute);
-    setDefaultSelectedConcern();
-  }));
+        ],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      }).compileComponents();
+      store = TestBed.inject(Store);
+      snackBarService = TestBed.inject(SnackBarService);
+      commentsService = TestBed.inject(CommentsService);
+      activatedRoute = TestBed.inject(ActivatedRoute);
+      setDefaultSelectedConcern();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(UploadDocumentsComponent);

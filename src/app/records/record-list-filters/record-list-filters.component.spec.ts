@@ -1,5 +1,5 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
@@ -15,22 +15,24 @@ describe("RecordListFiltersComponent", () => {
   let fixture: ComponentFixture<RecordListFiltersComponent>;
   let recordsService: RecordsService;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        MaterialModule,
-        NoopAnimationsModule,
-        RouterTestingModule.withRoutes([
-          { path: "", component: RecordListFiltersComponent }
-        ]),
-        NgxsModule.forRoot([RecommendationsState]),
-        HttpClientTestingModule
-      ],
-      declarations: [RecordListFiltersComponent]
-    }).compileComponents();
-    store = TestBed.inject(Store);
-    recordsService = TestBed.inject(RecordsService);
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          MaterialModule,
+          NoopAnimationsModule,
+          RouterTestingModule.withRoutes([
+            { path: "", component: RecordListFiltersComponent }
+          ]),
+          NgxsModule.forRoot([RecommendationsState]),
+          HttpClientTestingModule
+        ],
+        declarations: [RecordListFiltersComponent]
+      }).compileComponents();
+      store = TestBed.inject(Store);
+      recordsService = TestBed.inject(RecordsService);
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RecordListFiltersComponent);

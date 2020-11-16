@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { MaterialModule } from "../../shared/material/material.module";
 
 import { RecordDetailsComponent } from "./record-details.component";
@@ -9,13 +9,15 @@ describe("RecordDetailsComponent", () => {
   let component: RecordDetailsComponent;
   let fixture: ComponentFixture<RecordDetailsComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [RecordDetailsComponent],
-      imports: [MaterialModule, RouterTestingModule],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [RecordDetailsComponent],
+        imports: [MaterialModule, RouterTestingModule],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RecordDetailsComponent);

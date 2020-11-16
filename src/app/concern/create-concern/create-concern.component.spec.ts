@@ -1,5 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { CreateConcernComponent } from "./create-concern.component";
 import { NgxsModule } from "@ngxs/store";
@@ -14,20 +14,22 @@ describe("CreateConcernComponent", () => {
   let component: CreateConcernComponent;
   let fixture: ComponentFixture<CreateConcernComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [CreateConcernComponent],
-      imports: [
-        NgxsModule.forRoot([ConcernState]),
-        HttpClientTestingModule,
-        MaterialModule,
-        NoopAnimationsModule,
-        ReactiveFormsModule,
-        RouterTestingModule
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [CreateConcernComponent],
+        imports: [
+          NgxsModule.forRoot([ConcernState]),
+          HttpClientTestingModule,
+          MaterialModule,
+          NoopAnimationsModule,
+          ReactiveFormsModule,
+          RouterTestingModule
+        ],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CreateConcernComponent);

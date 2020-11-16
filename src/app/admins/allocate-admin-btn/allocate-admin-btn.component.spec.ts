@@ -1,5 +1,5 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { RecommendationsState } from "../../recommendations/state/recommendations.state";
@@ -13,21 +13,23 @@ describe("AllocateAdminBtnComponent", () => {
   let fixture: ComponentFixture<AllocateAdminBtnComponent>;
   let recordsService: RecordsService;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [AllocateAdminBtnComponent],
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule,
-        NgxsModule.forRoot([RecommendationsState])
-      ]
-    }).compileComponents();
-    store = TestBed.inject(Store);
-    recordsService = TestBed.inject(RecordsService);
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [AllocateAdminBtnComponent],
+        imports: [
+          HttpClientTestingModule,
+          RouterTestingModule,
+          NgxsModule.forRoot([RecommendationsState])
+        ]
+      }).compileComponents();
+      store = TestBed.inject(Store);
+      recordsService = TestBed.inject(RecordsService);
 
-    store.reset({ recommendations: { enableAllocateAdmin: true } });
-    recordsService.stateName = "recommendations";
-  }));
+      store.reset({ recommendations: { enableAllocateAdmin: true } });
+      recordsService.stateName = "recommendations";
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AllocateAdminBtnComponent);

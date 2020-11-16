@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { ConcernComponent } from "./concern.component";
 import { NgxsModule } from "@ngxs/store";
@@ -13,19 +13,21 @@ describe("ConcernComponent", () => {
   let component: ConcernComponent;
   let fixture: ComponentFixture<ConcernComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        NgxsModule.forRoot([ConcernState]),
-        HttpClientTestingModule,
-        MaterialModule,
-        NoopAnimationsModule,
-        RouterTestingModule
-      ],
-      providers: [ConcernService],
-      declarations: [ConcernComponent]
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          NgxsModule.forRoot([ConcernState]),
+          HttpClientTestingModule,
+          MaterialModule,
+          NoopAnimationsModule,
+          RouterTestingModule
+        ],
+        providers: [ConcernService],
+        declarations: [ConcernComponent]
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ConcernComponent);

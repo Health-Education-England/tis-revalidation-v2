@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { MobileMenuComponent } from "./mobile-menu.component";
 import { MaterialModule } from "src/app/shared/material/material.module";
 import { RouterTestingModule } from "@angular/router/testing";
@@ -9,13 +9,15 @@ describe("MobileMenuComponent", () => {
   let component: MobileMenuComponent;
   let fixture: ComponentFixture<MobileMenuComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, MaterialModule, RouterTestingModule],
-      declarations: [MobileMenuComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [NoopAnimationsModule, MaterialModule, RouterTestingModule],
+        declarations: [MobileMenuComponent],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MobileMenuComponent);

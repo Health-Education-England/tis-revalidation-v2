@@ -1,5 +1,5 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { Sort as ISort } from "@angular/material/sort/sort";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { Router } from "@angular/router";
@@ -25,22 +25,24 @@ describe("RecordListComponent", () => {
   let router: Router;
   let recordsService: RecordsService;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [RecordListComponent],
-      imports: [
-        MaterialModule,
-        NoopAnimationsModule,
-        HttpClientTestingModule,
-        RouterTestingModule,
-        AdminsModule,
-        NgxsModule.forRoot([RecommendationsState, AdminsState])
-      ]
-    }).compileComponents();
-    store = TestBed.inject(Store);
-    router = TestBed.inject(Router);
-    recordsService = TestBed.inject(RecordsService);
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [RecordListComponent],
+        imports: [
+          MaterialModule,
+          NoopAnimationsModule,
+          HttpClientTestingModule,
+          RouterTestingModule,
+          AdminsModule,
+          NgxsModule.forRoot([RecommendationsState, AdminsState])
+        ]
+      }).compileComponents();
+      store = TestBed.inject(Store);
+      router = TestBed.inject(Router);
+      recordsService = TestBed.inject(RecordsService);
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RecordListComponent);

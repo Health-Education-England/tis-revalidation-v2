@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
-import { async, TestBed } from "@angular/core/testing";
+import { TestBed, waitForAsync } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { of } from "rxjs";
@@ -25,20 +25,22 @@ describe("Recommendations state", () => {
   let store: Store;
   let recordsService: RecordsService;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        NgxsModule.forRoot([RecommendationsState]),
-        HttpClientTestingModule,
-        RouterTestingModule,
-        MaterialModule
-      ],
-      providers: [RecordsService],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    }).compileComponents();
-    store = TestBed.inject(Store);
-    recordsService = TestBed.inject(RecordsService);
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          NgxsModule.forRoot([RecommendationsState]),
+          HttpClientTestingModule,
+          RouterTestingModule,
+          MaterialModule
+        ],
+        providers: [RecordsService],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      }).compileComponents();
+      store = TestBed.inject(Store);
+      recordsService = TestBed.inject(RecordsService);
+    })
+  );
 
   it("should select 'RecommendationsState'", () => {
     const state = store.selectSnapshot(RecommendationsState);

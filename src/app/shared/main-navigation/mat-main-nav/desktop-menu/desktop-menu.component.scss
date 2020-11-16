@@ -1,4 +1,6 @@
 @import "~@angular/material/core/style/variables";
+@import "~nhsuk-frontend/packages/core/settings/colours";
+
 // remove ng-deep if encapsulation is set to none
 ::ng-deep {
   .mat-menu-panel {
@@ -21,4 +23,8 @@
       }
     }
   }
+}
+
+.active-list-item {
+  background-color: $color_nhsuk-blue !important;
 }

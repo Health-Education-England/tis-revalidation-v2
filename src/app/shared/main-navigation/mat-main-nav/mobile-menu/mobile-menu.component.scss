@@ -4,3 +4,7 @@
 .mat-nav-list:nth-child(5n + 0) {
   border-bottom: solid 1px $color_nhsuk-grey-4;
 }
+
+.active-list-item {
+  background-color: $color_nhsuk-blue !important;
+}

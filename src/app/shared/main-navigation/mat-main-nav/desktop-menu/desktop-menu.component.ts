@@ -11,8 +11,13 @@ import { environment } from "@environment";
 export class DesktopMenuComponent implements OnInit {
   menuItems$: IMenuItem[] = menuItems;
   hostURI: string = environment.adminsUIHostUri;
+  activeItem = "Revalidation";
 
   constructor() {}
 
   ngOnInit(): void {}
+
+  setActiveItem(selectedItem: string) {
+    this.activeItem = selectedItem;
+  }
 }

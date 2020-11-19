@@ -1,6 +1,7 @@
 export interface IConnectionResponse {
   connection: IConnectionDetails;
   dbcs: IDesignatedBody[];
+  designatedBodyCode: IUserDBC;
 }
 
 export interface IConnectionDetails {
@@ -30,4 +31,8 @@ export interface IDesignatedBody {
   name: string;
   abbr: string;
   status: string;
+}
+
+export interface IUserDBC {
+  designatedBodyCode: string;
 }

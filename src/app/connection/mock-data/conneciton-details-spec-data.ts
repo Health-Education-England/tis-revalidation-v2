@@ -1,7 +1,8 @@
 import {
   IConnectionResponse,
   IConnectionDetails,
-  IDesignatedBody
+  IDesignatedBody,
+  IUserDBC
 } from "../connection.interfaces";
 
 const connection: IConnectionDetails = {
@@ -58,7 +59,12 @@ const dbcs: IDesignatedBody[] = [
   }
 ];
 
+const designatedBodyCode: IUserDBC = {
+  designatedBodyCode: "1-AIIDSA"
+};
+
 export const mockConnectionResponse: IConnectionResponse = {
   connection,
-  dbcs
+  dbcs,
+  designatedBodyCode
 };

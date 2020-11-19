@@ -36,4 +36,26 @@ describe("ConcernService", () => {
 
     http.verify();
   });
+
+  it("should add new connection", () => {
+    const endPoint = `${environment.appUrls.getConnections}/add`;
+
+    service.addConnection({}).subscribe();
+
+    const mockHttp = http.expectOne(endPoint);
+    expect(mockHttp.request.method).toBe("POST");
+
+    http.verify();
+  });
+
+  it("should remove current connection", () => {
+    const endPoint = `${environment.appUrls.getConnections}/remove`;
+
+    service.removeConnection({}).subscribe();
+
+    const mockHttp = http.expectOne(endPoint);
+    expect(mockHttp.request.method).toBe("POST");
+
+    http.verify();
+  });
 });

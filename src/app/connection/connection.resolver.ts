@@ -1,9 +1,4 @@
-import {
-  Resolve,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  Router
-} from "@angular/router";
+import { Resolve, ActivatedRouteSnapshot, Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { Store } from "@ngxs/store";
 import { catchError } from "rxjs/operators";
@@ -16,8 +11,7 @@ export class ConnectionResolver implements Resolve<IConnectionDetails> {
   constructor(private store: Store, private router: Router) {}
 
   resolve(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
+    route: ActivatedRouteSnapshot
   ): Observable<IConnectionDetails> | Observable<any> {
     const gmcNumber: number = Number(route.params.gmcNumber);
 

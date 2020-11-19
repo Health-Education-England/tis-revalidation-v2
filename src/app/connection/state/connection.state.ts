@@ -14,6 +14,7 @@ export class ConnectionStateModel {
   public gmcNumber: number;
   public connectionHistory: IConnectionHistory[];
   public dbcs: IDesignatedBody[];
+  public doctorCurrentDbc: string;
 }
 
 @State<ConnectionStateModel>({
@@ -21,7 +22,8 @@ export class ConnectionStateModel {
   defaults: {
     gmcNumber: null,
     connectionHistory: [],
-    dbcs: []
+    dbcs: [],
+    doctorCurrentDbc: ""
   }
 })
 @Injectable()
@@ -38,6 +40,16 @@ export class ConnectionState {
     return state.dbcs;
   }
 
+  @Selector()
+  public static gmcNumber(state: ConnectionStateModel) {
+    return state.gmcNumber;
+  }
+
+  @Selector()
+  public static doctorCurrentDbc(state: ConnectionStateModel) {
+    return state.doctorCurrentDbc;
+  }
+
   @Action(Get)
   get({ patchState }: StateContext<ConnectionStateModel>, { payload }: Get) {
     if (isNaN(payload)) {
@@ -49,7 +61,8 @@ export class ConnectionState {
         patchState({
           gmcNumber: response.connection.gmcNumber,
           connectionHistory: response.connection.connectionHistory,
-          dbcs: response.dbcs
+          dbcs: response.dbcs,
+          doctorCurrentDbc: response.designatedBodyCode.designatedBodyCode
         });
       })
     );

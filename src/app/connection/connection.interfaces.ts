@@ -1,3 +1,5 @@
+import { ActionType } from "./constants";
+
 export interface IConnectionResponse {
   connection: IConnectionDetails;
   dbcs: IDesignatedBody[];
@@ -35,4 +37,14 @@ export interface IDesignatedBody {
 
 export interface IUserDBC {
   designatedBodyCode: string;
+}
+
+export interface IAction {
+  action: ActionType;
+  reasons: IReason[];
+}
+
+export interface IReason {
+  code: string;
+  reason: string;
 }

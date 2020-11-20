@@ -1,33 +1,34 @@
-export enum ConnectionActions {
+import { IAction } from "./connection.interfaces";
+
+export enum ActionType {
   ADD_CONNECTION = "Add connection",
   REMOVE_CONNECTION = "Remove connection",
   REVIEW_CONNECTION = "Review connection",
   IGNORE_CONNECTION = "Ignore connection"
 }
 
-export const ACTION_REASONS = [
+export const ACTIONS: IAction[] = [
   {
-    action: ConnectionActions.ADD_CONNECTION,
+    action: ActionType.ADD_CONNECTION,
     reasons: [
-      "Doctor has a connection with this local office",
-      "Conflict of interest"
+      {
+        reason: "The doctor has a connection with this designated body",
+        code: "1"
+      },
+      { reason: "Conflict of interest", code: "2" }
     ]
   },
   {
-    action: ConnectionActions.REMOVE_CONNECTION,
+    action: ActionType.REMOVE_CONNECTION,
     reasons: [
-      "Doctor has retired (2)",
-      "Doctor has a connection with this local office",
-      "Conflict of interest"
+      { reason: "Conflict of interest", code: "1" },
+      { reason: "Doctor has retired", code: "2" },
+      {
+        reason:
+          "The doctor does not have a connection with this designated body",
+        code: "3"
+      }
     ]
-  },
-  {
-    action: ConnectionActions.REVIEW_CONNECTION,
-    reasons: []
-  },
-  {
-    action: ConnectionActions.IGNORE_CONNECTION,
-    reasons: []
   }
 ];
 

@@ -8,7 +8,7 @@ import { MaterialModule } from "../shared/material/material.module";
 import { ConnectionState } from "../connection/state/connection.state";
 import { ConnectionComponent } from "./connection.component";
 import { mockConnectionResponse } from "./mock-data/conneciton-details-spec-data";
-import { ConnectionActions } from "./constants";
+import { ActionType } from "./constants";
 import { of } from "rxjs";
 import { ConfirmDialogComponent } from "./confirm-dialog/confirm-dialog.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -74,7 +74,7 @@ describe("ConnectionComponent", () => {
 
   it("form should add reason control when any action selected", () => {
     component.updateConnectionForm.controls[actionText].setValue(
-      ConnectionActions.ADD_CONNECTION
+      ActionType.ADD_CONNECTION
     );
 
     const reason = component.updateConnectionForm.controls[reasonText];
@@ -83,7 +83,7 @@ describe("ConnectionComponent", () => {
 
   it("form should add dbc control when add connection selected", () => {
     component.updateConnectionForm.controls[actionText].setValue(
-      ConnectionActions.ADD_CONNECTION
+      ActionType.ADD_CONNECTION
     );
 
     const dbc = component.updateConnectionForm.controls[dbcText];
@@ -92,7 +92,7 @@ describe("ConnectionComponent", () => {
 
   it("form should not have dbc control when add connection is not selected", () => {
     component.updateConnectionForm.controls[actionText].setValue(
-      ConnectionActions.REMOVE_CONNECTION
+      ActionType.REMOVE_CONNECTION
     );
 
     const dbc = component.updateConnectionForm.controls[dbcText];
@@ -118,33 +118,17 @@ describe("ConnectionComponent", () => {
 
   it("form should invoke updateConnection() when remove conneciton action selected", () => {
     expect(component.updateConnectionForm.valid).toBeFalsy();
-    fillForm(ConnectionActions.REMOVE_CONNECTION);
+    fillForm(ActionType.REMOVE_CONNECTION);
     expect(component.updateConnectionForm.valid).toBeTruthy();
     component.openDialog();
   });
 
-  it("form should invoke updateConnection() when review conneciton action selected", () => {
-    expect(component.updateConnectionForm.valid).toBeFalsy();
-    fillForm(ConnectionActions.REVIEW_CONNECTION);
-    expect(component.updateConnectionForm.valid).toBeTruthy();
-    component.openDialog();
-  });
-
-  it("form should invoke updateConnection() when ignore conneciton action selected", () => {
-    expect(component.updateConnectionForm.valid).toBeFalsy();
-    fillForm(ConnectionActions.IGNORE_CONNECTION);
-    expect(component.updateConnectionForm.valid).toBeTruthy();
-    component.openDialog();
-  });
-
-  function fillForm(
-    action: ConnectionActions = ConnectionActions.ADD_CONNECTION
-  ) {
+  function fillForm(action: ActionType = ActionType.ADD_CONNECTION) {
     component.updateConnectionForm.controls[actionText].setValue(action);
     component.updateConnectionForm.controls[reasonText].setValue(
       "Conflict of interest"
     );
-    if (action === ConnectionActions.ADD_CONNECTION) {
+    if (action === ActionType.ADD_CONNECTION) {
       component.updateConnectionForm.controls[dbcText].setValue("1-ABCDE");
     }
   }

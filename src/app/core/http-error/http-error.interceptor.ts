@@ -6,7 +6,7 @@ import {
   HttpRequest
 } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, throwError } from "rxjs";
+import { Observable, of, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { ErrorService } from "../../shared/services/error/error.service";
 import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
@@ -18,15 +18,15 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     private errorService: ErrorService
   ) {}
 
-  intercept(
-    request: HttpRequest<unknown>,
-    next: HttpHandler
-  ): Observable<HttpEvent<unknown>> {
+  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<any> {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         const message: string = this.errorService.generateErrorMsg(error);
         this.snackBarService.openSnackBar(message);
-        return throwError(message);
+
+        return error.status === 200 && error.statusText === "OK"
+          ? of(message)
+          : throwError(message);
       })
     );
   }

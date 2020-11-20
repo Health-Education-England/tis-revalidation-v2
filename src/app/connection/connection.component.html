@@ -92,8 +92,11 @@
           <mat-form-field>
             <mat-label>Action</mat-label>
             <mat-select formControlName="action">
-              <mat-option *ngFor="let action of actions" [value]="action">
-                {{ action }}
+              <mat-option
+                *ngFor="let action of actions"
+                [value]="action.action"
+              >
+                {{ action.action }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="actionControl?.hasError('required')">
@@ -104,8 +107,8 @@
           <mat-form-field *ngIf="showReasonDropdown">
             <mat-label>Reason</mat-label>
             <mat-select formControlName="reason">
-              <mat-option *ngFor="let reason of reasons" [value]="reason">
-                {{ reason }}
+              <mat-option *ngFor="let reason of reasons" [value]="reason.code">
+                {{ reason.reason }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="reasonControl?.hasError('required')">

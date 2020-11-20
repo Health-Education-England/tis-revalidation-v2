@@ -1,13 +1,20 @@
+export enum ConnectionActions {
+  ADD_CONNECTION = "Add connection",
+  REMOVE_CONNECTION = "Remove connection",
+  REVIEW_CONNECTION = "Review connection",
+  IGNORE_CONNECTION = "Ignore connection"
+}
+
 export const ACTION_REASONS = [
   {
-    action: "Add connection",
+    action: ConnectionActions.ADD_CONNECTION,
     reasons: [
       "Doctor has a connection with this local office",
       "Conflict of interest"
     ]
   },
   {
-    action: "Remove connection",
+    action: ConnectionActions.REMOVE_CONNECTION,
     reasons: [
       "Doctor has retired (2)",
       "Doctor has a connection with this local office",
@@ -15,11 +22,11 @@ export const ACTION_REASONS = [
     ]
   },
   {
-    action: "Review connection",
+    action: ConnectionActions.REVIEW_CONNECTION,
     reasons: []
   },
   {
-    action: "Ignore connection",
+    action: ConnectionActions.IGNORE_CONNECTION,
     reasons: []
   }
 ];

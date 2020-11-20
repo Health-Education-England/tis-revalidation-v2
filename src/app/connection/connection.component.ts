@@ -1,15 +1,18 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { Select } from "@ngxs/store";
+import { MatDialog } from "@angular/material/dialog";
+import { Select, Store } from "@ngxs/store";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Observable, Subscription } from "rxjs";
+
 import { environment } from "@environment";
 import { IConnectionHistory, IDesignatedBody } from "./connection.interfaces";
 import { ConnectionState } from "./state/connection.state";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { AuthService } from "../core/auth/auth.service";
-import { ACTION_REASONS, ADMIN_ROLES } from "./constants";
-import { MatDialog } from "@angular/material/dialog";
+import { ACTION_REASONS, ADMIN_ROLES, ConnectionActions } from "./constants";
 import { ConfirmDialogComponent } from "./confirm-dialog/confirm-dialog.component";
 import { SnackBarService } from "../shared/services/snack-bar/snack-bar.service";
+import { ConnectionService } from "./services/connection.service";
+import { Get } from "./state/connection.actions";
 
 @Component({
   selector: "app-connection",
@@ -22,6 +25,12 @@ export class ConnectionComponent implements OnInit, OnDestroy {
 
   @Select(ConnectionState.dbcs)
   public dbcs$: Observable<IDesignatedBody[]>;
+
+  @Select(ConnectionState.gmcNumber)
+  public gmcNumber$: Observable<number>;
+
+  @Select(ConnectionState.doctorCurrentDbc)
+  public userDbc$: Observable<string>;
 
   updateConnectionForm: FormGroup;
   actionControl: FormControl;
@@ -39,18 +48,24 @@ export class ConnectionComponent implements OnInit, OnDestroy {
   ];
   componentSubscriptions: Subscription[] = [];
   dbcs: IDesignatedBody[] = [];
+  userDbcs: IDesignatedBody[] = [];
   actions: string[] = [];
   reasons: string[] = [];
+  gmcNumber: number;
+  doctorCurrentDbc: string;
 
   enableUpdateConnection = false;
   addConnectionSelected = false;
   showReasonDropdown = false;
   showReasonText = false;
+  submitting = false;
 
   constructor(
+    private store: Store,
     private authService: AuthService,
     private snackBarService: SnackBarService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private connectionService: ConnectionService
   ) {
     this.actions = ACTION_REASONS.map((ar) => ar.action);
   }
@@ -60,7 +75,14 @@ export class ConnectionComponent implements OnInit, OnDestroy {
       ADMIN_ROLES.includes(role)
     );
     this.bindFormControl();
-    this.dbcs$.subscribe((res) => (this.dbcs = res));
+    this.dbcs$.subscribe((res) => {
+      this.dbcs = res;
+      this.userDbcs = res.filter((r) =>
+        this.authService.userDesignatedBodies.includes(r.dbc)
+      );
+    });
+    this.gmcNumber$.subscribe((res) => (this.gmcNumber = res));
+    this.userDbc$.subscribe((res) => (this.doctorCurrentDbc = res));
   }
 
   ngOnDestroy(): void {
@@ -69,31 +91,81 @@ export class ConnectionComponent implements OnInit, OnDestroy {
     });
   }
 
-  updateConnection() {
-    if (this.updateConnectionForm.valid) {
-      const formValue = this.updateConnectionForm.value;
-      // Save api call
-      this.snackBarService.openSnackBar(
-        "Connection details updated successfully"
-      );
-      this.resetForm();
-    }
-  }
-
   getDBCAbbrevation(dbc: string) {
-    return this.dbcs.find((d) => d.dbc === dbc).abbr || dbc;
+    return this.dbcs.find((d) => d.dbc === dbc)?.abbr || dbc;
   }
 
   openDialog() {
-    this.dialog
-      .open(ConfirmDialogComponent)
-      .afterClosed()
-      .subscribe((result) => {
-        if (result) {
-          this.updateConnection();
-          this.updateConnectionForm.reset();
-        }
-      });
+    if (this.updateConnectionForm.valid) {
+      this.dialog
+        .open(ConfirmDialogComponent)
+        .afterClosed()
+        .subscribe((result) => {
+          if (result) {
+            this.submitting = true;
+            this.updateConnection();
+          }
+        });
+    }
+  }
+
+  resetForm() {
+    this.updateConnectionForm.reset();
+    this.showReasonDropdown = false;
+    this.showReasonText = false;
+    this.addConnectionSelected = false;
+  }
+
+  private updateConnection() {
+    let subscription: Observable<any>;
+    const formValue = this.updateConnectionForm.value;
+
+    switch (formValue.action) {
+      case ConnectionActions.ADD_CONNECTION:
+        subscription = this.connectionService.addConnection({
+          changeReason: formValue.reason,
+          designatedBodyCode: formValue.dbc,
+          gmcId: this.gmcNumber
+        });
+        break;
+
+      case ConnectionActions.REMOVE_CONNECTION:
+        subscription = this.connectionService.removeConnection({
+          changeReason: formValue.reason,
+          designatedBodyCode: this.doctorCurrentDbc,
+          gmcId: this.gmcNumber
+        });
+        break;
+
+      case ConnectionActions.REVIEW_CONNECTION:
+        break;
+
+      case ConnectionActions.IGNORE_CONNECTION:
+        break;
+
+      default:
+        this.snackBarService.openSnackBar("Please select an action");
+        return;
+    }
+
+    if (subscription) {
+      this.componentSubscriptions.push(
+        subscription.subscribe(
+          () => {
+            this.snackBarService.openSnackBar(
+              "Connection details updated successfully"
+            );
+
+            this.store.dispatch(new Get(this.gmcNumber));
+            this.resetForm();
+          },
+          (error) => {
+            this.snackBarService.openSnackBar("Error: " + error);
+          },
+          () => (this.submitting = false)
+        )
+      );
+    }
   }
 
   private bindFormControl() {
@@ -110,9 +182,11 @@ export class ConnectionComponent implements OnInit, OnDestroy {
     this.componentSubscriptions.push(
       this.actionControl.valueChanges.subscribe((action) => {
         if (action) {
-          this.addConnectionSelected = action === "Add connection";
+          this.addConnectionSelected =
+            action === ConnectionActions.ADD_CONNECTION;
           this.showReasonDropdown =
-            this.addConnectionSelected || action === "Remove connection";
+            this.addConnectionSelected ||
+            action === ConnectionActions.REMOVE_CONNECTION;
           this.showReasonText = !this.showReasonDropdown;
 
           if (this.addConnectionSelected) {
@@ -137,12 +211,5 @@ export class ConnectionComponent implements OnInit, OnDestroy {
     );
 
     this.updateConnectionForm.addControl("action", this.actionControl);
-  }
-
-  private resetForm() {
-    this.updateConnectionForm.reset();
-    this.showReasonDropdown = false;
-    this.showReasonText = false;
-    this.addConnectionSelected = false;
   }
 }

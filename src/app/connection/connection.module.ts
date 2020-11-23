@@ -13,9 +13,14 @@ import { ConnectionResolver } from "./connection.resolver";
 import { ConnectionService } from "./services/connection.service";
 import { ConnectionState } from "./state/connection.state";
 import { ConfirmDialogComponent } from "./confirm-dialog/confirm-dialog.component";
+import { UpdateConnectionComponent } from "./update-connection/update-connection.component";
 
 @NgModule({
-  declarations: [ConnectionComponent, ConfirmDialogComponent],
+  declarations: [
+    ConnectionComponent,
+    ConfirmDialogComponent,
+    UpdateConnectionComponent
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,

@@ -85,88 +85,10 @@
       ></tr>
     </table>
 
-    <mat-card *ngIf="enableUpdateConnection">
-      <mat-card-title>Update connection</mat-card-title>
-      <form [formGroup]="updateConnectionForm">
-        <div class="d-grid grid-container-3-col">
-          <mat-form-field>
-            <mat-label>Action</mat-label>
-            <mat-select formControlName="action">
-              <mat-option
-                *ngFor="let action of actions"
-                [value]="action.action"
-              >
-                {{ action.action }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="actionControl?.hasError('required')">
-              Please select an action
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field *ngIf="showReasonDropdown">
-            <mat-label>Reason</mat-label>
-            <mat-select formControlName="reason">
-              <mat-option *ngFor="let reason of reasons" [value]="reason.code">
-                {{ reason.reason }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="reasonControl?.hasError('required')">
-              Please select a reason
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field *ngIf="showReasonText">
-            <mat-label>Reason</mat-label>
-            <input matInput type="text" formControlName="reason" />
-            <mat-error *ngIf="reasonControl?.hasError('required')">
-              Please input reason
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field *ngIf="addConnectionSelected">
-            <mat-label>Dbc</mat-label>
-            <mat-select formControlName="dbc">
-              <mat-option *ngFor="let dbc of userDbcs" [value]="dbc.dbc">
-                {{ dbc.abbr }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="dbcControl?.hasError('required')">
-              Please select a designated body
-            </mat-error>
-          </mat-form-field>
-        </div>
-
-        <div class="button-row">
-          <button
-            mat-button
-            type="button"
-            aria-label="Reset changes"
-            (click)="resetForm()"
-            mat-raised-button
-            color="primary"
-            [disabled]="
-              updateConnectionForm ? !updateConnectionForm.touched : true
-            "
-          >
-            Reset
-          </button>
-
-          <button
-            mat-button
-            type="button"
-            aria-label="Submit changes"
-            mat-raised-button
-            color="accent"
-            (click)="openDialog()"
-            [disabled]="
-              updateConnectionForm ? !updateConnectionForm.valid : true
-            "
-          >
-            Save
-          </button>
-        </div>
-      </form>
-    </mat-card>
+    <app-update-connection
+      *ngIf="enableUpdateConnection"
+      (submittFormEvent)="updateConnection($event)"
+    >
+    </app-update-connection>
   </div>
 </ng-template>

@@ -45,8 +45,8 @@ export class ConnectionComponent implements OnInit, OnDestroy {
   dateFormat = environment.dateFormat;
   columnsToDisplay = [
     "programmeName",
-    "designatedBodyCode",
     "programmeOwner",
+    "designatedBodyCode",
     "connectionStatus",
     "programmeMembershipStartDate",
     "programmeMembershipEndDate"

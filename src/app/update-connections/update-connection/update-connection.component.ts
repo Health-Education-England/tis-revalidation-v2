@@ -11,6 +11,7 @@ import {
 } from "src/app/shared/confirm-dialog/confirm-dialog.component";
 import { ReferenceService } from "src/app/reference/services/reference.service";
 import { ActionType, IAction, IReason } from "../update-connections.interfaces";
+import { ConnectionService } from "src/app/connection/services/connection.service";
 
 @Component({
   selector: "app-update-connection",
@@ -30,15 +31,15 @@ export class UpdateConnectionComponent implements OnInit {
   userDbcs: IDesignatedBody[] = [];
   actions: IAction[] = [];
   reasons: IReason[] = [];
+  canSave = true;
 
   addConnectionSelected = false;
-  showReasonDropdown = false;
-  showReasonText = false;
 
   constructor(
     private authService: AuthService,
     public dialog: MatDialog,
-    private referenceService: ReferenceService
+    private referenceService: ReferenceService,
+    public connectionService: ConnectionService
   ) {
     this.actions = CONNECTION_ACTIONS;
   }
@@ -53,6 +54,9 @@ export class UpdateConnectionComponent implements OnInit {
         );
       }
     });
+    this.connectionService.canSave$.subscribe(
+      (result) => (this.canSave = result)
+    );
   }
 
   onSubmitt() {
@@ -74,9 +78,8 @@ export class UpdateConnectionComponent implements OnInit {
 
   resetForm() {
     this.updateConnectionForm.reset();
-    this.showReasonDropdown = false;
-    this.showReasonText = false;
     this.addConnectionSelected = false;
+    this.reasons = [];
   }
 
   private bindFormControl() {
@@ -94,10 +97,6 @@ export class UpdateConnectionComponent implements OnInit {
       this.actionControl.valueChanges.subscribe((action) => {
         if (action) {
           this.addConnectionSelected = action === ActionType.ADD_CONNECTION;
-          this.showReasonDropdown =
-            this.addConnectionSelected ||
-            action === ActionType.REMOVE_CONNECTION;
-          this.showReasonText = !this.showReasonDropdown;
 
           if (this.addConnectionSelected) {
             this.dbcControl.setValidators(Validators.required);
@@ -109,18 +108,15 @@ export class UpdateConnectionComponent implements OnInit {
           }
 
           this.reasonControl.setValue("");
-          if (this.showReasonDropdown) {
-            this.reasons =
-              CONNECTION_ACTIONS.find((arm) => arm.action === action).reasons ||
-              [];
-          }
-
-          this.updateConnectionForm.addControl("reason", this.reasonControl);
+          this.reasons =
+            CONNECTION_ACTIONS.find((arm) => arm.action === action)?.reasons ||
+            [];
           this.reasonControl.updateValueAndValidity();
         }
       })
     );
 
     this.updateConnectionForm.addControl("action", this.actionControl);
+    this.updateConnectionForm.addControl("reason", this.reasonControl);
   }
 }

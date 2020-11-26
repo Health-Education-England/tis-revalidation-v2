@@ -3,12 +3,15 @@ import { Select } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
 
 import { environment } from "@environment";
-import { IConnectionHistory, IDesignatedBody } from "./connection.interfaces";
+import { IConnectionHistory } from "./connection.interfaces";
 import { ConnectionState } from "./state/connection.state";
 import { AuthService } from "../core/auth/auth.service";
-import { ActionType, ADMIN_ROLES } from "./constants";
 import { SnackBarService } from "../shared/services/snack-bar/snack-bar.service";
 import { ConnectionService } from "./services/connection.service";
+import { ADMIN_ROLES } from "../connections/constants";
+import { IDesignatedBody } from "../reference/reference.interfaces";
+import { ReferenceService } from "../reference/services/reference.service";
+import { ActionType } from "../update-connections/update-connections.interfaces";
 
 @Component({
   selector: "app-connection",
@@ -18,9 +21,6 @@ import { ConnectionService } from "./services/connection.service";
 export class ConnectionComponent implements OnInit, OnDestroy {
   @Select(ConnectionState.connectionHistory)
   public connectionHistory$: Observable<IConnectionHistory[]>;
-
-  @Select(ConnectionState.dbcs)
-  public dbcs$: Observable<IDesignatedBody[]>;
 
   @Select(ConnectionState.gmcNumber)
   public gmcNumber$: Observable<number>;
@@ -48,7 +48,8 @@ export class ConnectionComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private snackBarService: SnackBarService,
-    private connectionService: ConnectionService
+    private connectionService: ConnectionService,
+    private referenceService: ReferenceService
   ) {}
 
   ngOnInit(): void {
@@ -56,15 +57,10 @@ export class ConnectionComponent implements OnInit, OnDestroy {
       ADMIN_ROLES.includes(role)
     );
 
-    this.dbcs$.subscribe((res) => {
-      this.dbcs = res;
-    });
     this.gmcNumber$.subscribe((res) => (this.gmcNumber = res));
     this.doctorCurrentDbc$.subscribe((res) => (this.doctorCurrentDbc = res));
-  }
-
-  setSubmitting(value: boolean) {
-    this.submitting = value;
+    this.referenceService.getDbcs().subscribe((res) => (this.dbcs = res));
+    this.connectionService.canSave$.next(true);
   }
 
   ngOnDestroy(): void {
@@ -85,15 +81,25 @@ export class ConnectionComponent implements OnInit, OnDestroy {
         subscription = this.connectionService.addConnection({
           changeReason: formValue.reason,
           designatedBodyCode: formValue.dbc,
-          gmcId: this.gmcNumber
+          doctors: [
+            {
+              gmcId: this.gmcNumber,
+              currentDesignatedBodyCode: this.doctorCurrentDbc
+            }
+          ]
         });
         break;
 
       case ActionType.REMOVE_CONNECTION:
         subscription = this.connectionService.removeConnection({
           changeReason: formValue.reason,
-          designatedBodyCode: this.doctorCurrentDbc,
-          gmcId: this.gmcNumber
+          designatedBodyCode: null,
+          doctors: [
+            {
+              gmcId: this.gmcNumber,
+              currentDesignatedBodyCode: this.doctorCurrentDbc
+            }
+          ]
         });
         break;
 

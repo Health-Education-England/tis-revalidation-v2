@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-
+import { NgxsModule } from "@ngxs/store";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { RouterTestingModule } from "@angular/router/testing";
 import { UpdateConnetionsBtnComponent } from "./update-connetions-btn.component";
 
 describe("UpdateConnetionsBtnComponent", () => {
@@ -8,6 +10,11 @@ describe("UpdateConnetionsBtnComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [
+        NgxsModule.forRoot(),
+        HttpClientTestingModule,
+        RouterTestingModule
+      ],
       declarations: [UpdateConnetionsBtnComponent]
     }).compileComponents();
   });

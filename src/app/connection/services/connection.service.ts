@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "@environment";
-import { Observable, of, throwError } from "rxjs";
+import { BehaviorSubject, Observable, of, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { IConnectionResponse } from "../connection.interfaces";
 
@@ -9,6 +9,10 @@ import { IConnectionResponse } from "../connection.interfaces";
   providedIn: "root"
 })
 export class ConnectionService {
+  public canSave$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
+
   constructor(private http: HttpClient) {}
 
   getConnectionHistory(
@@ -19,15 +23,15 @@ export class ConnectionService {
     );
   }
 
-  addConnection(formData: any) {
+  addConnection(payload: any) {
     return this.http
-      .post(`${environment.appUrls.getConnections}/add`, formData)
+      .post(`${environment.appUrls.getConnections}/add`, payload)
       .pipe(catchError(this.errorCallback));
   }
 
-  removeConnection(formData: any) {
+  removeConnection(payload: any) {
     return this.http
-      .post(`${environment.appUrls.getConnections}/remove`, formData)
+      .post(`${environment.appUrls.getConnections}/remove`, payload)
       .pipe(catchError(this.errorCallback));
   }
 

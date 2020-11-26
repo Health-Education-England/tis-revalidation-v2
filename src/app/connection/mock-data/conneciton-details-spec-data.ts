@@ -1,7 +1,6 @@
 import {
   IConnectionResponse,
   IConnectionDetails,
-  IDesignatedBody,
   IUserDBC
 } from "../connection.interfaces";
 
@@ -35,36 +34,11 @@ const connection: IConnectionDetails = {
   ]
 };
 
-const dbcs: IDesignatedBody[] = [
-  {
-    id: 1,
-    dbc: "1-AIIDWT",
-    name: "Health Education England East of England",
-    abbr: "HEEOE",
-    status: "CURRENT"
-  },
-  {
-    id: 2,
-    dbc: "1-AIIDR8",
-    name: "Health Education England Kent, Surrey and Sussex",
-    abbr: "HEKSS",
-    status: "CURRENT"
-  },
-  {
-    id: 3,
-    dbc: "1-AIIDSA",
-    name: "Health Education England East Midlands",
-    abbr: "HEEM",
-    status: "CURRENT"
-  }
-];
-
 const designatedBodyCode: IUserDBC = {
   designatedBodyCode: "1-AIIDSA"
 };
 
 export const mockConnectionResponse: IConnectionResponse = {
   connection,
-  dbcs,
   designatedBodyCode
 };

@@ -9,8 +9,8 @@ import { mockDbcs } from "src/app/reference/mock-data/reference-spec.data";
 import { ConfirmDialogComponent } from "src/app/shared/confirm-dialog/confirm-dialog.component";
 import { SharedModule } from "src/app/shared/shared.module";
 import { MaterialModule } from "src/app/shared/material/material.module";
-import { ActionType } from "../connections.interfaces";
 import { UpdateConnectionComponent } from "./update-connection.component";
+import { ActionType } from "../update-connections.interfaces";
 
 describe("UpdateConnectionComponent", () => {
   let component: UpdateConnectionComponent;
@@ -44,7 +44,6 @@ describe("UpdateConnectionComponent", () => {
     fixture = TestBed.createComponent(UpdateConnectionComponent);
     component = fixture.componentInstance;
     Object.defineProperty(component, "dbcs$", { writable: true });
-    component.dbcs$ = of(mockDbcs);
     fixture.detectChanges();
   });
 

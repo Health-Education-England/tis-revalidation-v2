@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
 import { filter, take } from "rxjs/operators";
@@ -19,6 +18,7 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
     (state) => state[this.recordsService.stateName].enableAllocateAdmin
   );
 
+  public isConnectionsSummary: boolean;
   public form: FormGroup;
   public subscriptions: Subscription = new Subscription();
   @ViewChild("ngForm") public ngForm;
@@ -26,9 +26,10 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private store: Store,
-    private route: ActivatedRoute,
     private recordsService: RecordsService
-  ) {}
+  ) {
+    this.isConnectionsSummary = this.recordsService.stateName === "connections";
+  }
 
   ngOnInit() {
     this.setupForm();

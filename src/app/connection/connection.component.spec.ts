@@ -8,11 +8,10 @@ import { Subscription } from "rxjs";
 import { MaterialModule } from "../shared/material/material.module";
 import { ConnectionState } from "../connection/state/connection.state";
 import { ConnectionComponent } from "./connection.component";
-import { mockConnectionResponse } from "./mock-data/conneciton-details-spec-data";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { ActionType } from "./constants";
+import { mockDbcs } from "../reference/mock-data/reference-spec.data";
 import { ConnectionService } from "./services/connection.service";
 import { SnackBarService } from "../shared/services/snack-bar/snack-bar.service";
+import { ActionType } from "../update-connections/update-connections.interfaces";
 
 describe("ConnectionComponent", () => {
   let component: ConnectionComponent;
@@ -28,8 +27,7 @@ describe("ConnectionComponent", () => {
         MaterialModule,
         RouterTestingModule,
         ReactiveFormsModule,
-        FormsModule,
-        BrowserAnimationsModule
+        FormsModule
       ],
       declarations: [ConnectionComponent]
     }).compileComponents();
@@ -50,20 +48,13 @@ describe("ConnectionComponent", () => {
     expect(component).toBeTruthy();
   });
 
-  it("should change submitting proerty value when setSubitting is invoked", () => {
-    expect(component.submitting).toBeFalsy();
-
-    component.setSubmitting(true);
-    expect(component.submitting).toBeTruthy();
-  });
-
   it("should return dbc abbrevation when getDBCAbbrevation is called with dbc code", () => {
-    component.dbcs = mockConnectionResponse.dbcs;
+    component.dbcs = mockDbcs;
     expect(component.getDBCAbbrevation("1-AIIDSA")).toBe("HEEM");
   });
 
   it("should return dbc code when getDBCAbbrevation is called with unavailable dbc code", () => {
-    component.dbcs = mockConnectionResponse.dbcs;
+    component.dbcs = mockDbcs;
     expect(component.getDBCAbbrevation("1-RANDOM")).toBe("1-RANDOM");
   });
 
@@ -94,7 +85,7 @@ describe("ConnectionComponent", () => {
     expect(connectionService.addConnection).toHaveBeenCalledWith({
       changeReason: "Conflict of interset",
       designatedBodyCode: "1-ABCDE",
-      gmcId: 123456
+      doctors: [{ gmcId: 123456, currentDesignatedBodyCode: "" }]
     });
   });
 
@@ -113,8 +104,8 @@ describe("ConnectionComponent", () => {
     expect(component.submitting).toBeTruthy();
     expect(connectionService.removeConnection).toHaveBeenCalledWith({
       changeReason: "Conflict of interset",
-      designatedBodyCode: "1-ABCDE",
-      gmcId: 123456
+      designatedBodyCode: null,
+      doctors: [{ gmcId: 123456, currentDesignatedBodyCode: "1-ABCDE" }]
     });
   });
 

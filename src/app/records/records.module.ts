@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { AdminsModule } from "../admins/admins.module";
 import { MaterialModule } from "../shared/material/material.module";
 import { SharedModule } from "../shared/shared.module";
+import { UpdateConnectionsModule } from "../update-connections/update-connections.module";
 import { RecordListFiltersComponent } from "./record-list-filters/record-list-filters.component";
 import { RecordListPaginatorComponent } from "./record-list-paginator/record-list-paginator.component";
 import { RecordListComponent } from "./record-list/record-list.component";
@@ -31,7 +32,8 @@ const components: any[] = [
     MaterialModule,
     AdminsModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    UpdateConnectionsModule
   ],
   exports: components
 })

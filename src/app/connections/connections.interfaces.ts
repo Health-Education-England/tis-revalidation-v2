@@ -1,7 +1,9 @@
 import { IGetRecordsResponse } from "../records/records.interfaces";
+import { IDesignatedBody } from "../reference/reference.interfaces";
 
 export interface IGetConnectionsResponse extends IGetRecordsResponse {
   connections: IConnection[];
+  dbcs: IDesignatedBody[];
 }
 
 export interface IConnection {

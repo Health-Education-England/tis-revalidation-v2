@@ -14,7 +14,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field *ngIf="showReasonDropdown">
+      <mat-form-field *ngIf="reasons.length > 0; else reasonText">
         <mat-label>Reason</mat-label>
         <mat-select formControlName="reason">
           <mat-option *ngFor="let reason of reasons" [value]="reason.code">
@@ -26,13 +26,15 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field *ngIf="showReasonText">
-        <mat-label>Reason</mat-label>
-        <input matInput type="text" formControlName="reason" />
-        <mat-error *ngIf="reasonControl?.hasError('required')">
-          Please input reason
-        </mat-error>
-      </mat-form-field>
+      <ng-template #reasonText>
+        <mat-form-field>
+          <mat-label>Reason</mat-label>
+          <input matInput type="text" formControlName="reason" />
+          <mat-error *ngIf="reasonControl?.hasError('required')">
+            Please input reason
+          </mat-error>
+        </mat-form-field>
+      </ng-template>
 
       <mat-form-field *ngIf="addConnectionSelected">
         <mat-label>Dbc</mat-label>
@@ -67,7 +69,9 @@
         mat-raised-button
         color="accent"
         (click)="onSubmitt()"
-        [disabled]="updateConnectionForm ? !updateConnectionForm.valid : true"
+        [disabled]="
+          canSave && updateConnectionForm ? !updateConnectionForm.valid : true
+        "
       >
         Save
       </button>

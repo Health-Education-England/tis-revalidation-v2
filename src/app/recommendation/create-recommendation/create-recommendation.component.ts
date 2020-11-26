@@ -125,7 +125,7 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
   saveDraft(procced: boolean): void {
     if (this.recommendationForm.valid) {
       const formValue = this.recommendationForm.value;
-      this.recommendation.admin = this.auth.userName;
+      this.recommendation.admin = this.auth.fullName;
       this.recommendation.recommendationType = formValue.action;
       this.recommendation.comments = this.appComments.comments.value
         .filter((comments: { comment: string; checkbox: boolean }) => {

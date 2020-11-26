@@ -1,13 +1,6 @@
-import { IAction } from "./connection.interfaces";
+import { ActionType, IAction } from "./update-connections.interfaces";
 
-export enum ActionType {
-  ADD_CONNECTION = "Add connection",
-  REMOVE_CONNECTION = "Remove connection",
-  REVIEW_CONNECTION = "Review connection",
-  IGNORE_CONNECTION = "Ignore connection"
-}
-
-export const ACTIONS: IAction[] = [
+export const CONNECTION_ACTIONS: IAction[] = [
   {
     action: ActionType.ADD_CONNECTION,
     reasons: [
@@ -30,10 +23,4 @@ export const ACTIONS: IAction[] = [
       }
     ]
   }
-];
-
-export const ADMIN_ROLES = [
-  "RevalSuperAdmin",
-  "RevalTISAdmin1",
-  "RevalTISAdmin2"
 ];

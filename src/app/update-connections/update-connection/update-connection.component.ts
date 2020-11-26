@@ -1,13 +1,16 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
-import { Select } from "@ngxs/store";
-import { Observable, Subscription } from "rxjs";
+import { Subscription } from "rxjs";
 import { AuthService } from "src/app/core/auth/auth.service";
-import { ConfirmDialogComponent } from "../confirm-dialog/confirm-dialog.component";
-import { IAction, IDesignatedBody, IReason } from "../connection.interfaces";
-import { ACTIONS, ActionType } from "../constants";
-import { ConnectionState } from "../state/connection.state";
+import { CONNECTION_ACTIONS } from "../constants";
+import { IDesignatedBody } from "src/app/reference/reference.interfaces";
+import {
+  ConfirmDialogComponent,
+  ConfirmDialogModel
+} from "src/app/shared/confirm-dialog/confirm-dialog.component";
+import { ReferenceService } from "src/app/reference/services/reference.service";
+import { ActionType, IAction, IReason } from "../update-connections.interfaces";
 
 @Component({
   selector: "app-update-connection",
@@ -16,9 +19,6 @@ import { ConnectionState } from "../state/connection.state";
 })
 export class UpdateConnectionComponent implements OnInit {
   @Output() submittFormEvent = new EventEmitter<any>();
-
-  @Select(ConnectionState.dbcs)
-  public dbcs$: Observable<IDesignatedBody[]>;
 
   componentSubscriptions: Subscription[] = [];
   updateConnectionForm: FormGroup;
@@ -35,13 +35,17 @@ export class UpdateConnectionComponent implements OnInit {
   showReasonDropdown = false;
   showReasonText = false;
 
-  constructor(private authService: AuthService, public dialog: MatDialog) {
-    this.actions = ACTIONS;
+  constructor(
+    private authService: AuthService,
+    public dialog: MatDialog,
+    private referenceService: ReferenceService
+  ) {
+    this.actions = CONNECTION_ACTIONS;
   }
 
   ngOnInit(): void {
     this.bindFormControl();
-    this.dbcs$.subscribe((res) => {
+    this.referenceService.getDbcs().subscribe((res) => {
       if (res) {
         this.dbcs = res;
         this.userDbcs = res.filter((r) =>
@@ -53,8 +57,12 @@ export class UpdateConnectionComponent implements OnInit {
 
   onSubmitt() {
     if (this.updateConnectionForm.valid) {
+      const dialogData = new ConfirmDialogModel(
+        "Confirm Action",
+        "Are you sure you want to save changes to all selected records?"
+      );
       this.dialog
-        .open(ConfirmDialogComponent)
+        .open(ConfirmDialogComponent, { data: dialogData })
         .afterClosed()
         .subscribe((result) => {
           if (result) {
@@ -103,7 +111,8 @@ export class UpdateConnectionComponent implements OnInit {
           this.reasonControl.setValue("");
           if (this.showReasonDropdown) {
             this.reasons =
-              ACTIONS.find((arm) => arm.action === action).reasons || [];
+              CONNECTION_ACTIONS.find((arm) => arm.action === action).reasons ||
+              [];
           }
 
           this.updateConnectionForm.addControl("reason", this.reasonControl);

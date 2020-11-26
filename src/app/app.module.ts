@@ -7,7 +7,9 @@ import {
   SwRegistrationOptions
 } from "@angular/service-worker";
 import { NgxsModule } from "@ngxs/store";
+import { Router } from "@angular/router";
 
+import { ReferenceModule } from "./reference/reference.module";
 import {
   AnalyticsModule,
   HotJarModule,
@@ -27,11 +29,11 @@ import { errorHandlerFactory } from "./factories/error-handler.factory";
 import { analyticsConfigFactory } from "./factories/google-analytics-config.factory";
 import { hotjarConfigFactory } from "./factories/hotjar-config.factory";
 import { swRegistrationOptionsFactory } from "./factories/sw-registration-options.factory";
-import { Router } from "@angular/router";
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    ReferenceModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,

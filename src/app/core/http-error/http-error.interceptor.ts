@@ -24,9 +24,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         const message: string = this.errorService.generateErrorMsg(error);
         this.snackBarService.openSnackBar(message);
 
-        return error.status === 200 && error.statusText === "OK"
-          ? of(message)
-          : throwError(message);
+        return throwError(message);
       })
     );
   }

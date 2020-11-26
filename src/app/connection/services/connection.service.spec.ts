@@ -58,4 +58,21 @@ describe("ConcernService", () => {
 
     http.verify();
   });
+
+  it("should throw error when add/remove connection api call fail", () => {
+    let response: any;
+    let errResponse: any;
+    const mockErrorResponse = { status: 400, statusText: "Bad Request" };
+    const data = "Invalid request parameters";
+
+    service.removeConnection({}).subscribe(
+      (res) => (response = res),
+      (err) => (errResponse = err)
+    );
+    http
+      .expectOne(`${environment.appUrls.getConnections}/remove`)
+      .flush(data, mockErrorResponse);
+
+    expect(errResponse.error).toBe(data);
+  });
 });

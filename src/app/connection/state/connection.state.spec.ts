@@ -59,4 +59,16 @@ describe("Connection actions", () => {
     );
     httpMock.verify();
   }));
+
+  it("should throw error when gmcNumber is undefined", fakeAsync(() => {
+    const gmcNumber = undefined;
+    store.dispatch(new Get(gmcNumber)).subscribe(
+      () => {},
+      (error) => {
+        expect(error.toString()).toContain(
+          "gmcNumber undefined must be of type number"
+        );
+      }
+    );
+  }));
 });

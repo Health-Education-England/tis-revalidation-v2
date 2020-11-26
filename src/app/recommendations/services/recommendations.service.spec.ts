@@ -4,7 +4,10 @@ import { TestBed } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { BehaviorSubject, Observable, of } from "rxjs";
-import { RecommendationStatus } from "../../recommendation/recommendation-history.interface";
+import {
+  RecommendationStatus,
+  RecommendationGmcOutcome
+} from "../../recommendation/recommendation-history.interface";
 import {
   FilterRecommendations,
   ResetRecommendationsPaginator,
@@ -33,7 +36,8 @@ export const mockRecommendationsResponse: IGetRecommendationsResponse = {
       lastUpdatedDate: "2015-09-08",
       programmeMembershipType: "",
       programmeName: "",
-      designatedBody: "2-09876"
+      designatedBody: "2-09876",
+      gmcOutcome: RecommendationGmcOutcome.APPROVED
     },
     {
       dateAdded: "2017-09-01",
@@ -49,7 +53,8 @@ export const mockRecommendationsResponse: IGetRecommendationsResponse = {
       lastUpdatedDate: "2015-09-08",
       programmeMembershipType: "",
       programmeName: "",
-      designatedBody: "1-345678"
+      designatedBody: "1-345678",
+      gmcOutcome: RecommendationGmcOutcome.REJECTED
     }
   ],
   countTotal: 21312,

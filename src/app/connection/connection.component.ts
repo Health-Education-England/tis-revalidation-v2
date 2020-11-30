@@ -72,7 +72,7 @@ export class ConnectionComponent implements OnInit, OnDestroy {
     }
   }
 
-  getDBCAbbrevation(dbc: string) {
+  getDBCAbbreviation(dbc: string) {
     return this.dbcs.find((d) => d.dbc === dbc)?.abbr || dbc;
   }
 

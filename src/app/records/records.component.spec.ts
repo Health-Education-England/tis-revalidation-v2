@@ -4,17 +4,21 @@ import { NgxsModule } from "@ngxs/store";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { RecordsComponent } from "./records.component";
+import { SnackBarService } from "../shared/services/snack-bar/snack-bar.service";
+import { MaterialModule } from "../shared/material/material.module";
 
 describe("RecordsComponent", () => {
   let component: RecordsComponent;
   let fixture: ComponentFixture<RecordsComponent>;
+  let snackBarService: SnackBarService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         NgxsModule.forRoot(),
         HttpClientTestingModule,
-        RouterTestingModule
+        RouterTestingModule,
+        MaterialModule
       ],
       declarations: [RecordsComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -22,6 +26,7 @@ describe("RecordsComponent", () => {
   }));
 
   beforeEach(() => {
+    snackBarService = TestBed.inject(SnackBarService);
     fixture = TestBed.createComponent(RecordsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

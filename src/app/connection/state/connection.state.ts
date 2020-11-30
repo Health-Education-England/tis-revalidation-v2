@@ -2,10 +2,8 @@ import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { map } from "rxjs/operators";
 import {
-  IConnectionDetails,
   IConnectionHistory,
-  IConnectionResponse,
-  IDesignatedBody
+  IConnectionResponse
 } from "../connection.interfaces";
 import { ConnectionService } from "../services/connection.service";
 import { Get } from "./connection.actions";
@@ -13,7 +11,6 @@ import { Get } from "./connection.actions";
 export class ConnectionStateModel {
   public gmcNumber: number;
   public connectionHistory: IConnectionHistory[];
-  public dbcs: IDesignatedBody[];
   public doctorCurrentDbc: string;
 }
 
@@ -22,7 +19,6 @@ export class ConnectionStateModel {
   defaults: {
     gmcNumber: null,
     connectionHistory: [],
-    dbcs: [],
     doctorCurrentDbc: ""
   }
 })
@@ -33,11 +29,6 @@ export class ConnectionState {
   @Selector()
   public static connectionHistory(state: ConnectionStateModel) {
     return state.connectionHistory;
-  }
-
-  @Selector()
-  public static dbcs(state: ConnectionStateModel) {
-    return state.dbcs;
   }
 
   @Selector()
@@ -61,7 +52,6 @@ export class ConnectionState {
         patchState({
           gmcNumber: response.connection.gmcNumber,
           connectionHistory: response.connection.connectionHistory,
-          dbcs: response.dbcs,
           doctorCurrentDbc: response.designatedBodyCode.designatedBodyCode
         });
       })

@@ -1,0 +1,19 @@
+<ng-container *ngIf="enableUpdateConnection$ | async; else isDisabled">
+  <button
+    mat-menu-item
+    aria-label="Disable update connections"
+    (click)="disableUpdateConnection()"
+  >
+    Disable update connections
+  </button>
+</ng-container>
+
+<ng-template #isDisabled>
+  <button
+    mat-menu-item
+    aria-label="Enable update connections"
+    (click)="enableUpdateConnection()"
+  >
+    Enable update connections
+  </button>
+</ng-template>

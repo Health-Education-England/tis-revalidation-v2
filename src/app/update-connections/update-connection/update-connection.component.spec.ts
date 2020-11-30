@@ -5,12 +5,12 @@ import { MatDialog } from "@angular/material/dialog";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
 import { of } from "rxjs";
-
+import { mockDbcs } from "src/app/reference/mock-data/reference-spec.data";
+import { ConfirmDialogComponent } from "src/app/shared/confirm-dialog/confirm-dialog.component";
+import { SharedModule } from "src/app/shared/shared.module";
 import { MaterialModule } from "src/app/shared/material/material.module";
-import { ConfirmDialogComponent } from "../confirm-dialog/confirm-dialog.component";
-import { ActionType } from "../constants";
-import { mockConnectionResponse } from "../mock-data/conneciton-details-spec-data";
 import { UpdateConnectionComponent } from "./update-connection.component";
+import { ActionType } from "../update-connections.interfaces";
 
 describe("UpdateConnectionComponent", () => {
   let component: UpdateConnectionComponent;
@@ -27,7 +27,8 @@ describe("UpdateConnectionComponent", () => {
         RouterTestingModule,
         ReactiveFormsModule,
         FormsModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        SharedModule
       ],
       declarations: [UpdateConnectionComponent],
       providers: [
@@ -43,14 +44,12 @@ describe("UpdateConnectionComponent", () => {
     fixture = TestBed.createComponent(UpdateConnectionComponent);
     component = fixture.componentInstance;
     Object.defineProperty(component, "dbcs$", { writable: true });
-    component.dbcs$ = of(mockConnectionResponse.dbcs);
     fixture.detectChanges();
   });
 
   it("should create", () => {
     expect(component).toBeTruthy();
-
-    expect(component.dbcs).toBe(mockConnectionResponse.dbcs);
+    expect(component.dbcs).toBe(mockDbcs);
   });
 
   it("form invalid when empty", () => {

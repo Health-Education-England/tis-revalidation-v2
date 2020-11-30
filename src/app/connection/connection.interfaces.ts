@@ -1,8 +1,5 @@
-import { ActionType } from "./constants";
-
 export interface IConnectionResponse {
   connection: IConnectionDetails;
-  dbcs: IDesignatedBody[];
   designatedBodyCode: IUserDBC;
 }
 
@@ -27,24 +24,6 @@ export interface IConnectionHistory {
   programmeMembershipEndDate: Date;
 }
 
-export interface IDesignatedBody {
-  id: number;
-  dbc: string;
-  name: string;
-  abbr: string;
-  status: string;
-}
-
 export interface IUserDBC {
   designatedBodyCode: string;
-}
-
-export interface IAction {
-  action: ActionType;
-  reasons: IReason[];
-}
-
-export interface IReason {
-  code: string;
-  reason: string;
 }

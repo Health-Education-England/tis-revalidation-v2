@@ -3,7 +3,10 @@ import { Injectable } from "@angular/core";
 import { environment } from "@environment";
 import { BehaviorSubject, Observable, of, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
-import { IConnectionResponse } from "../connection.interfaces";
+import {
+  IConnectionResponse,
+  IUpdateConnectionResponse
+} from "../connection.interfaces";
 
 @Injectable({
   providedIn: "root"
@@ -23,15 +26,15 @@ export class ConnectionService {
     );
   }
 
-  addConnection(payload: any) {
+  updateConnection(
+    payload: any,
+    action: string
+  ): Observable<IUpdateConnectionResponse> {
     return this.http
-      .post(`${environment.appUrls.getConnections}/add`, payload)
-      .pipe(catchError(this.errorCallback));
-  }
-
-  removeConnection(payload: any) {
-    return this.http
-      .post(`${environment.appUrls.getConnections}/remove`, payload)
+      .post<IUpdateConnectionResponse>(
+        `${environment.appUrls.getConnections}/${action}`,
+        payload
+      )
       .pipe(catchError(this.errorCallback));
   }
 

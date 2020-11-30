@@ -70,57 +70,49 @@ describe("ConnectionComponent", () => {
   });
 
   it("should invoke addConnection in ConnectionService correct form data is passed", () => {
-    spyOn(connectionService, "addConnection");
+    spyOn(connectionService, "updateConnection").and.callThrough();
 
     const formValue = {
       action: ActionType.ADD_CONNECTION,
       reason: "Conflict of interset",
-      dbc: "1-ABCDE"
+      dbc: "1-FGHIJ"
     };
 
+    component.doctorCurrentDbc = "1-ABCDE";
     component.gmcNumber = 123456;
     component.updateConnection(formValue);
 
     expect(component.submitting).toBeTruthy();
-    expect(connectionService.addConnection).toHaveBeenCalledWith({
-      changeReason: "Conflict of interset",
-      designatedBodyCode: "1-ABCDE",
-      doctors: [{ gmcId: 123456, currentDesignatedBodyCode: "" }]
-    });
+    expect(connectionService.updateConnection).toHaveBeenCalledWith(
+      {
+        changeReason: "Conflict of interset",
+        designatedBodyCode: "1-FGHIJ",
+        doctors: [{ gmcId: 123456, currentDesignatedBodyCode: "1-ABCDE" }]
+      },
+      "add"
+    );
   });
 
   it("should invoke removeConnection in ConnectionService correct form data is passed", () => {
-    spyOn(connectionService, "removeConnection");
+    spyOn(connectionService, "updateConnection").and.callThrough();
 
-    component.doctorCurrentDbc = "1-ABCDE";
-    component.gmcNumber = 123456;
     const formValue = {
       action: ActionType.REMOVE_CONNECTION,
       reason: "Conflict of interset"
     };
 
+    component.doctorCurrentDbc = "1-ABCDE";
+    component.gmcNumber = 123456;
     component.updateConnection(formValue);
 
     expect(component.submitting).toBeTruthy();
-    expect(connectionService.removeConnection).toHaveBeenCalledWith({
-      changeReason: "Conflict of interset",
-      designatedBodyCode: null,
-      doctors: [{ gmcId: 123456, currentDesignatedBodyCode: "1-ABCDE" }]
-    });
-  });
-
-  it("should invoke `snackBarService.openSnackBar()` if action is not valid", () => {
-    spyOn(snackBarService, "openSnackBar");
-
-    const formValue = {
-      action: "UNKNOWN",
-      reason: "Conflict of interset"
-    };
-
-    component.updateConnection(formValue);
-
-    expect(snackBarService.openSnackBar).toHaveBeenCalledWith(
-      "Please select an action"
+    expect(connectionService.updateConnection).toHaveBeenCalledWith(
+      {
+        changeReason: "Conflict of interset",
+        designatedBodyCode: null,
+        doctors: [{ gmcId: 123456, currentDesignatedBodyCode: "1-ABCDE" }]
+      },
+      "remove"
     );
   });
 });

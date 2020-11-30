@@ -40,7 +40,7 @@ describe("ConcernService", () => {
   it("should add new connection", () => {
     const endPoint = `${environment.appUrls.getConnections}/add`;
 
-    service.addConnection({}).subscribe();
+    service.updateConnection({}, "add").subscribe();
 
     const mockHttp = http.expectOne(endPoint);
     expect(mockHttp.request.method).toBe("POST");
@@ -51,7 +51,7 @@ describe("ConcernService", () => {
   it("should remove current connection", () => {
     const endPoint = `${environment.appUrls.getConnections}/remove`;
 
-    service.removeConnection({}).subscribe();
+    service.updateConnection({}, "remove").subscribe();
 
     const mockHttp = http.expectOne(endPoint);
     expect(mockHttp.request.method).toBe("POST");
@@ -65,7 +65,7 @@ describe("ConcernService", () => {
     const mockErrorResponse = { status: 400, statusText: "Bad Request" };
     const data = "Invalid request parameters";
 
-    service.removeConnection({}).subscribe(
+    service.updateConnection({}, "remove").subscribe(
       (res) => (response = res),
       (err) => (errResponse = err)
     );

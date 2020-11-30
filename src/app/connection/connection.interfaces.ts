@@ -3,6 +3,10 @@ export interface IConnectionResponse {
   designatedBodyCode: IUserDBC;
 }
 
+export interface IUpdateConnectionResponse {
+  message: string;
+}
+
 export interface IConnectionDetails {
   gmcNumber: number;
   forenames: string;

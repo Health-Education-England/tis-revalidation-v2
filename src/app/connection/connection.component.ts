@@ -3,7 +3,10 @@ import { Select } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
 
 import { environment } from "@environment";
-import { IConnectionHistory } from "./connection.interfaces";
+import {
+  IConnectionHistory,
+  IUpdateConnectionResponse
+} from "./connection.interfaces";
 import { ConnectionState } from "./state/connection.state";
 import { AuthService } from "../core/auth/auth.service";
 import { SnackBarService } from "../shared/services/snack-bar/snack-bar.service";
@@ -75,52 +78,35 @@ export class ConnectionComponent implements OnInit, OnDestroy {
 
   updateConnection(formValue: any) {
     this.submitting = true;
-    let subscription: Observable<any>;
-    switch (formValue.action) {
-      case ActionType.ADD_CONNECTION:
-        subscription = this.connectionService.addConnection({
-          changeReason: formValue.reason,
-          designatedBodyCode: formValue.dbc,
-          doctors: [
-            {
-              gmcId: this.gmcNumber,
-              currentDesignatedBodyCode: this.doctorCurrentDbc
-            }
-          ]
-        });
-        break;
+    const doctors = [
+      {
+        gmcId: this.gmcNumber,
+        currentDesignatedBodyCode: this.doctorCurrentDbc
+      }
+    ];
 
-      case ActionType.REMOVE_CONNECTION:
-        subscription = this.connectionService.removeConnection({
-          changeReason: formValue.reason,
-          designatedBodyCode: null,
-          doctors: [
-            {
-              gmcId: this.gmcNumber,
-              currentDesignatedBodyCode: this.doctorCurrentDbc
-            }
-          ]
-        });
-        break;
+    const payload = {
+      changeReason: formValue.reason,
+      designatedBodyCode:
+        formValue.action === ActionType.ADD_CONNECTION ? formValue.dbc : null,
+      doctors
+    };
 
-      default:
-        this.snackBarService.openSnackBar("Please select an action");
-        this.submitting = false;
-        return;
-    }
+    const action =
+      formValue.action === ActionType.ADD_CONNECTION ? "add" : "remove";
 
-    if (subscription) {
-      this.componentSubscription = subscription.subscribe(
-        (response) => {
-          this.snackBarService.openSnackBar(response);
+    this.componentSubscription = this.connectionService
+      .updateConnection(payload, action)
+      .subscribe(
+        (response: IUpdateConnectionResponse) => {
+          this.snackBarService.openSnackBar(response.message);
         },
         (error) => {
-          this.snackBarService.openSnackBar(error);
+          this.snackBarService.openSnackBar(error.message);
         },
         () => {
           this.submitting = false;
         }
       );
-    }
   }
 }

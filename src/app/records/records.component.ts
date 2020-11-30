@@ -1,9 +1,11 @@
-import { Component } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 import { Store } from "@ngxs/store";
-import { Observable } from "rxjs";
-import { ClearAllocateList } from "../admins/state/admins.actions";
+import { Observable, Subscription } from "rxjs";
+import { IUpdateConnectionResponse } from "../connection/connection.interfaces";
 import { ConnectionService } from "../connection/services/connection.service";
 import { EnableUpdateConnections } from "../connections/state/connections.actions";
+import { SnackBarService } from "../shared/services/snack-bar/snack-bar.service";
+import { ActionType } from "../update-connections/update-connections.interfaces";
 import { RecordsService } from "./services/records.service";
 
 @Component({
@@ -11,7 +13,9 @@ import { RecordsService } from "./services/records.service";
   templateUrl: "./records.component.html",
   styleUrls: ["./records.component.scss"]
 })
-export class RecordsComponent {
+export class RecordsComponent implements OnDestroy {
+  componentSubscription: Subscription;
+
   public enableUpdateConnection$: Observable<boolean> = this.store.select(
     (state) => state[this.recordsService.stateName].enableUpdateConnections
   );
@@ -20,13 +24,14 @@ export class RecordsComponent {
     (state) => state[this.recordsService.stateName].items
   );
 
-  public selectedItems: any[];
+  public selectedItems = [];
   public isConnectionsSummary: boolean;
 
   constructor(
     private store: Store,
     private recordsService: RecordsService,
-    private connectionService: ConnectionService
+    private connectionService: ConnectionService,
+    private snackBarService: SnackBarService
   ) {
     this.isConnectionsSummary = this.recordsService.stateName === "connections";
 
@@ -37,9 +42,12 @@ export class RecordsComponent {
       }
     });
   }
+  ngOnDestroy(): void {
+    this.componentSubscription.unsubscribe();
+  }
 
   updateConnections(formValue: any) {
-    if (this.selectedItems && this.selectedItems.length > 0) {
+    if (this.selectedItems.length > 0) {
       const doctors = this.selectedItems.map((item) => ({
         gmcId: item.gmcReferenceNumber,
         currentDesignatedBodyCode: item.designatedBody
@@ -47,19 +55,28 @@ export class RecordsComponent {
 
       const payload = {
         changeReason: formValue.reason,
-        designatedBodyCode: formValue.dbc,
+        designatedBodyCode:
+          formValue.action === ActionType.ADD_CONNECTION ? formValue.dbc : null,
         doctors
       };
 
-      this.connectionService.addConnection(JSON.stringify(payload)).subscribe(
-        () => {},
-        () => {},
-        () => {
-          this.store.dispatch(new EnableUpdateConnections(false));
-          this.recordsService.enableAllocateAdmin(false);
-          this.recordsService.get();
-        }
-      );
+      const action =
+        formValue.action === ActionType.ADD_CONNECTION ? "add" : "remove";
+      this.componentSubscription = this.connectionService
+        .updateConnection(payload, action)
+        .subscribe(
+          (response: IUpdateConnectionResponse) => {
+            this.snackBarService.openSnackBar(response.message);
+          },
+          (error) => {
+            this.snackBarService.openSnackBar(error.message);
+          },
+          () => {
+            this.store.dispatch(new EnableUpdateConnections(false));
+            this.recordsService.enableAllocateAdmin(false);
+            this.recordsService.get();
+          }
+        );
     } else {
       alert("Please select doctors to update connections");
     }

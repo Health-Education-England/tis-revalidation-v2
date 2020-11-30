@@ -43,7 +43,9 @@ export class RecordsComponent implements OnDestroy {
     });
   }
   ngOnDestroy(): void {
-    this.componentSubscription.unsubscribe();
+    if (this.componentSubscription) {
+      this.componentSubscription.unsubscribe();
+    }
   }
 
   updateConnections(formValue: any) {

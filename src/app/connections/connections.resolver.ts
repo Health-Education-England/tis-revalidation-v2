@@ -5,17 +5,20 @@ import { Observable } from "rxjs";
 import { generateColumnData } from "../records/constants";
 import { RecordsResolver } from "../records/records.resolver";
 import { RecordsService } from "../records/services/records.service";
+import { UpdateConnectionsService } from "../update-connections/services/update-connections.service";
 import { ConnectionsFilterType } from "./connections.interfaces";
 import { COLUMN_DATA } from "./constants";
 
 @Injectable()
-export class ConnectionsResolver extends RecordsResolver
+export class ConnectionsResolver
+  extends RecordsResolver
   implements Resolve<any> {
   constructor(
     protected store: Store,
-    protected recordsService: RecordsService
+    protected recordsService: RecordsService,
+    protected updateConnectionsService: UpdateConnectionsService
   ) {
-    super(store, recordsService);
+    super(store, recordsService, updateConnectionsService);
     this.initialiseData();
   }
 

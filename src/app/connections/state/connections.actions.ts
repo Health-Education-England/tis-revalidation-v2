@@ -70,8 +70,3 @@ export class ToggleConnectionsCheckbox extends ToggleCheckboxPayload {
 export class ToggleAllConnectionsCheckboxes {
   static readonly type = `[Connections] Toggle All Checkboxes`;
 }
-
-export class EnableUpdateConnections {
-  constructor(public enableUpdateConnections: boolean) {}
-  static readonly type = `[Connections] Enable Update Connections`;
-}

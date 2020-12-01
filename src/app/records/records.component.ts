@@ -2,9 +2,9 @@ import { Component, OnDestroy } from "@angular/core";
 import { Store } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
 import { IUpdateConnectionResponse } from "../connection/connection.interfaces";
-import { ConnectionService } from "../connection/services/connection.service";
-import { EnableUpdateConnections } from "../connections/state/connections.actions";
 import { SnackBarService } from "../shared/services/snack-bar/snack-bar.service";
+import { UpdateConnectionsService } from "../update-connections/services/update-connections.service";
+import { EnableUpdateConnections } from "../update-connections/state/update-connections.actions";
 import { ActionType } from "../update-connections/update-connections.interfaces";
 import { RecordsService } from "./services/records.service";
 
@@ -16,8 +16,13 @@ import { RecordsService } from "./services/records.service";
 export class RecordsComponent implements OnDestroy {
   componentSubscription: Subscription;
 
-  public enableUpdateConnection$: Observable<boolean> = this.store.select(
-    (state) => state[this.recordsService.stateName].enableUpdateConnections
+  public enableUpdateConnections$: Observable<boolean> = this.store.select(
+    (state) =>
+      state[this.updateConnectionsService.stateName].enableUpdateConnections
+  );
+
+  public enableAllocateAdmin$: Observable<boolean> = this.store.select(
+    (state) => state[this.recordsService.stateName].enableAllocateAdmin
   );
 
   public items$: Observable<any[]> = this.store.select(
@@ -25,31 +30,34 @@ export class RecordsComponent implements OnDestroy {
   );
 
   public selectedItems = [];
-  public isConnectionsSummary: boolean;
+  public loading = false;
 
   constructor(
     private store: Store,
     private recordsService: RecordsService,
-    private connectionService: ConnectionService,
+    private updateConnectionsService: UpdateConnectionsService,
     private snackBarService: SnackBarService
   ) {
-    this.isConnectionsSummary = this.recordsService.stateName === "connections";
-
+    this.updateConnectionsService.canCancel$.next(true);
     this.items$.subscribe((items) => {
       if (items) {
         this.selectedItems = items.filter((item) => item.checked);
-        this.connectionService.canSave$.next(this.selectedItems.length > 0);
+        this.updateConnectionsService.canSave$.next(
+          this.selectedItems.length > 0
+        );
       }
     });
   }
   ngOnDestroy(): void {
     if (this.componentSubscription) {
       this.componentSubscription.unsubscribe();
+      this.updateConnectionsService.enableUpdateConnections(false);
     }
   }
 
   updateConnections(formValue: any) {
     if (this.selectedItems.length > 0) {
+      this.loading = true;
       const doctors = this.selectedItems.map((item) => ({
         gmcId: item.gmcReferenceNumber,
         currentDesignatedBodyCode: item.designatedBody
@@ -64,7 +72,7 @@ export class RecordsComponent implements OnDestroy {
 
       const action =
         formValue.action === ActionType.ADD_CONNECTION ? "add" : "remove";
-      this.componentSubscription = this.connectionService
+      this.componentSubscription = this.updateConnectionsService
         .updateConnection(payload, action)
         .subscribe(
           (response: IUpdateConnectionResponse) => {
@@ -77,10 +85,13 @@ export class RecordsComponent implements OnDestroy {
             this.store.dispatch(new EnableUpdateConnections(false));
             this.recordsService.enableAllocateAdmin(false);
             this.recordsService.get();
+            this.loading = false;
           }
         );
     } else {
-      alert("Please select doctors to update connections");
+      this.snackBarService.openSnackBar(
+        "Please select doctors to update connections"
+      );
     }
   }
 }

@@ -12,6 +12,7 @@ import {
 import { ReferenceService } from "src/app/reference/services/reference.service";
 import { ActionType, IAction, IReason } from "../update-connections.interfaces";
 import { ConnectionService } from "src/app/connection/services/connection.service";
+import { UpdateConnectionsService } from "../services/update-connections.service";
 
 @Component({
   selector: "app-update-connection",
@@ -32,6 +33,7 @@ export class UpdateConnectionComponent implements OnInit {
   actions: IAction[] = [];
   reasons: IReason[] = [];
   canSave = true;
+  canCancel = false;
 
   addConnectionSelected = false;
 
@@ -39,7 +41,7 @@ export class UpdateConnectionComponent implements OnInit {
     private authService: AuthService,
     public dialog: MatDialog,
     private referenceService: ReferenceService,
-    public connectionService: ConnectionService
+    public updateConnectionsService: UpdateConnectionsService
   ) {
     this.actions = CONNECTION_ACTIONS;
   }
@@ -54,15 +56,19 @@ export class UpdateConnectionComponent implements OnInit {
         );
       }
     });
-    this.connectionService.canSave$.subscribe(
+    this.updateConnectionsService.canSave$.subscribe(
       (result) => (this.canSave = result)
+    );
+
+    this.updateConnectionsService.canCancel$.subscribe(
+      (result) => (this.canCancel = result)
     );
   }
 
   onSubmitt() {
     if (this.updateConnectionForm.valid) {
       const dialogData = new ConfirmDialogModel(
-        "Confirm Action",
+        "Update connection(s)",
         "Are you sure you want to save changes to all selected records?"
       );
       this.dialog
@@ -80,6 +86,10 @@ export class UpdateConnectionComponent implements OnInit {
     this.updateConnectionForm.reset();
     this.addConnectionSelected = false;
     this.reasons = [];
+  }
+
+  cancel() {
+    this.updateConnectionsService.enableUpdateConnections(false);
   }
 
   private bindFormControl() {

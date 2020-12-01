@@ -1,12 +1,14 @@
 import { ActivatedRouteSnapshot, Params } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
+import { UpdateConnectionsService } from "../update-connections/services/update-connections.service";
 import { RecordsService } from "./services/records.service";
 
 export class RecordsResolver {
   constructor(
     protected store: Store,
-    protected recordsService: RecordsService
+    protected recordsService: RecordsService,
+    protected updateConnectionsService: UpdateConnectionsService
   ) {}
 
   /**
@@ -28,6 +30,8 @@ export class RecordsResolver {
       this.checkFilter(route.queryParams, state);
     } else {
       this.recordsService.resetRecordsState();
+      this.recordsService?.enableAllocateAdmin(false);
+      this.updateConnectionsService?.enableUpdateConnections(false);
     }
 
     return this.recordsService.get();

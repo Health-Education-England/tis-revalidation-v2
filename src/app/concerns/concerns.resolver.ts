@@ -6,15 +6,17 @@ import { ConcernStatus } from "../concern/concern.interfaces";
 import { generateColumnData } from "../records/constants";
 import { RecordsResolver } from "../records/records.resolver";
 import { RecordsService } from "../records/services/records.service";
+import { UpdateConnectionsService } from "../update-connections/services/update-connections.service";
 import { COLUMN_DATA } from "./constants";
 
 @Injectable()
 export class ConcernsResolver extends RecordsResolver implements Resolve<any> {
   constructor(
     protected store: Store,
-    protected recordsService: RecordsService
+    protected recordsService: RecordsService,
+    protected updateConnectionsService: UpdateConnectionsService
   ) {
-    super(store, recordsService);
+    super(store, recordsService, updateConnectionsService);
     this.initialiseData();
   }
 

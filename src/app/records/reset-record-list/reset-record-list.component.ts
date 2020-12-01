@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
+import { UpdateConnectionsService } from "src/app/update-connections/services/update-connections.service";
 import { RecordsService } from "../services/records.service";
 
 @Component({
@@ -13,7 +14,16 @@ export class ResetRecordListComponent {
     (state) => state[this.recordsService.stateName].enableAllocateAdmin
   );
 
-  constructor(private store: Store, private recordsService: RecordsService) {}
+  public enableUpdateConnections$: Observable<boolean> = this.store.select(
+    (state) =>
+      state[this.updateConnectionsService.stateName].enableUpdateConnections
+  );
+
+  constructor(
+    private store: Store,
+    private recordsService: RecordsService,
+    private updateConnectionsService: UpdateConnectionsService
+  ) {}
 
   public resetRecordList(): void {
     this.recordsService.resetSearchForm$.next(true);

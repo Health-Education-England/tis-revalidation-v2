@@ -8,6 +8,7 @@ import { RecordsService } from "../records/services/records.service";
 import { COLUMN_DATA } from "./constants";
 import { RecommendationsFilterType } from "./recommendations.interfaces";
 import { AuthService } from "../core/auth/auth.service";
+import { UpdateConnectionsService } from "../update-connections/services/update-connections.service";
 
 @Injectable()
 export class RecommendationsResolver
@@ -16,9 +17,10 @@ export class RecommendationsResolver
   constructor(
     protected store: Store,
     protected recordsService: RecordsService,
-    private authService: AuthService
+    private authService: AuthService,
+    protected updateConnectionsService: UpdateConnectionsService
   ) {
-    super(store, recordsService);
+    super(store, recordsService, updateConnectionsService);
     this.initialiseData();
   }
 

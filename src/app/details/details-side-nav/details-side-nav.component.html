@@ -22,9 +22,15 @@
       <div class="mat-caption" mat-line>Programme name:</div>
       <div mat-line>{{ traineeDetails.programmeName }}</div>
     </mat-list-item>
-    <mat-list-item *ngIf="traineeDetails.currentGrade">
+    <mat-list-item>
       <div class="mat-caption" mat-line>Current grade:</div>
-      <div mat-line>{{ traineeDetails.currentGrade }}</div>
+      <div mat-line>
+        {{
+          traineeDetails.currentGrade == null
+            ? "N/A"
+            : traineeDetails.currentGrade
+        }}
+      </div>
     </mat-list-item>
     <mat-list-item *ngIf="traineeDetails.cctDate">
       <div class="mat-caption" mat-line>CCT date:</div>

@@ -14,3 +14,14 @@ export interface IReason {
   code: string;
   reason: string;
 }
+
+export interface IUpdateConnection {
+  changeReason: string;
+  designatedBodyCode: string;
+  doctors: IDoctor[];
+}
+
+export interface IDoctor {
+  gmcId: number;
+  currentDesignatedBodyCode: string;
+}

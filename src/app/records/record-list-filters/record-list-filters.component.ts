@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
+import { UpdateConnectionsService } from "src/app/update-connections/services/update-connections.service";
 import { IFilter, ITotalCounts } from "../records.interfaces";
 import { RecordsService } from "../services/records.service";
 
@@ -19,9 +20,17 @@ export class RecordListFiltersComponent {
   public enableAllocateAdmin$: Observable<boolean> = this.store.select(
     (state) => state[this.recordsService.stateName].enableAllocateAdmin
   );
+  public enableUpdateConnections$: Observable<boolean> = this.store.select(
+    (state) =>
+      state[this.updateConnectionsService.stateName].enableUpdateConnections
+  );
   public filters: IFilter[] = this.recordsService.filters;
 
-  constructor(private store: Store, private recordsService: RecordsService) {}
+  constructor(
+    private store: Store,
+    private recordsService: RecordsService,
+    private updateConnectionsService: UpdateConnectionsService
+  ) {}
 
   public filterRecords(filter: string): void {
     this.recordsService.filter(filter);

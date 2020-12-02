@@ -1,8 +1,13 @@
-<div class="pt-30 pb-30 pl-15" *ngIf="enableAllocateAdmin$ | async">
-  <button mat-button mat-raised-button class="mr-10" (click)="cancel()">
-    Cancel
-  </button>
-  <button mat-button mat-raised-button color="primary" (click)="save()">
-    Save
-  </button>
+<div class="d-grid grid-container-3-col">
+  <div
+    class="d-grid grid-container-3-col pt-30 pb-30 pl-15"
+    *ngIf="enableAllocateAdmin$ | async"
+  >
+    <button mat-button mat-raised-button class="mr-10" (click)="cancel()">
+      Cancel
+    </button>
+    <button mat-button mat-raised-button color="primary" (click)="save()">
+      Save
+    </button>
+  </div>
 </div>

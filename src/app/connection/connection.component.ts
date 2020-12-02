@@ -15,6 +15,7 @@ import { ADMIN_ROLES } from "../connections/constants";
 import { IDesignatedBody } from "../reference/reference.interfaces";
 import { ReferenceService } from "../reference/services/reference.service";
 import { ActionType } from "../update-connections/update-connections.interfaces";
+import { UpdateConnectionsService } from "../update-connections/services/update-connections.service";
 
 @Component({
   selector: "app-connection",
@@ -51,7 +52,7 @@ export class ConnectionComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private snackBarService: SnackBarService,
-    private connectionService: ConnectionService,
+    private updateConnectionsService: UpdateConnectionsService,
     private referenceService: ReferenceService
   ) {}
 
@@ -63,7 +64,7 @@ export class ConnectionComponent implements OnInit, OnDestroy {
     this.gmcNumber$.subscribe((res) => (this.gmcNumber = res));
     this.doctorCurrentDbc$.subscribe((res) => (this.doctorCurrentDbc = res));
     this.referenceService.getDbcs().subscribe((res) => (this.dbcs = res));
-    this.connectionService.canSave$.next(true);
+    this.updateConnectionsService.canSave$.next(true);
   }
 
   ngOnDestroy(): void {
@@ -95,7 +96,7 @@ export class ConnectionComponent implements OnInit, OnDestroy {
     const action =
       formValue.action === ActionType.ADD_CONNECTION ? "add" : "remove";
 
-    this.componentSubscription = this.connectionService
+    this.componentSubscription = this.updateConnectionsService
       .updateConnection(payload, action)
       .subscribe(
         (response: IUpdateConnectionResponse) => {

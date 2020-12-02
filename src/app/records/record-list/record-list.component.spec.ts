@@ -104,7 +104,7 @@ describe("RecordListComponent", () => {
     spyOn(router, "navigate");
 
     component.detailsRoute = "/trainee";
-    component.navigateToDetails(mockEvent, mockRecommendation, false);
+    component.navigateToDetails(mockEvent, mockRecommendation, false, false);
     expect(router.navigate).toHaveBeenCalledWith([
       component.detailsRoute,
       mockRecommendation.gmcReferenceNumber

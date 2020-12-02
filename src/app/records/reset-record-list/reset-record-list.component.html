@@ -1,8 +1,12 @@
 <button
+  *ngIf="{
+    enableAllocateAdmin: enableAllocateAdmin$ | async,
+    enableUpdateConnections: enableUpdateConnections$ | async
+  } as data"
   mat-menu-item
   (click)="resetRecordList()"
   aria-label="Clear all"
-  [disabled]="enableAllocateAdmin$ | async"
+  [disabled]="data.nableAllocateAdmin || data.enableUpdateConnections"
 >
   Clear all
 </button>

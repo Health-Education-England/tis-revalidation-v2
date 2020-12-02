@@ -49,32 +49,47 @@
       </mat-form-field>
     </div>
 
-    <div class="button-row">
-      <button
-        mat-button
-        type="button"
-        aria-label="Reset changes"
-        (click)="resetForm()"
-        mat-raised-button
-        color="primary"
-        [disabled]="updateConnectionForm ? !updateConnectionForm.touched : true"
-      >
-        Reset
-      </button>
+    <div class="d-grid grid-container-3-col">
+      <div class="d-grid grid-container-3-col">
+        <button
+          mat-button
+          type=" button"
+          aria-label="Cancel update connections"
+          (click)="cancel()"
+          mat-raised-button
+          *ngIf="canCancel"
+          color="primary"
+        >
+          Cancel
+        </button>
 
-      <button
-        mat-button
-        type="button"
-        aria-label="Submit changes"
-        mat-raised-button
-        color="accent"
-        (click)="onSubmitt()"
-        [disabled]="
-          canSave && updateConnectionForm ? !updateConnectionForm.valid : true
-        "
-      >
-        Save
-      </button>
+        <button
+          mat-button
+          type=" button"
+          aria-label="Reset changes"
+          (click)="resetForm()"
+          mat-raised-button
+          [disabled]="
+            updateConnectionForm ? !updateConnectionForm.touched : true
+          "
+        >
+          Reset
+        </button>
+
+        <button
+          mat-button
+          type="button"
+          aria-label="Submit changes"
+          mat-raised-button
+          color="accent"
+          (click)="onSubmitt()"
+          [disabled]="
+            canSave && updateConnectionForm ? !updateConnectionForm.valid : true
+          "
+        >
+          Save
+        </button>
+      </div>
     </div>
   </form>
 </mat-card>

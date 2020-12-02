@@ -5,12 +5,15 @@ import { MatDialog } from "@angular/material/dialog";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
 import { of } from "rxjs";
+import { NgxsModule } from "@ngxs/store";
+
 import { mockDbcs } from "src/app/reference/mock-data/reference-spec.data";
 import { ConfirmDialogComponent } from "src/app/shared/confirm-dialog/confirm-dialog.component";
 import { SharedModule } from "src/app/shared/shared.module";
 import { MaterialModule } from "src/app/shared/material/material.module";
 import { UpdateConnectionComponent } from "./update-connection.component";
 import { ActionType } from "../update-connections.interfaces";
+import { UpdateConnectionsState } from "../state/update-connections.state";
 
 describe("UpdateConnectionComponent", () => {
   let component: UpdateConnectionComponent;
@@ -28,7 +31,8 @@ describe("UpdateConnectionComponent", () => {
         ReactiveFormsModule,
         FormsModule,
         BrowserAnimationsModule,
-        SharedModule
+        SharedModule,
+        NgxsModule.forRoot([UpdateConnectionsState])
       ],
       declarations: [UpdateConnectionComponent],
       providers: [

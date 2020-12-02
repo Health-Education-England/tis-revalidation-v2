@@ -31,6 +31,7 @@
               sort: sort$ | async,
               items: items$ | async,
               enableAllocateAdmin: enableAllocateAdmin$ | async,
+              enableUpdateConnections: enableUpdateConnections$ | async,
               allChecked: allChecked$ | async,
               someChecked: someChecked$ | async
             } as data"
@@ -55,11 +56,17 @@
                 *matHeaderCellDef
                 [mat-sort-header]="i.name"
                 scope="col"
-                [disabled]="data.enableAllocateAdmin || !i.enableSort"
+                [disabled]="
+                  data.enableUpdateConnections ||
+                  data.enableAllocateAdmin ||
+                  !i.enableSort
+                "
               >
                 <mat-checkbox
                   *ngIf="
-                    data.enableAllocateAdmin && i.name === 'doctorFirstName'
+                    (data.enableUpdateConnections ||
+                      data.enableAllocateAdmin) &&
+                    i.name === 'doctorFirstName'
                   "
                   [checked]="data.allChecked"
                   [indeterminate]="data.someChecked"
@@ -75,20 +82,27 @@
                 <!-- checkbox -->
                 <mat-checkbox
                   *ngIf="
-                    data.enableAllocateAdmin && i.name === 'doctorFirstName'
+                    (data.enableUpdateConnections ||
+                      data.enableAllocateAdmin) &&
+                    i.name === 'doctorFirstName'
                   "
                   class="pr-20"
                   [checked]="element.checked"
                   (change)="toggleCheckbox(element.gmcReferenceNumber)"
-                ></mat-checkbox>
+                >
+                </mat-checkbox>
 
                 <!-- render allocate admin component or admin name -->
                 <ng-container *ngIf="i.name === 'admin'; else notAdminCell">
                   <app-allocate-admin-autocomplete
-                    *ngIf="data.enableAllocateAdmin; else renderAdminName"
+                    *ngIf="
+                      data.enableUpdateConnections || data.enableAllocateAdmin;
+                      else renderAdminName
+                    "
                     [gmcNumber]="element.gmcReferenceNumber"
-                    [admin] = "element[i.name] | AdminName"
-                  ></app-allocate-admin-autocomplete>
+                    [admin]="element[i.name] | AdminName"
+                  >
+                  </app-allocate-admin-autocomplete>
                   <ng-template #renderAdminName>
                     <a
                       *ngIf="element[i.name]"
@@ -119,15 +133,34 @@
             <tr
               mat-row
               *matRowDef="let row; columns: columnNames"
-              (click)="navigateToDetails($event, row, data.enableAllocateAdmin)"
+              (click)="
+                navigateToDetails(
+                  $event,
+                  row,
+                  data.enableAllocateAdmin,
+                  data.enableUpdateConnections
+                )
+              "
               (keyup.enter)="
-                navigateToDetails($event, row, data.enableAllocateAdmin)
+                navigateToDetails(
+                  $event,
+                  row,
+                  data.enableAllocateAdmin,
+                  data.enableUpdateConnections
+                )
               "
               (keyup.space)="
-                navigateToDetails($event, row, data.enableAllocateAdmin)
+                navigateToDetails(
+                  $event,
+                  row,
+                  data.enableAllocateAdmin,
+                  data.enableUpdateConnections
+                )
               "
               [class.is-under-notice]="row.underNotice === 'YES'"
-              [class.cursor-auto]="data.enableAllocateAdmin"
+              [class.cursor-auto]="
+                data.enableAllocateAdmin || data.enableUpdateConnections
+              "
               tabindex="0"
             ></tr>
           </table>
@@ -136,9 +169,7 @@
 
       <!--  no results found -->
       <ng-template #noResults>
-        <div class="d-grid justify-content-center">
-          No results found
-        </div>
+        <div class="d-grid justify-content-center">No results found</div>
       </ng-template>
     </ng-template>
   </ng-template>

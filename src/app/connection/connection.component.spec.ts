@@ -9,14 +9,14 @@ import { MaterialModule } from "../shared/material/material.module";
 import { ConnectionState } from "../connection/state/connection.state";
 import { ConnectionComponent } from "./connection.component";
 import { mockDbcs } from "../reference/mock-data/reference-spec.data";
-import { ConnectionService } from "./services/connection.service";
 import { SnackBarService } from "../shared/services/snack-bar/snack-bar.service";
 import { ActionType } from "../update-connections/update-connections.interfaces";
+import { UpdateConnectionsService } from "../update-connections/services/update-connections.service";
 
 describe("ConnectionComponent", () => {
   let component: ConnectionComponent;
   let fixture: ComponentFixture<ConnectionComponent>;
-  let connectionService: ConnectionService;
+  let connectionService: UpdateConnectionsService;
   let snackBarService: SnackBarService;
 
   beforeEach(async () => {
@@ -34,7 +34,7 @@ describe("ConnectionComponent", () => {
   });
 
   beforeEach(async () => {
-    connectionService = TestBed.inject(ConnectionService);
+    connectionService = TestBed.inject(UpdateConnectionsService);
     snackBarService = TestBed.inject(SnackBarService);
     fixture = TestBed.createComponent(ConnectionComponent);
     component = fixture.componentInstance;

@@ -2,7 +2,8 @@
   *ngIf="{
     totalCounts: totalCounts$ | async,
     filter: filter$ | async,
-    enableAllocateAdmin: enableAllocateAdmin$ | async
+    enableAllocateAdmin: enableAllocateAdmin$ | async,
+    enableUpdateConnections: enableUpdateConnections$ | async
   } as data"
 >
   <nav mat-tab-nav-bar>
@@ -12,7 +13,7 @@
       [active]="data.filter === i.name"
       [attr.aria-label]="'Filter ' + i.label.toLowerCase() + 'records'"
       (click)="filterRecords(i.name)"
-      [disabled]="data.enableAllocateAdmin"
+      [disabled]="data.enableAllocateAdmin || data.enableUpdateConnections"
     >
       {{ i.label }}
       <ng-container *ngIf="data.totalCounts?.hasOwnProperty(i.name)">

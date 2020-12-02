@@ -30,8 +30,7 @@ import {
   GetConnectionsSuccess,
   ResetConnectionsFilter,
   ToggleAllConnectionsCheckboxes,
-  ToggleConnectionsCheckbox,
-  EnableUpdateConnections
+  ToggleConnectionsCheckbox
 } from "./connections.actions";
 
 export class ConnectionsStateModel extends RecordsStateModel<
@@ -162,15 +161,5 @@ export class ConnectionsState extends RecordsState {
   @Action(ToggleAllConnectionsCheckboxes)
   toggleAllCheckboxes(ctx: StateContext<ConnectionsStateModel>) {
     return super.toggleAllCheckboxesHandler(ctx);
-  }
-
-  @Action(EnableUpdateConnections)
-  enableUpdateConnections(
-    ctx: StateContext<ConnectionsStateModel>,
-    action: EnableUpdateConnections
-  ) {
-    return ctx.patchState({
-      enableUpdateConnections: action.enableUpdateConnections
-    });
   }
 }

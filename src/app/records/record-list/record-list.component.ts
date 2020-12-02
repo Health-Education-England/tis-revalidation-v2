@@ -5,6 +5,7 @@ import { environment } from "@environment";
 import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
+import { UpdateConnectionsService } from "src/app/update-connections/services/update-connections.service";
 import { ClearAllocateList } from "../../admins/state/admins.actions";
 import { IRecordDataCell } from "../records.interfaces";
 import { RecordsService } from "../services/records.service";
@@ -46,12 +47,17 @@ export class RecordListComponent implements OnDestroy {
   public enableAllocateAdmin$: Observable<boolean> = this.store.select(
     (state) => state[this.recordsService.stateName].enableAllocateAdmin
   );
+  public enableUpdateConnections$: Observable<boolean> = this.store.select(
+    (state) =>
+      state[this.updateConnectionsService.stateName].enableUpdateConnections
+  );
 
   constructor(
     protected activatedRoute: ActivatedRoute,
     protected recordsService: RecordsService,
     protected router: Router,
-    protected store: Store
+    protected store: Store,
+    private updateConnectionsService: UpdateConnectionsService
   ) {}
 
   public get columnNames(): string[] {
@@ -68,10 +74,11 @@ export class RecordListComponent implements OnDestroy {
   public navigateToDetails(
     event: Event,
     row: any,
-    enableAllocateAdmin: boolean
+    enableAllocateAdmin: boolean,
+    enableUpdateConnections: boolean
   ): Promise<boolean> {
     event.stopPropagation();
-    if (!enableAllocateAdmin) {
+    if (!enableAllocateAdmin && !enableUpdateConnections) {
       return this.router.navigate([this.detailsRoute, row.gmcReferenceNumber]);
     }
   }

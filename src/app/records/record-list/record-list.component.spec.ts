@@ -9,7 +9,10 @@ import { AdminsModule } from "../../admins/admins.module";
 import { ClearAllocateList } from "../../admins/state/admins.actions";
 import { AdminsState } from "../../admins/state/admins.state";
 import { COLUMN_DATA } from "../../concerns/constants";
-import { RecommendationStatus } from "../../recommendation/recommendation-history.interface";
+import {
+  RecommendationStatus,
+  RecommendationGmcOutcome
+} from "../../recommendation/recommendation-history.interface";
 import { IRecommendation } from "../../recommendations/recommendations.interfaces";
 import { mockRecommendationsResponse } from "../../recommendations/services/recommendations.service.spec";
 import { RecommendationsState } from "../../recommendations/state/recommendations.state";
@@ -97,7 +100,8 @@ describe("RecordListComponent", () => {
       lastUpdatedDate: "2015-09-08",
       programmeMembershipType: "",
       programmeName: "",
-      designatedBody: "2-RTYTRI"
+      designatedBody: "2-RTYTRI",
+      gmcOutcome: RecommendationGmcOutcome.APPROVED
     };
 
     spyOn(mockEvent, "preventDefault");

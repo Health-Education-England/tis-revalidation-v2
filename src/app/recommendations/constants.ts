@@ -2,7 +2,8 @@ import { Sort } from "@angular/material/sort";
 
 export const COLUMN_DATA: [string, string, boolean][] = [
   ["GMC Submission due date", "submissionDate", true],
-  ["Status", "doctorStatus", false],
+  ["GMC Status", "gmcOutcome", false],
+  ["TIS Status", "doctorStatus", false],
   ["Programme name", "programmeName", false],
   ["Programme membership type", "programmeMembershipType", false],
   ["CCT date", "cctDate", false],

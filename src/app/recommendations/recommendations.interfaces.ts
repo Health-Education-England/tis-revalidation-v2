@@ -1,5 +1,8 @@
 import { IGetRecordsResponse } from "../records/records.interfaces";
-import { RecommendationStatus } from "../recommendation/recommendation-history.interface";
+import {
+  RecommendationStatus,
+  RecommendationGmcOutcome
+} from "../recommendation/recommendation-history.interface";
 
 export interface IRecommendation {
   admin: string;
@@ -9,6 +12,7 @@ export interface IRecommendation {
   designatedBody: string;
   doctorFirstName: string;
   doctorLastName: string;
+  gmcOutcome: RecommendationGmcOutcome;
   doctorStatus: RecommendationStatus;
   gmcReferenceNumber: string;
   lastUpdatedDate: string;

@@ -11,6 +11,7 @@ import {
   take
 } from "rxjs/operators";
 import { IAdmin } from "../admins.interfaces";
+import { AdminsService } from "../services/admins.service";
 import { AddToAllocateList } from "../state/admins.actions";
 import { AdminsState } from "../state/admins.state";
 
@@ -25,11 +26,18 @@ export class AllocateAdminAutocompleteComponent implements OnInit {
   public filteredItems$: Observable<IAdmin[]>;
   public form: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private store: Store) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private store: Store,
+    private adminsService: AdminsService
+  ) {}
 
   ngOnInit() {
     this.setupForm();
     this.getItems();
+    this.adminsService.resetForm$.subscribe(() => {
+      this.resetForm();
+    });
   }
 
   public setupForm(): void {
@@ -59,9 +67,18 @@ export class AllocateAdminAutocompleteComponent implements OnInit {
     this.filteredItems$ = this.form.get("autocomplete").valueChanges.pipe(
       startWith(""),
       distinctUntilChanged(),
-      map((value: any) => (value.fullName ? value.fullName : value)),
-      map((value: string) => this.filter(value, items))
+      map((value: any) => (value && value.fullName ? value.fullName : value)),
+      map((value: string) => (value ? this.filter(value, items) : []))
     );
+  }
+
+  public onOptionSelected(event: MatAutocompleteSelectedEvent): void {
+    const admin: string = event.option.value.username;
+    if (this.gmcNumber) {
+      this.store.dispatch(new AddToAllocateList(admin, this.gmcNumber));
+    } else {
+      this.adminsService.selectedAdmin$.next(admin);
+    }
   }
 
   private filter(value: string, items: IAdmin[]): any {
@@ -72,8 +89,9 @@ export class AllocateAdminAutocompleteComponent implements OnInit {
     }
   }
 
-  public onOptionSelected(event: MatAutocompleteSelectedEvent): void {
-    const admin: string = event.option.value.username;
-    this.store.dispatch(new AddToAllocateList(admin, this.gmcNumber));
+  private resetForm() {
+    if (this.form) {
+      this.form.reset();
+    }
   }
 }

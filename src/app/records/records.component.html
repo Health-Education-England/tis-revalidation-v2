@@ -19,8 +19,8 @@
     (submittFormEvent)="updateConnections($event)"
   >
   </app-update-connection>
-  <app-record-list></app-record-list>
   <app-allocate-admin-actions
     *ngIf="enableAllocateAdmin$ | async"
   ></app-allocate-admin-actions>
+  <app-record-list></app-record-list>
 </ng-template>

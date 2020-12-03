@@ -94,25 +94,14 @@
 
                 <!-- render allocate admin component or admin name -->
                 <ng-container *ngIf="i.name === 'admin'; else notAdminCell">
-                  <app-allocate-admin-autocomplete
-                    *ngIf="
-                      data.enableUpdateConnections || data.enableAllocateAdmin;
-                      else renderAdminName
-                    "
-                    [gmcNumber]="element.gmcReferenceNumber"
-                    [admin]="element[i.name] | AdminName"
+                  <a
+                    *ngIf="element[i.name]"
+                    [matTooltip]="element[i.name] | AdminName: 'email'"
+                    mat-button
+                    (click)="$event.stopPropagation()"
+                    [href]="'mailto:' + element[i.name] | AdminName: 'email'"
+                    >{{ element[i.name] | AdminName }}</a
                   >
-                  </app-allocate-admin-autocomplete>
-                  <ng-template #renderAdminName>
-                    <a
-                      *ngIf="element[i.name]"
-                      [matTooltip]="element[i.name] | AdminName: 'email'"
-                      mat-button
-                      (click)="$event.stopPropagation()"
-                      [href]="'mailto:' + element[i.name] | AdminName: 'email'"
-                      >{{ element[i.name] | AdminName }}</a
-                    >
-                  </ng-template>
                 </ng-container>
 
                 <!-- remaining cells -->

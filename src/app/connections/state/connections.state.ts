@@ -38,14 +38,14 @@ export class ConnectionsStateModel extends RecordsStateModel<
   IConnection[]
 > {
   public filter: ConnectionsFilterType;
-  public enableUpdateConnections: boolean;
+  public disableSearchAndSort: boolean;
 }
 
 @State<ConnectionsStateModel>({
   name: "connections",
   defaults: {
     filter: ConnectionsFilterType.ALL,
-    enableUpdateConnections: false,
+    disableSearchAndSort: false,
     ...defaultRecordsState
   }
 })
@@ -61,7 +61,17 @@ export class ConnectionsState extends RecordsState {
   @Action(GetConnections)
   get(ctx: StateContext<ConnectionsStateModel>) {
     const params: HttpParams = this.connectionsService.generateParams();
-    const endPoint = `${environment.appUrls.getConnections}`;
+    let endPoint = `${environment.appUrls.getConnections}`;
+
+    switch (this.connectionsService.getFilter()) {
+      case ConnectionsFilterType.EXCEPTIONS_QUEUE:
+        endPoint = `${endPoint}/exception`;
+        break;
+
+      default:
+        break;
+    }
+
     super.getHandler(ctx);
 
     return this.recordsService
@@ -134,7 +144,10 @@ export class ConnectionsState extends RecordsState {
 
   @Action(FilterConnections)
   filter(ctx: StateContext<ConnectionsStateModel>, action: FilterConnections) {
-    return super.filterHandler(ctx, action);
+    return ctx.patchState({
+      filter: action.filter,
+      disableSearchAndSort: action.filter !== ConnectionsFilterType.ALL
+    });
   }
 
   @Action(ResetConnectionsFilter)

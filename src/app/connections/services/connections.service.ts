@@ -2,6 +2,7 @@ import { HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Store } from "@ngxs/store";
 import { RecordsService } from "../../records/services/records.service";
+import { ConnectionsFilterType } from "../connections.interfaces";
 import { ConnectionsStateModel } from "../state/connections.state";
 
 @Injectable({
@@ -17,5 +18,9 @@ export class ConnectionsService {
     params = params.append("filter", snapshot.filter);
 
     return params;
+  }
+
+  public getFilter(): ConnectionsFilterType {
+    return this.store.snapshot().connections.filter;
   }
 }

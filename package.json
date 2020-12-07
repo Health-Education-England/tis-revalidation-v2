@@ -41,7 +41,7 @@
     "@sentry/browser": "^5.28.0",
     "angulartics2": "^10.0.0",
     "aws-amplify": "^3.0.22",
-    "browserslist": "^4.14.7",
+    "browserslist": "^4.15.0",
     "caniuse-lite": "^1.0.30001133",
     "file-saver": "^2.0.5",
     "nhsuk-frontend": "^4.0.0",

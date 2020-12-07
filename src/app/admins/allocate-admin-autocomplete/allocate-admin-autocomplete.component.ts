@@ -72,8 +72,8 @@ export class AllocateAdminAutocompleteComponent implements OnInit {
     );
   }
 
-  public onOptionSelected(event: MatAutocompleteSelectedEvent): void {
-    const admin: string = event.option.value.username;
+  public onOptionSelected(selectedAdmin: IAdmin): void {
+    const admin: string = selectedAdmin.username;
     if (this.gmcNumber) {
       this.store.dispatch(new AddToAllocateList(admin, this.gmcNumber));
     } else {

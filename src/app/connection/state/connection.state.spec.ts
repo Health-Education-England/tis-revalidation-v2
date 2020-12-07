@@ -57,6 +57,14 @@ describe("Connection actions", () => {
     expect(connectionHistory).toEqual(
       mockConnectionResponse.connection.connectionHistory
     );
+
+    const programmeHistory = store.selectSnapshot(
+      (state) => state.connection.programmeHistory
+    );
+
+    expect(programmeHistory).toEqual(
+      mockConnectionResponse.programme.programmeHistory
+    );
     httpMock.verify();
   }));
 

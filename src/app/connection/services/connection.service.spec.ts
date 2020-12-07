@@ -25,10 +25,10 @@ describe("ConcernService", () => {
   });
 
   it("should call get connection details api", () => {
-    const endPoint = `${environment.appUrls.getConnections}/${mockConnectionResponse.connection.gmcNumber}`;
+    const endPoint = `${environment.appUrls.getConnections}/${mockConnectionResponse.programme.gmcNumber}`;
 
     service
-      .getConnectionHistory(mockConnectionResponse.connection.gmcNumber)
+      .getConnectionHistory(mockConnectionResponse.programme.gmcNumber)
       .subscribe();
 
     const mockHttp = http.expectOne(endPoint);

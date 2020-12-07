@@ -32,6 +32,7 @@
               items: items$ | async,
               enableAllocateAdmin: enableAllocateAdmin$ | async,
               enableUpdateConnections: enableUpdateConnections$ | async,
+              disableSearchAndSort: disableSearchAndSort$ | async,
               allChecked: allChecked$ | async,
               someChecked: someChecked$ | async
             } as data"
@@ -59,6 +60,7 @@
                 [disabled]="
                   data.enableUpdateConnections ||
                   data.enableAllocateAdmin ||
+                  data.disableSearchAndSort ||
                   !i.enableSort
                 "
               >

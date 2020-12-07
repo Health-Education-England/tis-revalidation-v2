@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Store } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
 import { filter, take } from "rxjs/operators";
+import { UpdateConnectionsService } from "src/app/update-connections/services/update-connections.service";
 import { RecordsService } from "../services/records.service";
 
 @Component({
@@ -17,6 +18,13 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
   public enableAllocateAdmin$: Observable<boolean> = this.store.select(
     (state) => state[this.recordsService.stateName].enableAllocateAdmin
   );
+  public enableUpdateConnections$: Observable<boolean> = this.store.select(
+    (state) =>
+      state[this.updateConnectionsService.stateName].enableUpdateConnections
+  );
+  public disableSearchAndSort$: Observable<boolean> = this.store.select(
+    (state) => state[this.recordsService.stateName].disableSearchAndSort
+  );
 
   public isConnectionsSummary: boolean;
   public form: FormGroup;
@@ -26,7 +34,8 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private store: Store,
-    private recordsService: RecordsService
+    private recordsService: RecordsService,
+    private updateConnectionsService: UpdateConnectionsService
   ) {
     this.isConnectionsSummary = this.recordsService.stateName === "connections";
   }
@@ -67,9 +76,33 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
       this.enableAllocateAdmin$
         .pipe(filter((value) => value !== undefined))
         .subscribe((enableAllocateAdmin: boolean) => {
-          if (enableAllocateAdmin === true) {
+          if (enableAllocateAdmin) {
             this.form.disable();
-          } else if (enableAllocateAdmin === false) {
+          } else {
+            this.form.enable();
+          }
+        })
+    );
+
+    this.subscriptions.add(
+      this.enableUpdateConnections$
+        .pipe(filter((value) => value !== undefined))
+        .subscribe((enableUpdateConnections: boolean) => {
+          if (enableUpdateConnections) {
+            this.form.disable();
+          } else {
+            this.form.enable();
+          }
+        })
+    );
+
+    this.subscriptions.add(
+      this.disableSearchAndSort$
+        .pipe(filter((value) => value !== undefined))
+        .subscribe((disableSearchAndSort: boolean) => {
+          if (disableSearchAndSort) {
+            this.form.disable();
+          } else {
             this.form.enable();
           }
         })

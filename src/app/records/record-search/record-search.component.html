@@ -23,6 +23,11 @@
     [formGroup]="form"
     #ngForm="ngForm"
     autocomplete="off"
+    *ngIf="{
+      enableAllocateAdmin: enableAllocateAdmin$ | async,
+      enableUpdateConnections: enableUpdateConnections$ | async,
+      disableSearchAndSort: disableSearchAndSort$ | async
+    } as data"
   >
     <mat-form-field>
       <mat-label>Enter name / GMC no</mat-label>
@@ -38,7 +43,11 @@
         color="primary"
         aria-label="Recommendations search"
         type="submit"
-        [disabled]="enableAllocateAdmin$ | async"
+        [disabled]="
+          data.enableAllocateAdmin ||
+          data.enableUpdateConnections ||
+          data.disableSearchAndSort
+        "
       >
         <mat-icon aria-label="search icon">search</mat-icon>
       </button>

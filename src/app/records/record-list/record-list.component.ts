@@ -51,6 +51,9 @@ export class RecordListComponent implements OnDestroy {
     (state) =>
       state[this.updateConnectionsService.stateName].enableUpdateConnections
   );
+  public disableSearchAndSort$: Observable<boolean> = this.store.select(
+    (state) => state[this.recordsService.stateName].disableSearchAndSort
+  );
 
   constructor(
     protected activatedRoute: ActivatedRoute,

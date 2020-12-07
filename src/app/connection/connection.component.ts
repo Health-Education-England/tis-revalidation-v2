@@ -36,8 +36,6 @@ export class ConnectionComponent implements OnInit, OnDestroy {
   columnsToDisplay = [
     "programmeName",
     "programmeOwner",
-    "designatedBodyCode",
-    "connectionStatus",
     "programmeMembershipStartDate",
     "programmeMembershipEndDate"
   ];

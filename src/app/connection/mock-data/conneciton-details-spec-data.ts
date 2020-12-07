@@ -17,8 +17,6 @@ const connection: IConnectionDetails = {
       programmeMembershipType: "prg type1",
       programmeName: "prg name1",
       programmeOwner: "prg owner1",
-      connectionStatus: "open",
-      designatedBodyCode: "HNEW",
       programmeMembershipStartDate: new Date("10/11/2021"),
       programmeMembershipEndDate: new Date("10/11/2020")
     },
@@ -26,8 +24,6 @@ const connection: IConnectionDetails = {
       programmeMembershipType: "prg type2",
       programmeName: "prg name2",
       programmeOwner: "prg owner2",
-      connectionStatus: "closed",
-      designatedBodyCode: "HNSW",
       programmeMembershipStartDate: new Date("09/08/2019"),
       programmeMembershipEndDate: new Date("09/08/2020")
     }

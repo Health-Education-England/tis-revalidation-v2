@@ -22,8 +22,6 @@ export interface IConnectionHistory {
   programmeMembershipType: string;
   programmeName: string;
   programmeOwner: string;
-  connectionStatus: string;
-  designatedBodyCode: string;
   programmeMembershipStartDate: Date;
   programmeMembershipEndDate: Date;
 }

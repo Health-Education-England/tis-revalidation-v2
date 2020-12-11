@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { Subscription } from "rxjs";
@@ -20,6 +20,7 @@ import { UpdateConnectionsService } from "../services/update-connections.service
   styleUrls: ["./update-connection.component.scss"]
 })
 export class UpdateConnectionComponent implements OnInit {
+  @Input() public currentDoctorDbcCode: string;
   @Output() submittFormEvent = new EventEmitter<any>();
 
   componentSubscriptions: Subscription[] = [];
@@ -51,8 +52,10 @@ export class UpdateConnectionComponent implements OnInit {
     this.referenceService.getDbcs().subscribe((res) => {
       if (res) {
         this.dbcs = res;
-        this.userDbcs = res.filter((r) =>
-          this.authService.userDesignatedBodies.includes(r.dbc)
+        this.userDbcs = res.filter(
+          (r) =>
+            this.authService.userDesignatedBodies.includes(r.dbc) &&
+            r.dbc !== this.currentDoctorDbcCode
         );
       }
     });

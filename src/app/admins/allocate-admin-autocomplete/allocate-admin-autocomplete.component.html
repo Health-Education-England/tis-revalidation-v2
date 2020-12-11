@@ -11,7 +11,7 @@
     <mat-autocomplete
       #auto="matAutocomplete"
       [displayWith]="displayWith"
-      (optionSelected)="onOptionSelected($event)"
+      (optionSelected)="onOptionSelected($event.option.value)"
     >
       <mat-option *ngFor="let i of filteredItems$ | async" [value]="i">
         {{ i.fullName }}

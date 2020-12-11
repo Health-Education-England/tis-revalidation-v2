@@ -37,6 +37,5 @@ export const LONDON_DBCS: string[] = [
   "1-AIIDWA",
   "1-AIIDVS",
   "1-AIIDWI",
-  "1-AIIDR8",
-  "LDN-MOCK-DBC"
+  "1-AIIDR8"
 ];

@@ -45,13 +45,13 @@ describe("ConnectionResolver", () => {
   it("should call store.dispatch with new Get", () => {
     const route = new ActivatedRouteSnapshot();
     route.params = {
-      gmcNumber: mockConnectionResponse.connection.gmcNumber
+      gmcNumber: mockConnectionResponse.programme.gmcNumber
     };
 
     spyOn(store, "dispatch").and.callThrough();
     resolver.resolve(route);
     expect(store.dispatch).toHaveBeenCalledWith(
-      new Get(mockConnectionResponse.connection.gmcNumber)
+      new Get(mockConnectionResponse.programme.gmcNumber)
     );
   });
 });

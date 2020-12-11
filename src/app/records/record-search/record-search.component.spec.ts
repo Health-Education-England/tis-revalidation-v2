@@ -2,12 +2,16 @@ import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
+import { By } from "@angular/platform-browser";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
+import { AuthService } from "src/app/core/auth/auth.service";
+import { UpdateConnectionsState } from "src/app/update-connections/state/update-connections.state";
 import { RecommendationsState } from "../../recommendations/state/recommendations.state";
 import { MaterialModule } from "../../shared/material/material.module";
 import { RecordsService } from "../services/records.service";
+import { defaultRecordsState } from "../state/records.state";
 import { RecordSearchComponent } from "./record-search.component";
 
 describe("RecordSearchComponent", () => {
@@ -15,13 +19,29 @@ describe("RecordSearchComponent", () => {
   let component: RecordSearchComponent;
   let fixture: ComponentFixture<RecordSearchComponent>;
   let recordsService: RecordsService;
+  let authService: AuthService;
+  const sortColumn = "doctorFirstName";
+  const sortDirection = "asc";
+  const recommendationsState = {
+    ...defaultRecordsState,
+    enableAllocateAdmin: true,
+    disableSearchAndSort: false,
+    sort: {
+      active: sortColumn,
+      direction: sortDirection
+    }
+  };
+
+  const updateConnectionsState = {
+    enableUpdateConnections: true
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RecordSearchComponent],
       imports: [
         MaterialModule,
-        NgxsModule.forRoot([RecommendationsState]),
+        NgxsModule.forRoot([RecommendationsState, UpdateConnectionsState]),
         RouterTestingModule,
         HttpClientTestingModule,
         ReactiveFormsModule,
@@ -31,6 +51,7 @@ describe("RecordSearchComponent", () => {
     }).compileComponents();
     store = TestBed.inject(Store);
     recordsService = TestBed.inject(RecordsService);
+    authService = TestBed.inject(AuthService);
   }));
 
   beforeEach(() => {
@@ -38,7 +59,16 @@ describe("RecordSearchComponent", () => {
     component = fixture.componentInstance;
     recordsService.stateName = "recommendations";
     recordsService.setRecommendationsActions();
+
+    store.reset({
+      recommendations: recommendationsState,
+      updateConnections: updateConnectionsState
+    });
+
     fixture.detectChanges();
+
+    spyOn(component.form, "disable");
+    spyOn(component.form, "enable");
   });
 
   it("should create", () => {
@@ -98,6 +128,59 @@ describe("RecordSearchComponent", () => {
     expect(recordsService.resetSort).toHaveBeenCalled();
     expect(recordsService.resetPaginator).toHaveBeenCalled();
     expect(recordsService.updateRoute).toHaveBeenCalled();
+  });
+
+  it("should disable the form if EnableAllocateAdmin is false", () => {
+    store.reset({
+      recommendations: {
+        ...recommendationsState,
+        enableAllocateAdmin: false
+      },
+      updateConnections: updateConnectionsState
+    });
+
+    component.enableAllocateAdmin$.subscribe((value) => {
+      if (value) {
+        expect(component.form.disable).toHaveBeenCalled();
+      } else {
+        expect(component.form.enable).toHaveBeenCalled();
+      }
+    });
+  });
+
+  it("should disable the form if DisableSearchAndSort is true", () => {
+    store.reset({
+      recommendations: {
+        ...recommendationsState,
+        disableSearchAndSort: true
+      },
+      updateConnections: updateConnectionsState
+    });
+
+    component.disableSearchAndSort$.subscribe((value) => {
+      if (value) {
+        expect(component.form.disable).toHaveBeenCalled();
+      } else {
+        expect(component.form.enable).toHaveBeenCalled();
+      }
+    });
+  });
+
+  it("should enable the form if enableUpdateConnections is false", () => {
+    store.reset({
+      recommendations: recommendationsState,
+      updateConnections: {
+        enableUpdateConnections: false
+      }
+    });
+
+    component.enableUpdateConnections$.subscribe((value) => {
+      if (value) {
+        expect(component.form.disable).toHaveBeenCalled();
+      } else {
+        expect(component.form.enable).toHaveBeenCalled();
+      }
+    });
   });
 
   it("should unsubscribe from subscriptions upon `ngOnDestroy()`", () => {

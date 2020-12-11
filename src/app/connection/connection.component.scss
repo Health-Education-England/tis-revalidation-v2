@@ -5,13 +5,10 @@
     programmeName: (
       width: 180px
     ),
-    designatedBodyCode: (
-      width: 120px
-    ),
     programmeOwner: (
       width: 180px
     ),
-    connectionStatus: (
+    programmeMembershipType: (
       width: 120px
     ),
     programmeMembershipStartDate: (
@@ -19,6 +16,53 @@
     ),
     programmeMembershipEndDate: (
       width: 90px
+    ),
+    newDesignatedBodyCode: (
+      width: 90px
+    ),
+    previousDesignatedBodyCode: (
+      width: 90px
+    ),
+    requestType: (
+      width: 90px
+    ),
+    reasonMessage: (
+      width: 180px
+    ),
+    requestTime: (
+      width: 120px
     )
   )
 );
+
+.mat-card {
+  box-shadow: none !important;
+}
+
+.mat-card-title {
+  font-size: 12px;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+
+tr.element-row {
+  cursor: pointer;
+}
+
+tr.detail-row.mat-row {
+  height: 0;
+}
+
+.element-row td {
+  border-bottom-width: 0;
+}
+
+.element-detail {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.element-expanded {
+  padding: 16px 0;
+}

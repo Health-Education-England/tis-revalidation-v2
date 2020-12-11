@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Store } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
 import { filter, take } from "rxjs/operators";
+import { AuthService } from "src/app/core/auth/auth.service";
 import { UpdateConnectionsService } from "src/app/update-connections/services/update-connections.service";
 import { RecordsService } from "../services/records.service";
 
@@ -26,6 +27,7 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
     (state) => state[this.recordsService.stateName].disableSearchAndSort
   );
 
+  public isSuperAdmin: boolean;
   public isConnectionsSummary: boolean;
   public form: FormGroup;
   public subscriptions: Subscription = new Subscription();
@@ -35,9 +37,11 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private store: Store,
     private recordsService: RecordsService,
-    private updateConnectionsService: UpdateConnectionsService
+    private updateConnectionsService: UpdateConnectionsService,
+    private authService: AuthService
   ) {
     this.isConnectionsSummary = this.recordsService.stateName === "connections";
+    this.isSuperAdmin = this.authService.isSuperAdmin;
   }
 
   ngOnInit() {

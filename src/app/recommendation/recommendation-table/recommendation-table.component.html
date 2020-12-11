@@ -156,7 +156,7 @@
     ></tr>
   </table>
 
-  <div class="button-row" *ngIf="enableRecommendation$ | async">
+  <div class="button-row" *ngIf="enableRecommendation">
     <button
       mat-button
       mat-raised-button
@@ -168,9 +168,7 @@
         Edit recommendation
       </ng-container>
 
-      <ng-template #createMode>
-        Create recommendation
-      </ng-template>
+      <ng-template #createMode> Create recommendation </ng-template>
     </button>
     <span class="spacer"></span>
   </div>

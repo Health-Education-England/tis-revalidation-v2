@@ -10,10 +10,10 @@
     <mat-menu #menu="matMenu">
       <app-reset-record-list></app-reset-record-list>
       <app-allocate-admin-btn
-        *ngIf="!isConnectionsSummary"
+        *ngIf="isSuperAdmin && !isConnectionsSummary"
       ></app-allocate-admin-btn>
       <app-update-connetions-btn
-        *ngIf="isConnectionsSummary"
+        *ngIf="isSuperAdmin && isConnectionsSummary"
       ></app-update-connetions-btn>
     </mat-menu>
   </div>

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
-import { Subscription } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import { AuthService } from "src/app/core/auth/auth.service";
 import { CONNECTION_ACTIONS } from "../constants";
 import { IDesignatedBody } from "src/app/reference/reference.interfaces";
@@ -9,10 +9,13 @@ import {
   ConfirmDialogComponent,
   ConfirmDialogModel
 } from "src/app/shared/confirm-dialog/confirm-dialog.component";
-import { ReferenceService } from "src/app/reference/services/reference.service";
 import { ActionType, IAction, IReason } from "../update-connections.interfaces";
-import { ConnectionService } from "src/app/connection/services/connection.service";
 import { UpdateConnectionsService } from "../services/update-connections.service";
+import { Select, Store } from "@ngxs/store";
+import { Router } from "@angular/router";
+import { Get } from "../state/update-connections.actions";
+import { catchError } from "rxjs/operators";
+import { UpdateConnectionsState } from "../state/update-connections.state";
 
 @Component({
   selector: "app-update-connection",
@@ -22,6 +25,9 @@ import { UpdateConnectionsService } from "../services/update-connections.service
 export class UpdateConnectionComponent implements OnInit {
   @Input() public currentDoctorDbcCode: string;
   @Output() submittFormEvent = new EventEmitter<any>();
+
+  @Select(UpdateConnectionsState.Dbcs)
+  public dbcs$: Observable<IDesignatedBody[]>;
 
   componentSubscriptions: Subscription[] = [];
   updateConnectionForm: FormGroup;
@@ -39,17 +45,24 @@ export class UpdateConnectionComponent implements OnInit {
   addConnectionSelected = false;
 
   constructor(
+    private store: Store,
+    private router: Router,
     private authService: AuthService,
     public dialog: MatDialog,
-    private referenceService: ReferenceService,
     public updateConnectionsService: UpdateConnectionsService
   ) {
     this.actions = CONNECTION_ACTIONS;
+
+    this.store.dispatch(new Get()).pipe(
+      catchError(() => {
+        return this.router.navigate(["/404"]);
+      })
+    );
   }
 
   ngOnInit(): void {
     this.bindFormControl();
-    this.referenceService.getDbcs().subscribe((res) => {
+    this.dbcs$.subscribe((res) => {
       if (res) {
         this.dbcs = res;
         this.userDbcs = res.filter(
@@ -59,6 +72,7 @@ export class UpdateConnectionComponent implements OnInit {
         );
       }
     });
+
     this.updateConnectionsService.canSave$.subscribe(
       (result) => (this.canSave = result)
     );

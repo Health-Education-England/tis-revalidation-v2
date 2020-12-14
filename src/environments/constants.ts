@@ -8,6 +8,7 @@ export const APP_URLS_CONFIG: IEnvironment["appUrls"] = {
   getConcern: `/api/concerns`,
   getConcerns: `api/concerns`,
   getConnections: `api/connection`,
+  getDbcs: `api/reference/dbcs`,
   getDetails: `api/trainee`,
   getNotes: `mocky/5ea2da614f00006c00d9f540`,
   getRecommendation: `api/recommendation`,

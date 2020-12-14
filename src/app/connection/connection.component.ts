@@ -11,7 +11,6 @@ import {
 import { ConnectionState } from "./state/connection.state";
 import { AuthService } from "../core/auth/auth.service";
 import { SnackBarService } from "../shared/services/snack-bar/snack-bar.service";
-import { ADMIN_ROLES } from "../connections/constants";
 import { IDesignatedBody } from "../reference/reference.interfaces";
 import { ReferenceService } from "../reference/services/reference.service";
 import { ActionType } from "../update-connections/update-connections.interfaces";
@@ -85,10 +84,7 @@ export class ConnectionComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.enableUpdateConnection = this.authService.roles.some((role) =>
-      ADMIN_ROLES.includes(role)
-    );
-
+    this.enableUpdateConnection = this.authService.isSuperAdmin;
     this.gmcNumber$.subscribe((res) => (this.gmcNumber = res));
     this.doctorCurrentDbc$.subscribe((res) => (this.doctorCurrentDbc = res));
     this.referenceService.getDbcs().subscribe((res) => (this.dbcs = res));

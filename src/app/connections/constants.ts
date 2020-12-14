@@ -8,9 +8,3 @@ export const COLUMN_DATA: [string, string, boolean][] = [
   ["Start date", "programmeMembershipStartDate", false],
   ["End date", "programmeMembershipEndDate", false]
 ];
-
-export const ADMIN_ROLES = [
-  "RevalSuperAdmin",
-  "RevalTISAdmin1",
-  "RevalTISAdmin2"
-];

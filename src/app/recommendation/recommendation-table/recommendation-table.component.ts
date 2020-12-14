@@ -16,6 +16,7 @@ import {
 import { Select } from "@ngxs/store";
 import { RecommendationHistoryState } from "../state/recommendation-history.state";
 import { Observable } from "rxjs";
+import { AuthService } from "src/app/core/auth/auth.service";
 
 @Component({
   selector: "app-recommendation-table",
@@ -54,6 +55,14 @@ export class RecommendationTableComponent {
   enableRecommendation$: Observable<boolean>;
   @Select(RecommendationHistoryState.editRecommendation)
   editRecommendation$: Observable<boolean>;
+  enableRecommendation: boolean;
+
+  constructor(private authService: AuthService) {
+    this.enableRecommendation$.subscribe(
+      (value) =>
+        (this.enableRecommendation = value && this.authService.isSuperAdmin)
+    );
+  }
 
   currentExpanded(element: any, event: Event) {
     event.stopPropagation();

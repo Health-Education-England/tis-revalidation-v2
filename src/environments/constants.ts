@@ -39,3 +39,9 @@ export const LONDON_DBCS: string[] = [
   "1-AIIDWI",
   "1-AIIDR8"
 ];
+
+export const ADMIN_ROLES = [
+  "RevalSuperAdmin",
+  "RevalTISAdmin1",
+  "RevalTISAdmin2"
+];

@@ -4,7 +4,7 @@ import { CognitoUserSession } from "amazon-cognito-identity-js";
 import { Auth } from "aws-amplify";
 import { from, Observable } from "rxjs";
 import { catchError, tap } from "rxjs/operators";
-import { LONDON_DBCS } from "src/environments/constants";
+import { ADMIN_ROLES, LONDON_DBCS } from "src/environments/constants";
 
 @Injectable({
   providedIn: "root"
@@ -16,6 +16,7 @@ export class AuthService {
   public roles: string[] = [];
   public userDesignatedBodies: string[] = [];
   public inludesLondonDbcs = false;
+  public isSuperAdmin = false;
 
   constructor() {}
 
@@ -28,6 +29,9 @@ export class AuthService {
         this.fullName = `${cognitoIdToken.payload.given_name} ${cognitoIdToken.payload.family_name}`;
         this.email = cognitoIdToken.payload.email;
         this.roles = cognitoIdToken.payload["cognito:roles"] || [];
+        this.isSuperAdmin = this.roles.some((role) =>
+          ADMIN_ROLES.includes(role)
+        );
 
         let dbcs: string[] = cognitoIdToken.payload["cognito:groups"] || [];
         this.inludesLondonDbcs = dbcs.some((dbc) => LONDON_DBCS.includes(dbc));

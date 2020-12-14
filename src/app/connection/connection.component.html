@@ -203,6 +203,7 @@
     </mat-card>
     <app-update-connection
       *ngIf="enableUpdateConnection"
+      [currentDoctorDbcCode]="doctorCurrentDbc"
       (submittFormEvent)="updateConnection($event)"
     >
     </app-update-connection>

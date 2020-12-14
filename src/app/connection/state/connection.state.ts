@@ -22,7 +22,7 @@ export class ConnectionStateModel {
     gmcNumber: null,
     programmeHistory: [],
     connectionHistory: [],
-    doctorCurrentDbc: ""
+    doctorCurrentDbc: null
   }
 })
 @Injectable()

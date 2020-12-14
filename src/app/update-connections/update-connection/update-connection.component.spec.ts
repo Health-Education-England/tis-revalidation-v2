@@ -5,7 +5,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
 import { of } from "rxjs";
-import { NgxsModule } from "@ngxs/store";
+import { NgxsModule, Store } from "@ngxs/store";
 
 import { mockDbcs } from "src/app/reference/mock-data/reference-spec.data";
 import { ConfirmDialogComponent } from "src/app/shared/confirm-dialog/confirm-dialog.component";
@@ -14,10 +14,13 @@ import { MaterialModule } from "src/app/shared/material/material.module";
 import { UpdateConnectionComponent } from "./update-connection.component";
 import { ActionType } from "../update-connections.interfaces";
 import { UpdateConnectionsState } from "../state/update-connections.state";
+import { UpdateConnectionsService } from "../services/update-connections.service";
 
 describe("UpdateConnectionComponent", () => {
   let component: UpdateConnectionComponent;
   let fixture: ComponentFixture<UpdateConnectionComponent>;
+  let store: Store;
+  let updateConnectionsService: UpdateConnectionsService;
   const actionText = "action";
   const reasonText = "reason";
   const dbcText = "dbc";
@@ -36,6 +39,7 @@ describe("UpdateConnectionComponent", () => {
       ],
       declarations: [UpdateConnectionComponent],
       providers: [
+        UpdateConnectionsService,
         {
           provide: MatDialog,
           useClass: MdDialogMock
@@ -45,15 +49,22 @@ describe("UpdateConnectionComponent", () => {
   });
 
   beforeEach(() => {
+    updateConnectionsService = TestBed.inject(UpdateConnectionsService);
     fixture = TestBed.createComponent(UpdateConnectionComponent);
     component = fixture.componentInstance;
-    Object.defineProperty(component, "dbcs$", { writable: true });
+    store = TestBed.inject(Store);
     fixture.detectChanges();
+
+    store.reset({
+      updateConnections: {
+        enableUpdateConnections: true,
+        dbcs: mockDbcs
+      }
+    });
   });
 
   it("should create", () => {
     expect(component).toBeTruthy();
-    expect(component.dbcs).toBe(mockDbcs);
   });
 
   it("form invalid when empty", () => {
@@ -126,6 +137,15 @@ describe("UpdateConnectionComponent", () => {
     fillForm(ActionType.REMOVE_CONNECTION);
     expect(component.updateConnectionForm.valid).toBeTruthy();
     component.onSubmitt();
+  });
+
+  it("should invoke enableUpdateConnections when cancel is invoked", () => {
+    spyOn(updateConnectionsService, "enableUpdateConnections");
+    component.cancel();
+
+    expect(
+      updateConnectionsService.enableUpdateConnections
+    ).toHaveBeenCalledWith(false);
   });
 
   function fillForm(action: ActionType = ActionType.ADD_CONNECTION) {

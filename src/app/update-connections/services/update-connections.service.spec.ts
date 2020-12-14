@@ -4,13 +4,15 @@ import {
 } from "@angular/common/http/testing";
 import { TestBed } from "@angular/core/testing";
 import { environment } from "@environment";
-import { NgxsModule } from "@ngxs/store";
+import { NgxsModule, Store } from "@ngxs/store";
+import { EnableUpdateConnections } from "../state/update-connections.actions";
 import { UpdateConnectionsState } from "../state/update-connections.state";
 import { UpdateConnectionsService } from "./update-connections.service";
 
 describe("UpdateConnectionsService", () => {
   let service: UpdateConnectionsService;
   let http: HttpTestingController;
+  let store: Store;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -21,10 +23,20 @@ describe("UpdateConnectionsService", () => {
     });
     service = TestBed.inject(UpdateConnectionsService);
     http = TestBed.inject(HttpTestingController);
+    store = TestBed.inject(Store);
   });
 
   it("should be created", () => {
     expect(service).toBeTruthy();
+  });
+
+  it("should dispatch EnableUpdateConnections action when enableUpdateConnections is invoked", () => {
+    spyOn(store, "dispatch");
+
+    service.enableUpdateConnections(false);
+    expect(store.dispatch).toHaveBeenCalledWith(
+      new EnableUpdateConnections(false)
+    );
   });
 
   it("should add new connection", () => {

@@ -18,6 +18,7 @@ export abstract class IEnvironment {
     readonly getConcern: string;
     readonly getConcerns: string;
     readonly getConnections: string;
+    readonly getDbcs: string;
     readonly getDetails: string;
     readonly getNotes: string;
     readonly getRecommendation: string;

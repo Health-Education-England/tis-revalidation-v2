@@ -34,12 +34,12 @@ export class ConnectionsResolver
     this.recordsService.columnData = generateColumnData(COLUMN_DATA);
     this.recordsService.filters = [
       {
-        label: "ADD CONNECTION",
-        name: ConnectionsFilterType.ADD_CONNECTION
+        label: "CONNECTED",
+        name: ConnectionsFilterType.REMOVE_CONNECTION
       },
       {
-        label: "REMOVE CONNECTION",
-        name: ConnectionsFilterType.REMOVE_CONNECTION
+        label: "DISCONNECTED",
+        name: ConnectionsFilterType.ADD_CONNECTION
       },
       {
         label: "EXCEPTIONS QUEUE",

@@ -70,10 +70,8 @@ export class RecordsComponent implements OnDestroy {
         doctors
       };
 
-      const action =
-        formValue.action === ActionType.ADD_CONNECTION ? "add" : "remove";
       this.componentSubscription = this.updateConnectionsService
-        .updateConnection(payload, action)
+        .updateConnection(payload, formValue.action)
         .subscribe(
           (response: IUpdateConnectionResponse) => {
             this.snackBarService.openSnackBar(response.message);

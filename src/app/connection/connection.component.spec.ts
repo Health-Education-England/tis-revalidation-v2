@@ -108,7 +108,7 @@ describe("ConnectionComponent", () => {
         designatedBodyCode: "1-FGHIJ",
         doctors: [{ gmcId: 123456, currentDesignatedBodyCode: "1-ABCDE" }]
       },
-      "add"
+      ActionType.ADD_CONNECTION
     );
   });
 
@@ -173,7 +173,7 @@ describe("ConnectionComponent", () => {
         designatedBodyCode: null,
         doctors: [{ gmcId: 123456, currentDesignatedBodyCode: "1-ABCDE" }]
       },
-      "remove"
+      ActionType.REMOVE_CONNECTION
     );
   });
 

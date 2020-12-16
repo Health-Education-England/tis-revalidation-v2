@@ -6,6 +6,7 @@ import { BehaviorSubject, Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { IUpdateConnectionResponse } from "src/app/connection/connection.interfaces";
 import { EnableUpdateConnections } from "../state/update-connections.actions";
+import { ActionType } from "../update-connections.interfaces";
 
 @Injectable({
   providedIn: "root"
@@ -31,14 +32,37 @@ export class UpdateConnectionsService {
 
   updateConnection(
     payload: any,
-    action: string
+    actionType: ActionType
   ): Observable<IUpdateConnectionResponse> {
-    return this.http
-      .post<IUpdateConnectionResponse>(
-        `${environment.appUrls.getConnections}/${action}`,
-        payload
-      )
-      .pipe(catchError(this.errorCallback));
+    let action: string;
+    switch (actionType) {
+      case ActionType.ADD_CONNECTION:
+        action = "add";
+        break;
+
+      case ActionType.REMOVE_CONNECTION:
+        action = "remove";
+        break;
+
+      case ActionType.HIDE_CONNECTION:
+        action = "hide";
+        break;
+
+      case ActionType.UNHIDE_CONNECTION:
+        action = "unhide";
+        break;
+    }
+
+    if (action) {
+      return this.http
+        .post<IUpdateConnectionResponse>(
+          `${environment.appUrls.getConnections}/${action}`,
+          payload
+        )
+        .pipe(catchError(this.errorCallback));
+    } else {
+      return this.errorCallback("Action is not defined");
+    }
   }
 
   private errorCallback(error: any) {

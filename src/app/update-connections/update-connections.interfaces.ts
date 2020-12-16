@@ -1,8 +1,8 @@
 export enum ActionType {
   ADD_CONNECTION = "Add connection",
   REMOVE_CONNECTION = "Remove connection",
-  REVIEW_CONNECTION = "Review connection",
-  IGNORE_CONNECTION = "Ignore connection"
+  HIDE_CONNECTION = "Hide connection",
+  UNHIDE_CONNECTION = "Unhide connection"
 }
 
 export interface IAction {

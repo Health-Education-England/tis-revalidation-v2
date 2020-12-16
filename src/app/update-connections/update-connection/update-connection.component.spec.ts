@@ -94,7 +94,7 @@ describe("UpdateConnectionComponent", () => {
 
   it("form should not have reasons when action is not add / remove", () => {
     component.updateConnectionForm.controls[actionText].setValue(
-      ActionType.IGNORE_CONNECTION
+      ActionType.HIDE_CONNECTION
     );
 
     const reason = component.updateConnectionForm.controls[reasonText];

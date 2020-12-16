@@ -7,6 +7,7 @@ import { environment } from "@environment";
 import { NgxsModule, Store } from "@ngxs/store";
 import { EnableUpdateConnections } from "../state/update-connections.actions";
 import { UpdateConnectionsState } from "../state/update-connections.state";
+import { ActionType } from "../update-connections.interfaces";
 import { UpdateConnectionsService } from "./update-connections.service";
 
 describe("UpdateConnectionsService", () => {
@@ -42,7 +43,7 @@ describe("UpdateConnectionsService", () => {
   it("should add new connection", () => {
     const endPoint = `${environment.appUrls.getConnections}/add`;
 
-    service.updateConnection({}, "add").subscribe();
+    service.updateConnection({}, ActionType.ADD_CONNECTION).subscribe();
 
     const mockHttp = http.expectOne(endPoint);
     expect(mockHttp.request.method).toBe("POST");
@@ -53,7 +54,29 @@ describe("UpdateConnectionsService", () => {
   it("should remove current connection", () => {
     const endPoint = `${environment.appUrls.getConnections}/remove`;
 
-    service.updateConnection({}, "remove").subscribe();
+    service.updateConnection({}, ActionType.REMOVE_CONNECTION).subscribe();
+
+    const mockHttp = http.expectOne(endPoint);
+    expect(mockHttp.request.method).toBe("POST");
+
+    http.verify();
+  });
+
+  it("should hide selected connection", () => {
+    const endPoint = `${environment.appUrls.getConnections}/hide`;
+
+    service.updateConnection({}, ActionType.HIDE_CONNECTION).subscribe();
+
+    const mockHttp = http.expectOne(endPoint);
+    expect(mockHttp.request.method).toBe("POST");
+
+    http.verify();
+  });
+
+  it("should unhide selected connection", () => {
+    const endPoint = `${environment.appUrls.getConnections}/unhide`;
+
+    service.updateConnection({}, ActionType.UNHIDE_CONNECTION).subscribe();
 
     const mockHttp = http.expectOne(endPoint);
     expect(mockHttp.request.method).toBe("POST");
@@ -67,7 +90,7 @@ describe("UpdateConnectionsService", () => {
     const mockErrorResponse = { status: 400, statusText: "Bad Request" };
     const data = "Invalid request parameters";
 
-    service.updateConnection({}, "remove").subscribe(
+    service.updateConnection({}, ActionType.REMOVE_CONNECTION).subscribe(
       (res) => (response = res),
       (err) => (errResponse = err)
     );

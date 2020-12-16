@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { of } from "rxjs";
+import { of, throwError } from "rxjs";
 
 import { AllocateAdminActionsComponent } from "./allocate-admin-actions.component";
 import { RecordsService } from "src/app/records/services/records.service";
@@ -29,15 +29,34 @@ describe("AllocateAdminActionsComponent", () => {
   let recordsService: RecordsService;
   let snackBarService: SnackBarService;
   let adminsService: AdminsService;
+  const stateName = "recommendations";
 
   const admin = "dummy@dummy.com";
   const mockRecommendations: IRecommendation[] = [
+    {
+      checked: false,
+      dateAdded: "2015-05-14",
+      doctorFirstName: "Dummy",
+      doctorLastName: "Brown",
+      gmcReferenceNumber: "8457854",
+      sanction: "No",
+      submissionDate: "2018-05-14",
+      underNotice: "No",
+      admin: "",
+      cctDate: "2015-09-08",
+      doctorStatus: RecommendationStatus.NOT_STARTED,
+      lastUpdatedDate: "2015-09-08",
+      programmeMembershipType: "",
+      programmeName: "",
+      designatedBody: "2-09876",
+      gmcOutcome: RecommendationGmcOutcome.APPROVED
+    },
     {
       checked: true,
       dateAdded: "2015-05-14",
       doctorFirstName: "Bobby",
       doctorLastName: "Brown",
-      gmcReferenceNumber: "7777777",
+      gmcReferenceNumber: "7772777",
       sanction: "No",
       submissionDate: "2018-05-14",
       underNotice: "No",
@@ -55,7 +74,7 @@ describe("AllocateAdminActionsComponent", () => {
       dateAdded: "2017-09-01",
       doctorFirstName: "Kelly",
       doctorLastName: "Green",
-      gmcReferenceNumber: "1111",
+      gmcReferenceNumber: "3654896",
       sanction: "No",
       submissionDate: "2019-01-12",
       underNotice: "No",
@@ -95,12 +114,17 @@ describe("AllocateAdminActionsComponent", () => {
   }));
 
   beforeEach(() => {
+    recordsService.stateName = stateName;
     fixture = TestBed.createComponent(AllocateAdminActionsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
   beforeEach(() => {
+    store.reset({
+      recommendations: { items: mockRecommendations, enableAllocateAdmin: true }
+    });
+
     spyOn(recordsService, "enableAllocateAdmin").and.callFake(
       (val: boolean) => {
         return of(val);
@@ -109,7 +133,6 @@ describe("AllocateAdminActionsComponent", () => {
 
     spyOn(snackBarService, "openSnackBar");
     spyOn(recordsService, "get").and.stub();
-    spyOn(adminsService, "submitAllocateList").and.callThrough();
     spyOn(store, "dispatch").and.callThrough();
   });
 
@@ -144,7 +167,6 @@ describe("AllocateAdminActionsComponent", () => {
   });
 
   it("on save should invoke snackbarService message when admin is not selected", () => {
-    component.selectedItems = mockRecommendations;
     component.admin = null;
     component.save();
 
@@ -154,23 +176,47 @@ describe("AllocateAdminActionsComponent", () => {
   });
 
   it("on save should invoke adminsService submitAllocateList with IAllocateAdmin payload", () => {
-    component.selectedItems = mockRecommendations;
+    spyOn(adminsService, "submitAllocateList").and.callThrough();
     component.admin = admin;
     component.save();
 
     const expectedPayload: IAllocateAdmin[] = [
       {
         admin,
-        gmcNumber: Number(mockRecommendations[0].gmcReferenceNumber)
+        gmcNumber: Number(mockRecommendations[1].gmcReferenceNumber)
       },
       {
         admin,
-        gmcNumber: Number(mockRecommendations[1].gmcReferenceNumber)
+        gmcNumber: Number(mockRecommendations[2].gmcReferenceNumber)
       }
     ];
 
     expect(adminsService.submitAllocateList).toHaveBeenCalledWith(
       expectedPayload
+    );
+  });
+
+  it("should show success message when save is successful", () => {
+    spyOn(adminsService, "submitAllocateList").and.callFake(() =>
+      of("Success")
+    );
+    component.admin = admin;
+    component.save();
+
+    expect(snackBarService.openSnackBar).toHaveBeenCalledWith(
+      "Successfully assigned admins"
+    );
+  });
+
+  it("should show success message when save is successful", () => {
+    spyOn(adminsService, "submitAllocateList").and.callFake(() =>
+      throwError("Failed")
+    );
+    component.admin = admin;
+    component.save();
+
+    expect(snackBarService.openSnackBar).toHaveBeenCalledWith(
+      "Failed to assign admins"
     );
   });
 

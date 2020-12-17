@@ -18,7 +18,6 @@ import { DEFAULT_SORT } from "../../records/constants";
 import { ConnectionsService } from "../services/connections.service";
 import {
   ClearConnectionsSearch,
-  EnableConnectionsAllocateAdmin,
   FilterConnections,
   PaginateConnections,
   ResetConnectionsPaginator,
@@ -68,7 +67,8 @@ export class ConnectionsState extends RecordsState {
         endPoint = `${endPoint}/exception`;
         break;
 
-      default:
+      case ConnectionsFilterType.HIDDEN:
+        endPoint = `${endPoint}/hidden`;
         break;
     }
 
@@ -153,14 +153,6 @@ export class ConnectionsState extends RecordsState {
   @Action(ResetConnectionsFilter)
   resetFilter(ctx: StateContext<ConnectionsStateModel>) {
     return super.resetFilterHandler(ctx, ConnectionsFilterType.ALL);
-  }
-
-  @Action(EnableConnectionsAllocateAdmin)
-  enableAllocateAdmin(
-    ctx: StateContext<ConnectionsStateModel>,
-    action: EnableConnectionsAllocateAdmin
-  ) {
-    return super.enableAllocateAdminHandler(ctx, action.enableAllocateAdmin);
   }
 
   @Action(ToggleConnectionsCheckbox)

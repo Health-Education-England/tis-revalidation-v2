@@ -10,7 +10,6 @@ import { MaterialModule } from "../shared/material/material.module";
 describe("RecordsComponent", () => {
   let component: RecordsComponent;
   let fixture: ComponentFixture<RecordsComponent>;
-  let snackBarService: SnackBarService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -26,7 +25,6 @@ describe("RecordsComponent", () => {
   }));
 
   beforeEach(() => {
-    snackBarService = TestBed.inject(SnackBarService);
     fixture = TestBed.createComponent(RecordsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

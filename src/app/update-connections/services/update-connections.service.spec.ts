@@ -85,13 +85,12 @@ describe("UpdateConnectionsService", () => {
   });
 
   it("should throw error when add/remove connection api call fail", () => {
-    let response: any;
     let errResponse: any;
     const mockErrorResponse = { status: 400, statusText: "Bad Request" };
     const data = "Invalid request parameters";
 
     service.updateConnection({}, ActionType.REMOVE_CONNECTION).subscribe(
-      (res) => (response = res),
+      () => {},
       (err) => (errResponse = err)
     );
     http

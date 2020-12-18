@@ -2,11 +2,9 @@ import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
-import { By } from "@angular/platform-browser";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
-import { AuthService } from "src/app/core/auth/auth.service";
 import { UpdateConnectionsState } from "src/app/update-connections/state/update-connections.state";
 import { RecommendationsState } from "../../recommendations/state/recommendations.state";
 import { MaterialModule } from "../../shared/material/material.module";
@@ -19,7 +17,6 @@ describe("RecordSearchComponent", () => {
   let component: RecordSearchComponent;
   let fixture: ComponentFixture<RecordSearchComponent>;
   let recordsService: RecordsService;
-  let authService: AuthService;
   const sortColumn = "doctorFirstName";
   const sortDirection = "asc";
   const recommendationsState = {
@@ -51,7 +48,6 @@ describe("RecordSearchComponent", () => {
     }).compileComponents();
     store = TestBed.inject(Store);
     recordsService = TestBed.inject(RecordsService);
-    authService = TestBed.inject(AuthService);
   }));
 
   beforeEach(() => {

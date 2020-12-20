@@ -52,25 +52,18 @@ export class UpdateConnectionComponent implements OnInit {
     public updateConnectionsService: UpdateConnectionsService
   ) {
     this.actions = CONNECTION_ACTIONS;
-
-    this.store.dispatch(new Get()).pipe(
-      catchError(() => {
-        return this.router.navigate(["/404"]);
-      })
-    );
   }
 
   ngOnInit(): void {
     this.bindFormControl();
     this.dbcs$.subscribe((res) => {
-      if (res) {
-        this.dbcs = res;
-        this.userDbcs = res.filter(
+      this.dbcs = res || [];
+      this.userDbcs =
+        res?.filter(
           (r) =>
             this.authService.userDesignatedBodies.includes(r.dbc) &&
             r.dbc !== this.currentDoctorDbcCode
-        );
-      }
+        ) || [];
     });
 
     this.updateConnectionsService.canSave$.subscribe(
@@ -82,7 +75,7 @@ export class UpdateConnectionComponent implements OnInit {
     );
   }
 
-  onSubmitt() {
+  onSubmit() {
     if (this.updateConnectionForm.valid) {
       const dialogData = new ConfirmDialogModel(
         "Update connection(s)",
@@ -126,6 +119,7 @@ export class UpdateConnectionComponent implements OnInit {
           this.addConnectionSelected = action === ActionType.ADD_CONNECTION;
 
           if (this.addConnectionSelected) {
+            this.store.dispatch(new Get());
             this.dbcControl.setValidators(Validators.required);
             this.updateConnectionForm.addControl("dbc", this.dbcControl);
             this.dbcControl.updateValueAndValidity();
@@ -135,9 +129,9 @@ export class UpdateConnectionComponent implements OnInit {
           }
 
           this.reasonControl.setValue("");
-          this.reasons =
-            CONNECTION_ACTIONS.find((arm) => arm.action === action)?.reasons ||
-            [];
+          this.reasons = CONNECTION_ACTIONS.find(
+            (arm) => arm.action === action
+          )?.reasons;
           this.reasonControl.updateValueAndValidity();
         }
       })

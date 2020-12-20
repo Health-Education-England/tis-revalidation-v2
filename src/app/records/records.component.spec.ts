@@ -4,7 +4,6 @@ import { NgxsModule } from "@ngxs/store";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { RecordsComponent } from "./records.component";
-import { SnackBarService } from "../shared/services/snack-bar/snack-bar.service";
 import { MaterialModule } from "../shared/material/material.module";
 
 describe("RecordsComponent", () => {

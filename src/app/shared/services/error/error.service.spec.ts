@@ -20,7 +20,7 @@ describe("ErrorService", () => {
     });
     const message: string = service.generateErrorMsg(error);
     expect(message).toBeInstanceOf(String);
-    expect(message).toEqual(`Error: ${error.error.message}`);
+    expect(message).toEqual(`${error.error.message}`);
   });
 
   it("should return appropriate server side error message", () => {
@@ -30,6 +30,6 @@ describe("ErrorService", () => {
     });
     const message: string = service.generateErrorMsg(error);
     expect(message).toBeInstanceOf(String);
-    expect(message).toEqual(`Error Code: ${error.status}. ${error.statusText}`);
+    expect(message).toEqual("Oops, something went wrong");
   });
 });

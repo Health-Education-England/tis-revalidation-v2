@@ -6,11 +6,9 @@ import { Injectable } from "@angular/core";
 })
 export class ErrorService {
   public generateErrorMsg(error: HttpErrorResponse): string {
-    return error.status === 200
-      ? error.error.text
-      : error.error instanceof ErrorEvent || error.status === 406
-      ? `Error: ${error.error.message || error.error[0]}`
-      : `Error Code: ${error.status}. ${error.statusText}`;
+    return error.error instanceof ErrorEvent || error.status === 406
+      ? `${error.error.message || error.error[0]}`
+      : `Oops, something went wrong`;
   }
 }
 

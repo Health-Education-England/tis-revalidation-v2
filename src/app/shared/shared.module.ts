@@ -7,10 +7,16 @@ import { PageNotFoundComponent } from "./page-not-found/page-not-found.component
 import { ApiService } from "./services/api/api.service";
 import { StripHtmlPipe } from "./strip-html.pipe";
 import { FileBytesPipe } from "./file-bytes.pipe";
+import { InfoDialogComponent } from "./info-dialog/info-dialog.component";
 
 const modulePipes = [StripHtmlPipe, FileBytesPipe];
 @NgModule({
-  declarations: [PageNotFoundComponent, ConfirmDialogComponent, ...modulePipes],
+  declarations: [
+    PageNotFoundComponent,
+    ConfirmDialogComponent,
+    ...modulePipes,
+    InfoDialogComponent
+  ],
   imports: [RouterModule, MaterialModule],
   exports: [...modulePipes],
   providers: [ApiService]

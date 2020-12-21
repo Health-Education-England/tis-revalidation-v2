@@ -15,11 +15,13 @@ import { UpdateConnectionComponent } from "./update-connection.component";
 import { ActionType } from "../update-connections.interfaces";
 import { UpdateConnectionsState } from "../state/update-connections.state";
 import { UpdateConnectionsService } from "../services/update-connections.service";
+import { AuthService } from "src/app/core/auth/auth.service";
 
 describe("UpdateConnectionComponent", () => {
   let component: UpdateConnectionComponent;
   let fixture: ComponentFixture<UpdateConnectionComponent>;
   let store: Store;
+  let authService: AuthService;
   let updateConnectionsService: UpdateConnectionsService;
   const actionText = "action";
   const reasonText = "reason";
@@ -39,6 +41,7 @@ describe("UpdateConnectionComponent", () => {
       ],
       declarations: [UpdateConnectionComponent],
       providers: [
+        AuthService,
         UpdateConnectionsService,
         {
           provide: MatDialog,
@@ -49,12 +52,15 @@ describe("UpdateConnectionComponent", () => {
   });
 
   beforeEach(() => {
+    authService = TestBed.inject(AuthService);
     updateConnectionsService = TestBed.inject(UpdateConnectionsService);
     fixture = TestBed.createComponent(UpdateConnectionComponent);
     component = fixture.componentInstance;
     store = TestBed.inject(Store);
     fixture.detectChanges();
 
+    authService.userDesignatedBodies = ["1-AIIDWT", "1-AIIDSA", "1-AIIDVS"];
+    component.currentDoctorDbcCode = "1-AIIDWT";
     store.reset({
       updateConnections: {
         enableUpdateConnections: true,
@@ -74,19 +80,24 @@ describe("UpdateConnectionComponent", () => {
     expect(action.valid).toBeFalsy();
   });
 
-  it("form should add reason control when any action selected", () => {
-    component.updateConnectionForm.controls[actionText].setValue(
-      ActionType.ADD_CONNECTION
-    );
+  it("dbcs and userDbcs should be empty when dbcs$ is null", () => {
+    store.reset({
+      updateConnections: {
+        enableUpdateConnections: true,
+        dbcs: null
+      }
+    });
 
-    const reason = component.updateConnectionForm.controls[reasonText];
-    expect(reason).toBeDefined();
+    expect(component.dbcs.length).toBe(0);
+    expect(component.userDbcs.length).toBe(0);
   });
 
-  it("form should add dbc control when add connection selected", () => {
+  it("form should add dbc control with user dbcs excluding doctor current dbc when add connection selected", () => {
     component.updateConnectionForm.controls[actionText].setValue(
       ActionType.ADD_CONNECTION
     );
+
+    expect(component.userDbcs.length).toBe(2);
 
     const dbc = component.updateConnectionForm.controls[dbcText];
     expect(dbc).toBeDefined();
@@ -113,7 +124,7 @@ describe("UpdateConnectionComponent", () => {
 
   it("form should get reset when resetForm() invoked", () => {
     expect(component.updateConnectionForm.valid).toBeFalsy();
-    fillForm();
+    fillForm(ActionType.ADD_CONNECTION);
 
     expect(component.updateConnectionForm.valid).toBeTruthy();
 
@@ -121,22 +132,22 @@ describe("UpdateConnectionComponent", () => {
     expect(component.updateConnectionForm.valid).toBeFalsy();
   });
 
-  it("form should invoke updateConnection() when add conneciton action selected", () => {
+  it("form should emit submittFormEvent when form is submitted", () => {
     spyOn(component.submittFormEvent, "emit");
 
     expect(component.updateConnectionForm.valid).toBeFalsy();
-    fillForm();
+    fillForm(ActionType.ADD_CONNECTION);
     expect(component.updateConnectionForm.valid).toBeTruthy();
-    component.onSubmitt();
+    component.onSubmit();
+
+    expect(component.submittFormEvent.emit).toHaveBeenCalled();
   });
 
-  it("form should invoke updateConnection() when remove conneciton action selected", () => {
+  it("form should not emit submittFormEvent when invalid form is submitted", () => {
     spyOn(component.submittFormEvent, "emit");
+    component.onSubmit();
 
-    expect(component.updateConnectionForm.valid).toBeFalsy();
-    fillForm(ActionType.REMOVE_CONNECTION);
-    expect(component.updateConnectionForm.valid).toBeTruthy();
-    component.onSubmitt();
+    expect(component.submittFormEvent.emit).not.toHaveBeenCalled();
   });
 
   it("should invoke enableUpdateConnections when cancel is invoked", () => {
@@ -148,7 +159,7 @@ describe("UpdateConnectionComponent", () => {
     ).toHaveBeenCalledWith(false);
   });
 
-  function fillForm(action: ActionType = ActionType.ADD_CONNECTION) {
+  function fillForm(action: ActionType) {
     component.updateConnectionForm.controls[actionText].setValue(action);
     component.updateConnectionForm.controls[reasonText].setValue(
       "Conflict of interest"

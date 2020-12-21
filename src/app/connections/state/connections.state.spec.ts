@@ -1,6 +1,7 @@
 import {
   HttpClientTestingModule,
-  HttpTestingController
+  HttpTestingController,
+  TestRequest
 } from "@angular/common/http/testing";
 import { TestBed, async, fakeAsync } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
@@ -49,31 +50,34 @@ describe("Connections state", () => {
     expect(connectionsState).toBeTruthy();
   });
 
+  function setUpGetRequest(
+    filter: ConnectionsFilterType,
+    path: string
+  ): TestRequest {
+    spyOn(connectionsService, "getFilter").and.callFake(() => filter);
+    spyOn(connectionsService, "generateParams").and.callFake(() => {
+      return new HttpParams()
+        .set("sortColumn", "gmcReferenceNumber")
+        .set("sortOrder", "asc")
+        .set("pageNumber", "0")
+        .set("filter", filter);
+    });
+
+    store.dispatch(new GetConnections());
+
+    return httpMock.expectOne(
+      `${environment.appUrls.getConnections}${path}?sortColumn=gmcReferenceNumber&sortOrder=asc&pageNumber=0&filter=${filter}`
+    );
+  }
+
   [
     { filter: ConnectionsFilterType.ALL, apiPath: "" },
     { filter: ConnectionsFilterType.HIDDEN, apiPath: "/hidden" },
     { filter: ConnectionsFilterType.EXCEPTIONS_QUEUE, apiPath: "/exception" }
   ].forEach((testCase) => {
     it(`should have ${testCase.filter} connections when GetConnections is dispatched`, fakeAsync(() => {
-      spyOn(connectionsService, "getFilter").and.callFake(
-        () => testCase.filter
-      );
-      spyOn(connectionsService, "generateParams").and.callFake(() => {
-        return new HttpParams()
-          .set("sortColumn", "gmcReferenceNumber")
-          .set("sortOrder", "asc")
-          .set("pageNumber", "0")
-          .set("filter", testCase.filter);
-      });
-
-      store.dispatch(new GetConnections());
-
-      const req = httpMock.expectOne(
-        `${environment.appUrls.getConnections}${testCase.apiPath}?sortColumn=gmcReferenceNumber&sortOrder=asc&pageNumber=0&filter=${testCase.filter}`
-      );
-      expect(req.request.method).toEqual("GET");
+      const req = setUpGetRequest(testCase.filter, testCase.apiPath);
       req.flush(mockConnectionsResponse);
-
       const connections = store.selectSnapshot(
         (state) => state.connections.items
       );
@@ -90,24 +94,7 @@ describe("Connections state", () => {
     }));
 
     it(`should have ${testCase.filter} connections when GetConnections is dispatched and API failed`, fakeAsync(() => {
-      spyOn(connectionsService, "getFilter").and.callFake(
-        () => testCase.filter
-      );
-      spyOn(connectionsService, "generateParams").and.callFake(() => {
-        return new HttpParams()
-          .set("sortColumn", "gmcReferenceNumber")
-          .set("sortOrder", "asc")
-          .set("pageNumber", "0")
-          .set("filter", testCase.filter);
-      });
-
-      store.dispatch(new GetConnections());
-
-      const req = httpMock.expectOne(
-        `${environment.appUrls.getConnections}${testCase.apiPath}?sortColumn=gmcReferenceNumber&sortOrder=asc&pageNumber=0&filter=${testCase.filter}`
-      );
-      expect(req.request.method).toEqual("GET");
-
+      const req = setUpGetRequest(testCase.filter, testCase.apiPath);
       const mockErrorResponse = { status: 400, statusText: "Bad Request" };
       const data = "Invalid request parameters";
       req.flush(data, mockErrorResponse);

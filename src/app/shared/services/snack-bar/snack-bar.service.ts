@@ -1,27 +1,16 @@
 import { Injectable, NgZone } from "@angular/core";
-import {
-  MatSnackBar,
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition
-} from "@angular/material/snack-bar";
+import { MatDialog } from "@angular/material/dialog";
+import { InfoDialogComponent } from "../../info-dialog/info-dialog.component";
 
 @Injectable({
   providedIn: "root"
 })
 export class SnackBarService {
-  public horizontalPosition: MatSnackBarHorizontalPosition = "center";
-  public verticalPosition: MatSnackBarVerticalPosition = "top";
-  public snackBarDuration = 10000;
-
-  constructor(private snackBar: MatSnackBar, private zone: NgZone) {}
+  constructor(private dialog: MatDialog, private zone: NgZone) {}
 
   public openSnackBar(message: string) {
     this.zone.run(() =>
-      this.snackBar.open(message, "Close", {
-        duration: this.snackBarDuration,
-        horizontalPosition: this.horizontalPosition,
-        verticalPosition: this.verticalPosition
-      })
+      this.dialog.open(InfoDialogComponent, { data: { message } })
     );
   }
 }

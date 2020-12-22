@@ -146,7 +146,9 @@ export class ConnectionsState extends RecordsState {
   filter(ctx: StateContext<ConnectionsStateModel>, action: FilterConnections) {
     return ctx.patchState({
       filter: action.filter,
-      disableSearchAndSort: action.filter !== ConnectionsFilterType.ALL
+      disableSearchAndSort:
+        action.filter !== ConnectionsFilterType.ALL &&
+        action.filter !== ConnectionsFilterType.HIDDEN
     });
   }
 

@@ -18,7 +18,8 @@ export class DetailsSideNavStateModel {
       cctDate: null,
       programmeMembershipType: null,
       programmeName: null,
-      currentGrade: null
+      currentGrade: null,
+      tisPersonId: null
     }
   }
 })

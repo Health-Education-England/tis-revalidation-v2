@@ -6,4 +6,5 @@ export interface IDetailsSideNav {
   programmeMembershipType: string;
   programmeName: string;
   currentGrade: string;
+  tisPersonId: number;
 }

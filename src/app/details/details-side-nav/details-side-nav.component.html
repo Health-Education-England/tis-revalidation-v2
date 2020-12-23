@@ -39,7 +39,12 @@
   </mat-list>
   <mat-divider></mat-divider>
   <mat-nav-list>
-    <a mat-list-item href="" *ngFor="let link of sideLinks">
+    <a
+      mat-list-item
+      href="{{ link.link }}"
+      *ngFor="let link of sideLinks"
+      target="_blank"
+    >
       {{ link.text }}
     </a>
   </mat-nav-list>

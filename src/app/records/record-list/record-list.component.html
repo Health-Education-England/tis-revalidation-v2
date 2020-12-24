@@ -84,9 +84,12 @@
                 <!-- checkbox -->
                 <mat-checkbox
                   *ngIf="
-                    (data.enableUpdateConnections ||
-                      data.enableAllocateAdmin) &&
-                    i.name === 'doctorFirstName'
+                    showCheckbox(
+                      data.enableAllocateAdmin,
+                      data.enableUpdateConnections,
+                      i.name,
+                      element
+                    )
                   "
                   class="pr-20"
                   [checked]="element.checked"

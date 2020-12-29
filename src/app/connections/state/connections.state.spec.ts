@@ -24,7 +24,7 @@ import { ConnectionsState } from "./connections.state";
 import { mockConnectionsResponse } from "./../mock-data/connecitons-spec-data";
 import { ConnectionsService } from "../services/connections.service";
 import { HttpParams } from "@angular/common/http";
-import { ConnectionsFilterType } from "../connections.interfaces";
+import { ConnectionsFilterType, IConnection } from "../connections.interfaces";
 import { DEFAULT_SORT } from "src/app/records/constants";
 
 describe("Connections state", () => {
@@ -115,14 +115,14 @@ describe("Connections state", () => {
   });
 
   it("should set the filter when FilterConnections is dispatched", () => {
-    store.dispatch(new FilterConnections(ConnectionsFilterType.ADD_CONNECTION));
+    store.dispatch(new FilterConnections(ConnectionsFilterType.DISCONNECTED));
     const filter = store.selectSnapshot((state) => state.connections.filter);
 
     const disableSearchAndSort = store.selectSnapshot(
       (state) => state.connections.disableSearchAndSort
     );
 
-    expect(filter).toBe(ConnectionsFilterType.ADD_CONNECTION);
+    expect(filter).toBe(ConnectionsFilterType.DISCONNECTED);
     expect(disableSearchAndSort).toBeTruthy();
   });
 
@@ -217,7 +217,7 @@ describe("Connections state", () => {
     });
     store.dispatch(new ToggleConnectionsCheckbox(gmcReferenceNumber));
 
-    const selectedItem = store.selectSnapshot((state) =>
+    const selectedItem: IConnection = store.selectSnapshot((state) =>
       state.connections.items.find(
         (item) => item.gmcReferenceNumber === gmcReferenceNumber
       )
@@ -229,15 +229,25 @@ describe("Connections state", () => {
   it("should toggle all checkboxes when ToggleAllConnectionsCheckboxes is dispatched", () => {
     store.reset({
       connections: {
-        items: mockConnectionsResponse.connections
+        items: mockConnectionsResponse.connections,
+        allChecked: false
       }
     });
     store.dispatch(new ToggleAllConnectionsCheckboxes());
 
-    const selectedItem = store.selectSnapshot(
-      (state) => state.connections.items[0]
+    const items: IConnection[] = store.selectSnapshot(
+      (state) => state.connections.items
     );
 
-    expect(selectedItem.checked).toBeTruthy();
+    items.forEach((item) => {
+      if (
+        item.programmeMembershipType === "Military" ||
+        item.programmeName.includes("Foundation")
+      ) {
+        expect(item.checked).toBeFalsy();
+      } else {
+        expect(item.checked).toBeTruthy();
+      }
+    });
   });
 });

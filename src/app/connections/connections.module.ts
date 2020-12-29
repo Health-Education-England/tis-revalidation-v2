@@ -10,8 +10,10 @@ import { ConnectionsRoutingModule } from "./connections-routing.module";
 import { UpdateConnectionsModule } from "../update-connections/update-connections.module";
 import { ConnectionsResolver } from "./connections.resolver";
 import { ConnectionsState } from "./state/connections.state";
+import { ConnectionsComponent } from "./connections.component";
 
 @NgModule({
+  declarations: [ConnectionsComponent],
   imports: [
     CommonModule,
     MaterialModule,

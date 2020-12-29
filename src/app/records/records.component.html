@@ -16,7 +16,7 @@
 
   <app-update-connection
     *ngIf="enableUpdateConnections$ | async"
-    (submittFormEvent)="updateConnections($event)"
+    (submittFormEvent)="onSubmitConnections($event)"
   >
   </app-update-connection>
   <app-allocate-admin-actions

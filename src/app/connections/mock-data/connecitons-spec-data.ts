@@ -14,8 +14,8 @@ export const mockConnectionsResponse: IGetConnectionsResponse = {
       gmcReferenceNumber: "9856987",
       programmeMembershipEndDate: null,
       programmeMembershipStartDate: null,
-      programmeMembershipType: null,
-      programmeName: null,
+      programmeMembershipType: "Substantive",
+      programmeName: "Histopathology South LDN",
       programmeOwner: null,
       submissionDate: "2018-03-20"
     },
@@ -27,8 +27,34 @@ export const mockConnectionsResponse: IGetConnectionsResponse = {
       gmcReferenceNumber: "6589658",
       programmeMembershipEndDate: null,
       programmeMembershipStartDate: null,
+      programmeMembershipType: "Substantive",
+      programmeName: "Histopathology South LDN",
+      programmeOwner: null,
+      submissionDate: "2018-03-20"
+    },
+    {
+      connectionStatus: null,
+      designatedBody: "1-AIICWA",
+      doctorFirstName: "Andrew",
+      doctorLastName: "Howard",
+      gmcReferenceNumber: "6589658",
+      programmeMembershipEndDate: null,
+      programmeMembershipStartDate: null,
+      programmeMembershipType: "Military",
+      programmeName: "Histopathology South LDN",
+      programmeOwner: null,
+      submissionDate: "2018-03-20"
+    },
+    {
+      connectionStatus: null,
+      designatedBody: "1-AIIDWA",
+      doctorFirstName: "Jack",
+      doctorLastName: "Reacher",
+      gmcReferenceNumber: "6589658",
+      programmeMembershipEndDate: null,
+      programmeMembershipStartDate: null,
       programmeMembershipType: null,
-      programmeName: null,
+      programmeName: "Foundation year programme",
       programmeOwner: null,
       submissionDate: "2018-03-20"
     }

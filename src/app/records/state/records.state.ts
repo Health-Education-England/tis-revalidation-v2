@@ -228,7 +228,12 @@ export class RecordsState {
       ctx.setState(
         patch({
           items: updateItem(
-            (item: any) => item === i,
+            (item: any) =>
+              item === i &&
+              !(
+                i.programmeMembershipType === "Military" ||
+                i.programmeName?.includes("Foundation")
+              ),
             patch({ checked: allChecked })
           )
         })

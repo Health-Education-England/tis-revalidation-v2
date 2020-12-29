@@ -5,8 +5,9 @@ import { Store } from "@ngxs/store";
 import { BehaviorSubject, Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { IUpdateConnectionResponse } from "src/app/connection/connection.interfaces";
+import { CONNECTION_ACTIONS } from "../constants";
 import { EnableUpdateConnections } from "../state/update-connections.actions";
-import { ActionType } from "../update-connections.interfaces";
+import { ActionType, IAction } from "../update-connections.interfaces";
 
 @Injectable({
   providedIn: "root"
@@ -18,6 +19,10 @@ export class UpdateConnectionsService {
   public canCancel$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
+  public actions$: BehaviorSubject<IAction[]> = new BehaviorSubject<IAction[]>(
+    CONNECTION_ACTIONS
+  );
+
   public stateName = "updateConnections";
 
   constructor(private http: HttpClient, private store: Store) {}

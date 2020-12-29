@@ -3,7 +3,6 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { Observable, Subscription } from "rxjs";
 import { AuthService } from "src/app/core/auth/auth.service";
-import { CONNECTION_ACTIONS } from "../constants";
 import { IDesignatedBody } from "src/app/reference/reference.interfaces";
 import {
   ConfirmDialogComponent,
@@ -14,7 +13,6 @@ import { UpdateConnectionsService } from "../services/update-connections.service
 import { Select, Store } from "@ngxs/store";
 import { Router } from "@angular/router";
 import { Get } from "../state/update-connections.actions";
-import { catchError } from "rxjs/operators";
 import { UpdateConnectionsState } from "../state/update-connections.state";
 
 @Component({
@@ -50,9 +48,7 @@ export class UpdateConnectionComponent implements OnInit {
     private authService: AuthService,
     public dialog: MatDialog,
     public updateConnectionsService: UpdateConnectionsService
-  ) {
-    this.actions = CONNECTION_ACTIONS;
-  }
+  ) {}
 
   ngOnInit(): void {
     this.bindFormControl();
@@ -72,6 +68,10 @@ export class UpdateConnectionComponent implements OnInit {
 
     this.updateConnectionsService.canCancel$.subscribe(
       (result) => (this.canCancel = result)
+    );
+
+    this.updateConnectionsService.actions$.subscribe(
+      (result) => (this.actions = result)
     );
   }
 
@@ -129,7 +129,7 @@ export class UpdateConnectionComponent implements OnInit {
           }
 
           this.reasonControl.setValue("");
-          this.reasons = CONNECTION_ACTIONS.find(
+          this.reasons = this.actions.find(
             (arm) => arm.action === action
           )?.reasons;
           this.reasonControl.updateValueAndValidity();

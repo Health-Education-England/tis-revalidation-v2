@@ -20,7 +20,7 @@ describe("ConnectionsService", () => {
       active: sortColumn,
       direction: sortDirection
     },
-    filter: ConnectionsFilterType.ADD_CONNECTION
+    filter: ConnectionsFilterType.DISCONNECTED
   };
 
   beforeEach(() => {
@@ -60,6 +60,6 @@ describe("ConnectionsService", () => {
     const filter = connectionsService.getFilter();
 
     expect(connectionsService.getFilter).toHaveBeenCalled();
-    expect(filter).toBe(ConnectionsFilterType.ADD_CONNECTION);
+    expect(filter).toBe(ConnectionsFilterType.DISCONNECTED);
   });
 });

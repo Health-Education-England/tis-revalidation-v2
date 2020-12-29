@@ -98,11 +98,7 @@ export class ConnectionComponent implements OnInit, OnDestroy {
   }
 
   getDBCAbbreviation(dbc: string) {
-    if (dbc) {
-      return this.dbcs.find((d) => d.dbc === dbc)?.abbr || dbc;
-    }
-
-    return "";
+    return dbc ? this.dbcs.find((d) => d.dbc === dbc)?.abbr || dbc : "";
   }
 
   updateConnection(formValue: any) {

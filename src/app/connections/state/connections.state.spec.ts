@@ -115,14 +115,14 @@ describe("Connections state", () => {
   });
 
   it("should set the filter when FilterConnections is dispatched", () => {
-    store.dispatch(new FilterConnections(ConnectionsFilterType.ADD_CONNECTION));
+    store.dispatch(new FilterConnections(ConnectionsFilterType.DISCONNECTED));
     const filter = store.selectSnapshot((state) => state.connections.filter);
 
     const disableSearchAndSort = store.selectSnapshot(
       (state) => state.connections.disableSearchAndSort
     );
 
-    expect(filter).toBe(ConnectionsFilterType.ADD_CONNECTION);
+    expect(filter).toBe(ConnectionsFilterType.DISCONNECTED);
     expect(disableSearchAndSort).toBeTruthy();
   });
 

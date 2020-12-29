@@ -35,11 +35,11 @@ export class ConnectionsResolver
     this.recordsService.filters = [
       {
         label: "CONNECTED",
-        name: ConnectionsFilterType.REMOVE_CONNECTION
+        name: ConnectionsFilterType.CONNECTED
       },
       {
         label: "DISCONNECTED",
-        name: ConnectionsFilterType.ADD_CONNECTION
+        name: ConnectionsFilterType.DISCONNECTED
       },
       {
         label: "EXCEPTIONS QUEUE",

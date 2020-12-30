@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Store } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
 import { filter, take } from "rxjs/operators";
+import { ConnectionsFilterType } from "src/app/connections/connections.interfaces";
 import { AuthService } from "src/app/core/auth/auth.service";
 import { UpdateConnectionsService } from "src/app/update-connections/services/update-connections.service";
 import { RecordsService } from "../services/records.service";
@@ -26,7 +27,11 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
   public disableSearchAndSort$: Observable<boolean> = this.store.select(
     (state) => state[this.recordsService.stateName].disableSearchAndSort
   );
+  public filter$: Observable<any> = this.store.select(
+    (state) => state[this.recordsService.stateName].filter
+  );
 
+  public searchLabel: string;
   public isSuperAdmin: boolean;
   public isConnectionsSummary: boolean;
   public form: FormGroup;
@@ -42,6 +47,12 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
   ) {
     this.isConnectionsSummary = this.recordsService.stateName === "connections";
     this.isSuperAdmin = this.authService.isSuperAdmin;
+    this.filter$.subscribe((filterName) => {
+      this.searchLabel =
+        filterName === ConnectionsFilterType.HIDDEN
+          ? "Enter GMC no"
+          : "Enter name / GMC no";
+    });
   }
 
   ngOnInit() {

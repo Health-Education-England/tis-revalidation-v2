@@ -23,6 +23,8 @@ import {
   transition,
   trigger
 } from "@angular/animations";
+import { DetailsSideNavState } from "../details/details-side-nav/state/details-side-nav.state";
+import { IDetailsSideNav } from "../details/details-side-nav/details-side-nav.interfaces";
 
 @Component({
   selector: "app-connection",
@@ -51,6 +53,9 @@ export class ConnectionComponent implements OnInit, OnDestroy {
 
   @Select(ConnectionState.doctorCurrentDbc)
   public doctorCurrentDbc$: Observable<string>;
+
+  @Select(DetailsSideNavState.traineeDetails)
+  traineeDetails$: Observable<IDetailsSideNav>;
 
   dateFormat = environment.dateFormat;
   programmeColumnsToDisplay = [
@@ -84,7 +89,12 @@ export class ConnectionComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.enableUpdateConnection = this.authService.isSuperAdmin;
+    this.traineeDetails$.subscribe((trainee) => {
+      this.enableUpdateConnection =
+        this.authService.isSuperAdmin &&
+        trainee.programmeMembershipType !== "Military" &&
+        trainee.currentGrade !== "Foundation Year 1";
+    });
     this.gmcNumber$.subscribe((res) => (this.gmcNumber = res));
     this.doctorCurrentDbc$.subscribe((res) => (this.doctorCurrentDbc = res));
     this.referenceService.getDbcs().subscribe((res) => (this.dbcs = res));

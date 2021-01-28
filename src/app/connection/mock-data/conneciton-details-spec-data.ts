@@ -15,6 +15,7 @@ const programme: IProgramme = {
   currentGrade: "GRADE",
   programmeHistory: [
     {
+      designatedBodyCode: "1-AIIDVS",
       programmeMembershipType: "prg type1",
       programmeName: "prg name1",
       programmeOwner: "prg owner1",
@@ -22,6 +23,7 @@ const programme: IProgramme = {
       programmeMembershipEndDate: new Date("10/11/2020")
     },
     {
+      designatedBodyCode: "1-AIIDMQ",
       programmeMembershipType: "prg type2",
       programmeName: "prg name2",
       programmeOwner: "prg owner2",

@@ -22,6 +22,7 @@ export interface IProgramme {
 }
 
 export interface IProgrammeHistory {
+  designatedBodyCode: string;
   programmeMembershipType: string;
   programmeName: string;
   programmeOwner: string;

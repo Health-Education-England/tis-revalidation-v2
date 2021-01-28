@@ -13,6 +13,7 @@ import { SnackBarService } from "../shared/services/snack-bar/snack-bar.service"
 import { ActionType } from "../update-connections/update-connections.interfaces";
 import { UpdateConnectionsService } from "../update-connections/services/update-connections.service";
 import { IConnectionHistory } from "./connection.interfaces";
+import { mockConnectionResponse } from "./mock-data/conneciton-details-spec-data";
 
 describe("ConnectionComponent", () => {
   let component: ConnectionComponent;
@@ -99,6 +100,8 @@ describe("ConnectionComponent", () => {
 
     component.doctorCurrentDbc = "1-ABCDE";
     component.gmcNumber = 123456;
+    component.programmeOwnerDBC =
+      mockConnectionResponse.programme.programmeHistory[0].designatedBodyCode;
     component.updateConnection(formValue);
 
     expect(component.submitting).toBeTruthy();
@@ -106,7 +109,13 @@ describe("ConnectionComponent", () => {
       {
         changeReason: "Conflict of interset",
         designatedBodyCode: "1-FGHIJ",
-        doctors: [{ gmcId: 123456, currentDesignatedBodyCode: "1-ABCDE" }]
+        doctors: [
+          {
+            gmcId: 123456,
+            currentDesignatedBodyCode: "1-ABCDE",
+            programmeOwnerDesignatedBodyCode: "1-AIIDVS"
+          }
+        ]
       },
       ActionType.ADD_CONNECTION
     );
@@ -164,6 +173,8 @@ describe("ConnectionComponent", () => {
 
     component.doctorCurrentDbc = "1-ABCDE";
     component.gmcNumber = 123456;
+    component.programmeOwnerDBC =
+      mockConnectionResponse.programme.programmeHistory[0].designatedBodyCode;
     component.updateConnection(formValue);
 
     expect(component.submitting).toBeTruthy();
@@ -171,7 +182,13 @@ describe("ConnectionComponent", () => {
       {
         changeReason: "Conflict of interset",
         designatedBodyCode: null,
-        doctors: [{ gmcId: 123456, currentDesignatedBodyCode: "1-ABCDE" }]
+        doctors: [
+          {
+            gmcId: 123456,
+            currentDesignatedBodyCode: "1-ABCDE",
+            programmeOwnerDesignatedBodyCode: "1-AIIDVS"
+          }
+        ]
       },
       ActionType.REMOVE_CONNECTION
     );

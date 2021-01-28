@@ -13,7 +13,10 @@ import { AuthService } from "../core/auth/auth.service";
 import { SnackBarService } from "../shared/services/snack-bar/snack-bar.service";
 import { IDesignatedBody } from "../reference/reference.interfaces";
 import { ReferenceService } from "../reference/services/reference.service";
-import { ActionType } from "../update-connections/update-connections.interfaces";
+import {
+  ActionType,
+  IDoctor
+} from "../update-connections/update-connections.interfaces";
 import { UpdateConnectionsService } from "../update-connections/services/update-connections.service";
 import { Get } from "./state/connection.actions";
 import {
@@ -79,6 +82,7 @@ export class ConnectionComponent implements OnInit, OnDestroy {
   expandedElement: IConnectionHistory | null;
   enableUpdateConnection = false;
   submitting = false;
+  programmeOwnerDBC: string;
 
   constructor(
     private store: Store,
@@ -99,6 +103,9 @@ export class ConnectionComponent implements OnInit, OnDestroy {
     this.doctorCurrentDbc$.subscribe((res) => (this.doctorCurrentDbc = res));
     this.referenceService.getDbcs().subscribe((res) => (this.dbcs = res));
     this.updateConnectionsService.canSave$.next(true);
+    this.programmeHistory$.subscribe(
+      (res) => (this.programmeOwnerDBC = res[0].designatedBodyCode)
+    );
   }
 
   ngOnDestroy(): void {
@@ -113,10 +120,11 @@ export class ConnectionComponent implements OnInit, OnDestroy {
 
   updateConnection(formValue: any) {
     this.submitting = true;
-    const doctors = [
+    const doctors: IDoctor[] = [
       {
         gmcId: this.gmcNumber,
-        currentDesignatedBodyCode: this.doctorCurrentDbc
+        currentDesignatedBodyCode: this.doctorCurrentDbc,
+        programmeOwnerDesignatedBodyCode: this.programmeOwnerDBC
       }
     ];
 

@@ -49,7 +49,8 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
     this.isSuperAdmin = this.authService.isSuperAdmin;
     this.filter$.subscribe((filterName) => {
       this.searchLabel =
-        filterName === ConnectionsFilterType.HIDDEN
+        filterName === ConnectionsFilterType.HIDDEN ||
+        ConnectionsFilterType.EXCEPTIONS_QUEUE
           ? "Enter GMC no"
           : "Enter name / GMC no";
     });

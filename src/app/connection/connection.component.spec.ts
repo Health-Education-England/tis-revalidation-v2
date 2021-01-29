@@ -48,15 +48,19 @@ describe("ConnectionComponent", () => {
     }).compileComponents();
   });
 
-  beforeEach(async () => {
+  beforeEach(() => {
     updateConnectionService = TestBed.inject(UpdateConnectionsService);
     snackBarService = TestBed.inject(SnackBarService);
     fixture = TestBed.createComponent(ConnectionComponent);
     component = fixture.componentInstance;
 
     component.ngOnInit();
-    await fixture.whenStable();
+    fixture.whenStable();
     fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    fixture.destroy();
   });
 
   it("should create", () => {

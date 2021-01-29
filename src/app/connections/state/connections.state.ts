@@ -148,7 +148,8 @@ export class ConnectionsState extends RecordsState {
       filter: action.filter,
       disableSearchAndSort:
         action.filter !== ConnectionsFilterType.ALL &&
-        action.filter !== ConnectionsFilterType.HIDDEN
+        action.filter !== ConnectionsFilterType.HIDDEN &&
+        action.filter !== ConnectionsFilterType.EXCEPTIONS_QUEUE
     });
   }
 

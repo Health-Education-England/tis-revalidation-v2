@@ -21,7 +21,7 @@ import {
   ToggleConnectionsCheckbox
 } from "./connections.actions";
 import { ConnectionsState } from "./connections.state";
-import { mockConnectionsResponse } from "./../mock-data/connecitons-spec-data";
+import { mockConnectionsResponse } from "../mock-data/connections-spec-data";
 import { ConnectionsService } from "../services/connections.service";
 import { HttpParams } from "@angular/common/http";
 import { ConnectionsFilterType, IConnection } from "../connections.interfaces";

@@ -29,6 +29,7 @@ import { errorHandlerFactory } from "./factories/error-handler.factory";
 import { analyticsConfigFactory } from "./factories/google-analytics-config.factory";
 import { hotjarConfigFactory } from "./factories/hotjar-config.factory";
 import { swRegistrationOptionsFactory } from "./factories/sw-registration-options.factory";
+import { NgxsLoggerPluginModule } from "@ngxs/logger-plugin";
 
 @NgModule({
   declarations: [AppComponent],
@@ -44,6 +45,7 @@ import { swRegistrationOptionsFactory } from "./factories/sw-registration-option
     AnalyticsModule.forRoot(),
     HotJarModule.forRoot(),
     NgxsModule.forRoot([]),
+    NgxsLoggerPluginModule.forRoot(),
     MainNavigationModule
   ],
   providers: [

@@ -17,6 +17,7 @@ export interface IConnection {
   programmeName: string;
   programmeOwner: string;
   submissionDate: string;
+  tcsDesignatedBody: string;
 }
 
 export enum ConnectionsFilterType {

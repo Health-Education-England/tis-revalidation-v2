@@ -10,7 +10,7 @@
     "build:shared": "ng build --project=hee-shared",
     "build:browsers": "node supported.browsers.node.ts",
     "test": "ng test --code-coverage=true",
-    "test:ci": "npm run test -- --watch=true --browsers=ChromeHeadless",
+    "test:ci": "npm run test -- --watch=false --browsers=ChromeHeadless",
     "lint": "ng lint",
     "lint:styles": "stylelint \"src/**/*.scss\"",
     "cypress": "cypress run",

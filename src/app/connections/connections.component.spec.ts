@@ -10,12 +10,14 @@ import { SnackBarService } from "../shared/services/snack-bar/snack-bar.service"
 import { ActionType } from "../update-connections/update-connections.interfaces";
 import { mockConnectionsResponse } from "./mock-data/connections-spec-data";
 import { of, throwError } from "rxjs";
+import { RecordsService } from "../records/services/records.service";
 
 describe("ConnectionsComponent", () => {
   let component: ConnectionsComponent;
   let fixture: ComponentFixture<ConnectionsComponent>;
   let updateConnectionsService: UpdateConnectionsService;
   let snackBarService: SnackBarService;
+  let recordsService: RecordsService;
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
@@ -33,6 +35,7 @@ describe("ConnectionsComponent", () => {
   beforeEach(() => {
     updateConnectionsService = TestBed.inject(UpdateConnectionsService);
     snackBarService = TestBed.inject(SnackBarService);
+    recordsService = TestBed.inject(RecordsService);
     fixture = TestBed.createComponent(ConnectionsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -87,14 +90,17 @@ describe("ConnectionsComponent", () => {
       },
       ActionType.ADD_CONNECTION
     );
+    expect(component.loading).toBeTruthy();
   });
 
-  it("should display snackbar success message when bulk Add connection request succeeds ", () => {
+  it("should display snackbar success message and set loading to false when bulk Add connection request succeeds", () => {
     const message = "Connections updated!";
     spyOn(snackBarService, "openSnackBar");
     spyOn(updateConnectionsService, "updateConnection").and.returnValue(
       of({ message })
     );
+    spyOn(recordsService, "enableAllocateAdmin").and.returnValue(of(false));
+    spyOn(recordsService, "get").and.returnValue(of([]));
 
     const formValue = {
       action: ActionType.ADD_CONNECTION,
@@ -106,6 +112,7 @@ describe("ConnectionsComponent", () => {
     component.updateConnections(formValue);
 
     expect(snackBarService.openSnackBar).toHaveBeenCalledWith(message);
+    expect(component.loading).toBeFalsy();
   });
 
   it("should display snackbar error message when bulk Add connection request fails", () => {

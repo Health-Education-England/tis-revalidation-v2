@@ -75,7 +75,8 @@ export class ConnectionsComponent implements OnDestroy {
       this.loading = true;
       const doctors = this.selectedItems.map((item) => ({
         gmcId: item.gmcReferenceNumber,
-        currentDesignatedBodyCode: item.designatedBody
+        currentDesignatedBodyCode: item.designatedBody,
+        programmeOwnerDesignatedBodyCode: item.tcsDesignatedBody
       }));
 
       const payload = {

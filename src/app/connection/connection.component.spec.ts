@@ -98,7 +98,7 @@ describe("ConnectionComponent", () => {
 
     const formValue = {
       action: ActionType.ADD_CONNECTION,
-      reason: "Conflict of interset",
+      reason: "Conflict of interest",
       dbc: "1-FGHIJ"
     };
 
@@ -111,7 +111,7 @@ describe("ConnectionComponent", () => {
     expect(component.submitting).toBeTruthy();
     expect(updateConnectionService.updateConnection).toHaveBeenCalledWith(
       {
-        changeReason: "Conflict of interset",
+        changeReason: "Conflict of interest",
         designatedBodyCode: "1-FGHIJ",
         doctors: [
           {

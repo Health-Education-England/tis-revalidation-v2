@@ -10,8 +10,8 @@ describe("ReferenceService", () => {
   let service: ReferenceService;
   let http: HttpTestingController;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(() => {
+    TestBed.configureTestingModule({
       imports: [HttpClientTestingModule]
     });
     service = TestBed.inject(ReferenceService);

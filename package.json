@@ -61,7 +61,7 @@
     "@react-native-community/netinfo": "^5.9.9",
     "@types/jasmine": "~3.6.2",
     "@types/jasminewd2": "~2.0.3",
-    "@types/node": "^14.14.19",
+    "@types/node": "^14.14.28",
     "browserslist-useragent-regexp": "^2.1.1",
     "buffer": "^6.0.3",
     "codelyzer": "^6.0.1",

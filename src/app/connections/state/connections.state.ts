@@ -70,6 +70,14 @@ export class ConnectionsState extends RecordsState {
       case ConnectionsFilterType.HIDDEN:
         endPoint = `${endPoint}/hidden`;
         break;
+
+      case ConnectionsFilterType.CONNECTED:
+        endPoint = `${endPoint}/connected`;
+        break;
+
+      case ConnectionsFilterType.DISCONNECTED:
+        endPoint = `${endPoint}/disconnected`;
+        break;
     }
 
     super.getHandler(ctx);
@@ -149,6 +157,8 @@ export class ConnectionsState extends RecordsState {
       disableSearchAndSort:
         action.filter !== ConnectionsFilterType.ALL &&
         action.filter !== ConnectionsFilterType.HIDDEN &&
+        action.filter !== ConnectionsFilterType.CONNECTED &&
+        action.filter !== ConnectionsFilterType.DISCONNECTED &&
         action.filter !== ConnectionsFilterType.EXCEPTIONS_QUEUE
     });
   }

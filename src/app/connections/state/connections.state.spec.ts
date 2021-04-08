@@ -72,6 +72,8 @@ describe("Connections state", () => {
 
   [
     { filter: ConnectionsFilterType.ALL, apiPath: "" },
+    { filter: ConnectionsFilterType.CONNECTED, apiPath: "/connected" },
+    { filter: ConnectionsFilterType.DISCONNECTED, apiPath: "/disconnected" },
     { filter: ConnectionsFilterType.HIDDEN, apiPath: "/hidden" },
     { filter: ConnectionsFilterType.EXCEPTIONS_QUEUE, apiPath: "/exception" }
   ].forEach((testCase) => {
@@ -118,12 +120,9 @@ describe("Connections state", () => {
     store.dispatch(new FilterConnections(ConnectionsFilterType.DISCONNECTED));
     const filter = store.selectSnapshot((state) => state.connections.filter);
 
-    const disableSearchAndSort = store.selectSnapshot(
-      (state) => state.connections.disableSearchAndSort
-    );
+    store.selectSnapshot((state) => state.connections.disableSearchAndSort);
 
     expect(filter).toBe(ConnectionsFilterType.DISCONNECTED);
-    expect(disableSearchAndSort).toBeTruthy();
   });
 
   it("should not disableSearchAndSort when FilterConnections is dispatched with ALL filter", () => {

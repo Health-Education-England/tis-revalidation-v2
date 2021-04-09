@@ -21,8 +21,8 @@ export interface IConnection {
 }
 
 export enum ConnectionsFilterType {
-  DISCONNECTED = "addConnection",
-  CONNECTED = "removeConnection",
+  DISCONNECTED = "disconnected",
+  CONNECTED = "connected",
   EXCEPTIONS_QUEUE = "exceptionsQueue",
   ALL = "all",
   HIDDEN = "hidden"

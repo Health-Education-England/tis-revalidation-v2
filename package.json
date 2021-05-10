@@ -59,7 +59,7 @@
     "@ngxs/cli": "^2.0.0",
     "@ngxs/devtools-plugin": "^3.7.1",
     "@react-native-community/netinfo": "^6.0.0",
-    "@types/jasmine": "~3.6.10",
+    "@types/jasmine": "~3.7.1",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^15.0.2",
     "browserslist-useragent-regexp": "^3.0.0",

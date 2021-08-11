@@ -318,7 +318,7 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
 
   private successResponse(res: any): Observable<any> {
     this.snackBarService.openSnackBar(
-      "our recommendation was successfully saved"
+      "Your recommendation was successfully saved"
     );
     return of(res);
   }

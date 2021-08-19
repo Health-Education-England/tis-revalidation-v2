@@ -19,6 +19,7 @@
         [max]="lessThanEqualToday"
         formControlName="dateOfIncident"
         [matDatepicker]="dateOfIncidentPicker"
+        readonly
       />
       <mat-error *ngIf="form.dateOfIncident?.hasError('required')">
         Date of incident is required
@@ -99,9 +100,7 @@
   </div>
 
   <div class="button-row">
-    <button mat-button mat-raised-button [routerLink]="backRoute">
-      Back
-    </button>
+    <button mat-button mat-raised-button [routerLink]="backRoute">Back</button>
     <button mat-button mat-raised-button color="primary" type="submit">
       Next
     </button>

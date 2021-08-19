@@ -23,12 +23,17 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { MatDatepickerModule } from "@angular/material/datepicker";
-import { MatNativeDateModule, MAT_DATE_LOCALE } from "@angular/material/core";
+import {
+  DateAdapter,
+  MatNativeDateModule,
+  MAT_DATE_LOCALE
+} from "@angular/material/core";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatStepperModule } from "@angular/material/stepper";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
+import { CustomDateAdapter } from "./custom.date.adapter";
 
 const materialModules = [
   LayoutModule,
@@ -69,7 +74,8 @@ const materialModules = [
   providers: [
     MatDatepickerModule,
     MatNativeDateModule,
-    { provide: MAT_DATE_LOCALE, useValue: "en-GB" }
+    { provide: MAT_DATE_LOCALE, useValue: "en-GB" },
+    { provide: DateAdapter, useClass: CustomDateAdapter }
   ]
 })
 export class MaterialModule {}

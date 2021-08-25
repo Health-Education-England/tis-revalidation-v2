@@ -36,6 +36,7 @@ export class CommentsComponent implements OnInit {
    * adds an empty comment FormGroup for readily adding comment
    */
   private createCommentControls(): void {
+    if (!this.featureComments) this.featureComments = [];
     this.commentsService.comments = this.comments;
     for (const comment of this.featureComments) {
       this.commentsService.addCommentControl(comment);

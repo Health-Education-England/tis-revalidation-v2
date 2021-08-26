@@ -27,12 +27,13 @@
         [min]="minReferralDate"
         [max]="maxReferralDate"
         [matDatepicker]="picker"
+        disabled
       />
       <mat-error *ngIf="deferralDate?.hasError('required')">
         {{ getDeferralDateErrorMessage() }}
       </mat-error>
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker touchUi #picker></mat-datepicker>
+      <mat-datepicker touchUi #picker disabled="false"></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field *ngIf="deferSelected">

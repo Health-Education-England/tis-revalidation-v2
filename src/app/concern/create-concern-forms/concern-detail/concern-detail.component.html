@@ -19,6 +19,7 @@
         [max]="lessThanEqualToday"
         formControlName="dateOfIncident"
         [matDatepicker]="dateOfIncidentPicker"
+        disabled
       />
       <mat-error *ngIf="form.dateOfIncident?.hasError('required')">
         Date of incident is required
@@ -27,7 +28,11 @@
         matSuffix
         [for]="dateOfIncidentPicker"
       ></mat-datepicker-toggle>
-      <mat-datepicker touchUi #dateOfIncidentPicker></mat-datepicker>
+      <mat-datepicker
+        touchUi
+        #dateOfIncidentPicker
+        disabled="false"
+      ></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field>
@@ -65,6 +70,7 @@
         [min]="form.dateOfIncident?.value"
         formControlName="dateReported"
         [matDatepicker]="dateReportedPicker"
+        disabled
       />
       <mat-error *ngIf="form.dateReported?.hasError('required')">
         Date reported is required
@@ -76,7 +82,11 @@
         matSuffix
         [for]="dateReportedPicker"
       ></mat-datepicker-toggle>
-      <mat-datepicker touchUi #dateReportedPicker></mat-datepicker>
+      <mat-datepicker
+        touchUi
+        #dateReportedPicker
+        disabled="false"
+      ></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field>
@@ -86,6 +96,7 @@
         [min]="greaterThanToday"
         formControlName="followUpDate"
         [matDatepicker]="followUpDatePicker"
+        disabled
       />
       <mat-error *ngIf="form.followUpDate?.hasError('required')">
         Follow up date is required
@@ -94,14 +105,16 @@
         matSuffix
         [for]="followUpDatePicker"
       ></mat-datepicker-toggle>
-      <mat-datepicker touchUi #followUpDatePicker></mat-datepicker>
+      <mat-datepicker
+        touchUi
+        #followUpDatePicker
+        disabled="false"
+      ></mat-datepicker>
     </mat-form-field>
   </div>
 
   <div class="button-row">
-    <button mat-button mat-raised-button [routerLink]="backRoute">
-      Back
-    </button>
+    <button mat-button mat-raised-button [routerLink]="backRoute">Back</button>
     <button mat-button mat-raised-button color="primary" type="submit">
       Next
     </button>

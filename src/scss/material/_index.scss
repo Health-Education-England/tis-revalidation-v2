@@ -78,3 +78,9 @@ body {
   top: 0;
   z-index: 10;
 }
+
+// TODO remove this as part of TIS21-2001
+// Added for accessibility purposes while text input disabled
+.mat-datepicker-toggle {
+  font-size: 25px;
+}

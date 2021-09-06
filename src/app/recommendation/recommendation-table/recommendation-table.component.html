@@ -104,7 +104,7 @@
           <ng-container *ngFor="let comment of element.comments">
             <mat-divider></mat-divider>
             <div class="element-expanded">
-              {{ comment }}
+              <div [innerHTML]="comment"></div>
             </div>
           </ng-container>
           <ng-container *ngIf="element.deferralComment">

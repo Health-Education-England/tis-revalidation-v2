@@ -43,7 +43,9 @@ export enum RecommendationStatus {
   STARTED = "Started",
   READY_TO_REVIEW = "Ready to review",
   READY_TO_SUBMIT = "Ready to submit",
-  SUBMITTED_TO_GMC = "Submitted to GMC"
+  SUBMITTED_TO_GMC = "Submitted to GMC",
+  COMPLETED = "Complete",
+  DRAFT = "Draft"
 }
 
 export enum RecommendationGmcOutcome {

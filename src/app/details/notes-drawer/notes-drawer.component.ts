@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { INote } from "../details.interfaces";
-import { notes } from "./mock-data/notes-spec-data";
 import { Select } from "@ngxs/store";
 import { NotesDrawerState } from "../notes-drawer/state/notes-drawer.state";
 import { Observable } from "rxjs";

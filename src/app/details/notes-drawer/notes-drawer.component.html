@@ -1,0 +1,48 @@
+<div class="notes-wrapper">
+  <div class="d-flex justify-content-between" style="margin-bottom: 20px">
+    <h2>Notes</h2>
+    <button
+      color="primary"
+      mat-icon-button
+      aria-label="Add new note"
+      (click)="showAddNote = !showAddNote"
+    >
+      <mat-icon *ngIf="!showAddNote">note_add</mat-icon>
+      <mat-icon style="color: #da291c" *ngIf="showAddNote">cancel</mat-icon>
+    </button>
+  </div>
+  <ng-container *ngIf="showAddNote">
+    <mat-form-field style="width: 100%" appearance="fill">
+      <textarea
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="5"
+        matInput
+        placeholder="New note text"
+        name="noteText"
+      ></textarea>
+    </mat-form-field>
+
+    <button type="button" mat-raised-button mat-button color="primary">
+      Save
+    </button>
+
+    <button
+      (click)="showAddNote = !showAddNote"
+      type="button"
+      mat-raised-button
+      mat-button
+    >
+      Cancel
+    </button>
+    <mat-divider style="margin: 20px 0"></mat-divider>
+  </ng-container>
+
+  <ng-container>
+    <app-note-card
+      *ngFor="let note of notes$ | async; let index = index"
+      [note]="note"
+      [index]="index"
+    ></app-note-card>
+  </ng-container>
+</div>

@@ -1,0 +1,35 @@
+<mat-toolbar
+  class="sticky-toolbar"
+  *ngIf="{ isHandset: isHandset$ | async }; let device"
+>
+  <ng-container *ngIf="device.isHandset">
+    <mat-menu #recommendationMenu="matMenu">
+      <app-details-side-nav></app-details-side-nav>
+    </mat-menu>
+
+    <button
+      mat-icon-button
+      aria-label="Recommendation details"
+      [matMenuTriggerFor]="recommendationMenu"
+    >
+      <mat-icon aria-label="Recommendation details">account_box</mat-icon>
+    </button>
+  </ng-container>
+
+  <span class="spacer"></span>
+
+  <ng-container>
+    <button
+      (click)="toggleNotesDrawer()"
+      mat-icon-button
+      aria-label="Toggle notes"
+    >
+      <ng-container *ngIf="{ value: isOpen$ | async } as isOpen">
+        <mat-icon *ngIf="!isOpen.value" color="primary">speaker_notes</mat-icon>
+        <mat-icon *ngIf="isOpen.value" color="primary"
+          >speaker_notes_off</mat-icon
+        >
+      </ng-container>
+    </button>
+  </ng-container>
+</mat-toolbar>

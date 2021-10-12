@@ -1,8 +1,10 @@
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
-import { Component, ViewEncapsulation } from "@angular/core";
+import { Component, ViewEncapsulation, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
 import { map, shareReplay } from "rxjs/operators";
 import { NotesService } from "../notes-tool-bar/notes.service";
+import { Select } from "@ngxs/store";
+import { NotesDrawerState } from "../notes-drawer/state/notes-drawer.state";
 
 @Component({
   selector: "app-record-details",
@@ -10,7 +12,9 @@ import { NotesService } from "../notes-tool-bar/notes.service";
   styleUrls: ["./record-details.component.scss"],
   encapsulation: ViewEncapsulation.None
 })
-export class RecordDetailsComponent {
+export class RecordDetailsComponent implements OnInit {
+  @Select(NotesDrawerState.drawerStatus) isOpen$: Observable<boolean>;
+
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
     .pipe(
@@ -18,7 +22,7 @@ export class RecordDetailsComponent {
       shareReplay()
     );
   showNotes$ = this.notesService.showNotes$;
-
+  ngOnInit() {}
   constructor(
     private breakpointObserver: BreakpointObserver,
     private notesService: NotesService

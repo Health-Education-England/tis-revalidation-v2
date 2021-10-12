@@ -16,8 +16,6 @@ export class NoteCardComponent implements OnInit {
   @Input() note: INote;
   @Input() index: number;
 
-  @Output() noteUpdated = new EventEmitter<{ index: number; text: string }>();
-  @Output() noteDeleted = new EventEmitter<number>();
   dateFormat: string = environment.dateFormat;
   constructor(public dialog: MatDialog) {}
 
@@ -33,13 +31,9 @@ export class NoteCardComponent implements OnInit {
       .afterClosed()
       .subscribe((result) => {
         if (result) {
-          this.noteDeleted.emit(this.index);
         }
       });
   }
-  onUpdateNote() {
-    this.noteUpdated.emit({ index: this.index, text: this.note.text });
-    this.note.edit = false;
-  }
+
   ngOnInit(): void {}
 }

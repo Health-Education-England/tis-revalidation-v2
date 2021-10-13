@@ -23,6 +23,10 @@ $toolbar-height: 64px;
     100vh - #{$main-navbar-height} - #{$child-navbar-height} - #{$toolbar-height}
   );
 }
+
+.mat-drawer {
+  background-color: #fafafa;
+}
 .button-row {
   margin: 48px 0;
   display: flex;

@@ -19,26 +19,28 @@
       >{{ note.text }}</textarea
     >
   </mat-form-field>
-  <mat-divider></mat-divider>
-  <mat-card-actions *ngIf="!note.edit">
-    <button mat-icon-button aria-label="Delete note" (click)="onDeleteNote()">
-      <mat-icon>delete</mat-icon>
-    </button>
-    <button mat-icon-button aria-label="Edit note" (click)="note.edit = true">
-      <mat-icon>edit</mat-icon>
-    </button>
-  </mat-card-actions>
-  <mat-card-actions *ngIf="note.edit">
-    <button mat-icon-button (click)="onUpdateNote()">
-      <mat-icon aria-hidden="false" aria-label="edit note">save</mat-icon>
-    </button>
-    <button mat-icon-button>
-      <mat-icon
-        (click)="note.edit = false"
-        aria-hidden="false"
-        aria-label="edit note"
-        >undo</mat-icon
-      >
-    </button>
-  </mat-card-actions>
+  <ng-container *ngIf="isAdmin">
+    <mat-divider></mat-divider>
+    <mat-card-actions *ngIf="!note.edit">
+      <button mat-icon-button aria-label="Delete note" (click)="onDeleteNote()">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button mat-icon-button aria-label="Edit note" (click)="note.edit = true">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </mat-card-actions>
+    <mat-card-actions *ngIf="note.edit">
+      <button mat-icon-button>
+        <mat-icon aria-hidden="false" aria-label="edit note">save</mat-icon>
+      </button>
+      <button mat-icon-button>
+        <mat-icon
+          (click)="note.edit = false"
+          aria-hidden="false"
+          aria-label="edit note"
+          >undo</mat-icon
+        >
+      </button>
+    </mat-card-actions>
+  </ng-container>
 </mat-card>

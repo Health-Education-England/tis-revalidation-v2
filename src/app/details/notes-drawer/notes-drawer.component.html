@@ -2,6 +2,7 @@
   <div class="d-flex justify-content-between" style="margin-bottom: 20px">
     <h2>Trainee Notes</h2>
     <button
+      *ngIf="isAdmin"
       color="primary"
       mat-icon-button
       aria-label="Add new note"
@@ -46,6 +47,7 @@
       *ngFor="let note of traineeDetails.notes; let index = index"
       [note]="note"
       [index]="index"
+      [isAdmin]="isAdmin"
     ></app-note-card>
   </ng-container>
 </div>

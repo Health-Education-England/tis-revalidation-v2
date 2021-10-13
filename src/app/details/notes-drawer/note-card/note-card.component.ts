@@ -15,7 +15,7 @@ import {
 export class NoteCardComponent implements OnInit {
   @Input() note: INote;
   @Input() index: number;
-
+  @Input() isAdmin: boolean;
   dateFormat: string = environment.dateFormat;
   constructor(public dialog: MatDialog) {}
 

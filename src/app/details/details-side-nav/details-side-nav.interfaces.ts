@@ -1,3 +1,4 @@
+import { INote } from "../details.interfaces";
 export interface IDetailsSideNav {
   gmcNumber: number;
   forenames: string;
@@ -7,4 +8,5 @@ export interface IDetailsSideNav {
   programmeName: string;
   currentGrade: string;
   tisPersonId: number;
+  notes?: INote[];
 }

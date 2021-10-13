@@ -1,6 +1,6 @@
 <div class="notes-wrapper">
   <div class="d-flex justify-content-between" style="margin-bottom: 20px">
-    <h2>Notes</h2>
+    <h2>Trainee Notes</h2>
     <button
       color="primary"
       mat-icon-button
@@ -38,9 +38,12 @@
     <mat-divider style="margin: 20px 0"></mat-divider>
   </ng-container>
 
-  <ng-container>
+  <ng-container *ngIf="traineeDetails$ | async as traineeDetails">
+    <strong *ngIf="traineeDetails.notes.length === 0">
+      No notes for this trainee.
+    </strong>
     <app-note-card
-      *ngFor="let note of notes$ | async; let index = index"
+      *ngFor="let note of traineeDetails.notes; let index = index"
       [note]="note"
       [index]="index"
     ></app-note-card>

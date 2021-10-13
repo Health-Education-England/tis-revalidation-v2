@@ -25,7 +25,10 @@
       aria-label="Toggle notes"
     >
       <ng-container *ngIf="{ value: isOpen$ | async } as isOpen">
-        <mat-icon *ngIf="!isOpen.value" color="primary">speaker_notes</mat-icon>
+        <mat-icon [matBadge]="matBadge" *ngIf="!isOpen.value" color="primary"
+          >speaker_notes</mat-icon
+        >
+
         <mat-icon *ngIf="isOpen.value" color="primary"
           >speaker_notes_off</mat-icon
         >

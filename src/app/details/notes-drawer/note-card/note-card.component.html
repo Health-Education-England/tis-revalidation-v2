@@ -1,5 +1,7 @@
 <mat-card class="note-card">
-  <mat-card-subtitle>{{ note.date | date: dateFormat }}</mat-card-subtitle>
+  <mat-card-subtitle>{{
+    note.updatedDate | date: dateFormat
+  }}</mat-card-subtitle>
   <mat-card-content>
     <div *ngIf="!note.edit">{{ note.text }}</div>
   </mat-card-content>

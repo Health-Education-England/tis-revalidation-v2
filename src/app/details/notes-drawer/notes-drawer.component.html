@@ -13,29 +13,39 @@
     </button>
   </div>
   <ng-container *ngIf="showAddNote">
-    <mat-form-field style="width: 100%" appearance="fill">
-      <textarea
-        cdkTextareaAutosize
-        cdkAutosizeMinRows="1"
-        cdkAutosizeMaxRows="5"
-        matInput
-        placeholder="New note text"
-        name="noteText"
-      ></textarea>
-    </mat-form-field>
+    <form [formGroup]="newNoteForm" (ngSubmit)="onSubmit()">
+      <mat-form-field style="width: 100%" appearance="fill">
+        <textarea
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="5"
+          matInput
+          placeholder="New note text"
+          name="noteText"
+          id="noteText"
+          formControlName="noteText"
+        ></textarea>
+      </mat-form-field>
 
-    <button type="button" mat-raised-button mat-button color="primary">
-      Save
-    </button>
+      <div *ngIf="noteText.invalid && (noteText.dirty || noteText.touched)">
+        <mat-error *ngIf="noteText.errors?.required">
+          Please enter the note text.
+        </mat-error>
+      </div>
+      <button
+        type="submit"
+        [disabled]="!newNoteForm.valid"
+        mat-raised-button
+        mat-button
+        color="primary"
+      >
+        Save
+      </button>
 
-    <button
-      (click)="showAddNote = !showAddNote"
-      type="button"
-      mat-raised-button
-      mat-button
-    >
-      Cancel
-    </button>
+      <button (click)="onCancel()" type="button" mat-raised-button mat-button>
+        Cancel
+      </button>
+    </form>
     <mat-divider style="margin: 20px 0"></mat-divider>
   </ng-container>
 

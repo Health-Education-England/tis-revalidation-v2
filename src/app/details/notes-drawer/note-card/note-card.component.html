@@ -1,4 +1,4 @@
-<mat-card class="note-card">
+<mat-card class="note-card" *ngIf="note">
   <mat-card-subtitle>{{
     note.updatedDate | date: dateFormat
   }}</mat-card-subtitle>

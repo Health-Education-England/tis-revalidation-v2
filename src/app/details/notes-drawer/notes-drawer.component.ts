@@ -7,7 +7,7 @@ import { Observable } from "rxjs";
 import { IDetailsSideNav } from "../details-side-nav/details-side-nav.interfaces";
 import { AuthService } from "src/app/core/auth/auth.service";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { NotesDrawerService } from "./service/notes-drawer.service";
+
 @Component({
   selector: "app-notes-drawer",
   templateUrl: "./notes-drawer.component.html",
@@ -24,10 +24,7 @@ export class NotesDrawerComponent implements OnInit {
   @Select(DetailsSideNavState.traineeDetails)
   traineeDetails$: Observable<IDetailsSideNav>;
 
-  constructor(
-    private authService: AuthService,
-    private notesDrawerService: NotesDrawerService
-  ) {}
+  constructor(private authService: AuthService) {}
   onSubmit(): void {
     if (this.newNoteForm.valid) {
     }

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from "@angular/core";
-import { INote } from "../../details.interfaces";
+import { INote } from "../notes-drawer.interfaces";
 import { environment } from "@environment";
 import { MatDialog } from "@angular/material/dialog";
 import {

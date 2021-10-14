@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { State, Action, StateContext, Selector } from "@ngxs/store";
-import { INote } from "../../details.interfaces";
+import { INote } from "../notes-drawer.interfaces";
 import { ToggleDrawer } from "./notes-drawer.actions";
 
 export class NotesDrawerStateModel {
@@ -10,11 +10,7 @@ export class NotesDrawerStateModel {
 
 export const initialNotesDrawerState: NotesDrawerStateModel = {
   isOpen: false,
-  notes: [
-    { text: "lorem ipsum", date: new Date(), id: 12345 },
-    { text: "lorem ipsum", date: new Date(), id: 12345 },
-    { text: "lorem ipsum", date: new Date(), id: 12345 }
-  ]
+  notes: []
 };
 
 @State<NotesDrawerStateModel>({

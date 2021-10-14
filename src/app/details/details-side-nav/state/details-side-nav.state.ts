@@ -2,7 +2,6 @@ import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { tap } from "rxjs/operators";
 import { IDetailsSideNav } from "../details-side-nav.interfaces";
-import { INote } from "../../details.interfaces";
 import { DetailsSideNavService } from "../service/details-side-nav.service";
 import { Get as DetailsSideNavAction } from "./details-side-nav.actions";
 

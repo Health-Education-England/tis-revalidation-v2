@@ -1,4 +1,4 @@
-import { INote } from "../details.interfaces";
+import { INote } from "../notes-drawer/notes-drawer.interfaces";
 export interface IDetailsSideNav {
   gmcNumber: number;
   forenames: string;

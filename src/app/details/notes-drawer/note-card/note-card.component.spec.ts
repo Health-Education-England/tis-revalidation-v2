@@ -10,7 +10,7 @@ describe("NoteCardComponent", () => {
   let component: NoteCardComponent;
   let fixture: ComponentFixture<NoteCardComponent>;
   let note: INote;
-  let noteText: string = "This is an eample note text";
+  const noteText = "This is an eample note text";
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -36,7 +36,7 @@ describe("NoteCardComponent", () => {
     const { nativeElement } = debugElement;
     component.isAdmin = true;
     fixture.detectChanges();
-    let el = nativeElement.querySelector("mat-card-content");
+    const el = nativeElement.querySelector("mat-card-content");
     expect(el.innerText).toContain(noteText);
   });
 
@@ -45,7 +45,7 @@ describe("NoteCardComponent", () => {
     const { nativeElement } = debugElement;
     component.isAdmin = true;
     fixture.detectChanges();
-    let el = nativeElement.querySelector("mat-card-actions");
+    const el = nativeElement.querySelector("mat-card-actions");
     expect(el).toBeTruthy();
   });
 
@@ -54,7 +54,7 @@ describe("NoteCardComponent", () => {
     const { nativeElement } = debugElement;
     component.isAdmin = false;
     fixture.detectChanges();
-    let el = nativeElement.querySelector("mat-card-actions");
+    const el = nativeElement.querySelector("mat-card-actions");
     expect(el).toBeFalsy();
   });
 });

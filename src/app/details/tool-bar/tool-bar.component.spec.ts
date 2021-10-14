@@ -7,7 +7,6 @@ import { MaterialModule } from "src/app/shared/material/material.module";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { NotesDrawerState } from "../notes-drawer/state/notes-drawer.state";
-import { ToggleDrawer } from "../notes-drawer/state/notes-drawer.actions";
 import { DetailsSideNavState } from "../details-side-nav/state/details-side-nav.state";
 
 import { HttpClientTestingModule } from "@angular/common/http/testing";
@@ -66,7 +65,7 @@ describe("NoteCardComponent", () => {
   it("should display 'speaker_notes' mat-icon by default", async(() => {
     const { debugElement } = fixture;
     const { nativeElement } = debugElement;
-    let el = nativeElement.querySelector(".note-icon-open");
+    const el = nativeElement.querySelector(".note-icon-open");
     fixture.detectChanges();
     expect(el).toBeTruthy();
   }));
@@ -74,17 +73,17 @@ describe("NoteCardComponent", () => {
   it("should display 'speaker_notes_OFF' mat-icon when drawer is open", async(() => {
     const { debugElement } = fixture;
     const { nativeElement } = debugElement;
-    let button = nativeElement.querySelector("button.toggle-drawer");
+    const button = nativeElement.querySelector("button.toggle-drawer");
     button.click();
     fixture.detectChanges();
-    let el = nativeElement.querySelector(".note-icon-close");
+    const el = nativeElement.querySelector(".note-icon-close");
     expect(el).toBeTruthy();
   }));
 
   it("should display the number of notes in the icon badge", async(() => {
     const { debugElement } = fixture;
     const { nativeElement } = debugElement;
-    let el = nativeElement.querySelector(".mat-badge-content");
+    const el = nativeElement.querySelector(".mat-badge-content");
     expect(el.innerText).toContain("3");
   }));
 
@@ -101,7 +100,7 @@ describe("NoteCardComponent", () => {
 
     const { debugElement } = fixture;
     const { nativeElement } = debugElement;
-    let el = nativeElement.querySelector(".mat-badge-content");
+    const el = nativeElement.querySelector(".mat-badge-content");
     expect(el.innerText).toContain("");
   }));
 });

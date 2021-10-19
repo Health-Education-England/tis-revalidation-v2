@@ -11,8 +11,7 @@
       <div
         class="main-col d-grid align-content-start bg-white"
         *ngIf="{
-          ishandset: device.isHandset,
-          shownotes: showNotes$ | async
+          ishandset: device.isHandset
         } as toolbarSettings"
       >
         <app-tool-bar></app-tool-bar>
@@ -22,7 +21,6 @@
             #notesDrawer
             [mode]="toolbarSettings.ishandset ? 'over' : 'side'"
             position="end"
-            style="width: 360px"
             [opened]="isOpen$ | async"
           >
             <app-notes-drawer></app-notes-drawer>

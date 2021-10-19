@@ -2,7 +2,6 @@ import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { Component, ViewEncapsulation, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
 import { map, shareReplay } from "rxjs/operators";
-import { NotesService } from "../notes-tool-bar/notes.service";
 import { Select } from "@ngxs/store";
 import { NotesDrawerState } from "../notes-drawer/state/notes-drawer.state";
 
@@ -21,10 +20,6 @@ export class RecordDetailsComponent implements OnInit {
       map((result) => result.matches),
       shareReplay()
     );
-  showNotes$ = this.notesService.showNotes$;
   ngOnInit() {}
-  constructor(
-    private breakpointObserver: BreakpointObserver,
-    private notesService: NotesService
-  ) {}
+  constructor(private breakpointObserver: BreakpointObserver) {}
 }

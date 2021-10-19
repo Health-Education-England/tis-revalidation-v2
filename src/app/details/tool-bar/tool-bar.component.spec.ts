@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed, async } from "@angular/core/testing";
 import { ToolBarComponent } from "./tool-bar.component";
-import { NgxsModule } from "@ngxs/store";
-import { Store } from "@ngxs/store";
+import { NgxsModule, Store } from "@ngxs/store";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { MaterialModule } from "src/app/shared/material/material.module";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";

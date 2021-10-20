@@ -1,0 +1,63 @@
+<div class="notes-wrapper">
+  <div class="d-flex justify-content-between" style="margin-bottom: 20px">
+    <h2>Trainee Notes</h2>
+    <button
+      *ngIf="isAdmin"
+      color="primary"
+      mat-icon-button
+      aria-label="Add new note"
+      (click)="showAddNote = !showAddNote"
+    >
+      <mat-icon *ngIf="!showAddNote">note_add</mat-icon>
+      <mat-icon style="color: #da291c" *ngIf="showAddNote">cancel</mat-icon>
+    </button>
+  </div>
+  <ng-container *ngIf="showAddNote">
+    <form [formGroup]="newNoteForm" (ngSubmit)="onSubmit()">
+      <mat-form-field style="width: 100%" appearance="fill">
+        <textarea
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="5"
+          matInput
+          placeholder="New note text"
+          name="noteText"
+          id="noteText"
+          formControlName="noteText"
+        ></textarea>
+      </mat-form-field>
+
+      <div *ngIf="noteText.invalid && (noteText.dirty || noteText.touched)">
+        <mat-error *ngIf="noteText.errors?.required">
+          Please enter the note text.
+        </mat-error>
+      </div>
+      <button
+        type="submit"
+        [disabled]="!newNoteForm.valid"
+        mat-raised-button
+        mat-button
+        color="primary"
+      >
+        Save
+      </button>
+
+      <button (click)="onCancel()" type="button" mat-raised-button mat-button>
+        Cancel
+      </button>
+    </form>
+    <mat-divider style="margin: 20px 0"></mat-divider>
+  </ng-container>
+
+  <ng-container *ngIf="traineeDetails$ | async as traineeDetails">
+    <strong *ngIf="traineeDetails.notes.length === 0">
+      No notes for this trainee.
+    </strong>
+    <app-note-card
+      *ngFor="let note of traineeDetails.notes; let index = index"
+      [note]="note"
+      [index]="index"
+      [isAdmin]="isAdmin"
+    ></app-note-card>
+  </ng-container>
+</div>

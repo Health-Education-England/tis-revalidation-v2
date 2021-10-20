@@ -1,12 +1,16 @@
 @import "../../../../node_modules/@angular/material/core/style/variables";
 
+$main-navbar-height: 64px;
+$child-navbar-height: 48px;
+$toolbar-height: 64px;
+
 .main-col {
   grid-template-rows: auto auto;
 }
 
 .record-details {
   grid-template-columns: 280px 1px auto;
-  min-height: calc(100vh - 64px - 48px);
+  min-height: calc(100vh - #{$main-navbar-height} - #{$child-navbar-height});
 
   .record-content-container {
     padding: 24px 16px;
@@ -14,6 +18,16 @@
   }
 }
 
+.notes-drawer-container {
+  min-height: calc(
+    100vh - #{$main-navbar-height} - #{$child-navbar-height} - #{$toolbar-height}
+  );
+}
+
+.mat-drawer {
+  background-color: #fafafa;
+  width: 360px;
+}
 .button-row {
   margin: 48px 0;
   display: flex;
@@ -44,4 +58,8 @@
 .records-form {
   min-width: 150px;
   max-width: 100%;
+}
+
+.mat-badge-content {
+  font-family: "Frutiger W01", "Arial", "Sans-serif", Serif;
 }

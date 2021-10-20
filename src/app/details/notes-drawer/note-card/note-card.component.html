@@ -1,0 +1,48 @@
+<mat-card class="note-card" *ngIf="note">
+  <mat-card-subtitle>{{
+    note.updatedDate | date: dateFormat
+  }}</mat-card-subtitle>
+  <mat-card-content>
+    <div *ngIf="!note.edit">{{ note.text }}</div>
+  </mat-card-content>
+
+  <mat-form-field
+    style="width: 100%; margin-bottom: 0"
+    appearance="fill"
+    *ngIf="note.edit"
+  >
+    <textarea
+      #noteTextarea
+      cdkTextareaAutosize
+      cdkAutosizeMinRows="1"
+      cdkAutosizeMaxRows="5"
+      matInput
+      placeholder="Note text"
+      >{{ note.text }}</textarea
+    >
+  </mat-form-field>
+  <ng-container *ngIf="isAdmin">
+    <mat-divider></mat-divider>
+    <mat-card-actions *ngIf="!note.edit">
+      <button mat-icon-button aria-label="Delete note" (click)="onDeleteNote()">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button mat-icon-button aria-label="Edit note" (click)="note.edit = true">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </mat-card-actions>
+    <mat-card-actions *ngIf="note.edit">
+      <button mat-icon-button>
+        <mat-icon aria-hidden="false" aria-label="edit note">save</mat-icon>
+      </button>
+      <button mat-icon-button>
+        <mat-icon
+          (click)="note.edit = false"
+          aria-hidden="false"
+          aria-label="edit note"
+          >undo</mat-icon
+        >
+      </button>
+    </mat-card-actions>
+  </ng-container>
+</mat-card>

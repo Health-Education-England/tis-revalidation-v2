@@ -19,7 +19,8 @@ export class DetailsSideNavStateModel {
       programmeMembershipType: null,
       programmeName: null,
       currentGrade: null,
-      tisPersonId: null
+      tisPersonId: null,
+      notes: []
     }
   }
 })

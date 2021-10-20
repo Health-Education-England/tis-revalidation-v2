@@ -7,10 +7,12 @@ import { DetailsSideNavComponent } from "./details-side-nav/details-side-nav.com
 import { DetailsSideNavService } from "./details-side-nav/service/details-side-nav.service";
 import { NgxsModule } from "@ngxs/store";
 import { DetailsSideNavState } from "./details-side-nav/state/details-side-nav.state";
+import { NotesDrawerState } from "./notes-drawer/state/notes-drawer.state";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { AuthInterceptor } from "src/app/core/auth/auth.interceptor";
 import { RecordDetailsComponent } from "./record-details/record-details.component";
 import { NotesToolBarComponent } from "./notes-tool-bar/notes-tool-bar.component";
+import { NotesDrawerComponent } from "./notes-drawer/notes-drawer.component";
 import { CommentsService } from "./comments/comments.service";
 import { NotesService } from "./notes-tool-bar/notes.service";
 import {
@@ -19,6 +21,8 @@ import {
 } from "./comments/comments.component";
 import { ReactiveFormsModule } from "@angular/forms";
 import { HttpErrorInterceptor } from "../core/http-error/http-error.interceptor";
+import { NoteCardComponent } from "./notes-drawer/note-card/note-card.component";
+import { ToolBarComponent } from "./tool-bar/tool-bar.component";
 
 @NgModule({
   // TODO double check if NavBarComponent, DetailsSideNavComponent
@@ -29,8 +33,11 @@ import { HttpErrorInterceptor } from "../core/http-error/http-error.interceptor"
     DetailsSideNavComponent,
     RecordDetailsComponent,
     NotesToolBarComponent,
+    NotesDrawerComponent,
     DeleteCommentDialogueComponent,
-    CommentsComponent
+    CommentsComponent,
+    NoteCardComponent,
+    ToolBarComponent
   ],
   imports: [
     CommonModule,
@@ -38,7 +45,7 @@ import { HttpErrorInterceptor } from "../core/http-error/http-error.interceptor"
     RouterModule,
     HttpClientModule,
     ReactiveFormsModule,
-    NgxsModule.forFeature([DetailsSideNavState])
+    NgxsModule.forFeature([DetailsSideNavState, NotesDrawerState])
   ],
   providers: [
     DetailsSideNavService,

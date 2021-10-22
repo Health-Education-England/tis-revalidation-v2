@@ -3,5 +3,6 @@ export interface INote {
   text: string;
   id?: number;
   edit?: boolean;
+  createdDate?: Date;
   updatedDate?: Date;
 }

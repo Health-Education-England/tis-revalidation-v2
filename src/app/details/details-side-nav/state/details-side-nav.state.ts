@@ -3,7 +3,10 @@ import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { tap } from "rxjs/operators";
 import { IDetailsSideNav } from "../details-side-nav.interfaces";
 import { DetailsSideNavService } from "../service/details-side-nav.service";
-import { Get as DetailsSideNavAction } from "./details-side-nav.actions";
+import {
+  AddNote,
+  Get as DetailsSideNavAction
+} from "./details-side-nav.actions";
 
 export class DetailsSideNavStateModel {
   public item: IDetailsSideNav;
@@ -55,5 +58,18 @@ export class DetailsSideNavState {
         });
       })
     );
+  }
+
+  @Action(AddNote)
+  addNote(ctx: StateContext<any>, action: AddNote) {
+    const state = ctx.getState();
+    console.log(action);
+    ctx.setState({
+      ...state,
+      item: {
+        ...state.item,
+        notes: [...state.item.notes, ...[action.payload]]
+      }
+    });
   }
 }

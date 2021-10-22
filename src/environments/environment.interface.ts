@@ -12,6 +12,7 @@ export abstract class IEnvironment {
    */
   abstract readonly appUrls: {
     readonly addConcern: string;
+    readonly addNote: string;
     readonly allocateAdmin: string;
     readonly deleteFile: string;
     readonly downloadFile: string;

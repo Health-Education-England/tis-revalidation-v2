@@ -1,8 +1,12 @@
 import { TestBed, async, fakeAsync } from "@angular/core/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { IDetailsSideNav } from "../details-side-nav.interfaces";
+import { INote } from "../../notes-drawer/notes-drawer.interfaces";
 import { DetailsSideNavState } from "./details-side-nav.state";
-import { Get as DetailsSideNavAction } from "./details-side-nav.actions";
+import {
+  Get as DetailsSideNavAction,
+  AddNote
+} from "./details-side-nav.actions";
 import { environment } from "@environment";
 import { detailsSideNavResponse } from "src/app/recommendation/mock-data/recommendation-spec-data";
 import {
@@ -41,6 +45,27 @@ describe("DetailsSideNav actions", () => {
     );
 
     expect(item).toEqual(detailsSideNavResponse);
+  }));
+
+  it("should add a note to existing state", fakeAsync(() => {
+    const initialState = store.selectSnapshot(
+      (state) => state.traineeDetails.item
+    );
+    expect(initialState.notes.length).toEqual(0);
+
+    const note: INote = {
+      gmcId: 123,
+      text: "test",
+      id: 123,
+      edit: false,
+      updatedDate: new Date()
+    };
+    store.dispatch(new AddNote(note));
+
+    const finalState = store.selectSnapshot(
+      (state) => state.traineeDetails.item
+    );
+    expect(finalState.notes.length).toEqual(1);
   }));
 
   afterEach(() => {

@@ -3,6 +3,7 @@ import { Observable } from "rxjs";
 import { environment } from "@environment";
 import { HttpClient } from "@angular/common/http";
 import { IDetailsSideNav } from "../details-side-nav.interfaces";
+import { INote } from "../../notes-drawer/notes-drawer.interfaces";
 
 @Injectable({
   providedIn: "root"
@@ -14,5 +15,9 @@ export class DetailsSideNavService {
     return this.http.get<IDetailsSideNav>(
       `${environment.appUrls.getDetails}/${gmcNumber}`
     );
+  }
+
+  addNote(note: INote): Observable<INote | any> {
+    return this.http.post<INote>(`${environment.appUrls.addNote}`, note);
   }
 }

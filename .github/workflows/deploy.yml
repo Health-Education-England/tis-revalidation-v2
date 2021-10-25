@@ -1,6 +1,9 @@
 name: Deploy
 
-on: push
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   build:
@@ -12,19 +15,10 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set up Node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2.4.1
         with:
           node-version: "12.x"
-
-      - name: Cache node modules
-        uses: actions/cache@v2
-        env:
-          cache-name: npm-cache
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ env.cache-name }}-
+          cache: npm
 
       - name: Pull down dependencies
         run: npm install

@@ -63,12 +63,11 @@ export class DetailsSideNavState {
   @Action(AddNote)
   addNote(ctx: StateContext<any>, action: AddNote) {
     const state = ctx.getState();
-    console.log(action);
     ctx.setState({
       ...state,
       item: {
         ...state.item,
-        notes: [...state.item.notes, ...[action.payload]]
+        notes: [...[action.payload], ...state.item.notes]
       }
     });
   }

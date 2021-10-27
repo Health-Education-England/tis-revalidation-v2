@@ -20,4 +20,8 @@ export class DetailsSideNavService {
   addNote(note: INote): Observable<INote | any> {
     return this.http.post<INote>(`${environment.appUrls.addNote}`, note);
   }
+
+  editNote(note: INote): Observable<INote | any> {
+    return this.http.put<INote>(`${environment.appUrls.editNote}`, note);
+  }
 }

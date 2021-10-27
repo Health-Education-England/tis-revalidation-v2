@@ -6,6 +6,7 @@ export const APP_URLS_CONFIG: IEnvironment["appUrls"] = {
   allocateAdmin: `api/v1/doctors/assign-admin`,
   deleteFile: `api/storage/delete`,
   downloadFile: `api/storage/download`,
+  editNote: `api/trainee/notes/edit`,
   getConcern: `/api/concerns`,
   getConcerns: `api/concerns`,
   getConnections: `api/connection`,

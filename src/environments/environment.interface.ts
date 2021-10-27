@@ -16,6 +16,7 @@ export abstract class IEnvironment {
     readonly allocateAdmin: string;
     readonly deleteFile: string;
     readonly downloadFile: string;
+    readonly editNote: string;
     readonly getConcern: string;
     readonly getConcerns: string;
     readonly getConnections: string;

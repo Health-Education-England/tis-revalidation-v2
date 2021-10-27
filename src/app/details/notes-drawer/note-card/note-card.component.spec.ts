@@ -5,6 +5,8 @@ import { MaterialModule } from "src/app/shared/material/material.module";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { INote } from "../notes-drawer.interfaces";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { NgxsModule } from "@ngxs/store";
 
 describe("NoteCardComponent", () => {
   let component: NoteCardComponent;
@@ -14,7 +16,13 @@ describe("NoteCardComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, MaterialModule, CommonModule],
+      imports: [
+        NoopAnimationsModule,
+        MaterialModule,
+        CommonModule,
+        HttpClientTestingModule,
+        NgxsModule.forRoot([])
+      ],
       declarations: [NoteCardComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();

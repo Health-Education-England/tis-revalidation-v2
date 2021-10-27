@@ -33,7 +33,12 @@
     </mat-card-actions>
     <mat-card-actions *ngIf="note.edit">
       <button mat-icon-button>
-        <mat-icon aria-hidden="false" aria-label="edit note">save</mat-icon>
+        <mat-icon
+          aria-hidden="false"
+          aria-label="edit note"
+          (click)="onSaveEditNote()"
+          >save</mat-icon
+        >
       </button>
       <button mat-icon-button>
         <mat-icon

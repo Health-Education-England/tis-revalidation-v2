@@ -7,6 +7,7 @@ import { CommonModule } from "@angular/common";
 import { INote } from "../notes-drawer.interfaces";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { NgxsModule } from "@ngxs/store";
+import { DetailsSideNavState } from "../../details-side-nav/state/details-side-nav.state";
 
 describe("NoteCardComponent", () => {
   let component: NoteCardComponent;
@@ -21,7 +22,7 @@ describe("NoteCardComponent", () => {
         MaterialModule,
         CommonModule,
         HttpClientTestingModule,
-        NgxsModule.forRoot([])
+        NgxsModule.forRoot([DetailsSideNavState])
       ],
       declarations: [NoteCardComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]

@@ -24,9 +24,10 @@
   <ng-container *ngIf="isAdmin">
     <mat-divider></mat-divider>
     <mat-card-actions *ngIf="!note.edit">
-      <button mat-icon-button aria-label="Delete note" (click)="onDeleteNote()">
+      <!-- Temporarily hide delete button until delete feature being implemented -->
+      <!-- <button mat-icon-button aria-label="Delete note" (click)="onDeleteNote()">
         <mat-icon>delete</mat-icon>
-      </button>
+      </button> -->
       <button mat-icon-button aria-label="Edit note" (click)="note.edit = true">
         <mat-icon>edit</mat-icon>
       </button>

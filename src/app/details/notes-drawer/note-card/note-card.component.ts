@@ -45,18 +45,19 @@ export class NoteCardComponent implements OnInit {
   }
 
   onSaveEditNote(): void {
-    this.note.text = this.noteTextarea.nativeElement.value;
-    const editNote: INote = {
-      id: this.note.id,
-      gmcId: this.note.gmcId,
-      text: this.note.text,
-      createdDate: new Date(this.note.createdDate)
-    };
-    this.detailsSideNavService
-      .editNote(editNote)
-      .subscribe((response: INote) => {
-        this.store.dispatch(new EditNote(response));
-      });
+    if (this.note.text !== this.noteTextarea.nativeElement.value) {
+      this.note.text = this.noteTextarea.nativeElement.value;
+      const editNote: INote = {
+        id: this.note.id,
+        gmcId: this.note.gmcId,
+        text: this.note.text
+      };
+      this.detailsSideNavService
+        .editNote(editNote)
+        .subscribe((response: INote) => {
+          this.store.dispatch(new EditNote(response));
+        });
+    }
     this.note.edit = !this.note.edit;
   }
 

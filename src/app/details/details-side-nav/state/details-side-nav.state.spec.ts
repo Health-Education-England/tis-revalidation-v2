@@ -5,7 +5,8 @@ import { INote } from "../../notes-drawer/notes-drawer.interfaces";
 import { DetailsSideNavState } from "./details-side-nav.state";
 import {
   Get as DetailsSideNavAction,
-  AddNote
+  AddNote,
+  EditNote
 } from "./details-side-nav.actions";
 import { environment } from "@environment";
 import { detailsSideNavResponse } from "src/app/recommendation/mock-data/recommendation-spec-data";
@@ -66,6 +67,46 @@ describe("DetailsSideNav actions", () => {
       (state) => state.traineeDetails.item
     );
     expect(finalState.notes.length).toEqual(1);
+  }));
+
+  it("should edit a note to existing state", fakeAsync(() => {
+
+    // Set initial notes in state
+    const note: INote = {
+      gmcId: 123,
+      text: "test",
+      id: 123,
+      updatedDate: new Date()
+    };
+    store.dispatch(new AddNote(note));
+
+    store.reset({
+      ...store.snapshot(),
+      item: {
+        notes: [...[note]]
+      }
+    });
+
+    const initState = store.selectSnapshot(
+      (state) => state.traineeDetails.item
+    );
+    expect(initState.notes.length).toEqual(1);
+    
+
+    // Edit note
+    const editNote: INote = {
+      gmcId: 123,
+      text: "test edit",
+      id: 123,
+      updatedDate: new Date()
+    };
+    store.dispatch(new EditNote(editNote));
+
+    const finalState = store.selectSnapshot(
+      (state) => state.traineeDetails.item
+    );
+    expect(finalState.notes.length).toEqual(1);
+    expect(finalState.notes[0].text).toEqual("test edit");
   }));
 
   afterEach(() => {

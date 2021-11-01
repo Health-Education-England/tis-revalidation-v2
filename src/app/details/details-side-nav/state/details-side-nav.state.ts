@@ -3,9 +3,11 @@ import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { tap } from "rxjs/operators";
 import { IDetailsSideNav } from "../details-side-nav.interfaces";
 import { DetailsSideNavService } from "../service/details-side-nav.service";
+import { patch, updateItem } from "@ngxs/store/operators";
 import {
   AddNote,
-  Get as DetailsSideNavAction
+  Get as DetailsSideNavAction,
+  EditNote
 } from "./details-side-nav.actions";
 
 export class DetailsSideNavStateModel {
@@ -70,5 +72,19 @@ export class DetailsSideNavState {
         notes: [...[action.payload], ...state.item.notes]
       }
     });
+  }
+
+  @Action(EditNote)
+  editNote(ctx: StateContext<any>, { payload }: EditNote) {
+    ctx.setState(
+      patch({
+        item: patch({
+          notes: updateItem(
+            (item: any) => item.id === payload.id,
+            patch({ text: payload.text })
+          )
+        })
+      })
+    );
   }
 }

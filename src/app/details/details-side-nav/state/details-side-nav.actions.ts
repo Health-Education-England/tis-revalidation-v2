@@ -9,3 +9,8 @@ export class AddNote {
   static readonly type = "[detailssidenav] AddNote";
   constructor(public payload: INote) {}
 }
+
+export class EditNote {
+  static readonly type = "[detailssidenav] EditNote";
+  constructor(public payload: INote) {}
+}

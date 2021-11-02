@@ -45,6 +45,6 @@ export const LONDON_DBCS: string[] = [
 
 export const ADMIN_ROLES = [
   "RevalSuperAdmin",
-  "RevalTISAdmin1",
-  "RevalTISAdmin2"
+  "RevalApprover",
+  "RevalAdmin"
 ];

@@ -57,6 +57,8 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
   maxReferralDate: Date;
   deferSelected: boolean;
 
+  isRevalApprover: boolean;
+
   constructor(
     private store: Store,
     private activatedRoute: ActivatedRoute,
@@ -67,6 +69,7 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.isRevalApprover = this.auth.isRevalApprover;
     this.recommendationHistory$
       .pipe(take(1))
       .subscribe((recommendationHistory: IRecommendationHistory) => {

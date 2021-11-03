@@ -48,3 +48,7 @@ export const ADMIN_ROLES = [
   "RevalApprover",
   "RevalAdmin"
 ];
+
+export const APPROVER_ROLES = [
+  "RevalApprover"
+];

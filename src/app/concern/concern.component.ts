@@ -47,13 +47,13 @@ export class ConcernComponent {
   expandedElement: IConcernSummary | null;
   dateFormat = environment.dateFormat;
   concernStatus = ConcernStatus;
-  isSuperAdmin = false;
+  isRevalAdmin = false;
 
   @Select(ConcernState.history)
   public history$: Observable<IConcernSummary[]>;
 
   constructor(private authService: AuthService) {
-    this.isSuperAdmin = this.authService.isSuperAdmin;
+    this.isRevalAdmin = this.authService.isRevalAdmin;
   }
 
   currentExpanded(element: any, event: Event) {

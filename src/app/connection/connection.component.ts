@@ -95,7 +95,7 @@ export class ConnectionComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.traineeDetails$.subscribe((trainee) => {
       this.enableUpdateConnection =
-        this.authService.isSuperAdmin &&
+        this.authService.isRevalAdmin &&
         trainee.programmeMembershipType !== "Military" &&
         trainee.currentGrade !== "Foundation Year 1";
     });

@@ -60,7 +60,7 @@ export class RecommendationTableComponent {
   constructor(private authService: AuthService) {
     this.enableRecommendation$.subscribe(
       (value) =>
-        (this.enableRecommendation = value && this.authService.isSuperAdmin)
+        (this.enableRecommendation = value && this.authService.isRevalAdmin)
     );
   }
 

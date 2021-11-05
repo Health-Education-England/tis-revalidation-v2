@@ -32,7 +32,7 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
   );
 
   public searchLabel: string;
-  public isSuperAdmin: boolean;
+  public isRevalAdmin: boolean;
   public isConnectionsSummary: boolean;
   public form: FormGroup;
   public subscriptions: Subscription = new Subscription();
@@ -46,7 +46,7 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
     private authService: AuthService
   ) {
     this.isConnectionsSummary = this.recordsService.stateName === "connections";
-    this.isSuperAdmin = this.authService.isSuperAdmin;
+    this.isRevalAdmin = this.authService.isRevalAdmin;
     this.filter$.subscribe((filterName) => {
       this.searchLabel =
         filterName === ConnectionsFilterType.HIDDEN ||

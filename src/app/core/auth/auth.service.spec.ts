@@ -44,7 +44,7 @@ describe("AuthService", () => {
 
   it("should isRevalAdmin to be truthy when user has any of the admin role", () => {
     const payload: { [key: string]: any } = { ...defaultPayload };
-    payload["cognito:roles"] = ["role1", "role2", "RevalSuperAdmin"];
+    payload["cognito:roles"] = ["role1", "role2", "RevalAdmin"];
 
     spyOn(Auth, "currentSession").and.callFake(() =>
       Promise.resolve(createMockSession(payload))

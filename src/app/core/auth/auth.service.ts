@@ -16,7 +16,7 @@ export class AuthService {
   public roles: string[] = [];
   public userDesignatedBodies: string[] = [];
   public inludesLondonDbcs = false;
-  public isSuperAdmin = false;
+  public isRevalAdmin = false;
   public isRevalApprover = false;
 
   constructor() {}
@@ -30,7 +30,7 @@ export class AuthService {
         this.fullName = `${cognitoIdToken.payload.given_name} ${cognitoIdToken.payload.family_name}`;
         this.email = cognitoIdToken.payload.email;
         this.roles = cognitoIdToken.payload["cognito:roles"] || [];
-        this.isSuperAdmin = this.roles.some((role) =>
+        this.isRevalAdmin = this.roles.some((role) =>
           ADMIN_ROLES.includes(role)
         );
 

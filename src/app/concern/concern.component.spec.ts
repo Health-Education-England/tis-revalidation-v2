@@ -48,7 +48,7 @@ describe("ConcernComponent", () => {
 
   beforeEach(() => {
     authService = TestBed.inject(AuthService);
-    authService.isSuperAdmin = true;
+    authService.isRevalAdmin = true;
 
     fixture = TestBed.createComponent(ConcernComponent);
     component = fixture.componentInstance;
@@ -57,7 +57,7 @@ describe("ConcernComponent", () => {
 
   it("should create", () => {
     expect(component).toBeTruthy();
-    expect(component.isSuperAdmin).toBeTruthy();
+    expect(component.isRevalAdmin).toBeTruthy();
   });
 
   it("should set the expandedElement to null when element is already expanded", () => {

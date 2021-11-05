@@ -37,21 +37,21 @@ describe("AuthService", () => {
       expect(curresntSession.isValid()).toBeTruthy();
       expect(service.userName).toBe("dummy@dummy.com");
       expect(service.fullName).toBe("Name FName");
-      expect(service.isSuperAdmin).toBeFalsy();
+      expect(service.isRevalAdmin).toBeFalsy();
       expect(service.inludesLondonDbcs).toBeFalsy();
     });
   });
 
-  it("should isSuperAdmin to be truthy when user has any of the admin role", () => {
+  it("should isRevalAdmin to be truthy when user has any of the admin role", () => {
     const payload: { [key: string]: any } = { ...defaultPayload };
-    payload["cognito:roles"] = ["role1", "role2", "RevalSuperAdmin"];
+    payload["cognito:roles"] = ["role1", "role2", "RevalAdmin"];
 
     spyOn(Auth, "currentSession").and.callFake(() =>
       Promise.resolve(createMockSession(payload))
     );
 
     service.currentSession().subscribe((curresntSession) => {
-      expect(service.isSuperAdmin).toBeTruthy();
+      expect(service.isRevalAdmin).toBeTruthy();
     });
   });
 

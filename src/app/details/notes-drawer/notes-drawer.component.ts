@@ -56,7 +56,7 @@ export class NotesDrawerComponent implements OnInit {
 
   ngOnInit(): void {
     this.showAddNote = false;
-    this.isAdmin = this.authService.isSuperAdmin;
+    this.isAdmin = this.authService.isRevalAdmin;
     this.newNoteForm = new FormGroup({
       noteText: new FormControl("", [Validators.required])
     });

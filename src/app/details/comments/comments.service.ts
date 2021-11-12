@@ -31,7 +31,7 @@ export class CommentsService {
 
   addCommentControl(commentText?: string): void {
     const commentControl = new FormGroup({
-      comment: new FormControl(commentText ? commentText : ""),
+      comment: new FormControl(commentText ? this.convertPlainText(commentText) : ""),
       checkbox: new FormControl(false)
     });
     this.comments.push(commentControl);
@@ -70,5 +70,9 @@ export class CommentsService {
   filterControls(commentControl: FormGroup) {
     const checkbox = commentControl.controls.checkbox;
     return checkbox.value === true;
+  }
+
+  convertPlainText(comment: string) {
+    return comment.replace(/<\/?[^>]+>/gi, " ").replace(/&nbsp;/g, " ");
   }
 }

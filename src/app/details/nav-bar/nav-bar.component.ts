@@ -18,15 +18,6 @@ export class NavBarComponent implements OnInit {
         label: "Recommendation",
         path: `/recommendation/${gmcNumber}`
       }
-      // },
-      // {
-      //   label: "Concern",
-      //   path: `/concern/${gmcNumber}`
-      // },
-      // {
-      //   label: "Connection",
-      //   path: `/connection/${gmcNumber}`
-      // }
     ];
   }
 }

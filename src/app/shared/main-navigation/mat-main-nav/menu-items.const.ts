@@ -93,17 +93,17 @@ export const menuItems: IMenuItem[] = JSON.parse(
                 "description": ""
             },
             {
-                "type": 0,
+                "type": 9,
                 "route": "/concerns",
                 "name": "Concerns",
                 "description": ""
             },
             {
-                "type": 0,
+                "type": 9,
                 "route": "/connections",
                 "name": "Connections",
                 "description": ""
-            }                    
+            }                   
         ]
     },
     {

@@ -13,7 +13,7 @@ export const COLUMN_DATA: [string, string, boolean][] = [
 
 export const RECOMMENDATION_SORT: Sort = {
   active: "submissionDate",
-  direction: "desc"
+  direction: "asc"
 };
 
 export const DEFERRAL_MIN_DAYS = 120;

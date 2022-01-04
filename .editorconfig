@@ -1,4 +1,4 @@
-# Editor configuration, taken from https://github.com/Health-Education-England/dev-handbook/blob/master/.editorconfig
+# Editor configuration, taken from https://github.com/Health-Education-England/dev-handbook/blob/main/.editorconfig
 root = true
 
 [*]

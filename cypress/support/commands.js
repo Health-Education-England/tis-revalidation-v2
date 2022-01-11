@@ -30,7 +30,8 @@ const password = Cypress.env("password");
 Cypress.Commands.add("login", () => {
   cy.visit("/");
   cy.get("form").eq(1).as("form");
-  cy.get("@form").find("#signInFormUsername").type(username);
-  cy.get("@form").find("#signInFormPassword").type(password);
-  cy.get("@form").submit();
+  cy.get("@form").find(".idpButton-customizable").click();
+  cy.get("#kc-form-wrapper").find("#username").type(username);
+  cy.get("#kc-form-wrapper").find("#password").type(password);
+  cy.get("#kc-form-wrapper").find("#kc-login").click();
 });

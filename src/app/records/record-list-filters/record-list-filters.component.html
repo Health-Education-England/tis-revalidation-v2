@@ -14,6 +14,7 @@
       [attr.aria-label]="'Filter ' + i.label.toLowerCase() + 'records'"
       (click)="filterRecords(i.name)"
       [disabled]="data.enableAllocateAdmin || data.enableUpdateConnections"
+      data-cy="filter-records-button"
     >
       {{ i.label }}
       <ng-container *ngIf="data.totalCounts?.hasOwnProperty(i.name)">

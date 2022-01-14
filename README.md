@@ -37,6 +37,8 @@ In case you haven't done this, there is also now a git-hook to ensure your code 
 - VSCode: `https://github.com/prettier/prettier`
 - Sublime: `https://github.com/danreeves/sublime-prettier`
 
+When writing Cypress e2e tests, ensure you follow best practices (https://docs.cypress.io/guides/references/best-practices). In particular when `cy.get()` you should target data-cy properties on elements rather than using more vague selectors (e.g. id, element name etc.).
+
 ## Git Hooks
 
 [Local Git Hooks](https://www.atlassian.com/git/tutorials/git-hooks) are managed and maintained using [Husky](https://github.com/typicode/husky).

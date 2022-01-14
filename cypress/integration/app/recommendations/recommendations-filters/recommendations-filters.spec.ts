@@ -3,7 +3,7 @@ describe("Recommendations filters", () => {
     cy.login();
   });
 
-  const buttons = "app-record-list-filters a";
+  const buttons = "[data-cy=filter-records-button]";
 
   it("should allow me to visit the page", () => {
     cy.visit("/recommendations");

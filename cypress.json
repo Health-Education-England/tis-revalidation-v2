@@ -1,9 +1,5 @@
 {
   "baseUrl": "https://stage-revalidation.tis.nhs.uk/",
   "chromeWebSecurity": false,
-  "defaultCommandTimeout": 15000,
-  "reporter": "cypress-multi-reporters",
-  "reporterOptions": {
-    "configFile": "reporter-config.json"
-  }
+  "defaultCommandTimeout": 15000
 }

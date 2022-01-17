@@ -15,7 +15,7 @@
       <ng-container *ngFor="let item of menuItem.menuItems">
         <a
           mat-menu-item
-          *ngIf="item.type === 0"
+          *ngIf="(!item.env && item.type === 0) || (item.env && item.env.includes(env) && item.type === 0)"
           routerLink="{{ item.route }}"
           routerLinkActive="active-list-item"
           >{{ item.name }}</a

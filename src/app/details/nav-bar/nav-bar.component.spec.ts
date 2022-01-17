@@ -28,7 +28,7 @@ describe("NavBarComponent", () => {
 
   it("should create navLinks", () => {
     expect(component.navLinks).toBeInstanceOf(Array);
-    expect(component.navLinks.length).toEqual(1);
+    expect(component.navLinks.length).toEqual(2);
   });
 
   it("navLinks should have a label", () => {

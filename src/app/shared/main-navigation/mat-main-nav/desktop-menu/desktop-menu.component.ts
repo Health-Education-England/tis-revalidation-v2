@@ -12,6 +12,7 @@ export class DesktopMenuComponent implements OnInit {
   menuItems$: IMenuItem[] = menuItems;
   hostURI: string = environment.adminsUIHostUri;
   activeItem = "Revalidation";
+  env: string = environment.name;
 
   constructor() {}
 

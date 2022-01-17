@@ -7,7 +7,7 @@
       <a
         mat-list-item
         (click)="onMenuClick()"
-        *ngIf="item.type === 0"
+        *ngIf="(!item.env && item.type === 0) || (item.env && item.env.includes(env) && item.type === 0)"
         routerLinkActive="active-list-item"
         routerLink="{{ item.route }}"
         >{{ item.name }}</a

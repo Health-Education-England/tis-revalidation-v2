@@ -17,6 +17,10 @@ export class NavBarComponent implements OnInit {
       {
         label: "Recommendation",
         path: `/recommendation/${gmcNumber}`
+      },
+      {
+        label: "Connection",
+        path: `/connection/${gmcNumber}`
       }
     ];
   }

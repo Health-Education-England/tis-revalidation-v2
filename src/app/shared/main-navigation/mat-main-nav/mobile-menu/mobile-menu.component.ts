@@ -11,6 +11,8 @@ import { environment } from "@environment";
 export class MobileMenuComponent implements OnInit {
   menuItems$: IMenuItem[] = menuItems;
   hostURI: string = environment.adminsUIHostUri;
+  env: string = environment.name;
+  
   @Output() closeMenu = new EventEmitter();
   constructor() {}
 

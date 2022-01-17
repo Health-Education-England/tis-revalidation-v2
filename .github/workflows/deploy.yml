@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   build:
@@ -98,8 +99,9 @@ jobs:
           docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
           docker push --all-tags $ECR_REGISTRY/$ECR_REPOSITORY
 
-  deploy:
-    name: Deploy
+  deploy-pre-prod:
+    name: Deploy to pre-prod environment
+    environment: pre-prod
     needs: dockerize
     runs-on: ubuntu-latest
 
@@ -158,3 +160,26 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_TITLE: "TIS-REVALIDATION-V2 build has failed in the pipeline"
           SLACK_COLOR: "#fc1303"
+
+  cypress-e2e:
+    needs: deploy-pre-prod
+    name: Run Cypress E2E tests
+    runs-on: ubuntu-latest
+    #TODO: Consider node v14
+    container: cypress/browsers:node12.18.3-chrome89-ff86
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        env:
+          CYPRESS_baseUrl: https://stage-revalidation.tis.nhs.uk/
+          CYPRESS_password: ${{ secrets.E2E_TEST_PASS }}
+          CYPRESS_username: ${{ secrets.E2E_TEST_USER }}
+          CYPRESS_secret: ${{ secrets.E2E_TEST_SECRET }}
+          CYPRESS_coverage: false
+        with:
+          browser: chrome
+
+      #TODO: Fix/finish reporting setup

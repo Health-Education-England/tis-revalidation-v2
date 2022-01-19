@@ -17,7 +17,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v2.4.1
         with:
-          node-version: "12.x"
+          node-version: "14"
           cache: npm
 
       - name: Pull down dependencies

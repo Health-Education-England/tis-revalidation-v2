@@ -18,7 +18,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v2.4.1
         with:
-          node-version: "14"
+          node-version: "12.x"
           cache: npm
 
       - name: Pull down dependencies
@@ -165,7 +165,8 @@ jobs:
     needs: deploy-pre-prod
     name: Run Cypress E2E tests
     runs-on: ubuntu-latest
-    container: cypress/browsers:node14.17.0-chrome91-ff89
+    #TODO: Consider node v14
+    container: cypress/browsers:node12.18.3-chrome89-ff86
 
     steps:
       - uses: actions/checkout@v2

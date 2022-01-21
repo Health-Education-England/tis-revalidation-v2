@@ -17,7 +17,7 @@
       "responseType": "token",
       "userPoolId": "eu-west-2_r3l1XtMDD",
       "userPoolWebClientId": "4o37rm9tbid1u066hr500be5n3",
-      "bucketName": "tis-revalidation-concerns-upload-preprod",
+      "bucketName": "tis-revalidation-concerns-upload-prod",
       "mandatorySignIn": true,
       "redirectSignIn": "https://revalidation.tis.nhs.uk",
       "redirectSignOut": "https://revalidation.tis.nhs.uk"

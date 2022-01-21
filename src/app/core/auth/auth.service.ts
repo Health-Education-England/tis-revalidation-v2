@@ -26,7 +26,7 @@ export class AuthService {
       tap((cognitoUserSession: CognitoUserSession) => {
         const cognitoIdToken = cognitoUserSession.getIdToken();
 
-        this.userName = cognitoIdToken.payload["custom:preferred_username"];
+        this.userName = cognitoIdToken.payload["preferred_username"];
         this.fullName = `${cognitoIdToken.payload.given_name} ${cognitoIdToken.payload.family_name}`;
         this.email = cognitoIdToken.payload.email;
         this.roles = cognitoIdToken.payload["cognito:roles"] || [];

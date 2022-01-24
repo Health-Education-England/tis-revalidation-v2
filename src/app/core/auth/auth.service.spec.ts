@@ -12,7 +12,8 @@ describe("AuthService", () => {
     given_name: "Name",
     family_name: "FName"
   };
-  defaultPayload["custom:preferred_username"] = "dummy@dummy.com";
+  const userNameClaimKey = "preferred_username";
+  defaultPayload[userNameClaimKey] = "dummy@dummy.com";
   defaultPayload["cognito:roles"] = ["role1", "role2"];
   defaultPayload["cognito:groups"] = ["1-DBC", "2-DBC"];
 

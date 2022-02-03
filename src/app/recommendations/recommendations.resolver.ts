@@ -29,7 +29,7 @@ export class RecommendationsResolver
     this.recordsService.detailsRoute = "/recommendation";
     this.recordsService.setRecommendationsActions();
     this.recordsService.dateColumns = [
-      "cctDate",
+      "curriculumEndDate",
       "submissionDate",
       "dateAdded",
       "lastUpdatedDate"

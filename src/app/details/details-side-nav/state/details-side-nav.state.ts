@@ -20,7 +20,7 @@ export class DetailsSideNavStateModel {
       gmcNumber: null,
       forenames: null,
       surname: null,
-      cctDate: null,
+      curriculumEndDate: null,
       programmeMembershipType: null,
       programmeName: null,
       currentGrade: null,

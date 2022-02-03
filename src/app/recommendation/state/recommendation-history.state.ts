@@ -22,7 +22,7 @@ export class RecommendationHistoryStateModel {
     item: {
       gmcNumber: null,
       fullName: null,
-      cctDate: null,
+      curriculumEndDate: null,
       programmeMembershipType: null,
       currentGrade: null,
       deferralReasons: [],

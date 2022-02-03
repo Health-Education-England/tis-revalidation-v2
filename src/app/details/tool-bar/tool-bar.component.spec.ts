@@ -33,7 +33,7 @@ describe("NoteCardComponent", () => {
           gmcNumber: 123456,
           forenames: "Bob",
           surname: "Fossil",
-          cctDate: "2021-11-11",
+          curriculumEndDate: "2021-11-11",
           programmeMembershipType: "Zoo Keeper",
           programmeName: "Big Cats",
           currentGrade: "Junior",

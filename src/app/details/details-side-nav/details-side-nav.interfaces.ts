@@ -3,7 +3,7 @@ export interface IDetailsSideNav {
   gmcNumber: number;
   forenames: string;
   surname: string;
-  cctDate: string;
+  curriculumEndDate: string;
   programmeMembershipType: string;
   programmeName: string;
   currentGrade: string;

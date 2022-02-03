@@ -14,7 +14,7 @@ export interface IProgramme {
   gmcNumber: number;
   forenames: string;
   surname: string;
-  cctDate: Date;
+  curriculumEndDate: Date;
   programmeMembershipType: string;
   programmeName: string;
   currentGrade: string;

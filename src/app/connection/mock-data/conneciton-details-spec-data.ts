@@ -9,7 +9,7 @@ const programme: IProgramme = {
   gmcNumber: 123456,
   forenames: "Babul",
   surname: "Yasa",
-  cctDate: new Date(),
+  curriculumEndDate: new Date(),
   programmeMembershipType: "prg type1",
   programmeName: "prg name1",
   currentGrade: "GRADE",

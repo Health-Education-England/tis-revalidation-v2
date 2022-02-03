@@ -6,7 +6,7 @@ import {
 
 export interface IRecommendation {
   admin: string;
-  cctDate: string;
+  curriculumEndDate: string;
   checked?: boolean;
   dateAdded: string;
   designatedBody: string;

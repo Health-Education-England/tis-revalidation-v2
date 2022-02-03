@@ -6,7 +6,7 @@ export const COLUMN_DATA: [string, string, boolean][] = [
   ["TIS Status", "doctorStatus", false],
   ["Programme name", "programmeName", false],
   ["Programme membership type", "programmeMembershipType", false],
-  ["Curriculum end date", "cctDate", false],
+  ["Curriculum end date", "curriculumEndDate", false],
   ["Admin", "admin", false],
   ["Last updated", "lastUpdatedDate", false]
 ];

@@ -95,7 +95,7 @@ describe("RecordListComponent", () => {
       submissionDate: "2018-05-14",
       underNotice: "No",
       admin: "",
-      cctDate: "2015-09-08",
+      curriculumEndDate: "2015-09-08",
       doctorStatus: RecommendationStatus.NOT_STARTED,
       lastUpdatedDate: "2015-09-08",
       programmeMembershipType: "",

@@ -1,7 +1,7 @@
 export interface IRecommendationHistory {
   gmcNumber: number;
   fullName: string;
-  cctDate: Date;
+  curriculumEndDate: Date;
   programmeMembershipType: string;
   currentGrade: string;
   revalidations: IRecommendationSummary[];

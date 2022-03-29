@@ -23,7 +23,8 @@ export class NotSubmittedGuard implements CanActivate {
         const summaryItem = summary.recommendationHistory.item;
         return summaryItem.revalidations.find(
           (reval: IRecommendationSummary) =>
-            reval.recommendationStatus !== RecommendationStatus.SUBMITTED_TO_GMC
+            reval.recommendationStatus !== RecommendationStatus.SUBMITTED_TO_GMC &&
+            reval.recommendationStatus !== RecommendationStatus.COMPLETED
         );
       }
     );

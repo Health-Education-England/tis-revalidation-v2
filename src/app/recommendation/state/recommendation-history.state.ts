@@ -77,8 +77,8 @@ export class RecommendationHistoryState {
   ): IRecommendationSummary {
     return state.item.revalidations.find((item: IRecommendationSummary) => {
       return (
-        RecommendationStatus[item.recommendationStatus] !==
-        RecommendationStatus.SUBMITTED_TO_GMC
+        RecommendationStatus[item.recommendationStatus] !== RecommendationStatus.SUBMITTED_TO_GMC &&
+        RecommendationStatus[item.recommendationStatus] !== RecommendationStatus.COMPLETED
       );
     });
   }

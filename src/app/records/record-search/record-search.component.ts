@@ -36,6 +36,7 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
   public isConnectionsSummary: boolean;
   public form: FormGroup;
   public subscriptions: Subscription = new Subscription();
+  filterPanelOpen: boolean = false;
   @ViewChild("ngForm") public ngForm;
 
   constructor(
@@ -54,6 +55,13 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
     this.setupForm();
     this.listenToClearAllEvent();
     this.listenToAllocateAdminsEvent();
+    this.subscriptions.add(
+      this.recordsService.toggleTableFilterPanel$.subscribe(
+        (isOpen: boolean) => {
+          this.filterPanelOpen = isOpen;
+        }
+      )
+    );
   }
 
   public setupForm(): void {
@@ -138,6 +146,10 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
       .resetPaginator()
       .pipe(take(1))
       .subscribe(() => this.recordsService.updateRoute());
+  }
+
+  toggleTableFilterPanel() {
+    this.recordsService.toggleTableFilterPanel$.next(!this.filterPanelOpen);
   }
 
   ngOnDestroy() {

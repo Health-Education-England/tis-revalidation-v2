@@ -53,6 +53,9 @@ import { IFilter, IRecordDataCell } from "../records.interfaces";
 })
 export class RecordsService {
   public resetSearchForm$: BehaviorSubject<boolean> = new BehaviorSubject(null);
+  public toggleTableFilterPanel$: BehaviorSubject<boolean> =
+    new BehaviorSubject(false);
+
   public stateName: string;
   public dateColumns: string[];
   public columnData: IRecordDataCell[];

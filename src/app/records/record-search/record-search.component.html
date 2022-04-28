@@ -2,13 +2,17 @@
   <div class="d-flex pl-25 pr-20 align-items-center">
     <button
       color="primary"
-      matTooltip="Open filter panel"
+      [matTooltip]="
+        filterPanelOpen ? 'Close filter panel' : 'Open filter panel'
+      "
       matTooltipPosition="below"
       matTooltipShowDelay="500"
       mat-icon-button
-      aria-label="Enable allocate admin"
+      aria-label="Toggle table filter panel"
+      (click)="toggleTableFilterPanel()"
     >
-      <mat-icon>filter_alt</mat-icon>
+      <mat-icon *ngIf="!filterPanelOpen">filter_alt</mat-icon>
+      <mat-icon *ngIf="filterPanelOpen">filter_alt_off</mat-icon>
     </button>
     <app-reset-record-list></app-reset-record-list>
     <app-allocate-admin-btn

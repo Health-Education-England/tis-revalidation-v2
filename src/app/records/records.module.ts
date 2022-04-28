@@ -13,6 +13,7 @@ import { RecordsComponent } from "./records.component";
 import { RefreshDataBtnComponent } from "./refresh-data-btn/refresh-data-btn.component";
 import { ResetRecordListComponent } from "./reset-record-list/reset-record-list.component";
 import { RecordsService } from "./services/records.service";
+import { RecordListTableFiltersComponent } from "./record-list-table-filters/record-list-table-filters.component";
 
 const components: any[] = [
   RecordListComponent,
@@ -21,7 +22,8 @@ const components: any[] = [
   RecordsComponent,
   RecordSearchComponent,
   RefreshDataBtnComponent,
-  ResetRecordListComponent
+  ResetRecordListComponent,
+  RecordListTableFiltersComponent
 ];
 
 @NgModule({

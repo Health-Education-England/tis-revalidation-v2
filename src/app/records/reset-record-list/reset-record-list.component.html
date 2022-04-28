@@ -1,12 +1,16 @@
 <button
+  color="primary"
+  matTooltip="Clear all"
+  matTooltipPosition="below"
+  matTooltipShowDelay="500"
+  mat-icon-button
   *ngIf="{
     enableAllocateAdmin: enableAllocateAdmin$ | async,
     enableUpdateConnections: enableUpdateConnections$ | async
   } as data"
-  mat-menu-item
   (click)="resetRecordList()"
   aria-label="Clear all"
   [disabled]="data.nableAllocateAdmin || data.enableUpdateConnections"
 >
-  Clear all
+  <mat-icon>restart_alt</mat-icon>
 </button>

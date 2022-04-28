@@ -1,19 +1,27 @@
 <ng-container *ngIf="enableUpdateConnections$ | async; else isDisabled">
   <button
-    mat-menu-item
+    color="primary"
+    mat-icon-button
+    matTooltip="Disable update connections"
+    matTooltipPosition="below"
+    matTooltipShowDelay="500"
     aria-label="Disable update connections"
     (click)="disableUpdateConnection()"
   >
-    Disable update connections
+    <mat-icon>link_off</mat-icon>
   </button>
 </ng-container>
 
 <ng-template #isDisabled>
   <button
-    mat-menu-item
+    color="primary"
+    mat-icon-button
+    matTooltip="Enable update connections"
+    matTooltipPosition="below"
+    matTooltipShowDelay="500"
     aria-label="Enable update connections"
     (click)="enableUpdateConnection()"
   >
-    Enable update connections
+    <mat-icon>link</mat-icon>
   </button>
 </ng-template>

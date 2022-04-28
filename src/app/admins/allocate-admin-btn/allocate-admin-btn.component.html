@@ -1,19 +1,27 @@
 <ng-container *ngIf="enableAllocateAdmin$ | async; else isDisabled">
   <button
-    mat-menu-item
+    color="primary"
+    mat-icon-button
     aria-label="Disable allocate admin"
     (click)="disableAllocateAdmin()"
+    matTooltip="Disable allocate admin"
+    matTooltipPosition="below"
+    matTooltipShowDelay="500"
   >
-    Disable allocate admin
+    <mat-icon>person_add_disabled</mat-icon>
   </button>
 </ng-container>
 
 <ng-template #isDisabled>
   <button
-    mat-menu-item
+    mat-icon-button
+    color="primary"
     aria-label="Enable allocate admin"
     (click)="enableAllocateAdmin()"
+    matTooltip="Enable allocate admin"
+    matTooltipPosition="below"
+    matTooltipShowDelay="500"
   >
-    Enable allocate admin
+    <mat-icon>person_add</mat-icon>
   </button>
 </ng-template>

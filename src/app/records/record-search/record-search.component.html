@@ -1,21 +1,22 @@
 <div class="d-grid record-search">
-  <div class="d-grid align-items-center">
+  <div class="d-flex pl-25 pr-20 align-items-center">
     <button
+      color="primary"
+      matTooltip="Open filter panel"
+      matTooltipPosition="below"
+      matTooltipShowDelay="500"
       mat-icon-button
-      [matMenuTriggerFor]="menu"
-      aria-label="Menu for clear all and allocate admin "
+      aria-label="Enable allocate admin"
     >
-      <mat-icon>more_vert</mat-icon>
+      <mat-icon>filter_alt</mat-icon>
     </button>
-    <mat-menu #menu="matMenu">
-      <app-reset-record-list></app-reset-record-list>
-      <app-allocate-admin-btn
-        *ngIf="isRevalAdmin && !isConnectionsSummary"
-      ></app-allocate-admin-btn>
-      <app-update-connetions-btn
-        *ngIf="isRevalAdmin && isConnectionsSummary"
-      ></app-update-connetions-btn>
-    </mat-menu>
+    <app-reset-record-list></app-reset-record-list>
+    <app-allocate-admin-btn
+      *ngIf="isRevalAdmin && !isConnectionsSummary"
+    ></app-allocate-admin-btn>
+    <app-update-connetions-btn
+      *ngIf="isRevalAdmin && isConnectionsSummary"
+    ></app-update-connetions-btn>
   </div>
 
   <form

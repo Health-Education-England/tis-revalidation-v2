@@ -22,6 +22,11 @@ $toolbar-height: 64px;
     100vh - #{$main-navbar-height} - #{$child-navbar-height} - #{$toolbar-height}
   );
   background-color: #fafafa;
+  .mat-drawer-content {
+    min-height: calc(
+      100vh - #{$main-navbar-height} - #{$child-navbar-height} - #{$toolbar-height}
+    );
+  }
 }
 .mat-drawer {
   background-color: #fafafa;

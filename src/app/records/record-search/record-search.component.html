@@ -1,6 +1,7 @@
 <div class="d-grid record-search">
   <div class="d-flex pl-25 pr-20 align-items-center">
     <button
+      *ngIf="!isConnectionsSummary"
       color="primary"
       [matTooltip]="
         filterPanelOpen ? 'Close filter panel' : 'Open filter panel'

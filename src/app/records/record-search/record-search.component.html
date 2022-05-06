@@ -1,6 +1,32 @@
 <div class="d-grid record-search">
   <div class="d-flex pl-25 pr-20 align-items-center">
     <button
+      color="primary"
+      matTooltipPosition="below"
+      matTooltipShowDelay="500"
+      mat-icon-button
+      [matTooltip]="fixedColumns ? 'Unlock column width' : 'Lock column width'"
+      aria-label="Toggle table column width setting"
+      (click)="toggleFixedColumns()"
+    >
+      <ng-container *ngIf="fixedColumns">
+        <mat-icon class="material-icons-outlined layered-icon base-icon"
+          >table_chart</mat-icon
+        >
+        <mat-icon class="layered-icon overlay-bg-icon">circle</mat-icon>
+        <mat-icon class="layered-icon overlay-icon">lock_open</mat-icon>
+      </ng-container>
+
+      <ng-container *ngIf="!fixedColumns">
+        <mat-icon class="material-icons-outlined layered-icon base-icon"
+          >table_chart</mat-icon
+        >
+        <mat-icon class="layered-icon overlay-bg-icon">circle</mat-icon>
+        <mat-icon class="layered-icon overlay-icon">lock</mat-icon>
+      </ng-container>
+    </button>
+
+    <button
       *ngIf="!isConnectionsSummary"
       color="primary"
       [matTooltip]="

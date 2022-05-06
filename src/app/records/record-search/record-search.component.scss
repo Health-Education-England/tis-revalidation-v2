@@ -4,3 +4,26 @@
     width: auto;
   }
 }
+
+.layered-icon {
+  position: absolute;
+  &.base-icon {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  &.overlay-bg-icon {
+    bottom: 0;
+    right: 0;
+    transform: none;
+    font-size: 20px;
+    color: #005eb8;
+  }
+  &.overlay-icon {
+    bottom: 0;
+    right: 0;
+    transform: none;
+    font-size: 11px;
+    color: #fff;
+  }
+}

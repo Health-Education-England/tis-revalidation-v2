@@ -6,6 +6,7 @@ import { filter, take } from "rxjs/operators";
 import { ConnectionsFilterType } from "src/app/connections/connections.interfaces";
 import { AuthService } from "src/app/core/auth/auth.service";
 import { UpdateConnectionsService } from "src/app/update-connections/services/update-connections.service";
+import { ToggleFixedColumns } from "../record-list/state/record-list.actions";
 import { RecordsService } from "../services/records.service";
 
 @Component({
@@ -30,6 +31,9 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
   public filter$: Observable<any> = this.store.select(
     (state) => state[this.recordsService.stateName].filter
   );
+  public fixedColumns$: Observable<boolean> = this.store.select(
+    (state) => state.recordList.fixedColumns
+  );
 
   public searchLabel: string;
   public isRevalAdmin: boolean;
@@ -37,6 +41,7 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
   public form: FormGroup;
   public subscriptions: Subscription = new Subscription();
   filterPanelOpen: boolean = false;
+  fixedColumns: boolean;
   @ViewChild("ngForm") public ngForm;
 
   constructor(
@@ -55,6 +60,7 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
     this.setupForm();
     this.listenToClearAllEvent();
     this.listenToAllocateAdminsEvent();
+
     this.subscriptions.add(
       this.recordsService.toggleTableFilterPanel$.subscribe(
         (isOpen: boolean) => {
@@ -62,8 +68,16 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
         }
       )
     );
-  }
 
+    this.subscriptions.add(
+      this.fixedColumns$.subscribe((isFixedColumns: boolean) => {
+        this.fixedColumns = isFixedColumns;
+      })
+    );
+  }
+  public toggleFixedColumns() {
+    this.store.dispatch(new ToggleFixedColumns(!this.fixedColumns));
+  }
   public setupForm(): void {
     this.form = this.formBuilder.group(
       {

@@ -33,9 +33,10 @@ $space-prefixes: (
       $width: map-get($props, "width");
 
       &#{$colName} {
-        flex: 0 0 $width;
-        min-width: $width;
-
+        &.fixed {
+          flex: 0 0 $width;
+          min-width: $width;
+        }
         @if map-has-key($props, "color") {
           color: map-get($props, "color");
         }

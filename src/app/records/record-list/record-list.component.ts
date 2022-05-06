@@ -55,6 +55,10 @@ export class RecordListComponent implements OnDestroy {
     (state) => state[this.recordsService.stateName].disableSearchAndSort
   );
 
+  public fixedColumns$: Observable<boolean> = this.store.select(
+    (state) => state.recordList.fixedColumns
+  );
+
   constructor(
     protected activatedRoute: ActivatedRoute,
     protected recordsService: RecordsService,
@@ -79,10 +83,10 @@ export class RecordListComponent implements OnDestroy {
     row: any,
     enableAllocateAdmin: boolean,
     enableUpdateConnections: boolean
-  ): Promise<boolean> {
+  ) {
     event.stopPropagation();
     if (!enableAllocateAdmin && !enableUpdateConnections) {
-      return this.router.navigate([this.detailsRoute, row.gmcReferenceNumber]);
+      this.router.navigate([this.detailsRoute, row.gmcReferenceNumber]);
     }
   }
 

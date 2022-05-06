@@ -8,7 +8,13 @@
   <!-- spinner -->
   <div
     *ngIf="data.loading; else notLoading"
-    class="d-flex align-content-center justify-content-center align-items-center progress-spinner"
+    class="
+      d-flex
+      align-content-center
+      justify-content-center
+      align-items-center
+      progress-spinner
+    "
   >
     <mat-spinner></mat-spinner>
   </div>
@@ -80,7 +86,11 @@
               </th>
 
               <!-- mat cell -->
-              <td mat-cell *matCellDef="let element">
+              <td
+                mat-cell
+                [ngClass]="(fixedColumns$ | async) && 'fixed'"
+                *matCellDef="let element"
+              >
                 <!-- checkbox -->
                 <mat-checkbox
                   *ngIf="

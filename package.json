@@ -43,6 +43,7 @@
     "browserslist": "^4.16.6",
     "caniuse-lite": "^1.0.30001133",
     "file-saver": "^2.0.5",
+    "ngx-google-analytics": "^10.0.0",
     "nhsuk-frontend": "^5.0.0",
     "rxjs": "~6.6.7",
     "tslib": "^2.2.0",

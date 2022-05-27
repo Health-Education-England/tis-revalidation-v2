@@ -6,6 +6,7 @@ import {
   ServiceWorkerModule,
   SwRegistrationOptions
 } from "@angular/service-worker";
+import { NgxGoogleAnalyticsModule } from "ngx-google-analytics";
 import { NgxsModule } from "@ngxs/store";
 import { NgxsReduxDevtoolsPluginModule } from "@ngxs/devtools-plugin";
 import { Router } from "@angular/router";
@@ -37,6 +38,7 @@ import { swRegistrationOptionsFactory } from "./factories/sw-registration-option
     AppRoutingModule,
     ServiceWorkerModule.register("ngsw-worker.js"),
     NgxsModule.forRoot([]),
+    NgxGoogleAnalyticsModule.forRoot("G-SWV1NDD37B"),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     MainNavigationModule
   ],

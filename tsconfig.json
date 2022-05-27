@@ -12,12 +12,6 @@
     },
     {
       "path": "./tsconfig.spec.json"
-    },
-    {
-      "path": "./projects/hee-shared/tsconfig.lib.json"
-    },
-    {
-      "path": "./projects/hee-shared/tsconfig.spec.json"
     }
   ]
 }

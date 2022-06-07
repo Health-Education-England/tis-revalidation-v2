@@ -1,6 +1,6 @@
 import { AdminsPipe } from "./admins.pipe";
 import { Store, NgxsModule } from "@ngxs/store";
-import { TestBed, async } from "@angular/core/testing";
+import { TestBed, waitForAsync } from "@angular/core/testing";
 
 describe("AdminsPipe", () => {
   let store: Store;
@@ -23,7 +23,7 @@ describe("AdminsPipe", () => {
 
   const nullList = { items: null };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [NgxsModule.forRoot()]
     });

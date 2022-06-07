@@ -1,4 +1,4 @@
-import { TestBed, async } from "@angular/core/testing";
+import { TestBed, waitForAsync } from "@angular/core/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { RecommendationNotesState } from "./recommendation-notes.state";
 import { GetRecommendationNotes } from "./recommendation-notes.actions";
@@ -14,7 +14,7 @@ describe("RecommendationNotes actions", () => {
   let store: Store;
   let httpMock: HttpTestingController;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         NgxsModule.forRoot([RecommendationNotesState]),

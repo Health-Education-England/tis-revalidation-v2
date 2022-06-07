@@ -1,7 +1,7 @@
 import { CreateEditConcernResolver } from "./create-edit-concern.resolver";
 import { Router } from "@angular/router";
 import { Store, NgxsModule } from "@ngxs/store";
-import { TestBed, async } from "@angular/core/testing";
+import { TestBed, waitForAsync } from "@angular/core/testing";
 import { MaterialModule } from "src/app/shared/material/material.module";
 import { ConcernState } from "../state/concern.state";
 import {
@@ -26,7 +26,7 @@ describe("CreateEditConcernResolver", () => {
   const gmcNumber = 65477888;
   let req: TestRequest;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         MaterialModule,

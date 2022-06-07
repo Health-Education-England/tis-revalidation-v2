@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, async } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { ToolBarComponent } from "./tool-bar.component";
 import { NgxsModule, Store } from "@ngxs/store";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
@@ -61,7 +61,7 @@ describe("NoteCardComponent", () => {
     expect(component).toBeTruthy();
   });
 
-  it("should display 'speaker_notes' mat-icon by default", async(() => {
+  it("should display 'speaker_notes' mat-icon by default", waitForAsync(() => {
     const { debugElement } = fixture;
     const { nativeElement } = debugElement;
     const el = nativeElement.querySelector(".note-icon-open");
@@ -69,7 +69,7 @@ describe("NoteCardComponent", () => {
     expect(el).toBeTruthy();
   }));
 
-  it("should display 'speaker_notes_OFF' mat-icon when drawer is open", async(() => {
+  it("should display 'speaker_notes_OFF' mat-icon when drawer is open", waitForAsync(() => {
     const { debugElement } = fixture;
     const { nativeElement } = debugElement;
     const button = nativeElement.querySelector("button.toggle-drawer");
@@ -79,14 +79,14 @@ describe("NoteCardComponent", () => {
     expect(el).toBeTruthy();
   }));
 
-  it("should display the number of notes in the icon badge", async(() => {
+  it("should display the number of notes in the icon badge", waitForAsync(() => {
     const { debugElement } = fixture;
     const { nativeElement } = debugElement;
     const el = nativeElement.querySelector(".mat-badge-content");
     expect(el.innerText).toContain("3");
   }));
 
-  it("should display '' in the icon badge when no notes", async(() => {
+  it("should display '' in the icon badge when no notes", waitForAsync(() => {
     store.reset({
       ...store.snapshot(),
       traineeDetails: {

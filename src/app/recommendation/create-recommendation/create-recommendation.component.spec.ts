@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { CreateRecommendationComponent } from "./create-recommendation.component";
 import { MaterialModule } from "src/app/shared/material/material.module";
@@ -24,7 +24,7 @@ describe("CreateRecommendationComponent", () => {
   const activatedRoute = {
     parent: { snapshot: { params: { gmcNumber: 0 } } }
   };
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         MaterialModule,

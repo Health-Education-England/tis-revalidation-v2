@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { MaterialModule } from "../../shared/material/material.module";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RecordDetailsComponent } from "./record-details.component";
@@ -10,7 +10,7 @@ describe("RecordDetailsComponent", () => {
   let component: RecordDetailsComponent;
   let fixture: ComponentFixture<RecordDetailsComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [RecordDetailsComponent],
       imports: [

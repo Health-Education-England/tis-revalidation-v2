@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { ConcernComponent } from "./concern.component";
 import { NgxsModule } from "@ngxs/store";
@@ -32,7 +32,7 @@ describe("ConcernComponent", () => {
     status: ConcernStatus.OPEN
   };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         NgxsModule.forRoot([ConcernState]),

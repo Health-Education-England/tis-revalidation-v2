@@ -1,5 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { CreateConcernComponent } from "./create-concern.component";
 import { NgxsModule } from "@ngxs/store";
@@ -14,7 +14,7 @@ describe("CreateConcernComponent", () => {
   let component: CreateConcernComponent;
   let fixture: ComponentFixture<CreateConcernComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [CreateConcernComponent],
       imports: [

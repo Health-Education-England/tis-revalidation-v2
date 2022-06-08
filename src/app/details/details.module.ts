@@ -25,41 +25,40 @@ import { NoteCardComponent } from "./notes-drawer/note-card/note-card.component"
 import { ToolBarComponent } from "./tool-bar/tool-bar.component";
 
 @NgModule({
-  // TODO double check if NavBarComponent, DetailsSideNavComponent
-  // are needed to be imported and/or exported as the RecordDetailsComponent
-  // already encapsulate both of them
-  declarations: [
-    NavBarComponent,
-    DetailsSideNavComponent,
-    RecordDetailsComponent,
-    NotesToolBarComponent,
-    NotesDrawerComponent,
-    DeleteCommentDialogueComponent,
-    CommentsComponent,
-    NoteCardComponent,
-    ToolBarComponent
-  ],
-  imports: [
-    CommonModule,
-    MaterialModule,
-    RouterModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    NgxsModule.forFeature([DetailsSideNavState, NotesDrawerState])
-  ],
-  providers: [
-    DetailsSideNavService,
-    CommentsService,
-    NotesService,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }
-  ],
-  exports: [
-    NavBarComponent,
-    DetailsSideNavComponent,
-    RecordDetailsComponent,
-    CommentsComponent
-  ],
-  entryComponents: [DeleteCommentDialogueComponent]
+    // TODO double check if NavBarComponent, DetailsSideNavComponent
+    // are needed to be imported and/or exported as the RecordDetailsComponent
+    // already encapsulate both of them
+    declarations: [
+        NavBarComponent,
+        DetailsSideNavComponent,
+        RecordDetailsComponent,
+        NotesToolBarComponent,
+        NotesDrawerComponent,
+        DeleteCommentDialogueComponent,
+        CommentsComponent,
+        NoteCardComponent,
+        ToolBarComponent
+    ],
+    imports: [
+        CommonModule,
+        MaterialModule,
+        RouterModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        NgxsModule.forFeature([DetailsSideNavState, NotesDrawerState])
+    ],
+    providers: [
+        DetailsSideNavService,
+        CommentsService,
+        NotesService,
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }
+    ],
+    exports: [
+        NavBarComponent,
+        DetailsSideNavComponent,
+        RecordDetailsComponent,
+        CommentsComponent
+    ]
 })
 export class DetailsModule {}

@@ -18,10 +18,10 @@ module.exports = function (config) {
     },
     coverageReporter: {
       dir: require("path").join(__dirname, "./coverage/revalidation"),
-      reports: ["html", "lcovonly", "text-summary"],
+      reporters: ["html", "lcovonly", "text-summary"],
       fixWebpackSourcePaths: true
     },
-    reports: ["mocha", "kjhtml"],
+    reporters: ["mocha", "kjhtml"],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,

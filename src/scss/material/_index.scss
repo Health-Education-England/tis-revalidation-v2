@@ -1,33 +1,33 @@
 // Custom Theming for Angular Material
+@use '~@angular/material' as mat;
 // For more information: https://material.angular.io/guide/theming
-@import "~@angular/material/theming";
 // Plus imports for other components in your app.
 @import "palette";
 
-$nhsuk-typography: mat-typography-config(
+$nhsuk-typography: mat.define-typography-config(
   $font-family: $nhsuk-font + $nhsuk-font-fallback
 );
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
-@include mat-core($nhsuk-typography);
+@include mat.core($nhsuk-typography);
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$nhsuk-primary: mat-palette($nhsuk-blue);
-$nhsuk-accent: mat-palette($nhsuk-warm-yellow);
-$nhsuk-secondary: mat-palette($nhsuk-green);
+$nhsuk-primary: mat.define-palette($nhsuk-blue);
+$nhsuk-accent: mat.define-palette($nhsuk-warm-yellow);
+$nhsuk-secondary: mat.define-palette($nhsuk-green);
 // The warn palette is optional (defaults to red).
-$nhsuk-warn: mat-palette($nhsuk-red);
+$nhsuk-warn: mat.define-palette($nhsuk-red);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$nhsuk-theme: mat-light-theme($nhsuk-primary, $nhsuk-accent, $nhsuk-warn);
+$nhsuk-theme: mat.define-light-theme($nhsuk-primary, $nhsuk-accent, $nhsuk-warn);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include angular-material-theme($nhsuk-theme);
+@include mat.all-component-themes($nhsuk-theme);
 
 /* You can add global styles to this file, and also import other style files */
 

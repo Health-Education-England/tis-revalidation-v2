@@ -3,7 +3,7 @@
 
 .mat-toolbar-row,
 .mat-toolbar-single-row {
-  @media screen and (#{max-width: 599px}) {
+  @media screen and (max-width: 599px) {
     height: 72px;
   }
 }

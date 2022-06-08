@@ -4,7 +4,7 @@
   .mat-horizontal-content-container {
     padding: 0 20px 24px 20px;
 
-    @media screen and (#{max-width: 959px}) {
+    @media screen and (max-width: 959px) {
       padding: 0 0 24px 0;
     }
   }

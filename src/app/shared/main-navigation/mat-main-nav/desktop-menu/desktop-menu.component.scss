@@ -5,7 +5,7 @@
   .mat-menu-panel {
     &.mega-menu {
       max-width: 940.8px;
-      @media screen and (#{max-width: 959px}) {
+      @media screen and (max-width: 959px) {
         max-width: 98%;
       }
 
@@ -16,7 +16,7 @@
 
       .mat-menu-item {
         flex: 0 1 20%;
-        @media screen and (#{max-width: 959px}) {
+        @media screen and (max-width: 959px) {
           flex: 0 1 29%;
         }
       }

@@ -78,7 +78,6 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "aot": true,
             "assets": [
               "src/assets",
               {
@@ -110,7 +109,13 @@
                 "maximumWarning": "30kb",
                 "maximumError": "60kb"
               }
-            ]
+            ],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -160,13 +165,10 @@
               "ngswConfigPath": "ngsw-config.json"
             },
             "mocky": {
-              "optimization": false,
-              "outputHashing": "all",
-              "sourceMap": true,
-              "aot": true,
-              "buildOptimizer": false
+              "outputHashing": "all"
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",

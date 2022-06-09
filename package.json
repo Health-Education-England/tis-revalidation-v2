@@ -41,7 +41,6 @@
     "angulartics2": "^10.0.0",
     "aws-amplify": "^4.3.24",
     "browserslist": "^4.16.6",
-    "caniuse-lite": "^1.0.30001133",
     "file-saver": "^2.0.5",
     "karma-coverage": "^2.2.0",
     "ngx-google-analytics": "^10.0.0",

@@ -18,8 +18,10 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": [
-              "@aws-amplify/auth/lib-esm/types",
-              "@aws-amplify/core/lib-esm",
+              "@aws-amplify/auth",
+              "@aws-amplify/core",
+              "@aws-amplify/geo",
+              "@aws-crypto/crc32",
               "@aws-crypto/sha256-browser",
               "@aws-crypto/sha256-js",
               "@aws-sdk/config-resolver",
@@ -59,19 +61,23 @@
               "@aws-sdk/xml-builder",
               "axios",
               "buffer",
+              "camelcase-keys",
+              "crypto-js/core",
               "crypto-js/enc-base64",
               "crypto-js/hmac-sha256",
               "crypto-js/lib-typedarrays",
               "crypto-js/sha256",
               "fast-xml-parser",
               "file-saver",
+              "isomorphic-unfetch",
               "js-cookie",
               "lodash",
               "ulid",
               "uuid",
               "zen-observable",
               "zen-push",
-              "zone.js/dist/zone-error"
+              "zone.js/dist/zone-error",
+              "url"
             ],
             "outputPath": "dist/revalidation",
             "index": "src/index.html",
@@ -88,9 +94,7 @@
               "src/manifest.webmanifest",
               "src/robots.txt"
             ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "styles": ["src/styles.scss"],
             "scripts": [
               {
                 "input": "supported.browsers.js",

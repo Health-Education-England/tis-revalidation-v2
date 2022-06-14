@@ -8,15 +8,13 @@ import { environment } from "@environment";
   templateUrl: "./mobile-menu.component.html",
   styleUrls: ["./mobile-menu.component.scss"]
 })
-export class MobileMenuComponent implements OnInit {
+export class MobileMenuComponent {
   menuItems$: IMenuItem[] = menuItems;
   hostURI: string = environment.adminsUIHostUri;
   env: string = environment.name;
-  
+
   @Output() closeMenu = new EventEmitter();
   constructor() {}
-
-  ngOnInit(): void {}
 
   onMenuClick(): void {
     this.closeMenu.emit();

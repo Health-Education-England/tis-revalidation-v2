@@ -13,7 +13,7 @@
         mat-button
         (click)="reset()"
         mat-raised-button
-        [disabled]="admin == null"
+        [disabled]="admin === null"
       >
         Reset
       </button>
@@ -22,7 +22,7 @@
         mat-raised-button
         color="accent"
         (click)="save()"
-        [disabled]="!canSave || admin == null"
+        [disabled]="!canSave || admin === null"
       >
         Save
       </button>

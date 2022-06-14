@@ -11,7 +11,7 @@ import { NotesDrawerState } from "../notes-drawer/state/notes-drawer.state";
   styleUrls: ["./record-details.component.scss"],
   encapsulation: ViewEncapsulation.None
 })
-export class RecordDetailsComponent implements OnInit {
+export class RecordDetailsComponent {
   @Select(NotesDrawerState.drawerStatus) isOpen$: Observable<boolean>;
 
   isHandset$: Observable<boolean> = this.breakpointObserver
@@ -20,6 +20,6 @@ export class RecordDetailsComponent implements OnInit {
       map((result) => result.matches),
       shareReplay()
     );
-  ngOnInit() {}
+
   constructor(private breakpointObserver: BreakpointObserver) {}
 }

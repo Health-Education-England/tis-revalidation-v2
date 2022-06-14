@@ -94,7 +94,9 @@
               "src/manifest.webmanifest",
               "src/robots.txt"
             ],
-            "styles": ["src/styles.scss"],
+            "styles": [
+              "src/styles.scss"
+            ],
             "scripts": [
               {
                 "input": "supported.browsers.js",
@@ -215,8 +217,19 @@
               "src/manifest.webmanifest",
               "src/robots.txt"
             ],
-            "styles": ["src/styles.scss"],
+            "styles": [
+              "src/styles.scss"
+            ],
             "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         }
       }
@@ -224,6 +237,7 @@
   },
   "defaultProject": "revalidation",
   "cli": {
-    "analytics": "c8073553-0f3f-427d-b173-63b07df298c0"
+    "analytics": "c8073553-0f3f-427d-b173-63b07df298c0",
+    "defaultCollection": "@angular-eslint/schematics"
   }
 }

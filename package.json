@@ -12,7 +12,7 @@
     "test:ci": "npm run test -- --code-coverage=true --watch=false --browsers=ChromeHeadless",
     "lint": "ng lint",
     "lint:styles": "stylelint \"src/**/*.scss\"",
-    "cypress": "cypress run",
+    "cypress": "cypress run --browser chrome",
     "cypress-open": "cypress open",
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
     "preinstall": "npx npm-force-resolutions"

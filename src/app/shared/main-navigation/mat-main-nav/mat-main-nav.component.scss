@@ -1,9 +1,10 @@
 @import "~nhsuk-frontend/packages/core/settings/globals";
 @import "~nhsuk-frontend/packages/core/settings/colours";
+@import "../../../../scss/material/variables";
 
 .mat-toolbar-row,
 .mat-toolbar-single-row {
-  @media screen and (max-width: 599px) {
+  @media screen and (max-width: $xsmall) {
     height: 72px;
   }
 }

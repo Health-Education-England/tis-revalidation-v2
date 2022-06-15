@@ -1,11 +1,11 @@
-@import "../../../node_modules/@angular/material/core/style/variables";
+@import "../../scss/material/variables";
 @import "../../../node_modules/nhsuk-frontend/packages/core/settings/colours";
 
 .records-top-section {
   grid-template-columns: minmax(0, 1fr) auto auto;
   background: $color_nhsuk-white;
 
-  @media screen and (max-width: 599px) {
+  @media screen and (max-width: $xsmall) {
     :first-child {
       grid-column-start: 1;
       grid-column-end: 4;

@@ -1,10 +1,10 @@
-@import "../../../../node_modules/@angular/material/core/style/variables";
+@import "../../../scss/material/variables";
 
 .concern-stepper {
   .mat-horizontal-content-container {
     padding: 0 20px 24px 20px;
 
-    @media screen and (max-width: 959px) {
+    @media screen and (max-width: $small) {
       padding: 0 0 24px 0;
     }
   }

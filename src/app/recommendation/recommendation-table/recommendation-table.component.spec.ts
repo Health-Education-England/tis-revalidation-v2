@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { MaterialModule } from "../../shared/material/material.module";
 
@@ -13,7 +13,7 @@ describe("RecommendationTableComponent", () => {
   let component: RecommendationTableComponent;
   let fixture: ComponentFixture<RecommendationTableComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [RecommendationTableComponent],
       imports: [

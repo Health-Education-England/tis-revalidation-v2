@@ -1,4 +1,4 @@
-import { TestBed, async, fakeAsync } from "@angular/core/testing";
+import { TestBed, fakeAsync, waitForAsync } from "@angular/core/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { IDetailsSideNav } from "../details-side-nav.interfaces";
 import { INote } from "../../notes-drawer/notes-drawer.interfaces";
@@ -19,7 +19,7 @@ describe("DetailsSideNav actions", () => {
   let store: Store;
   let httpMock: HttpTestingController;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,

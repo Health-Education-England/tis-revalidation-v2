@@ -1,4 +1,4 @@
-import { TestBed, async, fakeAsync } from "@angular/core/testing";
+import { TestBed, fakeAsync, waitForAsync } from "@angular/core/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { RecommendationHistoryState } from "./recommendation-history.state";
 import { Get as RecommendationHistoryAction } from "./recommendation-history.actions";
@@ -21,7 +21,7 @@ describe("RecommendationHistory actions", () => {
       handleError: undefined
     });
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         MaterialModule,

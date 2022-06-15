@@ -3,7 +3,7 @@ import {
   HttpTestingController,
   TestRequest
 } from "@angular/common/http/testing";
-import { TestBed, async, fakeAsync } from "@angular/core/testing";
+import { TestBed, fakeAsync, waitForAsync } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { environment } from "@environment";
 import { NgxsModule, Store } from "@ngxs/store";
@@ -32,7 +32,7 @@ describe("Connections state", () => {
   let httpMock: HttpTestingController;
   let connectionsService: ConnectionsService;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,

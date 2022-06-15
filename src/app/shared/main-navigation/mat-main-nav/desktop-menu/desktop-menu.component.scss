@@ -1,12 +1,12 @@
-@import "~@angular/material/core/style/variables";
 @import "~nhsuk-frontend/packages/core/settings/colours";
+@import "../../../../../scss/material/variables";
 
 // remove ng-deep if encapsulation is set to none
 ::ng-deep {
   .mat-menu-panel {
     &.mega-menu {
       max-width: 940.8px;
-      @media screen and (#{$mat-small}) {
+      @media screen and (max-width: $small) {
         max-width: 98%;
       }
 
@@ -17,7 +17,7 @@
 
       .mat-menu-item {
         flex: 0 1 20%;
-        @media screen and (#{$mat-small}) {
+        @media screen and (max-width: $small) {
           flex: 0 1 29%;
         }
       }

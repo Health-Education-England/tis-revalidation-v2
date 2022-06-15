@@ -1,5 +1,0 @@
-{
-  "baseUrl": "https://stage-revalidation.tis.nhs.uk/",
-  "chromeWebSecurity": false,
-  "defaultCommandTimeout": 15000
-}

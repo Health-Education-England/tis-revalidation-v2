@@ -1,5 +1,5 @@
 import { RecommendationResolver } from "./recommendation.resolver";
-import { TestBed, async } from "@angular/core/testing";
+import { TestBed, waitForAsync } from "@angular/core/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { RouterTestingModule } from "@angular/router/testing";
 import { Router } from "@angular/router";
@@ -18,7 +18,7 @@ describe("RecommendationResolver", () => {
   let router: Router;
   let store: Store;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         MaterialModule,

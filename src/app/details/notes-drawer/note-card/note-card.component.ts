@@ -15,7 +15,7 @@ import { EditNote } from "../../details-side-nav/state/details-side-nav.actions"
   templateUrl: "./note-card.component.html",
   styleUrls: ["./note-card.component.scss"]
 })
-export class NoteCardComponent implements OnInit {
+export class NoteCardComponent {
   @Input() note: INote;
   @Input() index: number;
   @Input() isAdmin: boolean;
@@ -60,6 +60,4 @@ export class NoteCardComponent implements OnInit {
     }
     this.note.edit = !this.note.edit;
   }
-
-  ngOnInit(): void {}
 }

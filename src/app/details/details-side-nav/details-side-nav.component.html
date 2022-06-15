@@ -26,7 +26,7 @@
       <div class="mat-caption" mat-line>Current grade:</div>
       <div mat-line>
         {{
-          traineeDetails.currentGrade == null
+          traineeDetails.currentGrade === null
             ? "N/A"
             : traineeDetails.currentGrade
         }}
@@ -34,7 +34,9 @@
     </mat-list-item>
     <mat-list-item *ngIf="traineeDetails.curriculumEndDate">
       <div class="mat-caption" mat-line>Curriculum end date:</div>
-      <div mat-line>{{ traineeDetails.curriculumEndDate | date: dateFormat }}</div>
+      <div mat-line>
+        {{ traineeDetails.curriculumEndDate | date: dateFormat }}
+      </div>
     </mat-list-item>
   </mat-list>
   <mat-divider></mat-divider>

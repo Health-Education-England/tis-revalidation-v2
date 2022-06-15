@@ -104,7 +104,7 @@ export class ConnectionComponent implements OnInit, OnDestroy {
     this.referenceService.getDbcs().subscribe((res) => (this.dbcs = res));
     this.updateConnectionsService.canSave$.next(true);
     this.programmeHistory$.subscribe(
-      (res) => (this.programmeOwnerDBC = res[0].designatedBodyCode)
+      (res) => (this.programmeOwnerDBC = res[0]?.designatedBodyCode)
     );
   }
 

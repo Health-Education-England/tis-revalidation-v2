@@ -10,13 +10,11 @@ import { RecommendationNotesComponent } from "src/app/recommendation/recommendat
   selector: "app-notes-tool-bar",
   templateUrl: "./notes-tool-bar.component.html"
 })
-export class NotesToolBarComponent implements OnInit {
+export class NotesToolBarComponent {
   @Select(RecommendationNotesState.recommendationNotes)
   recommendationNotes$: Observable<INote[]>;
 
   constructor(private bottomSheet: MatBottomSheet) {}
-
-  ngOnInit(): void {}
 
   openNotes(): void {
     this.bottomSheet.open(RecommendationNotesComponent);

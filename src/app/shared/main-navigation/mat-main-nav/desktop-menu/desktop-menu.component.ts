@@ -8,15 +8,13 @@ import { environment } from "@environment";
   templateUrl: "./desktop-menu.component.html",
   styleUrls: ["./desktop-menu.component.scss"]
 })
-export class DesktopMenuComponent implements OnInit {
+export class DesktopMenuComponent {
   menuItems$: IMenuItem[] = menuItems;
   hostURI: string = environment.adminsUIHostUri;
   activeItem = "Revalidation";
   env: string = environment.name;
 
   constructor() {}
-
-  ngOnInit(): void {}
 
   setActiveItem(selectedItem: string) {
     this.activeItem = selectedItem;

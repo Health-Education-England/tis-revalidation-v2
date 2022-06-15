@@ -1,3 +1,5 @@
+@import "../material/variables";
+
 // display
 .d-block {
   display: block;
@@ -143,7 +145,7 @@
   grid-template-columns: 1fr 1fr;
   grid-gap: 15px;
 
-  @media screen and (#{$mat-small}) {
+  @media screen and (max-width: $small) {
     grid-template-columns: auto;
   }
 }
@@ -153,7 +155,7 @@
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 15px;
 
-  @media screen and (#{$mat-small}) {
+  @media screen and (max-width: $small) {
     grid-template-columns: auto;
   }
 }
@@ -167,7 +169,7 @@
 .main-content {
   min-height: auto;
   min-height: calc(100vh - 64px);
-  @media screen and (#{$mat-small}) {
+  @media screen and (max-width: $small) {
     min-height: calc(100vh - 72px);
   }
 }

@@ -1,5 +1,5 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { RecommendationsState } from "../../recommendations/state/recommendations.state";
@@ -13,7 +13,7 @@ describe("AllocateAdminBtnComponent", () => {
   let fixture: ComponentFixture<AllocateAdminBtnComponent>;
   let recordsService: RecordsService;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [AllocateAdminBtnComponent],
       imports: [

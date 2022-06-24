@@ -180,5 +180,9 @@ jobs:
           CYPRESS_coverage: false
         with:
           browser: chrome
+          record: true
+        env:
+          # for recording results and videos to Cypress Dashborad
+          CYPRESS_RECORD_KEY: ${{secrets.CYPRESS_RECORD_KEY}}
 
       #TODO: Fix/finish reporting setup

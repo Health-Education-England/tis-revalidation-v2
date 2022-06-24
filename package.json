@@ -13,7 +13,8 @@
     "lint": "ng lint",
     "lint:styles": "stylelint \"src/**/*.scss\"",
     "cypress": "cypress run --browser chrome",
-    "cypress-open": "cypress open",
+    "cypress:local": "cypress run --browser chrome --config baseUrl=http://localhost:4200",
+    "cypress:open": "cypress open --config baseUrl=http://localhost:4200",
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
     "preinstall": "npx npm-force-resolutions"
   },

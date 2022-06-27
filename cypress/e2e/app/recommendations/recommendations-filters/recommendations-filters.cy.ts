@@ -1,5 +1,5 @@
 describe("Recommendations filters", () => {
-  before(() => {
+  beforeEach(() => {
     cy.login();
   });
 
@@ -10,7 +10,6 @@ describe("Recommendations filters", () => {
   });
 
   it("should contain under notice and all doctors buttons", () => {
-    cy.login();
     cy.get(buttons).should("have.length", 2);
     cy.get(buttons).eq(0).should("contain.text", "ALL DOCTORS");
     cy.get(buttons).eq(1).should("contain.text", "UNDER NOTICE");

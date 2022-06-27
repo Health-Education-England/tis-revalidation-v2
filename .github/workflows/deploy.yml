@@ -177,12 +177,10 @@ jobs:
           CYPRESS_password: ${{ secrets.E2E_TEST_PASS }}
           CYPRESS_username: ${{ secrets.E2E_TEST_USER }}
           CYPRESS_secret: ${{ secrets.E2E_TEST_SECRET }}
+          # for recording results and videos to Cypress Dashborad
+          CYPRESS_RECORD_KEY: ${{secrets.CYPRESS_RECORD_KEY}}
           CYPRESS_coverage: false
         with:
           browser: chrome
           record: true
-        env:
-          # for recording results and videos to Cypress Dashborad
-          CYPRESS_RECORD_KEY: ${{secrets.CYPRESS_RECORD_KEY}}
-
-      #TODO: Fix/finish reporting setup
+          #TODO: Fix/finish reporting setup

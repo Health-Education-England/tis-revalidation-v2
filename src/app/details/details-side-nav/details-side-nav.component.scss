@@ -8,9 +8,15 @@
   }
 }
 ::ng-deep {
-  .mat-list-base .mat-list-item .mat-list-text .mat-caption {
-    font-size: 14px;
-    color: tint($color_nhsuk-black, 46%);
-    color: rgba(0, 0, 0, 0.54);
+  .mat-list-base .mat-list-item {
+    &.mat-2-line {
+      height: 60px;
+    }
+
+    .mat-list-text .mat-caption {
+      font-size: 14px;
+      color: tint($color_nhsuk-black, 46%);
+      color: rgba(0, 0, 0, 0.54);
+    }
   }
 }

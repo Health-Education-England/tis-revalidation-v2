@@ -3,7 +3,8 @@ import {
   IRecommendationSummary,
   RecommendationGmcOutcome,
   RecommendationType,
-  RecommendationStatus
+  RecommendationStatus,
+  IRecommendationHistory
 } from "../recommendation-history.interface";
 import { environment } from "@environment";
 import {
@@ -46,9 +47,14 @@ export class RecommendationTableComponent {
   ];
   expandedElement: IRecommendationSummary | null;
   dateFormat = environment.dateFormat;
+
   recommendationGmcOutcome = RecommendationGmcOutcome;
   recommendationType = RecommendationType;
   recommendationStatus = RecommendationStatus;
+
+  @Select(RecommendationHistoryState.recommendationHistory)
+  recommendation$: Observable<IRecommendationHistory>;
+
   @Select(RecommendationHistoryState.recommendationSummary)
   recommendationHistory$: Observable<IRecommendationSummary[]>;
   @Select(RecommendationHistoryState.enableRecommendation)
@@ -56,12 +62,36 @@ export class RecommendationTableComponent {
   @Select(RecommendationHistoryState.editRecommendation)
   editRecommendation$: Observable<boolean>;
   enableRecommendation: boolean;
+  gmcSubmissionDate: Date;
+  submissionDueStatusStyle: string;
+
+  convertToDays(milisecs: number) {
+    return Math.round(milisecs / 1000 / 60 / 60 / 24);
+  }
 
   constructor(private authService: AuthService) {
     this.enableRecommendation$.subscribe(
       (value) =>
         (this.enableRecommendation = value && this.authService.isRevalAdmin)
     );
+
+    this.recommendation$.subscribe((recommendation: IRecommendationHistory) => {
+      // this.gmcSubmissionDate = recommendation.gmcSubmissionDate;
+      this.gmcSubmissionDate = new Date("2022-05-30");
+
+      const d = new Date(this.gmcSubmissionDate).getTime();
+
+      const t = new Date().getTime();
+      const diffInDays = this.convertToDays(t - d);
+      if (diffInDays > 0) {
+        this.submissionDueStatusStyle = "alert-danger";
+      } else if (diffInDays > -14 && diffInDays <= 0) {
+        this.submissionDueStatusStyle = "alert-warning";
+      } else {
+        this.submissionDueStatusStyle = "alert-success";
+      }
+      console.log((t - d) / 1000 / 60 / 60 / 24);
+    });
   }
 
   currentExpanded(element: any, event: Event) {

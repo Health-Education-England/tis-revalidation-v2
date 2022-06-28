@@ -27,6 +27,6 @@ const content = `
 fs.writeFile("supported.browsers.js", content, (err) => {
   if (err) {
     console.error(err);
-    //return;
+    return;
   }
 });

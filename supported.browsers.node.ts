@@ -10,7 +10,12 @@ const supportedRegEx = browserRegEx.getUserAgentRegExp({
   allowHigherVersions: true
 });
 const fs = require("fs");
-
+const path = require("path");
+let target = path.join(
+  __dirname,
+  "src/assets/browser-support/supported.browsers.js"
+);
+console.log(target);
 const content = `
 // This file is generated via a node script supported.browsers.node.ts triggered by npm start/build 
 (function() {
@@ -24,13 +29,9 @@ const content = `
 })();
 `;
 
-fs.writeFile(
-  "./src/assets/browser-support/supported.browsers.js",
-  content,
-  (err) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
+fs.writeFile(target, content, (err) => {
+  if (err) {
+    console.error(err);
+    return;
   }
-);
+});

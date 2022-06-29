@@ -49,7 +49,9 @@ Thumbs.db
 
 ### Additional Rules ###
 /cypress/videos/
-/supported.browsers.js
+supported.browsers.js
+
+
 
 ### Cypress login ###
 cypress.env.json

@@ -11,7 +11,9 @@ const supportedRegEx = browserRegEx.getUserAgentRegExp({
 });
 const fs = require("fs");
 
-const content = `(function() {
+const content = `
+// This file is generated via a node script supported.browsers.node.ts triggered by npm start/build 
+(function() {
   var sb = ${supportedRegEx};
   if (sb.test(navigator.userAgent) === false &&
   /Chrome-Lighthouse/.test(navigator.userAgent) === false) {

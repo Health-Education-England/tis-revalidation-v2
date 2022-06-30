@@ -1,4 +1,14 @@
 @import "../../../scss/utilities/spacing-helpers";
+@import "../../../scss/material/variables";
+
+:host {
+  display: block;
+  padding: 0 20px;
+
+  @media screen and (max-width: $small) {
+    padding: 0 0 24px 0;
+  }
+}
 
 @include mat-table-columns(
   (

@@ -18,13 +18,15 @@ import { ConfirmRecommendationComponent } from "./confirm-recommendation/confirm
 import { UnderNoticeGuard } from "./guards/under-notice.gaurd";
 import { NotSubmittedGuard } from "./guards/not-submitted.guard";
 import { AdminsModule } from "../admins/admins.module";
+import { SubmissionDateComponent } from './submission-date/submission-date.component';
 
 @NgModule({
   declarations: [
     RecommendationNotesComponent,
     RecommendationTableComponent,
     CreateRecommendationComponent,
-    ConfirmRecommendationComponent
+    ConfirmRecommendationComponent,
+    SubmissionDateComponent
   ],
   imports: [
     MaterialModule,

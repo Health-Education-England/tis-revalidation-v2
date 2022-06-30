@@ -1,3 +1,5 @@
+<app-submission-date></app-submission-date>
+
 <form
   class="records-form"
   [formGroup]="recommendationForm"
@@ -85,7 +87,8 @@
     >
       Save draft
     </button>
-    <button *ngIf="isRevalApprover"
+    <button
+      *ngIf="isRevalApprover"
       type="submit"
       mat-button
       mat-raised-button

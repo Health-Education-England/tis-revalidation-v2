@@ -1,6 +1,6 @@
 # Revalidation
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.4.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.11.
 
 ## Pre requisite
 
@@ -9,13 +9,6 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## Development server
 
 - Run `npm run start` for a dev server which will consume staging hosted BE endpoints. Navigate to `http://localhost:4200/`.
-
-#### Alternatively
-
-- Run `npm run start:mocky` for a dev server which will consume mocked BE endpoints that are hosted on `https://designer.mocky.io/`.
-  This allows rapid FE development without relying on the real BE endpoints or whilst a BE endpoint is being updated. Navigate to `http://localhost:4200/`.
-
-The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 

@@ -60,6 +60,12 @@ export enum RecommendationType {
   NON_ENGAGEMENT = "Non Engagement"
 }
 
+export enum RecommendationDueDateStatus {
+  PAST = "past",
+  WARNING = "warning",
+  FUTURE = "future"
+}
+
 export interface DeferralReason {
   code: number;
   reason: string;

@@ -46,9 +46,11 @@ export class RecommendationTableComponent {
   ];
   expandedElement: IRecommendationSummary | null;
   dateFormat = environment.dateFormat;
+
   recommendationGmcOutcome = RecommendationGmcOutcome;
   recommendationType = RecommendationType;
   recommendationStatus = RecommendationStatus;
+
   @Select(RecommendationHistoryState.recommendationSummary)
   recommendationHistory$: Observable<IRecommendationSummary[]>;
   @Select(RecommendationHistoryState.enableRecommendation)
@@ -56,6 +58,8 @@ export class RecommendationTableComponent {
   @Select(RecommendationHistoryState.editRecommendation)
   editRecommendation$: Observable<boolean>;
   enableRecommendation: boolean;
+  gmcSubmissionDate: Date;
+  submissionDueStatusStyle: string;
 
   constructor(private authService: AuthService) {
     this.enableRecommendation$.subscribe(

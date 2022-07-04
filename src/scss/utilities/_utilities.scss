@@ -1,5 +1,11 @@
 @import "~nhsuk-frontend/packages/core/settings/colours";
 // re-usable styles and mixins
+
+h2 {
+  font-size: 12px;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
 .no-decoration-link {
   text-decoration: none;
   color: inherit;
@@ -131,4 +137,23 @@ $colour-values: (
   left: 0;
   right: 0;
   z-index: 999;
+}
+
+.alert-warning {
+  color: #856404;
+  background-color: #fff3cd;
+  border-color: #ffeeba;
+}
+
+.alert-danger,
+.alert-past {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+.alert-success,
+.alert-future {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
 }

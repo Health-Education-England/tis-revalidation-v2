@@ -12,7 +12,6 @@ import { By } from "@angular/platform-browser";
 describe("SubmissionDateComponent", () => {
   let component: SubmissionDateComponent;
   let fixture: ComponentFixture<SubmissionDateComponent>;
-  let utilsService: UtilitiesService;
   let store: Store;
   const mockRecommendation: IRecommendationHistory = {
     gmcNumber: 999999,
@@ -44,7 +43,6 @@ describe("SubmissionDateComponent", () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SubmissionDateComponent);
     component = fixture.componentInstance;
-    utilsService = TestBed.inject(UtilitiesService);
     store.reset({
       recommendationHistory: { item: mockRecommendation }
     });

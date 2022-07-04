@@ -24,5 +24,4 @@ export class UtilitiesService {
       return RecommendationDueDateStatus.FUTURE;
     }
   }
-  constructor() {}
 }

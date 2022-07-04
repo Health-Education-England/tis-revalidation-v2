@@ -1,6 +1,6 @@
 <mat-card
+  *ngIf="gmcSubmissionDate"
   class="mb-30"
-  *ngIf="recommendation$ | async as recommendation"
   [ngClass]="submissionDueStatusStyle"
 >
   <mat-card-title>GMC submission due date</mat-card-title>

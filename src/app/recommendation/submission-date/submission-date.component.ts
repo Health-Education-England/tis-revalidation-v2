@@ -15,13 +15,15 @@ export class SubmissionDateComponent implements OnInit {
   recommendation$: Observable<IRecommendationHistory>;
 
   gmcSubmissionDate: Date;
-  submissionDueStatusStyle: string;
+  submissionDueStatusStyle: string = "";
 
   ngOnInit(): void {
     this.recommendation$.subscribe((recommendation: IRecommendationHistory) => {
       this.gmcSubmissionDate = recommendation.gmcSubmissionDate;
-      this.submissionDueStatusStyle =
-        "alert-" + this.utilsService.getDueDateStatus(this.gmcSubmissionDate);
+      if (this.gmcSubmissionDate) {
+        this.submissionDueStatusStyle =
+          "alert-" + this.utilsService.getDueDateStatus(this.gmcSubmissionDate);
+      }
     });
   }
 }

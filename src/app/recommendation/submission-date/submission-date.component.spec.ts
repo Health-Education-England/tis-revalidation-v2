@@ -97,4 +97,18 @@ describe("SubmissionDateComponent", () => {
     ).nativeElement;
     expect(element.classList).toContain("alert-warning");
   });
+
+  it("should not display submission due date when data set to null", () => {
+    store.reset({
+      recommendationHistory: {
+        item: {
+          ...mockRecommendation,
+          gmcSubmissionDate: null
+        }
+      }
+    });
+    fixture.detectChanges();
+
+    expect(fixture.debugElement.query(By.css("mat-card"))).toBeFalsy();
+  });
 });

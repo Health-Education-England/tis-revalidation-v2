@@ -23,7 +23,7 @@ describe("ConnectionsService", () => {
       active: sortColumn,
       direction: sortDirection
     },
-    filter: ConnectionsFilterType.DISCONNECTED,
+    filter: ConnectionsFilterType.HISTORIC_CONNECTIONS,
     dbcs: userLocalOffice
   };
 
@@ -68,6 +68,6 @@ describe("ConnectionsService", () => {
     const filter = connectionsService.getFilter();
 
     expect(connectionsService.getFilter).toHaveBeenCalled();
-    expect(filter).toBe(ConnectionsFilterType.DISCONNECTED);
+    expect(filter).toBe(ConnectionsFilterType.HISTORIC_CONNECTIONS);
   });
 });

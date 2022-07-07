@@ -64,7 +64,6 @@ export class ConnectionsState extends RecordsState {
 
     switch (this.connectionsService.getFilter()) {
       case ConnectionsFilterType.DISCREPENCIES:
-        //TODO: This endpoint will need renaming in API gateway and then updated here
         endPoint = `${endPoint}/exception`;
         break;
 
@@ -73,12 +72,10 @@ export class ConnectionsState extends RecordsState {
         break;
 
       case ConnectionsFilterType.CURRENT_CONNECTIONS:
-        //TODO: This endpoint will need renaming in API gateway and then updated here
         endPoint = `${endPoint}/connected`;
         break;
 
       case ConnectionsFilterType.HISTORIC_CONNECTIONS:
-        //TODO: This endpoint will need renaming in API gateway and then updated here
         endPoint = `${endPoint}/disconnected`;
         break;
     }

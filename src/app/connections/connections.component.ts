@@ -59,7 +59,7 @@ export class ConnectionsComponent implements OnDestroy {
             (c) => c.action !== ActionType.HIDE_CONNECTION
           );
           break;
-        case ConnectionsFilterType.DISCONNECTED:
+        case ConnectionsFilterType.HISTORIC_CONNECTIONS:
           actions = actions.filter(
             (c) => c.action !== ActionType.REMOVE_CONNECTION
           );

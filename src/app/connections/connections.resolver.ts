@@ -12,7 +12,8 @@ import { COLUMN_DATA } from "./constants";
 @Injectable()
 export class ConnectionsResolver
   extends RecordsResolver
-  implements Resolve<any> {
+  implements Resolve<any>
+{
   constructor(
     protected store: Store,
     protected recordsService: RecordsService,
@@ -34,16 +35,16 @@ export class ConnectionsResolver
     this.recordsService.columnData = generateColumnData(COLUMN_DATA);
     this.recordsService.filters = [
       {
-        label: "CONNECTED",
-        name: ConnectionsFilterType.CONNECTED
+        label: "CURRENT CONNECTIONS",
+        name: ConnectionsFilterType.CURRENT_CONNECTIONS
       },
       {
-        label: "DISCONNECTED",
-        name: ConnectionsFilterType.DISCONNECTED
+        label: "HISTORIC CONNECTIONS",
+        name: ConnectionsFilterType.HISTORIC_CONNECTIONS
       },
       {
-        label: "EXCEPTIONS QUEUE",
-        name: ConnectionsFilterType.EXCEPTIONS_QUEUE
+        label: "DISCREPENCIES",
+        name: ConnectionsFilterType.DISCREPENCIES
       },
       {
         label: "ALL",

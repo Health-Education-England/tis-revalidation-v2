@@ -16,11 +16,11 @@ export class AppComponent implements OnInit {
         map(() => {
           let route: ActivatedRoute = this.router.routerState.root;
           let routeTitle = "";
-          while (route!.firstChild) {
+          while (route.firstChild) {
             route = route.firstChild;
           }
           if (route.snapshot.data["title"]) {
-            routeTitle = route!.snapshot.data["title"];
+            routeTitle = route.snapshot.data["title"];
           }
           return routeTitle;
         })

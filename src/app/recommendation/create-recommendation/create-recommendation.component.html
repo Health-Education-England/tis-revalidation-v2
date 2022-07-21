@@ -81,7 +81,6 @@
       mat-button
       type="button"
       mat-raised-button
-      [disabled]="recommendationForm ? !recommendationForm.valid : true"
       (click)="saveDraft(false)"
       color="accent"
     >
@@ -92,7 +91,6 @@
       type="submit"
       mat-button
       mat-raised-button
-      [disabled]="recommendationForm ? !recommendationForm.valid : true"
       color="primary"
     >
       Make recommendation

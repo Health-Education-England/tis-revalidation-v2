@@ -126,6 +126,7 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
    * @param procced if procced to confirmation is set to true
    */
   saveDraft(procced: boolean): void {
+    this.recommendationForm.markAllAsTouched();
     if (this.recommendationForm.valid) {
       const formValue = this.recommendationForm.value;
       this.recommendation.admin = this.auth.userName;

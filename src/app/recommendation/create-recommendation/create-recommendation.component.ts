@@ -22,6 +22,7 @@ import {
   DEFERRAL_MAX_DAYS,
   DEFERRAL_MIN_DAYS
 } from "src/app/recommendations/constants";
+import { MatSelectChange } from "@angular/material/select";
 
 @Component({
   selector: "app-create-recommendation",
@@ -58,6 +59,10 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
   deferSelected: boolean;
 
   isRevalApprover: boolean;
+  isDeferrable: boolean = true;
+  deferralFrom: Date;
+  deferralWindow: number = 120;
+  today: string;
 
   constructor(
     private store: Store,
@@ -114,6 +119,22 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
         .subscribe()
     );
     this.setGmcNumber();
+    this.setIsDeferrable();
+  }
+
+  setIsDeferrable() {
+    const today = new Date();
+    const fourMonths = new Date();
+    fourMonths.setDate(fourMonths.getDate() + this.deferralWindow);
+    if (this.gmcSubmissionDate.getTime() > fourMonths.getTime()) {
+      this.isDeferrable = false;
+      this.deferralFrom = new Date(this.gmcSubmissionDate);
+      this.deferralFrom.setDate(
+        this.deferralFrom.getDate() - this.deferralWindow
+      );
+    } else {
+      this.isDeferrable = true;
+    }
   }
 
   resetForm(): void {
@@ -127,51 +148,51 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
    */
   saveDraft(procced: boolean): void {
     this.recommendationForm.markAllAsTouched();
-    if (this.recommendationForm.valid) {
-      const formValue = this.recommendationForm.value;
-      this.recommendation.admin = this.auth.userName;
-      this.recommendation.recommendationType = formValue.action;
-      this.recommendation.comments = this.appComments.comments.value
-        .filter((comments: { comment: string; checkbox: boolean }) => {
-          return !!comments.comment.trim();
-        })
-        .map((comments: { comment: string; checkbox: boolean }) => {
-          return comments.comment;
-        });
+    //if (this.recommendationForm.valid) {
+    const formValue = this.recommendationForm.value;
+    this.recommendation.admin = this.auth.userName;
+    this.recommendation.recommendationType = formValue.action;
+    this.recommendation.comments = this.appComments.comments.value
+      .filter((comments: { comment: string; checkbox: boolean }) => {
+        return !!comments.comment.trim();
+      })
+      .map((comments: { comment: string; checkbox: boolean }) => {
+        return comments.comment;
+      });
 
-      // Need to add one hour to negotiate BST
-      const deferralDate = new Date(formValue.deferralDate);
-      deferralDate.setHours(1);
-      this.recommendation.deferralDate = deferralDate;
-      this.recommendation.deferralReason = formValue.deferralReason;
-      this.recommendation.deferralSubReason = formValue.deferralSubReason;
-      this.recommendation.gmcNumber = this.gmcNumber;
+    // Need to add one hour to negotiate BST
+    const deferralDate = new Date(formValue.deferralDate);
+    deferralDate.setHours(1);
+    this.recommendation.deferralDate = deferralDate;
+    this.recommendation.deferralReason = formValue.deferralReason;
+    this.recommendation.deferralSubReason = formValue.deferralSubReason;
+    this.recommendation.gmcNumber = this.gmcNumber;
 
-      const redirectUrl = procced ? "../confirm" : "../";
+    const redirectUrl = procced ? "../confirm" : "../";
 
-      this.componentSubscriptions.push(
-        this.recommendationHistoryService
-          .saveRecommendation(this.recommendation)
-          .pipe(
-            tap(
-              (res) => {
-                if (!procced) {
-                  this.successResponse(res);
-                }
-              },
-              (error) => this.errorFnc(error)
-            ),
-            catchError(this.errorFnc)
-          )
-          .subscribe(() => {
-            this.store.dispatch(new Get(this.gmcNumber)).subscribe(() => {
-              this.router.navigate([redirectUrl], {
-                relativeTo: this.activatedRoute
-              });
+    this.componentSubscriptions.push(
+      this.recommendationHistoryService
+        .saveRecommendation(this.recommendation)
+        .pipe(
+          tap(
+            (res) => {
+              if (!procced) {
+                this.successResponse(res);
+              }
+            },
+            (error) => this.errorFnc(error)
+          ),
+          catchError(this.errorFnc)
+        )
+        .subscribe(() => {
+          this.store.dispatch(new Get(this.gmcNumber)).subscribe(() => {
+            this.router.navigate([redirectUrl], {
+              relativeTo: this.activatedRoute
             });
-          })
-      );
-    }
+          });
+        })
+    );
+    //}
   }
 
   getDeferralDateErrorMessage(): string {

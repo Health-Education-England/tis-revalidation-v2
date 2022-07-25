@@ -61,8 +61,7 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
   isRevalApprover: boolean;
   isDeferrable: boolean = true;
   deferralFrom: Date;
-  deferralWindow: number = 120;
-  today: string;
+  deferralPeriod: number = 120;
 
   constructor(
     private store: Store,
@@ -123,17 +122,14 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
   }
 
   setIsDeferrable() {
-    const today = new Date();
     const fourMonths = new Date();
-    fourMonths.setDate(fourMonths.getDate() + this.deferralWindow);
+    fourMonths.setDate(fourMonths.getDate() + this.deferralPeriod);
     if (this.gmcSubmissionDate.getTime() > fourMonths.getTime()) {
       this.isDeferrable = false;
       this.deferralFrom = new Date(this.gmcSubmissionDate);
       this.deferralFrom.setDate(
-        this.deferralFrom.getDate() - this.deferralWindow
+        this.deferralFrom.getDate() - this.deferralPeriod
       );
-    } else {
-      this.isDeferrable = true;
     }
   }
 
@@ -148,51 +144,51 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
    */
   saveDraft(procced: boolean): void {
     this.recommendationForm.markAllAsTouched();
-    //if (this.recommendationForm.valid) {
-    const formValue = this.recommendationForm.value;
-    this.recommendation.admin = this.auth.userName;
-    this.recommendation.recommendationType = formValue.action;
-    this.recommendation.comments = this.appComments.comments.value
-      .filter((comments: { comment: string; checkbox: boolean }) => {
-        return !!comments.comment.trim();
-      })
-      .map((comments: { comment: string; checkbox: boolean }) => {
-        return comments.comment;
-      });
-
-    // Need to add one hour to negotiate BST
-    const deferralDate = new Date(formValue.deferralDate);
-    deferralDate.setHours(1);
-    this.recommendation.deferralDate = deferralDate;
-    this.recommendation.deferralReason = formValue.deferralReason;
-    this.recommendation.deferralSubReason = formValue.deferralSubReason;
-    this.recommendation.gmcNumber = this.gmcNumber;
-
-    const redirectUrl = procced ? "../confirm" : "../";
-
-    this.componentSubscriptions.push(
-      this.recommendationHistoryService
-        .saveRecommendation(this.recommendation)
-        .pipe(
-          tap(
-            (res) => {
-              if (!procced) {
-                this.successResponse(res);
-              }
-            },
-            (error) => this.errorFnc(error)
-          ),
-          catchError(this.errorFnc)
-        )
-        .subscribe(() => {
-          this.store.dispatch(new Get(this.gmcNumber)).subscribe(() => {
-            this.router.navigate([redirectUrl], {
-              relativeTo: this.activatedRoute
-            });
-          });
+    if (this.recommendationForm.valid) {
+      const formValue = this.recommendationForm.value;
+      this.recommendation.admin = this.auth.userName;
+      this.recommendation.recommendationType = formValue.action;
+      this.recommendation.comments = this.appComments.comments.value
+        .filter((comments: { comment: string; checkbox: boolean }) => {
+          return !!comments.comment.trim();
         })
-    );
-    //}
+        .map((comments: { comment: string; checkbox: boolean }) => {
+          return comments.comment;
+        });
+
+      // Need to add one hour to negotiate BST
+      const deferralDate = new Date(formValue.deferralDate);
+      deferralDate.setHours(1);
+      this.recommendation.deferralDate = deferralDate;
+      this.recommendation.deferralReason = formValue.deferralReason;
+      this.recommendation.deferralSubReason = formValue.deferralSubReason;
+      this.recommendation.gmcNumber = this.gmcNumber;
+
+      const redirectUrl = procced ? "../confirm" : "../";
+
+      this.componentSubscriptions.push(
+        this.recommendationHistoryService
+          .saveRecommendation(this.recommendation)
+          .pipe(
+            tap(
+              (res) => {
+                if (!procced) {
+                  this.successResponse(res);
+                }
+              },
+              (error) => this.errorFnc(error)
+            ),
+            catchError(this.errorFnc)
+          )
+          .subscribe(() => {
+            this.store.dispatch(new Get(this.gmcNumber)).subscribe(() => {
+              this.router.navigate([redirectUrl], {
+                relativeTo: this.activatedRoute
+              });
+            });
+          })
+      );
+    }
   }
 
   getDeferralDateErrorMessage(): string {

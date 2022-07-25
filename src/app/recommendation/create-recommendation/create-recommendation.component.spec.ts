@@ -14,7 +14,7 @@ import { DetailsModule } from "../../details/details.module";
 import { By } from "@angular/platform-browser";
 import { IRecommendationHistory } from "../recommendation-history.interface";
 
-fdescribe("CreateRecommendationComponent", () => {
+describe("CreateRecommendationComponent", () => {
   let component: CreateRecommendationComponent;
   let fixture: ComponentFixture<CreateRecommendationComponent>;
   let store: Store;

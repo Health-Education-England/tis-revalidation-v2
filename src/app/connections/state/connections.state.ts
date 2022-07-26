@@ -63,7 +63,7 @@ export class ConnectionsState extends RecordsState {
     let endPoint = `${environment.appUrls.getConnections}`;
 
     switch (this.connectionsService.getFilter()) {
-      case ConnectionsFilterType.DISCREPENCIES:
+      case ConnectionsFilterType.DISCREPANCIES:
         endPoint = `${endPoint}/exception`;
         break;
 
@@ -159,7 +159,7 @@ export class ConnectionsState extends RecordsState {
         action.filter !== ConnectionsFilterType.HIDDEN &&
         action.filter !== ConnectionsFilterType.CURRENT_CONNECTIONS &&
         action.filter !== ConnectionsFilterType.HISTORIC_CONNECTIONS &&
-        action.filter !== ConnectionsFilterType.DISCREPENCIES
+        action.filter !== ConnectionsFilterType.DISCREPANCIES
     });
   }
 

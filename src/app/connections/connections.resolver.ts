@@ -43,8 +43,8 @@ export class ConnectionsResolver
         name: ConnectionsFilterType.HISTORIC_CONNECTIONS
       },
       {
-        label: "DISCREPENCIES",
-        name: ConnectionsFilterType.DISCREPENCIES
+        label: "DISCREPANCIES",
+        name: ConnectionsFilterType.DISCREPANCIES
       },
       {
         label: "ALL",

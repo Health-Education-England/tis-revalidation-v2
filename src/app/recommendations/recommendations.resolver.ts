@@ -9,11 +9,12 @@ import { COLUMN_DATA } from "./constants";
 import { RecommendationsFilterType } from "./recommendations.interfaces";
 import { AuthService } from "../core/auth/auth.service";
 import { UpdateConnectionsService } from "../update-connections/services/update-connections.service";
-
+import { stateName } from "../records/records.interfaces";
 @Injectable()
 export class RecommendationsResolver
   extends RecordsResolver
-  implements Resolve<any> {
+  implements Resolve<any>
+{
   constructor(
     protected store: Store,
     protected recordsService: RecordsService,
@@ -25,7 +26,7 @@ export class RecommendationsResolver
   }
 
   private initialiseData(): void {
-    this.recordsService.stateName = "recommendations";
+    this.recordsService.stateName = stateName.RECOMMENDATIONS;
     this.recordsService.detailsRoute = "/recommendation";
     this.recordsService.setRecommendationsActions();
     this.recordsService.dateColumns = [

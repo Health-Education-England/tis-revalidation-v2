@@ -5,29 +5,30 @@
       matTooltipPosition="below"
       matTooltipShowDelay="500"
       mat-icon-button
-      [matTooltip]="fixedColumns ? 'Unlock column width' : 'Lock column width'"
+      [matTooltip]="fixedColumns ? 'Fit columns to screen' : 'Expand columns'"
       aria-label="Toggle table column width setting"
       (click)="toggleFixedColumns()"
     >
       <ng-container *ngIf="fixedColumns">
         <mat-icon class="material-icons-outlined layered-icon base-icon"
-          >table_chart</mat-icon
+          >width_normal</mat-icon
         >
+
         <mat-icon class="layered-icon overlay-bg-icon">circle</mat-icon>
-        <mat-icon class="layered-icon overlay-icon">lock_open</mat-icon>
+        <mat-icon class="layered-icon overlay-icon">close_fullscreen </mat-icon>
       </ng-container>
 
       <ng-container *ngIf="!fixedColumns">
         <mat-icon class="material-icons-outlined layered-icon base-icon"
-          >table_chart</mat-icon
+          >width_wide</mat-icon
         >
         <mat-icon class="layered-icon overlay-bg-icon">circle</mat-icon>
-        <mat-icon class="layered-icon overlay-icon">lock</mat-icon>
+        <mat-icon class="layered-icon overlay-icon">open_in_full</mat-icon>
       </ng-container>
     </button>
 
     <button
-      *ngIf="!isConnectionsSummary"
+      *ngIf="isConnectionsSummary"
       color="primary"
       [matTooltip]="
         filterPanelOpen ? 'Close filter panel' : 'Open filter panel'

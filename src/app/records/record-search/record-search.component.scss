@@ -13,16 +13,16 @@
     transform: translate(-50%, -50%);
   }
   &.overlay-bg-icon {
-    bottom: 0;
+    bottom: 2px;
     right: 0;
     transform: none;
     font-size: 20px;
     color: #005eb8;
   }
   &.overlay-icon {
-    bottom: 0;
+    bottom: 2px;
     right: 0;
-    transform: none;
+    transform: rotate(45deg);
     font-size: 11px;
     color: #fff;
   }

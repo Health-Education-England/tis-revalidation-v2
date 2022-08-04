@@ -5,6 +5,18 @@
   [formGroup]="recommendationForm"
   (ngSubmit)="saveDraft(true)"
 >
+  <mat-card
+    *ngIf="!isDeferrable"
+    class="mat-card mat-focus-indicator mb-30 alert-warning ng-star-inserted deferral-blocked-message"
+  >
+    <mat-card-title>
+      Unable to defer recommendation for this doctor as GMC submission due date
+      is greater than 120 days in the future.
+    </mat-card-title>
+    <mat-card-content class="mat-card-content">
+      Deferral permitted from {{ deferralFrom | date: "fullDate" }}
+    </mat-card-content></mat-card
+  >
   <div class="d-grid grid-container-2-col">
     <mat-form-field>
       <mat-label>Make a recommendation</mat-label>
@@ -12,6 +24,10 @@
         <mat-option
           *ngFor="let revalType of recommendationType | keyvalue"
           [value]="revalType.key"
+          [disabled]="
+            !isDeferrable &&
+            recommendationType[revalType.key] === recommendationType.DEFER
+          "
         >
           {{ revalType.value }}
         </mat-option>
@@ -81,7 +97,6 @@
       mat-button
       type="button"
       mat-raised-button
-      [disabled]="recommendationForm ? !recommendationForm.valid : true"
       (click)="saveDraft(false)"
       color="accent"
     >
@@ -92,7 +107,6 @@
       type="submit"
       mat-button
       mat-raised-button
-      [disabled]="recommendationForm ? !recommendationForm.valid : true"
       color="primary"
     >
       Make recommendation

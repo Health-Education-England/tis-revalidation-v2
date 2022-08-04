@@ -20,7 +20,8 @@ import { CommentsComponent } from "src/app/details/comments/comments.component";
 import { RecommendationHistoryService } from "../services/recommendation-history.service";
 import {
   DEFERRAL_MAX_DAYS,
-  DEFERRAL_MIN_DAYS
+  DEFERRAL_MIN_DAYS,
+  DEFERRAL_PERMITTED_MAX_DAYS
 } from "src/app/recommendations/constants";
 
 @Component({
@@ -58,6 +59,8 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
   deferSelected: boolean;
 
   isRevalApprover: boolean;
+  isDeferrable: boolean = true;
+  deferralFrom: Date;
 
   constructor(
     private store: Store,
@@ -114,6 +117,19 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
         .subscribe()
     );
     this.setGmcNumber();
+    this.setIsDeferrable();
+  }
+
+  setIsDeferrable() {
+    const fourMonths = new Date();
+    fourMonths.setDate(fourMonths.getDate() + DEFERRAL_PERMITTED_MAX_DAYS);
+    if (this.gmcSubmissionDate.getTime() > fourMonths.getTime()) {
+      this.isDeferrable = false;
+      this.deferralFrom = new Date(this.gmcSubmissionDate);
+      this.deferralFrom.setDate(
+        this.deferralFrom.getDate() - DEFERRAL_PERMITTED_MAX_DAYS
+      );
+    }
   }
 
   resetForm(): void {
@@ -126,6 +142,7 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
    * @param procced if procced to confirmation is set to true
    */
   saveDraft(procced: boolean): void {
+    this.recommendationForm.markAllAsTouched();
     if (this.recommendationForm.valid) {
       const formValue = this.recommendationForm.value;
       this.recommendation.admin = this.auth.userName;

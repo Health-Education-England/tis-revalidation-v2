@@ -20,7 +20,8 @@ import { CommentsComponent } from "src/app/details/comments/comments.component";
 import { RecommendationHistoryService } from "../services/recommendation-history.service";
 import {
   DEFERRAL_MAX_DAYS,
-  DEFERRAL_MIN_DAYS
+  DEFERRAL_MIN_DAYS,
+  DEFERRAL_PERMITTED_MAX_DAYS
 } from "src/app/recommendations/constants";
 import { MatSelectChange } from "@angular/material/select";
 
@@ -61,7 +62,6 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
   isRevalApprover: boolean;
   isDeferrable: boolean = true;
   deferralFrom: Date;
-  deferralPeriod: number = 120;
 
   constructor(
     private store: Store,
@@ -123,12 +123,12 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
 
   setIsDeferrable() {
     const fourMonths = new Date();
-    fourMonths.setDate(fourMonths.getDate() + this.deferralPeriod);
+    fourMonths.setDate(fourMonths.getDate() + DEFERRAL_PERMITTED_MAX_DAYS);
     if (this.gmcSubmissionDate.getTime() > fourMonths.getTime()) {
       this.isDeferrable = false;
       this.deferralFrom = new Date(this.gmcSubmissionDate);
       this.deferralFrom.setDate(
-        this.deferralFrom.getDate() - this.deferralPeriod
+        this.deferralFrom.getDate() - DEFERRAL_PERMITTED_MAX_DAYS
       );
     }
   }

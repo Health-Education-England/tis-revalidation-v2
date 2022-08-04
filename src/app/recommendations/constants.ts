@@ -18,3 +18,4 @@ export const RECOMMENDATION_SORT: Sort = {
 
 export const DEFERRAL_MIN_DAYS = 120;
 export const DEFERRAL_MAX_DAYS = 365;
+export const DEFERRAL_PERMITTED_MAX_DAYS = 120;

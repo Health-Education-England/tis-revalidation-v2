@@ -23,7 +23,6 @@ import {
   DEFERRAL_MIN_DAYS,
   DEFERRAL_PERMITTED_MAX_DAYS
 } from "src/app/recommendations/constants";
-import { MatSelectChange } from "@angular/material/select";
 
 @Component({
   selector: "app-create-recommendation",

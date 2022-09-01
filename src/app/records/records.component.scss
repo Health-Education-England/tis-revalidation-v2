@@ -4,6 +4,7 @@
 .records-top-section {
   grid-template-columns: minmax(0, 1fr) auto auto;
   background: $color_nhsuk-white;
+  border-bottom: 1px solid #ddd;
 
   @media screen and (max-width: $xsmall) {
     :first-child {

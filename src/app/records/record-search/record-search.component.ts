@@ -36,11 +36,13 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
   );
 
   public searchLabel: string;
+  public searchQuery: string;
   public isRevalAdmin: boolean;
   public isConnectionsSummary: boolean;
   public form: FormGroup;
   public subscriptions: Subscription = new Subscription();
   filterPanelOpen: boolean = false;
+  showClearSearchForm: boolean = false;
   fixedColumns: boolean;
   @ViewChild("ngForm") public ngForm;
 
@@ -74,6 +76,13 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
         this.fixedColumns = isFixedColumns;
       })
     );
+
+    this.subscriptions.add(
+      this.searchQuery$.subscribe((searchQuery) => {
+        this.searchQuery = searchQuery;
+        this.toggleResetFormButton();
+      })
+    );
   }
   public toggleFixedColumns() {
     this.store.dispatch(new ToggleFixedColumns(!this.fixedColumns));
@@ -81,10 +90,22 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
   public setupForm(): void {
     this.form = this.formBuilder.group(
       {
-        searchQuery: [null, [Validators.required]]
+        searchQuery: [null]
       },
-      { updateOn: "submit" }
+      { updateOn: "change" }
     );
+
+    this.form.get("searchQuery").valueChanges.subscribe((val) => {
+      this.toggleResetFormButton(val);
+    });
+  }
+
+  toggleResetFormButton(inputValue: string = "") {
+    if (inputValue || this.searchQuery) {
+      this.showClearSearchForm = true;
+    } else {
+      this.showClearSearchForm = false;
+    }
   }
 
   /**
@@ -99,7 +120,9 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.recordsService.resetSearchForm$
         .pipe(filter(Boolean))
-        .subscribe(() => this.ngForm.resetForm())
+        .subscribe(() => {
+          this.ngForm?.resetForm();
+        })
     );
   }
 

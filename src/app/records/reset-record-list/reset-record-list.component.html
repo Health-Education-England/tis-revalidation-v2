@@ -1,6 +1,7 @@
 <button
+  type="button"
   color="primary"
-  matTooltip="Clear all"
+  matTooltip="Clear search and results"
   matTooltipPosition="below"
   matTooltipShowDelay="500"
   mat-icon-button
@@ -9,8 +10,10 @@
     enableUpdateConnections: enableUpdateConnections$ | async
   } as data"
   (click)="resetRecordList()"
-  aria-label="Clear all"
+  aria-label="Clear search and results"
   [disabled]="data.nableAllocateAdmin || data.enableUpdateConnections"
 >
-  <mat-icon>restart_alt</mat-icon>
+  <mat-icon class="material-icons-outlined layered-icon base-icon"
+    >close</mat-icon
+  >
 </button>

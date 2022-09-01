@@ -3,6 +3,12 @@
   ::ng-deep .mat-form-field-infix {
     width: auto;
   }
+  ::ng-deep .mat-form-field-wrapper {
+    padding: 10px 0 !important;
+  }
+  ::ng-deep .mat-form-field {
+    font-size: 14px;
+  }
 }
 
 .layered-icon {

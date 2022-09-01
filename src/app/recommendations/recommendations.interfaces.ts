@@ -29,6 +29,11 @@ export interface IGetRecommendationsResponse extends IGetRecordsResponse {
   recommendationInfo: IRecommendation[];
 }
 
+export interface IRecommendationsTableFilters {
+  programmeName: string;
+  gmcStatus: string;
+}
+
 export enum RecommendationsFilterType {
   UNDER_NOTICE = "underNotice",
   ALL_DOCTORS = "allDoctors"

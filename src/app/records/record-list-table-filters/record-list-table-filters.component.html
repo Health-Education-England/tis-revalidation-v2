@@ -6,5 +6,8 @@
       nobis. Facilis nostrum fugiat nobis ullam quam soluta expedita est nam ut
       officiis, dolor sequi consectetur ab? Ipsa, deleniti et.
     </p>
+    <button (click)="onFilter()">Show</button>
+    <button (click)="clearFilters()">Clear</button>
+    {{ filters | json }}
   </div>
 </div>

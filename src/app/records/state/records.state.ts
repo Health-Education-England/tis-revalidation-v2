@@ -4,9 +4,10 @@ import { createSelector, StateContext } from "@ngxs/store";
 import { patch, updateItem } from "@ngxs/store/operators";
 import { DEFAULT_SORT } from "../constants";
 import { ITotalCounts } from "../records.interfaces";
+import { ITableFilters } from "../records.interfaces";
 import { RecordsService } from "../services/records.service";
 
-export class RecordsStateModel<T, F> {
+export class RecordsStateModel<T, F, T2 = {}> {
   public allChecked: boolean;
   public enableAllocateAdmin?: boolean;
   public error?: string;
@@ -20,6 +21,7 @@ export class RecordsStateModel<T, F> {
   public totalPages: number;
   public totalResults: number;
   public totalCounts: ITotalCounts;
+  public tableFilters: T2;
 }
 
 export const defaultRecordsState = {
@@ -32,7 +34,8 @@ export const defaultRecordsState = {
   sort: DEFAULT_SORT,
   totalPages: null,
   totalResults: null,
-  totalCounts: null
+  totalCounts: null,
+  tableFilters: null
 };
 
 export class RecordsState {
@@ -101,6 +104,12 @@ export class RecordsState {
   static filter<T>() {
     return createSelector([this], (state: { filter: T }) => {
       return state.filter;
+    });
+  }
+
+  static tableFilters<T>() {
+    return createSelector([this], (state: { tableFilters: T }) => {
+      return state.tableFilters;
     });
   }
 

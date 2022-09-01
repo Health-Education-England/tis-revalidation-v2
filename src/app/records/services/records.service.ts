@@ -44,7 +44,9 @@ import {
   ResetRecommendationsSort,
   SortRecommendations,
   ToggleAllRecommendationsCheckboxes,
-  ToggleRecommendationsCheckbox
+  ToggleRecommendationsCheckbox,
+  SetRecommendationsTableFilters,
+  ClearRecommendationsTableFilters
 } from "../../recommendations/state/recommendations.actions";
 import { IFilter, IRecordDataCell } from "../records.interfaces";
 
@@ -75,6 +77,8 @@ export class RecordsService {
   public enableAllocateAdminAction: any;
   public toggleCheckboxAction: any;
   public toggleAllCheckboxesAction: any;
+  public setRecommendationsTableFilters: any;
+  public clearRecommendationsTableFilters: any;
 
   constructor(
     private http: HttpClient,
@@ -95,6 +99,8 @@ export class RecordsService {
     this.enableAllocateAdminAction = EnableRecommendationsAllocateAdmin;
     this.toggleCheckboxAction = ToggleRecommendationsCheckbox;
     this.toggleAllCheckboxesAction = ToggleAllRecommendationsCheckboxes;
+    this.setRecommendationsTableFilters = SetRecommendationsTableFilters;
+    this.clearRecommendationsTableFilters = ClearRecommendationsTableFilters;
   }
 
   public setConcernsActions(): void {
@@ -200,6 +206,18 @@ export class RecordsService {
   public clearSearch(): Observable<any> {
     this.handleUndefinedAction("clearSearchAction");
     return this.store.dispatch(new this.clearSearchAction());
+  }
+
+  public setTableFilters(filters: any): Observable<any> {
+    this.handleUndefinedAction("setTableFilters");
+    return this.store.dispatch(
+      new this.setRecommendationsTableFilters(filters)
+    );
+  }
+
+  public clearTableFilters(): Observable<any> {
+    this.handleUndefinedAction("clearTableFilters");
+    return this.store.dispatch(new this.clearRecommendationsTableFilters());
   }
 
   public filter(filter: string): Observable<any> {

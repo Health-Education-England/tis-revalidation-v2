@@ -1,6 +1,20 @@
 <div class="filters-wrapper">
   <div class="mb-20">
     <h2>Filters</h2>
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+      <div *ngFor="let control of meta" class="form-row">
+        <app-form-controller
+          [control]="control"
+          [form]="form"
+        ></app-form-controller>
+      </div>
+
+      <div class="form-row">
+        <button type="submit" class="btn btn-primary" [disabled]="form?.valid">
+          Save
+        </button>
+      </div>
+    </form>
     <p>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, neque
       nobis. Facilis nostrum fugiat nobis ullam quam soluta expedita est nam ut

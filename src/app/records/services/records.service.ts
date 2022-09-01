@@ -1,9 +1,11 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { FormControl, FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { BehaviorSubject, forkJoin, Observable } from "rxjs";
 import { switchMap, take } from "rxjs/operators";
+import { ControlBase } from "src/app/shared/form-controls/contol-base.model";
 import {
   ClearConcernsSearch,
   ConcernsSearch,
@@ -271,5 +273,16 @@ export class RecordsService {
     this.handleUndefinedAction("toggleAllCheckboxesAction");
 
     return this.store.dispatch(new this.toggleAllCheckboxesAction());
+  }
+
+  public toFormGroup(controls: ControlBase[], data: any) {
+    const group: any = {};
+
+    controls.forEach((control) => {
+      if (control.controlType !== "label") {
+        group[control.key] = new FormControl(data[control.key] || "");
+      }
+    });
+    return new FormGroup(group);
   }
 }

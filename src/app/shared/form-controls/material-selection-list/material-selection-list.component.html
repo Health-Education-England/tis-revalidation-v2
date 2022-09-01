@@ -1,0 +1,7 @@
+<div [formGroup]="form">
+  <mat-selection-list [formControlName]="meta.key">
+    <mat-list-option *ngFor="let option of meta.options" [value]="option.key">
+      {{ option.value }}
+    </mat-list-option>
+  </mat-selection-list>
+</div>

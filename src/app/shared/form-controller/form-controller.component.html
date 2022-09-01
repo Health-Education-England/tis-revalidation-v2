@@ -1,0 +1,7 @@
+<div [ngSwitch]="control.controlType">
+  <app-material-selection-list
+    *ngSwitchCase="'selectionList'"
+    [meta]="control"
+    [form]="form"
+  ></app-material-selection-list>
+</div>

@@ -11,5 +11,15 @@
     "target": "https://stage-revalidation.tis.nhs.uk/",
     "secure": true,
     "changeOrigin": true
+  },
+
+  "/nymovies": {
+    "target": "https://api.nytimes.com/svc/movies/v2/reviews/search.json",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/nymovies": ""
+    },
+    "logLevel": "debug"
   }
 }

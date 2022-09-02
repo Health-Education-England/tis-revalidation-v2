@@ -24,7 +24,10 @@ export class RecordListTableFiltersComponent implements OnInit {
     );
 
   clearFilters() {
-    this.recordsService.clearTableFilters();
+    this.form.reset();
+    this.recordsService.clearTableFilters().subscribe(() => {
+      this.recordsService.updateRoute();
+    });
   }
 
   onSubmit() {

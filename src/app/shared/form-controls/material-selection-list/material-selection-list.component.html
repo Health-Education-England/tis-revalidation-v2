@@ -1,8 +1,10 @@
 <div [formGroup]="form">
-  <mat-selection-list [formControlName]="meta.key">
-    <div mat-header>
-      <strong>{{ meta.label }}</strong>
-    </div>
+  <mat-selection-list
+    class="mb-20"
+    color="primary"
+    [formControlName]="meta.key"
+  >
+    <div class="h2">{{ meta.label }}</div>
     <mat-list-option *ngFor="let option of meta.options" [value]="option.key">
       {{ option.value }}
     </mat-list-option>

@@ -9,13 +9,27 @@
         ></app-form-controller>
       </div>
 
-      <div class="form-row">
-        <button type="submit" class="btn btn-primary" [disabled]="!form.valid">
-          Filter
+      <div class="d-flex justify-content-end">
+        <button
+          [disabled]="!form.valid"
+          type="button"
+          mat-button
+          mat-raised-button
+          color="secondary"
+          (click)="clearFilters()"
+        >
+          Clear filters
+        </button>
+        <button
+          [disabled]="!form.valid"
+          type="submit"
+          mat-button
+          mat-raised-button
+          color="primary"
+        >
+          Apply filters
         </button>
       </div>
     </form>
-
-    {{ filters | json }}
   </div>
 </div>

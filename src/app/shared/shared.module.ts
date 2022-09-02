@@ -11,6 +11,7 @@ import { FileBytesPipe } from "./file-bytes.pipe";
 import { InfoDialogComponent } from "./info-dialog/info-dialog.component";
 import { FormControllerComponent } from "./form-controller/form-controller.component";
 import { MaterialSelectionListComponent } from "./form-controls/material-selection-list/material-selection-list.component";
+import { MaterialAutocompleteComponent } from './form-controls/material-autocomplete/material-autocomplete.component';
 
 const modulePipes = [StripHtmlPipe, FileBytesPipe];
 @NgModule({
@@ -20,7 +21,8 @@ const modulePipes = [StripHtmlPipe, FileBytesPipe];
     ...modulePipes,
     InfoDialogComponent,
     FormControllerComponent,
-    MaterialSelectionListComponent
+    MaterialSelectionListComponent,
+    MaterialAutocompleteComponent
   ],
   imports: [RouterModule, MaterialModule, ReactiveFormsModule, CommonModule],
   exports: [...modulePipes, FormControllerComponent],

@@ -1,5 +1,8 @@
 import { Sort } from "@angular/material/sort";
-import { ControlBase } from "../shared/form-controls/contol-base.model";
+import {
+  ControlBase,
+  MaterialAutocompleteControl
+} from "../shared/form-controls/contol-base.model";
 
 export const COLUMN_DATA: [string, string, boolean][] = [
   ["GMC Submission due date", "submissionDate", true],
@@ -21,7 +24,9 @@ export const DEFERRAL_MIN_DAYS = 120;
 export const DEFERRAL_MAX_DAYS = 365;
 export const DEFERRAL_PERMITTED_MAX_DAYS = 120;
 
-export const TABLE_FILTERS_FORM_BASE: ControlBase[] = [
+export const TABLE_FILTERS_FORM_BASE: Array<
+  ControlBase | MaterialAutocompleteControl
+> = [
   {
     key: "gmcStatus",
     label: "GMC Status",
@@ -46,6 +51,16 @@ export const TABLE_FILTERS_FORM_BASE: ControlBase[] = [
     order: 2,
     controlType: "selectionList",
     initialValue: []
+  },
+  {
+    key: "programmeName",
+    label: "Programme name",
+    order: 4,
+    initialValue: [],
+    controlType: "autocomplete",
+    allowMultipleSelections: false,
+    serviceMethod: "loadMovies",
+    placeholder: "Start typing..."
   }
 ];
 

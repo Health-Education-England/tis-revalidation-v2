@@ -13,7 +13,5 @@ export class FormControllerComponent implements OnInit {
   @Input() control!: ControlBase;
   @Input() form!: FormGroup;
 
-  ngOnInit(): void {
-    console.log(this.control);
-  }
+  ngOnInit(): void {}
 }

@@ -182,14 +182,15 @@ export class RecordsService {
       ...(snapshot.searchQuery && { searchQuery: snapshot.searchQuery })
     };
     const tableFilters = snapshot.tableFilters;
-
-    Object.keys(tableFilters).forEach((key) => {
-      if (Array.isArray(tableFilters[key])) {
-        params[key] = tableFilters[key].join(",");
-      } else {
-        params[key] = tableFilters[key];
-      }
-    });
+    if (tableFilters) {
+      Object.keys(tableFilters).forEach((key) => {
+        if (Array.isArray(tableFilters[key])) {
+          params[key] = tableFilters[key].join(",");
+        } else {
+          params[key] = tableFilters[key];
+        }
+      });
+    }
     return params;
   }
 

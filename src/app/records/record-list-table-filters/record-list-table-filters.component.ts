@@ -13,19 +13,7 @@ import { RecordsService } from "../services/records.service";
 })
 export class RecordListTableFiltersComponent implements OnInit {
   filters: any;
-  @Input() meta: ControlBase[] = [
-    {
-      key: "country",
-      options: [
-        { key: "IN", value: "India" },
-        { key: "USA", value: "United States of America" },
-        { key: "UK", value: "United Kingdom" }
-      ],
-      order: 8,
-      controlType: "selectionList",
-      initialValue: []
-    }
-  ];
+  meta: ControlBase[] = [];
   @Input() data: any = {};
   form!: FormGroup;
   payLoad = "";
@@ -34,22 +22,20 @@ export class RecordListTableFiltersComponent implements OnInit {
     this.store.select(
       (state) => state[this.recordsService.stateName].tableFilters
     );
-  onFilter() {
-    this.recordsService
-      .setTableFilters({
-        programeName: "HELLO",
-        gmcStatus: "BUM"
-      })
-      .subscribe(() => this.recordsService.updateRoute());
-  }
+
   clearFilters() {
     this.recordsService.clearTableFilters();
   }
 
   onSubmit() {
-    alert("Show button clicked!");
+    this.recordsService.setTableFilters(this.form.value).subscribe(() => {
+      this.recordsService.updateRoute();
+    });
   }
   ngOnInit(): void {
+    this.meta = this.recordsService.tableFiltersForm.sort(
+      (a: ControlBase, b: ControlBase) => a.order - b.order
+    );
     this.form = this.recordsService.toFormGroup(this.meta, this.data);
     this.tableFilters$.subscribe((val) => {
       this.filters = val;

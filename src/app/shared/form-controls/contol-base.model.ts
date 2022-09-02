@@ -1,5 +1,6 @@
 export interface ControlBase {
   key: string;
+  label?: string;
   initialValue: any;
   required?: boolean;
   order: number;

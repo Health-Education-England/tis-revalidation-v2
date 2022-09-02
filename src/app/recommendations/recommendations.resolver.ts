@@ -5,7 +5,11 @@ import { Observable } from "rxjs";
 import { generateColumnData } from "../records/constants";
 import { RecordsResolver } from "../records/records.resolver";
 import { RecordsService } from "../records/services/records.service";
-import { COLUMN_DATA } from "./constants";
+import {
+  COLUMN_DATA,
+  TABLE_FILTERS_FORM_BASE,
+  TABLE_FILTERS_FORM_DBC
+} from "./constants";
 import { RecommendationsFilterType } from "./recommendations.interfaces";
 import { AuthService } from "../core/auth/auth.service";
 import { UpdateConnectionsService } from "../update-connections/services/update-connections.service";
@@ -38,13 +42,14 @@ export class RecommendationsResolver
 
     if (this.authService.inludesLondonDbcs) {
       const statusIndex = COLUMN_DATA.findIndex((dbc) => dbc[0] === "Status");
-
+      TABLE_FILTERS_FORM_BASE.push(TABLE_FILTERS_FORM_DBC);
       COLUMN_DATA.splice(statusIndex + 1, 0, [
         "Designated body",
         "designatedBody",
         false
       ]);
     }
+    this.recordsService.tableFiltersForm = TABLE_FILTERS_FORM_BASE;
 
     this.recordsService.columnData = generateColumnData(COLUMN_DATA);
     this.recordsService.filters = [

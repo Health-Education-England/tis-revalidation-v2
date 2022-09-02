@@ -17,11 +17,3 @@ export class FormControllerComponent implements OnInit {
     console.log(this.control);
   }
 }
-
-// <div [ngSwitch]="control.controlType">
-//     <app-material-selection-list
-//       *ngSwitchCase="'selectionList'"
-//       [meta]="control"
-//       [form]="form"
-//     ></app-material-selection-list>
-//   </div>

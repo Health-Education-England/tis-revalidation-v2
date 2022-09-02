@@ -65,6 +65,7 @@ export class RecordsService {
   public columnData: IRecordDataCell[];
   public detailsRoute: string;
   public filters: IFilter[];
+  public tableFiltersForm: ControlBase[];
 
   // TODO type these
   public clearSearchAction: any;
@@ -161,17 +162,43 @@ export class RecordsService {
    * which effectively means the components do not get reinstantiated
    * which is great for performance.
    */
+
+  private convertToQueryString(obj: {}): string {
+    if (obj) {
+      return Object.keys(obj)
+        .map((key) => key + "=" + obj[key])
+        .join("&");
+    }
+    return "";
+  }
+
+  private buildQueryParams() {
+    const snapshot: any = this.store.snapshot()[this.stateName];
+    const params = {
+      active: snapshot.sort.active,
+      direction: snapshot.sort.direction,
+      pageIndex: snapshot.pageIndex,
+      filter: snapshot.filter,
+      ...(snapshot.searchQuery && { searchQuery: snapshot.searchQuery })
+    };
+    const tableFilters = snapshot.tableFilters;
+
+    Object.keys(tableFilters).forEach((key) => {
+      if (Array.isArray(tableFilters[key])) {
+        params[key] = tableFilters[key].join(",");
+      } else {
+        params[key] = tableFilters[key];
+      }
+    });
+    return params;
+  }
+
   public updateRoute(): Promise<boolean> {
     const snapshot: any = this.store.snapshot()[this.stateName];
     const current = this.router.url.split("?")[0];
+
     return this.router.navigate([current], {
-      queryParams: {
-        active: snapshot.sort.active,
-        direction: snapshot.sort.direction,
-        pageIndex: snapshot.pageIndex,
-        filter: snapshot.filter,
-        ...(snapshot.searchQuery && { searchQuery: snapshot.searchQuery })
-      }
+      queryParams: this.buildQueryParams()
     });
   }
 

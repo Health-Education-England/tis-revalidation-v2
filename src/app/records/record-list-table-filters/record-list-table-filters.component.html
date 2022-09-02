@@ -10,18 +10,12 @@
       </div>
 
       <div class="form-row">
-        <button type="submit" class="btn btn-primary" [disabled]="form?.valid">
-          Save
+        <button type="submit" class="btn btn-primary" [disabled]="!form.valid">
+          Filter
         </button>
       </div>
     </form>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, neque
-      nobis. Facilis nostrum fugiat nobis ullam quam soluta expedita est nam ut
-      officiis, dolor sequi consectetur ab? Ipsa, deleniti et.
-    </p>
-    <button (click)="onFilter()">Show</button>
-    <button (click)="clearFilters()">Clear</button>
+
     {{ filters | json }}
   </div>
 </div>

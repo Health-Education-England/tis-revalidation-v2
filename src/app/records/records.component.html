@@ -2,13 +2,7 @@
 
 <div
   *ngIf="loading; else notLoading"
-  class="
-    d-flex
-    align-content-center
-    justify-content-center
-    align-items-center
-    progress-spinner
-  "
+  class="d-flex align-content-center justify-content-center align-items-center progress-spinner"
 >
   <mat-spinner></mat-spinner>
 </div>
@@ -29,7 +23,10 @@
     *ngIf="enableAllocateAdmin$ | async"
   ></app-allocate-admin-actions>
 
-  <mat-drawer-container class="filters-drawer-container">
+  <mat-drawer-container
+    *ngIf="showTableFilters; else noTableFilters"
+    class="filters-drawer-container"
+  >
     <mat-drawer #filtersDrawer mode="side" [opened]="filterPanelOpen">
       <app-record-list-table-filters></app-record-list-table-filters>
     </mat-drawer>
@@ -37,4 +34,8 @@
       <app-record-list></app-record-list>
     </mat-drawer-content>
   </mat-drawer-container>
+
+  <ng-template #noTableFilters>
+    <app-record-list></app-record-list>
+  </ng-template>
 </ng-template>

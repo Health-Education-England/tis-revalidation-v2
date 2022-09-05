@@ -49,7 +49,8 @@ export class RecommendationsResolver
         false
       ]);
     }
-    this.recordsService.tableFiltersForm = TABLE_FILTERS_FORM_BASE;
+    this.recordsService.showTableFilters = true;
+    this.recordsService.tableFiltersFormData = TABLE_FILTERS_FORM_BASE;
 
     this.recordsService.columnData = generateColumnData(COLUMN_DATA);
     this.recordsService.filters = [

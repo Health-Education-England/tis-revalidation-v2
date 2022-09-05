@@ -41,6 +41,7 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
   public isConnectionsSummary: boolean;
   public form: FormGroup;
   public subscriptions: Subscription = new Subscription();
+  showTableFilters: boolean;
   filterPanelOpen: boolean = false;
   showClearSearchForm: boolean = false;
   fixedColumns: boolean;
@@ -62,7 +63,7 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
     this.setupForm();
     this.listenToClearAllEvent();
     this.listenToAllocateAdminsEvent();
-
+    this.showTableFilters = this.recordsService.showTableFilters;
     this.subscriptions.add(
       this.recordsService.toggleTableFilterPanel$.subscribe(
         (isOpen: boolean) => {

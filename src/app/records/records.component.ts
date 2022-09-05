@@ -19,6 +19,7 @@ import { RecordsService } from "./services/records.service";
 export class RecordsComponent implements OnInit {
   @Output() updateConnections = new EventEmitter<any>();
   @Input() public loading: boolean;
+  showTableFilters: boolean;
   filterPanelOpen: boolean;
   public subscriptions: Subscription = new Subscription();
   public enableUpdateConnections$: Observable<boolean> = this.store.select(
@@ -36,6 +37,7 @@ export class RecordsComponent implements OnInit {
     private updateConnectionsService: UpdateConnectionsService
   ) {}
   ngOnInit(): void {
+    this.showTableFilters = this.recordsService.showTableFilters;
     this.subscriptions.add(
       this.recordsService.toggleTableFilterPanel$.subscribe(
         (isOpen: boolean) => {

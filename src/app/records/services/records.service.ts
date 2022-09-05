@@ -5,7 +5,10 @@ import { Router } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { BehaviorSubject, forkJoin, Observable } from "rxjs";
 import { switchMap, take } from "rxjs/operators";
-import { ControlBase } from "src/app/shared/form-controls/contol-base.model";
+import {
+  ControlBase,
+  MaterialAutocompleteControl
+} from "src/app/shared/form-controls/contol-base.model";
 import {
   ClearConcernsSearch,
   ConcernsSearch,
@@ -65,7 +68,8 @@ export class RecordsService {
   public columnData: IRecordDataCell[];
   public detailsRoute: string;
   public filters: IFilter[];
-  public tableFiltersForm: ControlBase[];
+  public showTableFilters: boolean = false;
+  public tableFiltersFormData: (ControlBase | MaterialAutocompleteControl)[];
 
   // TODO type these
   public clearSearchAction: any;
@@ -80,8 +84,8 @@ export class RecordsService {
   public enableAllocateAdminAction: any;
   public toggleCheckboxAction: any;
   public toggleAllCheckboxesAction: any;
-  public setRecommendationsTableFilters: any;
-  public clearRecommendationsTableFilters: any;
+  public setTableFiltersAction: any;
+  public clearTableFiltersAction: any;
 
   constructor(
     private http: HttpClient,
@@ -102,8 +106,8 @@ export class RecordsService {
     this.enableAllocateAdminAction = EnableRecommendationsAllocateAdmin;
     this.toggleCheckboxAction = ToggleRecommendationsCheckbox;
     this.toggleAllCheckboxesAction = ToggleAllRecommendationsCheckboxes;
-    this.setRecommendationsTableFilters = SetRecommendationsTableFilters;
-    this.clearRecommendationsTableFilters = ClearRecommendationsTableFilters;
+    this.setTableFiltersAction = SetRecommendationsTableFilters;
+    this.clearTableFiltersAction = ClearRecommendationsTableFilters;
   }
 
   public setConcernsActions(): void {
@@ -162,15 +166,6 @@ export class RecordsService {
    * which effectively means the components do not get reinstantiated
    * which is great for performance.
    */
-
-  private convertToQueryString(obj: {}): string {
-    if (obj) {
-      return Object.keys(obj)
-        .map((key) => key + "=" + obj[key])
-        .join("&");
-    }
-    return "";
-  }
 
   private buildQueryParams() {
     const snapshot: any = this.store.snapshot()[this.stateName];
@@ -240,14 +235,12 @@ export class RecordsService {
 
   public setTableFilters(filters: any): Observable<any> {
     this.handleUndefinedAction("setTableFilters");
-    return this.store.dispatch(
-      new this.setRecommendationsTableFilters(filters)
-    );
+    return this.store.dispatch(new this.setTableFiltersAction(filters));
   }
 
   public clearTableFilters(): Observable<any> {
     this.handleUndefinedAction("clearTableFilters");
-    return this.store.dispatch(new this.clearRecommendationsTableFilters());
+    return this.store.dispatch(new this.clearTableFiltersAction());
   }
 
   public filter(filter: string): Observable<any> {

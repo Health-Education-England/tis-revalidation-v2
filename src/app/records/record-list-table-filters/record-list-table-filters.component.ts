@@ -3,7 +3,10 @@ import { FormGroup } from "@angular/forms";
 import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { IRecommendationsTableFilters } from "src/app/recommendations/recommendations.interfaces";
-import { ControlBase } from "src/app/shared/form-controls/contol-base.model";
+import {
+  ControlBase,
+  MaterialAutocompleteControl
+} from "src/app/shared/form-controls/contol-base.model";
 import { RecordsService } from "../services/records.service";
 
 @Component({
@@ -13,7 +16,7 @@ import { RecordsService } from "../services/records.service";
 })
 export class RecordListTableFiltersComponent implements OnInit {
   filters: any;
-  meta: ControlBase[] = [];
+  meta: (ControlBase | MaterialAutocompleteControl)[] = [];
   @Input() data: any = {};
   form!: FormGroup;
   payLoad = "";
@@ -36,12 +39,16 @@ export class RecordListTableFiltersComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-    this.meta = this.recordsService.tableFiltersForm.sort(
-      (a: ControlBase, b: ControlBase) => a.order - b.order
-    );
-    this.form = this.recordsService.toFormGroup(this.meta, this.data);
-    this.tableFilters$.subscribe((val) => {
-      this.filters = val;
-    });
+    if (this.recordsService.tableFiltersFormData) {
+      this.meta = this.recordsService.tableFiltersFormData;
+      this.form = this.recordsService.toFormGroup(
+        this.recordsService.tableFiltersFormData,
+        this.data
+      );
+      console.log(this.form);
+      this.tableFilters$.subscribe((val) => {
+        this.filters = val;
+      });
+    }
   }
 }

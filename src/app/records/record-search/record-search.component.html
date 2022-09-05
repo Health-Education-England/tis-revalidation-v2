@@ -28,7 +28,7 @@
     </button>
 
     <button
-      *ngIf="!isConnectionsSummary"
+      *ngIf="showTableFilters"
       color="primary"
       [matTooltip]="
         filterPanelOpen ? 'Close filter panel' : 'Open filter panel'

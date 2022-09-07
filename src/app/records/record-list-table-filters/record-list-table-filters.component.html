@@ -11,7 +11,7 @@
 
       <div class="d-flex justify-content-end">
         <button
-          [disabled]="!form.valid"
+          [disabled]="!form.valid || !form.dirty"
           type="button"
           mat-button
           mat-raised-button
@@ -21,7 +21,7 @@
           Clear filters
         </button>
         <button
-          [disabled]="!form.valid"
+          [disabled]="!form.valid || !form.dirty"
           type="submit"
           mat-button
           mat-raised-button

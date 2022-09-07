@@ -14,6 +14,7 @@ import { RecommendationsFilterType } from "./recommendations.interfaces";
 import { AuthService } from "../core/auth/auth.service";
 import { UpdateConnectionsService } from "../update-connections/services/update-connections.service";
 import { stateName } from "../records/records.interfaces";
+import { FormControlBase } from "../shared/form-controls/form-contol-base.model";
 @Injectable()
 export class RecommendationsResolver
   extends RecordsResolver
@@ -50,7 +51,9 @@ export class RecommendationsResolver
       ]);
     }
     this.recordsService.showTableFilters = true;
-    this.recordsService.tableFiltersFormData = TABLE_FILTERS_FORM_BASE;
+    this.recordsService.tableFiltersFormData = TABLE_FILTERS_FORM_BASE.sort(
+      (a: FormControlBase, b: FormControlBase) => a.order - b.order
+    );
 
     this.recordsService.columnData = generateColumnData(COLUMN_DATA);
     this.recordsService.filters = [

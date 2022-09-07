@@ -6,9 +6,9 @@ import { Store } from "@ngxs/store";
 import { BehaviorSubject, forkJoin, Observable } from "rxjs";
 import { switchMap, take } from "rxjs/operators";
 import {
-  ControlBase,
-  MaterialAutocompleteControl
-} from "src/app/shared/form-controls/contol-base.model";
+  FormControlBase,
+  AutocompleteControl
+} from "src/app/shared/form-controls/form-contol-base.model";
 import {
   ClearConcernsSearch,
   ConcernsSearch,
@@ -69,7 +69,7 @@ export class RecordsService {
   public detailsRoute: string;
   public filters: IFilter[];
   public showTableFilters: boolean = false;
-  public tableFiltersFormData: (ControlBase | MaterialAutocompleteControl)[];
+  public tableFiltersFormData: (FormControlBase | AutocompleteControl)[];
 
   // TODO type these
   public clearSearchAction: any;
@@ -296,13 +296,11 @@ export class RecordsService {
     return this.store.dispatch(new this.toggleAllCheckboxesAction());
   }
 
-  public toFormGroup(controls: ControlBase[], data: any) {
+  public toFormGroup(controls: FormControlBase[], data: any = {}) {
     const group: any = {};
 
     controls.forEach((control) => {
-      if (control.controlType !== "label") {
-        group[control.key] = new FormControl(data[control.key] || "");
-      }
+      group[control.key] = new FormControl(data[control.key] || "");
     });
     return new FormGroup(group);
   }

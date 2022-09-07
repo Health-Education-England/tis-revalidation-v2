@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { ControlBase } from "../form-controls/contol-base.model";
+import { FormControlBase } from "../form-controls/form-contol-base.model";
 
 @Component({
   selector: "app-form-controller",
@@ -10,7 +10,7 @@ import { ControlBase } from "../form-controls/contol-base.model";
 export class FormControllerComponent implements OnInit {
   constructor() {}
 
-  @Input() control!: ControlBase;
+  @Input() control!: FormControlBase;
   @Input() form!: FormGroup;
 
   ngOnInit(): void {}

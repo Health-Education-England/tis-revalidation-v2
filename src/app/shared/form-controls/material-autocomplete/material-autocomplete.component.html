@@ -8,10 +8,10 @@
     <input
       matInput
       [matAutocomplete]="auto"
-      [matChipInputFor]="chipList"
-      [formControl]="searchControl"
+      [formControlName]="meta.key"
       [placeholder]="meta.placeholder"
     />
+
     <button
       *ngIf="searchControl.value"
       matSuffix
@@ -31,28 +31,10 @@
       <mat-option *ngIf="isLoading" class="is-loading">Loading...</mat-option>
       <ng-container *ngIf="!isLoading">
         <mat-option *ngFor="let item of filteredItems" [value]="item">
-          <span>{{ item.title }}</span>
+          <span>{{ item }}</span>
         </mat-option>
       </ng-container>
     </mat-autocomplete>
-    <mat-chip-list
-      [hidden]="!meta.allowMultipleSelections"
-      #chipList
-      [attr.aria-label]="meta.label"
-    >
-      <mat-chip
-        *ngFor="let tag of form.controls[meta.key].value"
-        (removed)="removeTag(tag)"
-      >
-        {{ tag.title }}
-        <button matChipRemove>
-          <mat-icon>cancel</mat-icon>
-        </button>
-      </mat-chip>
-    </mat-chip-list>
   </mat-form-field>
-
-  <ng-container *ngIf="errorMsg">
-    {{ errorMsg }}
-  </ng-container>
+  <div class="mat-error error" *ngIf="isNoMatches">No matches found.</div>
 </div>

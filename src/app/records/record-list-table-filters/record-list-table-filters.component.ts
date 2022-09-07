@@ -1,12 +1,12 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
-import { IRecommendationsTableFilters } from "src/app/recommendations/recommendations.interfaces";
 import {
-  ControlBase,
-  MaterialAutocompleteControl
-} from "src/app/shared/form-controls/contol-base.model";
+  FormControlBase,
+  AutocompleteControl
+} from "src/app/shared/form-controls/form-contol-base.model";
+import { ITableFilters } from "../records.interfaces";
 import { RecordsService } from "../services/records.service";
 
 @Component({
@@ -15,16 +15,14 @@ import { RecordsService } from "../services/records.service";
   styleUrls: ["./record-list-table-filters.component.scss"]
 })
 export class RecordListTableFiltersComponent implements OnInit {
-  filters: any;
-  meta: (ControlBase | MaterialAutocompleteControl)[] = [];
-  @Input() data: any = {};
+  activeTableFilters: ITableFilters;
+  meta: (FormControlBase | AutocompleteControl)[] = [];
   form!: FormGroup;
   payLoad = "";
   constructor(private recordsService: RecordsService, private store: Store) {}
-  public tableFilters$: Observable<IRecommendationsTableFilters> =
-    this.store.select(
-      (state) => state[this.recordsService.stateName].tableFilters
-    );
+  public tableFilters$: Observable<any> = this.store.select(
+    (state) => state[this.recordsService.stateName].tableFilters
+  );
 
   clearFilters() {
     this.form.reset();
@@ -38,17 +36,21 @@ export class RecordListTableFiltersComponent implements OnInit {
       this.recordsService.updateRoute();
     });
   }
+
   ngOnInit(): void {
+    this.tableFilters$.subscribe((filters) => {
+      if (filters) {
+        this.activeTableFilters = filters;
+      }
+    });
+
     if (this.recordsService.tableFiltersFormData) {
       this.meta = this.recordsService.tableFiltersFormData;
       this.form = this.recordsService.toFormGroup(
-        this.recordsService.tableFiltersFormData,
-        this.data
+        this.meta,
+        this.activeTableFilters
       );
-      console.log(this.form);
-      this.tableFilters$.subscribe((val) => {
-        this.filters = val;
-      });
+      this.activeTableFilters && this.form.markAsDirty();
     }
   }
 }

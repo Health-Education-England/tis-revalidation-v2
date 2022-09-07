@@ -1,4 +1,4 @@
-export interface ControlBase {
+export interface FormControlBase {
   key: string;
   label?: string;
   initialValue: any;
@@ -10,7 +10,6 @@ export interface ControlBase {
   options?: { key: string; value: string }[];
 }
 
-export interface MaterialAutocompleteControl extends ControlBase {
-  allowMultipleSelections?: boolean;
+export interface AutocompleteControl extends FormControlBase {
   serviceMethod: string;
 }

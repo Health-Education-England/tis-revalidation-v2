@@ -20,7 +20,7 @@ export interface IFilter {
 }
 
 export interface ITableFilters {
-  [key: string]: string;
+  [key: string]: string | string[];
 }
 
 export enum stateName {

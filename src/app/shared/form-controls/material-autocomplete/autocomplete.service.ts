@@ -14,18 +14,18 @@ export class AutocompleteService {
     const params = new HttpParams().set("api-key", apiKey).set("query", query);
 
     return this.http.get<any[]>("nymovies", { params }).pipe(
+      tap((data) => {
+        console.log("data ", data);
+      }),
       map((data: any) => {
         if (data["results"]) {
           return data["results"];
         }
-        return data;
+        return [];
       }),
       map((data: any) => {
-        if (!data["Error"]) {
-          return data.map((item: any) => ({
-            title: item["display_title"],
-            ...item
-          }));
+        if (data.length) {
+          return data.map((item: any) => item["display_title"]);
         }
       })
     );

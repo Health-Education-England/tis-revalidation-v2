@@ -16,17 +16,13 @@ export class MaterialAutocompleteComponent implements OnInit {
   debounceTime: number = 800;
   minLengthTerm: number = 3;
 
-  searchControl: FormControl = new FormControl();
   filteredItems: any;
   isLoading: boolean;
   isNoMatches: boolean;
 
   options: any[];
 
-  constructor(
-    private autocompleteService: AutocompleteService,
-    private snackBarService: SnackBarService
-  ) {}
+  constructor(private autocompleteService: AutocompleteService) {}
 
   onSelected() {
     this.form.controls[this.meta.key].updateValueAndValidity();
@@ -42,36 +38,39 @@ export class MaterialAutocompleteComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.form.controls[this.meta.key].valueChanges
-      .pipe(
-        filter((res) => {
-          if (res !== null && res.length >= this.minLengthTerm) {
-            return res;
-          }
-          this.filteredItems = [];
-        }),
-        //distinctUntilChanged(),
-        debounceTime(this.debounceTime),
-        tap((value: string) => {
-          this.filteredItems = [];
-          this.isLoading = true;
-        }),
-        switchMap((value: string) =>
-          this.autocompleteService.getData(value, this.meta.serviceMethod).pipe(
-            finalize(() => {
-              this.isLoading = false;
-            })
+    this.meta &&
+      this.form.controls[this.meta.key].valueChanges
+        .pipe(
+          filter((res) => {
+            if (res !== null && res.length >= this.minLengthTerm) {
+              return res;
+            }
+            this.filteredItems = [];
+          }),
+          //distinctUntilChanged(),
+          debounceTime(this.debounceTime),
+          tap((value: string) => {
+            this.filteredItems = [];
+            this.isLoading = true;
+          }),
+          switchMap((value: string) =>
+            this.autocompleteService
+              .getData(value, this.meta.serviceMethod)
+              .pipe(
+                finalize(() => {
+                  this.isLoading = false;
+                })
+              )
           )
         )
-      )
-      .subscribe((data: any) => {
-        if (data == undefined) {
-          this.isNoMatches = true;
-          this.filteredItems = [];
-        } else {
-          this.filteredItems = data;
-          this.isNoMatches = false;
-        }
-      });
+        .subscribe((data: any) => {
+          if (data?.length) {
+            this.filteredItems = data;
+            this.isNoMatches = false;
+          } else {
+            this.isNoMatches = true;
+            this.filteredItems = [];
+          }
+        });
   }
 }

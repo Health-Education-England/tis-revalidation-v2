@@ -4,8 +4,7 @@ import { FormControlBase } from "../form-contol-base.model";
 
 @Component({
   selector: "app-material-selection-list",
-  templateUrl: "./material-selection-list.component.html",
-  styleUrls: ["./material-selection-list.component.scss"]
+  templateUrl: "./material-selection-list.component.html"
 })
 export class MaterialSelectionListComponent implements OnInit {
   @Input() meta!: FormControlBase;

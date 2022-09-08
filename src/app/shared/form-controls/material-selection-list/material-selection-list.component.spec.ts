@@ -7,7 +7,7 @@ import { MaterialModule } from "src/app/shared/material/material.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
 
-fdescribe("MaterialSelectionListComponent", () => {
+describe("MaterialSelectionListComponent", () => {
   let component: TestHostComponent;
   let fixture: ComponentFixture<TestHostComponent>;
 

@@ -6,7 +6,7 @@ import {
 import { AutocompleteService } from "./autocomplete.service";
 import { isEmpty } from "rxjs/operators";
 
-fdescribe("AutocompleteService", () => {
+describe("AutocompleteService", () => {
   let service: AutocompleteService;
   let httpTestingController: HttpTestingController;
   const options: string[] = ["apple", "banana", "cherry"];

@@ -11,7 +11,7 @@ import { MaterialAutocompleteComponent } from "./material-autocomplete.component
 import { AutocompleteService } from "./autocomplete.service";
 import { of } from "rxjs";
 
-fdescribe("MaterialAutocompleteComponent", () => {
+describe("MaterialAutocompleteComponent", () => {
   let component: MaterialAutocompleteComponent;
   let fixture: ComponentFixture<MaterialAutocompleteComponent>;
   let mockAutocompleteService = jasmine.createSpyObj(["getData", "testFunc"]);

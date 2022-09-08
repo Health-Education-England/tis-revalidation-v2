@@ -1,16 +1,15 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { RecordListTableFiltersComponent } from './record-list-table-filters.component';
+import { RecordListTableFiltersComponent } from "./record-list-table-filters.component";
 
-describe('RecordListTableFiltersComponent', () => {
+xdescribe("RecordListTableFiltersComponent", () => {
   let component: RecordListTableFiltersComponent;
   let fixture: ComponentFixture<RecordListTableFiltersComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RecordListTableFiltersComponent ]
-    })
-    .compileComponents();
+      declarations: [RecordListTableFiltersComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe('RecordListTableFiltersComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

@@ -56,7 +56,7 @@ export const TABLE_FILTERS_FORM_BASE: Array<
     key: "programmeName",
     label: "Programme name",
     order: 4,
-    initialValue: [],
+    initialValue: "",
     controlType: "autocomplete",
     serviceMethod: "loadMovies",
     placeholder: "Start typing..."

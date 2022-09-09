@@ -9,9 +9,11 @@
     />
 
     <button
+      *ngIf="this.form.controls[this.meta.key].value"
       matSuffix
       mat-icon-button
       aria-label="Clear"
+      data-jasmine="clearInputButton"
       (click)="clearSelection()"
     >
       <mat-icon>close</mat-icon>

@@ -4,8 +4,7 @@ import { FormControlBase } from "../form-controls/form-contol-base.model";
 
 @Component({
   selector: "app-form-controller",
-  templateUrl: "./form-controller.component.html",
-  styleUrls: ["./form-controller.component.scss"]
+  templateUrl: "./form-controller.component.html"
 })
 export class FormControllerComponent implements OnInit {
   constructor() {}

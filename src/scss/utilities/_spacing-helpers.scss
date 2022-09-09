@@ -19,7 +19,7 @@ $space-prefixes: (
   @each $attr-short, $attr-long in $space-prefixes {
     @each $value in $space-values {
       .#{$attr-short}-#{$value} {
-        #{$attr-long}: #{$value}#{"px"};
+        #{$attr-long}: #{$value}#{"px"} !important;
       }
     }
   }

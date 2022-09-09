@@ -3,10 +3,10 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Store } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
 import { filter, take } from "rxjs/operators";
-import { ConnectionsFilterType } from "src/app/connections/connections.interfaces";
 import { AuthService } from "src/app/core/auth/auth.service";
 import { UpdateConnectionsService } from "src/app/update-connections/services/update-connections.service";
 import { ToggleFixedColumns } from "../record-list/state/record-list.actions";
+import { stateName } from "../records.interfaces";
 import { RecordsService } from "../services/records.service";
 
 @Component({
@@ -54,7 +54,8 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
     private updateConnectionsService: UpdateConnectionsService,
     private authService: AuthService
   ) {
-    this.isConnectionsSummary = this.recordsService.stateName === "connections";
+    this.isConnectionsSummary =
+      this.recordsService.stateName === stateName.CONNECTIONS;
     this.isRevalAdmin = this.authService.isRevalAdmin;
     this.searchLabel = "Search name, programme or GMC no";
   }

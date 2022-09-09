@@ -16,7 +16,7 @@ import { RecordsService } from "../services/records.service";
 })
 export class RecordListTableFiltersComponent implements OnInit {
   activeTableFilters: ITableFilters;
-  meta: (FormControlBase | AutocompleteControl)[] = [];
+  formControls: (FormControlBase | AutocompleteControl)[] = [];
   form!: FormGroup;
   payLoad = "";
   constructor(private recordsService: RecordsService, private store: Store) {}
@@ -45,9 +45,9 @@ export class RecordListTableFiltersComponent implements OnInit {
     });
 
     if (this.recordsService.tableFiltersFormData) {
-      this.meta = this.recordsService.tableFiltersFormData;
+      this.formControls = this.recordsService.tableFiltersFormData;
       this.form = this.recordsService.toFormGroup(
-        this.meta,
+        this.formControls,
         this.activeTableFilters
       );
       this.activeTableFilters && this.form.markAsDirty();

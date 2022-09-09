@@ -296,11 +296,13 @@ export class RecordsService {
     return this.store.dispatch(new this.toggleAllCheckboxesAction());
   }
 
-  public toFormGroup(controls: FormControlBase[], data: any = {}) {
+  public toFormGroup(controls: FormControlBase[], formData: any = {}) {
     const group: any = {};
 
     controls.forEach((control) => {
-      group[control.key] = new FormControl(data[control.key] || "");
+      group[control.key] = new FormControl(
+        formData[control.key] || control.initialValue || ""
+      );
     });
     return new FormGroup(group);
   }

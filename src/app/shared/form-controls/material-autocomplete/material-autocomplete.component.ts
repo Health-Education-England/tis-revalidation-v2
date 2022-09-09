@@ -34,6 +34,7 @@ export class MaterialAutocompleteComponent implements OnInit {
   }
 
   clearSelection() {
+    this.form.controls[this.meta.key].setValue("");
     this.filteredItems = [];
   }
 

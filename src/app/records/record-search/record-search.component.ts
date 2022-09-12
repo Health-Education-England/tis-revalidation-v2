@@ -82,6 +82,7 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.searchQuery$.subscribe((searchQuery) => {
         this.searchQuery = searchQuery;
+        searchQuery && this.form.get("searchQuery").setValue(searchQuery);
         this.toggleResetFormButton();
       })
     );
@@ -89,17 +90,20 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
   public toggleFixedColumns() {
     this.store.dispatch(new ToggleFixedColumns(!this.fixedColumns));
   }
+
   public setupForm(): void {
     this.form = this.formBuilder.group(
       {
-        searchQuery: [null]
+        searchQuery: this.searchQuery || null
       },
       { updateOn: "change" }
     );
 
-    this.form.get("searchQuery").valueChanges.subscribe((val) => {
-      this.toggleResetFormButton(val);
-    });
+    this.subscriptions.add(
+      this.form.get("searchQuery").valueChanges.subscribe((val) => {
+        this.toggleResetFormButton(val);
+      })
+    );
   }
 
   toggleResetFormButton(inputValue: string = "") {

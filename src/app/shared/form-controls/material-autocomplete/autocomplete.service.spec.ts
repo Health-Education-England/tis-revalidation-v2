@@ -21,7 +21,7 @@ describe("AutocompleteService", () => {
   });
 
   it("should call correct endpoint", () => {
-    service.getListItems("programmeName", "query").subscribe();
+    service.getMatchingItems("programmeName", "query").subscribe();
     const request = httpTestingController.expectOne(
       "/autocomplete?fieldName=programmeName"
     );

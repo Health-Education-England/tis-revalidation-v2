@@ -14,25 +14,15 @@ import { of } from "rxjs";
 describe("MaterialAutocompleteComponent", () => {
   let component: MaterialAutocompleteComponent;
   let fixture: ComponentFixture<MaterialAutocompleteComponent>;
-  let mockAutocompleteService = jasmine.createSpyObj(["getData", "testFunc"]);
-  const meta: AutocompleteControl = {
-    key: "initialKey",
-    label: "initialLabel",
-    order: 1,
-    controlType: "autocomplete",
-    serviceMethod: "mockServiceName",
-    initialValue: []
-  };
+  let mockAutocompleteService = jasmine.createSpyObj(["getMatchingItems"]);
+
   const data = {};
   const options: string[] = ["apple", "banana", "cherry", "date"];
-
-  const toFormGroup = (): FormGroup => {
-    const group: any = {};
-    group[meta.key] = new FormControl(data[meta.key] || "");
-    return new FormGroup(group);
-  };
-  const initAutocomplete = (inputValue: string, ops: string[] = options) => {
-    mockAutocompleteService.getData.and.returnValue(of(ops));
+  const enterSearchItemsAndSubmit = (
+    inputValue: string,
+    searchOptions: string[] = options
+  ) => {
+    mockAutocompleteService.getMatchingItems.and.returnValue(of(searchOptions));
 
     const inputElement = fixture.debugElement.query(By.css("input"));
     inputElement.nativeElement.dispatchEvent(new Event("focusin"));
@@ -58,7 +48,7 @@ describe("MaterialAutocompleteComponent", () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(MaterialAutocompleteComponent);
     component = fixture.componentInstance;
-    component.meta = {
+    component.controlProperties = {
       key: "initialKey",
       label: "initialLabel",
       order: 1,
@@ -66,7 +56,11 @@ describe("MaterialAutocompleteComponent", () => {
       serviceMethod: "mockServiceName",
       initialValue: []
     };
-    component.form = toFormGroup();
+    const group: any = {};
+    group[component.controlProperties.key] = new FormControl(
+      data[component.controlProperties.key] || ""
+    );
+    component.form = new FormGroup(group);
     fixture.detectChanges();
   });
 
@@ -82,7 +76,7 @@ describe("MaterialAutocompleteComponent", () => {
 
   it("should not display options when input is < 5 characters", async () => {
     component.minLengthTerm = 5;
-    initAutocomplete("four");
+    enterSearchItemsAndSubmit("four");
     await fixture.whenStable();
     fixture.detectChanges();
 
@@ -92,7 +86,7 @@ describe("MaterialAutocompleteComponent", () => {
 
   it("should display correct options in dropdown when input length >= 5", async () => {
     component.minLengthTerm = 5;
-    initAutocomplete("query");
+    enterSearchItemsAndSubmit("query");
     await fixture.whenStable();
     fixture.detectChanges();
 
@@ -102,13 +96,13 @@ describe("MaterialAutocompleteComponent", () => {
   });
 
   it("should display error when no options found", async () => {
-    initAutocomplete("query", []);
+    enterSearchItemsAndSubmit("query", []);
     await fixture.whenStable();
     fixture.detectChanges();
     expect(fixture.debugElement.queryAll(By.css(".mat-error")).length).toBe(1);
   });
   it("should not display the clear button when input is empty", async () => {
-    initAutocomplete("", []);
+    enterSearchItemsAndSubmit("", []);
     await fixture.whenStable();
     fixture.detectChanges();
     expect(
@@ -118,7 +112,7 @@ describe("MaterialAutocompleteComponent", () => {
   });
 
   it("should display the clear button when input contains text", async () => {
-    initAutocomplete("qw", []);
+    enterSearchItemsAndSubmit("qw", []);
     await fixture.whenStable();
     fixture.detectChanges();
     expect(

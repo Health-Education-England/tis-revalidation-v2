@@ -10,7 +10,7 @@ import { environment } from "@environment";
 })
 export class AutocompleteService {
   constructor(private http: HttpClient, private authService: AuthService) {}
-  getListItems(fieldName: string, query: string): Observable<any> {
+  getMatchingItems(fieldName: string, query: string): Observable<any> {
     const designatedBodies: string =
       this.authService.userDesignatedBodies?.join(",");
 

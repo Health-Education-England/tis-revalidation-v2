@@ -8,19 +8,42 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
 
 describe("MaterialSelectionListComponent", () => {
-  let component: TestHostComponent;
-  let fixture: ComponentFixture<TestHostComponent>;
+  let component: MaterialSelectionListComponent;
+  let fixture: ComponentFixture<MaterialSelectionListComponent>;
+  let controlProperties: FormControlBase = {
+    key: "initialKey",
+    label: "initialLabel",
+    options: [
+      { key: "initialOptionKey1", value: "initial option value 1" },
+      { key: "initialOptionKey2", value: "initial option value 2" }
+    ],
+    order: 1,
+    controlType: "selectionList",
+    initialValue: []
+  };
+  let form: FormGroup;
+  let data: any = {};
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [MaterialModule, FormsModule, ReactiveFormsModule],
-      declarations: [MaterialSelectionListComponent, TestHostComponent]
+      declarations: [
+        MaterialSelectionListComponent,
+        MaterialSelectionListComponent
+      ]
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TestHostComponent);
+    fixture = TestBed.createComponent(MaterialSelectionListComponent);
     component = fixture.componentInstance;
+    component;
+    component.controlProperties = controlProperties;
+    const group: any = {};
+    group[component.controlProperties.key] = new FormControl(
+      data[component.controlProperties.key] || ""
+    );
+    component.form = new FormGroup(group);
     fixture.detectChanges();
   });
 
@@ -36,7 +59,7 @@ describe("MaterialSelectionListComponent", () => {
   });
 
   it("should update the form label when changed", () => {
-    const meta = {
+    component.controlProperties = {
       key: "testKey",
       label: "testLabel",
       options: [
@@ -48,7 +71,6 @@ describe("MaterialSelectionListComponent", () => {
       initialValue: []
     };
 
-    component.setMeta(meta);
     fixture.detectChanges();
 
     expect(
@@ -57,41 +79,41 @@ describe("MaterialSelectionListComponent", () => {
     ).toContain("test option value 1");
   });
 
-  @Component({
-    selector: `host-component`,
-    template: `<form [formGroup]="form">
-      <app-material-selection-list
-        [meta]="meta"
-        [form]="form"
-      ></app-material-selection-list>
-    </form>`
-  })
-  class TestHostComponent implements OnInit {
-    meta: FormControlBase = {
-      key: "initialKey",
-      label: "initialLabel",
-      options: [
-        { key: "initialOptionKey1", value: "initial option value 1" },
-        { key: "initialOptionKey2", value: "initial option value 2" }
-      ],
-      order: 1,
-      controlType: "selectionList",
-      initialValue: []
-    };
-    form: FormGroup;
-    data: any = {};
+  //   @Component({
+  //     selector: `host-component`,
+  //     template: `<form [formGroup]="form">
+  //       <app-material-selection-list
+  //         [meta]="meta"
+  //         [form]="form"
+  //       ></app-material-selection-list>
+  //     </form>`
+  //   })
+  //   class TestHostComponent implements OnInit {
+  //     meta: FormControlBase = {
+  //       key: "initialKey",
+  //       label: "initialLabel",
+  //       options: [
+  //         { key: "initialOptionKey1", value: "initial option value 1" },
+  //         { key: "initialOptionKey2", value: "initial option value 2" }
+  //       ],
+  //       order: 1,
+  //       controlType: "selectionList",
+  //       initialValue: []
+  //     };
+  //     form: FormGroup;
+  //     data: any = {};
 
-    toFormGroup() {
-      const group: any = {};
-      group[this.meta.key] = new FormControl(this.data[this.meta.key] || "");
-      return new FormGroup(group);
-    }
-    ngOnInit(): void {
-      this.form = this.toFormGroup();
-    }
-    setMeta(meta: FormControlBase) {
-      this.meta = meta;
-      this.toFormGroup();
-    }
-  }
+  //     toFormGroup() {
+  //       const group: any = {};
+  //       group[this.meta.key] = new FormControl(this.data[this.meta.key] || "");
+  //       return new FormGroup(group);
+  //     }
+  //     ngOnInit(): void {
+  //       this.form = this.toFormGroup();
+  //     }
+  //     setMeta(meta: FormControlBase) {
+  //       this.meta = meta;
+  //       this.toFormGroup();
+  //     }
+  //   }
 });

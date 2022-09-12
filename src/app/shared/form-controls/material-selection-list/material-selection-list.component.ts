@@ -7,7 +7,7 @@ import { FormControlBase } from "../form-contol-base.model";
   templateUrl: "./material-selection-list.component.html"
 })
 export class MaterialSelectionListComponent implements OnInit {
-  @Input() meta!: FormControlBase;
+  @Input() controlProperties!: FormControlBase;
   @Input() form!: FormGroup;
   constructor() {}
 

@@ -1,12 +1,12 @@
 <div [ngSwitch]="control.controlType">
   <app-material-selection-list
     *ngSwitchCase="'selectionList'"
-    [meta]="control"
+    [controlProperties]="control"
     [form]="form"
   ></app-material-selection-list>
   <app-material-autocomplete
     *ngSwitchCase="'autocomplete'"
-    [meta]="control"
+    [controlProperties]="control"
     [form]="form"
   >
   </app-material-autocomplete>

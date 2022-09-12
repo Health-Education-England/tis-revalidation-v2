@@ -12,7 +12,7 @@ import { AutocompleteService } from "./autocomplete.service";
   styleUrls: ["./material-autocomplete.component.scss"]
 })
 export class MaterialAutocompleteComponent implements OnInit {
-  @Input() meta!: AutocompleteControl;
+  @Input() controlProperties!: AutocompleteControl;
   @Input() form!: FormGroup;
   debounceTime: number = 800;
   minLengthTerm: number = 3;
@@ -26,7 +26,7 @@ export class MaterialAutocompleteComponent implements OnInit {
   constructor(private autocompleteService: AutocompleteService) {}
 
   onSelected() {
-    this.form.controls[this.meta.key].updateValueAndValidity();
+    this.form.controls[this.controlProperties.key].updateValueAndValidity();
     this.form.markAsDirty();
   }
 
@@ -35,13 +35,13 @@ export class MaterialAutocompleteComponent implements OnInit {
   }
 
   clearSelection() {
-    this.form.controls[this.meta.key].setValue("");
+    this.form.controls[this.controlProperties.key].setValue("");
     this.filteredItems = [];
   }
 
   ngOnInit() {
-    this.meta &&
-      this.form.controls[this.meta.key].valueChanges
+    this.controlProperties &&
+      this.form.controls[this.controlProperties.key].valueChanges
         .pipe(
           filter((inputValue) => {
             if (
@@ -50,7 +50,6 @@ export class MaterialAutocompleteComponent implements OnInit {
             ) {
               return inputValue;
             }
-            // this.filteredItems = [];
           }),
           //distinctUntilChanged(),
           debounceTime(this.debounceTime),
@@ -60,7 +59,7 @@ export class MaterialAutocompleteComponent implements OnInit {
           }),
           switchMap((inputValue: string) =>
             this.autocompleteService
-              .getListItems(this.meta.key, inputValue)
+              .getMatchingItems(this.controlProperties.key, inputValue)
               .pipe(
                 finalize(() => {
                   this.isLoading = false;

@@ -2,10 +2,13 @@
   <mat-selection-list
     class="mb-20"
     color="primary"
-    [formControlName]="meta.key"
+    [formControlName]="controlProperties.key"
   >
-    <div class="h2">{{ meta.label }}</div>
-    <mat-list-option *ngFor="let option of meta.options" [value]="option.key">
+    <div class="h2">{{ controlProperties.label }}</div>
+    <mat-list-option
+      *ngFor="let option of controlProperties.options"
+      [value]="option.key"
+    >
       {{ option.value }}
     </mat-list-option>
   </mat-selection-list>

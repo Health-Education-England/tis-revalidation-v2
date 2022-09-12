@@ -107,4 +107,23 @@ describe("MaterialAutocompleteComponent", () => {
     fixture.detectChanges();
     expect(fixture.debugElement.queryAll(By.css(".mat-error")).length).toBe(1);
   });
+  it("should not display the clear button when input is empty", async () => {
+    initAutocomplete("", []);
+    await fixture.whenStable();
+    fixture.detectChanges();
+    expect(
+      fixture.debugElement.queryAll(By.css("[data-jasmine='clearInputButton']"))
+        .length
+    ).toBe(0);
+  });
+
+  it("should display the clear button when input contains text", async () => {
+    initAutocomplete("qw", []);
+    await fixture.whenStable();
+    fixture.detectChanges();
+    expect(
+      fixture.debugElement.queryAll(By.css("[data-jasmine='clearInputButton']"))
+        .length
+    ).toBe(1);
+  });
 });

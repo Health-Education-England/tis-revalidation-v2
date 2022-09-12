@@ -1,7 +1,7 @@
 <div class="filters-wrapper">
   <div class="mb-20">
     <h2>Filters</h2>
-    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+    <form (ngSubmit)="onSubmit()" *ngIf="form" [formGroup]="form">
       <div *ngFor="let control of formControls" class="form-row">
         <app-form-controller
           [control]="control"
@@ -11,6 +11,7 @@
 
       <div class="d-flex justify-content-end">
         <button
+          data-jasmine="clearFiltersButton"
           class="mr-10"
           [disabled]="!form.valid || !form.dirty"
           type="button"
@@ -22,6 +23,7 @@
           Clear filters
         </button>
         <button
+          data-jasmine="submitFormButton"
           [disabled]="!form.valid || !form.dirty"
           type="submit"
           mat-button

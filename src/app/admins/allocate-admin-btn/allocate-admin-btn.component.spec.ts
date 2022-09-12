@@ -1,4 +1,5 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { MaterialModule } from "../../shared/material/material.module";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
@@ -18,6 +19,7 @@ describe("AllocateAdminBtnComponent", () => {
       declarations: [AllocateAdminBtnComponent],
       imports: [
         HttpClientTestingModule,
+        MaterialModule,
         RouterTestingModule,
         NgxsModule.forRoot([RecommendationsState])
       ]

@@ -1,15 +1,29 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { EMPTY, Observable } from "rxjs";
+import { EMPTY, Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
+import { AuthService } from "src/app/core/auth/auth.service";
 
 @Injectable({
   providedIn: "root"
 })
 export class AutocompleteService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
+  private filterProgrammeName(query: string) {
+    const designatedBodies: string =
+      this.authService.userDesignatedBodies?.join(",");
 
-  loadNYMovies(query: string): Observable<any[]> {
+    const params = new HttpParams()
+      .set("fieldName", "programmeName")
+      .set("input", query)
+      .set("dbcs", designatedBodies);
+    console.log("params:", params);
+    //return this.http.get<any[]>("endpoint", { params });
+    const mock = ["apple", "banana", "cherry", "damson", "elderberry", "fig"];
+    return of(mock);
+  }
+
+  private loadNYMovies(query: string): Observable<any[]> {
     const apiKey: string = "GyIcunqNC1k86GYGU21QAUTdESGlGUOP";
     const params = new HttpParams().set("api-key", apiKey).set("query", query);
 
@@ -30,6 +44,10 @@ export class AutocompleteService {
 
   getData(query: string, methodName: string): Observable<any> {
     switch (methodName) {
+      case "programmeName": {
+        return this.filterProgrammeName(query);
+        break;
+      }
       case "loadMovies": {
         return this.loadNYMovies(query);
         break;

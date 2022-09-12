@@ -1,4 +1,4 @@
-import { TestBed } from "@angular/core/testing";
+import { TestBed, waitForAsync } from "@angular/core/testing";
 import {
   HttpClientTestingModule,
   HttpTestingController
@@ -30,13 +30,12 @@ describe("AutocompleteService", () => {
     expect(request.request.method).toBe("GET");
   });
 
-  it("should call no endpoint when invalid method name passed", (done: DoneFn) => {
+  it("should call no endpoint when invalid method name passed", waitForAsync(() => {
     service
       .getData("query", "NoMethod")
       .pipe(isEmpty())
       .subscribe((response) => {
         expect(response).toEqual(true);
-        done();
       });
-  });
+  }));
 });

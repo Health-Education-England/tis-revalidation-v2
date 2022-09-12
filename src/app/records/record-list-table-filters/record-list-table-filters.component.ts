@@ -18,7 +18,6 @@ export class RecordListTableFiltersComponent implements OnInit {
   activeTableFilters: ITableFilters;
   formControls: (FormControlBase | AutocompleteControl)[] = [];
   form!: FormGroup;
-  payLoad = "";
   constructor(private recordsService: RecordsService, private store: Store) {}
   public tableFilters$: Observable<any> = this.store.select(
     (state) => state[this.recordsService.stateName].tableFilters
@@ -43,7 +42,6 @@ export class RecordListTableFiltersComponent implements OnInit {
         this.activeTableFilters = filters;
       }
     });
-
     if (this.recordsService.tableFiltersFormData) {
       this.formControls = this.recordsService.tableFiltersFormData;
       this.form = this.recordsService.toFormGroup(

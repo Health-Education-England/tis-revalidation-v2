@@ -21,21 +21,12 @@ describe("AutocompleteService", () => {
   });
 
   it("should call correct endpoint", () => {
-    service.getData("query", "loadMovies").subscribe();
+    service.getListItems("programmeName", "query").subscribe();
     const request = httpTestingController.expectOne(
-      "nymovies?api-key=GyIcunqNC1k86GYGU21QAUTdESGlGUOP&query=query"
+      "/autocomplete?fieldName=programmeName"
     );
 
     request.flush(options);
     expect(request.request.method).toBe("GET");
   });
-
-  it("should call no endpoint when invalid method name passed", waitForAsync(() => {
-    service
-      .getData("query", "NoMethod")
-      .pipe(isEmpty())
-      .subscribe((response) => {
-        expect(response).toEqual(true);
-      });
-  }));
 });

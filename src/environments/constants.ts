@@ -4,6 +4,7 @@ export const APP_URLS_CONFIG: IEnvironment["appUrls"] = {
   addConcern: "api/concerns",
   addNote: "api/trainee/notes/add",
   allocateAdmin: `api/v1/doctors/assign-admin`,
+  autocomplete: ``,
   deleteFile: `api/storage/delete`,
   downloadFile: `api/storage/download`,
   editNote: `api/trainee/notes/edit`,
@@ -43,11 +44,6 @@ export const LONDON_DBCS: string[] = [
   "1-AIIDR8"
 ];
 
-export const ADMIN_ROLES = [
-  "RevalApprover",
-  "RevalAdmin"
-];
+export const ADMIN_ROLES = ["RevalApprover", "RevalAdmin"];
 
-export const APPROVER_ROLES = [
-  "RevalApprover"
-];
+export const APPROVER_ROLES = ["RevalApprover"];

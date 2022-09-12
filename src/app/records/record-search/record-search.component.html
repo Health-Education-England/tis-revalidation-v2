@@ -1,6 +1,7 @@
 <div class="d-grid record-search">
   <div class="d-flex pl-25 pr-20 align-items-center">
     <button
+      data-cy="toggleFixedColumnsButton"
       color="primary"
       matTooltipPosition="below"
       matTooltipShowDelay="500"
@@ -28,6 +29,7 @@
     </button>
 
     <button
+      data-cy="toggleTableFiltersButton"
       *ngIf="showTableFilters"
       color="primary"
       [matTooltip]="

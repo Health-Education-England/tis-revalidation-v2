@@ -1,3 +1,4 @@
+import { ValueConverter } from "@angular/compiler/src/render3/view/template";
 import { Component, OnInit, Input } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
 import { debounceTime, filter, finalize, switchMap, tap } from "rxjs/operators";
@@ -42,21 +43,24 @@ export class MaterialAutocompleteComponent implements OnInit {
     this.meta &&
       this.form.controls[this.meta.key].valueChanges
         .pipe(
-          filter((res) => {
-            if (res !== null && res.length >= this.minLengthTerm) {
-              return res;
+          filter((inputValue) => {
+            if (
+              inputValue !== null &&
+              inputValue.length >= this.minLengthTerm
+            ) {
+              return inputValue;
             }
-            this.filteredItems = [];
+            // this.filteredItems = [];
           }),
           //distinctUntilChanged(),
           debounceTime(this.debounceTime),
-          tap((value: string) => {
+          tap(() => {
             this.filteredItems = [];
             this.isLoading = true;
           }),
-          switchMap((value: string) =>
+          switchMap((inputValue: string) =>
             this.autocompleteService
-              .getData(value, this.meta.serviceMethod)
+              .getListItems(this.meta.key, inputValue)
               .pipe(
                 finalize(() => {
                   this.isLoading = false;

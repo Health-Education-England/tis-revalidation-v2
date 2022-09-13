@@ -159,18 +159,14 @@ export class RecommendationsState extends RecordsState {
     ctx: StateContext<RecommendationsStateModel>,
     action: SetRecommendationsTableFilters
   ) {
-    return ctx.patchState({
-      tableFilters: action.tableFilter
-    });
+    return super.setTableFiltersHandler(ctx, action);
   }
 
   @Action(ClearRecommendationsTableFilters)
   clearRecommendationsTableFilters(
     ctx: StateContext<RecommendationsStateModel>
   ) {
-    return ctx.patchState({
-      tableFilters: null
-    });
+    return super.clearTableFiltersHandler(ctx);
   }
 
   @Action(FilterRecommendations)

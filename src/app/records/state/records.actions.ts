@@ -13,7 +13,7 @@ export class FilterPayload<T> {
 }
 
 export class TableFiltersPayload<T> {
-  constructor(public tableFilter: T) {}
+  constructor(public tableFilters: T) {}
 }
 export class SearchPayload {
   constructor(public searchQuery: string) {}

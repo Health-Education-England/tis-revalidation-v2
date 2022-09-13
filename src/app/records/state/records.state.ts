@@ -107,8 +107,8 @@ export class RecordsState {
     });
   }
 
-  static tableFilters<T>() {
-    return createSelector([this], (state: { tableFilters: T }) => {
+  static tableFilters<T2>() {
+    return createSelector([this], (state: { tableFilters: T2 }) => {
       return state.tableFilters;
     });
   }
@@ -190,6 +190,18 @@ export class RecordsState {
 
   protected resetFilterHandler(ctx: StateContext<any>, action: any) {
     ctx.patchState({ filter: action });
+  }
+
+  protected setTableFiltersHandler(ctx: StateContext<any>, action: any) {
+    ctx.patchState({
+      tableFilters: action.tableFilters
+    });
+  }
+
+  protected clearTableFiltersHandler(ctx: StateContext<any>) {
+    ctx.patchState({
+      tableFilters: null
+    });
   }
 
   protected enableAllocateAdminHandler(ctx: StateContext<any>, action: any) {

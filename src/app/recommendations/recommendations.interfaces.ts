@@ -1,4 +1,7 @@
-import { IGetRecordsResponse } from "../records/records.interfaces";
+import {
+  IGetRecordsResponse,
+  ITableFilters
+} from "../records/records.interfaces";
 import {
   RecommendationStatus,
   RecommendationGmcOutcome
@@ -29,9 +32,10 @@ export interface IGetRecommendationsResponse extends IGetRecordsResponse {
   recommendationInfo: IRecommendation[];
 }
 
-export interface IRecommendationsTableFilters {
-  programmeName: string;
-  gmcStatus: string;
+export interface IRecommendationsTableFilters extends ITableFilters {
+  programmeName?: string;
+  gmcStatus?: string[];
+  tisStatus?: string[];
 }
 
 export enum RecommendationsFilterType {

@@ -5,6 +5,7 @@ import { Router } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { BehaviorSubject, forkJoin, Observable } from "rxjs";
 import { switchMap, take } from "rxjs/operators";
+import { IRecommendationsTableFilters } from "src/app/recommendations/recommendations.interfaces";
 import {
   FormControlBase,
   AutocompleteControl
@@ -53,7 +54,7 @@ import {
   SetRecommendationsTableFilters,
   ClearRecommendationsTableFilters
 } from "../../recommendations/state/recommendations.actions";
-import { IFilter, IRecordDataCell } from "../records.interfaces";
+import { IFilter, IRecordDataCell, ITableFilters } from "../records.interfaces";
 
 @Injectable({
   providedIn: "root"
@@ -167,7 +168,7 @@ export class RecordsService {
    * which is great for performance.
    */
 
-  private buildQueryParams() {
+  private buildQueryParamsForRoute() {
     const snapshot: any = this.store.snapshot()[this.stateName];
     const params = {
       active: snapshot.sort.active,
@@ -190,11 +191,10 @@ export class RecordsService {
   }
 
   public updateRoute(): Promise<boolean> {
-    const snapshot: any = this.store.snapshot()[this.stateName];
     const current = this.router.url.split("?")[0];
 
     return this.router.navigate([current], {
-      queryParams: this.buildQueryParams()
+      queryParams: this.buildQueryParamsForRoute()
     });
   }
 
@@ -233,7 +233,7 @@ export class RecordsService {
     return this.store.dispatch(new this.clearSearchAction());
   }
 
-  public setTableFilters(filters: any): Observable<any> {
+  public setTableFilters(filters: ITableFilters): Observable<any> {
     this.handleUndefinedAction("setTableFilters");
     return this.store.dispatch(new this.setTableFiltersAction(filters));
   }

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { ActivatedRouteSnapshot, Resolve } from "@angular/router";
+import { ActivatedRouteSnapshot, Params, Resolve } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { generateColumnData } from "../records/constants";
@@ -10,11 +10,15 @@ import {
   TABLE_FILTERS_FORM_BASE,
   TABLE_FILTERS_FORM_DBC
 } from "./constants";
-import { RecommendationsFilterType } from "./recommendations.interfaces";
+import {
+  IRecommendationsTableFilters,
+  RecommendationsFilterType
+} from "./recommendations.interfaces";
 import { AuthService } from "../core/auth/auth.service";
 import { UpdateConnectionsService } from "../update-connections/services/update-connections.service";
 import { stateName } from "../records/records.interfaces";
 import { FormControlBase } from "../shared/form-controls/form-contol-base.model";
+import { RecommendationsStateModel } from "./state/recommendations.state";
 @Injectable()
 export class RecommendationsResolver
   extends RecordsResolver
@@ -69,6 +73,22 @@ export class RecommendationsResolver
   }
 
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    const paramsExist: boolean = Object.keys(route.queryParams).length > 0;
+    if (paramsExist) {
+      const state: RecommendationsStateModel = this.store.selectSnapshot(
+        (snapshot) => snapshot.recommendations
+      );
+
+      const filters: IRecommendationsTableFilters = {};
+      if (
+        route.queryParams.programmeName !== state.tableFilters?.programmeName
+      ) {
+        filters.programmeName = route.queryParams.programmeName;
+
+        this.recordsService.setTableFilters(filters);
+        this.recordsService.toggleTableFilterPanel$.next(true);
+      }
+    }
     return super.resolve(route);
   }
 }

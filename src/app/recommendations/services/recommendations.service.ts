@@ -17,8 +17,8 @@ export class RecommendationsService {
   ) {}
 
   public generateParams(): HttpParams {
-    const snapshot: RecommendationsStateModel = this.store.snapshot()
-      .recommendations;
+    const snapshot: RecommendationsStateModel =
+      this.store.snapshot().recommendations;
     let params: HttpParams = this.recordsService.generateParams(snapshot);
 
     params = params
@@ -28,7 +28,8 @@ export class RecommendationsService {
           ? "true"
           : "false"
       )
-      .append("dbcs", this.authService.userDesignatedBodies.join(","));
+      .append("dbcs", this.authService.userDesignatedBodies.join(","))
+      .append("programmeName", snapshot.tableFilters?.programmeName || "");
 
     return params;
   }

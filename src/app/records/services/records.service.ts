@@ -5,7 +5,7 @@ import { Router } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { BehaviorSubject, forkJoin, Observable } from "rxjs";
 import { switchMap, take } from "rxjs/operators";
-import { IRecommendationsTableFilters } from "src/app/recommendations/recommendations.interfaces";
+
 import {
   FormControlBase,
   AutocompleteControl
@@ -69,7 +69,7 @@ export class RecordsService {
   public columnData: IRecordDataCell[];
   public detailsRoute: string;
   public filters: IFilter[];
-  public showTableFilters: boolean = false;
+  public showTableFilters: boolean;
   public tableFiltersFormData: (FormControlBase | AutocompleteControl)[];
 
   // TODO type these

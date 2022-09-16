@@ -5,11 +5,7 @@ import { Observable } from "rxjs";
 import { generateColumnData } from "../records/constants";
 import { RecordsResolver } from "../records/records.resolver";
 import { RecordsService } from "../records/services/records.service";
-import {
-  COLUMN_DATA,
-  TABLE_FILTERS_FORM_BASE,
-  TABLE_FILTERS_FORM_DBC
-} from "./constants";
+import { COLUMN_DATA, TABLE_FILTERS_FORM_BASE } from "./constants";
 import {
   IRecommendationsTableFilters,
   RecommendationsFilterType
@@ -37,6 +33,7 @@ export class RecommendationsResolver
   private initialiseData(): void {
     this.recordsService.stateName = stateName.RECOMMENDATIONS;
     this.recordsService.detailsRoute = "/recommendation";
+    this.recordsService.showTableFilters = true;
     this.recordsService.setRecommendationsActions();
     this.recordsService.dateColumns = [
       "curriculumEndDate",
@@ -47,14 +44,13 @@ export class RecommendationsResolver
 
     if (this.authService.inludesLondonDbcs) {
       const statusIndex = COLUMN_DATA.findIndex((dbc) => dbc[0] === "Status");
-      TABLE_FILTERS_FORM_BASE.push(TABLE_FILTERS_FORM_DBC);
       COLUMN_DATA.splice(statusIndex + 1, 0, [
         "Designated body",
         "designatedBody",
         false
       ]);
     }
-    this.recordsService.showTableFilters = true;
+
     this.recordsService.tableFiltersFormData = TABLE_FILTERS_FORM_BASE.sort(
       (a: FormControlBase, b: FormControlBase) => a.order - b.order
     );

@@ -23,6 +23,7 @@ export class ConcernsResolver extends RecordsResolver implements Resolve<any> {
   private initialiseData(): void {
     this.recordsService.stateName = "concerns";
     this.recordsService.detailsRoute = "/concern";
+    this.recordsService.showTableFilters = false;
     this.recordsService.setConcernsActions();
     this.recordsService.dateColumns = [
       "closedDate",

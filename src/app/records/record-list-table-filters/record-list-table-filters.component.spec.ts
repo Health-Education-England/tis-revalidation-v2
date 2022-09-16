@@ -229,8 +229,6 @@ describe("Record List Table FIlters", () => {
         ...(snapshot.searchQuery && { searchQuery: snapshot.searchQuery })
       }
     });
-    console.log("#######################", location.path());
-
     flush();
   }));
 });

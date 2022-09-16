@@ -4,7 +4,6 @@ import { createSelector, StateContext } from "@ngxs/store";
 import { patch, updateItem } from "@ngxs/store/operators";
 import { DEFAULT_SORT } from "../constants";
 import { ITotalCounts } from "../records.interfaces";
-import { ITableFilters } from "../records.interfaces";
 import { RecordsService } from "../services/records.service";
 
 export class RecordsStateModel<T, F, T2 = {}> {

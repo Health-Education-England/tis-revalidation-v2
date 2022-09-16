@@ -1,7 +1,7 @@
 export interface FormControlBase {
   key: string;
   label?: string;
-  initialValue: any;
+  initialValue?: any;
   required?: boolean;
   order: number;
   controlType: string;

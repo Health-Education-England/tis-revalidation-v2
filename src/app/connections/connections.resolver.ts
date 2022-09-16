@@ -26,6 +26,7 @@ export class ConnectionsResolver
   private initialiseData(): void {
     this.recordsService.stateName = stateName.CONNECTIONS;
     this.recordsService.detailsRoute = "/connection";
+    this.recordsService.showTableFilters = false;
     this.recordsService.setConnectionsActions();
     this.recordsService.dateColumns = [
       "submissionDate",

@@ -1,7 +1,14 @@
 import { ValueConverter } from "@angular/compiler/src/render3/view/template";
 import { Component, OnInit, Input } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
-import { debounceTime, filter, finalize, switchMap, tap } from "rxjs/operators";
+import {
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  finalize,
+  switchMap,
+  tap
+} from "rxjs/operators";
 import { SnackBarService } from "../../services/snack-bar/snack-bar.service";
 import { AutocompleteControl } from "../form-contol-base.model";
 import { AutocompleteService } from "./autocomplete.service";
@@ -14,7 +21,7 @@ import { AutocompleteService } from "./autocomplete.service";
 export class MaterialAutocompleteComponent implements OnInit {
   @Input() controlProperties!: AutocompleteControl;
   @Input() form!: FormGroup;
-  debounceTime: number = 800;
+  debounceTime: number = 500;
   minLengthTerm: number = 3;
 
   filteredItems: any;
@@ -51,7 +58,7 @@ export class MaterialAutocompleteComponent implements OnInit {
               return inputValue;
             }
           }),
-          //distinctUntilChanged(),
+          distinctUntilChanged(),
           debounceTime(this.debounceTime),
           tap(() => {
             this.filteredItems = [];
@@ -59,7 +66,7 @@ export class MaterialAutocompleteComponent implements OnInit {
           }),
           switchMap((inputValue: string) =>
             this.autocompleteService
-              .getMatchingItems(this.controlProperties.key, inputValue)
+              .getItems(this.controlProperties.key, inputValue)
               .pipe(
                 finalize(() => {
                   this.isLoading = false;

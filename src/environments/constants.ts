@@ -4,7 +4,7 @@ export const APP_URLS_CONFIG: IEnvironment["appUrls"] = {
   addConcern: "api/concerns",
   addNote: "api/trainee/notes/add",
   allocateAdmin: `api/v1/doctors/assign-admin`,
-  autocomplete: ``,
+  autocomplete: `api/v1/doctors/autocomplete`,
   deleteFile: `api/storage/delete`,
   downloadFile: `api/storage/download`,
   editNote: `api/trainee/notes/edit`,

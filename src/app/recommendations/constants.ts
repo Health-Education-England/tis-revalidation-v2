@@ -28,51 +28,10 @@ export const TABLE_FILTERS_FORM_BASE: Array<
   FormControlBase | AutocompleteControl
 > = [
   {
-    key: "gmcStatus",
-    label: "GMC Status",
-    options: [
-      { key: "Approved", value: "Approved" },
-      { key: "Rejected", value: "Rejected" },
-      { key: "Under Review", value: "Under Review" }
-    ],
-    order: 1,
-    controlType: "selectionList",
-    initialValue: []
-  },
-  {
-    key: "tisStatus",
-    label: "TIS Status",
-    options: [
-      { key: "Not started", value: "Not started" },
-      { key: "Submitted to GMC", value: "Submitted to GMC" },
-      { key: "Draft", value: "Draft" },
-      { key: "Complete", value: "Complete" }
-    ],
-    order: 2,
-    controlType: "selectionList",
-    initialValue: []
-  },
-  {
     key: "programmeName",
     label: "Programme name",
-    order: 4,
-    initialValue: "",
+    order: 1,
     controlType: "autocomplete",
-    serviceMethod: "loadMovies",
     placeholder: "Start typing..."
   }
 ];
-
-export const TABLE_FILTERS_FORM_DBC: FormControlBase = {
-  key: "dbc",
-  label: "Designated Body",
-  options: [
-    { key: "KSS", value: "Kent, Surrey and Sussex" },
-    { key: "NCEL", value: "North Central and East London" },
-    { key: "NWL", value: "North West London" },
-    { key: "SL", value: "South London" }
-  ],
-  order: 3,
-  controlType: "selectionList",
-  initialValue: []
-};

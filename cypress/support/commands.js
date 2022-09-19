@@ -34,4 +34,17 @@ Cypress.Commands.add("login", () => {
   cy.get("#kc-form-wrapper").find("#username").type(username);
   cy.get("#kc-form-wrapper").find("#password").type(password);
   cy.get("#kc-form-wrapper").find("#kc-login").click();
+  cy.wait(3000);
+});
+
+Cypress.Commands.add("loginSession", () => {
+  cy.session([username, password], () => {
+    cy.visit("/");
+    cy.get("form").eq(1).as("form");
+    cy.get("@form").find(".idpButton-customizable").click();
+    cy.get("#kc-form-wrapper").find("#username").type(username);
+    cy.get("#kc-form-wrapper").find("#password").type(password);
+    cy.get("#kc-form-wrapper").find("#kc-login").click();
+    cy.wait(3000);
+  });
 });

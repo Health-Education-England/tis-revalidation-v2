@@ -1,7 +1,12 @@
 <div class="filters-wrapper">
   <div class="mb-20">
     <h2>Filters</h2>
-    <form (ngSubmit)="onSubmit()" *ngIf="form" [formGroup]="form">
+    <form
+      data-cy="tableFiltersForm"
+      (ngSubmit)="onSubmit()"
+      *ngIf="form"
+      [formGroup]="form"
+    >
       <div *ngFor="let control of formControls" class="form-row">
         <app-form-controller
           [control]="control"

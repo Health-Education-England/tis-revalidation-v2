@@ -1,5 +1,6 @@
-<div data-jasmine="formControl" [formGroup]="form">
+<div data-jasmine="formControl" data-cy="formFieldWrapper" [formGroup]="form">
   <mat-form-field
+    attr.data-cy="formfield_{{ controlProperties.key }}"
     *ngIf="controlProperties"
     style="width: 100%"
     appearance="fill"

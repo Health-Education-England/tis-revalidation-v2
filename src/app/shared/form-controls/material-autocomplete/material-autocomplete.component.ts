@@ -23,7 +23,6 @@ export class MaterialAutocompleteComponent implements OnInit {
   @Input() form!: FormGroup;
   debounceTime: number = 500;
   minLengthTerm: number = 3;
-
   filteredItems: any;
   isLoading: boolean;
   isNoMatches: boolean;

@@ -57,7 +57,7 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
     this.isConnectionsSummary =
       this.recordsService.stateName === stateName.CONNECTIONS;
     this.isRevalAdmin = this.authService.isRevalAdmin;
-    this.searchLabel = "Search name, programme or GMC no";
+    this.searchLabel = "Search name or GMC no";
   }
 
   ngOnInit() {

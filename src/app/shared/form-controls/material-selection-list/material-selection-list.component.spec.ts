@@ -1,9 +1,13 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { MaterialSelectionListComponent } from "./material-selection-list.component";
 import { FormControlBase } from "../form-contol-base.model";
-import { FormControl, FormGroup } from "@angular/forms";
 import { MaterialModule } from "src/app/shared/material/material.module";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule
+} from "@angular/forms";
 import { By } from "@angular/platform-browser";
 
 describe("MaterialSelectionListComponent", () => {
@@ -20,7 +24,6 @@ describe("MaterialSelectionListComponent", () => {
     controlType: "selectionList",
     initialValue: []
   };
-  let form: FormGroup;
   let data: any = {};
 
   beforeEach(async () => {
@@ -36,7 +39,6 @@ describe("MaterialSelectionListComponent", () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(MaterialSelectionListComponent);
     component = fixture.componentInstance;
-    component;
     component.controlProperties = controlProperties;
     const group: any = {};
     group[component.controlProperties.key] = new FormControl(

@@ -42,38 +42,13 @@ describe("FormControllerComponent", () => {
       controlType: "selectionList",
       initialValue: []
     },
+
     {
-      key: "selectionList2_Key",
-      label: "selection List 2 Label",
-      options: [
-        {
-          key: "selectionList2_OptionKey1",
-          value: "selection List 2 Option Value 1"
-        },
-        {
-          key: "selectionList2_OptionKey2",
-          value: "selection List 2 Option Value 2"
-        },
-        {
-          key: "selectionList2_OptionKey3",
-          value: "selection List 2 Option Value 3"
-        },
-        {
-          key: "selectionList2_OptionKey4",
-          value: "selection List 2 Option Value 4"
-        }
-      ],
-      order: 4,
-      controlType: "selectionList",
-      initialValue: []
-    },
-    {
-      key: "autocomplete_key",
+      key: "autocompleteKey",
       label: "autocomplete label",
       order: 4,
       initialValue: "",
       controlType: "autocomplete",
-      serviceMethod: "loadMovies",
       placeholder: "Start typing..."
     }
   ];
@@ -100,17 +75,22 @@ describe("FormControllerComponent", () => {
     expect(component).toBeTruthy();
   });
 
-  it("should render a form control when set", () => {
-    component.control = {
-      key: "autocompleteKey",
-      label: "autocomplete label",
-      order: 4,
-      initialValue: "",
-      controlType: "autocomplete",
-      placeholder: "Start typing..."
-    };
+  it("should render a selection list form control when set", () => {
+    component.control = formControls[0];
     component.form = new FormGroup({
-      autocompleteKey: new FormControl("")
+      [formControls[0].key]: new FormControl("")
+    });
+    fixture.detectChanges();
+    expect(
+      fixture.debugElement.query(By.css("app-material-selection-list"))
+        .nativeElement
+    ).toBeTruthy();
+  });
+
+  it("should render an autocomplete form control when set", () => {
+    component.control = formControls[1];
+    component.form = new FormGroup({
+      [formControls[1].key]: new FormControl("")
     });
     fixture.detectChanges();
     expect(

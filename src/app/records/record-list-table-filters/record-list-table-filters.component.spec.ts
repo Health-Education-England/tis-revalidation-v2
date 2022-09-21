@@ -85,7 +85,6 @@ describe("Record List Table FIlters", () => {
       order: 4,
       initialValue: "",
       controlType: "autocomplete",
-      serviceMethod: "loadMovies",
       placeholder: "Start typing..."
     }
   ];

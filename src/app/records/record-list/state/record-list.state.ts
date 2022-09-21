@@ -13,8 +13,6 @@ export class RecordListStateModel {
 })
 @Injectable()
 export class RecordListState {
-  constructor() {}
-
   @Selector()
   static isFixedColumns(state: RecordListStateModel) {
     return state.fixedColumns;

@@ -23,7 +23,6 @@ import {
   AutocompleteControl,
   FormControlBase
 } from "src/app/shared/form-controls/form-contol-base.model";
-import { Location } from "@angular/common";
 import { Router } from "@angular/router";
 import { of } from "rxjs";
 
@@ -32,7 +31,6 @@ describe("Record List Table FIlters", () => {
   let recordsService: RecordsService;
   let fixture: ComponentFixture<RecordListTableFiltersComponent>;
   let component: RecordListTableFiltersComponent;
-  let location: Location;
   let router: Router;
   const formControls: (FormControlBase | AutocompleteControl)[] = [
     {
@@ -107,7 +105,6 @@ describe("Record List Table FIlters", () => {
     store = TestBed.inject(Store);
     recordsService = TestBed.inject(RecordsService);
     router = TestBed.inject(Router);
-    location = TestBed.inject(Location);
   }));
 
   beforeEach(() => {

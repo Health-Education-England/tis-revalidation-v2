@@ -16,7 +16,7 @@ import { RecordsService } from "./services/records.service";
   templateUrl: "./records.component.html",
   styleUrls: ["./records.component.scss"]
 })
-export class RecordsComponent implements OnInit {
+export class RecordsComponent implements OnInit, OnDestroy {
   @Output() updateConnections = new EventEmitter<any>();
   @Input() public loading: boolean;
   showTableFilters: boolean;

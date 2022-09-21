@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { ActivatedRouteSnapshot, Params, Resolve } from "@angular/router";
+import { ActivatedRouteSnapshot, Resolve } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { generateColumnData } from "../records/constants";
@@ -51,9 +51,9 @@ export class RecommendationsResolver
       ]);
     }
 
-    this.recordsService.tableFiltersFormData = TABLE_FILTERS_FORM_BASE.sort(
-      (a: FormControlBase, b: FormControlBase) => a.order - b.order
-    );
+    this.recordsService.tableFiltersFormData = [
+      ...TABLE_FILTERS_FORM_BASE
+    ].sort((a: FormControlBase, b: FormControlBase) => a.order - b.order);
 
     this.recordsService.columnData = generateColumnData(COLUMN_DATA);
     this.recordsService.filters = [

@@ -1,10 +1,9 @@
-import { TestBed, waitForAsync } from "@angular/core/testing";
+import { TestBed } from "@angular/core/testing";
 import {
   HttpClientTestingModule,
   HttpTestingController
 } from "@angular/common/http/testing";
 import { AutocompleteService } from "./autocomplete.service";
-import { isEmpty } from "rxjs/operators";
 
 describe("AutocompleteService", () => {
   let service: AutocompleteService;
@@ -21,7 +20,7 @@ describe("AutocompleteService", () => {
   });
 
   it("should call correct endpoint", () => {
-    service.getMatchingItems("programmeName", "query").subscribe();
+    service.getItems("programmeName", "query").subscribe();
     const request = httpTestingController.expectOne(
       "/autocomplete?fieldName=programmeName"
     );

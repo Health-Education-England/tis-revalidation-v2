@@ -1,6 +1,5 @@
-import { ValueConverter } from "@angular/compiler/src/render3/view/template";
 import { Component, OnInit, Input } from "@angular/core";
-import { FormControl, FormGroup } from "@angular/forms";
+import { FormGroup } from "@angular/forms";
 import {
   debounceTime,
   distinctUntilChanged,
@@ -9,7 +8,6 @@ import {
   switchMap,
   tap
 } from "rxjs/operators";
-import { SnackBarService } from "../../services/snack-bar/snack-bar.service";
 import { AutocompleteControl } from "../form-contol-base.model";
 import { AutocompleteService } from "./autocomplete.service";
 

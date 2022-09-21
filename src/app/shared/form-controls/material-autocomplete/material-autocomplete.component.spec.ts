@@ -1,10 +1,13 @@
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { Component, OnInit } from "@angular/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { AutocompleteControl } from "../form-contol-base.model";
-import { FormControl, FormGroup } from "@angular/forms";
+import {
+  FormsModule,
+  ReactiveFormsModule,
+  FormControl,
+  FormGroup
+} from "@angular/forms";
 import { MaterialModule } from "src/app/shared/material/material.module";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+
 import { By } from "@angular/platform-browser";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { MaterialAutocompleteComponent } from "./material-autocomplete.component";

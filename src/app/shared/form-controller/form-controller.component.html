@@ -1,4 +1,4 @@
-<div [ngSwitch]="control.controlType">
+<div [ngSwitch]="control?.controlType">
   <app-material-selection-list
     *ngSwitchCase="'selectionList'"
     [controlProperties]="control"

@@ -22,7 +22,7 @@ describe("AutocompleteService", () => {
   it("should call correct endpoint", () => {
     service.getItems("programmeName", "query").subscribe();
     const request = httpTestingController.expectOne(
-      "/autocomplete?fieldName=programmeName"
+      "api/v1/doctors/autocomplete?fieldName=programmeName&input=query&dbcs="
     );
 
     request.flush(options);

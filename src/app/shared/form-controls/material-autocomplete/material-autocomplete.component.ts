@@ -53,6 +53,8 @@ export class MaterialAutocompleteComponent implements OnInit {
               inputValue.length >= this.minLengthTerm
             ) {
               return inputValue;
+            } else {
+              this.filteredItems = [];
             }
           }),
           distinctUntilChanged(),

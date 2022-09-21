@@ -17,7 +17,7 @@ import { of } from "rxjs";
 describe("MaterialAutocompleteComponent", () => {
   let component: MaterialAutocompleteComponent;
   let fixture: ComponentFixture<MaterialAutocompleteComponent>;
-  let mockAutocompleteService = jasmine.createSpyObj(["getMatchingItems"]);
+  let mockAutocompleteService = jasmine.createSpyObj(["getItems"]);
 
   const data = {};
   const options: string[] = ["apple", "banana", "cherry", "date"];
@@ -25,7 +25,7 @@ describe("MaterialAutocompleteComponent", () => {
     inputValue: string,
     searchOptions: string[] = options
   ) => {
-    mockAutocompleteService.getMatchingItems.and.returnValue(of(searchOptions));
+    mockAutocompleteService.getItems.and.returnValue(of(searchOptions));
 
     const inputElement = fixture.debugElement.query(By.css("input"));
     inputElement.nativeElement.dispatchEvent(new Event("focusin"));

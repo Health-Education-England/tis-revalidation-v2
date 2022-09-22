@@ -6,7 +6,7 @@ import { CognitoUserSession } from "amazon-cognito-identity-js";
 import { AuthService } from "./auth.service";
 import { EMPTY, of } from "rxjs";
 
-fdescribe("AuthService", () => {
+describe("AuthService", () => {
   let service: AuthService;
   let http: HttpClient;
   const defaultPayload: { [key: string]: any } = {
@@ -97,7 +97,7 @@ fdescribe("AuthService", () => {
     });
   });
 
-  fit("should invoke Auth federated signin when currentsession is not avaialbel", () => {
+  it("should invoke Auth federated signin when currentsession is not avaialbel", () => {
     spyOn(service, "currentSession").and.returnValue(EMPTY);
 
     spyOn(service, "signIn");

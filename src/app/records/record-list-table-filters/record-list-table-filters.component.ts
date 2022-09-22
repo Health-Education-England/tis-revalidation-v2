@@ -25,6 +25,7 @@ export class RecordListTableFiltersComponent implements OnInit {
 
   clearFilters() {
     this.form.reset();
+    this.recordsService.resetPaginator();
     this.recordsService.clearTableFilters().subscribe(() => {
       this.recordsService.updateRoute();
     });

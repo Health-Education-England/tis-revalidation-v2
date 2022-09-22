@@ -4,7 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import { Auth } from "aws-amplify";
 import { CognitoUserSession } from "amazon-cognito-identity-js";
 import { AuthService } from "./auth.service";
-import { EMPTY, of } from "rxjs";
+import { EMPTY } from "rxjs";
 
 describe("AuthService", () => {
   let service: AuthService;

@@ -1,7 +1,8 @@
 @import "~nhsuk-frontend/packages/core/settings/colours";
 // re-usable styles and mixins
 
-h2 {
+h2,
+.h2 {
   font-size: 12px;
   font-weight: bold;
   padding-bottom: 10px;
@@ -96,6 +97,13 @@ $colour-values: (
 .mat-tab-label,
 .mat-tab-link {
   color: shade($color_nhsuk-black, 100%);
+}
+
+.mat-list-text {
+  font-size: 14px;
+}
+.mat-list-option {
+  height: 36px !important;
 }
 
 .centered {

@@ -1,0 +1,41 @@
+<div data-jasmine="formControl" data-cy="formFieldWrapper" [formGroup]="form">
+  <mat-form-field
+    attr.data-cy="formfield_{{ controlProperties.key }}"
+    *ngIf="controlProperties"
+    style="width: 100%"
+    appearance="fill"
+  >
+    <mat-label>{{ controlProperties.label }}</mat-label>
+    <input
+      matInput
+      [matAutocomplete]="auto"
+      [formControlName]="controlProperties.key"
+      [placeholder]="controlProperties.placeholder"
+    />
+
+    <button
+      *ngIf="this.form.controls[this.controlProperties.key].value"
+      matSuffix
+      mat-icon-button
+      aria-label="Clear"
+      data-jasmine="clearInputButton"
+      (click)="clearSelection()"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+
+    <mat-autocomplete
+      [panelWidth]="400"
+      #auto="matAutocomplete"
+      (optionSelected)="onSelected()"
+    >
+      <mat-option *ngIf="isLoading" class="is-loading">Loading...</mat-option>
+      <ng-container *ngIf="!isLoading">
+        <mat-option *ngFor="let item of filteredItems" [value]="item">
+          <span>{{ item }}</span>
+        </mat-option>
+      </ng-container>
+    </mat-autocomplete>
+  </mat-form-field>
+  <div class="mat-error error" *ngIf="isNoMatches">No matches found.</div>
+</div>

@@ -1,9 +1,15 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { FormControl, FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { BehaviorSubject, forkJoin, Observable } from "rxjs";
 import { switchMap, take } from "rxjs/operators";
+
+import {
+  FormControlBase,
+  AutocompleteControl
+} from "src/app/shared/form-controls/form-contol-base.model";
 import {
   ClearConcernsSearch,
   ConcernsSearch,
@@ -44,20 +50,27 @@ import {
   ResetRecommendationsSort,
   SortRecommendations,
   ToggleAllRecommendationsCheckboxes,
-  ToggleRecommendationsCheckbox
+  ToggleRecommendationsCheckbox,
+  SetRecommendationsTableFilters,
+  ClearRecommendationsTableFilters
 } from "../../recommendations/state/recommendations.actions";
-import { IFilter, IRecordDataCell } from "../records.interfaces";
+import { IFilter, IRecordDataCell, ITableFilters } from "../records.interfaces";
 
 @Injectable({
   providedIn: "root"
 })
 export class RecordsService {
   public resetSearchForm$: BehaviorSubject<boolean> = new BehaviorSubject(null);
+  public toggleTableFilterPanel$: BehaviorSubject<boolean> =
+    new BehaviorSubject(false);
+
   public stateName: string;
   public dateColumns: string[];
   public columnData: IRecordDataCell[];
   public detailsRoute: string;
   public filters: IFilter[];
+  public showTableFilters: boolean;
+  public tableFiltersFormData: (FormControlBase | AutocompleteControl)[];
 
   // TODO type these
   public clearSearchAction: any;
@@ -72,6 +85,8 @@ export class RecordsService {
   public enableAllocateAdminAction: any;
   public toggleCheckboxAction: any;
   public toggleAllCheckboxesAction: any;
+  public setTableFiltersAction: any;
+  public clearTableFiltersAction: any;
 
   constructor(
     private http: HttpClient,
@@ -92,6 +107,8 @@ export class RecordsService {
     this.enableAllocateAdminAction = EnableRecommendationsAllocateAdmin;
     this.toggleCheckboxAction = ToggleRecommendationsCheckbox;
     this.toggleAllCheckboxesAction = ToggleAllRecommendationsCheckboxes;
+    this.setTableFiltersAction = SetRecommendationsTableFilters;
+    this.clearTableFiltersAction = ClearRecommendationsTableFilters;
   }
 
   public setConcernsActions(): void {
@@ -150,17 +167,34 @@ export class RecordsService {
    * which effectively means the components do not get reinstantiated
    * which is great for performance.
    */
-  public updateRoute(): Promise<boolean> {
+
+  private buildQueryParamsForRoute() {
     const snapshot: any = this.store.snapshot()[this.stateName];
+    const params = {
+      active: snapshot.sort.active,
+      direction: snapshot.sort.direction,
+      pageIndex: snapshot.pageIndex,
+      filter: snapshot.filter,
+      ...(snapshot.searchQuery && { searchQuery: snapshot.searchQuery })
+    };
+    const tableFilters = snapshot.tableFilters;
+    if (tableFilters) {
+      Object.keys(tableFilters).forEach((key) => {
+        if (Array.isArray(tableFilters[key])) {
+          params[key] = tableFilters[key].join(",");
+        } else {
+          params[key] = tableFilters[key];
+        }
+      });
+    }
+    return params;
+  }
+
+  public updateRoute(): Promise<boolean> {
     const current = this.router.url.split("?")[0];
+
     return this.router.navigate([current], {
-      queryParams: {
-        active: snapshot.sort.active,
-        direction: snapshot.sort.direction,
-        pageIndex: snapshot.pageIndex,
-        filter: snapshot.filter,
-        ...(snapshot.searchQuery && { searchQuery: snapshot.searchQuery })
-      }
+      queryParams: this.buildQueryParamsForRoute()
     });
   }
 
@@ -197,6 +231,16 @@ export class RecordsService {
   public clearSearch(): Observable<any> {
     this.handleUndefinedAction("clearSearchAction");
     return this.store.dispatch(new this.clearSearchAction());
+  }
+
+  public setTableFilters(filters: ITableFilters): Observable<any> {
+    this.handleUndefinedAction("setTableFilters");
+    return this.store.dispatch(new this.setTableFiltersAction(filters));
+  }
+
+  public clearTableFilters(): Observable<any> {
+    this.handleUndefinedAction("clearTableFilters");
+    return this.store.dispatch(new this.clearTableFiltersAction());
   }
 
   public filter(filter: string): Observable<any> {
@@ -250,5 +294,16 @@ export class RecordsService {
     this.handleUndefinedAction("toggleAllCheckboxesAction");
 
     return this.store.dispatch(new this.toggleAllCheckboxesAction());
+  }
+
+  public toFormGroup(controls: FormControlBase[], formData: any = {}) {
+    const group: any = {};
+
+    controls.forEach((control) => {
+      group[control.key] = new FormControl(
+        formData[control.key] || control.initialValue || ""
+      );
+    });
+    return new FormGroup(group);
   }
 }

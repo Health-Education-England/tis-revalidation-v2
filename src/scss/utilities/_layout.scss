@@ -17,6 +17,14 @@
   display: flex;
 }
 
+// justify content
+.justify-content-end {
+  justify-content: flex-end;
+}
+.justify-content-start {
+  justify-content: flex-start;
+}
+
 // justify items
 .justify-items-start {
   justify-items: start;

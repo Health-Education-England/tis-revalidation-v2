@@ -6,7 +6,7 @@ import { DEFAULT_SORT } from "../constants";
 import { ITotalCounts } from "../records.interfaces";
 import { RecordsService } from "../services/records.service";
 
-export class RecordsStateModel<T, F> {
+export class RecordsStateModel<T, F, T2 = {}> {
   public allChecked: boolean;
   public enableAllocateAdmin?: boolean;
   public error?: string;
@@ -20,6 +20,7 @@ export class RecordsStateModel<T, F> {
   public totalPages: number;
   public totalResults: number;
   public totalCounts: ITotalCounts;
+  public tableFilters: T2;
 }
 
 export const defaultRecordsState = {
@@ -32,7 +33,8 @@ export const defaultRecordsState = {
   sort: DEFAULT_SORT,
   totalPages: null,
   totalResults: null,
-  totalCounts: null
+  totalCounts: null,
+  tableFilters: null
 };
 
 export class RecordsState {
@@ -101,6 +103,12 @@ export class RecordsState {
   static filter<T>() {
     return createSelector([this], (state: { filter: T }) => {
       return state.filter;
+    });
+  }
+
+  static tableFilters<T2>() {
+    return createSelector([this], (state: { tableFilters: T2 }) => {
+      return state.tableFilters;
     });
   }
 
@@ -181,6 +189,18 @@ export class RecordsState {
 
   protected resetFilterHandler(ctx: StateContext<any>, action: any) {
     ctx.patchState({ filter: action });
+  }
+
+  protected setTableFiltersHandler(ctx: StateContext<any>, action: any) {
+    ctx.patchState({
+      tableFilters: action.tableFilters
+    });
+  }
+
+  protected clearTableFiltersHandler(ctx: StateContext<any>) {
+    ctx.patchState({
+      tableFilters: null
+    });
   }
 
   protected enableAllocateAdminHandler(ctx: StateContext<any>, action: any) {

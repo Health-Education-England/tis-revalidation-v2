@@ -8,7 +8,7 @@ import { RecordsService } from "../records/services/records.service";
 import { UpdateConnectionsService } from "../update-connections/services/update-connections.service";
 import { ConnectionsFilterType } from "./connections.interfaces";
 import { COLUMN_DATA } from "./constants";
-
+import { stateName } from "../records/records.interfaces";
 @Injectable()
 export class ConnectionsResolver
   extends RecordsResolver
@@ -24,8 +24,9 @@ export class ConnectionsResolver
   }
 
   private initialiseData(): void {
-    this.recordsService.stateName = "connections";
+    this.recordsService.stateName = stateName.CONNECTIONS;
     this.recordsService.detailsRoute = "/connection";
+    this.recordsService.showTableFilters = false;
     this.recordsService.setConnectionsActions();
     this.recordsService.dateColumns = [
       "submissionDate",

@@ -3,9 +3,10 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Store } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
 import { filter, take } from "rxjs/operators";
-import { ConnectionsFilterType } from "src/app/connections/connections.interfaces";
 import { AuthService } from "src/app/core/auth/auth.service";
 import { UpdateConnectionsService } from "src/app/update-connections/services/update-connections.service";
+import { ToggleFixedColumns } from "../record-list/state/record-list.actions";
+import { stateName } from "../records.interfaces";
 import { RecordsService } from "../services/records.service";
 
 @Component({
@@ -30,12 +31,20 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
   public filter$: Observable<any> = this.store.select(
     (state) => state[this.recordsService.stateName].filter
   );
+  public fixedColumns$: Observable<boolean> = this.store.select(
+    (state) => state.recordList.fixedColumns
+  );
 
   public searchLabel: string;
+  public searchQuery: string;
   public isRevalAdmin: boolean;
   public isConnectionsSummary: boolean;
   public form: FormGroup;
   public subscriptions: Subscription = new Subscription();
+  showTableFilters: boolean;
+  filterPanelOpen: boolean = false;
+  showClearSearchForm: boolean = false;
+  fixedColumns: boolean;
   @ViewChild("ngForm") public ngForm;
 
   constructor(
@@ -45,24 +54,64 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
     private updateConnectionsService: UpdateConnectionsService,
     private authService: AuthService
   ) {
-    this.isConnectionsSummary = this.recordsService.stateName === "connections";
+    this.isConnectionsSummary =
+      this.recordsService.stateName === stateName.CONNECTIONS;
     this.isRevalAdmin = this.authService.isRevalAdmin;
-    this.searchLabel = "Search name, programme or GMC no";
+    this.searchLabel = "Search name or GMC no";
   }
 
   ngOnInit() {
     this.setupForm();
     this.listenToClearAllEvent();
     this.listenToAllocateAdminsEvent();
+    this.showTableFilters = this.recordsService.showTableFilters;
+    this.subscriptions.add(
+      this.recordsService.toggleTableFilterPanel$.subscribe(
+        (isOpen: boolean) => {
+          this.filterPanelOpen = isOpen;
+        }
+      )
+    );
+
+    this.subscriptions.add(
+      this.fixedColumns$.subscribe((isFixedColumns: boolean) => {
+        this.fixedColumns = isFixedColumns;
+      })
+    );
+
+    this.subscriptions.add(
+      this.searchQuery$.subscribe((searchQuery) => {
+        this.searchQuery = searchQuery;
+        searchQuery && this.form.get("searchQuery").setValue(searchQuery);
+        this.toggleResetFormButton();
+      })
+    );
+  }
+  public toggleFixedColumns() {
+    this.store.dispatch(new ToggleFixedColumns(!this.fixedColumns));
   }
 
   public setupForm(): void {
     this.form = this.formBuilder.group(
       {
-        searchQuery: [null, [Validators.required]]
+        searchQuery: this.searchQuery || null
       },
-      { updateOn: "submit" }
+      { updateOn: "change" }
     );
+
+    this.subscriptions.add(
+      this.form.get("searchQuery").valueChanges.subscribe((val) => {
+        this.toggleResetFormButton(val);
+      })
+    );
+  }
+
+  toggleResetFormButton(inputValue: string = "") {
+    if (inputValue || this.searchQuery) {
+      this.showClearSearchForm = true;
+    } else {
+      this.showClearSearchForm = false;
+    }
   }
 
   /**
@@ -77,7 +126,9 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.recordsService.resetSearchForm$
         .pipe(filter(Boolean))
-        .subscribe(() => this.ngForm.resetForm())
+        .subscribe(() => {
+          this.ngForm?.resetForm();
+        })
     );
   }
 
@@ -138,6 +189,10 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
       .resetPaginator()
       .pipe(take(1))
       .subscribe(() => this.recordsService.updateRoute());
+  }
+
+  toggleTableFilterPanel() {
+    this.recordsService.toggleTableFilterPanel$.next(!this.filterPanelOpen);
   }
 
   ngOnDestroy() {

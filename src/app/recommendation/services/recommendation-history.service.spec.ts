@@ -2,7 +2,7 @@ import {
   HttpClientTestingModule,
   HttpTestingController
 } from "@angular/common/http/testing";
-import { TestBed } from "@angular/core/testing";
+import { TestBed, waitForAsync } from "@angular/core/testing";
 import {
   ActivatedRouteSnapshot,
   Router,
@@ -75,14 +75,13 @@ describe("RecommendationHistoryService", () => {
     http.verify();
   });
 
-  it("should call submit recommendation to GMC api", (done: DoneFn) => {
+  it("should call submit recommendation to GMC api", waitForAsync(() => {
     service.submitRecommendationToGMC(null, "", "").subscribe({
       error: (err) => {
         expect(err).toEqual("gmcNumber and recommendationId are required");
-        done();
       }
     });
-  });
+  }));
 
   it("should call submit recommendation to GMC api", () => {
     const designatedBody = "DBC";

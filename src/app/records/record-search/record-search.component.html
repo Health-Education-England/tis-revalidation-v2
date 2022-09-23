@@ -1,57 +1,97 @@
 <div class="d-grid record-search">
-  <div class="d-grid align-items-center">
+  <div class="d-flex pl-25 pr-20 align-items-center">
     <button
+      data-cy="toggleFixedColumnsButton"
+      color="primary"
+      matTooltipPosition="below"
+      matTooltipShowDelay="500"
       mat-icon-button
-      [matMenuTriggerFor]="menu"
-      aria-label="Menu for clear all and allocate admin "
+      [matTooltip]="fixedColumns ? 'Fit columns to screen' : 'Expand columns'"
+      aria-label="Toggle table column width setting"
+      (click)="toggleFixedColumns()"
     >
-      <mat-icon>more_vert</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <app-reset-record-list></app-reset-record-list>
-      <app-allocate-admin-btn
-        *ngIf="isRevalAdmin && !isConnectionsSummary"
-      ></app-allocate-admin-btn>
-      <app-update-connetions-btn
-        *ngIf="isRevalAdmin && isConnectionsSummary"
-      ></app-update-connetions-btn>
-    </mat-menu>
-  </div>
+      <ng-container *ngIf="fixedColumns">
+        <mat-icon class="material-icons-outlined layered-icon base-icon"
+          >width_normal</mat-icon
+        >
 
-  <form
-    (ngSubmit)="checkForm()"
-    [formGroup]="form"
-    #ngForm="ngForm"
-    autocomplete="off"
-    *ngIf="{
-      enableAllocateAdmin: enableAllocateAdmin$ | async,
-      enableUpdateConnections: enableUpdateConnections$ | async,
-      disableSearchAndSort: disableSearchAndSort$ | async
-    } as data"
-  >
-    <mat-form-field style="width: 360px">
-      <mat-label>{{ searchLabel }}</mat-label>
-      <input
-        matInput
-        type="text"
-        [formControlName]="'searchQuery'"
-        [value]="searchQuery$ | async"
-      />
-      <button
-        mat-button
-        matSuffix
-        color="primary"
-        aria-label="Recommendations search"
-        type="submit"
-        [disabled]="
-          data.enableAllocateAdmin ||
-          data.enableUpdateConnections ||
-          data.disableSearchAndSort
-        "
-      >
-        <mat-icon aria-label="search icon">search</mat-icon>
-      </button>
-      <mat-error *ngIf="form.invalid">No search terms entered</mat-error>
-    </mat-form-field>
-  </form>
+        <mat-icon class="layered-icon overlay-bg-icon">circle</mat-icon>
+        <mat-icon class="layered-icon overlay-icon">close_fullscreen </mat-icon>
+      </ng-container>
+
+      <ng-container *ngIf="!fixedColumns">
+        <mat-icon class="material-icons-outlined layered-icon base-icon"
+          >width_wide</mat-icon
+        >
+        <mat-icon class="layered-icon overlay-bg-icon">circle</mat-icon>
+        <mat-icon class="layered-icon overlay-icon">open_in_full</mat-icon>
+      </ng-container>
+    </button>
+
+    <button
+      data-cy="toggleTableFiltersButton"
+      *ngIf="showTableFilters"
+      color="primary"
+      [matTooltip]="
+        filterPanelOpen ? 'Close filter panel' : 'Open filter panel'
+      "
+      matTooltipPosition="below"
+      matTooltipShowDelay="500"
+      mat-icon-button
+      aria-label="Toggle table filter panel"
+      (click)="toggleTableFilterPanel()"
+    >
+      <mat-icon *ngIf="!filterPanelOpen">filter_alt</mat-icon>
+      <mat-icon *ngIf="filterPanelOpen">filter_alt_off</mat-icon>
+    </button>
+
+    <app-allocate-admin-btn
+      *ngIf="isRevalAdmin && !isConnectionsSummary"
+    ></app-allocate-admin-btn>
+    <app-update-connetions-btn
+      *ngIf="isRevalAdmin && isConnectionsSummary"
+    ></app-update-connetions-btn>
+
+    <form
+      (ngSubmit)="checkForm()"
+      [formGroup]="form"
+      #ngForm="ngForm"
+      autocomplete="off"
+      *ngIf="{
+        enableAllocateAdmin: enableAllocateAdmin$ | async,
+        enableUpdateConnections: enableUpdateConnections$ | async,
+        disableSearchAndSort: disableSearchAndSort$ | async
+      } as data"
+    >
+      <mat-form-field appearance="outline" class="ml-20" style="width: 360px">
+        <mat-label>{{ searchLabel }}</mat-label>
+        <input
+          matInput
+          type="text"
+          [formControlName]="'searchQuery'"
+          [value]="searchQuery$ | async"
+        />
+        <app-reset-record-list
+          *ngIf="showClearSearchForm"
+          matSuffix
+        ></app-reset-record-list>
+        <button
+          mat-icon-button
+          matSuffix
+          color="primary"
+          aria-label="Recommendations search"
+          type="submit"
+          [disabled]="
+            data.enableAllocateAdmin ||
+            data.enableUpdateConnections ||
+            data.disableSearchAndSort
+          "
+        >
+          <mat-icon aria-label="search icon">search</mat-icon>
+        </button>
+
+        <mat-error *ngIf="form.invalid">No search terms entered</mat-error>
+      </mat-form-field>
+    </form>
+  </div>
 </div>

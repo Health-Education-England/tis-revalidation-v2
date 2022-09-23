@@ -3,4 +3,33 @@
   ::ng-deep .mat-form-field-infix {
     width: auto;
   }
+  ::ng-deep .mat-form-field-wrapper {
+    padding: 10px 0 !important;
+  }
+  ::ng-deep .mat-form-field {
+    font-size: 14px;
+  }
+}
+
+.layered-icon {
+  position: absolute;
+  &.base-icon {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  &.overlay-bg-icon {
+    bottom: 2px;
+    right: 0;
+    transform: none;
+    font-size: 20px;
+    color: #005eb8;
+  }
+  &.overlay-icon {
+    bottom: 2px;
+    right: 0;
+    transform: rotate(45deg);
+    font-size: 11px;
+    color: #fff;
+  }
 }

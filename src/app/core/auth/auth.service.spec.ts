@@ -4,6 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import { Auth } from "aws-amplify";
 import { CognitoUserSession } from "amazon-cognito-identity-js";
 import { AuthService } from "./auth.service";
+import { EMPTY } from "rxjs";
 
 describe("AuthService", () => {
   let service: AuthService;
@@ -97,9 +98,8 @@ describe("AuthService", () => {
   });
 
   it("should invoke Auth federated signin when currentsession is not avaialbel", () => {
-    spyOn(Auth, "currentSession").and.callFake(() =>
-      Promise.reject("Session not available")
-    );
+    spyOn(service, "currentSession").and.returnValue(EMPTY);
+
     spyOn(service, "signIn");
 
     service.currentSession().subscribe(

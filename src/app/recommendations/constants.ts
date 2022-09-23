@@ -1,4 +1,8 @@
 import { Sort } from "@angular/material/sort";
+import {
+  FormControlBase,
+  AutocompleteControl
+} from "../shared/form-controls/form-contol-base.model";
 
 export const COLUMN_DATA: [string, string, boolean][] = [
   ["GMC Submission due date", "submissionDate", true],
@@ -19,3 +23,15 @@ export const RECOMMENDATION_SORT: Sort = {
 export const DEFERRAL_MIN_DAYS = 120;
 export const DEFERRAL_MAX_DAYS = 365;
 export const DEFERRAL_PERMITTED_MAX_DAYS = 120;
+
+export const TABLE_FILTERS_FORM_BASE: Array<
+  FormControlBase | AutocompleteControl
+> = [
+  {
+    key: "programmeName",
+    label: "Programme name",
+    order: 1,
+    controlType: "autocomplete",
+    placeholder: "Start typing..."
+  }
+];

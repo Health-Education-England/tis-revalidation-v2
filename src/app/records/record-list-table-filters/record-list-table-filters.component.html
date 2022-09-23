@@ -1,0 +1,43 @@
+<div class="filters-wrapper">
+  <div class="mb-20">
+    <h2>Filters</h2>
+    <form
+      data-cy="tableFiltersForm"
+      (ngSubmit)="onSubmit()"
+      *ngIf="form"
+      [formGroup]="form"
+    >
+      <div *ngFor="let control of formControls" class="form-row">
+        <app-form-controller
+          [control]="control"
+          [form]="form"
+        ></app-form-controller>
+      </div>
+
+      <div class="d-flex justify-content-end">
+        <button
+          data-jasmine="clearFiltersButton"
+          class="mr-10"
+          [disabled]="!form.valid || !form.dirty"
+          type="button"
+          mat-button
+          mat-raised-button
+          color="secondary"
+          (click)="clearFilters()"
+        >
+          Clear filters
+        </button>
+        <button
+          data-jasmine="submitFormButton"
+          [disabled]="!form.valid || !form.dirty"
+          type="submit"
+          mat-button
+          mat-raised-button
+          color="primary"
+        >
+          Apply filters
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

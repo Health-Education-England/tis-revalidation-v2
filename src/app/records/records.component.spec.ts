@@ -5,7 +5,7 @@ import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { RecordsComponent } from "./records.component";
 import { MaterialModule } from "../shared/material/material.module";
-
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 describe("RecordsComponent", () => {
   let component: RecordsComponent;
   let fixture: ComponentFixture<RecordsComponent>;
@@ -16,7 +16,8 @@ describe("RecordsComponent", () => {
         NgxsModule.forRoot(),
         HttpClientTestingModule,
         RouterTestingModule,
-        MaterialModule
+        MaterialModule,
+        BrowserAnimationsModule
       ],
       declarations: [RecordsComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]

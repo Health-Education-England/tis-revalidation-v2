@@ -5,21 +5,21 @@ import {
   PaginatePayload,
   SearchPayload,
   SortPayload,
-  ToggleCheckboxPayload
+  ToggleCheckboxPayload,
+  TableFiltersPayload
 } from "../../records/state/records.actions";
 import { HttpErrorPayload } from "../../shared/services/error/error.service";
 import {
   IGetRecommendationsResponse,
-  RecommendationsFilterType
+  RecommendationsFilterType,
+  IRecommendationsTableFilters
 } from "../recommendations.interfaces";
 
 export class GetRecommendations {
   static readonly type = `[Recommendations] Get`;
 }
 
-export class GetRecommendationsSuccess extends GetSuccessPayload<
-  IGetRecommendationsResponse
-> {
+export class GetRecommendationsSuccess extends GetSuccessPayload<IGetRecommendationsResponse> {
   static readonly type = `[Recommendations] Get Success`;
 }
 
@@ -35,9 +35,7 @@ export class ResetRecommendationsSort {
   static readonly type = `[Recommendations] Reset Sort`;
 }
 
-export class FilterRecommendations extends FilterPayload<
-  RecommendationsFilterType
-> {
+export class FilterRecommendations extends FilterPayload<RecommendationsFilterType> {
   static readonly type = `[Recommendations] Filter`;
 }
 
@@ -51,6 +49,14 @@ export class RecommendationsSearch extends SearchPayload {
 
 export class ClearRecommendationsSearch {
   static readonly type = `[Recommendations] Clear Search`;
+}
+
+export class SetRecommendationsTableFilters extends TableFiltersPayload<IRecommendationsTableFilters> {
+  static readonly type = `[Recommendations] Filter Table`;
+}
+
+export class ClearRecommendationsTableFilters {
+  static readonly type = `[Recommendations] Clear Table Filters`;
 }
 
 export class PaginateRecommendations extends PaginatePayload {

@@ -18,3 +18,12 @@ export interface IFilter {
   label: string;
   name: string;
 }
+
+export interface ITableFilters {
+  [key: string]: string | string[];
+}
+
+export enum stateName {
+  RECOMMENDATIONS = "recommendations",
+  CONNECTIONS = "connections"
+}

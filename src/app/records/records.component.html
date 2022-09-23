@@ -22,5 +22,20 @@
   <app-allocate-admin-actions
     *ngIf="enableAllocateAdmin$ | async"
   ></app-allocate-admin-actions>
-  <app-record-list></app-record-list>
+
+  <mat-drawer-container
+    *ngIf="showTableFilters; else noTableFilters"
+    class="filters-drawer-container"
+  >
+    <mat-drawer #filtersDrawer mode="side" [opened]="filterPanelOpen">
+      <app-record-list-table-filters></app-record-list-table-filters>
+    </mat-drawer>
+    <mat-drawer-content>
+      <app-record-list></app-record-list>
+    </mat-drawer-content>
+  </mat-drawer-container>
+
+  <ng-template #noTableFilters>
+    <app-record-list></app-record-list>
+  </ng-template>
 </ng-template>

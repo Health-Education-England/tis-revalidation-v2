@@ -20,6 +20,7 @@ import { MaterialModule } from "../../shared/material/material.module";
 import { DEFAULT_SORT, generateColumnData } from "../constants";
 import { RecordsService } from "../services/records.service";
 import { RecordListComponent } from "./record-list.component";
+import { RecordListState } from "./state/record-list.state";
 
 describe("RecordListComponent", () => {
   let store: Store;
@@ -37,7 +38,7 @@ describe("RecordListComponent", () => {
         HttpClientTestingModule,
         RouterTestingModule,
         AdminsModule,
-        NgxsModule.forRoot([RecommendationsState, AdminsState])
+        NgxsModule.forRoot([RecommendationsState, AdminsState, RecordListState])
       ]
     }).compileComponents();
     store = TestBed.inject(Store);
@@ -50,11 +51,61 @@ describe("RecordListComponent", () => {
     component = fixture.componentInstance;
     recordsService.stateName = "recommendations";
     recordsService.setRecommendationsActions();
+    store.reset({
+      recommendations: {
+        items: mockRecommendationsResponse.recommendationInfo,
+        totalResults: 2,
+        sort: { active: "submissionDate", direction: "asc" },
+        enableAllocateAdmin: false,
+        enableUpdateConnections: false,
+        disableSearchAndSort: false,
+        allChecked: false,
+        someChecked: false
+      },
+      recordList: { fixedColumns: true }
+    });
+    component.columnData = generateColumnData(COLUMN_DATA);
+    component.dateColumns = [
+      "curriculumEndDate,submissionDate,dateAdded,lastUpdatedDate"
+    ];
+
     fixture.detectChanges();
   });
 
   it("should create", () => {
     expect(component).toBeTruthy();
+  });
+
+  it("Should display a table containing doctors summary data", () => {
+    expect(
+      fixture.debugElement.nativeElement.querySelector(".mat-table")
+    ).toBeTruthy();
+  });
+
+  it("Should display message when no records returned", () => {
+    store.reset({
+      recommendations: { totalResults: 0 }
+    });
+    fixture.detectChanges();
+    expect(
+      fixture.debugElement.nativeElement.querySelector(".no-records")
+    ).toBeTruthy();
+  });
+
+  it("Should apply fixed class to table columns when display in fixed width mode", () => {
+    expect(
+      fixture.debugElement.nativeElement.querySelector(".mat-cell.fixed")
+    ).toBeTruthy();
+  });
+
+  it("Should not apply fixed class to table columns when display in fluid width mode", () => {
+    store.reset({
+      recordList: { fixedColumns: false }
+    });
+    fixture.detectChanges();
+    expect(
+      fixture.debugElement.nativeElement.querySelector(".mat-cell.fixed")
+    ).toBeFalsy();
   });
 
   it("should select 'items$' from state", () => {

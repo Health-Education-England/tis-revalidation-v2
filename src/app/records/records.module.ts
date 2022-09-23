@@ -13,7 +13,9 @@ import { RecordsComponent } from "./records.component";
 import { RefreshDataBtnComponent } from "./refresh-data-btn/refresh-data-btn.component";
 import { ResetRecordListComponent } from "./reset-record-list/reset-record-list.component";
 import { RecordsService } from "./services/records.service";
-
+import { RecordListTableFiltersComponent } from "./record-list-table-filters/record-list-table-filters.component";
+import { RecordListState } from "./record-list/state/record-list.state";
+import { NgxsModule } from "@ngxs/store";
 const components: any[] = [
   RecordListComponent,
   RecordListFiltersComponent,
@@ -21,7 +23,8 @@ const components: any[] = [
   RecordsComponent,
   RecordSearchComponent,
   RefreshDataBtnComponent,
-  ResetRecordListComponent
+  ResetRecordListComponent,
+  RecordListTableFiltersComponent
 ];
 
 @NgModule({
@@ -33,7 +36,8 @@ const components: any[] = [
     AdminsModule,
     SharedModule,
     ReactiveFormsModule,
-    UpdateConnectionsModule
+    UpdateConnectionsModule,
+    NgxsModule.forFeature([RecordListState])
   ],
   exports: components
 })

@@ -14,6 +14,7 @@ export abstract class IEnvironment {
     readonly addConcern: string;
     readonly addNote: string;
     readonly allocateAdmin: string;
+    readonly autocomplete: string;
     readonly deleteFile: string;
     readonly downloadFile: string;
     readonly editNote: string;

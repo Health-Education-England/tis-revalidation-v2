@@ -14,6 +14,7 @@ import {
 import {
   IGetRecommendationsResponse,
   IRecommendation,
+  IRecommendationsTableFilters,
   RecommendationsFilterType
 } from "../recommendations.interfaces";
 import { RecommendationsService } from "../services/recommendations.service";
@@ -26,6 +27,8 @@ import {
   GetRecommendationsSuccess,
   PaginateRecommendations,
   RecommendationsSearch,
+  SetRecommendationsTableFilters,
+  ClearRecommendationsTableFilters,
   ResetRecommendationsFilter,
   ResetRecommendationsPaginator,
   ResetRecommendationsSort,
@@ -36,7 +39,8 @@ import {
 
 export class RecommendationsStateModel extends RecordsStateModel<
   RecommendationsFilterType,
-  IRecommendation[]
+  IRecommendation[],
+  IRecommendationsTableFilters
 > {}
 
 @State<RecommendationsStateModel>({
@@ -148,6 +152,21 @@ export class RecommendationsState extends RecordsState {
   @Action(ClearRecommendationsSearch)
   clearSearch(ctx: StateContext<RecommendationsStateModel>) {
     return super.clearSearchHandler(ctx);
+  }
+
+  @Action(SetRecommendationsTableFilters)
+  setRecommendationsTableFilters(
+    ctx: StateContext<RecommendationsStateModel>,
+    action: SetRecommendationsTableFilters
+  ) {
+    return super.setTableFiltersHandler(ctx, action);
+  }
+
+  @Action(ClearRecommendationsTableFilters)
+  clearRecommendationsTableFilters(
+    ctx: StateContext<RecommendationsStateModel>
+  ) {
+    return super.clearTableFiltersHandler(ctx);
   }
 
   @Action(FilterRecommendations)

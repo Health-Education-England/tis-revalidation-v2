@@ -4,6 +4,7 @@
 .records-top-section {
   grid-template-columns: minmax(0, 1fr) auto auto;
   background: $color_nhsuk-white;
+  border-bottom: 1px solid #ddd;
 
   @media screen and (max-width: $xsmall) {
     :first-child {
@@ -11,4 +12,24 @@
       grid-column-end: 4;
     }
   }
+}
+
+$main-navbar-height: 64px;
+$child-navbar-height: 48px;
+$toolbar-height: 64px;
+
+.filters-drawer-container {
+  min-height: calc(
+    100vh - #{$main-navbar-height} - #{$child-navbar-height} - #{$toolbar-height}
+  );
+  background-color: #fafafa;
+  .mat-drawer-content {
+    min-height: calc(
+      100vh - #{$main-navbar-height} - #{$child-navbar-height} - #{$toolbar-height}
+    );
+  }
+}
+.mat-drawer {
+  background-color: #fafafa;
+  width: 360px;
 }

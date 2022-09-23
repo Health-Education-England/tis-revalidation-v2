@@ -38,7 +38,7 @@ export class RecordListTableFiltersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.tableFilters$.subscribe((filters) => {
+    this.tableFilters$.subscribe((filters: ITableFilters) => {
       if (filters) {
         this.activeTableFilters = filters;
       }

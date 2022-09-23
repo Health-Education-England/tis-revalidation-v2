@@ -28,7 +28,6 @@
       [panelWidth]="400"
       #auto="matAutocomplete"
       (optionSelected)="onSelected()"
-      [displayWith]="displayWith"
     >
       <mat-option *ngIf="isLoading" class="is-loading">Loading...</mat-option>
       <ng-container *ngIf="!isLoading">

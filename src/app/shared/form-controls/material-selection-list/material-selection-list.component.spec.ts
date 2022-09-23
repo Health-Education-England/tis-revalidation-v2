@@ -29,10 +29,7 @@ describe("MaterialSelectionListComponent", () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [MaterialModule, FormsModule, ReactiveFormsModule],
-      declarations: [
-        MaterialSelectionListComponent,
-        MaterialSelectionListComponent
-      ]
+      declarations: [MaterialSelectionListComponent]
     }).compileComponents();
   });
 

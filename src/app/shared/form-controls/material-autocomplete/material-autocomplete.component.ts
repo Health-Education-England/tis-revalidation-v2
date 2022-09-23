@@ -34,10 +34,6 @@ export class MaterialAutocompleteComponent implements OnInit {
     this.form.markAsDirty();
   }
 
-  displayWith(value: any) {
-    return value;
-  }
-
   clearSelection() {
     this.form.controls[this.controlProperties.key].setValue("");
     this.filteredItems = [];

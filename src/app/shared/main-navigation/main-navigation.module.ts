@@ -6,12 +6,13 @@ import { StatusBarComponent } from "./mat-main-nav/status-bar/status-bar.compone
 import { MobileMenuComponent } from "./mat-main-nav/mobile-menu/mobile-menu.component";
 import { MaterialModule } from "../material/material.module";
 import { RouterModule } from "@angular/router";
-
+import { SpinnerComponent } from "../spinner/spinner.component";
 const navComponents = [
   MatMainNavComponent,
   StatusBarComponent,
   MobileMenuComponent,
-  DesktopMenuComponent
+  DesktopMenuComponent,
+  SpinnerComponent
 ];
 
 @NgModule({

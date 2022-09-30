@@ -2,7 +2,7 @@ import { State, Action, Selector, StateContext } from "@ngxs/store";
 
 import { Get, Set, Post, Add } from "./recommendation-history.actions";
 import { Injectable } from "@angular/core";
-import { tap } from "rxjs/operators";
+import { finalize, tap } from "rxjs/operators";
 import {
   IRecommendationHistory,
   IRecommendationSummary,
@@ -11,6 +11,7 @@ import {
   RecommendationGmcOutcome
 } from "../recommendation-history.interface";
 import { RecommendationHistoryService } from "../services/recommendation-history.service";
+import { SpinnerService } from "src/app/shared/spinner/spinner.service";
 
 export class RecommendationHistoryStateModel {
   public item: IRecommendationHistory;
@@ -35,7 +36,10 @@ export class RecommendationHistoryStateModel {
 })
 @Injectable()
 export class RecommendationHistoryState {
-  constructor(private service: RecommendationHistoryService) {}
+  constructor(
+    private service: RecommendationHistoryService,
+    private spinnerService: SpinnerService
+  ) {}
 
   @Selector()
   public static recommendationHistory(
@@ -77,8 +81,10 @@ export class RecommendationHistoryState {
   ): IRecommendationSummary {
     return state.item.revalidations.find((item: IRecommendationSummary) => {
       return (
-        RecommendationStatus[item.recommendationStatus] !== RecommendationStatus.SUBMITTED_TO_GMC &&
-        RecommendationStatus[item.recommendationStatus] !== RecommendationStatus.COMPLETED
+        RecommendationStatus[item.recommendationStatus] !==
+          RecommendationStatus.SUBMITTED_TO_GMC &&
+        RecommendationStatus[item.recommendationStatus] !==
+          RecommendationStatus.COMPLETED
       );
     });
   }
@@ -114,6 +120,9 @@ export class RecommendationHistoryState {
         ctx.patchState({
           item: result
         });
+      }),
+      finalize(() => {
+        this.spinnerService.hideSpinner();
       })
     );
   }

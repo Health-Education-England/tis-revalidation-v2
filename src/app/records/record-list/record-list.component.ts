@@ -29,9 +29,6 @@ export class RecordListComponent implements OnDestroy {
   public someChecked$: Observable<boolean> = this.store.select(
     (state) => state[this.recordsService.stateName].someChecked
   );
-  public loading$: Observable<boolean> = this.store.select(
-    (state) => state[this.recordsService.stateName].loading
-  );
   public items$: Observable<any[]> = this.store.select(
     (state) => state[this.recordsService.stateName].items
   );

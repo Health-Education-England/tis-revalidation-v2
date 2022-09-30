@@ -36,6 +36,7 @@ import {
   ToggleAllRecommendationsCheckboxes,
   ToggleRecommendationsCheckbox
 } from "./recommendations.actions";
+import { SpinnerService } from "src/app/shared/spinner/spinner.service";
 
 export class RecommendationsStateModel extends RecordsStateModel<
   RecommendationsFilterType,
@@ -55,7 +56,8 @@ export class RecommendationsStateModel extends RecordsStateModel<
 export class RecommendationsState extends RecordsState {
   constructor(
     private recommendationsService: RecommendationsService,
-    protected recordsService: RecordsService
+    protected recordsService: RecordsService,
+    private spinnerService: SpinnerService
   ) {
     super(recordsService);
   }
@@ -83,11 +85,12 @@ export class RecommendationsState extends RecordsState {
         catchError((error: string) =>
           ctx.dispatch(new GetRecommendationsError(error))
         ),
-        finalize(() =>
+        finalize(() => {
           ctx.patchState({
             loading: false
-          })
-        )
+          });
+          this.spinnerService.hideSpinner();
+        })
       )
       .subscribe();
   }

@@ -1,6 +1,7 @@
 import { ActivatedRouteSnapshot, Params } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
+import { SpinnerService } from "../shared/spinner/spinner.service";
 import { UpdateConnectionsService } from "../update-connections/services/update-connections.service";
 import { RecordsService } from "./services/records.service";
 
@@ -8,7 +9,8 @@ export class RecordsResolver {
   constructor(
     protected store: Store,
     protected recordsService: RecordsService,
-    protected updateConnectionsService: UpdateConnectionsService
+    protected updateConnectionsService: UpdateConnectionsService,
+    protected spinnerService: SpinnerService
   ) {}
 
   /**
@@ -19,6 +21,7 @@ export class RecordsResolver {
    * @param route ActivatedRouteSnapshot
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    this.spinnerService.showSpinner();
     const paramsExist: boolean = Object.keys(route.queryParams).length > 0;
     if (paramsExist) {
       const state: any = this.store.selectSnapshot(

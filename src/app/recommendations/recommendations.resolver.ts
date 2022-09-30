@@ -15,6 +15,7 @@ import { UpdateConnectionsService } from "../update-connections/services/update-
 import { stateName } from "../records/records.interfaces";
 import { FormControlBase } from "../shared/form-controls/form-contol-base.model";
 import { RecommendationsStateModel } from "./state/recommendations.state";
+import { SpinnerService } from "../shared/spinner/spinner.service";
 @Injectable()
 export class RecommendationsResolver
   extends RecordsResolver
@@ -24,9 +25,10 @@ export class RecommendationsResolver
     protected store: Store,
     protected recordsService: RecordsService,
     private authService: AuthService,
-    protected updateConnectionsService: UpdateConnectionsService
+    protected updateConnectionsService: UpdateConnectionsService,
+    protected spinnerService: SpinnerService
   ) {
-    super(store, recordsService, updateConnectionsService);
+    super(store, recordsService, updateConnectionsService, spinnerService);
     this.initialiseData();
   }
 

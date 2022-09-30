@@ -1,184 +1,164 @@
 <ng-container
   *ngIf="{
-    loading: loading$ | async,
     totalResults: totalResults$ | async,
     error: error$ | async
   } as data"
 >
-  <!-- spinner -->
-  <div
-    *ngIf="data.loading; else notLoading"
-    class="
-      d-flex
-      align-content-center
-      justify-content-center
-      align-items-center
-      progress-spinner
-    "
-  >
-    <mat-spinner></mat-spinner>
+  <!--  error -->
+  <div *ngIf="data.error; else items" class="d-grid justify-content-center">
+    <mat-chip-list class="mat-chip-list-stacked" aria-orientation="vertical">
+      <mat-chip selected color="warn">{{ data.error }}</mat-chip>
+    </mat-chip-list>
   </div>
 
-  <ng-template #notLoading>
-    <!--  error -->
-    <div *ngIf="data.error; else items" class="d-grid justify-content-center">
-      <mat-chip-list class="mat-chip-list-stacked" aria-orientation="vertical">
-        <mat-chip selected color="warn">{{ data.error }}</mat-chip>
-      </mat-chip-list>
-    </div>
-
-    <!-- Records list -->
-    <ng-template #items>
-      <ng-container *ngIf="data.totalResults; else noResults">
-        <div class="table-container">
-          <table
-            mat-table
-            *ngIf="{
-              sort: sort$ | async,
-              items: items$ | async,
-              enableAllocateAdmin: enableAllocateAdmin$ | async,
-              enableUpdateConnections: enableUpdateConnections$ | async,
-              disableSearchAndSort: disableSearchAndSort$ | async,
-              allChecked: allChecked$ | async,
-              someChecked: someChecked$ | async
-            } as data"
-            class="w-100"
-            [dataSource]="data.items"
-            matSort
-            matSortDisableClear
-            (matSortChange)="sort($event)"
-            [matSortActive]="data.sort.active"
-            [matSortDirection]="data.sort.direction"
+  <!-- Records list -->
+  <ng-template #items>
+    <ng-container *ngIf="data.totalResults; else noResults">
+      <div class="table-container">
+        <table
+          mat-table
+          *ngIf="{
+            sort: sort$ | async,
+            items: items$ | async,
+            enableAllocateAdmin: enableAllocateAdmin$ | async,
+            enableUpdateConnections: enableUpdateConnections$ | async,
+            disableSearchAndSort: disableSearchAndSort$ | async,
+            allChecked: allChecked$ | async,
+            someChecked: someChecked$ | async
+          } as data"
+          class="w-100"
+          [dataSource]="data.items"
+          matSort
+          matSortDisableClear
+          (matSortChange)="sort($event)"
+          [matSortActive]="data.sort.active"
+          [matSortDirection]="data.sort.direction"
+        >
+          <caption class="collapsed no-height">
+            Records list
+          </caption>
+          <ng-container
+            *ngFor="let i of columnData"
+            matColumnDef="{{ i.name }}"
           >
-            <caption class="collapsed no-height">
-              Records list
-            </caption>
-            <ng-container
-              *ngFor="let i of columnData"
-              matColumnDef="{{ i.name }}"
+            <!-- header cell -->
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              [mat-sort-header]="i.name"
+              scope="col"
+              [disabled]="
+                data.enableUpdateConnections ||
+                data.enableAllocateAdmin ||
+                data.disableSearchAndSort ||
+                !i.enableSort
+              "
             >
-              <!-- header cell -->
-              <th
-                mat-header-cell
-                *matHeaderCellDef
-                [mat-sort-header]="i.name"
-                scope="col"
-                [disabled]="
-                  data.enableUpdateConnections ||
-                  data.enableAllocateAdmin ||
-                  data.disableSearchAndSort ||
-                  !i.enableSort
+              <mat-checkbox
+                *ngIf="
+                  (data.enableUpdateConnections || data.enableAllocateAdmin) &&
+                  i.name === 'doctorFirstName'
                 "
+                [checked]="data.allChecked"
+                [indeterminate]="data.someChecked"
+                (change)="toggleAllCheckboxes()"
+                class="pr-20"
               >
-                <mat-checkbox
-                  *ngIf="
-                    (data.enableUpdateConnections ||
-                      data.enableAllocateAdmin) &&
-                    i.name === 'doctorFirstName'
-                  "
-                  [checked]="data.allChecked"
-                  [indeterminate]="data.someChecked"
-                  (change)="toggleAllCheckboxes()"
-                  class="pr-20"
-                >
-                </mat-checkbox>
-                {{ i.label }}
-              </th>
+              </mat-checkbox>
+              {{ i.label }}
+            </th>
 
-              <!-- mat cell -->
-              <td
-                mat-cell
-                [ngClass]="(fixedColumns$ | async) && 'fixed'"
-                *matCellDef="let element"
+            <!-- mat cell -->
+            <td
+              mat-cell
+              [ngClass]="(fixedColumns$ | async) && 'fixed'"
+              *matCellDef="let element"
+            >
+              <!-- checkbox -->
+              <mat-checkbox
+                *ngIf="
+                  showCheckbox(
+                    data.enableAllocateAdmin,
+                    data.enableUpdateConnections,
+                    i.name,
+                    element
+                  )
+                "
+                class="pr-20"
+                [checked]="element.checked"
+                (change)="toggleCheckbox(element.gmcReferenceNumber)"
               >
-                <!-- checkbox -->
-                <mat-checkbox
-                  *ngIf="
-                    showCheckbox(
-                      data.enableAllocateAdmin,
-                      data.enableUpdateConnections,
-                      i.name,
-                      element
-                    )
-                  "
-                  class="pr-20"
-                  [checked]="element.checked"
-                  (change)="toggleCheckbox(element.gmcReferenceNumber)"
-                >
-                </mat-checkbox>
+              </mat-checkbox>
 
-                <!-- render allocate admin component or admin name -->
-                <ng-container *ngIf="i.name === 'admin'; else notAdminCell">
-                  <a
-                    *ngIf="element[i.name]"
-                    [matTooltip]="element[i.name] | AdminName: 'email'"
-                    mat-button
-                    (click)="$event.stopPropagation()"
-                    [href]="'mailto:' + element[i.name] | AdminName: 'email'"
-                    >{{ element[i.name] | AdminName }}</a
-                  >
+              <!-- render allocate admin component or admin name -->
+              <ng-container *ngIf="i.name === 'admin'; else notAdminCell">
+                <a
+                  *ngIf="element[i.name]"
+                  [matTooltip]="element[i.name] | AdminName: 'email'"
+                  mat-button
+                  (click)="$event.stopPropagation()"
+                  [href]="'mailto:' + element[i.name] | AdminName: 'email'"
+                  >{{ element[i.name] | AdminName }}</a
+                >
+              </ng-container>
+
+              <!-- remaining cells -->
+              <ng-template #notAdminCell>
+                <!-- cell value | format date -->
+
+                <ng-container *ngIf="dateColumns.includes(i.name); else noPipe">
+                  {{ element[i.name] | date: dateFormat }}
                 </ng-container>
+                <!-- cell value | no formatting needed -->
+                <ng-template #noPipe>{{ element[i.name] }}</ng-template>
+              </ng-template>
+            </td>
+          </ng-container>
 
-                <!-- remaining cells -->
-                <ng-template #notAdminCell>
-                  <!-- cell value | format date -->
+          <tr mat-header-row *matHeaderRowDef="columnNames"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: columnNames"
+            (click)="
+              navigateToDetails(
+                $event,
+                row,
+                data.enableAllocateAdmin,
+                data.enableUpdateConnections
+              )
+            "
+            (keyup.enter)="
+              navigateToDetails(
+                $event,
+                row,
+                data.enableAllocateAdmin,
+                data.enableUpdateConnections
+              )
+            "
+            (keyup.space)="
+              navigateToDetails(
+                $event,
+                row,
+                data.enableAllocateAdmin,
+                data.enableUpdateConnections
+              )
+            "
+            [class.is-under-notice]="row.underNotice === 'YES'"
+            [class.cursor-auto]="
+              data.enableAllocateAdmin || data.enableUpdateConnections
+            "
+            tabindex="0"
+          ></tr>
+        </table>
+      </div>
+    </ng-container>
 
-                  <ng-container
-                    *ngIf="dateColumns.includes(i.name); else noPipe"
-                  >
-                    {{ element[i.name] | date: dateFormat }}
-                  </ng-container>
-                  <!-- cell value | no formatting needed -->
-                  <ng-template #noPipe>{{ element[i.name] }}</ng-template>
-                </ng-template>
-              </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="columnNames"></tr>
-            <tr
-              mat-row
-              *matRowDef="let row; columns: columnNames"
-              (click)="
-                navigateToDetails(
-                  $event,
-                  row,
-                  data.enableAllocateAdmin,
-                  data.enableUpdateConnections
-                )
-              "
-              (keyup.enter)="
-                navigateToDetails(
-                  $event,
-                  row,
-                  data.enableAllocateAdmin,
-                  data.enableUpdateConnections
-                )
-              "
-              (keyup.space)="
-                navigateToDetails(
-                  $event,
-                  row,
-                  data.enableAllocateAdmin,
-                  data.enableUpdateConnections
-                )
-              "
-              [class.is-under-notice]="row.underNotice === 'YES'"
-              [class.cursor-auto]="
-                data.enableAllocateAdmin || data.enableUpdateConnections
-              "
-              tabindex="0"
-            ></tr>
-          </table>
-        </div>
-      </ng-container>
-
-      <!--  no results found -->
-      <ng-template #noResults>
-        <div class="d-grid justify-content-center no-records">
-          We could not find any results. Please clear your search criteria in
-          order to reset results.
-        </div>
-      </ng-template>
+    <!--  no results found -->
+    <ng-template #noResults>
+      <div class="d-grid justify-content-center no-records">
+        We could not find any results. Please clear your search criteria in
+        order to reset results.
+      </div>
     </ng-template>
   </ng-template>
 </ng-container>

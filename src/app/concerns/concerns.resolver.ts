@@ -6,6 +6,7 @@ import { ConcernStatus } from "../concern/concern.interfaces";
 import { generateColumnData } from "../records/constants";
 import { RecordsResolver } from "../records/records.resolver";
 import { RecordsService } from "../records/services/records.service";
+import { SpinnerService } from "../shared/spinner/spinner.service";
 import { UpdateConnectionsService } from "../update-connections/services/update-connections.service";
 import { COLUMN_DATA } from "./constants";
 
@@ -14,9 +15,10 @@ export class ConcernsResolver extends RecordsResolver implements Resolve<any> {
   constructor(
     protected store: Store,
     protected recordsService: RecordsService,
-    protected updateConnectionsService: UpdateConnectionsService
+    protected updateConnectionsService: UpdateConnectionsService,
+    protected spinnerService: SpinnerService
   ) {
-    super(store, recordsService, updateConnectionsService);
+    super(store, recordsService, updateConnectionsService, spinnerService);
     this.initialiseData();
   }
 

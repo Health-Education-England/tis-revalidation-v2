@@ -9,6 +9,7 @@ import { UpdateConnectionsService } from "../update-connections/services/update-
 import { ConnectionsFilterType } from "./connections.interfaces";
 import { COLUMN_DATA } from "./constants";
 import { stateName } from "../records/records.interfaces";
+import { SpinnerService } from "../shared/spinner/spinner.service";
 @Injectable()
 export class ConnectionsResolver
   extends RecordsResolver
@@ -17,9 +18,10 @@ export class ConnectionsResolver
   constructor(
     protected store: Store,
     protected recordsService: RecordsService,
-    protected updateConnectionsService: UpdateConnectionsService
+    protected updateConnectionsService: UpdateConnectionsService,
+    protected spinnerService: SpinnerService
   ) {
-    super(store, recordsService, updateConnectionsService);
+    super(store, recordsService, updateConnectionsService, spinnerService);
     this.initialiseData();
   }
 

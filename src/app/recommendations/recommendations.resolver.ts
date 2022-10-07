@@ -16,9 +16,9 @@ import {
 } from "./recommendations.interfaces";
 import { AuthService } from "../core/auth/auth.service";
 import { UpdateConnectionsService } from "../update-connections/services/update-connections.service";
-import { stateName } from "../records/records.interfaces";
+import { ITableFilters, stateName } from "../records/records.interfaces";
 import { FormControlBase } from "../shared/form-controls/form-contol-base.model";
-import { RecommendationsStateModel } from "./state/recommendations.state";
+
 @Injectable()
 export class RecommendationsResolver
   extends RecordsResolver
@@ -74,18 +74,24 @@ export class RecommendationsResolver
   }
 
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    const tableFiltersState: ITableFilters = this.store.selectSnapshot(
+      (snapshot) => snapshot.recommendations.tableFilters
+    );
     const paramsExist: boolean = Object.keys(route.queryParams).length > 0;
-    if (paramsExist) {
-      const state: RecommendationsStateModel = this.store.selectSnapshot(
-        (snapshot) => snapshot.recommendations
-      );
 
+    // The use case for this is when launching Reval from a bookmarked page where querystring parameters
+    // have been set in order to load with filters applied.
+    if (paramsExist && !tableFiltersState) {
       const filters: IRecommendationsTableFilters = {};
       if (
-        route.queryParams.programmeName !== state.tableFilters?.programmeName
+        route.queryParams.programmeName !== tableFiltersState?.programmeName
       ) {
         filters.programmeName = route.queryParams.programmeName;
-
+      }
+      if (route.queryParams.dbcs !== tableFiltersState?.dbcs) {
+        filters.dbcs = route.queryParams.dbcs?.split(",");
+      }
+      if (Object.keys(filters).length) {
         this.recordsService.setTableFilters(filters);
         this.recordsService.toggleTableFilterPanel$.next(true);
       }

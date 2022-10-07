@@ -38,7 +38,7 @@ Cypress.Commands.add("login", () => {
 });
 
 Cypress.Commands.add("loginSession", () => {
-  cy.session([username, password], () => {
+  cy.session(username, () => {
     cy.visit("/");
     cy.get("form").eq(1).as("form");
     cy.get("@form").find(".idpButton-customizable").click();

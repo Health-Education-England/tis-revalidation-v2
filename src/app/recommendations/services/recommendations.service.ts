@@ -21,6 +21,13 @@ export class RecommendationsService {
       this.store.snapshot().recommendations;
     let params: HttpParams = this.recordsService.generateParams(snapshot);
 
+    let dbcFilters: string[] = [];
+    if (snapshot.tableFilters?.dbcs) {
+      dbcFilters = snapshot.tableFilters.dbcs.filter((dbc) =>
+        this.authService.userDesignatedBodies.find((userDbc) => dbc === userDbc)
+      );
+    }
+
     params = params
       .append(
         RecommendationsFilterType.UNDER_NOTICE,
@@ -28,7 +35,10 @@ export class RecommendationsService {
           ? "true"
           : "false"
       )
-      .append("dbcs", this.authService.userDesignatedBodies.join(","))
+      .append(
+        "dbcs",
+        dbcFilters?.join(",") || this.authService.userDesignatedBodies.join(",")
+      )
       .append("programmeName", snapshot.tableFilters?.programmeName || "");
 
     return params;

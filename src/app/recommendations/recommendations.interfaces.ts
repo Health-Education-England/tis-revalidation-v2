@@ -34,6 +34,7 @@ export interface IGetRecommendationsResponse extends IGetRecordsResponse {
 
 export interface IRecommendationsTableFilters extends ITableFilters {
   programmeName?: string;
+  dbcs?: string[];
   gmcStatus?: string[];
   tisStatus?: string[];
 }

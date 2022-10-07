@@ -1,7 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { Store } from "@ngxs/store";
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import {
   FormControlBase,
   AutocompleteControl
@@ -14,10 +14,11 @@ import { RecordsService } from "../services/records.service";
   templateUrl: "./record-list-table-filters.component.html",
   styleUrls: ["./record-list-table-filters.component.scss"]
 })
-export class RecordListTableFiltersComponent implements OnInit {
+export class RecordListTableFiltersComponent implements OnInit, OnDestroy {
   activeTableFilters: ITableFilters;
   formControls: (FormControlBase | AutocompleteControl)[] = [];
   form!: FormGroup;
+  subscriptions: Subscription = new Subscription();
   constructor(private recordsService: RecordsService, private store: Store) {}
   public tableFilters$: Observable<any> = this.store.select(
     (state) => state[this.recordsService.stateName].tableFilters
@@ -26,15 +27,19 @@ export class RecordListTableFiltersComponent implements OnInit {
   clearFilters() {
     this.form.reset();
     this.recordsService.resetPaginator();
-    this.recordsService.clearTableFilters().subscribe(() => {
-      this.recordsService.updateRoute();
-    });
+    this.subscriptions.add(
+      this.recordsService.clearTableFilters().subscribe(() => {
+        this.recordsService.updateRoute();
+      })
+    );
   }
 
   onSubmit() {
-    this.recordsService.setTableFilters(this.form.value).subscribe(() => {
-      this.recordsService.updateRoute();
-    });
+    this.subscriptions.add(
+      this.recordsService.setTableFilters(this.form.value).subscribe(() => {
+        this.recordsService.updateRoute();
+      })
+    );
   }
 
   ngOnInit(): void {
@@ -51,5 +56,9 @@ export class RecordListTableFiltersComponent implements OnInit {
       );
       this.activeTableFilters && this.form.markAsDirty();
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 }

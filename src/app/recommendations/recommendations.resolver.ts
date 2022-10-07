@@ -5,7 +5,11 @@ import { Observable } from "rxjs";
 import { generateColumnData } from "../records/constants";
 import { RecordsResolver } from "../records/records.resolver";
 import { RecordsService } from "../records/services/records.service";
-import { COLUMN_DATA, TABLE_FILTERS_FORM_BASE } from "./constants";
+import {
+  COLUMN_DATA,
+  TABLE_FILTERS_FORM_BASE,
+  TABLE_FILTERS_FORM_DBC
+} from "./constants";
 import {
   IRecommendationsTableFilters,
   RecommendationsFilterType
@@ -49,6 +53,7 @@ export class RecommendationsResolver
         "designatedBody",
         false
       ]);
+      TABLE_FILTERS_FORM_BASE?.push(TABLE_FILTERS_FORM_DBC);
     }
 
     this.recordsService.tableFiltersFormData = [

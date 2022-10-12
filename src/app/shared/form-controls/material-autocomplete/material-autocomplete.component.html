@@ -8,6 +8,8 @@
     <mat-label>{{ controlProperties.label }}</mat-label>
     <input
       matInput
+      #trigger="matAutocompleteTrigger"
+      (keydown.enter)="$event.target.blur(); trigger.closePanel()"
       [matAutocomplete]="auto"
       [formControlName]="controlProperties.key"
       [placeholder]="controlProperties.placeholder"

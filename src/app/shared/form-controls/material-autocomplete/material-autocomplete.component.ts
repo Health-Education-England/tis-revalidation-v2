@@ -63,6 +63,7 @@ export class MaterialAutocompleteComponent implements OnInit {
             this.autocompleteService
               .getItems(this.controlProperties.key, inputValue)
               .pipe(
+                tap((items) => items.unshift(inputValue)),
                 finalize(() => {
                   this.isLoading = false;
                 })

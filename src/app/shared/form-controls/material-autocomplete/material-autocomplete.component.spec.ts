@@ -23,7 +23,7 @@ describe("MaterialAutocompleteComponent", () => {
   const options: string[] = ["apple", "banana", "cherry", "date"];
   const enterSearchItemsAndSubmit = (
     inputValue: string,
-    searchOptions: string[] = options
+    searchOptions: string[] = [...options]
   ) => {
     mockAutocompleteService.getItems.and.returnValue(of(searchOptions));
 
@@ -87,23 +87,44 @@ describe("MaterialAutocompleteComponent", () => {
     expect(matOptions.length).toBe(0);
   });
 
-  it("should display correct options in dropdown when input length >= 5", async () => {
-    component.minLengthTerm = 5;
-    enterSearchItemsAndSubmit("query");
+  it("should display query as first option in dropdown list", async () => {
+    const query = "Clinical";
+    enterSearchItemsAndSubmit(query);
     await fixture.whenStable();
+    fixture.detectChanges();
+    const matOptions = document.querySelectorAll("mat-option");
+    expect(matOptions[0].innerHTML).toContain(query);
+  });
+
+  it("should display correct options in dropdown", async () => {
+    const query = "Clinical";
+    enterSearchItemsAndSubmit(query);
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const sourceOptions = [query, ...options];
+    const matOptions = Array.from(document.querySelectorAll("mat-option"));
+    const optionLabels = matOptions.map((option) => option.textContent);
+    expect(optionLabels).toEqual([query, ...options]);
+  });
+
+  it("should hide dropdown when pressing 'Enter' key", async () => {
+    const query = "Clinical";
+    const inputElement = fixture.debugElement.query(By.css("input"));
+
+    enterSearchItemsAndSubmit(query);
+    await fixture.whenStable();
+    fixture.detectChanges();
+    inputElement.nativeElement.dispatchEvent(new Event("focusin"));
+    const enterKeyEvent = new KeyboardEvent("keydown", {
+      key: "Enter"
+    });
+    inputElement.nativeElement.dispatchEvent(enterKeyEvent);
     fixture.detectChanges();
 
     const matOptions = document.querySelectorAll("mat-option");
-    expect(matOptions.length).toBe(options.length);
-    expect(matOptions[0].innerHTML).toContain(options[0]);
+    expect(matOptions.length).toBe(0);
   });
 
-  it("should display error when no options found", async () => {
-    enterSearchItemsAndSubmit("query", []);
-    await fixture.whenStable();
-    fixture.detectChanges();
-    expect(fixture.debugElement.queryAll(By.css(".mat-error")).length).toBe(1);
-  });
   it("should not display the clear button when input is empty", async () => {
     enterSearchItemsAndSubmit("", []);
     await fixture.whenStable();

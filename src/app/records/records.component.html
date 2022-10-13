@@ -27,7 +27,12 @@
     *ngIf="showTableFilters; else noTableFilters"
     class="filters-drawer-container"
   >
-    <mat-drawer #filtersDrawer mode="side" [opened]="filterPanelOpen">
+    <mat-drawer
+      #filtersDrawer
+      mode="side"
+      [opened]="filterPanelOpen"
+      [disableClose]="true"
+    >
       <app-record-list-table-filters></app-record-list-table-filters>
     </mat-drawer>
     <mat-drawer-content>

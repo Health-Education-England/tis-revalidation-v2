@@ -101,7 +101,6 @@ describe("MaterialAutocompleteComponent", () => {
     enterSearchItemsAndSubmit(query);
     await fixture.whenStable();
     fixture.detectChanges();
-    const sourceOptions = [query, ...options];
     const matOptions = Array.from(document.querySelectorAll("mat-option"));
     const optionLabels = matOptions.map((option) => option.textContent);
     expect(optionLabels).toEqual([query, ...options]);

@@ -23,7 +23,7 @@ describe("Recommendations", () => {
       cy.get(
         "[data-cy='tableFiltersForm'] button[data-jasmine='submitFormButton']"
       ).click();
-      cy.wait(1000);
+      cy.wait(2000);
     };
 
     it("should open and close filter panel when toggle button is clicked", () => {
@@ -110,11 +110,11 @@ describe("Recommendations", () => {
         cy.get("[data-cy='formfield_programmeName'] input").type("neuro");
         cy.wait(2000);
         cy.get("mat-option")
-          .first()
+          .eq(1)
           .invoke("text")
           .then((value) => {
-            cy.get("mat-option").first().click();
-            cy.wait(1000);
+            cy.get("mat-option").eq(1).click();
+            cy.wait(2000);
             cy.get("[data-cy='selectionOption1-AIIDR8']").click();
 
             submitForm();
@@ -191,21 +191,17 @@ describe("Recommendations", () => {
 
         cy.get("mat-option").should("not.exist");
         cy.get("[data-cy='formfield_programmeName'] input").type("Clin");
-        cy.wait(1000);
+        cy.wait(2000);
         cy.get("mat-option").should("have.length.above", 1);
       });
 
-      it("should display error message when no matching options found", () => {
+      it("should display list where first item matches input text", () => {
         initFilterPanel();
-
+        const query = "Clinical";
         cy.get("mat-option").should("not.exist");
-        cy.get("[data-cy='formfield_programmeName'] input").type("qwert");
-        cy.wait(1000);
-
-        cy.get("[data-cy='formFieldWrapper'] div.mat-error").should(
-          "contain",
-          "No matches found"
-        );
+        cy.get("[data-cy='formfield_programmeName'] input").type(query);
+        cy.wait(2000);
+        cy.get("mat-option").first().should("contain", query);
       });
 
       it("should set value of textbox matching selected item from list", () => {
@@ -213,13 +209,13 @@ describe("Recommendations", () => {
 
         cy.get("mat-option").should("not.exist");
         cy.get("[data-cy='formfield_programmeName'] input").type("clin");
-        cy.wait(1000);
+        cy.wait(2000);
         cy.get("mat-option")
-          .first()
+          .eq(1)
           .invoke("text")
           .then((value) => {
-            cy.get("mat-option").first().click();
-            cy.wait(1000);
+            cy.get("mat-option").eq(1).click();
+            cy.wait(2000);
             cy.get("[data-cy='formfield_programmeName'] input").should(
               "have.value",
               value
@@ -232,9 +228,9 @@ describe("Recommendations", () => {
 
         cy.get("mat-option").should("not.exist");
         cy.get("[data-cy='formfield_programmeName'] input").type("clin");
-        cy.wait(1000);
-        cy.get("mat-option").first().click();
-        cy.wait(1000);
+        cy.wait(2000);
+        cy.get("mat-option").eq(1).click();
+        cy.wait(2000);
         checkButtonsDisabled("not.be.disabled");
       });
 
@@ -243,13 +239,13 @@ describe("Recommendations", () => {
 
         cy.get("mat-option").should("not.exist");
         cy.get("[data-cy='formfield_programmeName'] input").type("clin");
-        cy.wait(1000);
+        cy.wait(2000);
         cy.get("mat-option")
-          .first()
+          .eq(1)
           .invoke("text")
           .then((value) => {
-            cy.get("mat-option").first().click();
-            cy.wait(1000);
+            cy.get("mat-option").eq(1).click();
+            cy.wait(2000);
             submitForm();
 
             cy.get("td.cdk-column-programmeName").each(($el, index, $list) => {
@@ -261,9 +257,9 @@ describe("Recommendations", () => {
       it("should reset summary table results when 'Clear fliters' button is clicked", () => {
         initFilterPanel();
         cy.get("[data-cy='formfield_programmeName'] input").type("clin");
-        cy.wait(1000);
-        cy.get("mat-option").first().click();
-        cy.wait(1000);
+        cy.wait(2000);
+        cy.get("mat-option").eq(1).click();
+        cy.wait(2000);
         cy.get(".mat-paginator-range-label")
           .invoke("text")
           .then((paginatorText) => {
@@ -275,7 +271,7 @@ describe("Recommendations", () => {
             cy.get(
               "[data-cy='tableFiltersForm'] [data-jasmine='clearFiltersButton']"
             ).click();
-            cy.wait(1000);
+            cy.wait(2000);
             cy.get(".mat-paginator-range-label").should(
               "contain",
               paginatorText

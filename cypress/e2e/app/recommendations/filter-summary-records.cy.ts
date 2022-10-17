@@ -72,7 +72,7 @@ describe("Recommendations", () => {
 
         submitForm();
 
-        cy.get("td.cdk-column-designatedBody").each(($el, index, $list) => {
+        cy.get("td.cdk-column-designatedBody").each(($el) => {
           expect($el.text()).to.equal("1-AIIDR8");
         });
       });
@@ -92,7 +92,7 @@ describe("Recommendations", () => {
 
         const dbcs: string[] = [];
         cy.get("td.cdk-column-designatedBody")
-          .each(($el, index, $list) => {
+          .each(($el) => {
             dbcs.push($el.text());
           })
           .then(() => {
@@ -118,10 +118,10 @@ describe("Recommendations", () => {
             cy.get("[data-cy='selectionOption1-AIIDR8']").click();
 
             submitForm();
-            cy.get("td.cdk-column-programmeName").each(($el, index, $list) => {
+            cy.get("td.cdk-column-programmeName").each(($el) => {
               expect($el.text()).to.equal(value);
             });
-            cy.get("td.cdk-column-designatedBody").each(($el, index, $list) => {
+            cy.get("td.cdk-column-designatedBody").each(($el) => {
               expect($el.text()).to.equal("1-AIIDR8");
             });
           });
@@ -155,9 +155,77 @@ describe("Recommendations", () => {
         );
         cy.get(".filters-drawer-container .mat-drawer-opened").should("exist");
         cy.wait(2000);
-        cy.get("td.cdk-column-designatedBody").each(($el, index, $list) => {
+        cy.get("td.cdk-column-designatedBody").each(($el) => {
           expect($el.text() === "1-AIIDWT").to.be.false;
         });
+      });
+    });
+
+    describe.only("Filter by GMC status", () => {
+      it("should display 'gmc status' selection list filters", () => {
+        initFilterPanel();
+        cy.get("[data-cy='selectionListgmcStatus']").should("exist");
+      });
+
+      it("should display 3 selection options in the 'gmc status' selection list labelled accordingly", () => {
+        const gmcStatusLabels = ["Approved", "Rejected", "Under Review"];
+
+        initFilterPanel();
+
+        cy.get(
+          "[data-cy='selectionListgmcStatus'] .mat-list-option .mat-list-text"
+        ).should("have.length", 3);
+        cy.get(
+          "[data-cy='selectionListgmcStatus'] .mat-list-option .mat-list-text"
+        ).each(($el) => {
+          expect(gmcStatusLabels.indexOf($el.text().trim())).to.be.greaterThan(
+            -1
+          );
+        });
+      });
+
+      it("should filter summary records list by single gmc status when single option selected and submitted", () => {
+        initFilterPanel();
+
+        cy.get("[data-cy='selectionOptionApproved']").should("exist");
+        cy.get("[data-cy='selectionOptionApproved']").click();
+        checkButtonsDisabled("not.be.disabled");
+
+        submitForm();
+
+        cy.get("td.cdk-column-gmcOutcome").each(($el) => {
+          expect($el.text()).to.equal("Approved");
+        });
+      });
+
+      it("should filter summary records list by multiple gmc statuses when multiple options selected and submitted", () => {
+        initFilterPanel();
+        const selectedGmcStatus = ["Approved", "Rejected"];
+        selectedGmcStatus.forEach((gmcStatus) => {
+          const $el = cy.get("[data-cy='selectionOption" + gmcStatus + "']");
+          $el.should("exist");
+          $el.click();
+        });
+
+        checkButtonsDisabled("not.be.disabled");
+
+        submitForm();
+
+        const dbcs: string[] = [];
+        cy.get("td.cdk-column-gmcOutcome")
+          .each(($el) => {
+            dbcs.push($el.text());
+          })
+          .then(() => {
+            expect(
+              dbcs.every((gmcStatus) => {
+                return (
+                  gmcStatus === selectedGmcStatus[0] ||
+                  gmcStatus === selectedGmcStatus[1]
+                );
+              })
+            ).to.be.true;
+          });
       });
     });
 
@@ -248,7 +316,7 @@ describe("Recommendations", () => {
             cy.wait(2000);
             submitForm();
 
-            cy.get("td.cdk-column-programmeName").each(($el, index, $list) => {
+            cy.get("td.cdk-column-programmeName").each(($el) => {
               expect($el.text()).to.equal(value);
             });
           });

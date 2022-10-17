@@ -41,8 +41,7 @@ export const TABLE_FILTERS_FORM_BASE: Array<
     options: [
       { key: "Approved", value: "Approved" },
       { key: "Rejected", value: "Rejected" },
-      { key: "Under Review", value: "Under Review" },
-      { key: "", value: "None" }
+      { key: "Under Review", value: "Under Review" }
     ],
     order: 2,
     controlType: FormControlType.SELECTION_LIST,

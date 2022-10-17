@@ -1,7 +1,8 @@
 import { Sort } from "@angular/material/sort";
 import {
   FormControlBase,
-  AutocompleteControl
+  AutocompleteControl,
+  FormControlType
 } from "../shared/form-controls/form-contol-base.model";
 
 export const COLUMN_DATA: [string, string, boolean][] = [
@@ -31,8 +32,21 @@ export const TABLE_FILTERS_FORM_BASE: Array<
     key: "programmeName",
     label: "Programme name",
     order: 1,
-    controlType: "autocomplete",
+    controlType: FormControlType.AUTOCOMPLETE,
     placeholder: "Start typing..."
+  },
+  {
+    key: "gmcStatus",
+    label: "GMC status",
+    options: [
+      { key: "Approved", value: "Approved" },
+      { key: "Rejected", value: "Rejected" },
+      { key: "Under Review", value: "Under Review" },
+      { key: "", value: "None" }
+    ],
+    order: 2,
+    controlType: FormControlType.SELECTION_LIST,
+    initialValue: []
   }
 ];
 
@@ -45,7 +59,7 @@ export const TABLE_FILTERS_FORM_DBC: FormControlBase = {
     { key: "1-AIIDWA", value: "North West London" },
     { key: "1-AIIDWI", value: "South London" }
   ],
-  order: 2,
-  controlType: "selectionList",
+  order: 3,
+  controlType: FormControlType.SELECTION_LIST,
   initialValue: []
 };

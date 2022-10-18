@@ -161,7 +161,7 @@ describe("Recommendations", () => {
       });
     });
 
-    describe.only("Filter by GMC status", () => {
+    describe("Filter by GMC status", () => {
       it("should display 'gmc status' selection list filters", () => {
         initFilterPanel();
         cy.get("[data-cy='selectionListgmcStatus']").should("exist");
@@ -201,8 +201,8 @@ describe("Recommendations", () => {
       it("should filter summary records list by multiple gmc statuses when multiple options selected and submitted", () => {
         initFilterPanel();
         const selectedGmcStatus = ["Approved", "Rejected"];
-        selectedGmcStatus.forEach((gmcStatus) => {
-          const $el = cy.get("[data-cy='selectionOption" + gmcStatus + "']");
+        selectedGmcStatus.forEach((status) => {
+          const $el = cy.get("[data-cy='selectionOption" + status + "']");
           $el.should("exist");
           $el.click();
         });
@@ -211,17 +211,17 @@ describe("Recommendations", () => {
 
         submitForm();
 
-        const dbcs: string[] = [];
+        const gmcStatus: string[] = [];
         cy.get("td.cdk-column-gmcOutcome")
           .each(($el) => {
-            dbcs.push($el.text());
+            gmcStatus.push($el.text());
           })
           .then(() => {
             expect(
-              dbcs.every((gmcStatus) => {
+              gmcStatus.every((status) => {
                 return (
-                  gmcStatus === selectedGmcStatus[0] ||
-                  gmcStatus === selectedGmcStatus[1]
+                  status === selectedGmcStatus[0] ||
+                  status === selectedGmcStatus[1]
                 );
               })
             ).to.be.true;
@@ -229,7 +229,7 @@ describe("Recommendations", () => {
       });
     });
 
-    describe("Filter by Programme Name", () => {
+    describe.only("Filter by Programme Name", () => {
       it("should display 'programme name' filter field", () => {
         initFilterPanel();
         cy.get("[data-cy='formfield_programmeName']").should("exist");
@@ -306,7 +306,7 @@ describe("Recommendations", () => {
         initFilterPanel();
 
         cy.get("mat-option").should("not.exist");
-        cy.get("[data-cy='formfield_programmeName'] input").type("clin");
+        cy.get("[data-cy='formfield_programmeName'] input").type("General");
         cy.wait(2000);
         cy.get("mat-option")
           .eq(1)
@@ -324,7 +324,7 @@ describe("Recommendations", () => {
 
       it("should reset summary table results when 'Clear fliters' button is clicked", () => {
         initFilterPanel();
-        cy.get("[data-cy='formfield_programmeName'] input").type("clin");
+        cy.get("[data-cy='formfield_programmeName'] input").type("General");
         cy.wait(2000);
         cy.get("mat-option").eq(1).click();
         cy.wait(2000);

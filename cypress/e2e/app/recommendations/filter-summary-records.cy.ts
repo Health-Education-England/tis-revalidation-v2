@@ -229,7 +229,7 @@ describe("Recommendations", () => {
       });
     });
 
-    describe.only("Filter by Programme Name", () => {
+    describe("Filter by Programme Name", () => {
       it("should display 'programme name' filter field", () => {
         initFilterPanel();
         cy.get("[data-cy='formfield_programmeName']").should("exist");

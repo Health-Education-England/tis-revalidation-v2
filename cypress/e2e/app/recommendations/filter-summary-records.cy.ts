@@ -93,16 +93,9 @@ describe("Recommendations", () => {
 
         submitForm();
 
-        const dbcs: string[] = [];
-        cy.get("td.cdk-column-designatedBody")
-          .each(($el) => {
-            dbcs.push($el.text());
-          })
-          .then(() => {
-            dbcs.every((dbc) => {
-              expect(dbc).to.be.oneOf(selectedDbcs);
-            });
-          });
+        cy.get("td.cdk-column-designatedBody").each(($el) => {
+          expect($el.text().trim()).to.be.oneOf(selectedDbcs);
+        });
       });
 
       it("should filter by both 'programme name' and 'dbc' when both filters selected", () => {
@@ -206,15 +199,9 @@ describe("Recommendations", () => {
         checkButtonsDisabled("not.be.disabled");
 
         submitForm();
-
-        const gmcStatus: string[] = [];
-        cy.get("td.cdk-column-gmcOutcome")
-          .each(($el) => {
-            gmcStatus.push($el.text());
-          })
-          .then(() => {
-            expect(gmcStatus).to.be.oneOf(selectedGmcStatus);
-          });
+        cy.get("td.cdk-column-gmcOutcome").each(($el) => {
+          expect($el.text().trim()).to.be.oneOf(selectedGmcStatus);
+        });
       });
     });
 

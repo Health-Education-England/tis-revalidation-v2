@@ -8,10 +8,12 @@ import {
   RecommendationStatus,
   RecommendationGmcOutcome
 } from "../../recommendation/recommendation-history.interface";
+
 import {
   FilterRecommendations,
   ResetRecommendationsPaginator,
-  RecommendationsSearch
+  RecommendationsSearch,
+  SetRecommendationsTableFilters
 } from "../state/recommendations.actions";
 import { RecommendationsState } from "../state/recommendations.state";
 import {
@@ -117,5 +119,37 @@ describe("RecommendationsService", () => {
     const params: HttpParams = recommendationsService.generateParams();
 
     expect(params.get("searchQuery")).toEqual("lisa");
+  });
+
+  it("`generateParams()` should include 'programmeName' query if its set on store", () => {
+    store.dispatch(
+      new SetRecommendationsTableFilters({
+        programmeName: "Clinical"
+      })
+    );
+    store.dispatch(new ResetRecommendationsPaginator());
+    store.dispatch(
+      new FilterRecommendations(RecommendationsFilterType.UNDER_NOTICE)
+    );
+
+    const params: HttpParams = recommendationsService.generateParams();
+
+    expect(params.get("programmeName")).toEqual("Clinical");
+  });
+
+  it("`generateParams()` should include 'gmcStatus' query if its set on store", () => {
+    store.dispatch(
+      new SetRecommendationsTableFilters({
+        gmcStatus: ["Approved", "Rejected"]
+      })
+    );
+    store.dispatch(new ResetRecommendationsPaginator());
+    store.dispatch(
+      new FilterRecommendations(RecommendationsFilterType.UNDER_NOTICE)
+    );
+
+    const params: HttpParams = recommendationsService.generateParams();
+
+    expect(params.get("gmcStatus")).toEqual("Approved,Rejected");
   });
 });

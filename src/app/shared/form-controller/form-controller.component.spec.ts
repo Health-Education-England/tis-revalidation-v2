@@ -15,6 +15,7 @@ import {
   ReactiveFormsModule
 } from "@angular/forms";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
+import { MaterialSelectionListComponent } from "../form-controls/material-selection-list/material-selection-list.component";
 
 describe("FormControllerComponent", () => {
   let component: FormControllerComponent;
@@ -61,7 +62,11 @@ describe("FormControllerComponent", () => {
         FormsModule,
         ReactiveFormsModule
       ],
-      declarations: [FormControllerComponent, MaterialAutocompleteComponent]
+      declarations: [
+        FormControllerComponent,
+        MaterialAutocompleteComponent,
+        MaterialSelectionListComponent
+      ]
     }).compileComponents();
   });
 

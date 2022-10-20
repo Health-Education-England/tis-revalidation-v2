@@ -13,3 +13,8 @@ export interface FormControlBase {
 export interface AutocompleteControl extends FormControlBase {
   serviceMethod: string;
 }
+
+export enum FormControlType {
+  AUTOCOMPLETE = "autocomplete",
+  SELECTION_LIST = "selectionList"
+}

@@ -94,6 +94,9 @@ export class RecommendationsResolver
       if (route.queryParams.gmcStatus !== tableFiltersState?.gmcStatus) {
         filters.gmcStatus = route.queryParams.gmcStatus?.split(",");
       }
+      if (route.queryParams.tisStatus !== tableFiltersState?.tisStatus) {
+        filters.tisStatus = route.queryParams.tisStatus?.split(",");
+      }
       if (Object.keys(filters).length) {
         this.recordsService.setTableFilters(filters);
         this.recordsService.toggleTableFilterPanel$.next(true);

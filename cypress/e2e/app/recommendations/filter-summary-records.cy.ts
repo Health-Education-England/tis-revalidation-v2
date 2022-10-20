@@ -4,6 +4,16 @@ describe("Recommendations", () => {
       cy.loginSession();
     });
 
+    const formFilters = {
+      dbc: [
+        { value: "1-AIIDR8", label: "Kent, Surrey and Sussex" },
+        { value: "1-AIIDVS", label: "North Central and East London" },
+        { value: "1-AIIDWA", label: "North West London" },
+        { value: "1-AIIDWI", label: "South London" }
+      ],
+      gmcStatus: ["Approved", "Rejected", "Under Review"],
+      tisStatus: ["Not started", "Submitted to GMC", "Draft", "Complete"]
+    };
     const openProgrammeNameDropdown = (query: string = "General") => {
       cy.get("mat-option").should("not.exist");
       cy.get("[data-cy='formfield_programmeName'] input").type(query);
@@ -30,7 +40,9 @@ describe("Recommendations", () => {
       cy.get(
         "[data-cy='tableFiltersForm'] button[data-jasmine='submitFormButton']"
       ).click();
-      cy.wait(2000);
+      // TODO:  There's a glitch in the summary record table which refreshes after the loading spinner has been hidden.
+      // Hence the need to increase this wait value.
+      cy.wait(5000);
     };
 
     it("should open and close filter panel when toggle button is clicked", () => {
@@ -50,13 +62,6 @@ describe("Recommendations", () => {
       });
 
       it("should display 4 selection options in the 'dbc' selection list labelled accordingly", () => {
-        const dbcLabels = [
-          "Kent, Surrey and Sussex",
-          "North Central and East London",
-          "North West London",
-          "South London"
-        ];
-
         initFilterPanel();
 
         cy.get(
@@ -65,7 +70,9 @@ describe("Recommendations", () => {
         cy.get(
           "[data-cy='selectionListdbcs'] .mat-list-option .mat-list-text"
         ).each(($el) => {
-          expect($el.text().trim()).to.be.oneOf(dbcLabels);
+          expect($el.text().trim()).to.be.oneOf(
+            formFilters.dbc.map((item) => item.label)
+          );
         });
       });
 
@@ -76,13 +83,15 @@ describe("Recommendations", () => {
         cy.get("[data-cy='selectionOption1-AIIDR8']").click();
         submitForm();
         cy.get("td.cdk-column-designatedBody").each(($el) => {
-          expect($el.text()).to.equal("1-AIIDR8");
+          expect($el.text().trim()).to.equal("1-AIIDR8");
         });
       });
 
       it("should filter summary records list by multiple dbcs when multiple options selected and submitted", () => {
         initFilterPanel();
-        const selectedDbcs = ["1-AIIDR8", "1-AIIDVS"];
+        const selectedDbcs = formFilters.dbc
+          .filter((_, index) => index < 2)
+          .map((item) => item.value);
         selectedDbcs.forEach((dbc) => {
           const $el = cy.get("[data-cy='selectionOption" + dbc + "']");
           $el.should("exist");
@@ -159,8 +168,6 @@ describe("Recommendations", () => {
       });
 
       it("should display 3 selection options in the 'gmc status' selection list labelled accordingly", () => {
-        const gmcStatusLabels = ["Approved", "Rejected", "Under Review"];
-
         initFilterPanel();
 
         cy.get(
@@ -169,7 +176,7 @@ describe("Recommendations", () => {
         cy.get(
           "[data-cy='selectionListgmcStatus'] .mat-list-option .mat-list-text"
         ).each(($el) => {
-          expect($el.text().trim()).to.be.oneOf(gmcStatusLabels);
+          expect($el.text().trim()).to.be.oneOf(formFilters.gmcStatus);
         });
       });
 
@@ -189,7 +196,9 @@ describe("Recommendations", () => {
 
       it("should filter summary records list by multiple gmc statuses when multiple options selected and submitted", () => {
         initFilterPanel();
-        const selectedGmcStatus = ["Approved", "Rejected"];
+        const selectedGmcStatus = formFilters.gmcStatus.filter(
+          (_, index) => index < 2
+        );
         selectedGmcStatus.forEach((status) => {
           const $el = cy.get("[data-cy='selectionOption" + status + "']");
           $el.should("exist");
@@ -201,6 +210,61 @@ describe("Recommendations", () => {
         submitForm();
         cy.get("td.cdk-column-gmcOutcome").each(($el) => {
           expect($el.text().trim()).to.be.oneOf(selectedGmcStatus);
+        });
+      });
+    });
+
+    describe("Filter by TIS status", () => {
+      it("should display 'TIS status' selection list filters", () => {
+        initFilterPanel();
+        cy.get("[data-cy='selectionListtisStatus']").should("exist");
+      });
+
+      it("should display 4 selection options in the 'TIS status' selection list labelled accordingly", () => {
+        initFilterPanel();
+
+        cy.get(
+          "[data-cy='selectionListtisStatus'] .mat-list-option .mat-list-text"
+        ).should("have.length", 4);
+        cy.get(
+          "[data-cy='selectionListtisStatus'] .mat-list-option .mat-list-text"
+        ).each(($el) => {
+          expect($el.text().trim()).to.be.oneOf(formFilters.tisStatus);
+        });
+      });
+
+      it("should filter summary records list by single TIS status when single option selected and submitted", () => {
+        initFilterPanel();
+
+        cy.get("[data-cy='selectionOptionDraft']").should("exist");
+        cy.get("[data-cy='selectionOptionDraft']").click();
+        checkButtonsDisabled("not.be.disabled");
+
+        submitForm();
+
+        cy.get("td.cdk-column-doctorStatus").each(($el) => {
+          expect($el.text()).to.equal("Draft");
+        });
+      });
+
+      it("should filter summary records list by multiple TIS statuses when multiple options selected and submitted", () => {
+        initFilterPanel();
+        const selectedTisStatus = formFilters.tisStatus.filter(
+          (_, index) => index < 2
+        );
+        selectedTisStatus.forEach((status) => {
+          const $el = cy.get(
+            "[data-cy='selectionOption" + status.replace(/ /g, "") + "']"
+          );
+          $el.should("exist");
+          $el.click();
+        });
+
+        checkButtonsDisabled("not.be.disabled");
+
+        submitForm();
+        cy.get("td.cdk-column-gmcOutcome").each(($el) => {
+          expect($el.text().trim()).to.be.oneOf(selectedTisStatus);
         });
       });
     });

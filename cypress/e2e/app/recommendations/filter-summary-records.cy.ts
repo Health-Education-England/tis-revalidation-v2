@@ -3,11 +3,18 @@ describe("Recommendations", () => {
     beforeEach(() => {
       cy.loginSession();
     });
+
+    const openProgrammeNameDropdown = (query: string = "General") => {
+      cy.get("mat-option").should("not.exist");
+      cy.get("[data-cy='formfield_programmeName'] input").type(query);
+      cy.wait(2000);
+      cy.get("mat-option").should("exist");
+    };
+
     const initFilterPanel = () => {
       cy.visit("/recommendations");
       cy.get("[data-cy='toggleTableFiltersButton']").click();
       cy.get(".filters-drawer-container .mat-drawer-opened").should("exist");
-      cy.wait(3000);
     };
 
     const checkButtonsDisabled = (status: string = "be disabled") => {
@@ -30,7 +37,6 @@ describe("Recommendations", () => {
       cy.visit("/recommendations");
       cy.get("[data-cy='toggleTableFiltersButton']").click();
       cy.get(".filters-drawer-container .mat-drawer-opened").should("exist");
-      cy.wait(3000);
       cy.get("[data-cy='toggleTableFiltersButton']").click();
       cy.get(".filters-drawer-container .mat-drawer-opened").should(
         "not.exist"
@@ -58,8 +64,8 @@ describe("Recommendations", () => {
         ).should("have.length", 4);
         cy.get(
           "[data-cy='selectionListdbcs'] .mat-list-option .mat-list-text"
-        ).each(($el, index) => {
-          expect(dbcLabels.indexOf($el.text().trim())).to.be.greaterThan(-1);
+        ).each(($el) => {
+          expect($el.text().trim()).to.be.oneOf(dbcLabels);
         });
       });
 
@@ -68,10 +74,7 @@ describe("Recommendations", () => {
 
         cy.get("[data-cy='selectionOption1-AIIDR8']").should("exist");
         cy.get("[data-cy='selectionOption1-AIIDR8']").click();
-        checkButtonsDisabled("not.be.disabled");
-
         submitForm();
-
         cy.get("td.cdk-column-designatedBody").each(($el) => {
           expect($el.text()).to.equal("1-AIIDR8");
         });
@@ -96,25 +99,21 @@ describe("Recommendations", () => {
             dbcs.push($el.text());
           })
           .then(() => {
-            expect(
-              dbcs.every((dbc) => {
-                return dbc === selectedDbcs[0] || dbc === selectedDbcs[1];
-              })
-            ).to.be.true;
+            dbcs.every((dbc) => {
+              expect(dbc).to.be.oneOf(selectedDbcs);
+            });
           });
       });
 
       it("should filter by both 'programme name' and 'dbc' when both filters selected", () => {
         initFilterPanel();
 
-        cy.get("[data-cy='formfield_programmeName'] input").type("neuro");
-        cy.wait(2000);
+        openProgrammeNameDropdown("Neurology KSS");
         cy.get("mat-option")
           .eq(1)
           .invoke("text")
           .then((value) => {
             cy.get("mat-option").eq(1).click();
-            cy.wait(2000);
             cy.get("[data-cy='selectionOption1-AIIDR8']").click();
 
             submitForm();
@@ -154,7 +153,6 @@ describe("Recommendations", () => {
           "/recommendations?active=submissionDate&direction=asc&pageIndex=0&filter=underNotice&programmeName=&dbcs=1-AIIDWT"
         );
         cy.get(".filters-drawer-container .mat-drawer-opened").should("exist");
-        cy.wait(2000);
         cy.get("td.cdk-column-designatedBody").each(($el) => {
           expect($el.text() === "1-AIIDWT").to.be.false;
         });
@@ -178,9 +176,7 @@ describe("Recommendations", () => {
         cy.get(
           "[data-cy='selectionListgmcStatus'] .mat-list-option .mat-list-text"
         ).each(($el) => {
-          expect(gmcStatusLabels.indexOf($el.text().trim())).to.be.greaterThan(
-            -1
-          );
+          expect($el.text().trim()).to.be.oneOf(gmcStatusLabels);
         });
       });
 
@@ -217,14 +213,7 @@ describe("Recommendations", () => {
             gmcStatus.push($el.text());
           })
           .then(() => {
-            expect(
-              gmcStatus.every((status) => {
-                return (
-                  status === selectedGmcStatus[0] ||
-                  status === selectedGmcStatus[1]
-                );
-              })
-            ).to.be.true;
+            expect(gmcStatus).to.be.oneOf(selectedGmcStatus);
           });
       });
     });
@@ -237,7 +226,6 @@ describe("Recommendations", () => {
 
       it("should display 'Apply filters' and 'Clear filters' buttons disabled by default", () => {
         initFilterPanel();
-
         cy.get("[data-cy='tableFiltersForm'] button").should("have.length", 2);
         cy.get(
           "[data-cy='tableFiltersForm'] button[data-jasmine='clearFiltersButton']"
@@ -256,34 +244,26 @@ describe("Recommendations", () => {
 
       it("should display list containing matching options when the text 'clin' is entered in 'programme name' field", () => {
         initFilterPanel();
-
-        cy.get("mat-option").should("not.exist");
-        cy.get("[data-cy='formfield_programmeName'] input").type("Clin");
-        cy.wait(2000);
+        openProgrammeNameDropdown();
         cy.get("mat-option").should("have.length.above", 1);
       });
 
       it("should display list where first item matches input text", () => {
         initFilterPanel();
         const query = "Clinical";
-        cy.get("mat-option").should("not.exist");
-        cy.get("[data-cy='formfield_programmeName'] input").type(query);
-        cy.wait(2000);
+        openProgrammeNameDropdown(query);
         cy.get("mat-option").first().should("contain", query);
       });
 
       it("should set value of textbox matching selected item from list", () => {
         initFilterPanel();
 
-        cy.get("mat-option").should("not.exist");
-        cy.get("[data-cy='formfield_programmeName'] input").type("clin");
-        cy.wait(2000);
+        openProgrammeNameDropdown();
         cy.get("mat-option")
           .eq(1)
           .invoke("text")
           .then((value) => {
             cy.get("mat-option").eq(1).click();
-            cy.wait(2000);
             cy.get("[data-cy='formfield_programmeName'] input").should(
               "have.value",
               value
@@ -294,26 +274,20 @@ describe("Recommendations", () => {
       it("should enable both buttons when item selected from list", () => {
         initFilterPanel();
 
-        cy.get("mat-option").should("not.exist");
-        cy.get("[data-cy='formfield_programmeName'] input").type("clin");
-        cy.wait(2000);
+        openProgrammeNameDropdown();
         cy.get("mat-option").eq(1).click();
-        cy.wait(2000);
         checkButtonsDisabled("not.be.disabled");
       });
 
       it("should update summary table displaying trainees with matching programme name only", () => {
         initFilterPanel();
 
-        cy.get("mat-option").should("not.exist");
-        cy.get("[data-cy='formfield_programmeName'] input").type("General");
-        cy.wait(2000);
+        openProgrammeNameDropdown();
         cy.get("mat-option")
           .eq(1)
           .invoke("text")
           .then((value) => {
             cy.get("mat-option").eq(1).click();
-            cy.wait(2000);
             submitForm();
 
             cy.get("td.cdk-column-programmeName").each(($el) => {
@@ -324,10 +298,8 @@ describe("Recommendations", () => {
 
       it("should reset summary table results when 'Clear fliters' button is clicked", () => {
         initFilterPanel();
-        cy.get("[data-cy='formfield_programmeName'] input").type("General");
-        cy.wait(2000);
+        openProgrammeNameDropdown();
         cy.get("mat-option").eq(1).click();
-        cy.wait(2000);
         cy.get(".mat-paginator-range-label")
           .invoke("text")
           .then((paginatorText) => {
@@ -339,7 +311,6 @@ describe("Recommendations", () => {
             cy.get(
               "[data-cy='tableFiltersForm'] [data-jasmine='clearFiltersButton']"
             ).click();
-            cy.wait(2000);
             cy.get(".mat-paginator-range-label").should(
               "contain",
               paginatorText

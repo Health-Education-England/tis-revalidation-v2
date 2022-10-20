@@ -46,6 +46,19 @@ export const TABLE_FILTERS_FORM_BASE: Array<
     order: 2,
     controlType: FormControlType.SELECTION_LIST,
     initialValue: []
+  },
+  {
+    key: "tisStatus",
+    label: "TIS status",
+    options: [
+      { key: "Not started", value: "Not started" },
+      { key: "Submitted to GMC", value: "Submitted to GMC" },
+      { key: "Draft", value: "Draft" },
+      { key: "Complete", value: "Complete" }
+    ],
+    order: 3,
+    controlType: FormControlType.SELECTION_LIST,
+    initialValue: []
   }
 ];
 

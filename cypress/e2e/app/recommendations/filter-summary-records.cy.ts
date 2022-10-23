@@ -12,7 +12,12 @@ describe("Recommendations", () => {
         { value: "1-AIIDWI", label: "South London" }
       ],
       gmcStatus: ["Approved", "Rejected", "Under Review"],
-      tisStatus: ["Not started", "Submitted to GMC", "Draft", "Complete"]
+      tisStatus: [
+        { value: "NOT_STARTED", label: "Not started" },
+        { value: "SUBMITTED_TO_GMC", label: "Submitted to GMC" },
+        { value: "DRAFT", label: "Draft" },
+        { value: "COMPLETE", label: "Complete" }
+      ]
     };
     const openProgrammeNameDropdown = (query: string = "General") => {
       cy.get("mat-option").should("not.exist");
@@ -40,8 +45,6 @@ describe("Recommendations", () => {
       cy.get(
         "[data-cy='tableFiltersForm'] button[data-jasmine='submitFormButton']"
       ).click();
-      // TODO:  There's a glitch in the summary record table which refreshes after the loading spinner has been hidden.
-      // Hence the need to increase this wait value.
       cy.wait(5000);
     };
 
@@ -229,15 +232,17 @@ describe("Recommendations", () => {
         cy.get(
           "[data-cy='selectionListtisStatus'] .mat-list-option .mat-list-text"
         ).each(($el) => {
-          expect($el.text().trim()).to.be.oneOf(formFilters.tisStatus);
+          expect($el.text().trim()).to.be.oneOf(
+            formFilters.tisStatus.map((item) => item.label)
+          );
         });
       });
 
       it("should filter summary records list by single TIS status when single option selected and submitted", () => {
         initFilterPanel();
 
-        cy.get("[data-cy='selectionOptionDraft']").should("exist");
-        cy.get("[data-cy='selectionOptionDraft']").click();
+        cy.get("[data-cy='selectionOptionDRAFT']").should("exist");
+        cy.get("[data-cy='selectionOptionDRAFT']").click();
         checkButtonsDisabled("not.be.disabled");
 
         submitForm();
@@ -252,10 +257,9 @@ describe("Recommendations", () => {
         const selectedTisStatus = formFilters.tisStatus.filter(
           (_, index) => index < 2
         );
+
         selectedTisStatus.forEach((status) => {
-          const $el = cy.get(
-            "[data-cy='selectionOption" + status.replace(/ /g, "") + "']"
-          );
+          const $el = cy.get("[data-cy='selectionOption" + status.value + "']");
           $el.should("exist");
           $el.click();
         });
@@ -263,8 +267,10 @@ describe("Recommendations", () => {
         checkButtonsDisabled("not.be.disabled");
 
         submitForm();
-        cy.get("td.cdk-column-gmcOutcome").each(($el) => {
-          expect($el.text().trim()).to.be.oneOf(selectedTisStatus);
+        cy.get("td.cdk-column-doctorStatus").each(($el) => {
+          expect($el.text().trim()).to.be.oneOf(
+            selectedTisStatus.map((item) => item.label)
+          );
         });
       });
     });

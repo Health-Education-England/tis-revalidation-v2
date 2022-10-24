@@ -12,6 +12,7 @@ import { InfoDialogComponent } from "./info-dialog/info-dialog.component";
 import { FormControllerComponent } from "./form-controller/form-controller.component";
 import { MaterialSelectionListComponent } from "./form-controls/material-selection-list/material-selection-list.component";
 import { MaterialAutocompleteComponent } from './form-controls/material-autocomplete/material-autocomplete.component';
+import { RemoveWhitespacePipe } from './pipes/remove-whitespace.pipe';
 
 const modulePipes = [StripHtmlPipe, FileBytesPipe];
 @NgModule({
@@ -22,7 +23,8 @@ const modulePipes = [StripHtmlPipe, FileBytesPipe];
     InfoDialogComponent,
     FormControllerComponent,
     MaterialSelectionListComponent,
-    MaterialAutocompleteComponent
+    MaterialAutocompleteComponent,
+    RemoveWhitespacePipe
   ],
   imports: [RouterModule, MaterialModule, ReactiveFormsModule, CommonModule],
   exports: [...modulePipes, FormControllerComponent],

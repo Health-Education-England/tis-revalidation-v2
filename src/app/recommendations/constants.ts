@@ -1,9 +1,21 @@
 import { Sort } from "@angular/material/sort";
 import {
+  RecommendationGmcOutcome,
+  RecommendationStatus
+} from "../recommendation/recommendation-history.interface";
+import {
   FormControlBase,
   AutocompleteControl,
   FormControlType
 } from "../shared/form-controls/form-contol-base.model";
+
+function getEnumKeyByEnumValue<T extends { [index: string]: string }>(
+  myEnum: T,
+  enumValue: string
+): keyof T | null {
+  let keys = Object.keys(myEnum).filter((x) => myEnum[x] == enumValue);
+  return keys.length > 0 ? keys[0] : null;
+}
 
 export const COLUMN_DATA: [string, string, boolean][] = [
   ["GMC Submission due date", "submissionDate", true],
@@ -39,11 +51,57 @@ export const TABLE_FILTERS_FORM_BASE: Array<
     key: "gmcStatus",
     label: "GMC status",
     options: [
-      { key: "Approved", value: "Approved" },
-      { key: "Rejected", value: "Rejected" },
-      { key: "Under Review", value: "Under Review" }
+      {
+        key: RecommendationGmcOutcome.APPROVED,
+        value: RecommendationGmcOutcome.APPROVED
+      },
+      {
+        key: RecommendationGmcOutcome.REJECTED,
+        value: RecommendationGmcOutcome.REJECTED
+      },
+      {
+        key: RecommendationGmcOutcome.UNDER_REVIEW,
+        value: RecommendationGmcOutcome.UNDER_REVIEW
+      }
     ],
     order: 2,
+    controlType: FormControlType.SELECTION_LIST,
+    initialValue: []
+  },
+  {
+    key: "tisStatus",
+    label: "TIS status",
+    options: [
+      {
+        key: getEnumKeyByEnumValue(
+          RecommendationStatus,
+          RecommendationStatus.NOT_STARTED
+        ),
+        value: RecommendationStatus.NOT_STARTED
+      },
+      {
+        key: getEnumKeyByEnumValue(
+          RecommendationStatus,
+          RecommendationStatus.SUBMITTED_TO_GMC
+        ),
+        value: RecommendationStatus.SUBMITTED_TO_GMC
+      },
+      {
+        key: getEnumKeyByEnumValue(
+          RecommendationStatus,
+          RecommendationStatus.DRAFT
+        ),
+        value: RecommendationStatus.DRAFT
+      },
+      {
+        key: getEnumKeyByEnumValue(
+          RecommendationStatus,
+          RecommendationStatus.COMPLETED
+        ),
+        value: RecommendationStatus.COMPLETED
+      }
+    ],
+    order: 3,
     controlType: FormControlType.SELECTION_LIST,
     initialValue: []
   }

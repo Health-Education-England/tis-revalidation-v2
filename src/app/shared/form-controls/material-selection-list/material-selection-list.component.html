@@ -1,6 +1,6 @@
 <div data-jasmine="formControl" [formGroup]="form">
   <mat-selection-list
-    [attr.data-cy]="'selectionList' + controlProperties.key"
+    [attr.data-cy]="'selectionList' + controlProperties.key | removeWhitespace"
     class="mb-20"
     color="primary"
     [formControlName]="controlProperties.key"
@@ -9,7 +9,7 @@
     <mat-list-option
       *ngFor="let option of controlProperties.options"
       [value]="option.key"
-      [attr.data-cy]="'selectionOption' + option.key"
+      [attr.data-cy]="'selectionOption' + option.key | removeWhitespace"
     >
       {{ option.value }}
     </mat-list-option>

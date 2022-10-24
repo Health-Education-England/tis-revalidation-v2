@@ -40,7 +40,8 @@ export class RecommendationsService {
         dbcFilters?.join(",") || this.authService.userDesignatedBodies.join(",")
       )
       .append("programmeName", snapshot.tableFilters?.programmeName || "")
-      .append("gmcStatus", snapshot.tableFilters?.gmcStatus?.join(",") || "");
+      .append("gmcStatus", snapshot.tableFilters?.gmcStatus?.join(",") || "")
+      .append("tisStatus", snapshot.tableFilters?.tisStatus?.join(",") || "");
 
     return params;
   }

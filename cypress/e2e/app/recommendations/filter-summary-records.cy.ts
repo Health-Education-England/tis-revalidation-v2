@@ -26,6 +26,14 @@ describe("Recommendations", () => {
       cy.get("mat-option").should("exist");
     };
 
+    const openTisAdminDropdown = (query: string = "St") => {
+      cy.get("mat-sidenav-content").scrollTo("bottom");
+      cy.get("mat-option").should("not.exist");
+      cy.get("[data-cy='formfield_admin'] input").type(query);
+      cy.wait(2000);
+      cy.get("mat-option").should("exist");
+    };
+
     const initFilterPanel = () => {
       cy.visit("/recommendations");
       cy.get("[data-cy='toggleTableFiltersButton']").click();
@@ -372,6 +380,52 @@ describe("Recommendations", () => {
               "contain",
               paginatorText
             );
+          });
+      });
+    });
+
+    describe.only("Filter by TIS admin", () => {
+      it("should display 'TIS admin' filter field", () => {
+        initFilterPanel();
+        cy.get("[data-cy='formfield_admin']").should("exist");
+      });
+
+      it("should display list containing matching options when the text 'clin' is entered in 'programme name' field", () => {
+        initFilterPanel();
+        openTisAdminDropdown();
+        cy.get("mat-option").should("have.length.above", 0);
+      });
+
+      it("should set value of textbox matching selected item from list", () => {
+        initFilterPanel();
+
+        openTisAdminDropdown();
+        cy.get("mat-option")
+          .eq(1)
+          .invoke("text")
+          .then((value) => {
+            cy.get("mat-option").eq(1).click();
+            cy.get("[data-cy='formfield_admin'] input").should(
+              "have.value",
+              value
+            );
+          });
+      });
+
+      it("should update summary table displaying trainees with matching TIS admin name only", () => {
+        initFilterPanel();
+
+        openTisAdminDropdown("Steve");
+        cy.get("mat-option")
+          .first()
+          .invoke("text")
+          .then((value) => {
+            cy.get("mat-option").first().click();
+            submitForm();
+
+            cy.get("td.cdk-column-admin").each(($el) => {
+              expect($el.text()).to.equal(value);
+            });
           });
       });
     });

@@ -62,7 +62,7 @@ export class RecommendationsResolver
       )
       .subscribe((admins: IAdmin[]) => {
         const tisAdminFormField = TABLE_FILTERS_FORM_BASE.find(
-          ({ key }) => key === "tisAdmin"
+          ({ key }) => key === "admin"
         ) as AutocompleteControl;
         tisAdminFormField.data = admins.map((admin: IAdmin) => admin.fullName);
       });

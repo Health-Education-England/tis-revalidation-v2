@@ -106,7 +106,7 @@ export const TABLE_FILTERS_FORM_BASE: Array<
     initialValue: []
   },
   {
-    key: "tisAdmin",
+    key: "admin",
     label: "TIS admin",
     order: 5,
     controlType: FormControlType.AUTOCOMPLETE,

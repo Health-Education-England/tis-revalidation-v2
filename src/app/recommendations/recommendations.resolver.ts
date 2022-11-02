@@ -2,6 +2,8 @@ import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, Resolve } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
+import { finalize, filter, take } from "rxjs/operators";
+
 import { generateColumnData } from "../records/constants";
 import { RecordsResolver } from "../records/records.resolver";
 import { RecordsService } from "../records/services/records.service";
@@ -17,7 +19,11 @@ import {
 import { AuthService } from "../core/auth/auth.service";
 import { UpdateConnectionsService } from "../update-connections/services/update-connections.service";
 import { ITableFilters, stateName } from "../records/records.interfaces";
-import { FormControlBase } from "../shared/form-controls/form-contol-base.model";
+import {
+  AutocompleteControl,
+  FormControlBase
+} from "../shared/form-controls/form-contol-base.model";
+import { IAdmin } from "../admins/admins.interfaces";
 
 @Injectable()
 export class RecommendationsResolver
@@ -34,6 +40,33 @@ export class RecommendationsResolver
     this.initialiseData();
   }
 
+  admins$: Observable<IAdmin[]> = this.store.select(
+    (state) => state.admins.items
+  );
+
+  private async initFiltersFormData() {
+    this.admins$
+      .pipe(
+        filter((data) => !!data),
+        take(1),
+        finalize(() => {
+          if (this.authService.inludesLondonDbcs) {
+            TABLE_FILTERS_FORM_BASE?.push(TABLE_FILTERS_FORM_DBC);
+          }
+          this.recordsService.tableFiltersFormData.next(
+            [...TABLE_FILTERS_FORM_BASE].sort(
+              (a: FormControlBase, b: FormControlBase) => a.order - b.order
+            )
+          );
+        })
+      )
+      .subscribe((admins: IAdmin[]) => {
+        const tisAdminFormField = TABLE_FILTERS_FORM_BASE.find(
+          ({ key }) => key === "tisAdmin"
+        ) as AutocompleteControl;
+        tisAdminFormField.data = admins.map((admin: IAdmin) => admin.fullName);
+      });
+  }
   private initialiseData(): void {
     this.recordsService.stateName = stateName.RECOMMENDATIONS;
     this.recordsService.detailsRoute = "/recommendation";
@@ -46,6 +79,8 @@ export class RecommendationsResolver
       "lastUpdatedDate"
     ];
 
+    this.initFiltersFormData();
+
     if (this.authService.inludesLondonDbcs) {
       const statusIndex = COLUMN_DATA.findIndex((dbc) => dbc[0] === "Status");
       COLUMN_DATA.splice(statusIndex + 1, 0, [
@@ -53,12 +88,7 @@ export class RecommendationsResolver
         "designatedBody",
         false
       ]);
-      TABLE_FILTERS_FORM_BASE?.push(TABLE_FILTERS_FORM_DBC);
     }
-
-    this.recordsService.tableFiltersFormData = [
-      ...TABLE_FILTERS_FORM_BASE
-    ].sort((a: FormControlBase, b: FormControlBase) => a.order - b.order);
 
     this.recordsService.columnData = generateColumnData(COLUMN_DATA);
     this.recordsService.filters = [

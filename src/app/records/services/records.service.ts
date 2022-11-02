@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Store } from "@ngxs/store";
-import { BehaviorSubject, forkJoin, Observable } from "rxjs";
+import { BehaviorSubject, EMPTY, forkJoin, Observable, Subject } from "rxjs";
 import { switchMap, take } from "rxjs/operators";
 
 import {
@@ -70,7 +70,9 @@ export class RecordsService {
   public detailsRoute: string;
   public filters: IFilter[];
   public showTableFilters: boolean;
-  public tableFiltersFormData: (FormControlBase | AutocompleteControl)[];
+  public tableFiltersFormData: Subject<
+    (FormControlBase | AutocompleteControl)[]
+  > = new Subject();
 
   // TODO type these
   public clearSearchAction: any;

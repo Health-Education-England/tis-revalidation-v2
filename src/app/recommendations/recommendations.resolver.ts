@@ -127,6 +127,10 @@ export class RecommendationsResolver
       if (route.queryParams.tisStatus !== tableFiltersState?.tisStatus) {
         filters.tisStatus = route.queryParams.tisStatus?.split(",");
       }
+
+      if (route.queryParams.admin !== tableFiltersState?.admin) {
+        filters.admin = route.queryParams.admin;
+      }
       if (Object.keys(filters).length) {
         this.recordsService.setTableFilters(filters);
         this.recordsService.toggleTableFilterPanel$.next(true);

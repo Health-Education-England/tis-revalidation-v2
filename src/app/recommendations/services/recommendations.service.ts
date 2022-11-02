@@ -41,7 +41,8 @@ export class RecommendationsService {
       )
       .append("programmeName", snapshot.tableFilters?.programmeName || "")
       .append("gmcStatus", snapshot.tableFilters?.gmcStatus?.join(",") || "")
-      .append("tisStatus", snapshot.tableFilters?.tisStatus?.join(",") || "");
+      .append("tisStatus", snapshot.tableFilters?.tisStatus?.join(",") || "")
+      .append("admin", snapshot.tableFilters?.admin || "");
 
     return params;
   }

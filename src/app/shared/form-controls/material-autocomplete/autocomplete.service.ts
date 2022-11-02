@@ -1,9 +1,9 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 import { AuthService } from "src/app/core/auth/auth.service";
 import { environment } from "@environment";
-
+import { Store } from "@ngxs/store";
 export interface AutocompleteResults {
   results: string[];
 }
@@ -13,6 +13,15 @@ export interface AutocompleteResults {
 })
 export class AutocompleteService {
   constructor(private http: HttpClient, private authService: AuthService) {}
+
+  filterItems(value: string, items: string[] = []): Observable<string[]> {
+    return of(
+      items.filter((name: string) =>
+        name.toLowerCase().includes(value.toLowerCase())
+      )
+    );
+  }
+
   getItems(fieldName: string, query: string): Observable<any> {
     const params = new HttpParams()
       .set("fieldName", fieldName)

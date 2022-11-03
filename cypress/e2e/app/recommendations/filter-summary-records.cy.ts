@@ -383,7 +383,7 @@ describe("Recommendations", () => {
       });
     });
 
-    describe.only("Filter by TIS admin", () => {
+    describe("Filter by TIS admin", () => {
       it("should display 'TIS admin' filter field", () => {
         initFilterPanel();
         cy.get("[data-cy='formfield_admin']").should("exist");

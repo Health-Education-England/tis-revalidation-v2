@@ -14,22 +14,28 @@
   }
 }
 
-$main-navbar-height: 64px;
-$child-navbar-height: 48px;
-$toolbar-height: 64px;
-
 .filters-drawer-container {
-  min-height: calc(
-    100vh - #{$main-navbar-height} - #{$child-navbar-height} - #{$toolbar-height}
-  );
   background-color: #fafafa;
   .mat-drawer-content {
-    min-height: calc(
-      100vh - #{$main-navbar-height} - #{$child-navbar-height} - #{$toolbar-height}
-    );
+    min-height: 840px;
   }
 }
 .mat-drawer {
   background-color: #fafafa;
   width: 360px;
+}
+
+.sticky {
+  background-color: #fff;
+  border: 1px solid #eee;
+  display: inline-block;
+  position: sticky;
+  bottom: 0;
+  padding: 30px;
+  z-index: 2;
+  opacity: 0;
+  transition: all 300ms ease-in;
+  &.show {
+    opacity: 1;
+  }
 }

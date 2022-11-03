@@ -1,4 +1,13 @@
 .filters-wrapper {
   background-color: #fafafa;
-  padding: 10px;
+}
+
+.filter-form-header {
+  padding: 10px 10px 20px 10px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #dcdcdc;
+  background-color: #fafafa;
+  z-index: 100;
+  position: sticky;
+  top: 80px;
 }

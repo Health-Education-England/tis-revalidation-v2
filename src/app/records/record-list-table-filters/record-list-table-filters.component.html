@@ -1,19 +1,12 @@
 <div class="filters-wrapper">
-  <div class="mb-20">
-    <h2>Filters</h2>
-    <form
-      data-cy="tableFiltersForm"
-      (ngSubmit)="onSubmit()"
-      *ngIf="form"
-      [formGroup]="form"
-    >
-      <div *ngFor="let control of formControls" class="form-row">
-        <app-form-controller
-          [control]="control"
-          [form]="form"
-        ></app-form-controller>
-      </div>
-
+  <form
+    data-cy="tableFiltersForm"
+    (ngSubmit)="onSubmit()"
+    *ngIf="form"
+    [formGroup]="form"
+  >
+    <div class="filter-form-header">
+      <h2 class="mb-0">Filters</h2>
       <div class="d-flex justify-content-end">
         <button
           data-jasmine="clearFiltersButton"
@@ -38,6 +31,14 @@
           Apply filters
         </button>
       </div>
-    </form>
-  </div>
+    </div>
+    <div class="p-10 mb-20">
+      <div *ngFor="let control of formControls" class="form-row">
+        <app-form-controller
+          [control]="control"
+          [form]="form"
+        ></app-form-controller>
+      </div>
+    </div>
+  </form>
 </div>

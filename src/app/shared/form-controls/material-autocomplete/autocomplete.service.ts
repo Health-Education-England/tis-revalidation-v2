@@ -3,7 +3,6 @@ import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
 import { AuthService } from "src/app/core/auth/auth.service";
 import { environment } from "@environment";
-import { Store } from "@ngxs/store";
 export interface AutocompleteResults {
   results: string[];
 }

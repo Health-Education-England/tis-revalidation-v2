@@ -1,6 +1,6 @@
 import { RemoveWhitespacePipe } from "./remove-whitespace.pipe";
 
-fdescribe("RemoveWhitespacePipe", () => {
+describe("RemoveWhitespacePipe", () => {
   it("create an instance", () => {
     const pipe = new RemoveWhitespacePipe();
     expect(pipe).toBeTruthy();

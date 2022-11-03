@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { MaterialSelectionListComponent } from "./material-selection-list.component";
 import { FormControlBase } from "../form-contol-base.model";
 import { MaterialModule } from "src/app/shared/material/material.module";
+import { RemoveWhitespacePipe } from "../../pipes/remove-whitespace.pipe";
 import {
   FormControl,
   FormGroup,
@@ -29,7 +30,7 @@ describe("MaterialSelectionListComponent", () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [MaterialModule, FormsModule, ReactiveFormsModule],
-      declarations: [MaterialSelectionListComponent]
+      declarations: [MaterialSelectionListComponent, RemoveWhitespacePipe]
     }).compileComponents();
   });
 

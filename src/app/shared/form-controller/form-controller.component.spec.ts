@@ -16,7 +16,7 @@ import {
 } from "@angular/forms";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { MaterialSelectionListComponent } from "../form-controls/material-selection-list/material-selection-list.component";
-
+import { RemoveWhitespacePipe } from "../pipes/remove-whitespace.pipe";
 describe("FormControllerComponent", () => {
   let component: FormControllerComponent;
   let fixture: ComponentFixture<FormControllerComponent>;
@@ -65,7 +65,8 @@ describe("FormControllerComponent", () => {
       declarations: [
         FormControllerComponent,
         MaterialAutocompleteComponent,
-        MaterialSelectionListComponent
+        MaterialSelectionListComponent,
+        RemoveWhitespacePipe
       ]
     }).compileComponents();
   });

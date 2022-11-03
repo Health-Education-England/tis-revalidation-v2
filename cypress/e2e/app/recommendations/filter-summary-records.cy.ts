@@ -27,7 +27,6 @@ describe("Recommendations", () => {
     };
 
     const openTisAdminDropdown = (query: string = "St") => {
-      cy.get("mat-sidenav-content").scrollTo("bottom");
       cy.get("mat-option").should("not.exist");
       cy.get("[data-cy='formfield_admin'] input").type(query);
       cy.wait(2000);

@@ -37,6 +37,7 @@ export interface IRecommendationsTableFilters extends ITableFilters {
   dbcs?: string[];
   gmcStatus?: string[];
   tisStatus?: string[];
+  admin?: string;
 }
 
 export enum RecommendationsFilterType {

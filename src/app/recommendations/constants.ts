@@ -104,6 +104,15 @@ export const TABLE_FILTERS_FORM_BASE: Array<
     order: 3,
     controlType: FormControlType.SELECTION_LIST,
     initialValue: []
+  },
+  {
+    key: "admin",
+    label: "TIS admin",
+    order: 5,
+    controlType: FormControlType.AUTOCOMPLETE,
+    placeholder: "Start typing...",
+    minLengthTerm: 2,
+    data: []
   }
 ];
 
@@ -116,7 +125,7 @@ export const TABLE_FILTERS_FORM_DBC: FormControlBase = {
     { key: "1-AIIDWA", value: "North West London" },
     { key: "1-AIIDWI", value: "South London" }
   ],
-  order: 3,
+  order: 4,
   controlType: FormControlType.SELECTION_LIST,
   initialValue: []
 };

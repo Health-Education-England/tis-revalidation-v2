@@ -165,3 +165,7 @@ $colour-values: (
   background-color: #d4edda;
   border-color: #c3e6cb;
 }
+
+[class^="mat-drawer"] {
+  overflow: unset !important;
+}

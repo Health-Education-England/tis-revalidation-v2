@@ -11,7 +11,8 @@ export interface FormControlBase {
 }
 
 export interface AutocompleteControl extends FormControlBase {
-  serviceMethod: string;
+  minLengthTerm?: number;
+  data?: string[];
 }
 
 export enum FormControlType {

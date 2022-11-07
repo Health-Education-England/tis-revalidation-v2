@@ -48,14 +48,15 @@ export class RecordListTableFiltersComponent implements OnInit, OnDestroy {
         this.activeTableFilters = filters;
       }
     });
-    if (this.recordsService.tableFiltersFormData) {
-      this.formControls = this.recordsService.tableFiltersFormData;
+
+    this.recordsService.tableFiltersFormData.subscribe((formData) => {
+      this.formControls = formData;
       this.form = this.recordsService.toFormGroup(
         this.formControls,
         this.activeTableFilters
       );
       this.activeTableFilters && this.form.markAsDirty();
-    }
+    });
   }
 
   ngOnDestroy(): void {

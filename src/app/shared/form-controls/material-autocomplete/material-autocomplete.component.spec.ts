@@ -56,7 +56,6 @@ describe("MaterialAutocompleteComponent", () => {
       label: "initialLabel",
       order: 1,
       controlType: "autocomplete",
-      serviceMethod: "mockServiceName",
       initialValue: []
     };
     const group: any = {};

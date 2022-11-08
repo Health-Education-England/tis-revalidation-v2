@@ -70,9 +70,9 @@ export class RecordsService {
   public detailsRoute: string;
   public filters: IFilter[];
   public showTableFilters: boolean;
-  public tableFiltersFormData: Subject<
+  public tableFiltersFormData: BehaviorSubject<
     (FormControlBase | AutocompleteControl)[]
-  > = new Subject();
+  > = new BehaviorSubject([]);
 
   // TODO type these
   public clearSearchAction: any;

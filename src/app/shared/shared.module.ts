@@ -11,10 +11,11 @@ import { FileBytesPipe } from "./file-bytes.pipe";
 import { InfoDialogComponent } from "./info-dialog/info-dialog.component";
 import { FormControllerComponent } from "./form-controller/form-controller.component";
 import { MaterialSelectionListComponent } from "./form-controls/material-selection-list/material-selection-list.component";
-import { MaterialAutocompleteComponent } from './form-controls/material-autocomplete/material-autocomplete.component';
-import { RemoveWhitespacePipe } from './pipes/remove-whitespace.pipe';
+import { MaterialAutocompleteComponent } from "./form-controls/material-autocomplete/material-autocomplete.component";
+import { RemoveWhitespacePipe } from "./pipes/remove-whitespace.pipe";
+import { SplitStringToHTMLPipe } from "./pipes/split-string-to-html.pipe";
 
-const modulePipes = [StripHtmlPipe, FileBytesPipe];
+const modulePipes = [StripHtmlPipe, FileBytesPipe, SplitStringToHTMLPipe];
 @NgModule({
   declarations: [
     PageNotFoundComponent,
@@ -24,7 +25,8 @@ const modulePipes = [StripHtmlPipe, FileBytesPipe];
     FormControllerComponent,
     MaterialSelectionListComponent,
     MaterialAutocompleteComponent,
-    RemoveWhitespacePipe
+    RemoveWhitespacePipe,
+    SplitStringToHTMLPipe
   ],
   imports: [RouterModule, MaterialModule, ReactiveFormsModule, CommonModule],
   exports: [...modulePipes, FormControllerComponent],

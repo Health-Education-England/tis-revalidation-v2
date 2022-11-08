@@ -13,10 +13,17 @@
       height: 60px;
     }
 
-    .mat-list-text .mat-caption {
-      font-size: 14px;
-      color: tint($color_nhsuk-black, 46%);
-      color: rgba(0, 0, 0, 0.54);
+    .mat-list-text {
+      .mat-line {
+        overflow: auto;
+        white-space: normal;
+        text-overflow: unset;
+      }
+      .mat-caption {
+        font-size: 14px;
+        color: tint($color_nhsuk-black, 46%);
+        color: rgba(0, 0, 0, 0.54);
+      }
     }
   }
 }

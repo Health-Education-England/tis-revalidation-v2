@@ -123,12 +123,7 @@ describe("Record List Table FIlters", () => {
       }
     });
 
-    component.form = recordsService.toFormGroup(
-      formControls as FormControlBase[],
-      []
-    );
-    component.formControls = formControls;
-
+    recordsService.tableFiltersFormData.next(formControls);
     fixture.detectChanges();
   });
 

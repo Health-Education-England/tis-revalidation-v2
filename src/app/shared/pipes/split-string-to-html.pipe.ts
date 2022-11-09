@@ -4,7 +4,6 @@ import { SafeHtml } from "@angular/platform-browser";
   name: "splitStringToHTML"
 })
 export class SplitStringToHTMLPipe implements PipeTransform {
-  constructor() {}
   transform(value: string, delimiter: string = "|"): SafeHtml {
     if (value && value.includes(delimiter)) {
       return value

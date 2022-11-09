@@ -4,13 +4,13 @@
   *ngIf="traineeDetails$ | async as traineeDetails"
 >
   <mat-list>
-    <mat-list-item *ngIf="traineeDetails.forenames || traineeDetails.surname">
+    <mat-list-item>
       <div class="mat-caption" mat-line>Name:</div>
       <div mat-line>
         {{ traineeDetails.forenames }} {{ traineeDetails.surname }}
       </div>
     </mat-list-item>
-    <mat-list-item *ngIf="traineeDetails.gmcNumber">
+    <mat-list-item>
       <div class="mat-caption" mat-line>GMC No:</div>
       <div mat-line>{{ traineeDetails.gmcNumber }}</div>
     </mat-list-item>
@@ -24,13 +24,17 @@
         }}
       </div>
     </mat-list-item>
-    <mat-list-item *ngIf="traineeDetails.programmeName">
+    <mat-list-item>
       <div class="mat-caption" mat-line>Current programme name:</div>
       <div
+        *ngIf="traineeDetails.programmeName; else NoProgramme"
         mat-line
         class="programme-names"
-        [innerHTML]="traineeDetails.programmeName | splitStringToHTML"
+        [innerHTML]="traineeDetails.programmeName | splitStringToHTML: ' | '"
       ></div>
+      <ng-template #NoProgramme mat-line class="programme-names"
+        >N/A</ng-template
+      >
     </mat-list-item>
 
     <mat-list-item>

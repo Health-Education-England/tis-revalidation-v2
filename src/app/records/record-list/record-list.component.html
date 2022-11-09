@@ -125,8 +125,12 @@
                   <!-- cell value | no formatting needed -->
                   <ng-template #noPipe>
                     <div
+                      *ngIf="i.name === 'programmeName'; else NotProgramme"
                       [innerHTML]="element[i.name] | splitStringToHTML"
                     ></div>
+                    <ng-template #NotProgramme>
+                      {{ element[i.name] }}
+                    </ng-template>
                   </ng-template>
                 </ng-template>
               </td>

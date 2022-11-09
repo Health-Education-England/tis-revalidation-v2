@@ -53,7 +53,7 @@ describe("Recommendations", () => {
       cy.get(
         "[data-cy='tableFiltersForm'] button[data-jasmine='submitFormButton']"
       ).click();
-      cy.wait(5000);
+      cy.wait(3000);
     };
 
     it("should open and close filter panel when toggle button is clicked", () => {
@@ -131,10 +131,10 @@ describe("Recommendations", () => {
 
             submitForm();
             cy.get("td.cdk-column-programmeName").each(($el) => {
-              expect($el.text()).to.equal(value);
+              expect($el.text().trim()).to.equal(value);
             });
             cy.get("td.cdk-column-designatedBody").each(($el) => {
-              expect($el.text()).to.equal("1-AIIDR8");
+              expect($el.text().trim()).to.equal("1-AIIDR8");
             });
           });
       });
@@ -167,7 +167,7 @@ describe("Recommendations", () => {
         );
         cy.get(".filters-drawer-container .mat-drawer-opened").should("exist");
         cy.get("td.cdk-column-designatedBody").each(($el) => {
-          expect($el.text() === "1-AIIDWT").to.be.false;
+          expect($el.text().trim() === "1-AIIDWT").to.be.false;
         });
       });
     });
@@ -201,7 +201,7 @@ describe("Recommendations", () => {
         submitForm();
 
         cy.get("td.cdk-column-gmcOutcome").each(($el) => {
-          expect($el.text()).to.equal("Approved");
+          expect($el.text().trim()).to.equal("Approved");
         });
       });
 
@@ -256,7 +256,7 @@ describe("Recommendations", () => {
         submitForm();
 
         cy.get("td.cdk-column-doctorStatus").each(($el) => {
-          expect($el.text()).to.equal("Draft");
+          expect($el.text().trim()).to.equal("Draft");
         });
       });
 
@@ -356,7 +356,7 @@ describe("Recommendations", () => {
             submitForm();
 
             cy.get("td.cdk-column-programmeName").each(($el) => {
-              expect($el.text()).to.equal(value);
+              expect($el.text().trim()).to.equal(value);
             });
           });
       });
@@ -424,7 +424,7 @@ describe("Recommendations", () => {
             submitForm();
 
             cy.get("td.cdk-column-admin").each(($el) => {
-              expect($el.text()).to.equal(value);
+              expect($el.text().trim()).to.equal(value);
             });
           });
       });

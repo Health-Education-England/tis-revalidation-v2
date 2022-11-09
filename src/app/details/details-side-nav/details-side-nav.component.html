@@ -14,12 +14,18 @@
       <div class="mat-caption" mat-line>GMC No:</div>
       <div mat-line>{{ traineeDetails.gmcNumber }}</div>
     </mat-list-item>
-    <mat-list-item *ngIf="traineeDetails.programmeMembershipType">
+    <mat-list-item>
       <div class="mat-caption" mat-line>Programme membership type:</div>
-      <div mat-line>{{ traineeDetails.programmeMembershipType }}</div>
+      <div mat-line>
+        {{
+          traineeDetails.programmeMembershipType === null
+            ? "N/A"
+            : traineeDetails.programmeMembershipType
+        }}
+      </div>
     </mat-list-item>
     <mat-list-item *ngIf="traineeDetails.programmeName">
-      <div class="mat-caption" mat-line>Programme name:</div>
+      <div class="mat-caption" mat-line>Current programme name:</div>
       <div
         mat-line
         class="programme-names"
@@ -37,10 +43,14 @@
         }}
       </div>
     </mat-list-item>
-    <mat-list-item *ngIf="traineeDetails.curriculumEndDate">
+    <mat-list-item>
       <div class="mat-caption" mat-line>Curriculum end date:</div>
       <div mat-line>
-        {{ traineeDetails.curriculumEndDate | date: dateFormat }}
+        {{
+          traineeDetails.curriculumEndDate === null
+            ? "N/A"
+            : (traineeDetails.curriculumEndDate | date: dateFormat)
+        }}
       </div>
     </mat-list-item>
   </mat-list>

@@ -8,13 +8,7 @@
   <!-- spinner -->
   <div
     *ngIf="data.loading; else notLoading"
-    class="
-      d-flex
-      align-content-center
-      justify-content-center
-      align-items-center
-      progress-spinner
-    "
+    class="d-flex align-content-center justify-content-center align-items-center progress-spinner"
   >
     <mat-spinner></mat-spinner>
   </div>
@@ -129,7 +123,15 @@
                     {{ element[i.name] | date: dateFormat }}
                   </ng-container>
                   <!-- cell value | no formatting needed -->
-                  <ng-template #noPipe>{{ element[i.name] }}</ng-template>
+                  <ng-template #noPipe>
+                    <div
+                      *ngIf="i.name === 'programmeName'; else NotProgramme"
+                      [innerHTML]="element[i.name] | splitStringToHTML"
+                    ></div>
+                    <ng-template #NotProgramme>
+                      {{ element[i.name] }}
+                    </ng-template>
+                  </ng-template>
                 </ng-template>
               </td>
             </ng-container>

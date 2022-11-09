@@ -39,7 +39,7 @@ export class RecordsResolver {
 
   private checkSorting(queryParams: Params, state: any): void {
     if (
-      queryParams.active !== state.sort.active &&
+      queryParams.active !== state.sort.active ||
       queryParams.direction !== state.sort.direction
     ) {
       this.recordsService.sort(queryParams.active, queryParams.direction);

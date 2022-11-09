@@ -21,7 +21,7 @@ export const COLUMN_DATA: [string, string, boolean][] = [
   ["GMC Submission due date", "submissionDate", true],
   ["GMC Status", "gmcOutcome", false],
   ["TIS Status", "doctorStatus", false],
-  ["Programme name", "programmeName", false],
+  ["Current programme name", "programmeName", false],
   ["Programme membership type", "programmeMembershipType", false],
   ["Curriculum end date", "curriculumEndDate", false],
   ["Admin", "admin", false],

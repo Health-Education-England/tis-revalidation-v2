@@ -36,7 +36,7 @@ export class RecommendationsService {
     if (snapshot.tableFilters?.admin && admins.items) {
       adminEmail = admins.items?.find(
         (admin: IAdmin) => admin.fullName === snapshot.tableFilters.admin
-      ).email;
+      )?.email;
     }
 
     params = params

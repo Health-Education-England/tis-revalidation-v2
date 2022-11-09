@@ -6,6 +6,19 @@
   border-left: solid 4px $color_nhsuk-red;
 }
 
+::ng-deep {
+  .mat-column-programmeName {
+    .split-item {
+      display: block;
+      padding-top: 4px;
+      color: #da291c;
+    }
+    &:last-child() {
+      padding-bottom: 4px;
+    }
+  }
+}
+
 // common columns
 @include mat-table-columns(
   (

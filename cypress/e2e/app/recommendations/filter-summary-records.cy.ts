@@ -19,7 +19,7 @@ describe("Recommendations", () => {
         { value: "COMPLETE", label: "Complete" }
       ]
     };
-    const openProgrammeNameDropdown = (query: string = "General") => {
+    const openProgrammeNameDropdown = (query: string = "General Practice") => {
       cy.get("mat-option").should("not.exist");
       cy.get("[data-cy='formfield_programmeName'] input").type(query);
       cy.wait(2000);
@@ -35,6 +35,7 @@ describe("Recommendations", () => {
 
     const initFilterPanel = () => {
       cy.visit("/recommendations");
+      cy.get("[data-cy='filter-records-button']").first().click();
       cy.get("[data-cy='toggleTableFiltersButton']").click();
       cy.get(".filters-drawer-container .mat-drawer-opened").should("exist");
     };

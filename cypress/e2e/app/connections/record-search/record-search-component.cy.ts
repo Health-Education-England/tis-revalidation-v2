@@ -1,6 +1,6 @@
 describe("Connections Record Search", () => {
     beforeEach(() => {
-      cy.login();
+      cy.loginSession();
     });
   
     const control = "app-update-connection";

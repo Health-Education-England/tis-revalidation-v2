@@ -1,6 +1,6 @@
 describe("Connections Connection Component", () => {
     beforeEach(() => {
-      cy.login();
+      cy.loginSession();
     });
   
     const control = "app-update-connetions-btn";

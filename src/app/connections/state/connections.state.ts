@@ -43,7 +43,7 @@ export class ConnectionsStateModel extends RecordsStateModel<
 @State<ConnectionsStateModel>({
   name: "connections",
   defaults: {
-    filter: ConnectionsFilterType.ALL,
+    filter: ConnectionsFilterType.CURRENT_CONNECTIONS,
     disableSearchAndSort: false,
     ...defaultRecordsState
   }

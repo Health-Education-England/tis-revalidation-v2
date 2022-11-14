@@ -60,7 +60,7 @@
     "@angular-eslint/template-parser": "13.5.0",
     "@angular/cli": "^13.3.7",
     "@angular/compiler-cli": "~13.3.11",
-    "@angular/language-service": "^13.3.11",
+    "@angular/language-service": "^14.2.10",
     "@aws-amplify/pubsub": "^3.3.3",
     "@ngxs/cli": "^2.0.0",
     "@ngxs/devtools-plugin": "^3.7.4",

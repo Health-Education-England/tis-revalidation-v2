@@ -61,13 +61,6 @@ export class ConnectionComponent implements OnInit, OnDestroy {
   traineeDetails$: Observable<IDetailsSideNav>;
 
   dateFormat = environment.dateFormat;
-  programmeColumnsToDisplay = [
-    "programmeName",
-    "programmeOwner",
-    "programmeMembershipType",
-    "programmeMembershipStartDate",
-    "programmeMembershipEndDate"
-  ];
   connectionsColumnsToDisplay = [
     "newDesignatedBodyCode",
     "previousDesignatedBodyCode",

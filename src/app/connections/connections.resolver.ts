@@ -7,7 +7,7 @@ import { RecordsResolver } from "../records/records.resolver";
 import { RecordsService } from "../records/services/records.service";
 import { UpdateConnectionsService } from "../update-connections/services/update-connections.service";
 import { ConnectionsFilterType } from "./connections.interfaces";
-import { COLUMN_DATA } from "./constants";
+import { CURRENT_COLUMN_DATA, HISTORIC_COLUMN_DATA } from "./constants";
 import { stateName } from "../records/records.interfaces";
 @Injectable()
 export class ConnectionsResolver
@@ -23,6 +23,20 @@ export class ConnectionsResolver
     this.initialiseData();
   }
 
+  setColumnData(filter: string) {
+    let columnData: [string, string, boolean][];
+    switch (filter) {
+      case ConnectionsFilterType.CURRENT_CONNECTIONS:
+        columnData = CURRENT_COLUMN_DATA;
+        break;
+      case ConnectionsFilterType.HISTORIC_CONNECTIONS:
+        columnData = HISTORIC_COLUMN_DATA;
+        break;
+      default:
+        columnData = CURRENT_COLUMN_DATA;
+    }
+    this.recordsService.columnData = generateColumnData(columnData);
+  }
   private initialiseData(): void {
     this.recordsService.stateName = stateName.CONNECTIONS;
     this.recordsService.detailsRoute = "/connection";
@@ -33,7 +47,7 @@ export class ConnectionsResolver
       "programmeMembershipStartDate",
       "programmeMembershipEndDate"
     ];
-    this.recordsService.columnData = generateColumnData(COLUMN_DATA);
+
     this.recordsService.filters = [
       {
         label: "CURRENT CONNECTIONS",
@@ -59,6 +73,7 @@ export class ConnectionsResolver
   }
 
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    this.setColumnData(route.queryParams["filter"]);
     return super.resolve(route);
   }
 }

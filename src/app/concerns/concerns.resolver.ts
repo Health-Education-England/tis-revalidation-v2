@@ -31,7 +31,7 @@ export class ConcernsResolver extends RecordsResolver implements Resolve<any> {
       "dateAdded",
       "followUpDate"
     ];
-    this.recordsService.columnData = generateColumnData(COLUMN_DATA);
+    this.recordsService.columnData.next(generateColumnData(COLUMN_DATA));
     this.recordsService.filters = [
       {
         label: "OPEN",

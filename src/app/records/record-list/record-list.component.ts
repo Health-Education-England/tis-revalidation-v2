@@ -1,9 +1,9 @@
-import { Component, OnDestroy } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Sort as ISort } from "@angular/material/sort/sort";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { environment } from "@environment";
 import { Store } from "@ngxs/store";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { take } from "rxjs/operators";
 import { UpdateConnectionsService } from "src/app/update-connections/services/update-connections.service";
 import { ClearAllocateList } from "../../admins/state/admins.actions";
@@ -15,8 +15,8 @@ import { RecordsService } from "../services/records.service";
   templateUrl: "./record-list.component.html",
   styleUrls: ["./record-list.component.scss"]
 })
-export class RecordListComponent implements OnDestroy {
-  public columnData: IRecordDataCell[] = this.recordsService.columnData;
+export class RecordListComponent implements OnInit, OnDestroy {
+  public columnData: IRecordDataCell[];
   public dateColumns: string[] = this.recordsService.dateColumns;
   public detailsRoute: string = this.recordsService.detailsRoute;
 
@@ -128,5 +128,13 @@ export class RecordListComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.store.dispatch(new ClearAllocateList());
+  }
+
+  ngOnInit(): void {
+    this.recordsService.columnData.subscribe(
+      (columnsData: IRecordDataCell[]) => {
+        this.columnData = columnsData;
+      }
+    );
   }
 }

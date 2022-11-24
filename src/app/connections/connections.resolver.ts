@@ -35,7 +35,7 @@ export class ConnectionsResolver
       default:
         columnData = CURRENT_COLUMN_DATA;
     }
-    this.recordsService.columnData = generateColumnData(columnData);
+    this.recordsService.columnData.next(generateColumnData(columnData));
   }
   private initialiseData(): void {
     this.recordsService.stateName = stateName.CONNECTIONS;

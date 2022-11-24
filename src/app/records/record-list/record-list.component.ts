@@ -3,7 +3,7 @@ import { Sort as ISort } from "@angular/material/sort/sort";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { environment } from "@environment";
 import { Store } from "@ngxs/store";
-import { BehaviorSubject, Observable } from "rxjs";
+import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
 import { UpdateConnectionsService } from "src/app/update-connections/services/update-connections.service";
 import { ClearAllocateList } from "../../admins/state/admins.actions";

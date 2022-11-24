@@ -50,6 +50,7 @@ describe("RecordListComponent", () => {
     fixture = TestBed.createComponent(RecordListComponent);
     component = fixture.componentInstance;
     recordsService.stateName = "recommendations";
+    recordsService.columnData$.next(generateColumnData(COLUMN_DATA));
     recordsService.setRecommendationsActions();
     store.reset({
       recommendations: {
@@ -92,7 +93,7 @@ describe("RecordListComponent", () => {
     ).toBeTruthy();
   });
 
-  it("Should apply fixed class to table columns when display in fixed width mode", () => {
+  it("Should apply fixed class to table columns when display in fixed width mode", async () => {
     expect(
       fixture.debugElement.nativeElement.querySelector(".mat-cell.fixed")
     ).toBeTruthy();

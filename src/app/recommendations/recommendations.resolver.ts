@@ -90,7 +90,7 @@ export class RecommendationsResolver
       ]);
     }
 
-    this.recordsService.columnData.next(generateColumnData(COLUMN_DATA));
+    this.recordsService.columnData$.next(generateColumnData(COLUMN_DATA));
     this.recordsService.filters = [
       {
         label: "ALL DOCTORS",

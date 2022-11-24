@@ -131,7 +131,7 @@ export class RecordListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.recordsService.columnData.subscribe(
+    this.recordsService.columnData$.subscribe(
       (columnsData: IRecordDataCell[]) => {
         this.columnData = columnsData;
       }

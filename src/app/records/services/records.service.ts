@@ -66,8 +66,8 @@ export class RecordsService {
 
   public stateName: string;
   public dateColumns: string[];
-  public columnData: BehaviorSubject<IRecordDataCell[]> = new BehaviorSubject(
-    null
+  public columnData$: BehaviorSubject<IRecordDataCell[]> = new BehaviorSubject(
+    []
   );
   public detailsRoute: string;
   public filters: IFilter[];

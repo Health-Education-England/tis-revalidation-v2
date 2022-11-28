@@ -71,16 +71,11 @@ describe("Connections state", () => {
   }
 
   [
-    { filter: ConnectionsFilterType.ALL, apiPath: "" },
     {
       filter: ConnectionsFilterType.CURRENT_CONNECTIONS,
       apiPath: "/connected"
     },
-    {
-      filter: ConnectionsFilterType.HISTORIC_CONNECTIONS,
-      apiPath: "/disconnected"
-    },
-    { filter: ConnectionsFilterType.HIDDEN, apiPath: "/hidden" },
+
     { filter: ConnectionsFilterType.DISCREPANCIES, apiPath: "/exception" }
   ].forEach((testCase) => {
     it(`should have ${testCase.filter} connections when GetConnections is dispatched`, fakeAsync(() => {

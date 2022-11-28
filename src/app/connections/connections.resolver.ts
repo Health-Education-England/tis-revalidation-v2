@@ -40,20 +40,8 @@ export class ConnectionsResolver
         name: ConnectionsFilterType.CURRENT_CONNECTIONS
       },
       {
-        label: "HISTORIC CONNECTIONS",
-        name: ConnectionsFilterType.HISTORIC_CONNECTIONS
-      },
-      {
         label: "DISCREPANCIES",
         name: ConnectionsFilterType.DISCREPANCIES
-      },
-      {
-        label: "ALL",
-        name: ConnectionsFilterType.ALL
-      },
-      {
-        label: "HIDDEN",
-        name: ConnectionsFilterType.HIDDEN
       }
     ];
   }

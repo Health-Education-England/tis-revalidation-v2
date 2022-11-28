@@ -67,17 +67,12 @@ export class ConnectionsState extends RecordsState {
         endPoint = `${endPoint}/exception`;
         break;
 
-      case ConnectionsFilterType.HIDDEN:
-        endPoint = `${endPoint}/hidden`;
-        break;
-
       case ConnectionsFilterType.CURRENT_CONNECTIONS:
         endPoint = `${endPoint}/connected`;
         break;
 
-      case ConnectionsFilterType.HISTORIC_CONNECTIONS:
-        endPoint = `${endPoint}/disconnected`;
-        break;
+      default:
+        endPoint = `${endPoint}/connected`;
     }
 
     super.getHandler(ctx);

@@ -68,7 +68,12 @@ export class RecordsResolver {
   }
 
   private checkFilter(queryParams: Params, state: any): void {
-    if (queryParams.filter !== state.filter) {
+    if (
+      queryParams.filter !== state.filter &&
+      this.recordsService.filters.some(
+        (filter) => filter.name === queryParams.filter
+      )
+    ) {
       this.recordsService.filter(queryParams.filter);
     }
   }

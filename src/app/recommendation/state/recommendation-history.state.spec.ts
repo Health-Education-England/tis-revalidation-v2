@@ -53,16 +53,17 @@ describe("RecommendationHistory actions", () => {
     expect(item).toEqual(RecommendationHistoryRespone2);
   });
 
-  it("should throw an error is id is not a number", fakeAsync(() => {
+  it("should throw an error is id is not a number", () => {
     const gmcNumber = Number("test");
-    const errorHandler = TestBed.inject(ErrorHandler);
-
-    store.dispatch(new RecommendationHistoryAction(gmcNumber));
-
-    expect(errorHandler.handleError).toHaveBeenCalledWith(
-      new Error(`gmcNumber ${gmcNumber} must be of type number`)
+    store.dispatch(new RecommendationHistoryAction(gmcNumber)).subscribe(
+      () => {},
+      (error) => {
+        expect(error.toString()).toContain(
+          "gmcNumber NaN must be of type number"
+        );
+      }
     );
-  }));
+  });
 
   afterEach(() => {
     httpMock.verify();

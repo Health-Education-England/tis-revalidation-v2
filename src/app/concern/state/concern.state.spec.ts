@@ -69,22 +69,23 @@ describe("Concern actions", () => {
     httpMock.verify();
   }));
 
-  it("should throw an error if get id is not a number", fakeAsync(() => {
-    const gmcNumber = Number("test");
-    const errorHandler = TestBed.inject(ErrorHandler);
-
-    store.dispatch(new Get(gmcNumber));
-
-    expect(errorHandler.handleError).toHaveBeenCalledWith(
-      new Error(`gmcNumber ${gmcNumber} must be of type number`)
+  it("should throw an error if get id is not a number", () => {
+    const gmcNumber = undefined;
+    store.dispatch(new Get(gmcNumber)).subscribe(
+      () => {},
+      (error) => {
+        expect(error.toString()).toContain(
+          "gmcNumber undefined must be of type number"
+        );
+      }
     );
     httpMock.verify();
-  }));
+  });
 
   it("on 'Upload' event `uploadFileInProgress` should be truthy", () => {
     store.dispatch(new Upload(12132312, "xxxxxx-yyyyy-zzzzz", [mockFile]));
-    const uploadFileInProgress = store.selectSnapshot(ConcernState)
-      .uploadFileInProgress;
+    const uploadFileInProgress =
+      store.selectSnapshot(ConcernState).uploadFileInProgress;
     expect(uploadFileInProgress).toBeTrue();
   });
 

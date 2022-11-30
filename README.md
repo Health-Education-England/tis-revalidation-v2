@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Pre requisite
 
-- Clone this repo and then run `npm install` in order to get all dependencies.
+- Clone this repo. Make sure you are running `node v18` or above and then run `npm install` in order to get all dependencies. If you need to run multiple versions of node locally, the best approach is to use node version manager - https://github.com/nvm-sh/nvm
 
 ## Development server
 

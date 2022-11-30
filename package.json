@@ -15,8 +15,7 @@
     "cypress": "cypress run --browser chrome",
     "cypress:local": "cypress run --browser chrome --config baseUrl=http://localhost:4200",
     "cypress:open": "cypress open --config baseUrl=http://localhost:4200",
-    "tslint-check": "tslint-config-prettier-check ./tslint.json",
-    "preinstall": "npx npm-force-resolutions"
+    "tslint-check": "tslint-config-prettier-check ./tslint.json"
   },
   "husky": {
     "hooks": {
@@ -94,5 +93,12 @@
     "tslint-config-prettier": "^1.18.0",
     "typescript": "~4.6.4"
   },
-  "resolutions": {}
+  "overrides": {
+    "karma-mocha-reporter": {
+      "ansi-regex": "3.0.1"
+    },
+    "http-proxy@1.18.1": {
+      "follow-redirects": "1.15.2"
+    }
+  }
 }

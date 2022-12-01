@@ -23,7 +23,7 @@
       "redirectSignOut": "https://revalidation.tis.nhs.uk"
     }
   },
-  "stage": {
+  "preprod": {
     "production": true,
     "name": "stage",
     "siteIds": ["UA-40570867-6"],

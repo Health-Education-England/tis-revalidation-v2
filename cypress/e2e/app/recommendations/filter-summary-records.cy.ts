@@ -33,9 +33,14 @@ describe("Recommendations", () => {
       cy.get("mat-option").should("exist");
     };
 
+    const showAllDoctors = () => {
+      cy.get("[data-cy='filter-records-button']").first().click();
+      cy.get("app-record-list .mat-table").should("exist");
+    };
     const initFilterPanel = () => {
       cy.visit("/recommendations");
-      cy.get("[data-cy='filter-records-button']").first().click();
+      cy.get("app-record-list .mat-table").should("exist");
+      showAllDoctors();
       cy.get("[data-cy='toggleTableFiltersButton']").click();
       cy.get(".filters-drawer-container .mat-drawer-opened").should("exist");
     };

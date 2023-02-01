@@ -35,6 +35,7 @@ export class RecordListTableFiltersComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    this.recordsService.resetPaginator();
     this.subscriptions.add(
       this.recordsService.setTableFilters(this.form.value).subscribe(() => {
         this.recordsService.updateRoute();

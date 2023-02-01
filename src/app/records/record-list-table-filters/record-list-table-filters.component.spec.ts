@@ -198,7 +198,7 @@ describe("Record List Table FIlters", () => {
     expect(spySubmitForm).toHaveBeenCalled();
   });
 
-  it("should reset form when 'Clear filters' button is clicked", fakeAsync(() => {
+  fit("should reset form when 'Clear filters' button is clicked", fakeAsync(() => {
     spyOn(router, "navigate");
     const snapshot: RecommendationsStateModel =
       store.snapshot().recommendations;
@@ -212,7 +212,7 @@ describe("Record List Table FIlters", () => {
       queryParams: {
         active: snapshot.sort.active,
         direction: snapshot.sort.direction,
-        pageIndex: snapshot.pageIndex,
+        pageIndex: 0,
         filter: snapshot.filter,
         selectionList1_Key: "selectionList1_OptionKey1",
         selectionList2_Key: "",

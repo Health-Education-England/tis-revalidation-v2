@@ -17,6 +17,9 @@ async function initializeApplication(envName: string = "") {
   const redirectKey = "reval_redirectLocation";
   const location = window.location;
 
+  if (location.origin.includes("alpha")) {
+    envName = "alpha";
+  }
   if (
     !location.origin.includes("localhost") &&
     envName.length > 0 &&

@@ -33,3 +33,6 @@ jobs:
 
       - name: Deploy app build to S3 bucket
         run: aws s3 sync ./dist/revalidation/ s3://${{ secrets.AWS_S3_BUCKET_ALPHA }} --delete
+
+      - name: Invalidate CDN Cache
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID}} --paths /*.js /*.css /static/*

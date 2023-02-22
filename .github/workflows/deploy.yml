@@ -31,8 +31,14 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Run linting
+        run: npm run lint
+
       - name: Build Angular App
         run: npm run build:misc && npm run build -- --configuration=production
+
+      - name: Run unit tests
+        run: npm run test:ci
 
       - name: Deploy app build to S3 bucket
         run: aws s3 sync ./dist/revalidation/ s3://${{ secrets.AWS_S3_BUCKET }} --delete

@@ -25,7 +25,7 @@ export const APP_URLS_CONFIG: IEnvironment["appUrls"] = {
 
 export const AWS_CONFIG: IEnvironment["awsConfig"] = {
   authenticationFlowType: "USER_PASSWORD_AUTH",
-  responseType: "token",
+  responseType: "code",
   scope: ["openid", "aws.cognito.signin.user.admin"],
   mandatorySignIn: null,
   bucketName: "",

@@ -14,13 +14,11 @@ export const environment: IEnvironment = {
   awsConfig: {
     ...AWS_CONFIG,
     bucketName: "tis-revalidation-concerns-upload-preprod",
-    mandatorySignIn: false,
+    domain: "stage-auth.tis.nhs.uk",
     redirectSignIn: "http://localhost:4200",
     redirectSignOut: "http://localhost:4200",
     userPoolId: "eu-west-2_o5Es6Bpl8",
-    userPoolWebClientId: "r28c0u6jpc7scm9e2anhh274r",
-    domain: "stage-auth.tis.nhs.uk",
-    region: "eu-west-2"
+    userPoolWebClientId: "r28c0u6jpc7scm9e2anhh274r"
   }
 };
 

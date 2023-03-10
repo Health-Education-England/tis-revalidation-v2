@@ -33,17 +33,19 @@ export abstract class IEnvironment {
     readonly upload: string;
   };
 
-  abstract readonly awsConfig: {
-    readonly authenticationFlowType: string;
-    readonly bucketName: string;
-    readonly domain: string;
-    readonly mandatorySignIn: boolean;
-    readonly redirectSignIn: string;
-    readonly redirectSignOut: string;
-    readonly region: string;
-    readonly responseType: string;
-    readonly scope: string[];
-    readonly userPoolId: string;
-    readonly userPoolWebClientId: string;
-  };
+  abstract readonly awsConfig: IAWSConfig;
+}
+
+export interface IAWSConfig {
+  readonly authenticationFlowType: string;
+  readonly bucketName: string;
+  readonly domain: string;
+  readonly mandatorySignIn: boolean;
+  readonly redirectSignIn: string;
+  readonly redirectSignOut: string;
+  readonly region: string;
+  readonly responseType: string;
+  readonly scope: string[];
+  readonly userPoolId: string;
+  readonly userPoolWebClientId: string;
 }

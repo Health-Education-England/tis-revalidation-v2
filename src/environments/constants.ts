@@ -1,4 +1,4 @@
-import { IEnvironment } from "./environment.interface";
+import { IEnvironment, IAWSConfig } from "./environment.interface";
 
 export const APP_URLS_CONFIG: IEnvironment["appUrls"] = {
   addConcern: "api/concerns",
@@ -23,16 +23,16 @@ export const APP_URLS_CONFIG: IEnvironment["appUrls"] = {
   upload: `api/storage/upload`
 };
 
-export const AWS_CONFIG: IEnvironment["awsConfig"] = {
+export const AWS_CONFIG: IAWSConfig = {
   authenticationFlowType: "USER_PASSWORD_AUTH",
-  responseType: "code",
-  scope: ["openid", "aws.cognito.signin.user.admin"],
-  mandatorySignIn: null,
   bucketName: "",
   domain: "",
+  mandatorySignIn: false,
   redirectSignIn: "",
   redirectSignOut: "",
-  region: "",
+  region: "eu-west-2",
+  responseType: "code",
+  scope: ["openid", "aws.cognito.signin.user.admin"],
   userPoolId: "",
   userPoolWebClientId: ""
 };

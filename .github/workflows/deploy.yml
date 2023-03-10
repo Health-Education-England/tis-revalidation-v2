@@ -35,7 +35,7 @@ jobs:
         run: npm run lint
 
       - name: Build Angular App
-        run: npm run build:misc && npm run build -- --configuration=production
+        run: npm run build:misc && npm run build -- --configuration=stage
 
       - name: Run unit tests
         run: npm run test:ci

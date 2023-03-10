@@ -1,6 +1,6 @@
-import { IEnvironment, IAWSConfig } from "./environment.interface";
+import { IAWSConfig, IAppUrls } from "./environment.interface";
 
-export const APP_URLS_CONFIG: IEnvironment["appUrls"] = {
+export const APP_URLS_CONFIG: IAppUrls = {
   addConcern: "api/concerns",
   addNote: "api/trainee/notes/add",
   allocateAdmin: `api/v1/doctors/assign-admin`,

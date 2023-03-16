@@ -21,8 +21,6 @@ export class AuthService {
   public isRevalAdmin = false;
   public isRevalApprover = false;
 
-  constructor() {}
-
   currentSession(): Observable<CognitoUserSession> {
     return from(Auth.currentSession()).pipe(
       tap((cognitoUserSession: CognitoUserSession) => {

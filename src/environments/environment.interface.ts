@@ -7,9 +7,8 @@ export interface IEnvironment {
   readonly production: boolean; // build mode
   readonly siteIds: string[]; // Google analytics site id's
   readonly supportLink: string; // link to tis-support
-
   readonly appUrls: IAppUrls;
-
+  readonly londonDBCs: IKeyValue[];
   readonly awsConfig: IAWSConfig;
 }
 
@@ -48,4 +47,9 @@ export interface IAppUrls {
   readonly saveRecommendation: string;
   readonly submitToGMC: string;
   readonly upload: string;
+}
+
+export interface IKeyValue {
+  key: string;
+  value: string;
 }

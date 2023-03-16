@@ -14,7 +14,8 @@ export const environment: IEnvironment = {
   appUrls: APP_URLS_CONFIG,
   londonDBCs: [
     ...LONDON_DBCS,
-    { key: "1-1P9Y9R1", value: "North West (DBC TESTING)" }
+    { key: "1-1P9Y9R1", value: "North West (DBC TESTING)" },
+    { key: "1-1P9Y9QH", value: "Yorkshire & Humber (DBC TESTING)" }
   ],
 
   awsConfig: {

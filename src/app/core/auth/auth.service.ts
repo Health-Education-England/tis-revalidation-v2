@@ -4,7 +4,8 @@ import { CognitoUserSession } from "amazon-cognito-identity-js";
 import { Auth } from "aws-amplify";
 import { from, Observable } from "rxjs";
 import { catchError, tap } from "rxjs/operators";
-import { ADMIN_ROLES, LONDON_DBCS, APPROVER_ROLES } from "src/environments/constants";
+import { ADMIN_ROLES, APPROVER_ROLES } from "src/environments/constants";
+import { environment } from "@environment";
 
 @Injectable({
   providedIn: "root"
@@ -19,8 +20,6 @@ export class AuthService {
   public inludesLondonDbcs = false;
   public isRevalAdmin = false;
   public isRevalApprover = false;
-
-  constructor() {}
 
   currentSession(): Observable<CognitoUserSession> {
     return from(Auth.currentSession()).pipe(
@@ -40,10 +39,15 @@ export class AuthService {
         );
 
         let dbcs: string[] = cognitoIdToken.payload["cognito:groups"] || [];
-        this.inludesLondonDbcs = dbcs.some((dbc) => LONDON_DBCS.includes(dbc));
+        let londonDBCodes: string[] = environment.londonDBCs.map(
+          (dbc) => dbc.key
+        );
+        this.inludesLondonDbcs = dbcs.some((dbc) =>
+          londonDBCodes.includes(dbc)
+        );
 
         if (this.inludesLondonDbcs) {
-          dbcs = Array.from(new Set([...LONDON_DBCS, ...dbcs]));
+          dbcs = Array.from(new Set([...londonDBCodes, ...dbcs]));
         }
         this.userDesignatedBodies = dbcs;
       }),

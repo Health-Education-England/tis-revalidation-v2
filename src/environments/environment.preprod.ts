@@ -1,4 +1,4 @@
-import { APP_URLS_CONFIG, AWS_CONFIG } from "./constants";
+import { APP_URLS_CONFIG, AWS_CONFIG, LONDON_DBCS } from "./constants";
 import { IEnvironment } from "./environment.interface";
 
 export const environment: IEnvironment = {
@@ -12,6 +12,11 @@ export const environment: IEnvironment = {
     "https://teams.microsoft.com/l/channel/19%3ac7943c6ffa9c49b881304863bb39ff7b%40thread.skype/General?groupId=102f33a3-f794-4089-8c5a-68e04897e72e&tenantId=ffa7912b-b097-4131-9c0f-d0e80755b2ab",
   dateFormat: "dd/MM/yyyy",
   appUrls: APP_URLS_CONFIG,
+  londonDBCs: [
+    ...LONDON_DBCS,
+    { key: "1-1P9Y9R1", value: "North West (DBC TESTING)" },
+    { key: "1-1P9Y9QH", value: "Yorkshire & Humber (DBC TESTING)" }
+  ],
 
   awsConfig: {
     ...AWS_CONFIG,

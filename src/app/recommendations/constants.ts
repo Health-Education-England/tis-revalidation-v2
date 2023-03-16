@@ -1,4 +1,6 @@
 import { Sort } from "@angular/material/sort";
+import { environment } from "@environment";
+
 import {
   RecommendationGmcOutcome,
   RecommendationStatus
@@ -119,12 +121,7 @@ export const TABLE_FILTERS_FORM_BASE: Array<
 export const TABLE_FILTERS_FORM_DBC: FormControlBase = {
   key: "dbcs",
   label: "Designated Body",
-  options: [
-    { key: "1-AIIDR8", value: "Kent, Surrey and Sussex" },
-    { key: "1-AIIDVS", value: "North Central and East London" },
-    { key: "1-AIIDWA", value: "North West London" },
-    { key: "1-AIIDWI", value: "South London" }
-  ],
+  options: environment.londonDBCs,
   order: 4,
   controlType: FormControlType.SELECTION_LIST,
   initialValue: []

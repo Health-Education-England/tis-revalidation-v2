@@ -1,4 +1,4 @@
-import { IAWSConfig, IAppUrls } from "./environment.interface";
+import { IAWSConfig, IAppUrls, IKeyValue } from "./environment.interface";
 
 export const APP_URLS_CONFIG: IAppUrls = {
   addConcern: "api/concerns",
@@ -37,11 +37,17 @@ export const AWS_CONFIG: IAWSConfig = {
   userPoolWebClientId: ""
 };
 
-export const LONDON_DBCS: string[] = [
-  "1-AIIDWA",
-  "1-AIIDVS",
-  "1-AIIDWI",
-  "1-AIIDR8"
+export const LONDON_DBCS: IKeyValue[] = [
+  {
+    key: "1-AIIDR8",
+    value: "Kent, Surrey and Sussex"
+  },
+  {
+    key: "1-AIIDVS",
+    value: "North Central and East London"
+  },
+  { key: "1-AIIDWA", value: "North West London" },
+  { key: "1-AIIDWI", value: "South London" }
 ];
 
 export const ADMIN_ROLES = ["RevalApprover", "RevalAdmin"];

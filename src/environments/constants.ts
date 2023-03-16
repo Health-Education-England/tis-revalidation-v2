@@ -1,6 +1,6 @@
-import { IEnvironment } from "./environment.interface";
+import { IAWSConfig, IAppUrls } from "./environment.interface";
 
-export const APP_URLS_CONFIG: IEnvironment["appUrls"] = {
+export const APP_URLS_CONFIG: IAppUrls = {
   addConcern: "api/concerns",
   addNote: "api/trainee/notes/add",
   allocateAdmin: `api/v1/doctors/assign-admin`,
@@ -23,16 +23,16 @@ export const APP_URLS_CONFIG: IEnvironment["appUrls"] = {
   upload: `api/storage/upload`
 };
 
-export const AWS_CONFIG: IEnvironment["awsConfig"] = {
+export const AWS_CONFIG: IAWSConfig = {
   authenticationFlowType: "USER_PASSWORD_AUTH",
-  responseType: "code",
-  scope: ["openid", "aws.cognito.signin.user.admin"],
-  mandatorySignIn: null,
   bucketName: "",
   domain: "",
+  mandatorySignIn: false,
   redirectSignIn: "",
   redirectSignOut: "",
-  region: "",
+  region: "eu-west-2",
+  responseType: "code",
+  scope: ["openid", "aws.cognito.signin.user.admin"],
   userPoolId: "",
   userPoolWebClientId: ""
 };

@@ -198,7 +198,7 @@ describe("Record List Table FIlters", () => {
     expect(spySubmitForm).toHaveBeenCalled();
   });
 
-  fit("should reset form when 'Clear filters' button is clicked", fakeAsync(() => {
+  it("should reset form when 'Clear filters' button is clicked", fakeAsync(() => {
     spyOn(router, "navigate");
     const snapshot: RecommendationsStateModel =
       store.snapshot().recommendations;

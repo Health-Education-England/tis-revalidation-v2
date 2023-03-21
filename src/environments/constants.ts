@@ -37,6 +37,7 @@ export const AWS_CONFIG: IAWSConfig = {
   userPoolWebClientId: ""
 };
 
+<<<<<<< Updated upstream
 export const LONDON_DBCS: IKeyValue[] = [
   {
     key: "1-AIIDR8",
@@ -48,6 +49,14 @@ export const LONDON_DBCS: IKeyValue[] = [
   },
   { key: "1-AIIDWA", value: "North West London" },
   { key: "1-AIIDWI", value: "South London" }
+=======
+//TODO: Replace these with new values
+export const LONDON_DBCS: string[] = [
+  "1-***",
+  "1-***",
+  "1-***",
+  "1-***"
+>>>>>>> Stashed changes
 ];
 
 export const ADMIN_ROLES = ["RevalApprover", "RevalAdmin"];

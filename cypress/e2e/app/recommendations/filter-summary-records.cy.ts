@@ -5,11 +5,12 @@ describe("Recommendations", () => {
     });
 
     const formFilters = {
+    //TODO: Replace these with new values
       dbc: [
-        { value: "1-AIIDR8", label: "Kent, Surrey and Sussex" },
-        { value: "1-AIIDVS", label: "North Central and East London" },
-        { value: "1-AIIDWA", label: "North West London" },
-        { value: "1-AIIDWI", label: "South London" }
+        { value: "1-***", label: "Kent, Surrey and Sussex" },
+        { value: "1-***", label: "North Central and East London" },
+        { value: "1-***", label: "North West London" },
+        { value: "1-***", label: "South London" }
       ],
       gmcStatus: ["Approved", "Rejected", "Under Review"],
       tisStatus: [

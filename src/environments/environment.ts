@@ -1,4 +1,4 @@
-import { APP_URLS_CONFIG, AWS_CONFIG, LONDON_DBCS } from "./constants";
+import { APP_URLS_CONFIG, AWS_CONFIG } from "./constants";
 import { IEnvironment } from "./environment.interface";
 
 export const environment: IEnvironment = {
@@ -12,9 +12,16 @@ export const environment: IEnvironment = {
   dateFormat: "dd/MM/yyyy",
   appUrls: APP_URLS_CONFIG,
   londonDBCs: [
-    ...LONDON_DBCS,
-    { key: "1-1P9Y9R1", value: "North West (DBC TESTING)" },
-    { key: "1-1P9Y9QH", value: "Yorkshire & Humber (DBC TESTING)" }
+    {
+      key: "1-AIIDR8",
+      value: "Kent, Surrey and Sussex"
+    },
+    {
+      key: "1-AIIDVS",
+      value: "North Central and East London"
+    },
+    { key: "1-AIIDWA", value: "North West London" },
+    { key: "1-AIIDWI", value: "South London" }
   ],
   awsConfig: {
     ...AWS_CONFIG,

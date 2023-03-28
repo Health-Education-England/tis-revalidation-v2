@@ -14,15 +14,15 @@ export const environment: IEnvironment = {
   appUrls: APP_URLS_CONFIG,
   londonDBCs: [
     {
-      key: "ADD_NEW_DBC_CODE_HERE",
+      key: "1-1RUZV1D",
       value: "Kent, Surrey and Sussex"
     },
     {
-      key: "ADD_NEW_DBC_CODE_HERE",
+      key: "1-1RUZV4H",
       value: "North Central and East London"
     },
-    { key: "ADD_NEW_DBC_CODE_HERE", value: "North West London" },
-    { key: "ADD_NEW_DBC_CODE_HERE", value: "South London" }
+    { key: "1-1RUZV6H", value: "North West London" },
+    { key: "1-1RSSQ5L", value: "South London" }
   ],
   awsConfig: {
     ...AWS_CONFIG,

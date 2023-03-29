@@ -67,7 +67,7 @@ describe("AuthService", () => {
 
     service.currentSession().subscribe((curresntSession) => {
       expect(service.inludesLondonDbcs).toBeTruthy();
-      expect(service.userDesignatedBodies.length).toBe(8);
+      expect(service.userDesignatedBodies.length).toBe(6);
     });
   });
 

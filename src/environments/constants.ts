@@ -37,19 +37,6 @@ export const AWS_CONFIG: IAWSConfig = {
   userPoolWebClientId: ""
 };
 
-export const LONDON_DBCS: IKeyValue[] = [
-  {
-    key: "1-AIIDR8",
-    value: "Kent, Surrey and Sussex"
-  },
-  {
-    key: "1-AIIDVS",
-    value: "North Central and East London"
-  },
-  { key: "1-AIIDWA", value: "North West London" },
-  { key: "1-AIIDWI", value: "South London" }
-];
-
 export const ADMIN_ROLES = ["RevalApprover", "RevalAdmin"];
 
 export const APPROVER_ROLES = ["RevalApprover"];

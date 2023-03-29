@@ -1,5 +1,5 @@
 import { IEnvironment } from "./environment.interface";
-import { APP_URLS_CONFIG, AWS_CONFIG, LONDON_DBCS } from "./constants";
+import { APP_URLS_CONFIG, AWS_CONFIG } from "./constants";
 
 export const environment: IEnvironment = {
   production: true,
@@ -12,7 +12,18 @@ export const environment: IEnvironment = {
     "https://teams.microsoft.com/l/channel/19%3ac7943c6ffa9c49b881304863bb39ff7b%40thread.skype/General?groupId=102f33a3-f794-4089-8c5a-68e04897e72e&tenantId=ffa7912b-b097-4131-9c0f-d0e80755b2ab",
   dateFormat: "dd/MM/yyyy",
   appUrls: APP_URLS_CONFIG,
-  londonDBCs: LONDON_DBCS,
+  londonDBCs: [
+    {
+      key: "1-1RUZV1D",
+      value: "Kent, Surrey and Sussex"
+    },
+    {
+      key: "1-1RUZV4H",
+      value: "North Central and East London"
+    },
+    { key: "1-1RUZV6H", value: "North West London" },
+    { key: "1-1RSSQ5L", value: "South London" }
+  ],
   awsConfig: {
     ...AWS_CONFIG,
     bucketName: "tis-revalidation-concerns-upload-prod",

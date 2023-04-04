@@ -1,4 +1,4 @@
-name: Deploy to Amazon S3
+name: Deploy to Amazon S3 on Alpha
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ jobs:
   deploy-alpha:
     name: Deploy to alpha
     runs-on: ubuntu-latest
-    environment: pre-prod
+    environment: alpha
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -29,10 +29,10 @@ jobs:
         run: npm install
 
       - name: Build Angular App
-        run: npm run build:misc && npm run build -- --configuration=production
+        run: npm run build:misc && npm run build -- --configuration=staging
 
       - name: Deploy app build to S3 bucket
-        run: aws s3 sync ./dist/revalidation/ s3://${{ secrets.AWS_S3_BUCKET_ALPHA }} --delete
+        run: aws s3 sync ./dist/revalidation/ s3://${{ vars.AWS_S3_BUCKET }} --delete
 
       - name: Invalidate CDN Cache
-        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID}} --paths /*.js /*.css /static/*
+        run: aws cloudfront create-invalidation --distribution-id ${{ vars.CLOUDFRONT_DISTRIBUTION_ID}} --paths /*.js /*.css /static/*

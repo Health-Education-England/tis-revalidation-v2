@@ -27,4 +27,8 @@ const env: Partial<IEnvironment> = {
     userPoolWebClientId: "4o37rm9tbid1u066hr500be5n3"
   }
 };
-export const environment = { ...commonEnv, ...env };
+export const environment = {
+  ...commonEnv,
+  ...env,
+  awsConfig: { ...commonEnv.awsConfig, ...env.awsConfig }
+};

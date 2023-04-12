@@ -13,4 +13,8 @@ const env: Partial<IEnvironment> = {
   }
 };
 
-export const environment = { ...commonEnv, ...env };
+export const environment = {
+  ...commonEnv,
+  ...env,
+  awsConfig: { ...commonEnv.awsConfig, ...env.awsConfig }
+};

@@ -2,14 +2,12 @@ import { commonEnv } from "./environment.common";
 import { IEnvironment } from "./environment.interface";
 
 const env: Partial<IEnvironment> = {
-  name: "stage",
+  name: "alpha",
   production: true,
-  siteIds: ["UA-40570867-6"],
   hotJarId: 1980924,
-
   awsConfig: {
-    redirectSignIn: "https://stage-revalidation.tis.nhs.uk",
-    redirectSignOut: "https://stage-revalidation.tis.nhs.uk"
+    redirectSignIn: "https://alpha-revalidation.tis.nhs.uk",
+    redirectSignOut: "https://alpha-revalidation.tis.nhs.uk"
   }
 };
 

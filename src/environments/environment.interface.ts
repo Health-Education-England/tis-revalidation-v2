@@ -9,7 +9,7 @@ export interface IEnvironment {
   readonly supportLink: string; // link to tis-support
   readonly appUrls: IAppUrls;
   readonly londonDBCs: IKeyValue[];
-  readonly awsConfig: IAWSConfig;
+  readonly awsConfig: Partial<IAWSConfig>;
 }
 
 export interface IAWSConfig {

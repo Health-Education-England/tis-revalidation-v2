@@ -21,9 +21,7 @@
         I am the appointed or nominated Responsible Officer for each medical
         practitioner named below.
       </p>
-      <p>
-        I have read the criteria for recommendations to revalidate.
-      </p>
+      <p>I have read the criteria for recommendations to revalidate.</p>
       <p>
         In determining my revalidation recommendation to the General Medical
         Council for the medical practitioners named below, it is my judgement
@@ -84,9 +82,7 @@
         I am the appointed or nominated Responsible Officer for the medical
         practitioner to whom this deferral request applies.
       </p>
-      <p>
-        I have read the criteria for a deferral and I am satisfied that:
-      </p>
+      <p>I have read the criteria for a deferral and I am satisfied that:</p>
       <ul>
         <li>
           the medical practitioner has engaged with the systems and processes
@@ -141,9 +137,7 @@
         I am the appointed or nominated Responsible Officer for the medical
         practitioner to whom this notification of non-engagement applies.
       </p>
-      <p>
-        I have read the criteria for non-engagement and I confirm that:
-      </p>
+      <p>I have read the criteria for non-engagement and I confirm that:</p>
 
       <ul>
         <li>
@@ -186,7 +180,7 @@
   <mat-divider></mat-divider>
   <section class="w-100 mt-20">
     <mat-slide-toggle
-      class="example-margin"
+      data-jasmine="toggleConfirm"
       color="primary"
       formControlName="confirm"
     >
@@ -204,13 +198,14 @@
       Back
     </button>
     <button
+      data-jasmine="buttonSubmit"
       mat-button
       mat-raised-button
       color="primary"
       type="submit"
-      [disabled]="form.invalid"
+      [disabled]="form.invalid || isFormSubmitting"
     >
-      Submit to GMC
+      {{ isFormSubmitting ? "Submitting..." : "Submit to GMC" }}
     </button>
     <span class="spacer"></span>
     <button

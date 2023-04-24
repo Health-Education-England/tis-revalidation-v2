@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Select, Store } from "@ngxs/store";
 import { Observable, of } from "rxjs";
-import { catchError, filter, take, tap } from "rxjs/operators";
+import { catchError, filter, finalize, take, tap } from "rxjs/operators";
 import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
 import {
   IRecommendationHistory,
@@ -11,7 +11,7 @@ import {
   RecommendationType
 } from "../recommendation-history.interface";
 import { RecommendationHistoryService } from "../services/recommendation-history.service";
-import { Get, Post } from "../state/recommendation-history.actions";
+import { Get } from "../state/recommendation-history.actions";
 import { RecommendationHistoryState } from "../state/recommendation-history.state";
 
 @Component({
@@ -24,7 +24,7 @@ export class ConfirmRecommendationComponent implements OnInit {
   public recommendationId: string;
   public recommendationType = RecommendationType;
   public designatedBody: string;
-
+  isFormSubmitting: boolean;
   @Select(RecommendationHistoryState.currentRecommendationType)
   public currentRecommendationType$: Observable<string>;
 
@@ -47,6 +47,7 @@ export class ConfirmRecommendationComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.isFormSubmitting = false;
     this.setupForm();
     this.getCurrentRecommendation();
   }
@@ -58,6 +59,7 @@ export class ConfirmRecommendationComponent implements OnInit {
   }
 
   public submitToGMC(): void {
+    this.isFormSubmitting = true;
     this.recommendationHistoryService
       .submitRecommendationToGMC(
         this.gmcNumber,
@@ -76,7 +78,8 @@ export class ConfirmRecommendationComponent implements OnInit {
               "Your recommendation was successfully submitted to GMC"
             )
           )
-        )
+        ),
+        finalize(() => (this.isFormSubmitting = false))
       )
       .subscribe(() => {
         this.store

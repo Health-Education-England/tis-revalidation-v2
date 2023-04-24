@@ -1,6 +1,8 @@
 import { defineConfig } from "cypress";
 
 export default defineConfig({
+  viewportWidth: 1920,
+  viewportHeight: 1080,
   chromeWebSecurity: false,
   defaultCommandTimeout: 15000,
   projectId: "7r2r65",

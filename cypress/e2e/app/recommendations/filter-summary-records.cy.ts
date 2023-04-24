@@ -20,17 +20,19 @@ describe("Recommendations", () => {
       ]
     };
     const openProgrammeNameDropdown = (query: string = "General Practice") => {
-      cy.get("mat-option").should("not.exist");
+      cy.get(".mat-autocomplete-panel mat-option").should("not.exist");
       cy.get("[data-cy='formfield_programmeName'] input").type(query);
-      cy.wait(2000);
-      cy.get("mat-option").should("exist");
+      cy.get(".mat-autocomplete-panel [data-cy='autocomplete-option']").should(
+        "exist"
+      );
     };
 
     const openTisAdminDropdown = (query: string = "St") => {
-      cy.get("mat-option").should("not.exist");
+      cy.get(".mat-autocomplete-panel mat-option").should("not.exist");
       cy.get("[data-cy='formfield_admin'] input").type(query);
-      cy.wait(2000);
-      cy.get("mat-option").should("exist");
+      cy.get(".mat-autocomplete-panel [data-cy='autocomplete-option']").should(
+        "exist"
+      );
     };
 
     const showAllDoctors = () => {
@@ -42,7 +44,7 @@ describe("Recommendations", () => {
       cy.get("app-record-list .mat-table").should("exist");
       showAllDoctors();
       cy.get("[data-cy='toggleTableFiltersButton']").click();
-      cy.get(".filters-drawer-container .mat-drawer-opened").should("exist");
+      cy.get("app-form-controller").should("exist");
     };
 
     const checkButtonsDisabled = (status: string = "be disabled") => {
@@ -58,7 +60,7 @@ describe("Recommendations", () => {
       cy.get(
         "[data-cy='tableFiltersForm'] button[data-jasmine='submitFormButton']"
       ).click();
-      cy.wait(3000);
+      cy.get("app-record-list .mat-table").should("exist");
     };
 
     it("should open and close filter panel when toggle button is clicked", () => {
@@ -170,7 +172,8 @@ describe("Recommendations", () => {
         cy.visit(
           "/recommendations?active=submissionDate&direction=asc&pageIndex=0&filter=underNotice&programmeName=&dbcs=1-AIIDWT"
         );
-        cy.get(".filters-drawer-container .mat-drawer-opened").should("exist");
+
+        cy.get("app-record-list .mat-table").should("exist");
         cy.get("td.cdk-column-designatedBody").each(($el) => {
           expect($el.text().trim() === "1-AIIDWT").to.be.false;
         });

@@ -33,7 +33,11 @@
     >
       <mat-option *ngIf="isLoading" class="is-loading">Loading...</mat-option>
       <ng-container *ngIf="!isLoading">
-        <mat-option *ngFor="let item of filteredItems" [value]="item">
+        <mat-option
+          *ngFor="let item of filteredItems"
+          [value]="item"
+          data-cy="autocomplete-option"
+        >
           <span>{{ item }}</span>
         </mat-option>
       </ng-container>

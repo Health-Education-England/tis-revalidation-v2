@@ -37,7 +37,7 @@
     "@angular/service-worker": "^13.3.11",
     "@ngxs/logger-plugin": "^3.7.3",
     "@ngxs/store": "^3.7.3",
-    "@sentry/browser": "^6.19.7",
+    "@sentry/browser": "^7.50.0",
     "angulartics2": "^10.1.0",
     "aws-amplify": "^4.3.43",
     "browserslist": "^4.20.4",

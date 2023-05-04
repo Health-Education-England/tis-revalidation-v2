@@ -48,7 +48,9 @@
     <app-allocate-admin-btn
       *ngIf="isRevalAdmin && !isConnectionsSummary"
     ></app-allocate-admin-btn>
-
+    <app-update-connetions-btn
+      *ngIf="isRevalAdmin && isConnectionsSummary"
+    ></app-update-connetions-btn>
     <form
       (ngSubmit)="checkForm()"
       [formGroup]="form"

@@ -15,7 +15,12 @@ import { MaterialAutocompleteComponent } from "./form-controls/material-autocomp
 import { RemoveWhitespacePipe } from "./pipes/remove-whitespace.pipe";
 import { SplitStringToHTMLPipe } from "./pipes/split-string-to-html.pipe";
 
-const modulePipes = [StripHtmlPipe, FileBytesPipe, SplitStringToHTMLPipe];
+const modulePipes = [
+  StripHtmlPipe,
+  FileBytesPipe,
+  SplitStringToHTMLPipe,
+  RemoveWhitespacePipe
+];
 @NgModule({
   declarations: [
     PageNotFoundComponent,
@@ -25,7 +30,7 @@ const modulePipes = [StripHtmlPipe, FileBytesPipe, SplitStringToHTMLPipe];
     FormControllerComponent,
     MaterialSelectionListComponent,
     MaterialAutocompleteComponent,
-    RemoveWhitespacePipe,
+
     SplitStringToHTMLPipe
   ],
   imports: [RouterModule, MaterialModule, ReactiveFormsModule, CommonModule],

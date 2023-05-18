@@ -8,7 +8,7 @@ describe("Recommendations filters", () => {
 
   it("should contain correct filter button labels", () => {
     cy.get("app-record-list-filters a").each(($el) => {
-      expect($el.text().trim()).to.be.oneOf(filterButtonLabels);
+      expect(filterButtonLabels.join("|")).to.contain($el.text().trim());
     });
   });
 

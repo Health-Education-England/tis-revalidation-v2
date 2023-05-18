@@ -1,5 +1,6 @@
 <ng-container *ngIf="enableUpdateConnections$ | async; else isDisabled">
   <button
+    data-cy="disable-update-connections"
     color="primary"
     mat-icon-button
     matTooltip="Disable update connections"
@@ -14,6 +15,7 @@
 
 <ng-template #isDisabled>
   <button
+    data-cy="enable-update-connections"
     color="primary"
     mat-icon-button
     matTooltip="Enable update connections"

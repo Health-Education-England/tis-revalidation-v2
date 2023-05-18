@@ -9,7 +9,8 @@ export default defineConfig({
   e2e: {
     // We've imported your old cypress plugins here.
     // You may want to clean this up later by importing these.
-    experimentalSessionAndOrigin: true, //required to allow cross origin for hosted ui login
+    //experimentalSessionAndOrigin: true, //required to allow cross origin for hosted ui login
+    experimentalRunAllSpecs: true,
     setupNodeEvents(on, config) {
       return require("./cypress/plugins/index.js")(on, config);
     },

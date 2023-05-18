@@ -22,13 +22,5 @@ export const CONNECTION_ACTIONS: IAction[] = [
         code: "3"
       }
     ]
-  },
-  {
-    action: ActionType.HIDE_CONNECTION,
-    reasons: []
-  },
-  {
-    action: ActionType.UNHIDE_CONNECTION,
-    reasons: []
   }
 ];

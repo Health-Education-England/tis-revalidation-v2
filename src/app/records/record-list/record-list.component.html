@@ -70,6 +70,7 @@
                       data.enableAllocateAdmin) &&
                     i.name === 'doctorFirstName'
                   "
+                  data-cy="select-all-records-checkbox"
                   [checked]="data.allChecked"
                   [indeterminate]="data.someChecked"
                   (change)="toggleAllCheckboxes()"
@@ -98,6 +99,7 @@
                   class="pr-20"
                   [checked]="element.checked"
                   (change)="toggleCheckbox(element.gmcReferenceNumber)"
+                  data-cy="select-record-checkbox"
                 >
                 </mat-checkbox>
 

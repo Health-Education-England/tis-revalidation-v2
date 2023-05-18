@@ -2,10 +2,14 @@
   <mat-card-title>Update connection</mat-card-title>
   <form [formGroup]="updateConnectionForm">
     <div class="d-grid grid-container-3-col">
-      <mat-form-field>
+      <mat-form-field data-cy="update-connection-action">
         <mat-label>Action</mat-label>
         <mat-select formControlName="action">
-          <mat-option *ngFor="let action of actions" [value]="action.action">
+          <mat-option
+            data-cy="update-connection-action-option"
+            *ngFor="let action of actions"
+            [value]="action.action"
+          >
             {{ action.action }}
           </mat-option>
         </mat-select>
@@ -14,10 +18,17 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field *ngIf="reasons.length > 0; else reasonText">
+      <mat-form-field
+        *ngIf="reasons.length > 0; else reasonText"
+        data-cy="update-connection-reason"
+      >
         <mat-label>Reason</mat-label>
         <mat-select formControlName="reason">
-          <mat-option *ngFor="let reason of reasons" [value]="reason.code">
+          <mat-option
+            data-cy="update-connection-reason-option"
+            *ngFor="let reason of reasons"
+            [value]="reason.code"
+          >
             {{ reason.reason }}
           </mat-option>
         </mat-select>
@@ -27,7 +38,7 @@
       </mat-form-field>
 
       <ng-template #reasonText>
-        <mat-form-field>
+        <mat-form-field data-cy="update-connection-reason-text">
           <mat-label>Reason</mat-label>
           <input matInput type="text" formControlName="reason" />
           <mat-error *ngIf="reasonControl?.hasError('required')">
@@ -36,10 +47,17 @@
         </mat-form-field>
       </ng-template>
 
-      <mat-form-field *ngIf="addConnectionSelected">
+      <mat-form-field
+        *ngIf="addConnectionSelected"
+        data-cy="update-connection-dbc"
+      >
         <mat-label>Dbc</mat-label>
         <mat-select formControlName="dbc">
-          <mat-option *ngFor="let dbc of userDbcs" [value]="dbc.dbc">
+          <mat-option
+            data-cy="update-connection-dbc-option"
+            *ngFor="let dbc of userDbcs"
+            [value]="dbc.dbc"
+          >
             {{ dbc.abbr }}
           </mat-option>
         </mat-select>
@@ -52,6 +70,7 @@
     <div class="d-grid grid-container-3-col">
       <div class="d-grid grid-container-3-col">
         <button
+          data-cy="update-connection-cancel"
           mat-button
           type=" button"
           aria-label="Cancel update connections"
@@ -64,6 +83,7 @@
         </button>
 
         <button
+          data-cy="update-connection-reset"
           mat-button
           type=" button"
           aria-label="Reset changes"
@@ -77,6 +97,7 @@
         </button>
 
         <button
+          data-cy="update-connection-save"
           mat-button
           type="button"
           aria-label="Submit changes"

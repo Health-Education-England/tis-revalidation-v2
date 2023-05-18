@@ -36,7 +36,7 @@ describe("Recommendations", () => {
     };
 
     const showAllDoctors = () => {
-      cy.get("[data-cy='filter-records-button']").first().click();
+      cy.get("[data-cy='filter-records-button_ALLDOCTORS']").click();
       cy.get("app-record-list .mat-table").should("exist");
     };
     const initFilterPanel = () => {

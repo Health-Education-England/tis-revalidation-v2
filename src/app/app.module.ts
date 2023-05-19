@@ -25,6 +25,8 @@ import { initializeApplication } from "./core/auth/auth.initializer";
 import { errorHandlerFactory } from "./factories/error-handler.factory";
 
 import { swRegistrationOptionsFactory } from "./factories/sw-registration-options.factory";
+import { NgxHotjarModule } from "ngx-hotjar";
+import { environment } from "@environment";
 
 @NgModule({
   declarations: [AppComponent],
@@ -40,7 +42,8 @@ import { swRegistrationOptionsFactory } from "./factories/sw-registration-option
     NgxsModule.forRoot([]),
     NgxGoogleAnalyticsModule.forRoot("G-SWV1NDD37B"),
     NgxsReduxDevtoolsPluginModule.forRoot(),
-    MainNavigationModule
+    MainNavigationModule,
+    NgxHotjarModule.forRoot(environment.hotJarId)
   ],
   providers: [
     AuthService,

@@ -4,7 +4,7 @@ import { IEnvironment } from "./environment.interface";
 const env: Partial<IEnvironment> = {
   name: "prod",
   production: true,
-  hotJarId: 3168055,
+  hotJarId: "3168055",
   adminsUIHostUri: "https://apps.tis.nhs.uk/",
   londonDBCs: [
     {

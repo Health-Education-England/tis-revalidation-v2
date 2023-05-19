@@ -1,4 +1,4 @@
-import { IAWSConfig, IAppUrls, IKeyValue } from "./environment.interface";
+import { IAWSConfig, IAppUrls } from "./environment.interface";
 
 export const APP_URLS_CONFIG: IAppUrls = {
   addConcern: "api/concerns",

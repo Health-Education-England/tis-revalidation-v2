@@ -1,8 +1,7 @@
 export interface IEnvironment {
   readonly adminsUIHostUri: string; // admins-ui related links
   readonly dateFormat: string; // TODO: when implementing i18n localization use value from locale
-  readonly hotJarId: number;
-  readonly hotJarSv: number;
+  readonly hotJarId: string;
   readonly name: string; // environment name
   readonly production: boolean; // build mode
   readonly siteIds: string[]; // Google analytics site id's

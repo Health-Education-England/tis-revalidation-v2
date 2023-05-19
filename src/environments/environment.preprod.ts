@@ -5,8 +5,7 @@ const env: Partial<IEnvironment> = {
   name: "stage",
   production: true,
   siteIds: ["UA-40570867-6"],
-  hotJarId: 1980924,
-
+  hotJarId: "1980924",
   awsConfig: {
     redirectSignIn: "https://stage-revalidation.tis.nhs.uk",
     redirectSignOut: "https://stage-revalidation.tis.nhs.uk"

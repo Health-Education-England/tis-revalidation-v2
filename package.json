@@ -62,7 +62,7 @@
     "@angular/compiler-cli": "~13.3.11",
     "@angular/language-service": "^13.3.11",
     "@aws-amplify/pubsub": "^3.3.3",
-    "@ngxs/devtools-plugin": "^3.7.4",
+    "@ngxs/devtools-plugin": "^3.8.1",
     "@react-native-community/netinfo": "^6.2.1",
     "@types/jasmine": "^3.6.11",
     "@types/jasminewd2": "^2.0.10",

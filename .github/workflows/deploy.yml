@@ -46,28 +46,6 @@ jobs:
       - name: Invalidate CDN Cache
         run: aws cloudfront create-invalidation --distribution-id ${{ vars.CLOUDFRONT_DISTRIBUTION_ID}} --paths /*.js /*.css /static/*
 
-      - name: Slack Notification - Deploy Success
-        if: success()
-        uses: rtCamp/action-slack-notify@v2.2.0
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_USERNAME: TIS-REVALIDATION-V2
-          SLACK_TITLE: "Successfully deployed to preprod."
-          SLACK_CHANNEL: reval-pipeline
-          SLACK_ICON_EMOJI: ":deploy_yellow:"
-          SLACK_COLOR: FFCC00
-
-      - name: Slack Notification - Deploy Fail
-        if: failure()
-        uses: rtCamp/action-slack-notify@v2.2.0
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_USERNAME: TIS-REVALIDATION-V2
-          SLACK_TITLE: "Failed deployment to preprod."
-          SLACK_CHANNEL: reval-pipeline
-          SLACK_ICON_EMOJI: ":deploy_red:"
-          SLACK_COLOR: FF0000
-
   cypress-e2e:
     needs: deploy-pre-prod
     name: Run Cypress E2E tests
@@ -147,25 +125,3 @@ jobs:
 
       - name: Invalidate CDN Cache
         run: aws cloudfront create-invalidation --distribution-id ${{ vars.CLOUDFRONT_DISTRIBUTION_ID}} --paths /*.js /*.css /static/*
-
-      - name: Slack Notification - Deploy Success
-        if: success()
-        uses: rtCamp/action-slack-notify@v2.2.0
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_USERNAME: TIS-REVALIDATION-V2
-          SLACK_TITLE: "Successfully deployed to production."
-          SLACK_CHANNEL: reval-pipeline
-          SLACK_ICON_EMOJI: ":deploy_green:"
-          SLACK_COLOR: 00CC00
-
-      - name: Slack Notification - Deploy Fail
-        if: failure()
-        uses: rtCamp/action-slack-notify@v2.2.0
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_USERNAME: TIS-REVALIDATION-V2
-          SLACK_TITLE: "Failed deployment to production."
-          SLACK_CHANNEL: reval-pipeline
-          SLACK_ICON_EMOJI: ":deploy_red:"
-          SLACK_COLOR: FF0000

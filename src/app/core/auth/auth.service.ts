@@ -4,7 +4,11 @@ import { CognitoUserSession } from "amazon-cognito-identity-js";
 import { Auth } from "aws-amplify";
 import { from, Observable } from "rxjs";
 import { catchError, tap } from "rxjs/operators";
-import { ADMIN_ROLES, APPROVER_ROLES } from "src/environments/constants";
+import {
+  ADMIN_ROLES,
+  APPROVER_ROLES,
+  BETA_ROLES
+} from "src/environments/constants";
 import { environment } from "@environment";
 
 @Injectable({
@@ -20,6 +24,7 @@ export class AuthService {
   public inludesLondonDbcs = false;
   public isRevalAdmin = false;
   public isRevalApprover = false;
+  public isRevalBeta = false;
 
   currentSession(): Observable<CognitoUserSession> {
     return from(Auth.currentSession()).pipe(
@@ -37,6 +42,7 @@ export class AuthService {
         this.isRevalApprover = this.roles.some((role) =>
           APPROVER_ROLES.includes(role)
         );
+        this.isRevalBeta = this.roles.some((role) => BETA_ROLES.includes(role));
 
         let dbcs: string[] = cognitoIdToken.payload["cognito:groups"] || [];
         let londonDBCodes: string[] = environment.londonDBCs.map(

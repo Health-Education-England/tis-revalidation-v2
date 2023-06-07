@@ -40,3 +40,5 @@ export const AWS_CONFIG: IAWSConfig = {
 export const ADMIN_ROLES = ["RevalApprover", "RevalAdmin"];
 
 export const APPROVER_ROLES = ["RevalApprover"];
+
+export const BETA_ROLES = ["RevalBeta"];

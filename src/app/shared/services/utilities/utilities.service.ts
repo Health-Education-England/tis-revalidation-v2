@@ -32,8 +32,7 @@ export class UtilitiesService {
   showNavigationLink(item: IMenuItem): boolean {
     return (
       (!item.beta || (item.beta && this.authService.isRevalBeta)) &&
-      (!item.env ||
-        (item.env && item.env.includes(environment.name) && item.type === 0))
+      (!item.env || item.env?.includes(environment.name))
     );
   }
 }

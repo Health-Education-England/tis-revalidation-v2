@@ -68,18 +68,18 @@ describe("ConfirmRecommendationComponent", () => {
     fixture.detectChanges();
   });
 
-  fit("should create", () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 
-  fit("should disable form submission by default", async () => {
+  it("should disable form submission by default", async () => {
     const buttonSubmitElement = await loader.getHarness(
       MatButtonHarness.with(submitButtonSelector)
     );
     expect(await buttonSubmitElement.isDisabled()).toBe(true);
   });
 
-  fit("should enable and disable form submit when toggling confirm", async () => {
+  it("should enable and disable form submit when toggling confirm", async () => {
     const toggleConfirmElement = await loader.getHarness(
       MatSlideToggleHarness.with(toggleConfirmSelector)
     );
@@ -93,7 +93,7 @@ describe("ConfirmRecommendationComponent", () => {
     await toggleConfirmElement.uncheck();
     expect(await buttonSubmitElement.isDisabled()).toBe(true);
   });
-  fit("should disable form when submit button clicked", async () => {
+  it("should disable form when submit button clicked", async () => {
     spyOn(recommendationHistoryService, "submitRecommendationToGMC");
     const toggleConfirmElement = await loader.getHarness(
       MatSlideToggleHarness.with(toggleConfirmSelector)

@@ -13,19 +13,21 @@
       [class]="menuItem.menuItems?.length > 5 ? 'mega-menu' : ''"
     >
       <ng-container *ngFor="let item of menuItem.menuItems">
-        <a
-          mat-menu-item
-          *ngIf="(!item.env && item.type === 0) || (item.env && item.env.includes(env) && item.type === 0)"
-          routerLink="{{ item.route }}"
-          routerLinkActive="active-list-item"
-          >{{ item.name }}</a
-        >
-        <a
-          mat-menu-item
-          *ngIf="item.type === 1"
-          [href]="hostURI + item.route"
-          >{{ item.name }}</a
-        >
+        <ng-container *ngIf="showLink(item)">
+          <a
+            mat-menu-item
+            *ngIf="item.type === 0"
+            routerLink="{{ item.route }}"
+            routerLinkActive="active-list-item"
+            >{{ item.name }}</a
+          >
+          <a
+            mat-menu-item
+            *ngIf="item.type === 1"
+            [href]="hostURI + item.route"
+            >{{ item.name }}</a
+          >
+        </ng-container>
       </ng-container>
     </mat-menu>
   </ng-container>

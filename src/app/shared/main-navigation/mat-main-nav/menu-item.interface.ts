@@ -5,6 +5,7 @@ export interface IMenuItem {
   menuItems?: IMenuItem[];
   description?: string;
   env?: string[];
+  beta?: boolean;
 }
 
 export enum MenuType {

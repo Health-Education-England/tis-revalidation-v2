@@ -4,17 +4,22 @@
       {{ menuItem.name }}
     </mat-expansion-panel-header>
     <mat-nav-list *ngFor="let item of menuItem.menuItems">
-      <a
-        mat-list-item
-        (click)="onMenuClick()"
-        *ngIf="(!item.env && item.type === 0) || (item.env && item.env.includes(env) && item.type === 0)"
-        routerLinkActive="active-list-item"
-        routerLink="{{ item.route }}"
-        >{{ item.name }}</a
-      >
-      <a mat-list-item *ngIf="item.type === 1" [href]="hostURI + item.route">{{
-        item.name
-      }}</a>
+      <ng-container *ngIf="showLink(item)">
+        <a
+          mat-list-item
+          (click)="onMenuClick()"
+          *ngIf="item.type === 0"
+          routerLinkActive="active-list-item"
+          routerLink="{{ item.route }}"
+          >{{ item.name }}</a
+        >
+        <a
+          mat-list-item
+          *ngIf="item.type === 1"
+          [href]="hostURI + item.route"
+          >{{ item.name }}</a
+        >
+      </ng-container>
     </mat-nav-list>
   </mat-expansion-panel>
 

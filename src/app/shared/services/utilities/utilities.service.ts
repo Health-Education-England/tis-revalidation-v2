@@ -1,10 +1,14 @@
 import { Injectable } from "@angular/core";
 import { RecommendationDueDateStatus } from "../../../recommendation/recommendation-history.interface";
+import { IMenuItem } from "../../main-navigation/mat-main-nav/menu-item.interface";
+import { AuthService } from "src/app/core/auth/auth.service";
+import { environment } from "@environment";
 
 @Injectable({
   providedIn: "root"
 })
 export class UtilitiesService {
+  constructor(private authService: AuthService) {}
   private convertToDays(milisecs: number) {
     return Math.round(milisecs / 1000 / 60 / 60 / 24);
   }
@@ -23,5 +27,12 @@ export class UtilitiesService {
     } else {
       return RecommendationDueDateStatus.FUTURE;
     }
+  }
+
+  showNavigationLink(item: IMenuItem): boolean {
+    return (
+      (!item.beta || (item.beta && this.authService.isRevalBeta)) &&
+      (!item.env || item.env?.includes(environment.name))
+    );
   }
 }

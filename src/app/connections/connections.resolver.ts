@@ -9,6 +9,8 @@ import { UpdateConnectionsService } from "../update-connections/services/update-
 import { ConnectionsFilterType } from "./connections.interfaces";
 import { COLUMN_DATA } from "./constants";
 import { stateName } from "../records/records.interfaces";
+import { TABLE_FILTERS_FORM_BASE } from "../connections/constants";
+import { FormControlBase } from "../shared/form-controls/form-contol-base.model";
 @Injectable()
 export class ConnectionsResolver
   extends RecordsResolver
@@ -26,7 +28,7 @@ export class ConnectionsResolver
   private initialiseData(): void {
     this.recordsService.stateName = stateName.CONNECTIONS;
     this.recordsService.detailsRoute = "/connection";
-    this.recordsService.showTableFilters = false;
+    this.recordsService.showTableFilters = true;
     this.recordsService.setConnectionsActions();
     this.recordsService.dateColumns = [
       "submissionDate",
@@ -44,6 +46,12 @@ export class ConnectionsResolver
         name: ConnectionsFilterType.DISCREPANCIES
       }
     ];
+
+    this.recordsService.tableFiltersFormData.next(
+      [...TABLE_FILTERS_FORM_BASE].sort(
+        (a: FormControlBase, b: FormControlBase) => a.order - b.order
+      )
+    );
   }
 
   resolve(route: ActivatedRouteSnapshot): Observable<any> {

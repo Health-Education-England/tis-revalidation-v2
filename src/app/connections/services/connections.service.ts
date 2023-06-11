@@ -22,7 +22,8 @@ export class ConnectionsService {
 
     params = params
       .append("filter", snapshot.filter)
-      .append("dbcs", this.authService.userDesignatedBodies.join(","));
+      .append("dbcs", this.authService.userDesignatedBodies.join(","))
+      .append("programmeName", snapshot.tableFilters?.programmeName || "");
 
     return params;
   }

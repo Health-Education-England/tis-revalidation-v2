@@ -1,3 +1,4 @@
+import { FilterRecords } from "../records/filter-summary-records-po";
 describe("Recommendations", () => {
   describe("Apply filtering to summary records list table", () => {
     beforeEach(() => {
@@ -19,68 +20,20 @@ describe("Recommendations", () => {
         { value: "COMPLETE", label: "Complete" }
       ]
     };
-    const openProgrammeNameDropdown = (query: string = "General Practice") => {
-      cy.get(".mat-autocomplete-panel mat-option").should("not.exist");
-      cy.get("[data-cy='formfield_programmeName'] input").type(query);
-      cy.get(".mat-autocomplete-panel [data-cy='autocomplete-option']").should(
-        "exist"
-      );
-    };
-
-    const openTisAdminDropdown = (query: string = "St") => {
-      cy.get(".mat-autocomplete-panel mat-option").should("not.exist");
-      cy.get("[data-cy='formfield_admin'] input").type(query);
-      cy.get(".mat-autocomplete-panel [data-cy='autocomplete-option']").should(
-        "exist"
-      );
-    };
-
-    const showAllDoctors = () => {
-      cy.get("[data-cy='filter-records-button_ALLDOCTORS']").click();
-      cy.get("app-record-list .mat-table").should("exist");
-    };
-    const initFilterPanel = () => {
-      cy.visit("/recommendations");
-      cy.get("app-record-list .mat-table").should("exist");
-      showAllDoctors();
-      cy.get("[data-cy='toggleTableFiltersButton']").click();
-      cy.get("app-form-controller").should("exist");
-    };
-
-    const checkButtonsDisabled = (status: string = "be disabled") => {
-      cy.get(
-        "[data-cy='tableFiltersForm'] [data-jasmine='clearFiltersButton']"
-      ).should(status);
-      cy.get(
-        "[data-cy='tableFiltersForm'] [data-jasmine='submitFormButton']"
-      ).should(status);
-    };
-
-    const submitForm = () => {
-      cy.get(
-        "[data-cy='tableFiltersForm'] button[data-jasmine='submitFormButton']"
-      ).click();
-      cy.get("app-record-list .mat-table").should("exist");
-    };
 
     it("should open and close filter panel when toggle button is clicked", () => {
       cy.visit("/recommendations");
-      cy.get("[data-cy='toggleTableFiltersButton']").click();
-      cy.get(".filters-drawer-container .mat-drawer-opened").should("exist");
-      cy.get("[data-cy='toggleTableFiltersButton']").click();
-      cy.get(".filters-drawer-container .mat-drawer-opened").should(
-        "not.exist"
-      );
+      FilterRecords.toggleFilterPanel();
     });
 
     describe("Filter by DBC", () => {
       it("should display 'dbc' selection list filters", () => {
-        initFilterPanel();
+        FilterRecords.initFilterPanel();
         cy.get("[data-cy='selectionListdbcs']").should("exist");
       });
 
       it("should display 4 selection options in the 'dbc' selection list labelled accordingly", () => {
-        initFilterPanel();
+        FilterRecords.initFilterPanel();
 
         cy.get(
           "[data-cy='selectionListdbcs'] .mat-list-option .mat-list-text"
@@ -95,18 +48,18 @@ describe("Recommendations", () => {
       });
 
       it("should filter summary records list by single dbc when single option selected and submitted", () => {
-        initFilterPanel();
+        FilterRecords.initFilterPanel();
 
         cy.get("[data-cy='selectionOption1-AIIDR8']").should("exist");
         cy.get("[data-cy='selectionOption1-AIIDR8']").click();
-        submitForm();
+        FilterRecords.submitForm();
         cy.get("td.cdk-column-designatedBody").each(($el) => {
           expect($el.text().trim()).to.equal("1-AIIDR8");
         });
       });
 
       it("should filter summary records list by multiple dbcs when multiple options selected and submitted", () => {
-        initFilterPanel();
+        FilterRecords.initFilterPanel();
         const selectedDbcs = formFilters.dbc
           .filter((_, index) => index < 2)
           .map((item) => item.value);
@@ -116,9 +69,9 @@ describe("Recommendations", () => {
           $el.click();
         });
 
-        checkButtonsDisabled("not.be.disabled");
+        FilterRecords.checkButtonsDisabled("not.be.disabled");
 
-        submitForm();
+        FilterRecords.submitForm();
 
         cy.get("td.cdk-column-designatedBody").each(($el) => {
           expect($el.text().trim()).to.be.oneOf(selectedDbcs);
@@ -126,9 +79,9 @@ describe("Recommendations", () => {
       });
 
       it("should filter by both 'programme name' and 'dbc' when both filters selected", () => {
-        initFilterPanel();
+        FilterRecords.initFilterPanel();
 
-        openProgrammeNameDropdown("Neurology KSS");
+        FilterRecords.openProgrammeNameDropdown("Neurology KSS");
         cy.get("mat-option")
           .eq(1)
           .invoke("text")
@@ -136,7 +89,7 @@ describe("Recommendations", () => {
             cy.get("mat-option").eq(1).click();
             cy.get("[data-cy='selectionOption1-AIIDR8']").click();
 
-            submitForm();
+            FilterRecords.submitForm();
             cy.get("td.cdk-column-programmeName").each(($el) => {
               expect($el.text().trim()).to.equal(value);
             });
@@ -147,20 +100,20 @@ describe("Recommendations", () => {
       });
 
       it("should display all London/KSS dbcs when no filter selected and submitted", () => {
-        initFilterPanel();
+        FilterRecords.initFilterPanel();
         cy.get("[data-cy='selectionOption1-AIIDR8']").should("exist");
         cy.get("[data-cy='selectionOption1-AIIDR8']").click();
 
         cy.get(".mat-paginator-range-label")
           .invoke("text")
           .then((paginatorText) => {
-            submitForm();
+            FilterRecords.submitForm();
             cy.get(".mat-paginator-range-label").should(
               "not.contain",
               paginatorText
             );
             cy.get("[data-cy='selectionOption1-AIIDR8']").click();
-            submitForm();
+            FilterRecords.submitForm();
             cy.get(".mat-paginator-range-label").should(
               "contain",
               paginatorText
@@ -182,12 +135,12 @@ describe("Recommendations", () => {
 
     describe("Filter by GMC status", () => {
       it("should display 'gmc status' selection list filters", () => {
-        initFilterPanel();
+        FilterRecords.initFilterPanel();
         cy.get("[data-cy='selectionListgmcStatus']").should("exist");
       });
 
       it("should display 3 selection options in the 'gmc status' selection list labelled accordingly", () => {
-        initFilterPanel();
+        FilterRecords.initFilterPanel();
 
         cy.get(
           "[data-cy='selectionListgmcStatus'] .mat-list-option .mat-list-text"
@@ -200,13 +153,13 @@ describe("Recommendations", () => {
       });
 
       it("should filter summary records list by single gmc status when single option selected and submitted", () => {
-        initFilterPanel();
+        FilterRecords.initFilterPanel();
 
         cy.get("[data-cy='selectionOptionApproved']").should("exist");
         cy.get("[data-cy='selectionOptionApproved']").click();
-        checkButtonsDisabled("not.be.disabled");
+        FilterRecords.checkButtonsDisabled("not.be.disabled");
 
-        submitForm();
+        FilterRecords.submitForm();
 
         cy.get("td.cdk-column-gmcOutcome").each(($el) => {
           expect($el.text().trim()).to.equal("Approved");
@@ -214,7 +167,7 @@ describe("Recommendations", () => {
       });
 
       it("should filter summary records list by multiple gmc statuses when multiple options selected and submitted", () => {
-        initFilterPanel();
+        FilterRecords.initFilterPanel();
         const selectedGmcStatus = formFilters.gmcStatus.filter(
           (_, index) => index < 2
         );
@@ -224,9 +177,9 @@ describe("Recommendations", () => {
           $el.click();
         });
 
-        checkButtonsDisabled("not.be.disabled");
+        FilterRecords.checkButtonsDisabled("not.be.disabled");
 
-        submitForm();
+        FilterRecords.submitForm();
         cy.get("td.cdk-column-gmcOutcome").each(($el) => {
           expect($el.text().trim()).to.be.oneOf(selectedGmcStatus);
         });
@@ -235,12 +188,12 @@ describe("Recommendations", () => {
 
     describe("Filter by TIS status", () => {
       it("should display 'TIS status' selection list filters", () => {
-        initFilterPanel();
+        FilterRecords.initFilterPanel();
         cy.get("[data-cy='selectionListtisStatus']").should("exist");
       });
 
       it("should display 4 selection options in the 'TIS status' selection list labelled accordingly", () => {
-        initFilterPanel();
+        FilterRecords.initFilterPanel();
 
         cy.get(
           "[data-cy='selectionListtisStatus'] .mat-list-option .mat-list-text"
@@ -255,13 +208,13 @@ describe("Recommendations", () => {
       });
 
       it("should filter summary records list by single TIS status when single option selected and submitted", () => {
-        initFilterPanel();
+        FilterRecords.initFilterPanel();
 
         cy.get("[data-cy='selectionOptionDRAFT']").should("exist");
         cy.get("[data-cy='selectionOptionDRAFT']").click();
-        checkButtonsDisabled("not.be.disabled");
+        FilterRecords.checkButtonsDisabled("not.be.disabled");
 
-        submitForm();
+        FilterRecords.submitForm();
 
         cy.get("td.cdk-column-doctorStatus").each(($el) => {
           expect($el.text().trim()).to.equal("Draft");
@@ -269,7 +222,7 @@ describe("Recommendations", () => {
       });
 
       it("should filter summary records list by multiple TIS statuses when multiple options selected and submitted", () => {
-        initFilterPanel();
+        FilterRecords.initFilterPanel();
         const selectedTisStatus = formFilters.tisStatus.filter(
           (_, index) => index < 2
         );
@@ -280,9 +233,9 @@ describe("Recommendations", () => {
           $el.click();
         });
 
-        checkButtonsDisabled("not.be.disabled");
+        FilterRecords.checkButtonsDisabled("not.be.disabled");
 
-        submitForm();
+        FilterRecords.submitForm();
         cy.get("td.cdk-column-doctorStatus").each(($el) => {
           expect($el.text().trim()).to.be.oneOf(
             selectedTisStatus.map((item) => item.label)
@@ -293,12 +246,12 @@ describe("Recommendations", () => {
 
     describe("Filter by Programme Name", () => {
       it("should display 'programme name' filter field", () => {
-        initFilterPanel();
+        FilterRecords.initFilterPanel();
         cy.get("[data-cy='formfield_programmeName']").should("exist");
       });
 
       it("should display 'Apply filters' and 'Clear filters' buttons disabled by default", () => {
-        initFilterPanel();
+        FilterRecords.initFilterPanel();
         cy.get("[data-cy='tableFiltersForm'] button").should("have.length", 2);
         cy.get(
           "[data-cy='tableFiltersForm'] button[data-jasmine='clearFiltersButton']"
@@ -316,22 +269,22 @@ describe("Recommendations", () => {
       });
 
       it("should display list containing matching options when the text 'clin' is entered in 'programme name' field", () => {
-        initFilterPanel();
-        openProgrammeNameDropdown();
+        FilterRecords.initFilterPanel();
+        FilterRecords.openProgrammeNameDropdown();
         cy.get("mat-option").should("have.length.above", 1);
       });
 
       it("should display list where first item matches input text", () => {
-        initFilterPanel();
+        FilterRecords.initFilterPanel();
         const query = "Clinical";
-        openProgrammeNameDropdown(query);
+        FilterRecords.openProgrammeNameDropdown(query);
         cy.get("mat-option").first().should("contain", query);
       });
 
       it("should set value of textbox matching selected item from list", () => {
-        initFilterPanel();
+        FilterRecords.initFilterPanel();
 
-        openProgrammeNameDropdown();
+        FilterRecords.openProgrammeNameDropdown();
         cy.get("mat-option")
           .eq(1)
           .invoke("text")
@@ -345,69 +298,43 @@ describe("Recommendations", () => {
       });
 
       it("should enable both buttons when item selected from list", () => {
-        initFilterPanel();
+        FilterRecords.initFilterPanel();
 
-        openProgrammeNameDropdown();
+        FilterRecords.openProgrammeNameDropdown();
         cy.get("mat-option").eq(1).click();
-        checkButtonsDisabled("not.be.disabled");
+        FilterRecords.checkButtonsDisabled("not.be.disabled");
       });
 
       it("should update summary table displaying trainees with matching programme name only", () => {
-        initFilterPanel();
+        FilterRecords.initFilterPanel();
 
-        openProgrammeNameDropdown();
-        cy.get("mat-option")
-          .eq(1)
-          .invoke("text")
-          .then((value) => {
-            cy.get("mat-option").eq(1).click();
-            submitForm();
-
-            cy.get("td.cdk-column-programmeName").each(($el) => {
-              expect($el.text().trim()).to.equal(value);
-            });
-          });
+        FilterRecords.openProgrammeNameDropdown();
+        FilterRecords.checkSummaryTableIsFiltered();
       });
 
       it("should reset summary table results when 'Clear fliters' button is clicked", () => {
-        initFilterPanel();
-        openProgrammeNameDropdown();
-        cy.get("mat-option").eq(1).click();
-        cy.get(".mat-paginator-range-label")
-          .invoke("text")
-          .then((paginatorText) => {
-            submitForm();
-            cy.get(".mat-paginator-range-label").should(
-              "not.contain",
-              paginatorText
-            );
-            cy.get(
-              "[data-cy='tableFiltersForm'] [data-jasmine='clearFiltersButton']"
-            ).click();
-            cy.get(".mat-paginator-range-label").should(
-              "contain",
-              paginatorText
-            );
-          });
+        FilterRecords.initFilterPanel();
+        FilterRecords.openProgrammeNameDropdown();
+        FilterRecords.resetForm();
       });
     });
 
     describe("Filter by TIS admin", () => {
       it("should display 'TIS admin' filter field", () => {
-        initFilterPanel();
+        FilterRecords.initFilterPanel();
         cy.get("[data-cy='formfield_admin']").should("exist");
       });
 
       it("should display list containing matching options when the text 'clin' is entered in 'programme name' field", () => {
-        initFilterPanel();
-        openTisAdminDropdown();
+        FilterRecords.initFilterPanel();
+        FilterRecords.openTisAdminDropdown();
         cy.get("mat-option").should("have.length.above", 0);
       });
 
       it("should set value of textbox matching selected item from list", () => {
-        initFilterPanel();
+        FilterRecords.initFilterPanel();
 
-        openTisAdminDropdown();
+        FilterRecords.openTisAdminDropdown();
         cy.get("mat-option")
           .eq(1)
           .invoke("text")
@@ -421,15 +348,15 @@ describe("Recommendations", () => {
       });
 
       it("should update summary table displaying trainees with matching TIS admin name only", () => {
-        initFilterPanel();
+        FilterRecords.initFilterPanel();
 
-        openTisAdminDropdown("Steve");
+        FilterRecords.openTisAdminDropdown("Steve");
         cy.get("mat-option")
           .first()
           .invoke("text")
           .then((value) => {
             cy.get("mat-option").first().click();
-            submitForm();
+            FilterRecords.submitForm();
 
             cy.get("td.cdk-column-admin").each(($el) => {
               expect($el.text().trim()).to.equal(value);

@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Store } from "@ngxs/store";
-import { BehaviorSubject, forkJoin, Observable, Subject } from "rxjs";
+import { BehaviorSubject, forkJoin, Observable } from "rxjs";
 import { switchMap, take } from "rxjs/operators";
 
 import {
@@ -36,7 +36,9 @@ import {
   ResetConnectionsSort,
   SortConnections,
   ToggleAllConnectionsCheckboxes,
-  ToggleConnectionsCheckbox
+  ToggleConnectionsCheckbox,
+  SetConnectionsTableFilters,
+  ClearConnectionsTableFilters
 } from "../../connections/state/connections.actions";
 import {
   ClearRecommendationsSearch,
@@ -141,6 +143,8 @@ export class RecordsService {
     this.enableAllocateAdminAction = EnableConnectionsAllocateAdmin;
     this.toggleCheckboxAction = ToggleConnectionsCheckbox;
     this.toggleAllCheckboxesAction = ToggleAllConnectionsCheckboxes;
+    this.setTableFiltersAction = SetConnectionsTableFilters;
+    this.clearTableFiltersAction = ClearConnectionsTableFilters;
   }
 
   public getRecords<T>(endPoint: string, params?: HttpParams): Observable<T> {

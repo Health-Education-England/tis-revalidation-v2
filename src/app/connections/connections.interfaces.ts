@@ -1,4 +1,7 @@
-import { IGetRecordsResponse } from "../records/records.interfaces";
+import {
+  IGetRecordsResponse,
+  ITableFilters
+} from "../records/records.interfaces";
 
 export interface IGetConnectionsResponse extends IGetRecordsResponse {
   connections: IConnection[];
@@ -26,4 +29,8 @@ export enum ConnectionsFilterType {
   DISCREPANCIES = "discrepancies",
   ALL = "all",
   HIDDEN = "hidden"
+}
+
+export interface IConnectionsTableFilters extends ITableFilters {
+  programmeName?: string;
 }

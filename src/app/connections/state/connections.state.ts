@@ -12,6 +12,7 @@ import {
 import {
   ConnectionsFilterType,
   IConnection,
+  IConnectionsTableFilters,
   IGetConnectionsResponse
 } from "../connections.interfaces";
 import { DEFAULT_SORT } from "../../records/constants";
@@ -29,12 +30,15 @@ import {
   GetConnectionsSuccess,
   ResetConnectionsFilter,
   ToggleAllConnectionsCheckboxes,
-  ToggleConnectionsCheckbox
+  ToggleConnectionsCheckbox,
+  SetConnectionsTableFilters,
+  ClearConnectionsTableFilters
 } from "./connections.actions";
 
 export class ConnectionsStateModel extends RecordsStateModel<
   ConnectionsFilterType,
-  IConnection[]
+  IConnection[],
+  IConnectionsTableFilters
 > {
   public filter: ConnectionsFilterType;
   public disableSearchAndSort: boolean;
@@ -161,6 +165,18 @@ export class ConnectionsState extends RecordsState {
   @Action(ResetConnectionsFilter)
   resetFilter(ctx: StateContext<ConnectionsStateModel>) {
     return super.resetFilterHandler(ctx, ConnectionsFilterType.ALL);
+  }
+  @Action(SetConnectionsTableFilters)
+  setRecommendationsTableFilters(
+    ctx: StateContext<ConnectionsStateModel>,
+    action: SetConnectionsTableFilters
+  ) {
+    return super.setTableFiltersHandler(ctx, action);
+  }
+
+  @Action(ClearConnectionsTableFilters)
+  clearRecommendationsTableFilters(ctx: StateContext<ConnectionsStateModel>) {
+    return super.clearTableFiltersHandler(ctx);
   }
 
   @Action(ToggleConnectionsCheckbox)

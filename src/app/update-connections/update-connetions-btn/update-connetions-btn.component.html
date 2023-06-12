@@ -3,13 +3,20 @@
     data-cy="disable-update-connections"
     color="primary"
     mat-icon-button
-    matTooltip="Disable update connections"
+    matTooltip="Close bulk update connections"
     matTooltipPosition="below"
     matTooltipShowDelay="500"
-    aria-label="Disable update connections"
+    aria-label="Close bulk update connections"
     (click)="disableUpdateConnection()"
   >
-    <mat-icon>link_off</mat-icon>
+    <mat-icon class="material-icons-outlined layered-icon base-icon"
+      >library_add_check</mat-icon
+    >
+    <img
+      alt=""
+      src="assets/icons/diagonal_icon_overlay.svg"
+      class="layered-icon base-icon overlay-img"
+    />
   </button>
 </ng-container>
 
@@ -18,12 +25,14 @@
     data-cy="enable-update-connections"
     color="primary"
     mat-icon-button
-    matTooltip="Enable update connections"
+    matTooltip="Bulk update connections"
     matTooltipPosition="below"
     matTooltipShowDelay="500"
-    aria-label="Enable update connections"
+    aria-label="Bulk update connections"
     (click)="enableUpdateConnection()"
   >
-    <mat-icon>link</mat-icon>
+    <mat-icon class="material-icons-outlined layered-icon base-icon"
+      >library_add_check</mat-icon
+    >
   </button>
 </ng-template>

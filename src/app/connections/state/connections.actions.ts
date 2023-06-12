@@ -5,11 +5,13 @@ import {
   PaginatePayload,
   SearchPayload,
   SortPayload,
+  TableFiltersPayload,
   ToggleCheckboxPayload
 } from "../../records/state/records.actions";
 import { HttpErrorPayload } from "../../shared/services/error/error.service";
 import {
   ConnectionsFilterType,
+  IConnectionsTableFilters,
   IGetConnectionsResponse
 } from "../connections.interfaces";
 
@@ -17,9 +19,7 @@ export class GetConnections {
   static readonly type = `[Connections] Get`;
 }
 
-export class GetConnectionsSuccess extends GetSuccessPayload<
-  IGetConnectionsResponse
-> {
+export class GetConnectionsSuccess extends GetSuccessPayload<IGetConnectionsResponse> {
   static readonly type = `[Connections] Get Success`;
 }
 
@@ -49,6 +49,14 @@ export class ConnectionsSearch extends SearchPayload {
 
 export class ClearConnectionsSearch {
   static readonly type = `[Connections] Clear Search`;
+}
+
+export class SetConnectionsTableFilters extends TableFiltersPayload<IConnectionsTableFilters> {
+  static readonly type = `[Connections] Filter Table`;
+}
+
+export class ClearConnectionsTableFilters {
+  static readonly type = `[Connections] Clear Table Filters`;
 }
 
 export class PaginateConnections extends PaginatePayload {

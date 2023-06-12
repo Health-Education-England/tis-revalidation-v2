@@ -6,9 +6,14 @@ import { generateColumnData } from "../records/constants";
 import { RecordsResolver } from "../records/records.resolver";
 import { RecordsService } from "../records/services/records.service";
 import { UpdateConnectionsService } from "../update-connections/services/update-connections.service";
-import { ConnectionsFilterType } from "./connections.interfaces";
+import {
+  ConnectionsFilterType,
+  IConnectionsTableFilters
+} from "./connections.interfaces";
 import { COLUMN_DATA } from "./constants";
-import { stateName } from "../records/records.interfaces";
+import { ITableFilters, stateName } from "../records/records.interfaces";
+import { TABLE_FILTERS_FORM_BASE } from "../connections/constants";
+import { FormControlBase } from "../shared/form-controls/form-contol-base.model";
 @Injectable()
 export class ConnectionsResolver
   extends RecordsResolver
@@ -26,7 +31,7 @@ export class ConnectionsResolver
   private initialiseData(): void {
     this.recordsService.stateName = stateName.CONNECTIONS;
     this.recordsService.detailsRoute = "/connection";
-    this.recordsService.showTableFilters = false;
+    this.recordsService.showTableFilters = true;
     this.recordsService.setConnectionsActions();
     this.recordsService.dateColumns = [
       "submissionDate",
@@ -44,9 +49,35 @@ export class ConnectionsResolver
         name: ConnectionsFilterType.DISCREPANCIES
       }
     ];
+
+    this.recordsService.tableFiltersFormData.next(
+      [...TABLE_FILTERS_FORM_BASE].sort(
+        (a: FormControlBase, b: FormControlBase) => a.order - b.order
+      )
+    );
   }
 
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    const tableFiltersState: ITableFilters = this.store.selectSnapshot(
+      (snapshot) => snapshot.connections.tableFilters
+    );
+    const paramsExist: boolean = Object.keys(route.queryParams).length > 0;
+
+    // The use case for this is when launching Reval from a bookmarked page where querystring parameters
+    // have been set in order to load with filters applied.
+    if (paramsExist && !tableFiltersState) {
+      const filters: IConnectionsTableFilters = {};
+      if (
+        route.queryParams.programmeName !== tableFiltersState?.programmeName
+      ) {
+        filters.programmeName = route.queryParams.programmeName;
+      }
+
+      if (Object.keys(filters).length) {
+        this.recordsService.setTableFilters(filters);
+        this.recordsService.toggleTableFilterPanel$.next(true);
+      }
+    }
     return super.resolve(route);
   }
 }

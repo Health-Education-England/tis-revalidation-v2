@@ -89,8 +89,9 @@ export class ConnectionComponent implements OnInit, OnDestroy {
     this.traineeDetails$.subscribe((trainee) => {
       this.enableUpdateConnection =
         this.authService.isRevalAdmin &&
-        trainee.programmeMembershipType !== "Military" &&
-        trainee.currentGrade !== "Foundation Year 1";
+        trainee.programme !== null &&
+        trainee.programme.programmeMembershipType !== "Military" &&
+        trainee.programme.currentGrade !== "Foundation Year 1";
     });
     this.gmcNumber$.subscribe((res) => (this.gmcNumber = res));
     this.doctorCurrentDbc$.subscribe((res) => (this.doctorCurrentDbc = res));

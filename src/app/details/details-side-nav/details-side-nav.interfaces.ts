@@ -1,12 +1,8 @@
+import { IProgramme } from "src/app/connection/connection.interfaces";
 import { INote } from "../notes-drawer/notes-drawer.interfaces";
+import { IConnection } from "src/app/connections/connections.interfaces";
 export interface IDetailsSideNav {
-  gmcNumber: number;
-  forenames: string;
-  surname: string;
-  curriculumEndDate: string;
-  programmeMembershipType: string;
-  programmeName: string;
-  currentGrade: string;
-  tisPersonId: number;
-  notes?: INote[];
+  programme: IProgramme,
+  notes: INote[],
+  doctor: IConnection
 }

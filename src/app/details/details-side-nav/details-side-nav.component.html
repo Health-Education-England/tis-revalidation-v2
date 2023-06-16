@@ -7,30 +7,41 @@
     <mat-list-item>
       <div class="mat-caption" mat-line>Name:</div>
       <div mat-line>
-        {{ traineeDetails.forenames }} {{ traineeDetails.surname }}
+        {{
+          traineeDetails.programme === null
+            ? traineeDetails.doctor.doctorFirstName traineeDetails.doctor.doctorLastName
+            : traineeDetails.programme.forename traineeDetails.programme.surname
+        }}
       </div>
     </mat-list-item>
     <mat-list-item>
       <div class="mat-caption" mat-line>GMC No:</div>
-      <div mat-line>{{ traineeDetails.gmcNumber }}</div>
+      <div mat-line>        
+      {{
+        traineeDetails.programme === null
+          ? traineeDetails.doctor.gmcReferenceNumber
+          : traineeDetails.programme.gmcNumber
+      }}
+    </div>
     </mat-list-item>
     <mat-list-item>
       <div class="mat-caption" mat-line>Programme membership type:</div>
       <div mat-line>
         {{
-          traineeDetails.programmeMembershipType === null
+          traineeDetails.programme === null
+          || traineeDetails.programme.programmeMembershipType === null
             ? "N/A"
-            : traineeDetails.programmeMembershipType
+            : traineeDetails.programme.programmeMembershipType
         }}
       </div>
     </mat-list-item>
     <mat-list-item>
       <div class="mat-caption" mat-line>Current programme name:</div>
       <div
-        *ngIf="traineeDetails.programmeName; else NoProgramme"
+        *ngIf="traineeDetails.programme || traineeDetails.programme.programmeName; else NoProgramme"
         mat-line
         class="programme-names"
-        [innerHTML]="traineeDetails.programmeName | splitStringToHTML: ' | '"
+        [innerHTML]="traineeDetails.programme.programmeName | splitStringToHTML: ' | '"
       ></div>
       <ng-template #NoProgramme mat-line class="programme-names"
         >N/A</ng-template
@@ -41,9 +52,10 @@
       <div class="mat-caption" mat-line>Current grade:</div>
       <div mat-line>
         {{
-          traineeDetails.currentGrade === null
+          traineeDetails.programme === null
+          || traineeDetails.programme.currentGrade === null
             ? "N/A"
-            : traineeDetails.currentGrade
+            : traineeDetails.programme.currentGrade
         }}
       </div>
     </mat-list-item>
@@ -51,9 +63,10 @@
       <div class="mat-caption" mat-line>Curriculum end date:</div>
       <div mat-line>
         {{
-          traineeDetails.curriculumEndDate === null
+          traineeDetails.programme === null
+          || traineeDetails.programme.curriculumEndDate === null
             ? "N/A"
-            : (traineeDetails.curriculumEndDate | date: dateFormat)
+            : traineeDetails.programme.curriculumEndDate
         }}
       </div>
     </mat-list-item>

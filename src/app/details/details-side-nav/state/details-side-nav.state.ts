@@ -17,15 +17,9 @@ export class DetailsSideNavStateModel {
   name: "traineeDetails",
   defaults: {
     item: {
-      gmcNumber: null,
-      forenames: null,
-      surname: null,
-      curriculumEndDate: null,
-      programmeMembershipType: null,
-      programmeName: null,
-      currentGrade: null,
-      tisPersonId: null,
-      notes: []
+      programme: null,
+      notes: [],
+      doctor: null
     }
   }
 })

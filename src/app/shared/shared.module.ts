@@ -14,12 +14,14 @@ import { MaterialSelectionListComponent } from "./form-controls/material-selecti
 import { MaterialAutocompleteComponent } from "./form-controls/material-autocomplete/material-autocomplete.component";
 import { RemoveWhitespacePipe } from "./pipes/remove-whitespace.pipe";
 import { SplitStringToHTMLPipe } from "./pipes/split-string-to-html.pipe";
+import { FormatDesignatedBodyPipe } from "./pipes/format-designated-body.pipe";
 
 const modulePipes = [
   StripHtmlPipe,
   FileBytesPipe,
   SplitStringToHTMLPipe,
-  RemoveWhitespacePipe
+  RemoveWhitespacePipe,
+  FormatDesignatedBodyPipe
 ];
 @NgModule({
   declarations: [

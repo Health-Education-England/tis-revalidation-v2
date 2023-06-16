@@ -12,8 +12,7 @@ import { ActionType, IAction, IReason } from "../update-connections.interfaces";
 import { UpdateConnectionsService } from "../services/update-connections.service";
 import { Select, Store } from "@ngxs/store";
 import { Router } from "@angular/router";
-import { Get } from "../state/update-connections.actions";
-import { UpdateConnectionsState } from "../state/update-connections.state";
+import { ReferenceState } from "src/app/reference/state/reference.state";
 
 @Component({
   selector: "app-update-connection",
@@ -24,7 +23,7 @@ export class UpdateConnectionComponent implements OnInit {
   @Input() public currentDoctorDbcCode: string;
   @Output() submittFormEvent = new EventEmitter<any>();
 
-  @Select(UpdateConnectionsState.Dbcs)
+  @Select(ReferenceState.Dbcs)
   public dbcs$: Observable<IDesignatedBody[]>;
 
   componentSubscriptions: Subscription[] = [];
@@ -119,7 +118,6 @@ export class UpdateConnectionComponent implements OnInit {
           this.addConnectionSelected = action === ActionType.ADD_CONNECTION;
 
           if (this.addConnectionSelected) {
-            this.store.dispatch(new Get());
             this.dbcControl.setValidators(Validators.required);
             this.updateConnectionForm.addControl("dbc", this.dbcControl);
             this.dbcControl.updateValueAndValidity();

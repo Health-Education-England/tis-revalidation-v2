@@ -1,11 +1,9 @@
-// import { IDesignatedBody } from "src/app/reference/reference.interfaces";
 import { FormatDesignatedBodyPipe } from "./format-designated-body.pipe";
 import { Store, NgxsModule } from "@ngxs/store";
 import { TestBed, waitForAsync } from "@angular/core/testing";
 import { mockDbcs } from "src/app/reference/mock-data/reference-spec.data";
 import { IDesignatedBody } from "src/app/reference/reference.interfaces";
-import { ReferenceState } from "src/app/reference/state/reference.state";
-// import { ReferenceService } from "src/app/reference/services/reference.service";
+
 describe("DbcMapperPipe", () => {
   let store: Store;
   let pipe: FormatDesignatedBodyPipe;

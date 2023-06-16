@@ -120,18 +120,29 @@
                   <!-- cell value | format date -->
 
                   <ng-container
-                    *ngIf="dateColumns.includes(i.name); else noPipe"
+                    *ngIf="dateColumns.includes(i.name); else notDate"
                   >
                     {{ element[i.name] | date: dateFormat }}
                   </ng-container>
                   <!-- cell value | no formatting needed -->
-                  <ng-template #noPipe>
+                  <ng-template #notDate>
                     <div
                       *ngIf="i.name === 'programmeName'; else NotProgramme"
                       [innerHTML]="element[i.name] | splitStringToHTML"
                     ></div>
                     <ng-template #NotProgramme>
-                      {{ element[i.name] }}
+                      <ng-container
+                        *ngIf="
+                          i.name === 'designatedBody' ||
+                            i.name === 'programmeOwner';
+                          else NotDBC
+                        "
+                      >
+                        {{ element[i.name] | formatDesignatedBody: "abbr" }}
+                      </ng-container>
+                      <ng-template #NotDBC>
+                        {{ element[i.name] }}
+                      </ng-template>
                     </ng-template>
                   </ng-template>
                 </ng-template>

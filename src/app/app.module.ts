@@ -7,7 +7,7 @@ import {
   SwRegistrationOptions
 } from "@angular/service-worker";
 import { NgxGoogleAnalyticsModule } from "ngx-google-analytics";
-import { NgxsModule } from "@ngxs/store";
+import { NgxsModule, Store } from "@ngxs/store";
 import { NgxsReduxDevtoolsPluginModule } from "@ngxs/devtools-plugin";
 import { Router } from "@angular/router";
 
@@ -27,6 +27,8 @@ import { errorHandlerFactory } from "./factories/error-handler.factory";
 import { swRegistrationOptionsFactory } from "./factories/sw-registration-options.factory";
 import { NgxHotjarModule } from "ngx-hotjar";
 import { environment } from "@environment";
+import { GetDesignatedBodies } from "./reference/state/reference.actions";
+import { ReferenceState } from "./reference/state/reference.state";
 
 @NgModule({
   declarations: [AppComponent],
@@ -39,7 +41,7 @@ import { environment } from "@environment";
     SharedModule,
     AppRoutingModule,
     ServiceWorkerModule.register("ngsw-worker.js"),
-    NgxsModule.forRoot([]),
+    NgxsModule.forRoot([ReferenceState]),
     NgxGoogleAnalyticsModule.forRoot("G-SWV1NDD37B"),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     MainNavigationModule,
@@ -61,4 +63,8 @@ import { environment } from "@environment";
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private store: Store) {
+    this.store.dispatch(new GetDesignatedBodies());
+  }
+}

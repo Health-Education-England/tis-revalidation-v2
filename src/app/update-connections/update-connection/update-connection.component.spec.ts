@@ -16,6 +16,7 @@ import { ActionType } from "../update-connections.interfaces";
 import { UpdateConnectionsState } from "../state/update-connections.state";
 import { UpdateConnectionsService } from "../services/update-connections.service";
 import { AuthService } from "src/app/core/auth/auth.service";
+import { ReferenceState } from "src/app/reference/state/reference.state";
 
 describe("UpdateConnectionComponent", () => {
   let component: UpdateConnectionComponent;
@@ -37,7 +38,7 @@ describe("UpdateConnectionComponent", () => {
         FormsModule,
         BrowserAnimationsModule,
         SharedModule,
-        NgxsModule.forRoot([UpdateConnectionsState])
+        NgxsModule.forRoot([UpdateConnectionsState, ReferenceState])
       ],
       declarations: [UpdateConnectionComponent],
       providers: [
@@ -63,7 +64,9 @@ describe("UpdateConnectionComponent", () => {
     component.currentDoctorDbcCode = "1-AIIDWT";
     store.reset({
       updateConnections: {
-        enableUpdateConnections: true,
+        enableUpdateConnections: true
+      },
+      reference: {
         dbcs: mockDbcs
       }
     });

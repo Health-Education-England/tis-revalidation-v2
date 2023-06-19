@@ -67,21 +67,6 @@ describe("ConnectionComponent", () => {
     expect(component).toBeTruthy();
   });
 
-  it("should return dbc abbrevation when getDBCAbbrevation is called with dbc code", () => {
-    component.dbcs = mockDbcs;
-    expect(component.getDBCAbbreviation("1-AIIDSA")).toBe("HEEM");
-  });
-
-  it("should return dbc code when getDBCAbbrevation is called with unavailable dbc code", () => {
-    component.dbcs = mockDbcs;
-    expect(component.getDBCAbbreviation("1-RANDOM")).toBe("1-RANDOM");
-  });
-
-  it("should return ''  when getDBCAbbrevation is called with null", () => {
-    component.dbcs = mockDbcs;
-    expect(component.getDBCAbbreviation(null)).toBe("");
-  });
-
   it("should unsubscribe from subscriptions upon `ngOnDestroy()`", () => {
     component.componentSubscription = new Subscription();
     spyOn(component.componentSubscription, "unsubscribe");

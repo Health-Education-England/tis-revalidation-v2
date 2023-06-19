@@ -94,7 +94,6 @@ export class ConnectionComponent implements OnInit, OnDestroy {
     });
     this.gmcNumber$.subscribe((res) => (this.gmcNumber = res));
     this.doctorCurrentDbc$.subscribe((res) => (this.doctorCurrentDbc = res));
-    this.referenceService.getDbcs().subscribe((res) => (this.dbcs = res));
     this.updateConnectionsService.canSave$.next(true);
     this.programmeHistory$.subscribe(
       (res) => (this.programmeOwnerDBC = res[0]?.designatedBodyCode)
@@ -105,10 +104,6 @@ export class ConnectionComponent implements OnInit, OnDestroy {
     if (this.componentSubscription) {
       this.componentSubscription.unsubscribe();
     }
-  }
-
-  getDBCAbbreviation(dbc: string) {
-    return dbc ? this.dbcs.find((d) => d.dbc === dbc)?.abbr || dbc : "";
   }
 
   updateConnection(formValue: any) {

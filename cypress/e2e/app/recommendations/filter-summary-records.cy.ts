@@ -7,10 +7,14 @@ describe("Recommendations", () => {
 
     const formFilters = {
       dbc: [
-        { value: "1-AIIDR8", label: "Kent, Surrey and Sussex" },
-        { value: "1-AIIDVS", label: "North Central and East London" },
-        { value: "1-AIIDWA", label: "North West London" },
-        { value: "1-AIIDWI", label: "South London" }
+        { value: "1-AIIDR8", label: "Kent, Surrey and Sussex", abbr: "HEKSS" },
+        {
+          value: "1-AIIDVS",
+          label: "North Central and East London",
+          abbr: "HENCEL"
+        },
+        { value: "1-AIIDWA", label: "North West London", abbr: "HEWL" },
+        { value: "1-AIIDWI", label: "South London", abbr: "HESL" }
       ],
       gmcStatus: ["Approved", "Rejected", "Under Review"],
       tisStatus: [
@@ -54,17 +58,16 @@ describe("Recommendations", () => {
         cy.get("[data-cy='selectionOption1-AIIDR8']").click();
         FilterRecords.submitForm();
         cy.get("td.cdk-column-designatedBody").each(($el) => {
-          expect($el.text().trim()).to.equal("1-AIIDR8");
+          expect($el.text().trim()).to.equal("HEKSS");
         });
       });
 
       it("should filter summary records list by multiple dbcs when multiple options selected and submitted", () => {
         FilterRecords.initFilterPanel();
-        const selectedDbcs = formFilters.dbc
-          .filter((_, index) => index < 2)
-          .map((item) => item.value);
+        const selectedDbcs = formFilters.dbc.filter((_, index) => index < 2);
+
         selectedDbcs.forEach((dbc) => {
-          const $el = cy.get("[data-cy='selectionOption" + dbc + "']");
+          const $el = cy.get("[data-cy='selectionOption" + dbc.value + "']");
           $el.should("exist");
           $el.click();
         });
@@ -74,7 +77,9 @@ describe("Recommendations", () => {
         FilterRecords.submitForm();
 
         cy.get("td.cdk-column-designatedBody").each(($el) => {
-          expect($el.text().trim()).to.be.oneOf(selectedDbcs);
+          expect($el.text().trim()).to.be.oneOf(
+            selectedDbcs.map((dbc) => dbc.abbr)
+          );
         });
       });
 
@@ -94,7 +99,7 @@ describe("Recommendations", () => {
               expect($el.text().trim()).to.equal(value);
             });
             cy.get("td.cdk-column-designatedBody").each(($el) => {
-              expect($el.text().trim()).to.equal("1-AIIDR8");
+              expect($el.text().trim()).to.equal("HEKSS");
             });
           });
       });
@@ -128,7 +133,7 @@ describe("Recommendations", () => {
 
         cy.get("app-record-list .mat-table").should("exist");
         cy.get("td.cdk-column-designatedBody").each(($el) => {
-          expect($el.text().trim() === "1-AIIDWT").to.be.false;
+          expect($el.text().trim() === "HEEOE").to.be.false;
         });
       });
     });

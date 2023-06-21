@@ -26,10 +26,6 @@
 .icon_nhs_logo.mat-icon {
   width: 100px;
   height: 40px;
-
-  &:hover {
-    box-shadow: 0 0 0 $nhsuk-focus-width $color_shade_nhsuk-blue-35;
-  }
 }
 
 .fill-space {

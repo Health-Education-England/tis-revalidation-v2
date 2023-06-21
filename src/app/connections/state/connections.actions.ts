@@ -17,9 +17,7 @@ export class GetConnections {
   static readonly type = `[Connections] Get`;
 }
 
-export class GetConnectionsSuccess extends GetSuccessPayload<
-  IGetConnectionsResponse
-> {
+export class GetConnectionsSuccess extends GetSuccessPayload<IGetConnectionsResponse> {
   static readonly type = `[Connections] Get Success`;
 }
 
@@ -69,4 +67,8 @@ export class ToggleConnectionsCheckbox extends ToggleCheckboxPayload {
 
 export class ToggleAllConnectionsCheckboxes {
   static readonly type = `[Connections] Toggle All Checkboxes`;
+}
+
+export class ClearConnectionsTableFilters {
+  static readonly type = `[Connections] Clear Table Filters`;
 }

@@ -58,6 +58,10 @@ export class RecordListTableFiltersComponent implements OnInit, OnDestroy {
       );
       this.activeTableFilters && this.form.markAsDirty();
     });
+
+    this.recordsService.onTableFilterFormReset.subscribe(() => {
+      this.form.reset();
+    });
   }
 
   ngOnDestroy(): void {

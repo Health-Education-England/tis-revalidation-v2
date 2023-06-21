@@ -3,6 +3,7 @@
   aria-label="Refresh data"
   [disabled]="enableAllocateAdmin$ | async"
   (click)="refreshData()"
+  [matTooltip]="'Reload data table'"
 >
   <mat-icon>refresh</mat-icon>
 </button>

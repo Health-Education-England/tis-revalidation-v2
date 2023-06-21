@@ -29,6 +29,9 @@ export class RecordsResolver {
       this.checkSearchQuery(route.queryParams, state);
       this.checkFilter(route.queryParams, state);
     } else {
+      this.recordsService.clearTableFilters();
+      this.recordsService.resetTableFiltersForm();
+      this.recordsService.toggleTableFilterPanel$.next(false);
       this.recordsService.resetRecordsState();
       this.recordsService?.enableAllocateAdmin(false);
       this.updateConnectionsService?.enableUpdateConnections(false);
@@ -39,15 +42,18 @@ export class RecordsResolver {
 
   private checkSorting(queryParams: Params, state: any): void {
     if (
-      queryParams.active !== state.sort.active ||
-      queryParams.direction !== state.sort.direction
+      (queryParams.active && queryParams.active !== state.sort.active) ||
+      (queryParams.direction && queryParams.direction !== state.sort.direction)
     ) {
       this.recordsService.sort(queryParams.active, queryParams.direction);
     }
   }
 
   private checkPagination(queryParams: Params, state: any): void {
-    if (Number(queryParams.pageIndex) !== state.pageIndex) {
+    if (
+      queryParams.pageIndex &&
+      Number(queryParams.pageIndex) !== state.pageIndex
+    ) {
       this.recordsService.paginate(Number(queryParams.pageIndex));
     }
   }

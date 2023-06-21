@@ -26,6 +26,7 @@ import {
 } from "../../concerns/state/concerns.actions";
 import {
   ClearConnectionsSearch,
+  ClearConnectionsTableFilters,
   ConnectionsSearch,
   EnableConnectionsAllocateAdmin,
   FilterConnections,
@@ -73,6 +74,7 @@ export class RecordsService {
   public tableFiltersFormData: BehaviorSubject<
     (FormControlBase | AutocompleteControl)[]
   > = new BehaviorSubject([]);
+  public onTableFilterFormReset = new Subject<void>();
 
   // TODO type these
   public clearSearchAction: any;
@@ -141,6 +143,7 @@ export class RecordsService {
     this.enableAllocateAdminAction = EnableConnectionsAllocateAdmin;
     this.toggleCheckboxAction = ToggleConnectionsCheckbox;
     this.toggleAllCheckboxesAction = ToggleAllConnectionsCheckboxes;
+    this.clearTableFiltersAction = ClearConnectionsTableFilters;
   }
 
   public getRecords<T>(endPoint: string, params?: HttpParams): Observable<T> {
@@ -213,6 +216,10 @@ export class RecordsService {
   public resetSort(): Observable<any> {
     this.handleUndefinedAction("resetSortAction");
     return this.store.dispatch(new this.resetSortAction());
+  }
+
+  public resetTableFiltersForm(): void {
+    this.onTableFilterFormReset.next();
   }
 
   public paginate(pageIndex: number): Observable<any> {

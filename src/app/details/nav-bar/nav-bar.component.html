@@ -1,12 +1,28 @@
 <nav mat-tab-nav-bar>
   <a
+    style="margin-top: 5px"
+    color="primary"
+    [matTooltip]="'Show summary records table'"
+    matTooltipPosition="below"
+    matTooltipShowDelay="500"
+    mat-icon-button
+    aria-label="Show summary records table"
+    [queryParams]="{ param: 'exists' }"
+    [routerLink]="'/' + stateName"
+  >
+    <mat-icon class="material-icons-outlined">arrow_back</mat-icon>
+  </a>
+  <mat-divider [vertical]="true"></mat-divider>
+  <a
     mat-tab-link
     *ngFor="let link of navLinks"
     [routerLink]="link.path"
+    [queryParams]="link.params"
     routerLinkActive
     #rla="routerLinkActive"
     [routerLinkActiveOptions]="{ exact: true }"
     [active]="rla.isActive"
+    [fragment]="link.fragment"
   >
     {{ link.label }}
   </a>

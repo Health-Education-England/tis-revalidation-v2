@@ -20,7 +20,6 @@ export class NavBarComponent implements OnInit {
   );
   navLinks: INavLink[] = [];
   summaryRoute: string;
-  queryParams: Params;
   linkLabel: string;
   ngOnInit() {
     this.summaryRoute = this.recordsService.summaryRoute;

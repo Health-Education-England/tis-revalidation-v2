@@ -1,5 +1,7 @@
 <nav mat-tab-nav-bar>
   <a
+    data-jasmine="navBarLink"
+    id="navLinkToList"
     style="text-transform: capitalize"
     mat-tab-link
     [routerLink]="summaryRoute"
@@ -8,6 +10,7 @@
     {{ linkLabel }}
   </a>
   <a
+    data-jasmine="navBarLink"
     mat-tab-link
     *ngFor="let link of navLinks"
     [routerLink]="link.path"

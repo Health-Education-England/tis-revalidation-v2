@@ -3,6 +3,7 @@ import {
   FilterPayload,
   GetSuccessPayload,
   PaginatePayload,
+  QueryParamsPayload,
   SearchPayload,
   SortPayload,
   TableFiltersPayload,
@@ -77,4 +78,8 @@ export class ToggleConnectionsCheckbox extends ToggleCheckboxPayload {
 
 export class ToggleAllConnectionsCheckboxes {
   static readonly type = `[Connections] Toggle All Checkboxes`;
+}
+
+export class UpdateConnectionsQueryParams extends QueryParamsPayload {
+  static readonly type = "[Connections] Update query params";
 }

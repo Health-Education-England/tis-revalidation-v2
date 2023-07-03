@@ -1,7 +1,7 @@
 import { HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "@environment";
-import { Action, State, StateContext } from "@ngxs/store";
+import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { catchError, concatMap, finalize, map, take } from "rxjs/operators";
 import { RecommendationStatus } from "../../recommendation/recommendation-history.interface";
 import { RecordsService } from "../../records/services/records.service";
@@ -34,7 +34,8 @@ import {
   ResetRecommendationsSort,
   SortRecommendations,
   ToggleAllRecommendationsCheckboxes,
-  ToggleRecommendationsCheckbox
+  ToggleRecommendationsCheckbox,
+  UpdateRecommendationsQueryParams
 } from "./recommendations.actions";
 
 export class RecommendationsStateModel extends RecordsStateModel<
@@ -204,5 +205,13 @@ export class RecommendationsState extends RecordsState {
   @Action(ToggleAllRecommendationsCheckboxes)
   toggleAllCheckboxes(ctx: StateContext<RecommendationsStateModel>) {
     return super.toggleAllCheckboxesHandler(ctx);
+  }
+
+  @Action(UpdateRecommendationsQueryParams)
+  updateQueryParams(
+    ctx: StateContext<RecommendationsStateModel>,
+    action: UpdateRecommendationsQueryParams
+  ) {
+    return super.updateQueryParamsHandler(ctx, action.params);
   }
 }

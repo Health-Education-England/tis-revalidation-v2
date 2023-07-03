@@ -1,9 +1,9 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
-import { Router } from "@angular/router";
+import { Router, Params } from "@angular/router";
 import { Store } from "@ngxs/store";
-import { BehaviorSubject, forkJoin, Observable } from "rxjs";
+import { BehaviorSubject, forkJoin, Observable, Subject } from "rxjs";
 import { switchMap, take } from "rxjs/operators";
 
 import {
@@ -38,7 +38,8 @@ import {
   ToggleAllConnectionsCheckboxes,
   ToggleConnectionsCheckbox,
   SetConnectionsTableFilters,
-  ClearConnectionsTableFilters
+  ClearConnectionsTableFilters,
+  UpdateConnectionsQueryParams
 } from "../../connections/state/connections.actions";
 import {
   ClearRecommendationsSearch,
@@ -54,7 +55,8 @@ import {
   ToggleAllRecommendationsCheckboxes,
   ToggleRecommendationsCheckbox,
   SetRecommendationsTableFilters,
-  ClearRecommendationsTableFilters
+  ClearRecommendationsTableFilters,
+  UpdateRecommendationsQueryParams
 } from "../../recommendations/state/recommendations.actions";
 import { IFilter, IRecordDataCell, ITableFilters } from "../records.interfaces";
 
@@ -92,6 +94,7 @@ export class RecordsService {
   public toggleAllCheckboxesAction: any;
   public setTableFiltersAction: any;
   public clearTableFiltersAction: any;
+  public updateQueryParamsAction: any;
 
   constructor(
     private http: HttpClient,
@@ -114,6 +117,7 @@ export class RecordsService {
     this.toggleAllCheckboxesAction = ToggleAllRecommendationsCheckboxes;
     this.setTableFiltersAction = SetRecommendationsTableFilters;
     this.clearTableFiltersAction = ClearRecommendationsTableFilters;
+    this.updateQueryParamsAction = UpdateRecommendationsQueryParams;
   }
 
   public setConcernsActions(): void {
@@ -146,6 +150,7 @@ export class RecordsService {
     this.toggleAllCheckboxesAction = ToggleAllConnectionsCheckboxes;
     this.setTableFiltersAction = SetConnectionsTableFilters;
     this.clearTableFiltersAction = ClearConnectionsTableFilters;
+    this.updateQueryParamsAction = UpdateConnectionsQueryParams;
   }
 
   public getRecords<T>(endPoint: string, params?: HttpParams): Observable<T> {
@@ -312,5 +317,10 @@ export class RecordsService {
       );
     });
     return new FormGroup(group);
+  }
+
+  public updateQueryParams(params: Params): Observable<any> {
+    this.handleUndefinedAction("updateQueryParams");
+    return this.store.dispatch(new this.updateQueryParamsAction(params));
   }
 }

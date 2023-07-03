@@ -1,5 +1,5 @@
 import { SortDirection } from "@angular/material/sort/sort-direction";
-
+import { Params } from "@angular/router";
 export class GetSuccessPayload<T> {
   constructor(public response: T) {}
 }
@@ -29,4 +29,8 @@ export class EnableAllocateAdminPayload {
 
 export class ToggleCheckboxPayload {
   constructor(public gmcReferenceNumber: string) {}
+}
+
+export class QueryParamsPayload {
+  constructor(public params: Params) {}
 }

@@ -1,3 +1,4 @@
+import { Params } from "@angular/router";
 import {
   EnableAllocateAdminPayload,
   FilterPayload,
@@ -6,7 +7,8 @@ import {
   SearchPayload,
   SortPayload,
   ToggleCheckboxPayload,
-  TableFiltersPayload
+  TableFiltersPayload,
+  QueryParamsPayload
 } from "../../records/state/records.actions";
 import { HttpErrorPayload } from "../../shared/services/error/error.service";
 import {
@@ -77,4 +79,8 @@ export class ToggleRecommendationsCheckbox extends ToggleCheckboxPayload {
 
 export class ToggleAllRecommendationsCheckboxes {
   static readonly type = `[Recommendations] Toggle All Checkboxes`;
+}
+
+export class UpdateRecommendationsQueryParams extends QueryParamsPayload {
+  static readonly type = "[Recommendations] Update query params";
 }

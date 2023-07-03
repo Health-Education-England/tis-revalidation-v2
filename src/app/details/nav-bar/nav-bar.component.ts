@@ -1,8 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Params } from "@angular/router";
 import { INavLink } from "../details.interfaces";
 import { RecordsService } from "src/app/records/services/records.service";
 import { Store } from "@ngxs/store";
+import { Observable, Subscription } from "rxjs";
 @Component({
   selector: "app-nav-bar",
   templateUrl: "./nav-bar.component.html"
@@ -14,8 +15,12 @@ export class NavBarComponent implements OnInit {
     private store: Store
   ) {}
 
+  public queryParams$: Observable<Params> = this.store.select(
+    (state) => state[this.recordsService.stateName].queryParams
+  );
   navLinks: INavLink[] = [];
   summaryRoute: string;
+  queryParams: Params;
   linkLabel: string;
   ngOnInit() {
     this.summaryRoute = this.recordsService.summaryRoute;

@@ -15,6 +15,7 @@
     #rla="routerLinkActive"
     [routerLinkActiveOptions]="{ exact: true }"
     [active]="rla.isActive"
+    [queryParams]="link.params || null"
   >
     {{ link.label }}
   </a>

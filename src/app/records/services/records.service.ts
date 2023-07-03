@@ -65,6 +65,7 @@ import { IFilter, IRecordDataCell, ITableFilters } from "../records.interfaces";
 })
 export class RecordsService {
   public resetSearchForm$: BehaviorSubject<boolean> = new BehaviorSubject(null);
+  public onTableFilterFormReset = new Subject<void>();
   public toggleTableFilterPanel$: BehaviorSubject<boolean> =
     new BehaviorSubject(false);
 
@@ -180,6 +181,9 @@ export class RecordsService {
    * which is great for performance.
    */
 
+  public resetTableFiltersForm(): void {
+    this.onTableFilterFormReset.next();
+  }
   private buildQueryParamsForRoute() {
     const snapshot: any = this.store.snapshot()[this.stateName];
     const params = {

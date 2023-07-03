@@ -1,7 +1,7 @@
 import { HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "@environment";
-import { Action, Selector, State, StateContext } from "@ngxs/store";
+import { Action, State, StateContext } from "@ngxs/store";
 import { catchError, concatMap, finalize, map, take } from "rxjs/operators";
 import { RecommendationStatus } from "../../recommendation/recommendation-history.interface";
 import { RecordsService } from "../../records/services/records.service";

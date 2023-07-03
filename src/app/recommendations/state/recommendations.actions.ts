@@ -1,4 +1,3 @@
-import { Params } from "@angular/router";
 import {
   EnableAllocateAdminPayload,
   FilterPayload,

@@ -3,7 +3,7 @@ import { ActivatedRoute, Params } from "@angular/router";
 import { INavLink } from "../details.interfaces";
 import { RecordsService } from "src/app/records/services/records.service";
 import { Store } from "@ngxs/store";
-import { Observable, Subscription } from "rxjs";
+import { Observable } from "rxjs";
 @Component({
   selector: "app-nav-bar",
   templateUrl: "./nav-bar.component.html"

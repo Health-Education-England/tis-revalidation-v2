@@ -1,5 +1,13 @@
 <nav mat-tab-nav-bar>
   <a
+    style="text-transform: capitalize"
+    mat-tab-link
+    [routerLink]="summaryRoute"
+    [queryParams]="queryParams$ | async"
+  >
+    {{ linkLabel }}
+  </a>
+  <a
     mat-tab-link
     *ngFor="let link of navLinks"
     [routerLink]="link.path"

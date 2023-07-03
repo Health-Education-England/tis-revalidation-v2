@@ -70,6 +70,7 @@ export class RecordsService {
   public dateColumns: string[];
   public columnData: IRecordDataCell[];
   public detailsRoute: string;
+  public summaryRoute: string;
   public filters: IFilter[];
   public showTableFilters: boolean;
   public tableFiltersFormData: BehaviorSubject<

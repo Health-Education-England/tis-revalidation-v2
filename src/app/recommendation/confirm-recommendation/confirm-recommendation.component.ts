@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Select, Store } from "@ngxs/store";
 import { Observable, of } from "rxjs";
@@ -19,7 +19,7 @@ import { RecommendationHistoryState } from "../state/recommendation-history.stat
   templateUrl: "./confirm-recommendation.component.html"
 })
 export class ConfirmRecommendationComponent implements OnInit {
-  public form: FormGroup;
+  public form: UntypedFormGroup;
   public gmcNumber: number;
   public recommendationId: string;
   public recommendationType = RecommendationType;
@@ -39,7 +39,7 @@ export class ConfirmRecommendationComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private router: Router,
     private store: Store,
     private snackBarService: SnackBarService,

@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import {
-  FormGroup,
-  FormControl,
-  FormArray,
+  UntypedFormGroup,
+  UntypedFormControl,
+  UntypedFormArray,
   AbstractControl
 } from "@angular/forms";
 import { BehaviorSubject } from "rxjs";
@@ -18,7 +18,7 @@ import { BehaviorSubject } from "rxjs";
  * Add delete comment formControls from tool-bar UI
  */
 export class CommentsService {
-  comments: FormArray;
+  comments: UntypedFormArray;
   filteredControls: AbstractControl[];
   partialSelection$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   allSelected$: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -30,9 +30,9 @@ export class CommentsService {
   constructor() {}
 
   addCommentControl(commentText?: string): void {
-    const commentControl = new FormGroup({
-      comment: new FormControl(commentText ? this.convertPlainText(commentText) : ""),
-      checkbox: new FormControl(false)
+    const commentControl = new UntypedFormGroup({
+      comment: new UntypedFormControl(commentText ? this.convertPlainText(commentText) : ""),
+      checkbox: new UntypedFormControl(false)
     });
     this.comments.push(commentControl);
     commentControl.controls.checkbox.valueChanges.subscribe(() => {
@@ -61,13 +61,13 @@ export class CommentsService {
   }
 
   selectAllComments(val: any) {
-    this.comments.controls.forEach((commentControl: FormGroup) => {
+    this.comments.controls.forEach((commentControl: UntypedFormGroup) => {
       const checkbox = commentControl.controls.checkbox;
       checkbox.setValue(val);
     });
   }
 
-  filterControls(commentControl: FormGroup) {
+  filterControls(commentControl: UntypedFormGroup) {
     const checkbox = commentControl.controls.checkbox;
     return checkbox.value === true;
   }

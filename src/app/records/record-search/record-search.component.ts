@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
 import { Store } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
 import { filter, take } from "rxjs/operators";
@@ -39,7 +39,7 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
   public searchQuery: string;
   public isRevalAdmin: boolean;
   public isConnectionsSummary: boolean;
-  public form: FormGroup;
+  public form: UntypedFormGroup;
   public subscriptions: Subscription = new Subscription();
   showTableFilters: boolean;
   filterPanelOpen: boolean = false;
@@ -48,7 +48,7 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
   @ViewChild("ngForm") public ngForm;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private store: Store,
     private recordsService: RecordsService,
     private updateConnectionsService: UpdateConnectionsService,

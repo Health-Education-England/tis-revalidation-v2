@@ -270,9 +270,10 @@
       }
     }
   },
-  "defaultProject": "revalidation",
   "cli": {
     "analytics": "c8073553-0f3f-427d-b173-63b07df298c0",
-    "defaultCollection": "@angular-eslint/schematics"
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }

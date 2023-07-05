@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { Observable, Subscription } from "rxjs";
 import { AuthService } from "src/app/core/auth/auth.service";
@@ -27,10 +27,10 @@ export class UpdateConnectionComponent implements OnInit {
   public dbcs$: Observable<IDesignatedBody[]>;
 
   componentSubscriptions: Subscription[] = [];
-  updateConnectionForm: FormGroup;
-  actionControl: FormControl;
-  reasonControl: FormControl;
-  dbcControl: FormControl;
+  updateConnectionForm: UntypedFormGroup;
+  actionControl: UntypedFormControl;
+  reasonControl: UntypedFormControl;
+  dbcControl: UntypedFormControl;
 
   dbcs: IDesignatedBody[] = [];
   userDbcs: IDesignatedBody[] = [];
@@ -102,11 +102,11 @@ export class UpdateConnectionComponent implements OnInit {
   }
 
   private bindFormControl() {
-    this.updateConnectionForm = new FormGroup({});
+    this.updateConnectionForm = new UntypedFormGroup({});
 
-    this.actionControl = new FormControl(null, Validators.required);
-    this.reasonControl = new FormControl(null, Validators.required);
-    this.dbcControl = new FormControl(null, Validators.required);
+    this.actionControl = new UntypedFormControl(null, Validators.required);
+    this.reasonControl = new UntypedFormControl(null, Validators.required);
+    this.dbcControl = new UntypedFormControl(null, Validators.required);
 
     this.subscribeToActions();
   }

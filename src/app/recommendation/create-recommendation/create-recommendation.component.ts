@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Select, Store } from "@ngxs/store";
 import { Observable, of, Subscription } from "rxjs";
@@ -48,11 +48,11 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
   gmcNumber: number;
   gmcSubmissionDate: Date;
 
-  recommendationForm: FormGroup;
-  action: FormControl;
-  deferralDate: FormControl;
-  deferralReason: FormControl;
-  deferralSubReason: FormControl;
+  recommendationForm: UntypedFormGroup;
+  action: UntypedFormControl;
+  deferralDate: UntypedFormControl;
+  deferralReason: UntypedFormControl;
+  deferralSubReason: UntypedFormControl;
   @ViewChild(CommentsComponent) appComments: CommentsComponent;
   minReferralDate: Date;
   maxReferralDate: Date;
@@ -208,7 +208,7 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
   }
 
   private bindFormControl(): void {
-    this.recommendationForm = new FormGroup({});
+    this.recommendationForm = new UntypedFormGroup({});
     this.setMinMaxDeferralDates();
     this.createVariableControls();
     this.subscribeToActions();
@@ -235,17 +235,17 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
    * bind show sub reasons based on reason data selected
    */
   private createVariableControls(): void {
-    this.deferralReason = new FormControl(
+    this.deferralReason = new UntypedFormControl(
       this.recommendation.deferralReason,
       Validators.required
     );
 
-    this.deferralSubReason = new FormControl(
+    this.deferralSubReason = new UntypedFormControl(
       this.recommendation.deferralSubReason,
       Validators.required
     );
 
-    this.deferralDate = new FormControl(
+    this.deferralDate = new UntypedFormControl(
       this.recommendation.deferralDate,
       Validators.required
     );
@@ -302,7 +302,7 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
    * enable disable all comments tick box in tool-bar // TODO: revise with users
    */
   private subscribeToActions(): void {
-    this.action = new FormControl(
+    this.action = new UntypedFormControl(
       this.recommendation.recommendationType,
       Validators.required
     );

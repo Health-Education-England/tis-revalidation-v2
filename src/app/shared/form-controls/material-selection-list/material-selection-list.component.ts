@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core";
-import { FormGroup } from "@angular/forms";
+import { UntypedFormGroup } from "@angular/forms";
 import { FormControlBase } from "../form-contol-base.model";
 
 @Component({
@@ -8,5 +8,5 @@ import { FormControlBase } from "../form-contol-base.model";
 })
 export class MaterialSelectionListComponent {
   @Input() controlProperties!: FormControlBase;
-  @Input() form!: FormGroup;
+  @Input() form!: UntypedFormGroup;
 }

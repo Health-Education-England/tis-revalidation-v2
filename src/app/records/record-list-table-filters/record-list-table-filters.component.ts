@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { FormGroup } from "@angular/forms";
+import { UntypedFormGroup } from "@angular/forms";
 import { Store } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
 import {
@@ -17,7 +17,7 @@ import { RecordsService } from "../services/records.service";
 export class RecordListTableFiltersComponent implements OnInit, OnDestroy {
   activeTableFilters: ITableFilters;
   formControls: (FormControlBase | AutocompleteControl)[] = [];
-  form!: FormGroup;
+  form!: UntypedFormGroup;
   subscriptions: Subscription = new Subscription();
   constructor(private recordsService: RecordsService, private store: Store) {}
   public tableFilters$: Observable<any> = this.store.select(

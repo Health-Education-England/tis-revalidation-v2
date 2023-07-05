@@ -6,7 +6,7 @@ import { DetailsSideNavState } from "../details-side-nav/state/details-side-nav.
 import { Observable } from "rxjs";
 import { IDetailsSideNav } from "../details-side-nav/details-side-nav.interfaces";
 import { AuthService } from "src/app/core/auth/auth.service";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
 import { DetailsSideNavService } from "../details-side-nav/service/details-side-nav.service";
 import { AddNote } from "../details-side-nav/state/details-side-nav.actions";
 import { ActivatedRoute } from "@angular/router";
@@ -20,7 +20,7 @@ export class NotesDrawerComponent implements OnInit {
   showAddNote: boolean;
   isAdmin: boolean;
   note: INote;
-  newNoteForm: FormGroup;
+  newNoteForm: UntypedFormGroup;
   gmcNumber: number;
 
   @Select(NotesDrawerState.drawerStatus) isOpen$: Observable<boolean>;
@@ -57,8 +57,8 @@ export class NotesDrawerComponent implements OnInit {
   ngOnInit(): void {
     this.showAddNote = false;
     this.isAdmin = this.authService.isRevalAdmin;
-    this.newNoteForm = new FormGroup({
-      noteText: new FormControl("", [Validators.required])
+    this.newNoteForm = new UntypedFormGroup({
+      noteText: new UntypedFormControl("", [Validators.required])
     });
     this.gmcNumber = Number(this.activatedRoute.snapshot.params.gmcNumber);
   }

@@ -1,5 +1,16 @@
 <nav mat-tab-nav-bar>
   <a
+    data-jasmine="navBarLink"
+    id="navLinkToList"
+    style="text-transform: capitalize"
+    mat-tab-link
+    [routerLink]="summaryRoute"
+    [queryParams]="queryParams$ | async"
+  >
+    {{ linkLabel }}
+  </a>
+  <a
+    data-jasmine="navBarLink"
     mat-tab-link
     *ngFor="let link of navLinks"
     [routerLink]="link.path"
@@ -7,6 +18,7 @@
     #rla="routerLinkActive"
     [routerLinkActiveOptions]="{ exact: true }"
     [active]="rla.isActive"
+    [queryParams]="link.params || null"
   >
     {{ link.label }}
   </a>

@@ -10,6 +10,7 @@ import { MaterialModule } from "../shared/material/material.module";
 import { ConnectionState } from "./state/connection.state";
 import { Get } from "./state/connection.actions";
 import { mockConnectionResponse } from "./mock-data/conneciton-details-spec-data";
+import { RecordsService } from "../records/services/records.service";
 
 @Component({
   template: `blank`
@@ -20,6 +21,7 @@ describe("ConnectionResolver", () => {
   let router: Router;
   let store: Store;
   let resolver: ConnectionResolver;
+  let service: RecordsService;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -34,8 +36,9 @@ describe("ConnectionResolver", () => {
     }).compileComponents();
 
     store = TestBed.inject(Store);
+    service = TestBed.inject(RecordsService);
     router = TestBed.inject(Router);
-    resolver = new ConnectionResolver(store, router);
+    resolver = new ConnectionResolver(store, router, service);
   }));
 
   it("should create an instance", () => {

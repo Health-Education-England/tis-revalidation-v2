@@ -18,7 +18,9 @@ export class RecordsResolver {
    * Then invoke api and fetch data
    * @param route ActivatedRouteSnapshot
    */
+
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    this.recordsService.updateQueryParams(route.queryParams);
     const paramsExist: boolean = Object.keys(route.queryParams).length > 0;
     if (paramsExist) {
       const state: any = this.store.selectSnapshot(

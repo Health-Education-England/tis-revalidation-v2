@@ -32,7 +32,8 @@ import {
   ToggleAllConnectionsCheckboxes,
   ToggleConnectionsCheckbox,
   SetConnectionsTableFilters,
-  ClearConnectionsTableFilters
+  ClearConnectionsTableFilters,
+  UpdateConnectionsQueryParams
 } from "./connections.actions";
 
 export class ConnectionsStateModel extends RecordsStateModel<
@@ -190,5 +191,13 @@ export class ConnectionsState extends RecordsState {
   @Action(ToggleAllConnectionsCheckboxes)
   toggleAllCheckboxes(ctx: StateContext<ConnectionsStateModel>) {
     return super.toggleAllCheckboxesHandler(ctx);
+  }
+
+  @Action(UpdateConnectionsQueryParams)
+  updateQueryParams(
+    ctx: StateContext<ConnectionsStateModel>,
+    action: UpdateConnectionsQueryParams
+  ) {
+    return super.updateQueryParamsHandler(ctx, action.params);
   }
 }

@@ -5,7 +5,7 @@ import { patch, updateItem } from "@ngxs/store/operators";
 import { DEFAULT_SORT } from "../constants";
 import { ITotalCounts } from "../records.interfaces";
 import { RecordsService } from "../services/records.service";
-
+import { Params } from "@angular/router";
 export class RecordsStateModel<T, F, T2 = {}> {
   public allChecked: boolean;
   public enableAllocateAdmin?: boolean;
@@ -21,6 +21,7 @@ export class RecordsStateModel<T, F, T2 = {}> {
   public totalResults: number;
   public totalCounts: ITotalCounts;
   public tableFilters: T2;
+  public queryParams: Params;
 }
 
 export const defaultRecordsState = {
@@ -34,7 +35,8 @@ export const defaultRecordsState = {
   totalPages: null,
   totalResults: null,
   totalCounts: null,
-  tableFilters: null
+  tableFilters: null,
+  queryParams: null
 };
 
 export class RecordsState {
@@ -206,6 +208,12 @@ export class RecordsState {
   protected enableAllocateAdminHandler(ctx: StateContext<any>, action: any) {
     ctx.patchState({
       enableAllocateAdmin: action
+    });
+  }
+
+  protected updateQueryParamsHandler(ctx: StateContext<any>, action: any) {
+    ctx.patchState({
+      queryParams: action
     });
   }
 

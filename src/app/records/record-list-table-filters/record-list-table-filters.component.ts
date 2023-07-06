@@ -50,6 +50,9 @@ export class RecordListTableFiltersComponent implements OnInit, OnDestroy {
       }
     });
 
+    this.recordsService.onTableFilterFormReset.subscribe(() => {
+      this.form.reset();
+    });
     this.recordsService.tableFiltersFormData.subscribe((formData) => {
       this.formControls = formData;
       this.form = this.recordsService.toFormGroup(

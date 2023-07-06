@@ -8,6 +8,7 @@ import { RecommendationHistoryState } from "./state/recommendation-history.state
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { RecommendationNotesState } from "./state/recommendation-notes.state";
 import { MaterialModule } from "../shared/material/material.module";
+import { RecordsService } from "../records/services/records.service";
 
 @Component({
   template: `blank`
@@ -17,6 +18,7 @@ export class BlankComponent {}
 describe("RecommendationResolver", () => {
   let router: Router;
   let store: Store;
+  let service: RecordsService;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -30,11 +32,12 @@ describe("RecommendationResolver", () => {
         ])
       ]
     }).compileComponents();
+    service = TestBed.inject(RecordsService);
     store = TestBed.inject(Store);
     router = TestBed.inject(Router);
   }));
 
   it("should create an instance", () => {
-    expect(new RecommendationResolver(store, router)).toBeTruthy();
+    expect(new RecommendationResolver(store, router, service)).toBeTruthy();
   });
 });

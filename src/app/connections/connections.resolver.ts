@@ -63,9 +63,7 @@ export class ConnectionsResolver
     );
     const paramsExist: boolean = Object.keys(route.queryParams).length > 0;
 
-    // The use case for this is when launching Reval from a bookmarked page where querystring parameters
-    // have been set in order to load with filters applied.
-    if (paramsExist && !tableFiltersState) {
+    if (paramsExist) {
       const filters: IConnectionsTableFilters = {};
       if (
         route.queryParams.programmeName !== tableFiltersState?.programmeName
@@ -77,6 +75,10 @@ export class ConnectionsResolver
         this.recordsService.setTableFilters(filters);
         this.recordsService.toggleTableFilterPanel$.next(true);
       }
+    } else {
+      this.recordsService.clearTableFilters();
+      this.recordsService.toggleTableFilterPanel$.next(false);
+      this.recordsService.resetTableFiltersForm();
     }
     return super.resolve(route);
   }

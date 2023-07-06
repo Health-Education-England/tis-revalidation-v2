@@ -34,7 +34,8 @@ import {
   ResetRecommendationsSort,
   SortRecommendations,
   ToggleAllRecommendationsCheckboxes,
-  ToggleRecommendationsCheckbox
+  ToggleRecommendationsCheckbox,
+  UpdateRecommendationsQueryParams
 } from "./recommendations.actions";
 
 export class RecommendationsStateModel extends RecordsStateModel<
@@ -204,5 +205,13 @@ export class RecommendationsState extends RecordsState {
   @Action(ToggleAllRecommendationsCheckboxes)
   toggleAllCheckboxes(ctx: StateContext<RecommendationsStateModel>) {
     return super.toggleAllCheckboxesHandler(ctx);
+  }
+
+  @Action(UpdateRecommendationsQueryParams)
+  updateQueryParams(
+    ctx: StateContext<RecommendationsStateModel>,
+    action: UpdateRecommendationsQueryParams
+  ) {
+    return super.updateQueryParamsHandler(ctx, action.params);
   }
 }

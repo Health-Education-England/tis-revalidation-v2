@@ -17,6 +17,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "stylePreprocessorOptions": {
+              "includePaths": ["./node_modules"]
+            },
             "allowedCommonJsDependencies": [
               "@aws-amplify/auth",
               "@aws-amplify/core",
@@ -272,8 +275,6 @@
   },
   "cli": {
     "analytics": "c8073553-0f3f-427d-b173-63b07df298c0",
-    "schematicCollections": [
-      "@angular-eslint/schematics"
-    ]
+    "schematicCollections": ["@angular-eslint/schematics"]
   }
 }

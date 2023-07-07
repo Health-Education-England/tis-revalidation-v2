@@ -110,24 +110,17 @@ export class RecommendationsResolver
     const paramsExist: boolean = Object.keys(route.queryParams).length > 0;
     if (paramsExist) {
       const filters: IRecommendationsTableFilters = {};
-      if (
-        route.queryParams.programmeName !== tableFiltersState?.programmeName
-      ) {
-        filters.programmeName = route.queryParams.programmeName;
-      }
-      if (route.queryParams.dbcs !== tableFiltersState?.dbcs) {
-        filters.dbcs = route.queryParams.dbcs?.split(",");
-      }
-      if (route.queryParams.gmcStatus !== tableFiltersState?.gmcStatus) {
-        filters.gmcStatus = route.queryParams.gmcStatus?.split(",");
-      }
-      if (route.queryParams.tisStatus !== tableFiltersState?.tisStatus) {
-        filters.tisStatus = route.queryParams.tisStatus?.split(",");
-      }
 
-      if (route.queryParams.admin !== tableFiltersState?.admin) {
-        filters.admin = route.queryParams.admin;
-      }
+      filters.programmeName =
+        tableFiltersState?.programmeName || route.queryParams.programmeName;
+      filters.dbcs =
+        tableFiltersState?.dbcs || route.queryParams.dbcs?.split(",");
+      filters.gmcStatus =
+        tableFiltersState?.gmcStatus || route.queryParams.gmcStatus?.split(",");
+      filters.tisStatus =
+        tableFiltersState?.tisStatus || route.queryParams.tisStatus?.split(",");
+      filters.admin = tableFiltersState?.admin || route.queryParams.admin;
+
       if (Object.keys(filters).length) {
         this.recordsService.setTableFilters(filters);
         this.recordsService.toggleTableFilterPanel$.next(true);

@@ -65,11 +65,9 @@ export class ConnectionsResolver
 
     if (paramsExist) {
       const filters: IConnectionsTableFilters = {};
-      if (
-        route.queryParams.programmeName !== tableFiltersState?.programmeName
-      ) {
-        filters.programmeName = route.queryParams.programmeName;
-      }
+
+      filters.programmeName =
+        tableFiltersState?.programmeName || route.queryParams.programmeName;
 
       if (Object.keys(filters).length) {
         this.recordsService.setTableFilters(filters);

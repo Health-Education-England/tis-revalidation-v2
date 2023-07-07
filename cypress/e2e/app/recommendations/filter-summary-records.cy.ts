@@ -369,5 +369,20 @@ describe("Recommendations", () => {
           });
       });
     });
+
+    describe("Filters persist", () => {
+      it("should display the filters applied when navigating to details page and back", () => {
+        FilterRecords.initFilterPanel();
+        FilterRecords.openProgrammeNameDropdown("General");
+        FilterRecords.submitForm();
+        cy.get(".mat-table tr:nth-child(2)").click();
+        cy.get("app-nav-bar").should("exist");
+        cy.get("#navLinkToList").should("exist").click();
+        cy.get("[data-cy='formfield_programmeName'] input").should(
+          "have.value",
+          "General"
+        );
+      });
+    });
   });
 });

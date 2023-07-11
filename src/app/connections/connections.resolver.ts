@@ -58,25 +58,33 @@ export class ConnectionsResolver
   }
 
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const tableFiltersState: ITableFilters = this.store.selectSnapshot(
-      (snapshot) => snapshot.connections.tableFilters
+    const tableFiltersState: IConnectionsTableFilters =
+      this.store.selectSnapshot(
+        (snapshot) => snapshot.connections.tableFilters
+      );
+
+    const filterParamsExists = Object.keys(route.queryParams).some((param) =>
+      TABLE_FILTERS_FORM_BASE.map((tableFilter) => tableFilter.key).includes(
+        param
+      )
     );
-    const paramsExist: boolean = Object.keys(route.queryParams).length > 0;
 
-    if (paramsExist) {
-      const filters: IConnectionsTableFilters = {};
-
-      filters.programmeName =
-        tableFiltersState?.programmeName || route.queryParams.programmeName;
-
-      if (Object.keys(filters).length) {
-        this.recordsService.setTableFilters(filters);
-        this.recordsService.toggleTableFilterPanel$.next(true);
-      }
-    } else {
+    if (tableFiltersState && !filterParamsExists) {
       this.recordsService.clearTableFilters();
       this.recordsService.toggleTableFilterPanel$.next(false);
       this.recordsService.resetTableFiltersForm();
+    } else {
+      const filters: IConnectionsTableFilters = {};
+      TABLE_FILTERS_FORM_BASE.forEach((filter) => {
+        filters[filter.key] = filter.options
+          ? route.queryParams[filter.key]?.split(",")
+          : route.queryParams[filter.key];
+      });
+
+      if (Object.values(filters).some((filter) => filter)) {
+        this.recordsService.setTableFilters(filters);
+        this.recordsService.toggleTableFilterPanel$.next(true);
+      }
     }
     return super.resolve(route);
   }

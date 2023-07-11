@@ -104,32 +104,35 @@ export class RecommendationsResolver
   }
 
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const tableFiltersState: ITableFilters = this.store.selectSnapshot(
-      (snapshot) => snapshot.recommendations.tableFilters
+    const tableFiltersState: IRecommendationsTableFilters =
+      this.store.selectSnapshot(
+        (snapshot) => snapshot.recommendations.tableFilters
+      );
+
+    const filterParamsExists = Object.keys(route.queryParams).some((param) =>
+      TABLE_FILTERS_FORM_BASE.map((tableFilter) => tableFilter.key).includes(
+        param
+      )
     );
-    const paramsExist: boolean = Object.keys(route.queryParams).length > 0;
-    if (paramsExist) {
-      const filters: IRecommendationsTableFilters = {};
 
-      filters.programmeName =
-        tableFiltersState?.programmeName || route.queryParams.programmeName;
-      filters.dbcs =
-        tableFiltersState?.dbcs || route.queryParams.dbcs?.split(",");
-      filters.gmcStatus =
-        tableFiltersState?.gmcStatus || route.queryParams.gmcStatus?.split(",");
-      filters.tisStatus =
-        tableFiltersState?.tisStatus || route.queryParams.tisStatus?.split(",");
-      filters.admin = tableFiltersState?.admin || route.queryParams.admin;
-
-      if (Object.keys(filters).length) {
-        this.recordsService.setTableFilters(filters);
-        this.recordsService.toggleTableFilterPanel$.next(true);
-      }
-    } else {
+    if (tableFiltersState && !filterParamsExists) {
       this.recordsService.clearTableFilters();
       this.recordsService.toggleTableFilterPanel$.next(false);
       this.recordsService.resetTableFiltersForm();
+    } else {
+      const filters: IRecommendationsTableFilters = {};
+      TABLE_FILTERS_FORM_BASE.forEach((filter) => {
+        filters[filter.key] = filter.options
+          ? route.queryParams[filter.key]?.split(",")
+          : route.queryParams[filter.key];
+      });
+
+      if (Object.values(filters).some((filter) => filter)) {
+        this.recordsService.setTableFilters(filters);
+        this.recordsService.toggleTableFilterPanel$.next(true);
+      }
     }
+
     return super.resolve(route);
   }
 }

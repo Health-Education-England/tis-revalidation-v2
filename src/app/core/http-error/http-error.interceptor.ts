@@ -7,15 +7,17 @@ import {
 } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, of, throwError } from "rxjs";
-import { catchError } from "rxjs/operators";
+import { catchError, tap } from "rxjs/operators";
 import { ErrorService } from "../../shared/services/error/error.service";
 import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
+import { Router } from "@angular/router";
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
   constructor(
     private snackBarService: SnackBarService,
-    private errorService: ErrorService
+    private errorService: ErrorService,
+    private router: Router
   ) {}
 
   intercept(
@@ -24,9 +26,13 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
+        if (error instanceof HttpErrorResponse) {
+          if (error.status === 404) {
+            this.router.navigateByUrl("/404");
+          }
+        }
         const message: string = this.errorService.generateErrorMsg(error);
         this.snackBarService.openSnackBar(message);
-
         return throwError(message);
       })
     );

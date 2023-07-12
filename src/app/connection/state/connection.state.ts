@@ -58,7 +58,7 @@ export class ConnectionState {
     return this.service.getConnectionHistory(payload).pipe(
       map((response: IConnectionResponse) => {
         patchState({
-          gmcNumber: response.programme.gmcNumber,
+          gmcNumber: payload,
           programmeHistory: response.programme.programmeHistory,
           connectionHistory: response.connection.connectionHistory,
           doctorCurrentDbc: response.designatedBodyCode.designatedBodyCode

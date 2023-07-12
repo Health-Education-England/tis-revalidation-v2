@@ -81,8 +81,7 @@ export class ConnectionComponent implements OnInit, OnDestroy {
     private store: Store,
     private authService: AuthService,
     private snackBarService: SnackBarService,
-    private updateConnectionsService: UpdateConnectionsService,
-    private referenceService: ReferenceService
+    private updateConnectionsService: UpdateConnectionsService
   ) {}
 
   ngOnInit(): void {
@@ -95,9 +94,11 @@ export class ConnectionComponent implements OnInit, OnDestroy {
     this.gmcNumber$.subscribe((res) => (this.gmcNumber = res));
     this.doctorCurrentDbc$.subscribe((res) => (this.doctorCurrentDbc = res));
     this.updateConnectionsService.canSave$.next(true);
-    this.programmeHistory$.subscribe(
-      (res) => (this.programmeOwnerDBC = res[0]?.designatedBodyCode)
-    );
+    this.programmeHistory$.subscribe((res) => {
+      if (res) {
+        this.programmeOwnerDBC = res[0]?.designatedBodyCode;
+      }
+    });
   }
 
   ngOnDestroy(): void {

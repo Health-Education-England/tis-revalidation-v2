@@ -12,7 +12,6 @@ import { ConnectionState } from "./state/connection.state";
 import { AuthService } from "../core/auth/auth.service";
 import { SnackBarService } from "../shared/services/snack-bar/snack-bar.service";
 import { IDesignatedBody } from "../reference/reference.interfaces";
-import { ReferenceService } from "../reference/services/reference.service";
 import {
   ActionType,
   IDoctor
@@ -81,8 +80,7 @@ export class ConnectionComponent implements OnInit, OnDestroy {
     private store: Store,
     private authService: AuthService,
     private snackBarService: SnackBarService,
-    private updateConnectionsService: UpdateConnectionsService,
-    private referenceService: ReferenceService
+    private updateConnectionsService: UpdateConnectionsService
   ) {}
 
   ngOnInit(): void {
@@ -95,9 +93,11 @@ export class ConnectionComponent implements OnInit, OnDestroy {
     this.gmcNumber$.subscribe((res) => (this.gmcNumber = res));
     this.doctorCurrentDbc$.subscribe((res) => (this.doctorCurrentDbc = res));
     this.updateConnectionsService.canSave$.next(true);
-    this.programmeHistory$.subscribe(
-      (res) => (this.programmeOwnerDBC = res[0]?.designatedBodyCode)
-    );
+    this.programmeHistory$.subscribe((res) => {
+      if (res) {
+        this.programmeOwnerDBC = res[0]?.designatedBodyCode;
+      }
+    });
   }
 
   ngOnDestroy(): void {

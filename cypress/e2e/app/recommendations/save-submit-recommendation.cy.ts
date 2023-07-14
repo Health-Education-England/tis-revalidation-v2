@@ -7,8 +7,9 @@ describe("Save and submit recommendation", () => {
     const url = `/recommendations?active=submissionDate&direction=asc&pageIndex=0&filter=underNotice&programmeName=&gmcStatus=&tisStatus=${tisStatus}&dbcs=&admin=`;
     cy.visit(url);
     cy.get("app-record-list tbody tr").each(($el) => {
-      if ($el.find("td:not(:contains('Under review'))").length != -1) {
+      if ($el.find("td:not(:contains('Under review'))")) {
         $el.trigger("click");
+        return false;
       }
     });
   };

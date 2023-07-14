@@ -12,7 +12,6 @@ import { ConnectionState } from "./state/connection.state";
 import { AuthService } from "../core/auth/auth.service";
 import { SnackBarService } from "../shared/services/snack-bar/snack-bar.service";
 import { IDesignatedBody } from "../reference/reference.interfaces";
-import { ReferenceService } from "../reference/services/reference.service";
 import {
   ActionType,
   IDoctor

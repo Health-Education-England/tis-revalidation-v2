@@ -6,8 +6,8 @@ import {
   HttpRequest
 } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, of, throwError } from "rxjs";
-import { catchError, tap } from "rxjs/operators";
+import { Observable, throwError } from "rxjs";
+import { catchError } from "rxjs/operators";
 import { ErrorService } from "../../shared/services/error/error.service";
 import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
 import { Router } from "@angular/router";

@@ -2,10 +2,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { NgModule, APP_INITIALIZER, ErrorHandler } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import {
-  ServiceWorkerModule,
-  SwRegistrationOptions
-} from "@angular/service-worker";
+
 import { NgxGoogleAnalyticsModule } from "ngx-google-analytics";
 import { NgxsModule, Store } from "@ngxs/store";
 import { NgxsReduxDevtoolsPluginModule } from "@ngxs/devtools-plugin";
@@ -24,7 +21,6 @@ import { AuthService } from "./core/auth/auth.service";
 import { initializeApplication } from "./core/auth/auth.initializer";
 import { errorHandlerFactory } from "./factories/error-handler.factory";
 
-import { swRegistrationOptionsFactory } from "./factories/sw-registration-options.factory";
 import { NgxHotjarModule } from "ngx-hotjar";
 import { environment } from "@environment";
 import { GetDesignatedBodies } from "./reference/state/reference.actions";
@@ -40,7 +36,6 @@ import { ReferenceState } from "./reference/state/reference.state";
     MaterialModule,
     SharedModule,
     AppRoutingModule,
-    ServiceWorkerModule.register("ngsw-worker.js"),
     NgxsModule.forRoot([ReferenceState]),
     NgxGoogleAnalyticsModule.forRoot("G-SWV1NDD37B"),
     NgxsReduxDevtoolsPluginModule.forRoot(),
@@ -57,9 +52,7 @@ import { ReferenceState } from "./reference/state/reference.state";
       multi: true,
       deps: [AuthService, Router]
     },
-    { provide: ErrorHandler, useFactory: errorHandlerFactory },
-
-    { provide: SwRegistrationOptions, useFactory: swRegistrationOptionsFactory }
+    { provide: ErrorHandler, useFactory: errorHandlerFactory }
   ],
   bootstrap: [AppComponent]
 })

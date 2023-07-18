@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { Sort as ISort } from "@angular/material/sort/sort";
+import { Sort as ISort } from "@angular/material/sort";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";

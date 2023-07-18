@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from "@angular/core";
-import { Sort as ISort } from "@angular/material/sort/sort";
+import { Sort as ISort } from "@angular/material/sort";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { environment } from "@environment";
 import { Store } from "@ngxs/store";

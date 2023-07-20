@@ -15,7 +15,7 @@ describe("Connections Summary Records List", () => {
     "Programme owner",
     "Programme membership"
   ];
-  const sortableColumns = ["First name", "Last name"];
+  const sortableColumns = ["First name", "Last name", "GMC Designated body", "Programme owner"];
 
   const filters = ["DISCREPANCIES", "CURRENT CONNECTIONS"];
 

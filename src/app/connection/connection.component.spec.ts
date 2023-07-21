@@ -89,8 +89,7 @@ describe("ConnectionComponent", () => {
 
     component.doctorCurrentDbc = "1-ABCDE";
     component.gmcNumber = 123456;
-    component.programmeOwnerDBC =
-      mockConnectionResponse.programme.programmeHistory[0].designatedBodyCode;
+
     component.updateConnection(formValue);
 
     expect(component.submitting).toBeTruthy();
@@ -101,8 +100,7 @@ describe("ConnectionComponent", () => {
         doctors: [
           {
             gmcId: 123456,
-            currentDesignatedBodyCode: "1-ABCDE",
-            programmeOwnerDesignatedBodyCode: "1-AIIDVS"
+            currentDesignatedBodyCode: "1-ABCDE"
           }
         ]
       },
@@ -162,8 +160,6 @@ describe("ConnectionComponent", () => {
 
     component.doctorCurrentDbc = "1-ABCDE";
     component.gmcNumber = 123456;
-    component.programmeOwnerDBC =
-      mockConnectionResponse.programme.programmeHistory[0].designatedBodyCode;
     component.updateConnection(formValue);
 
     expect(component.submitting).toBeTruthy();
@@ -174,8 +170,7 @@ describe("ConnectionComponent", () => {
         doctors: [
           {
             gmcId: 123456,
-            currentDesignatedBodyCode: "1-ABCDE",
-            programmeOwnerDesignatedBodyCode: "1-AIIDVS"
+            currentDesignatedBodyCode: "1-ABCDE"
           }
         ]
       },

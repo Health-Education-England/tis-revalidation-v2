@@ -46,15 +46,14 @@ describe("ConnectionResolver", () => {
   });
 
   it("should call store.dispatch with new Get", () => {
+    const gmcNumber = 1234567;
     const route = new ActivatedRouteSnapshot();
     route.params = {
-      gmcNumber: mockConnectionResponse.programme.gmcNumber
+      gmcNumber
     };
 
     spyOn(store, "dispatch").and.callThrough();
     resolver.resolve(route);
-    expect(store.dispatch).toHaveBeenCalledWith(
-      new Get(mockConnectionResponse.programme.gmcNumber)
-    );
+    expect(store.dispatch).toHaveBeenCalledWith(new Get(gmcNumber));
   });
 });

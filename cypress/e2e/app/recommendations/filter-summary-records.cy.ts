@@ -159,13 +159,14 @@ describe("Recommendations", () => {
 
       it("should filter summary records list by single gmc status when single option selected and submitted", () => {
         FilterRecords.initFilterPanel();
-
+        cy.get("[data-cy=filter-records-button_ALLDOCTORS]")
+          .should("exist")
+          .click();
         cy.get("[data-cy='selectionOptionApproved']").should("exist");
         cy.get("[data-cy='selectionOptionApproved']").click();
         FilterRecords.checkButtonsDisabled("not.be.disabled");
 
         FilterRecords.submitForm();
-
         cy.get("td.cdk-column-gmcOutcome").each(($el) => {
           expect($el.text().trim()).to.equal("Approved");
         });
@@ -173,6 +174,9 @@ describe("Recommendations", () => {
 
       it("should filter summary records list by multiple gmc statuses when multiple options selected and submitted", () => {
         FilterRecords.initFilterPanel();
+        cy.get("[data-cy=filter-records-button_ALLDOCTORS]")
+          .should("exist")
+          .click();
         const selectedGmcStatus = formFilters.gmcStatus.filter(
           (_, index) => index < 2
         );

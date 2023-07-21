@@ -62,6 +62,7 @@ export class FilterRecords {
       "[data-cy='tableFiltersForm'] button[data-jasmine='submitFormButton']"
     ).click();
     cy.get("app-record-list .mat-table").should("exist");
+    cy.wait(1000);
   };
 
   static resetForm = () => {

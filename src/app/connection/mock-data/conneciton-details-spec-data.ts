@@ -1,37 +1,8 @@
 import {
   IConnectionHistory,
   IConnectionResponse,
-  IProgramme,
   IUserDBC
 } from "../connection.interfaces";
-
-const programme: IProgramme = {
-  gmcNumber: 123456,
-  forenames: "Babul",
-  surname: "Yasa",
-  curriculumEndDate: new Date(),
-  programmeMembershipType: "prg type1",
-  programmeName: "prg name1",
-  currentGrade: "GRADE",
-  programmeHistory: [
-    {
-      designatedBodyCode: "1-AIIDVS",
-      programmeMembershipType: "prg type1",
-      programmeName: "prg name1",
-      programmeOwner: "prg owner1",
-      programmeMembershipStartDate: new Date("10/11/2021"),
-      programmeMembershipEndDate: new Date("10/11/2020")
-    },
-    {
-      designatedBodyCode: "1-AIIDMQ",
-      programmeMembershipType: "prg type2",
-      programmeName: "prg name2",
-      programmeOwner: "prg owner2",
-      programmeMembershipStartDate: new Date("09/08/2019"),
-      programmeMembershipEndDate: new Date("09/08/2020")
-    }
-  ]
-};
 
 const connectionHistory: IConnectionHistory[] = [
   {
@@ -67,7 +38,6 @@ const designatedBodyCode: IUserDBC = {
 };
 
 export const mockConnectionResponse: IConnectionResponse = {
-  programme,
   designatedBodyCode,
   connection: {
     connectionHistory

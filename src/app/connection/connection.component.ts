@@ -5,7 +5,6 @@ import { Observable, Subscription } from "rxjs";
 import { environment } from "@environment";
 import {
   IConnectionHistory,
-  IProgrammeHistory,
   IUpdateConnectionResponse
 } from "./connection.interfaces";
 import { ConnectionState } from "./state/connection.state";
@@ -46,9 +45,6 @@ import { IDetailsSideNav } from "../details/details-side-nav/details-side-nav.in
 export class ConnectionComponent implements OnInit, OnDestroy {
   @Select(ConnectionState.connectionHistory)
   public connectionHistory$: Observable<IConnectionHistory[]>;
-
-  @Select(ConnectionState.programmeHistory)
-  public programmeHistory$: Observable<IProgrammeHistory[]>;
 
   @Select(ConnectionState.gmcNumber)
   public gmcNumber$: Observable<number>;
@@ -93,11 +89,6 @@ export class ConnectionComponent implements OnInit, OnDestroy {
     this.gmcNumber$.subscribe((res) => (this.gmcNumber = res));
     this.doctorCurrentDbc$.subscribe((res) => (this.doctorCurrentDbc = res));
     this.updateConnectionsService.canSave$.next(true);
-    this.programmeHistory$.subscribe((res) => {
-      if (res) {
-        this.programmeOwnerDBC = res[0]?.designatedBodyCode;
-      }
-    });
   }
 
   ngOnDestroy(): void {
@@ -111,8 +102,7 @@ export class ConnectionComponent implements OnInit, OnDestroy {
     const doctors: IDoctor[] = [
       {
         gmcId: this.gmcNumber,
-        currentDesignatedBodyCode: this.doctorCurrentDbc,
-        programmeOwnerDesignatedBodyCode: this.programmeOwnerDBC
+        currentDesignatedBodyCode: this.doctorCurrentDbc
       }
     ];
 

@@ -1,5 +1,4 @@
 export interface IConnectionResponse {
-  programme: IProgramme;
   designatedBodyCode: IUserDBC;
   connection: {
     connectionHistory: IConnectionHistory[];
@@ -8,26 +7,6 @@ export interface IConnectionResponse {
 
 export interface IUpdateConnectionResponse {
   message: string;
-}
-
-export interface IProgramme {
-  gmcNumber: number;
-  forenames: string;
-  surname: string;
-  curriculumEndDate: Date;
-  programmeMembershipType: string;
-  programmeName: string;
-  currentGrade: string;
-  programmeHistory: IProgrammeHistory[];
-}
-
-export interface IProgrammeHistory {
-  designatedBodyCode: string;
-  programmeMembershipType: string;
-  programmeName: string;
-  programmeOwner: string;
-  programmeMembershipStartDate: Date;
-  programmeMembershipEndDate: Date;
 }
 
 export interface IConnectionHistory {

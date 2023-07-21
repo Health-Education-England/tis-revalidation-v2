@@ -3,13 +3,13 @@ import { Observable } from "rxjs";
 import { Store } from "@ngxs/store";
 import { catchError } from "rxjs/operators";
 import { Injectable } from "@angular/core";
-import { IProgramme } from "./connection.interfaces";
 import { Get } from "./state/connection.actions";
 import { RecordsService } from "../records/services/records.service";
 import { stateName } from "../records/records.interfaces";
+import { IConnectionResponse } from "./connection.interfaces";
 
 @Injectable()
-export class ConnectionResolver implements Resolve<IProgramme> {
+export class ConnectionResolver implements Resolve<IConnectionResponse> {
   constructor(
     private store: Store,
     private router: Router,
@@ -18,7 +18,7 @@ export class ConnectionResolver implements Resolve<IProgramme> {
 
   resolve(
     route: ActivatedRouteSnapshot
-  ): Observable<IProgramme> | Observable<any> {
+  ): Observable<IConnectionResponse> | Observable<any> {
     const gmcNumber: number = Number(route.params.gmcNumber);
     this.recordsService.summaryRoute = "/connections";
     this.recordsService.stateName = stateName.CONNECTIONS;

@@ -6,7 +6,6 @@ import {
 } from "@angular/common/http/testing";
 
 import { environment } from "@environment";
-import { mockConnectionResponse } from "../mock-data/conneciton-details-spec-data";
 
 describe("ConcernService", () => {
   let http: HttpTestingController;
@@ -25,11 +24,10 @@ describe("ConcernService", () => {
   });
 
   it("should call get connection details api", () => {
-    const endPoint = `${environment.appUrls.getConnections}/${mockConnectionResponse.programme.gmcNumber}`;
+    const gmcNumber = 1234567;
+    const endPoint = `${environment.appUrls.getConnections}/${gmcNumber}`;
 
-    service
-      .getConnectionHistory(mockConnectionResponse.programme.gmcNumber)
-      .subscribe();
+    service.getConnectionHistory(gmcNumber).subscribe();
 
     const mockHttp = http.expectOne(endPoint);
     expect(mockHttp.request.method).toBe("GET");

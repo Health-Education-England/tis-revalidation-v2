@@ -8,12 +8,10 @@ import { of, Subscription, throwError } from "rxjs";
 import { MaterialModule } from "../shared/material/material.module";
 import { ConnectionState } from "../connection/state/connection.state";
 import { ConnectionComponent } from "./connection.component";
-import { mockDbcs } from "../reference/mock-data/reference-spec.data";
 import { SnackBarService } from "../shared/services/snack-bar/snack-bar.service";
 import { ActionType } from "../update-connections/update-connections.interfaces";
 import { UpdateConnectionsService } from "../update-connections/services/update-connections.service";
 import { IConnectionHistory } from "./connection.interfaces";
-import { mockConnectionResponse } from "./mock-data/conneciton-details-spec-data";
 
 describe("ConnectionComponent", () => {
   let component: ConnectionComponent;

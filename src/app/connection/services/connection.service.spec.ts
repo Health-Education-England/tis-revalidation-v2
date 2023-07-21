@@ -6,7 +6,6 @@ import {
 } from "@angular/common/http/testing";
 
 import { environment } from "@environment";
-import { mockConnectionResponse } from "../mock-data/conneciton-details-spec-data";
 
 describe("ConcernService", () => {
   let http: HttpTestingController;

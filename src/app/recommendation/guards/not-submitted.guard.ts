@@ -1,8 +1,4 @@
-import {
-  CanActivate,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot
-} from "@angular/router";
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
 import { Store } from "@ngxs/store";
 import {
   IRecommendationSummary,
@@ -12,7 +8,7 @@ import { Injectable } from "@angular/core";
 import { RecommendationHistoryService } from "../services/recommendation-history.service";
 
 @Injectable()
-export class NotSubmittedGuard implements CanActivate {
+export class NotSubmittedGuard  {
   constructor(
     private store: Store,
     private service: RecommendationHistoryService

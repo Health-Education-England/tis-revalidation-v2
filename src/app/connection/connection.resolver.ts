@@ -1,4 +1,4 @@
-import { Resolve, ActivatedRouteSnapshot, Router } from "@angular/router";
+import { ActivatedRouteSnapshot, Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { Store } from "@ngxs/store";
 import { catchError } from "rxjs/operators";
@@ -9,7 +9,7 @@ import { stateName } from "../records/records.interfaces";
 import { IConnectionResponse } from "./connection.interfaces";
 
 @Injectable()
-export class ConnectionResolver implements Resolve<IConnectionResponse> {
+export class ConnectionResolver  {
   constructor(
     private store: Store,
     private router: Router,

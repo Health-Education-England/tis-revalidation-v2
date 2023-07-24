@@ -1,4 +1,4 @@
-import { Resolve, ActivatedRouteSnapshot, Router } from "@angular/router";
+import { ActivatedRouteSnapshot, Router } from "@angular/router";
 import { IRecommendationHistory } from "./recommendation-history.interface";
 import { Observable } from "rxjs";
 import { Store } from "@ngxs/store";
@@ -9,7 +9,7 @@ import { RecordsService } from "../records/services/records.service";
 import { stateName } from "../records/records.interfaces";
 
 @Injectable()
-export class RecommendationResolver implements Resolve<IRecommendationHistory> {
+export class RecommendationResolver  {
   constructor(
     private store: Store,
     private router: Router,

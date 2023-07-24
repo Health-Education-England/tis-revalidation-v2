@@ -1,15 +1,11 @@
-import {
-  CanActivate,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot
-} from "@angular/router";
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
 import { IRecommendationHistory } from "../recommendation-history.interface";
 import { Injectable } from "@angular/core";
 import { RecommendationHistoryService } from "../services/recommendation-history.service";
 import { Store } from "@ngxs/store";
 
 @Injectable()
-export class UnderNoticeGuard implements CanActivate {
+export class UnderNoticeGuard  {
   constructor(
     private service: RecommendationHistoryService,
     private store: Store

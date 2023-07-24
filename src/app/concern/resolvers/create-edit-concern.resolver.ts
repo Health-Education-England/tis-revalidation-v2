@@ -1,10 +1,5 @@
 import { Injectable } from "@angular/core";
-import {
-  Resolve,
-  Router,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot
-} from "@angular/router";
+import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { Observable, from } from "rxjs";
 import { IConcernSummary } from "../concern.interfaces";
@@ -13,7 +8,7 @@ import { SetSelectedConcern } from "../state/concern.actions";
 import { defaultConcern } from "../constants";
 
 @Injectable()
-export class CreateEditConcernResolver implements Resolve<any> {
+export class CreateEditConcernResolver  {
   constructor(private store: Store, private router: Router) {}
 
   resolve(

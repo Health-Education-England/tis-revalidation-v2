@@ -1,3 +1,5 @@
+import { Params } from "@angular/router";
+
 export class GetSuccessPayload<T> {
   constructor(public response: T) {}
 }

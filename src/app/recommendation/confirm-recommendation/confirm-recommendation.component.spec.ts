@@ -10,8 +10,8 @@ import { RecommendationHistoryService } from "../services/recommendation-history
 import { ConfirmRecommendationComponent } from "./confirm-recommendation.component";
 import { HarnessLoader } from "@angular/cdk/testing";
 import { TestbedHarnessEnvironment } from "@angular/cdk/testing/testbed";
-import { MatButtonHarness } from "@angular/material/button/testing";
-import { MatSlideToggleHarness } from "@angular/material/slide-toggle/testing";
+import { MatLegacyButtonHarness as MatButtonHarness } from "@angular/material/legacy-button/testing";
+import { MatLegacySlideToggleHarness as MatSlideToggleHarness } from "@angular/material/legacy-slide-toggle/testing";
 describe("ConfirmRecommendationComponent", () => {
   let store: Store;
   let recommendationHistoryService: RecommendationHistoryService;

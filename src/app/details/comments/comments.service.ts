@@ -7,12 +7,8 @@ import {
 } from "@angular/forms";
 import { BehaviorSubject } from "rxjs";
 
-/**
- * https://angular.io/api/core/Injectable
- * 'any' : Provides a unique instance in each lazy loaded module while all eagerly loaded modules share one instance.
- */
 @Injectable({
-  providedIn: "any"
+  providedIn: "root"
 })
 /**
  * Add delete comment formControls from tool-bar UI
@@ -31,7 +27,9 @@ export class CommentsService {
 
   addCommentControl(commentText?: string): void {
     const commentControl = new UntypedFormGroup({
-      comment: new UntypedFormControl(commentText ? this.convertPlainText(commentText) : ""),
+      comment: new UntypedFormControl(
+        commentText ? this.convertPlainText(commentText) : ""
+      ),
       checkbox: new UntypedFormControl(false)
     });
     this.comments.push(commentControl);

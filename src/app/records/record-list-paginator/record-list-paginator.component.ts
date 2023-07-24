@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { PageEvent } from "@angular/material/paginator";
+import { LegacyPageEvent as PageEvent } from "@angular/material/legacy-paginator";
 import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { take } from "rxjs/operators";

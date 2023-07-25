@@ -7,7 +7,7 @@ export const COLUMN_DATA: [string, string, boolean][] = [
   ["Current programme name", "programmeName", false],
   ["GMC Submission date", "submissionDate", false],
   ["GMC Designated body", "designatedBody", true],
-  ["Programme owner", "programmeOwner", true],
+  ["Programme owner", "tcsDesignatedBody", true],
   ["Programme membership", "programmeMembershipType", false]
 ];
 

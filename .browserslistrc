@@ -10,4 +10,6 @@ last 2 versions
 Chrome >= 100
 Firefox ESR
 not dead
-not IE 9-11 # For IE 9-11 support, remove 'not'.
+not IE 9-11
+not op_mini all
+not KaiOS <= 100

@@ -80,7 +80,8 @@
               "zen-observable",
               "zen-push",
               "zone.js/dist/zone-error",
-              "url"
+              "url",
+              "cookie"
             ],
             "outputPath": "dist/revalidation",
             "index": "src/index.html",

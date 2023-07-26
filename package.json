@@ -44,8 +44,6 @@
     "browserslist": "^4.20.4",
     "file-saver": "^2.0.5",
     "karma-coverage": "^2.2.0",
-    "ngx-google-analytics": "^10.0.0",
-    "ngx-hotjar": "^11.0.0",
     "nhsuk-frontend": "^7.0.0",
     "rxjs": "^7.4.0",
     "tslib": "^2.4.0",

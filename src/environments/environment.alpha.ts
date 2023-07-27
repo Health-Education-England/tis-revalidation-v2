@@ -4,7 +4,7 @@ import { IEnvironment } from "./environment.interface";
 const env: Partial<IEnvironment> = {
   name: "alpha",
   production: true,
-  hotJarId: "3498835",
+  gtmID: "GTM-WFRHL895",
   awsConfig: {
     redirectSignIn: "https://alpha-revalidation.tis.nhs.uk",
     redirectSignOut: "https://alpha-revalidation.tis.nhs.uk"

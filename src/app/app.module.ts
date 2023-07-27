@@ -28,6 +28,8 @@ import { swRegistrationOptionsFactory } from "./factories/sw-registration-option
 
 import { GetDesignatedBodies } from "./reference/state/reference.actions";
 import { ReferenceState } from "./reference/state/reference.state";
+import { GoogleTagManagerModule } from 'angular-google-tag-manager';
+import { environment } from "@environment";
 
 @NgModule({
   declarations: [AppComponent],
@@ -42,7 +44,10 @@ import { ReferenceState } from "./reference/state/reference.state";
     ServiceWorkerModule.register("ngsw-worker.js"),
     NgxsModule.forRoot([ReferenceState]),
     NgxsReduxDevtoolsPluginModule.forRoot(),
-    MainNavigationModule
+    MainNavigationModule,
+    GoogleTagManagerModule.forRoot({
+      id: environment.gtmID
+    })
   ],
   providers: [
     AuthService,

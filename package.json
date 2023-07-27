@@ -39,6 +39,7 @@
     "@ngxs/logger-plugin": "^3.8.1",
     "@ngxs/store": "^3.8.1",
     "@sentry/browser": "^7.60.0",
+    "angular-google-tag-manager": "^1.8.0",
     "angulartics2": "^12.2.0",
     "aws-amplify": "^5.3.5",
     "browserslist": "^4.20.4",

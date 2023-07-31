@@ -3,7 +3,7 @@ import { Title } from "@angular/platform-browser";
 import { Router, NavigationEnd, ActivatedRoute } from "@angular/router";
 import { GoogleTagManagerService } from "angular-google-tag-manager";
 import { zip, of } from "rxjs";
-import { filter, map, mergeMap } from "rxjs/operators";
+import { filter, mergeMap } from "rxjs/operators";
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html"

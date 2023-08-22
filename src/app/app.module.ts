@@ -6,7 +6,7 @@ import {
   ServiceWorkerModule,
   SwRegistrationOptions
 } from "@angular/service-worker";
-import { NgxGoogleAnalyticsModule } from "ngx-google-analytics";
+
 import { NgxsModule, Store } from "@ngxs/store";
 import { NgxsReduxDevtoolsPluginModule } from "@ngxs/devtools-plugin";
 import { Router } from "@angular/router";
@@ -25,10 +25,11 @@ import { initializeApplication } from "./core/auth/auth.initializer";
 import { errorHandlerFactory } from "./factories/error-handler.factory";
 
 import { swRegistrationOptionsFactory } from "./factories/sw-registration-options.factory";
-import { NgxHotjarModule } from "ngx-hotjar";
-import { environment } from "@environment";
+
 import { GetDesignatedBodies } from "./reference/state/reference.actions";
 import { ReferenceState } from "./reference/state/reference.state";
+import { GoogleTagManagerModule } from 'angular-google-tag-manager';
+import { environment } from "@environment";
 
 @NgModule({
   declarations: [AppComponent],
@@ -42,10 +43,11 @@ import { ReferenceState } from "./reference/state/reference.state";
     AppRoutingModule,
     ServiceWorkerModule.register("ngsw-worker.js"),
     NgxsModule.forRoot([ReferenceState]),
-    NgxGoogleAnalyticsModule.forRoot("G-SWV1NDD37B"),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     MainNavigationModule,
-    NgxHotjarModule.forRoot(environment.hotJarId)
+    GoogleTagManagerModule.forRoot({
+      id: environment.gtmID
+    })
   ],
   providers: [
     AuthService,

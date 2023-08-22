@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { ActivatedRouteSnapshot, Resolve } from "@angular/router";
+import { ActivatedRouteSnapshot } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { generateColumnData } from "../records/constants";
@@ -17,7 +17,7 @@ import { FormControlBase } from "../shared/form-controls/form-contol-base.model"
 @Injectable()
 export class ConnectionsResolver
   extends RecordsResolver
-  implements Resolve<any>
+  
 {
   constructor(
     protected store: Store,

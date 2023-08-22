@@ -4,8 +4,8 @@ import { FormControlBase } from "../form-contol-base.model";
 import { MaterialModule } from "src/app/shared/material/material.module";
 import { RemoveWhitespacePipe } from "../../pipes/remove-whitespace.pipe";
 import {
-  FormControl,
-  FormGroup,
+  UntypedFormControl,
+  UntypedFormGroup,
   FormsModule,
   ReactiveFormsModule
 } from "@angular/forms";
@@ -39,10 +39,10 @@ describe("MaterialSelectionListComponent", () => {
     component = fixture.componentInstance;
     component.controlProperties = controlProperties;
     const group: any = {};
-    group[component.controlProperties.key] = new FormControl(
+    group[component.controlProperties.key] = new UntypedFormControl(
       data[component.controlProperties.key] || ""
     );
-    component.form = new FormGroup(group);
+    component.form = new UntypedFormGroup(group);
     fixture.detectChanges();
   });
 

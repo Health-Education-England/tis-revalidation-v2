@@ -1,11 +1,11 @@
-import { SortDirection } from "@angular/material/sort/sort-direction";
 import { Params } from "@angular/router";
+
 export class GetSuccessPayload<T> {
   constructor(public response: T) {}
 }
 
 export class SortPayload {
-  constructor(public column: string, public direction: SortDirection) {}
+  constructor(public column: string, public direction: "asc" | "desc" | "") {}
 }
 
 export class FilterPayload<T> {

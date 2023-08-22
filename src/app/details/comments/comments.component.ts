@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { FormArray, FormGroup } from "@angular/forms";
+import { UntypedFormArray, UntypedFormGroup } from "@angular/forms";
 import { CommentsService } from "./comments.service";
-import { MatCheckboxChange } from "@angular/material/checkbox";
-import { MatDialogRef, MatDialog } from "@angular/material/dialog";
+import { MatLegacyCheckboxChange as MatCheckboxChange } from "@angular/material/legacy-checkbox";
+import { MatLegacyDialogRef as MatDialogRef, MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 
 @Component({
   selector: "app-comments",
@@ -10,8 +10,8 @@ import { MatDialogRef, MatDialog } from "@angular/material/dialog";
   styleUrls: ["./comments.component.scss"]
 })
 export class CommentsComponent implements OnInit {
-  public form: FormGroup;
-  public comments: FormArray;
+  public form: UntypedFormGroup;
+  public comments: UntypedFormArray;
   @Input() featureComments: string[] = [];
   public partialSelection$ = this.commentsService.partialSelection$;
   public allSelected$ = this.commentsService.allSelected$;
@@ -27,8 +27,8 @@ export class CommentsComponent implements OnInit {
   }
 
   public setupForm(): void {
-    this.form = new FormGroup({});
-    this.comments = new FormArray([]);
+    this.form = new UntypedFormGroup({});
+    this.comments = new UntypedFormArray([]);
   }
 
   /**

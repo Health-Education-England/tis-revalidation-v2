@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { FormControl, FormGroup } from "@angular/forms";
+import { UntypedFormControl, UntypedFormGroup } from "@angular/forms";
 import { Router, Params } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { BehaviorSubject, forkJoin, Observable, Subject } from "rxjs";
@@ -316,11 +316,11 @@ export class RecordsService {
     const group: any = {};
 
     controls.forEach((control) => {
-      group[control.key] = new FormControl(
+      group[control.key] = new UntypedFormControl(
         formData[control.key] || control.initialValue || ""
       );
     });
-    return new FormGroup(group);
+    return new UntypedFormGroup(group);
   }
 
   public updateQueryParams(params: Params): Observable<any> {

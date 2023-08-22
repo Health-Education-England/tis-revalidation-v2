@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { FormGroup } from "@angular/forms";
+import { UntypedFormGroup } from "@angular/forms";
 import {
   debounceTime,
   distinctUntilChanged,
@@ -18,7 +18,7 @@ import { AutocompleteService } from "./autocomplete.service";
 })
 export class MaterialAutocompleteComponent implements OnInit {
   @Input() controlProperties!: AutocompleteControl;
-  @Input() form!: FormGroup;
+  @Input() form!: UntypedFormGroup;
   debounceTime: number = 500;
   minLengthTerm: number = 3;
   filteredItems: any;

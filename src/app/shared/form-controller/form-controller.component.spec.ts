@@ -9,8 +9,8 @@ import { MaterialModule } from "../material/material.module";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { FormControllerComponent } from "./form-controller.component";
 import {
-  FormControl,
-  FormGroup,
+  UntypedFormControl,
+  UntypedFormGroup,
   FormsModule,
   ReactiveFormsModule
 } from "@angular/forms";
@@ -83,8 +83,8 @@ describe("FormControllerComponent", () => {
 
   it("should render a selection list form control when set", () => {
     component.control = formControls[0];
-    component.form = new FormGroup({
-      [formControls[0].key]: new FormControl("")
+    component.form = new UntypedFormGroup({
+      [formControls[0].key]: new UntypedFormControl("")
     });
     fixture.detectChanges();
     expect(
@@ -95,8 +95,8 @@ describe("FormControllerComponent", () => {
 
   it("should render an autocomplete form control when set", () => {
     component.control = formControls[1];
-    component.form = new FormGroup({
-      [formControls[1].key]: new FormControl("")
+    component.form = new UntypedFormGroup({
+      [formControls[1].key]: new UntypedFormControl("")
     });
     fixture.detectChanges();
     expect(

@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, AfterViewInit } from "@angular/core";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
 import { MatStepper } from "@angular/material/stepper";
 import { Select, Store } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
@@ -21,7 +21,7 @@ import { ActivatedRoute } from "@angular/router";
   templateUrl: "./concern-detail.component.html"
 })
 export class ConcernDetailComponent implements OnDestroy, AfterViewInit {
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
   statusText: string;
   lessThanEqualToday: Date;
   greaterThanToday: Date;
@@ -145,13 +145,13 @@ export class ConcernDetailComponent implements OnDestroy, AfterViewInit {
   }
 
   private setupForm(): void {
-    this.formGroup = new FormGroup({
-      dateOfIncident: new FormControl(null, [Validators.required]),
-      concernType: new FormControl(null, [Validators.required]),
-      source: new FormControl(null, [Validators.required]),
-      dateReported: new FormControl(null, [Validators.required]),
-      followUpDate: new FormControl(null, [Validators.required]),
-      status: new FormControl(null, [Validators.required])
+    this.formGroup = new UntypedFormGroup({
+      dateOfIncident: new UntypedFormControl(null, [Validators.required]),
+      concernType: new UntypedFormControl(null, [Validators.required]),
+      source: new UntypedFormControl(null, [Validators.required]),
+      dateReported: new UntypedFormControl(null, [Validators.required]),
+      followUpDate: new UntypedFormControl(null, [Validators.required]),
+      status: new UntypedFormControl(null, [Validators.required])
     });
   }
 }

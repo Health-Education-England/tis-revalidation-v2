@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { ActivatedRouteSnapshot, Resolve } from "@angular/router";
+import { ActivatedRouteSnapshot } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { finalize, filter, take } from "rxjs/operators";
@@ -28,7 +28,7 @@ import { IAdmin } from "../admins/admins.interfaces";
 @Injectable()
 export class RecommendationsResolver
   extends RecordsResolver
-  implements Resolve<any>
+  
 {
   constructor(
     protected store: Store,

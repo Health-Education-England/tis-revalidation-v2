@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { INote } from "../notes-drawer.interfaces";
 import { environment } from "@environment";
-import { MatDialog } from "@angular/material/dialog";
+import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import {
   ConfirmDialogComponent,
   ConfirmDialogModel

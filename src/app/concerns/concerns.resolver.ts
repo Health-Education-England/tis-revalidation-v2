@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { ActivatedRouteSnapshot, Resolve } from "@angular/router";
+import { ActivatedRouteSnapshot } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { ConcernStatus } from "../concern/concern.interfaces";
@@ -10,7 +10,7 @@ import { UpdateConnectionsService } from "../update-connections/services/update-
 import { COLUMN_DATA } from "./constants";
 
 @Injectable()
-export class ConcernsResolver extends RecordsResolver implements Resolve<any> {
+export class ConcernsResolver extends RecordsResolver  {
   constructor(
     protected store: Store,
     protected recordsService: RecordsService,

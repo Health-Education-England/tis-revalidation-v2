@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core";
-import { FormGroup } from "@angular/forms";
+import { UntypedFormGroup } from "@angular/forms";
 import {
   FormControlBase,
   FormControlType
@@ -12,5 +12,5 @@ import {
 export class FormControllerComponent {
   formControlType: typeof FormControlType = FormControlType;
   @Input() control!: FormControlBase;
-  @Input() form!: FormGroup;
+  @Input() form!: UntypedFormGroup;
 }

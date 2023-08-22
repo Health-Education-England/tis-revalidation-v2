@@ -1,5 +1,4 @@
-import { Sort } from "@angular/material/sort";
-import { Sort as ISort } from "@angular/material/sort/sort";
+import { Sort as ISort } from "@angular/material/sort";
 import { createSelector, StateContext } from "@ngxs/store";
 import { patch, updateItem } from "@ngxs/store/operators";
 import { DEFAULT_SORT } from "../constants";
@@ -155,7 +154,7 @@ export class RecordsState {
     });
   }
 
-  protected resetSortHandler(ctx: StateContext<any>, sortOptions: Sort) {
+  protected resetSortHandler(ctx: StateContext<any>, sortOptions: ISort) {
     ctx.patchState({
       sort: sortOptions
     });

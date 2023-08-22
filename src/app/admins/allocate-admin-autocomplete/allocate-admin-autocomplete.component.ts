@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
+import { UntypedFormBuilder, UntypedFormGroup } from "@angular/forms";
+import { MatLegacyAutocompleteSelectedEvent as MatAutocompleteSelectedEvent } from "@angular/material/legacy-autocomplete";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import {
@@ -24,10 +24,10 @@ export class AllocateAdminAutocompleteComponent implements OnInit {
   @Input() public admin?: string;
   @Select(AdminsState.items) public items$: Observable<IAdmin[]>;
   public filteredItems$: Observable<IAdmin[]>;
-  public form: FormGroup;
+  public form: UntypedFormGroup;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private store: Store,
     private adminsService: AdminsService
   ) {}

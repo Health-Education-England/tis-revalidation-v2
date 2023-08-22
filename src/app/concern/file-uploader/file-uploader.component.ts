@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewChild
 } from "@angular/core";
-import { FormGroup, FormControl } from "@angular/forms";
+import { UntypedFormGroup, UntypedFormControl } from "@angular/forms";
 import { Select, Store } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
 import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
@@ -32,7 +32,7 @@ export class FileUploaderComponent implements OnInit, OnDestroy {
     "text/csv"
   ];
   public acceptedFileSize = 10485760;
-  public form: FormGroup;
+  public form: UntypedFormGroup;
   public gmcNumber: number = this.store.selectSnapshot(ConcernState.gmcNumber);
   public concernId?: string;
   @Select(ConcernState.uploadFileInProgress)
@@ -61,7 +61,7 @@ export class FileUploaderComponent implements OnInit, OnDestroy {
   }
 
   public setupForm(): void {
-    this.form = new FormGroup({ fileUploader: new FormControl("") });
+    this.form = new UntypedFormGroup({ fileUploader: new UntypedFormControl("") });
   }
 
   /**

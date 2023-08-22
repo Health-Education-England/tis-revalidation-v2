@@ -1,9 +1,4 @@
-import {
-  Resolve,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  Router
-} from "@angular/router";
+import { ActivatedRouteSnapshot, RouterStateSnapshot, Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { Store } from "@ngxs/store";
 import { catchError } from "rxjs/operators";
@@ -13,7 +8,7 @@ import { IGetConcernResponse } from "../concern.interfaces";
 import { Get } from "../state/concern.actions";
 
 @Injectable()
-export class ConcernResolver implements Resolve<IGetConcernResponse> {
+export class ConcernResolver  {
   constructor(private store: Store, private router: Router) {}
 
   resolve(

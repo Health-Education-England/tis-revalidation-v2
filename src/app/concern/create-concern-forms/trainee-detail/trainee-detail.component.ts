@@ -9,7 +9,7 @@ import {
   ViewEncapsulation,
   AfterViewInit
 } from "@angular/core";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
 import { MatStepper } from "@angular/material/stepper";
 import { Select, Store } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
@@ -35,7 +35,7 @@ import { ConcernState } from "../../state/concern.state";
   encapsulation: ViewEncapsulation.None
 })
 export class TraineeDetailComponent implements OnDestroy, AfterViewInit {
-  public formGroup: FormGroup;
+  public formGroup: UntypedFormGroup;
   public admin: string;
 
   @Select(ConcernState.gmcNumber)
@@ -79,10 +79,10 @@ export class TraineeDetailComponent implements OnDestroy, AfterViewInit {
   }
 
   private setupForm(): void {
-    this.formGroup = new FormGroup({
-      grade: new FormControl(),
-      site: new FormControl(),
-      employer: new FormControl()
+    this.formGroup = new UntypedFormGroup({
+      grade: new UntypedFormControl(),
+      site: new UntypedFormControl(),
+      employer: new UntypedFormControl()
     });
   }
 

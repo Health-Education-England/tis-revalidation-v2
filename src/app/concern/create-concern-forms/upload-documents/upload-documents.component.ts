@@ -5,7 +5,7 @@ import {
   OnDestroy,
   ViewChild
 } from "@angular/core";
-import { FormGroup } from "@angular/forms";
+import { UntypedFormGroup } from "@angular/forms";
 import { MatStepper } from "@angular/material/stepper";
 import { Select, Store } from "@ngxs/store";
 import { Observable, Subscription, of } from "rxjs";
@@ -24,7 +24,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 })
 export class UploadDocumentsComponent implements OnDestroy, AfterViewInit {
   @Input() stepper: MatStepper;
-  formGroup: FormGroup = new FormGroup({});
+  formGroup: UntypedFormGroup = new UntypedFormGroup({});
   subsciptions: Subscription[] = [];
   @ViewChild(CommentsComponent) appComments: CommentsComponent;
   @Select(ConcernState.selected)

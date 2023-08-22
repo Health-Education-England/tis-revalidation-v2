@@ -109,20 +109,11 @@ export class RecordListComponent implements OnDestroy {
   public showCheckbox(
     enableAllocateAdmin: boolean,
     enableUpdateConnections: boolean,
-    columnName: string,
-    element: any
+    columnName: string
   ) {
-    const programmeMembershipType = "programmeMembershipType";
-    const programmeName = "programmeName";
     return (
       (enableAllocateAdmin || enableUpdateConnections) &&
-      columnName === "doctorFirstName" &&
-      !(
-        (this.recordsService.stateName === "connections" &&
-          element[programmeMembershipType] === "Military") ||
-        // TODO: Chnage this to placement grade condition
-        element[programmeName]?.includes("Foundation")
-      )
+      columnName === "doctorFirstName"
     );
   }
 

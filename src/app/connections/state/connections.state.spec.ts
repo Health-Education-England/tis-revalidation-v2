@@ -242,14 +242,7 @@ describe("Connections state", () => {
     );
 
     items.forEach((item) => {
-      if (
-        item.programmeMembershipType === "Military" ||
-        item.programmeName.includes("Foundation")
-      ) {
-        expect(item.checked).toBeFalsy();
-      } else {
-        expect(item.checked).toBeTruthy();
-      }
+      expect(item.checked).toBeTruthy();
     });
   });
 });

@@ -7,9 +7,10 @@ import { Injectable } from "@angular/core";
 import { Get as GetRecommendationHistory } from "./state/recommendation-history.actions";
 import { RecordsService } from "../records/services/records.service";
 import { stateName } from "../records/records.interfaces";
+import { Get as GetSideNavDetails } from "../details/details-side-nav/state/details-side-nav.actions";
 
 @Injectable()
-export class RecommendationResolver  {
+export class RecommendationResolver {
   constructor(
     private store: Store,
     private router: Router,
@@ -22,7 +23,7 @@ export class RecommendationResolver  {
     this.recordsService.summaryRoute = "/recommendations";
     this.recordsService.stateName = stateName.RECOMMENDATIONS;
     const gmcNumber: number = Number(route.params.gmcNumber);
-
+    this.store.dispatch(new GetSideNavDetails(gmcNumber));
     return this.store
       .dispatch(new GetRecommendationHistory(gmcNumber))
       .pipe(catchError(() => this.router.navigate(["/404"])));

@@ -1,12 +1,11 @@
-import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
-import { Select, Store } from "@ngxs/store";
+import { Component } from "@angular/core";
+
+import { Select } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { Breakpoints, BreakpointObserver } from "@angular/cdk/layout";
 import { map, shareReplay } from "rxjs/operators";
 import { environment } from "@environment";
 import { IDetailsSideNav } from "./details-side-nav.interfaces";
-import { Get } from "./state/details-side-nav.actions";
 import { DetailsSideNavState } from "./state/details-side-nav.state";
 
 @Component({
@@ -14,7 +13,7 @@ import { DetailsSideNavState } from "./state/details-side-nav.state";
   templateUrl: "./details-side-nav.component.html",
   styleUrls: ["./details-side-nav.component.scss"]
 })
-export class DetailsSideNavComponent implements OnInit {
+export class DetailsSideNavComponent {
   @Select(DetailsSideNavState.traineeDetails)
   traineeDetails$: Observable<IDetailsSideNav>;
   hostURI: string = environment.adminsUIHostUri;
@@ -28,11 +27,7 @@ export class DetailsSideNavComponent implements OnInit {
     );
 
   sideLinks = [];
-  constructor(
-    private breakpointObserver: BreakpointObserver,
-    private store: Store,
-    private activatedRoute: ActivatedRoute
-  ) {
+  constructor(private breakpointObserver: BreakpointObserver) {
     this.traineeDetails$.subscribe((traineeDetails) => {
       const path = `${this.hostURI}admin/people/person/${traineeDetails.tisPersonId}`;
       this.sideLinks = [
@@ -54,12 +49,5 @@ export class DetailsSideNavComponent implements OnInit {
         }
       ];
     });
-  }
-
-  ngOnInit(): void {
-    const gmcNumber: number = Number(
-      this.activatedRoute.snapshot.params.gmcNumber
-    );
-    this.store.dispatch(new Get(gmcNumber));
   }
 }

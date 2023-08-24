@@ -5,7 +5,7 @@ import {
   HttpInterceptor,
   HttpRequest
 } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { ErrorHandler, Injectable } from "@angular/core";
 import { Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { ErrorService } from "../../shared/services/error/error.service";
@@ -29,11 +29,12 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         if (error instanceof HttpErrorResponse) {
           if (error.status === 404) {
             this.router.navigateByUrl("/404");
+            return throwError(() => new Error("404 page not found"));
           }
         }
         const message: string = this.errorService.generateErrorMsg(error);
         this.snackBarService.openSnackBar(message);
-        return throwError(message);
+        return throwError(() => new Error(message));
       })
     );
   }

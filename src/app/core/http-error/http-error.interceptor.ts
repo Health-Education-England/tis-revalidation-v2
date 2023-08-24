@@ -5,7 +5,7 @@ import {
   HttpInterceptor,
   HttpRequest
 } from "@angular/common/http";
-import { ErrorHandler, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { ErrorService } from "../../shared/services/error/error.service";

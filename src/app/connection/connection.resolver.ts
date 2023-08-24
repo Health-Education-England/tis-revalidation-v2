@@ -7,9 +7,9 @@ import { Get } from "./state/connection.actions";
 import { RecordsService } from "../records/services/records.service";
 import { stateName } from "../records/records.interfaces";
 import { IConnectionResponse } from "./connection.interfaces";
-
+import { Get as GetSideNavDetails } from "../details/details-side-nav/state/details-side-nav.actions";
 @Injectable()
-export class ConnectionResolver  {
+export class ConnectionResolver {
   constructor(
     private store: Store,
     private router: Router,
@@ -22,6 +22,7 @@ export class ConnectionResolver  {
     const gmcNumber: number = Number(route.params.gmcNumber);
     this.recordsService.summaryRoute = "/connections";
     this.recordsService.stateName = stateName.CONNECTIONS;
+    this.store.dispatch(new GetSideNavDetails(gmcNumber));
     return this.store.dispatch(new Get(gmcNumber)).pipe(
       catchError((error) => {
         return this.router.navigate(["/404"]);

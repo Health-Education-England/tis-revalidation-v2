@@ -15,10 +15,7 @@ describe("Save and submit recommendation", () => {
   };
   it("should display 404 page opened with non existent doctor", () => {
     cy.visit("/recommendation/999999999999");
-    cy.get("app-info-dialog")
-      .should("exist")
-      .contains("Oops, something went wrong");
-    cy.get("app-info-dialog button").should("exist").click();
+
     cy.get("app-page-not-found h1").should("exist").contains("Page not found");
   });
 

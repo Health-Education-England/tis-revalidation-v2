@@ -29,11 +29,12 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         if (error instanceof HttpErrorResponse) {
           if (error.status === 404) {
             this.router.navigateByUrl("/404");
+            return throwError(() => new Error("404 page not found"));
           }
         }
         const message: string = this.errorService.generateErrorMsg(error);
         this.snackBarService.openSnackBar(message);
-        return throwError(message);
+        return throwError(() => new Error(message));
       })
     );
   }

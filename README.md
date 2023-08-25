@@ -1,6 +1,6 @@
 # Revalidation
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.11.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version `16.1.6`.
 
 ## Pre requisite
 
@@ -19,6 +19,10 @@ Run `ng generate component component-name` to generate a new component. You can 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 \*NOTE on build you may encounter `Error: Call retries were exceeded`
 fix: `node --max_old_space_size=4096 node_modules/@angular/cli/bin/ng build`
+
+## Versioning
+
+We adopt Semantic Versioning https://semver.org/ defined via `version` property in `package.json`. This needs to be incremented for each new release.
 
 ## Coding Style
 

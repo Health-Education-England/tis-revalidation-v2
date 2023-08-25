@@ -3,6 +3,7 @@ import { IEnvironment } from "./environment.interface";
 
 export const commonEnv: IEnvironment = {
   production: false,
+  appVersion: require("../../package.json").version,
   name: "dev",
   siteIds: ["UA-40570867-6"],
   gtmID: "GTM-WFRHL895",

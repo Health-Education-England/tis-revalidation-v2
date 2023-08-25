@@ -17,3 +17,15 @@
     color: $color_nhsuk-purple;
   }
 }
+::ng-deep {
+  .mat-menu-content {
+    padding-bottom: 0 !important;
+  }
+}
+.version {
+  background-color: #eee;
+  font-size: x-small;
+  color: #888;
+  text-align: right;
+  padding: 4px;
+}

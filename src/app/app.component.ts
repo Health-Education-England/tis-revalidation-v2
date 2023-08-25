@@ -1,14 +1,16 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, HostBinding } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 import { Router, NavigationEnd, ActivatedRoute } from "@angular/router";
 import { GoogleTagManagerService } from "angular-google-tag-manager";
 import { zip, of } from "rxjs";
 import { filter, mergeMap } from "rxjs/operators";
+import { environment } from "@environment";
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html"
 })
 export class AppComponent implements OnInit {
+  @HostBinding("attr.app-version") appVersionAttr = environment.appVersion;
   constructor(
     private titleService: Title,
     private router: Router,

@@ -12,10 +12,11 @@ export class StatusBarComponent implements OnInit {
   helpLink: string = environment.supportLink;
   notificationsCount: number;
   username: string;
-
+  version: string;
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
+    this.version = environment.appVersion;
     this.setUsername();
     this.setServiceStatus();
     this.setNotifications();

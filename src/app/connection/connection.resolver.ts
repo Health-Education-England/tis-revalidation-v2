@@ -1,5 +1,5 @@
 import { ActivatedRouteSnapshot, Router } from "@angular/router";
-import { Observable } from "rxjs";
+import { Observable, combineLatest } from "rxjs";
 import { Store } from "@ngxs/store";
 import { Injectable } from "@angular/core";
 import { Get } from "./state/connection.actions";
@@ -21,7 +21,10 @@ export class ConnectionResolver {
     const gmcNumber: number = Number(route.params.gmcNumber);
     this.recordsService.summaryRoute = "/connections";
     this.recordsService.stateName = stateName.CONNECTIONS;
-    this.store.dispatch(new GetSideNavDetails(gmcNumber));
-    return this.store.dispatch(new Get(gmcNumber));
+
+    return combineLatest([
+      this.store.dispatch(new Get(gmcNumber)),
+      this.store.dispatch(new GetSideNavDetails(gmcNumber))
+    ]);
   }
 }

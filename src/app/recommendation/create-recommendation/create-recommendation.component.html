@@ -45,7 +45,7 @@
         [min]="minReferralDate"
         [max]="maxReferralDate"
         [matDatepicker]="picker"
-        disabled
+        readonly
       />
       <mat-error *ngIf="deferralDate?.hasError('required')">
         {{ getDeferralDateErrorMessage() }}

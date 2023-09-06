@@ -32,7 +32,7 @@
           {{ revalType.value }}
         </mat-option>
       </mat-select>
-      <mat-error *ngIf="action?.hasError('required')">
+      <mat-error *ngIf="actionControl?.hasError('required')">
         Please make a recommendation
       </mat-error>
     </mat-form-field>
@@ -47,11 +47,11 @@
         [matDatepicker]="picker"
         readonly
       />
-      <mat-error *ngIf="deferralDate?.hasError('required')">
+      <mat-error *ngIf="deferralDateControl?.hasError('required')">
         {{ getDeferralDateErrorMessage() }}
       </mat-error>
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker touchUi #picker disabled="false"></mat-datepicker>
+      <mat-datepicker #picker disabled="false"></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field *ngIf="deferSelected">
@@ -64,7 +64,7 @@
           {{ reason.reason }}
         </mat-option>
       </mat-select>
-      <mat-error *ngIf="deferralReason?.hasError('required')">
+      <mat-error *ngIf="deferralReasonControl?.hasError('required')">
         Reason must be provided
       </mat-error>
     </mat-form-field>
@@ -79,7 +79,7 @@
           {{ reason.reason }}
         </mat-option>
       </mat-select>
-      <mat-error *ngIf="deferralSubReason?.hasError('required')">
+      <mat-error *ngIf="deferralSubReasonControl?.hasError('required')">
         Sub reason must be provided
       </mat-error>
     </mat-form-field>

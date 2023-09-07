@@ -7,8 +7,8 @@ describe("Recommendations filters", () => {
   const filterButtonLabels = ["ALL DOCTORS", "UNDER NOTICE"];
 
   it("should contain correct filter button labels", () => {
-    cy.get("app-record-list-filters a").each(($el) => {
-      expect(filterButtonLabels.join("|")).to.contain($el.text().trim());
+    filterButtonLabels.forEach((btnLabel) => {
+      cy.get("app-record-list-filters a").contains(btnLabel).should("exist");
     });
   });
 

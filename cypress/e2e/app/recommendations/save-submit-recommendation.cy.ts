@@ -38,6 +38,21 @@ describe("Save and submit recommendation", () => {
     cy.get("[data-cy='btnCreateRecommendation']").should("not.exist");
   });
 
+  it("should display date picker when 'Defer' action is selected", () => {
+    openDetailPage();
+    cy.get("[data-cy='btnCreateRecommendation']").should("exist").click();
+    cy.get('mat-select[formcontrolname="action"]').click();
+    cy.get("mat-option").contains("Revalidate").click();
+    cy.get("[data-cy='deferDate']").should("not.exist");
+    cy.get('mat-select[formcontrolname="action"]').click();
+    cy.get("mat-option").contains("Defer").click();
+    cy.get("[data-cy='deferDate']").should("exist");
+
+    cy.get("[data-cy='deferDate'] input")
+      .invoke("attr", "readonly")
+      .should("exist");
+  });
+
   it("should save draft recommendation", () => {
     openDetailPage();
     cy.get("[data-cy='btnCreateRecommendation']").should("exist").click();

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
-import { UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Select, Store } from "@ngxs/store";
 import { Observable, of, Subscription } from "rxjs";
@@ -48,11 +48,12 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
   gmcNumber: number;
   gmcSubmissionDate: Date;
 
-  recommendationForm: UntypedFormGroup;
-  action: UntypedFormControl;
-  deferralDate: UntypedFormControl;
-  deferralReason: UntypedFormControl;
-  deferralSubReason: UntypedFormControl;
+  recommendationForm: FormGroup;
+  actionControl: FormControl;
+  deferralDateControl: FormControl;
+  deferralReasonControl: FormControl;
+  deferralSubReasonControl: FormControl;
+
   @ViewChild(CommentsComponent) appComments: CommentsComponent;
   minReferralDate: Date;
   maxReferralDate: Date;
@@ -208,7 +209,7 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
   }
 
   private bindFormControl(): void {
-    this.recommendationForm = new UntypedFormGroup({});
+    this.recommendationForm = new FormGroup({});
     this.setMinMaxDeferralDates();
     this.createVariableControls();
     this.subscribeToActions();
@@ -235,18 +236,18 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
    * bind show sub reasons based on reason data selected
    */
   private createVariableControls(): void {
-    this.deferralReason = new UntypedFormControl(
+    this.deferralReasonControl = new FormControl<number>(
       this.recommendation.deferralReason,
       Validators.required
     );
 
-    this.deferralSubReason = new UntypedFormControl(
+    this.deferralSubReasonControl = new FormControl<number>(
       this.recommendation.deferralSubReason,
       Validators.required
     );
 
-    this.deferralDate = new UntypedFormControl(
-      this.recommendation.deferralDate,
+    this.deferralDateControl = new FormControl<Date>(
+      { value: this.recommendation.deferralDate, disabled: false },
       Validators.required
     );
 
@@ -263,35 +264,43 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
     };
 
     this.componentSubscriptions.push(
-      this.deferralReason.valueChanges
+      this.deferralReasonControl.valueChanges
         .pipe(distinctUntilChanged())
         .subscribe((val) => {
           setDeferralSubReasons(val);
 
           if (this.deferralSubReasons.length > 0) {
-            this.deferralSubReason.setValidators(Validators.required);
+            this.deferralSubReasonControl.setValidators(Validators.required);
           } else {
-            this.deferralSubReason.clearValidators();
+            this.deferralSubReasonControl.clearValidators();
           }
           // update validity
-          this.deferralSubReason.updateValueAndValidity();
-          this.deferralSubReason.reset();
+          this.deferralSubReasonControl.updateValueAndValidity();
+          this.deferralSubReasonControl.reset();
         })
     );
 
-    this.recommendationForm.addControl("deferralReason", this.deferralReason);
+    this.recommendationForm.addControl(
+      "deferralReason",
+      this.deferralReasonControl
+    );
     this.recommendationForm.addControl(
       "deferralSubReason",
-      this.deferralSubReason
+      this.deferralSubReasonControl
     );
-    this.recommendationForm.addControl("deferralDate", this.deferralDate);
+    this.recommendationForm.addControl(
+      "deferralDate",
+      this.deferralDateControl
+    );
     // if rebind sub reasons mat-select control
     if (
       this.recommendation.recommendationId &&
       this.recommendation.deferralSubReason
     ) {
-      this.deferralReason.updateValueAndValidity();
-      this.deferralSubReason.setValue(this.recommendation.deferralSubReason);
+      this.deferralReasonControl.updateValueAndValidity();
+      this.deferralSubReasonControl.setValue(
+        this.recommendation.deferralSubReason
+      );
     }
   }
 
@@ -302,33 +311,33 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
    * enable disable all comments tick box in tool-bar // TODO: revise with users
    */
   private subscribeToActions(): void {
-    this.action = new UntypedFormControl(
+    this.actionControl = new FormControl<string>(
       this.recommendation.recommendationType,
       Validators.required
     );
     this.componentSubscriptions.push(
-      this.action.valueChanges.subscribe((val) => {
+      this.actionControl.valueChanges.subscribe((val) => {
         this.deferSelected =
           this.recommendationType[val] === this.recommendationType.DEFER;
         if (this.deferSelected) {
-          this.deferralReason.setValidators(Validators.required);
-          this.deferralSubReason.setValidators(Validators.required);
-          this.deferralDate.setValidators(Validators.required);
+          this.deferralReasonControl.setValidators(Validators.required);
+          this.deferralSubReasonControl.setValidators(Validators.required);
+          this.deferralDateControl.setValidators(Validators.required);
         } else {
-          this.deferralReason.clearValidators();
-          this.deferralSubReason.clearValidators();
-          this.deferralDate.clearValidators();
-          this.deferralReason.reset();
-          this.deferralSubReason.reset();
-          this.deferralDate.reset();
+          this.deferralReasonControl.clearValidators();
+          this.deferralSubReasonControl.clearValidators();
+          this.deferralDateControl.clearValidators();
+          this.deferralReasonControl.reset();
+          this.deferralSubReasonControl.reset();
+          this.deferralDateControl.reset();
         }
-        this.deferralReason.updateValueAndValidity();
-        this.deferralDate.updateValueAndValidity();
-        this.deferralSubReason.updateValueAndValidity();
+        this.deferralReasonControl.updateValueAndValidity();
+        this.deferralDateControl.updateValueAndValidity();
+        this.deferralSubReasonControl.updateValueAndValidity();
       })
     );
-    this.action.updateValueAndValidity();
-    this.recommendationForm.addControl("action", this.action);
+    this.actionControl.updateValueAndValidity();
+    this.recommendationForm.addControl("action", this.actionControl);
   }
 
   private errorFnc(err: any): Observable<any> {

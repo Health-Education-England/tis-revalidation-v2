@@ -5,7 +5,7 @@
 @import "palette";
 
 $nhsuk-typography: mat.define-legacy-typography-config(
-  $font-family: $nhsuk-font + $nhsuk-font-fallback
+  $font-family: $nhsuk-font
 );
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
@@ -38,7 +38,8 @@ $nhsuk-theme: mat.define-light-theme(
       accent: $nhsuk-accent,
       warn: $nhsuk-warn
     ),
-    density: 0
+    density: 0,
+    typography: $nhsuk-typography
   )
 );
 
@@ -51,10 +52,8 @@ $nhsuk-theme: mat.define-light-theme(
 
 html,
 body {
+  font-family: $nhsuk-font;
   height: 100%;
-}
-body {
-  font-family: $nhsuk-font, $nhsuk-font-fallback, Serif, Sans-serif; // sonar error fall-back variable is Serif, Sans-serif
   margin: 0;
   padding: 0;
   color: $color_nhsuk-black;

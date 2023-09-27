@@ -1,5 +1,6 @@
 <div class="d-grid record-search">
   <div class="d-flex pl-25 pr-20 align-items-center">
+    <app-show-hide-table-columns></app-show-hide-table-columns>
     <button
       data-cy="toggleFixedColumnsButton"
       color="primary"
@@ -10,22 +11,13 @@
       aria-label="Toggle table column width setting"
       (click)="toggleFixedColumns()"
     >
-      <ng-container *ngIf="fixedColumns">
-        <mat-icon class="material-icons-outlined layered-icon base-icon"
-          >width_normal</mat-icon
-        >
+      <mat-icon *ngIf="fixedColumns" class="material-icons-outlined rotate-90"
+        >compress</mat-icon
+      >
 
-        <mat-icon class="layered-icon overlay-bg-icon">circle</mat-icon>
-        <mat-icon class="layered-icon overlay-icon">close_fullscreen </mat-icon>
-      </ng-container>
-
-      <ng-container *ngIf="!fixedColumns">
-        <mat-icon class="material-icons-outlined layered-icon base-icon"
-          >width_wide</mat-icon
-        >
-        <mat-icon class="layered-icon overlay-bg-icon">circle</mat-icon>
-        <mat-icon class="layered-icon overlay-icon">open_in_full</mat-icon>
-      </ng-container>
+      <mat-icon *ngIf="!fixedColumns" class="material-icons-outlined rotate-90"
+        >expand</mat-icon
+      >
     </button>
 
     <button

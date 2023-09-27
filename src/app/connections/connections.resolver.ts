@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
-import { generateColumnData } from "../records/constants";
+import { RECORDS_COLUMN_DATA, generateColumnData } from "../records/constants";
 import { RecordsResolver } from "../records/records.resolver";
 import { RecordsService } from "../records/services/records.service";
 import { UpdateConnectionsService } from "../update-connections/services/update-connections.service";
@@ -14,20 +14,25 @@ import { COLUMN_DATA } from "./constants";
 import { ITableFilters, stateName } from "../records/records.interfaces";
 import { TABLE_FILTERS_FORM_BASE } from "../connections/constants";
 import { FormControlBase } from "../shared/form-controls/form-contol-base.model";
+import { LocalService } from "../shared/services/local/local.service";
 @Injectable()
-export class ConnectionsResolver
-  extends RecordsResolver
-  
-{
+export class ConnectionsResolver extends RecordsResolver {
   constructor(
     protected store: Store,
     protected recordsService: RecordsService,
-    protected updateConnectionsService: UpdateConnectionsService
+    protected updateConnectionsService: UpdateConnectionsService,
+    private localService: LocalService
   ) {
     super(store, recordsService, updateConnectionsService);
     this.initialiseData();
   }
 
+  setColumnsToDisplay() {
+    const columnNamesToDisplay: string[] = [];
+    if (this.localService.getData(this.recordsService.stateName)) {
+      columnNamesToDisplay;
+    }
+  }
   private initialiseData(): void {
     this.recordsService.stateName = stateName.CONNECTIONS;
     this.recordsService.detailsRoute = "/connection";
@@ -38,7 +43,23 @@ export class ConnectionsResolver
       "programmeMembershipStartDate",
       "programmeMembershipEndDate"
     ];
-    this.recordsService.columnData = generateColumnData(COLUMN_DATA);
+
+    this.recordsService.columnData = [...RECORDS_COLUMN_DATA, ...COLUMN_DATA];
+
+    if (!this.recordsService.columnsToDisplay$.getValue().length) {
+      if (this.localService.customLocalData?.connectionsTableColumns?.length) {
+        this.recordsService.columnsToDisplay$.next(
+          this.localService.customLocalData.connectionsTableColumns
+        );
+      } else {
+        this.recordsService.columnsToDisplay$.next(
+          this.recordsService.columnData
+            .filter((column) => !column.hidden)
+            .map((column) => column.name)
+        );
+      }
+    }
+
     this.recordsService.filters = [
       {
         label: "CURRENT CONNECTIONS",

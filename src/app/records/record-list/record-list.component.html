@@ -48,27 +48,27 @@
               Records list
             </caption>
             <ng-container
-              *ngFor="let i of columnData"
-              matColumnDef="{{ i.name }}"
+              *ngFor="let column of columnData"
+              matColumnDef="{{ column.name }}"
             >
               <!-- header cell -->
               <th
                 mat-header-cell
                 *matHeaderCellDef
-                [mat-sort-header]="i.name"
+                [mat-sort-header]="column.name"
                 scope="col"
                 [disabled]="
                   data.enableUpdateConnections ||
                   data.enableAllocateAdmin ||
                   data.disableSearchAndSort ||
-                  !i.enableSort
+                  !column.enableSort
                 "
               >
                 <mat-checkbox
                   *ngIf="
                     (data.enableUpdateConnections ||
                       data.enableAllocateAdmin) &&
-                    i.name === 'doctorFirstName'
+                    column.name === 'doctorFirstName'
                   "
                   data-cy="select-all-records-checkbox"
                   [checked]="data.allChecked"
@@ -77,7 +77,7 @@
                   class="pr-20"
                 >
                 </mat-checkbox>
-                {{ i.label }}
+                {{ column.label }}
               </th>
 
               <!-- mat cell -->
@@ -92,7 +92,7 @@
                     showCheckbox(
                       data.enableAllocateAdmin,
                       data.enableUpdateConnections,
-                      i.name
+                      column.name
                     )
                   "
                   class="pr-20"
@@ -103,14 +103,18 @@
                 </mat-checkbox>
 
                 <!-- render allocate admin component or admin name -->
-                <ng-container *ngIf="i.name === 'admin'; else notAdminCell">
+                <ng-container
+                  *ngIf="column.name === 'admin'; else notAdminCell"
+                >
                   <a
-                    *ngIf="element[i.name]"
-                    [matTooltip]="element[i.name] | AdminName: 'email'"
+                    *ngIf="element[column.name]"
+                    [matTooltip]="element[column.name] | AdminName: 'email'"
                     mat-button
                     (click)="$event.stopPropagation()"
-                    [href]="'mailto:' + element[i.name] | AdminName: 'email'"
-                    >{{ element[i.name] | AdminName }}</a
+                    [href]="
+                      'mailto:' + element[column.name] | AdminName: 'email'
+                    "
+                    >{{ element[column.name] | AdminName }}</a
                   >
                 </ng-container>
 
@@ -119,28 +123,30 @@
                   <!-- cell value | format date -->
 
                   <ng-container
-                    *ngIf="dateColumns.includes(i.name); else notDate"
+                    *ngIf="dateColumns.includes(column.name); else notDate"
                   >
-                    {{ element[i.name] | date: dateFormat }}
+                    {{ element[column.name] | date: dateFormat }}
                   </ng-container>
                   <!-- cell value | no formatting needed -->
                   <ng-template #notDate>
                     <div
-                      *ngIf="i.name === 'programmeName'; else NotProgramme"
-                      [innerHTML]="element[i.name] | splitStringToHTML"
+                      *ngIf="column.name === 'programmeName'; else NotProgramme"
+                      [innerHTML]="element[column.name] | splitStringToHTML"
                     ></div>
                     <ng-template #NotProgramme>
                       <ng-container
                         *ngIf="
-                          i.name === 'designatedBody' ||
-                            i.name === 'tcsDesignatedBody';
+                          column.name === 'designatedBody' ||
+                            column.name === 'tcsDesignatedBody';
                           else NotDBC
                         "
                       >
-                        {{ element[i.name] | formatDesignatedBody: "abbr" }}
+                        {{
+                          element[column.name] | formatDesignatedBody: "abbr"
+                        }}
                       </ng-container>
                       <ng-template #NotDBC>
-                        {{ element[i.name] }}
+                        {{ element[column.name] }}
                       </ng-template>
                     </ng-template>
                   </ng-template>

@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Sort as ISort } from "@angular/material/sort";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { environment } from "@environment";
@@ -9,13 +9,14 @@ import { UpdateConnectionsService } from "src/app/update-connections/services/up
 import { ClearAllocateList } from "../../admins/state/admins.actions";
 import { IRecordDataCell } from "../records.interfaces";
 import { RecordsService } from "../services/records.service";
+import { LocalService } from "src/app/shared/services/local/local.service";
 
 @Component({
   selector: "app-record-list",
   templateUrl: "./record-list.component.html",
   styleUrls: ["./record-list.component.scss"]
 })
-export class RecordListComponent implements OnDestroy {
+export class RecordListComponent implements OnDestroy, OnInit {
   public columnData: IRecordDataCell[] = this.recordsService.columnData;
   public dateColumns: string[] = this.recordsService.dateColumns;
   public detailsRoute: string = this.recordsService.detailsRoute;
@@ -64,12 +65,10 @@ export class RecordListComponent implements OnDestroy {
     protected recordsService: RecordsService,
     protected router: Router,
     protected store: Store,
-    private updateConnectionsService: UpdateConnectionsService
+    private updateConnectionsService: UpdateConnectionsService,
+    private localService: LocalService
   ) {}
-
-  public get columnNames(): string[] {
-    return this.columnData.map((i) => i.name);
-  }
+  columnNames: string[];
 
   /**
    * Handler method for navigating from summary to details screen
@@ -117,6 +116,20 @@ export class RecordListComponent implements OnDestroy {
     );
   }
 
+  ngOnInit(): void {
+    if (this.localService.customLocalData?.connectionsTableColumns?.length) {
+      this.columnNames =
+        this.localService.customLocalData.connectionsTableColumns;
+    } else {
+      this.columnNames = this.columnData
+        .filter((cd) => !cd.hidden)
+        .map((c) => c.name);
+    }
+
+    this.recordsService.columnsToDisplay$.subscribe((columnNames) => {
+      this.columnNames = columnNames;
+    });
+  }
   ngOnDestroy() {
     this.store.dispatch(new ClearAllocateList());
   }

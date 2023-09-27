@@ -72,6 +72,7 @@ export class RecordsService {
   public stateName: string;
   public dateColumns: string[];
   public columnData: IRecordDataCell[];
+  public columnsToDisplay$: BehaviorSubject<string[]> = new BehaviorSubject([]);
   public detailsRoute: string;
   public summaryRoute: string;
   public filters: IFilter[];

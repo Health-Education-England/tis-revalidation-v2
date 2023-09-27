@@ -1,0 +1,28 @@
+<button
+  [matMenuTriggerFor]="menu"
+  color="primary"
+  matTooltipPosition="below"
+  matTooltipShowDelay="500"
+  mat-icon-button
+  matTooltip="Show/hide table columns"
+  aria-label="Show/hide table columns"
+>
+  <mat-icon class="material-icons-outlined"> view_week </mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+  <mat-selection-list
+    #columnsToShow
+    (selectionChange)="onSelection(columnsToShow.selectedOptions.selected)"
+  >
+    <mat-list-option
+      [disabled]="column.name === 'doctorFirstName'"
+      (click)="$event.stopPropagation()"
+      *ngFor="let column of columnData"
+      [value]="column.name"
+      [selected]="columnsToDisplay.includes(column.name)"
+    >
+      {{ column.label }}
+    </mat-list-option>
+  </mat-selection-list>
+  <button mat-flat-button color="primary" class="w-100">Close</button>
+</mat-menu>

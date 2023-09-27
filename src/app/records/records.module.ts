@@ -16,6 +16,7 @@ import { RecordsService } from "./services/records.service";
 import { RecordListTableFiltersComponent } from "./record-list-table-filters/record-list-table-filters.component";
 import { RecordListState } from "./record-list/state/record-list.state";
 import { NgxsModule } from "@ngxs/store";
+import { ShowHideTableColumnsComponent } from "./show-hide-table-columns/show-hide-table-columns.component";
 const components: any[] = [
   RecordListComponent,
   RecordListFiltersComponent,
@@ -24,7 +25,8 @@ const components: any[] = [
   RecordSearchComponent,
   RefreshDataBtnComponent,
   ResetRecordListComponent,
-  RecordListTableFiltersComponent
+  RecordListTableFiltersComponent,
+  ShowHideTableColumnsComponent
 ];
 
 @NgModule({

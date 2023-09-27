@@ -1,13 +1,19 @@
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
+import {
+  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators
+} from "@angular/forms";
 import { Store } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
 import { filter, take } from "rxjs/operators";
 import { AuthService } from "src/app/core/auth/auth.service";
 import { UpdateConnectionsService } from "src/app/update-connections/services/update-connections.service";
 import { ToggleFixedColumns } from "../record-list/state/record-list.actions";
-import { stateName } from "../records.interfaces";
+import { IRecordDataCell, stateName } from "../records.interfaces";
 import { RecordsService } from "../services/records.service";
+import { FormControlBase } from "src/app/shared/form-controls/form-contol-base.model";
 
 @Component({
   selector: "app-record-search",
@@ -45,6 +51,8 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
   filterPanelOpen: boolean = false;
   showClearSearchForm: boolean = false;
   fixedColumns: boolean;
+  columnData: IRecordDataCell[];
+
   @ViewChild("ngForm") public ngForm;
 
   constructor(
@@ -58,8 +66,12 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
       this.recordsService.stateName === stateName.CONNECTIONS;
     this.isRevalAdmin = this.authService.isRevalAdmin;
     this.searchLabel = "Search name or GMC no";
+    this.columnData = this.recordsService.columnData;
   }
 
+  onSelectionChange(e, v) {
+    console.log(v);
+  }
   ngOnInit() {
     this.setupForm();
     this.listenToClearAllEvent();

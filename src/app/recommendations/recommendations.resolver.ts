@@ -4,11 +4,12 @@ import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { finalize, filter, take } from "rxjs/operators";
 
-import { generateColumnData } from "../records/constants";
+import { RECORDS_COLUMN_DATA, generateColumnData } from "../records/constants";
 import { RecordsResolver } from "../records/records.resolver";
 import { RecordsService } from "../records/services/records.service";
 import {
   COLUMN_DATA,
+  DBC_DATA,
   TABLE_FILTERS_FORM_BASE,
   TABLE_FILTERS_FORM_DBC
 } from "./constants";
@@ -24,17 +25,16 @@ import {
   FormControlBase
 } from "../shared/form-controls/form-contol-base.model";
 import { IAdmin } from "../admins/admins.interfaces";
+import { LocalService } from "../shared/services/local/local.service";
 
 @Injectable()
-export class RecommendationsResolver
-  extends RecordsResolver
-  
-{
+export class RecommendationsResolver extends RecordsResolver {
   constructor(
     protected store: Store,
     protected recordsService: RecordsService,
     private authService: AuthService,
-    protected updateConnectionsService: UpdateConnectionsService
+    protected updateConnectionsService: UpdateConnectionsService,
+    private localService: LocalService
   ) {
     super(store, recordsService, updateConnectionsService);
     this.initialiseData();
@@ -82,15 +82,24 @@ export class RecommendationsResolver
     this.initFiltersFormData();
 
     if (this.authService.inludesLondonDbcs) {
-      const statusIndex = COLUMN_DATA.findIndex((dbc) => dbc[0] === "Status");
-      COLUMN_DATA.splice(statusIndex + 1, 0, [
-        "Designated body",
-        "designatedBody",
-        false
-      ]);
+      COLUMN_DATA.unshift(DBC_DATA);
     }
+    console.log([...RECORDS_COLUMN_DATA, ...COLUMN_DATA]);
+    this.recordsService.columnData = [...RECORDS_COLUMN_DATA, ...COLUMN_DATA];
 
-    this.recordsService.columnData = generateColumnData(COLUMN_DATA);
+    if (!this.recordsService.columnsToDisplay$.getValue().length) {
+      if (this.localService.customLocalData?.connectionsTableColumns?.length) {
+        this.recordsService.columnsToDisplay$.next(
+          this.localService.customLocalData.connectionsTableColumns
+        );
+      } else {
+        this.recordsService.columnsToDisplay$.next(
+          this.recordsService.columnData
+            .filter((column) => !column.hidden)
+            .map((column) => column.name)
+        );
+      }
+    }
     this.recordsService.filters = [
       {
         label: "ALL DOCTORS",

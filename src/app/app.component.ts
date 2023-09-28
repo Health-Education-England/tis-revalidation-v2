@@ -23,16 +23,8 @@ export class AppComponent implements OnInit {
     private localService: LocalService
   ) {}
 
-  initLocalDataStore() {
-    const localData: CustomLocalData = this.localService.customLocalData;
-    console.log("environment.appVersion", environment.appVersion);
-    if (!localData || localData.version !== environment.appVersion) {
-      this.localService.initCustomData();
-    }
-  }
-
   ngOnInit() {
-    this.initLocalDataStore();
+    this.localService.initCustomData();
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),

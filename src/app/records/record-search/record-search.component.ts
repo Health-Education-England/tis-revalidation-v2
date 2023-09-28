@@ -69,9 +69,6 @@ export class RecordSearchComponent implements OnInit, OnDestroy {
     this.columnData = this.recordsService.columnData;
   }
 
-  onSelectionChange(e, v) {
-    console.log(v);
-  }
   ngOnInit() {
     this.setupForm();
     this.listenToClearAllEvent();

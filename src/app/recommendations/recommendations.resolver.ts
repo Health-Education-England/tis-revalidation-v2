@@ -84,13 +84,14 @@ export class RecommendationsResolver extends RecordsResolver {
     if (this.authService.inludesLondonDbcs) {
       COLUMN_DATA.unshift(DBC_DATA);
     }
-    console.log([...RECORDS_COLUMN_DATA, ...COLUMN_DATA]);
     this.recordsService.columnData = [...RECORDS_COLUMN_DATA, ...COLUMN_DATA];
 
     if (!this.recordsService.columnsToDisplay$.getValue().length) {
-      if (this.localService.customLocalData?.connectionsTableColumns?.length) {
+      if (
+        this.localService.customLocalData?.recommendationsTableColumns?.length
+      ) {
         this.recordsService.columnsToDisplay$.next(
-          this.localService.customLocalData.connectionsTableColumns
+          this.localService.customLocalData.recommendationsTableColumns
         );
       } else {
         this.recordsService.columnsToDisplay$.next(

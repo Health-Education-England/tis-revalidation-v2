@@ -11,7 +11,7 @@ export interface CustomLocalData {
   providedIn: "root"
 })
 export class LocalService {
-  constructor() {}
+  public customLocalData: CustomLocalData;
 
   public initCustomData() {
     const initLocalData: CustomLocalData = {
@@ -19,21 +19,29 @@ export class LocalService {
       connectionsTableColumns: [],
       recommendationsTableColumns: []
     };
-    this.saveData("RevalCustomData", JSON.stringify(initLocalData));
+
+    const revalCustomData: CustomLocalData = JSON.parse(
+      this.getData("RevalCustomData")
+    );
+    if (
+      !revalCustomData ||
+      revalCustomData.version !== environment.appVersion
+    ) {
+      this.customLocalData = initLocalData;
+      this.saveData("RevalCustomData", JSON.stringify(initLocalData));
+    } else {
+      this.customLocalData = revalCustomData;
+    }
   }
 
   updateCustomData(key: string, value: string | string[]) {
-    const updated = Object.assign({}, this.customLocalData, { [key]: value });
-    this.saveData("RevalCustomData", JSON.stringify(updated));
+    this.customLocalData[key] = value;
+    this.saveData("RevalCustomData", JSON.stringify(this.customLocalData));
   }
 
   public saveData(key: string, value: string) {
     localStorage.setItem(key, value);
   }
-
-  public customLocalData: CustomLocalData = JSON.parse(
-    this.getData("RevalCustomData")
-  );
 
   public getData(key: string) {
     return localStorage.getItem(key);

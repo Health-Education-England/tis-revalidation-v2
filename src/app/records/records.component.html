@@ -1,46 +1,52 @@
 <app-record-list-filters></app-record-list-filters>
-
-<div
-  *ngIf="loading; else notLoading"
-  class="d-flex align-content-center justify-content-center align-items-center progress-spinner"
->
-  <mat-spinner></mat-spinner>
-</div>
-
-<ng-template #notLoading>
-  <div class="d-grid records-top-section align-items-center sticky-toolbar">
-    <app-record-search></app-record-search>
-    <app-refresh-data-btn class="d-grid pl-5"></app-refresh-data-btn>
-    <app-record-list-paginator></app-record-list-paginator>
+<ng-container *ngIf="filter$ | async as filter">
+  <div
+    *ngIf="loading; else notLoading"
+    class="d-flex align-content-center justify-content-center align-items-center progress-spinner"
+  >
+    <mat-spinner></mat-spinner>
   </div>
 
-  <app-update-connection
-    *ngIf="enableUpdateConnections$ | async"
-    (submittFormEvent)="onSubmitConnections($event)"
-  >
-  </app-update-connection>
-  <app-allocate-admin-actions
-    *ngIf="enableAllocateAdmin$ | async"
-  ></app-allocate-admin-actions>
+  <ng-template #notLoading>
+    <div *ngIf="filter === exceptionsLogFilter; else showRecords">
+      <app-exceptions-log></app-exceptions-log>
+    </div>
+    <ng-template #showRecords>
+      <div class="d-grid records-top-section align-items-center sticky-toolbar">
+        <app-record-search></app-record-search>
+        <app-refresh-data-btn class="d-grid pl-5"></app-refresh-data-btn>
+        <app-record-list-paginator></app-record-list-paginator>
+      </div>
 
-  <mat-drawer-container
-    *ngIf="showTableFilters; else noTableFilters"
-    class="filters-drawer-container"
-  >
-    <mat-drawer
-      #filtersDrawer
-      mode="side"
-      [opened]="filterPanelOpen"
-      [disableClose]="true"
-    >
-      <app-record-list-table-filters></app-record-list-table-filters>
-    </mat-drawer>
-    <mat-drawer-content>
-      <app-record-list></app-record-list>
-    </mat-drawer-content>
-  </mat-drawer-container>
+      <app-update-connection
+        *ngIf="enableUpdateConnections$ | async"
+        (submittFormEvent)="onSubmitConnections($event)"
+      >
+      </app-update-connection>
+      <app-allocate-admin-actions
+        *ngIf="enableAllocateAdmin$ | async"
+      ></app-allocate-admin-actions>
 
-  <ng-template #noTableFilters>
-    <app-record-list></app-record-list>
+      <mat-drawer-container
+        *ngIf="showTableFilters; else noTableFilters"
+        class="filters-drawer-container"
+      >
+        <mat-drawer
+          #filtersDrawer
+          mode="side"
+          [opened]="filterPanelOpen"
+          [disableClose]="true"
+        >
+          <app-record-list-table-filters></app-record-list-table-filters>
+        </mat-drawer>
+        <mat-drawer-content>
+          <app-record-list></app-record-list>
+        </mat-drawer-content>
+      </mat-drawer-container>
+
+      <ng-template #noTableFilters>
+        <app-record-list></app-record-list>
+      </ng-template>
+    </ng-template>
   </ng-template>
-</ng-template>
+</ng-container>

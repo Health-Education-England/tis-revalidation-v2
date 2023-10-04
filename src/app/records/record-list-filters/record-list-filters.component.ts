@@ -5,6 +5,7 @@ import { take } from "rxjs/operators";
 import { UpdateConnectionsService } from "src/app/update-connections/services/update-connections.service";
 import { IFilter, ITotalCounts } from "../records.interfaces";
 import { RecordsService } from "../services/records.service";
+import { ConnectionsFilterType } from "src/app/connections/connections.interfaces";
 
 @Component({
   selector: "app-record-list-filters",
@@ -34,9 +35,11 @@ export class RecordListFiltersComponent {
 
   public filterRecords(filter: string): void {
     this.recordsService.filter(filter);
-    this.recordsService
-      .resetSortPageAndSearch()
-      .pipe(take(1))
-      .subscribe(() => this.recordsService.updateRoute());
+    if (filter !== ConnectionsFilterType.EXCEPTIONSLOG) {
+      this.recordsService
+        .resetSortPageAndSearch()
+        .pipe(take(1))
+        .subscribe(() => this.recordsService.updateRoute());
+    }
   }
 }

@@ -10,6 +10,7 @@ import { Store } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
 import { UpdateConnectionsService } from "../update-connections/services/update-connections.service";
 import { RecordsService } from "./services/records.service";
+import { ConnectionsFilterType } from "../connections/connections.interfaces";
 
 @Component({
   selector: "app-records",
@@ -21,6 +22,7 @@ export class RecordsComponent implements OnInit, OnDestroy {
   @Input() public loading: boolean;
   showTableFilters: boolean;
   filterPanelOpen: boolean;
+  exceptionsLogFilter = ConnectionsFilterType.EXCEPTIONSLOG;
   public subscriptions: Subscription = new Subscription();
   public enableUpdateConnections$: Observable<boolean> = this.store.select(
     (state) =>
@@ -31,6 +33,9 @@ export class RecordsComponent implements OnInit, OnDestroy {
     (state) => state[this.recordsService.stateName].enableAllocateAdmin
   );
 
+  public filter$: Observable<string> = this.store.select(
+    (state) => state[this.recordsService.stateName].filter
+  );
   constructor(
     private store: Store,
     private recordsService: RecordsService,

@@ -15,10 +15,7 @@ import { ITableFilters, stateName } from "../records/records.interfaces";
 import { TABLE_FILTERS_FORM_BASE } from "../connections/constants";
 import { FormControlBase } from "../shared/form-controls/form-contol-base.model";
 @Injectable()
-export class ConnectionsResolver
-  extends RecordsResolver
-  
-{
+export class ConnectionsResolver extends RecordsResolver {
   constructor(
     protected store: Store,
     protected recordsService: RecordsService,
@@ -47,6 +44,11 @@ export class ConnectionsResolver
       {
         label: "DISCREPANCIES",
         name: ConnectionsFilterType.DISCREPANCIES
+      },
+
+      {
+        label: "EXCEPTIONS LOG",
+        name: "exceptionsLog"
       }
     ];
 

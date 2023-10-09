@@ -60,7 +60,7 @@
     "@angular-eslint/template-parser": "16.1.0",
     "@angular/cli": "^16.1.5",
     "@angular/compiler-cli": "^16.1.6",
-    "@angular/language-service": "^16.1.6",
+    "@angular/language-service": "^16.2.8",
     "@ngxs/devtools-plugin": "^3.8.1",
     "@react-native-community/netinfo": "^9.4.1",
     "@types/jasmine": "^4.3.5",

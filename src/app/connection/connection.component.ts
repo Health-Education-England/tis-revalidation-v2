@@ -98,6 +98,7 @@ export class ConnectionComponent implements OnInit, OnDestroy {
   }
 
   updateConnection(formValue: any) {
+    const admin = this.authService.userName;
     this.submitting = true;
     const doctors: IDoctor[] = [
       {
@@ -110,7 +111,8 @@ export class ConnectionComponent implements OnInit, OnDestroy {
       changeReason: formValue.reason,
       designatedBodyCode:
         formValue.action === ActionType.ADD_CONNECTION ? formValue.dbc : null,
-      doctors
+      doctors,
+      admin
     };
 
     this.componentSubscription = this.updateConnectionsService

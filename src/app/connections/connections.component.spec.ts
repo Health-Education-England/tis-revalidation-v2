@@ -86,7 +86,8 @@ describe("ConnectionsComponent", () => {
             currentDesignatedBodyCode: "1-AIIDWA",
             programmeOwnerDesignatedBodyCode: "1-AIIDWA"
           }
-        ]
+        ],
+        admin: ""
       },
       ActionType.ADD_CONNECTION
     );

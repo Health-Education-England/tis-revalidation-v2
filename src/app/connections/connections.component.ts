@@ -9,6 +9,7 @@ import { UpdateConnectionsService } from "../update-connections/services/update-
 import { EnableUpdateConnections } from "../update-connections/state/update-connections.actions";
 import { ActionType } from "../update-connections/update-connections.interfaces";
 import { ConnectionsFilterType } from "./connections.interfaces";
+import { AuthService } from "../core/auth/auth.service";
 
 @Component({
   selector: "app-connections",
@@ -32,6 +33,7 @@ export class ConnectionsComponent implements OnDestroy {
   constructor(
     private store: Store,
     private recordsService: RecordsService,
+    private authService: AuthService,
     private updateConnectionsService: UpdateConnectionsService,
     private snackBarService: SnackBarService
   ) {
@@ -79,11 +81,14 @@ export class ConnectionsComponent implements OnDestroy {
         programmeOwnerDesignatedBodyCode: item.tcsDesignatedBody
       }));
 
+      const admin = this.authService.userName;
+
       const payload = {
         changeReason: formValue.reason,
         designatedBodyCode:
           formValue.action === ActionType.ADD_CONNECTION ? formValue.dbc : null,
-        doctors
+        doctors,
+        admin: admin
       };
 
       this.componentSubscription = this.updateConnectionsService

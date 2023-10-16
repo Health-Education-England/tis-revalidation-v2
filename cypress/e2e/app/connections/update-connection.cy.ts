@@ -1,7 +1,7 @@
 describe("Update connections", () => {
   beforeEach(() => {
     cy.loginSession();
-    cy.visit("/connection/8999999");
+    cy.visit("/connection/7920092");
   });
 
   const updateActions = ["Add connection", "Remove connection"];

@@ -100,7 +100,8 @@ describe("ConnectionComponent", () => {
             gmcId: 123456,
             currentDesignatedBodyCode: "1-ABCDE"
           }
-        ]
+        ],
+        admin: ""
       },
       ActionType.ADD_CONNECTION
     );
@@ -168,9 +169,10 @@ describe("ConnectionComponent", () => {
         doctors: [
           {
             gmcId: 123456,
-            currentDesignatedBodyCode: "1-ABCDE"
+            currentDesignatedBodyCode: "1-ABCDE",
           }
-        ]
+        ],
+        admin:""
       },
       ActionType.REMOVE_CONNECTION
     );

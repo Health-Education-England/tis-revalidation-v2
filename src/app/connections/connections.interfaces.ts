@@ -28,7 +28,8 @@ export enum ConnectionsFilterType {
   CURRENT_CONNECTIONS = "currentConnections",
   DISCREPANCIES = "discrepancies",
   ALL = "all",
-  HIDDEN = "hidden"
+  HIDDEN = "hidden",
+  EXCEPTIONSLOG = "exceptionsLog"
 }
 
 export interface IConnectionsTableFilters extends ITableFilters {

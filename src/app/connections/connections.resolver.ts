@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot } from "@angular/router";
 import { Store } from "@ngxs/store";
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 import { generateColumnData } from "../records/constants";
 import { RecordsResolver } from "../records/records.resolver";
 import { RecordsService } from "../records/services/records.service";
@@ -15,10 +15,7 @@ import { ITableFilters, stateName } from "../records/records.interfaces";
 import { TABLE_FILTERS_FORM_BASE } from "../connections/constants";
 import { FormControlBase } from "../shared/form-controls/form-contol-base.model";
 @Injectable()
-export class ConnectionsResolver
-  extends RecordsResolver
-  
-{
+export class ConnectionsResolver extends RecordsResolver {
   constructor(
     protected store: Store,
     protected recordsService: RecordsService,
@@ -47,6 +44,11 @@ export class ConnectionsResolver
       {
         label: "DISCREPANCIES",
         name: ConnectionsFilterType.DISCREPANCIES
+      },
+
+      {
+        label: "EXCEPTIONS LIST",
+        name: ConnectionsFilterType.EXCEPTIONSLOG
       }
     ];
 
@@ -62,7 +64,10 @@ export class ConnectionsResolver
       this.store.selectSnapshot(
         (snapshot) => snapshot.connections.tableFilters
       );
-
+    if (route.queryParams.filter === ConnectionsFilterType.EXCEPTIONSLOG) {
+      this.recordsService.filter(route.queryParams.filter);
+      return of(null);
+    }
     const filterParamsExists = Object.keys(route.queryParams).some((param) =>
       TABLE_FILTERS_FORM_BASE.map((tableFilter) => tableFilter.key).includes(
         param

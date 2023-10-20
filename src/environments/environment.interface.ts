@@ -2,6 +2,7 @@ export interface IEnvironment {
   readonly appVersion: string;
   readonly adminsUIHostUri: string; // admins-ui related links
   readonly dateFormat: string; // TODO: when implementing i18n localization use value from locale
+  readonly dateTimeFormat: string;
   readonly gtmID: string;
   readonly name: string; // environment name
   readonly production: boolean; // build mode

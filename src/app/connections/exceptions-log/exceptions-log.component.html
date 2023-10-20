@@ -1,0 +1,66 @@
+<ng-container id="ShowError" *ngIf="pageStatus === 'error'">
+  <div data-test="ErrorMessage" class="mt-20 d-flex justify-content-center">
+    Exceptions data failed to load.
+  </div>
+</ng-container>
+<ng-container id="ShowLoadingSpinner" *ngIf="pageStatus === 'loading'">
+  <div
+    class="d-flex align-content-center justify-content-center align-items-center progress-spinner"
+  >
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-container>
+
+<ng-container id="NoExceptionDataFound" *ngIf="pageStatus === 'empty'">
+  <div
+    data-test="NoExceptionsMessage"
+    class="mt-20 d-flex justify-content-center"
+  >
+    No exceptions found.
+  </div>
+</ng-container>
+
+<ng-container id="ExceptionDataFound" *ngIf="pageStatus === 'ok'">
+  <h2 class="ml-20 mt-20">
+    List of errors from unsuccessful connection updates made today by currennt
+    user.
+  </h2>
+
+  <table
+    class="w-100"
+    mat-table
+    [dataSource]="dataSource"
+    matSort
+    matSortActive="timestamp"
+    matSortDirection="desc"
+    matSortDisableClear
+  >
+    <caption class="collapsed no-height">
+      List of connection update errors from today.
+    </caption>
+    <ng-container
+      [matColumnDef]="column.name"
+      *ngFor="let column of displayedColumns"
+    >
+      <th mat-header-cell [mat-sort-header]="column.name" *matHeaderCellDef>
+        {{ column.label }}
+      </th>
+      <td mat-cell *matCellDef="let cell">
+        <ng-container *ngIf="column.name === 'timestamp'; else notDate">
+          {{ cell[column.name] | date: dateFormat }}
+        </ng-container>
+        <ng-template #notDate>
+          {{ cell[column.name] }}
+        </ng-template>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumnNames"></tr>
+    <tr
+      tabindex="0"
+      mat-row
+      *matRowDef="let row; columns: displayedColumnNames"
+      (click)="navigateToDetails($event, row)"
+    ></tr>
+  </table>
+</ng-container>

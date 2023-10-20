@@ -7,9 +7,10 @@ import {
   OnDestroy
 } from "@angular/core";
 import { Store } from "@ngxs/store";
-import { Observable, Subscription } from "rxjs";
+import { Observable, Subscription, map } from "rxjs";
 import { UpdateConnectionsService } from "../update-connections/services/update-connections.service";
 import { RecordsService } from "./services/records.service";
+import { ConnectionsFilterType } from "../connections/connections.interfaces";
 
 @Component({
   selector: "app-records",
@@ -31,6 +32,9 @@ export class RecordsComponent implements OnInit, OnDestroy {
     (state) => state[this.recordsService.stateName].enableAllocateAdmin
   );
 
+  public isExceptionsLog$: Observable<boolean> = this.store
+    .select((state) => state[this.recordsService.stateName].filter)
+    .pipe(map((filter) => filter === ConnectionsFilterType.EXCEPTIONSLOG));
   constructor(
     private store: Store,
     private recordsService: RecordsService,

@@ -105,8 +105,8 @@
           (click)="currentExpanded(element, $event)"
           (keyup.enter)="currentExpanded(element, $event)"
           (keyup.space)="currentExpanded(element, $event)"
-          [class.highlight-row-warn]="element.responseCode !== 0"
-          [class.highlight-row-success]="element.responseCode === 0"
+          [class.highlight-row-warn]="element.responseCode !== '0'"
+          [class.highlight-row-success]="element.responseCode === '0'"
         ></tr>
         <tr
           mat-row

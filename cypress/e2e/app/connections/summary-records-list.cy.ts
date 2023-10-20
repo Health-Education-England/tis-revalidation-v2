@@ -15,9 +15,14 @@ describe("Connections Summary Records List", () => {
     "Programme owner",
     "Programme membership"
   ];
-  const sortableColumns = ["First name", "Last name", "GMC Designated body", "Programme owner"];
+  const sortableColumns = [
+    "First name",
+    "Last name",
+    "GMC Designated body",
+    "Programme owner"
+  ];
 
-  const filters = ["DISCREPANCIES", "CURRENT CONNECTIONS"];
+  const filters = ["DISCREPANCIES", "CURRENT CONNECTIONS", "EXCEPTIONS LIST"];
 
   it("should display correct page filter tabs", () => {
     cy.get("app-record-list-filters a").each(($el) => {

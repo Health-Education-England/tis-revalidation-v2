@@ -13,6 +13,7 @@ export const APP_URLS_CONFIG: IAppUrls = {
   getConnections: `api/connection`,
   getDbcs: `api/reference/dbcs`,
   getDetails: `api/trainee`,
+  getExceptionsLog: `api/connection/exceptionLog/today`,
   getNotes: `mocky/5ea2da614f00006c00d9f540`,
   getRecommendation: `api/recommendation`,
   getRecommendations: `api/v1/doctors`,

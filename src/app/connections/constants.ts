@@ -10,6 +10,11 @@ export const COLUMN_DATA: [string, string, boolean][] = [
   ["Programme owner", "tcsDesignatedBody", true],
   ["Programme membership", "programmeMembershipType", false]
 ];
+export const EXCEPTIONSLOG_COLUMN_DATA: { name: string; label: string }[] = [
+  { name: "timestamp", label: "Date/time" },
+  { name: "gmcId", label: "GMC Number" },
+  { name: "errorMessage", label: "Error message" }
+];
 
 export const TABLE_FILTERS_FORM_BASE: Array<
   FormControlBase | AutocompleteControl

@@ -39,6 +39,7 @@ export interface IAppUrls {
   readonly getConnections: string;
   readonly getDbcs: string;
   readonly getDetails: string;
+  readonly getExceptionsLog: string;
   readonly getNotes: string;
   readonly getRecommendation: string;
   readonly getRecommendations: string;

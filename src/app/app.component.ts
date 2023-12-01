@@ -2,9 +2,10 @@ import { Component, OnInit, HostBinding } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 import { Router, NavigationEnd, ActivatedRoute } from "@angular/router";
 import { GoogleTagManagerService } from "angular-google-tag-manager";
-import { zip, of } from "rxjs";
-import { filter, mergeMap } from "rxjs/operators";
+import { zip, of, Observable } from "rxjs";
+import { filter, map, mergeMap } from "rxjs/operators";
 import { environment } from "@environment";
+import { ContentfulService } from "./shared/services/contentful/contentful.service";
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html"
@@ -14,10 +15,14 @@ export class AppComponent implements OnInit {
   constructor(
     private titleService: Title,
     private router: Router,
-    private gtmService: GoogleTagManagerService
+    private gtmService: GoogleTagManagerService,
+    private contentfulService: ContentfulService
   ) {}
 
+  messages$: Observable<any | undefined>;
   ngOnInit() {
+    this.messages$ = this.contentfulService.getAlerts();
+
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),

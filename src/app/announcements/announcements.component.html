@@ -1,0 +1,25 @@
+<ng-container *ngIf="showAnnouncement">
+  <section
+    id="announcements"
+    *ngFor="let alert of alerts$ | async as alerts"
+    class="banner sticky d-flex p-20 justify-content-between"
+  >
+    <div class="banner-announcement d-flex">
+      <div class="banner-icon mr-10">
+        <mat-icon>notifications</mat-icon>
+      </div>
+      <div class="banner-text">
+        <h1>{{ alert.fields.title }}</h1>
+
+        <div
+          [innerHTML]="alert.fields.content | contentfulDocumentToHtml"
+        ></div>
+      </div>
+    </div>
+    <div class="banner-close">
+      <button (click)="close(alert.sys.id)" mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </section>
+</ng-container>

@@ -28,11 +28,16 @@ import { swRegistrationOptionsFactory } from "./factories/sw-registration-option
 
 import { GetDesignatedBodies } from "./reference/state/reference.actions";
 import { ReferenceState } from "./reference/state/reference.state";
-import { GoogleTagManagerModule } from 'angular-google-tag-manager';
+import { GoogleTagManagerModule } from "angular-google-tag-manager";
 import { environment } from "@environment";
-
+import { AnnouncementsComponent } from "./announcements/announcements.component";
+import { ContentfulDocumentToHtmlPipe } from "./shared/pipes/contentful-document-to-html.pipe";
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    AnnouncementsComponent,
+    ContentfulDocumentToHtmlPipe
+  ],
   imports: [
     ReferenceModule,
     BrowserModule,
@@ -49,6 +54,7 @@ import { environment } from "@environment";
       id: environment.gtmID
     })
   ],
+  exports: [ContentfulDocumentToHtmlPipe],
   providers: [
     AuthService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

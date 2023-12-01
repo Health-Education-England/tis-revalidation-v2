@@ -10,6 +10,12 @@ export interface IEnvironment {
   readonly appUrls: IAppUrls;
   readonly londonDBCs: IKeyValue[];
   readonly awsConfig: Partial<IAWSConfig>;
+  readonly contentful: IContentfulParams;
+}
+
+export interface IContentfulParams {
+  spaceId: string;
+  accessToken: string;
 }
 
 export interface IAWSConfig {

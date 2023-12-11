@@ -76,7 +76,7 @@ describe("Connections state", () => {
       apiPath: "/connected"
     },
 
-    { filter: ConnectionsFilterType.DISCREPANCIES, apiPath: "/exception" }
+    { filter: ConnectionsFilterType.DISCREPANCIES, apiPath: "/discrepancies" }
   ].forEach((testCase) => {
     it(`should have ${testCase.filter} connections when GetConnections is dispatched`, fakeAsync(() => {
       const req = setUpGetRequest(testCase.filter, testCase.apiPath);

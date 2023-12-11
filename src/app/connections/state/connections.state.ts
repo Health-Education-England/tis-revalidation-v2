@@ -69,7 +69,7 @@ export class ConnectionsState extends RecordsState {
 
     switch (this.connectionsService.getFilter()) {
       case ConnectionsFilterType.DISCREPANCIES:
-        endPoint = `${endPoint}/exception`;
+        endPoint = `${endPoint}/discrepancies`;
         break;
 
       case ConnectionsFilterType.CURRENT_CONNECTIONS:

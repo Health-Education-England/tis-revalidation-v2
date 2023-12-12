@@ -30,6 +30,7 @@ export interface IGetRecommendationsResponse extends IGetRecordsResponse {
   countTotal: number;
   countUnderNotice: number;
   recommendationInfo: IRecommendation[];
+  traineeInfo?: IRecommendation[];
 }
 
 export interface IRecommendationsTableFilters extends ITableFilters {

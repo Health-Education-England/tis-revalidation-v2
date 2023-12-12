@@ -53,7 +53,7 @@ describe("RecordListComponent", () => {
     recordsService.setRecommendationsActions();
     store.reset({
       recommendations: {
-        items: mockRecommendationsResponse.recommendationInfo,
+        items: mockRecommendationsResponse.traineeInfo,
         totalResults: 2,
         sort: { active: "submissionDate", direction: "asc" },
         enableAllocateAdmin: false,
@@ -110,7 +110,7 @@ describe("RecordListComponent", () => {
 
   it("should select 'items$' from state", () => {
     store.reset({
-      recommendations: { items: mockRecommendationsResponse.recommendationInfo }
+      recommendations: { items: mockRecommendationsResponse.traineeInfo }
     });
 
     component.items$.subscribe((value) => {

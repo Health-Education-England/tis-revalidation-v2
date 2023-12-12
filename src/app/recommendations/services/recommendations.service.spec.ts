@@ -23,7 +23,7 @@ import {
 import { RecommendationsService } from "./recommendations.service";
 
 export const mockRecommendationsResponse: IGetRecommendationsResponse = {
-  recommendationInfo: [
+  traineeInfo: [
     {
       dateAdded: "2015-05-14",
       doctorFirstName: "Bobby",

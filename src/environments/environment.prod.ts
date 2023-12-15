@@ -6,18 +6,6 @@ const env: Partial<IEnvironment> = {
   production: true,
   adminsUIHostUri: "https://apps.tis.nhs.uk/",
   gtmID: "GTM-MLTQS7XR",
-  londonDBCs: [
-    {
-      key: "1-1RUZV1D",
-      value: "Kent, Surrey and Sussex"
-    },
-    {
-      key: "1-1RUZV4H",
-      value: "North Central and East London"
-    },
-    { key: "1-1RUZV6H", value: "North West London" },
-    { key: "1-1RSSQ5L", value: "South London" }
-  ],
   awsConfig: {
     bucketName: "tis-revalidation-concerns-upload-prod",
     domain: "auth.tis.nhs.uk",

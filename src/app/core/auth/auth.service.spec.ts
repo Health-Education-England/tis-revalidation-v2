@@ -59,7 +59,7 @@ describe("AuthService", () => {
 
   it("should include all london dbcs in userDesignatedBodies when user is assigned to any london dbc", () => {
     const payload: { [key: string]: any } = { ...defaultPayload };
-    payload["cognito:groups"] = ["1-DBC", "2-DBC", "1-AIIDWA"];
+    payload["cognito:groups"] = ["1-DBC", "2-DBC", "1-1RUZV1D"];
 
     spyOn(Auth, "currentSession").and.callFake(() =>
       Promise.resolve(createMockSession(payload))

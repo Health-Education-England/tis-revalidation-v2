@@ -72,11 +72,6 @@ export class RecommendationsState extends RecordsState {
       .pipe(
         take(1),
         map((response: IGetRecommendationsResponse) => {
-          if (response.traineeInfo) {
-            response.recommendationInfo = response.traineeInfo;
-            delete response.traineeInfo;
-          }
-
           response.recommendationInfo.forEach(
             (item: IRecommendation) =>
               (item.doctorStatus = RecommendationStatus[item.doctorStatus])

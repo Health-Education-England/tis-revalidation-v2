@@ -14,15 +14,15 @@ export const commonEnv: IEnvironment = {
   appUrls: APP_URLS_CONFIG,
   londonDBCs: [
     {
-      key: "1-AIIDR8",
+      key: "1-1RUZV1D",
       value: "Kent, Surrey and Sussex"
     },
     {
-      key: "1-AIIDVS",
+      key: "1-1RUZV4H",
       value: "North Central and East London"
     },
-    { key: "1-AIIDWA", value: "North West London" },
-    { key: "1-AIIDWI", value: "South London" }
+    { key: "1-1RUZV6H", value: "North West London" },
+    { key: "1-1RSSQ5L", value: "South London" }
   ],
   awsConfig: {
     ...AWS_CONFIG,

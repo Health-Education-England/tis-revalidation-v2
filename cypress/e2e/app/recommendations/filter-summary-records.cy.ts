@@ -7,15 +7,20 @@ describe("Recommendations", () => {
 
     const formFilters = {
       dbc: [
-        { value: "1-AIIDR8", label: "Kent, Surrey and Sussex", abbr: "HEKSS" },
         {
-          value: "1-AIIDVS",
+          value: "1-1RUZV1D",
+          label: "Kent, Surrey and Sussex",
+          abbr: "HEKSS"
+        },
+        {
+          value: "1-1RUZV4H",
           label: "North Central and East London",
           abbr: "HENCEL"
         },
-        { value: "1-AIIDWA", label: "North West London", abbr: "HEWL" },
-        { value: "1-AIIDWI", label: "South London", abbr: "HESL" }
+        { value: "1-1RUZV6H", label: "North West London", abbr: "HEWL" },
+        { value: "1-1RSSQ5L", label: "South London", abbr: "HESL" }
       ],
+
       gmcStatus: ["Approved", "Rejected", "Under Review"],
       tisStatus: [
         { value: "NOT_STARTED", label: "Not started" },
@@ -54,8 +59,8 @@ describe("Recommendations", () => {
       it("should filter summary records list by single dbc when single option selected and submitted", () => {
         FilterRecords.initFilterPanel();
 
-        cy.get("[data-cy='selectionOption1-AIIDR8']").should("exist");
-        cy.get("[data-cy='selectionOption1-AIIDR8']").click();
+        cy.get("[data-cy='selectionOption1-1RUZV1D']").should("exist");
+        cy.get("[data-cy='selectionOption1-1RUZV1D']").click();
         FilterRecords.submitForm();
         cy.get("td.cdk-column-designatedBody").each(($el) => {
           expect($el.text().trim()).to.equal("HEKSS");
@@ -92,7 +97,7 @@ describe("Recommendations", () => {
           .invoke("text")
           .then((value) => {
             cy.get("mat-option").eq(1).click();
-            cy.get("[data-cy='selectionOption1-AIIDR8']").click();
+            cy.get("[data-cy='selectionOption1-1RUZV1D']").click();
 
             FilterRecords.submitForm();
             cy.get("td.cdk-column-programmeName").each(($el) => {
@@ -106,8 +111,8 @@ describe("Recommendations", () => {
 
       it("should display all London/KSS dbcs when no filter selected and submitted", () => {
         FilterRecords.initFilterPanel();
-        cy.get("[data-cy='selectionOption1-AIIDR8']").should("exist");
-        cy.get("[data-cy='selectionOption1-AIIDR8']").click();
+        cy.get("[data-cy='selectionOption1-1RUZV1D']").should("exist");
+        cy.get("[data-cy='selectionOption1-1RUZV1D']").click();
 
         cy.get(".mat-paginator-range-label")
           .invoke("text")
@@ -117,7 +122,7 @@ describe("Recommendations", () => {
               "not.contain",
               paginatorText
             );
-            cy.get("[data-cy='selectionOption1-AIIDR8']").click();
+            cy.get("[data-cy='selectionOption1-1RUZV1D']").click();
             FilterRecords.submitForm();
             cy.get(".mat-paginator-range-label").should(
               "contain",

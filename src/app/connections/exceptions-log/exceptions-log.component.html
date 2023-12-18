@@ -1,6 +1,6 @@
 <ng-container id="ShowError" *ngIf="pageStatus === 'error'">
   <div data-test="ErrorMessage" class="mt-20 d-flex justify-content-center">
-    Exceptions data failed to load.
+    Error loading failed GMC updates.
   </div>
 </ng-container>
 <ng-container id="ShowLoadingSpinner" *ngIf="pageStatus === 'loading'">
@@ -16,13 +16,13 @@
     data-test="NoExceptionsMessage"
     class="mt-20 d-flex justify-content-center"
   >
-    No exceptions from today found.
+    No failed GMC updates from today found.
   </div>
 </ng-container>
 
 <ng-container id="ExceptionDataFound" *ngIf="pageStatus === 'ok'">
   <h2 class="ml-20 mt-20">
-    List of errors from unsuccessful connections made today by current user.
+    List of failed GMC updates from today by current user.
   </h2>
 
   <table
@@ -35,7 +35,7 @@
     matSortDisableClear
   >
     <caption class="collapsed no-height">
-      List of connection update errors from today.
+      List of failed GMC updates from today.
     </caption>
     <ng-container
       [matColumnDef]="column.name"

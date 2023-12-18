@@ -47,7 +47,7 @@ export class ConnectionsResolver extends RecordsResolver {
       },
 
       {
-        label: "EXCEPTIONS LIST",
+        label: "FAILED GMC UPDATES",
         name: ConnectionsFilterType.EXCEPTIONSLOG
       }
     ];

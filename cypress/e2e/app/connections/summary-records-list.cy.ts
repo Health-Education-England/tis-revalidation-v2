@@ -22,7 +22,11 @@ describe("Connections Summary Records List", () => {
     "Programme owner"
   ];
 
-  const filters = ["DISCREPANCIES", "CURRENT CONNECTIONS", "EXCEPTIONS LIST"];
+  const filters = [
+    "DISCREPANCIES",
+    "CURRENT CONNECTIONS",
+    "FAILED GMC UPDATES"
+  ];
 
   it("should display correct page filter tabs", () => {
     cy.get("app-record-list-filters a").each(($el) => {

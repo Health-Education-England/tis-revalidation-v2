@@ -75,10 +75,10 @@ describe("Update connections", () => {
   it("should display buttons in correct state", () => {
     cy.get(
       "app-update-connection button[data-cy='update-connection-reset']"
-    ).should("have.class", "mat-button-disabled");
+    ).should("be.disabled");
     cy.get(
       "app-update-connection button[data-cy='update-connection-save']"
-    ).should("have.class", "mat-button-disabled");
+    ).should("be.disabled");
   });
 
   it("should display correct actions in dropdown", () => {

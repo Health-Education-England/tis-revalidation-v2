@@ -18,7 +18,7 @@ import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from "@ang
 import { MatCardModule } from "@angular/material/card";
 import { MatLegacyTabsModule as MatTabsModule } from "@angular/material/legacy-tabs";
 import { MatBottomSheetModule } from "@angular/material/bottom-sheet";
-import { MatLegacyDialogModule as MatDialogModule } from "@angular/material/legacy-dialog";
+import { MatDialogModule } from "@angular/material/dialog";
 import { MatLegacyFormFieldModule as MatFormFieldModule } from "@angular/material/legacy-form-field";
 import { MatLegacyInputModule as MatInputModule } from "@angular/material/legacy-input";
 import { MatLegacySelectModule as MatSelectModule } from "@angular/material/legacy-select";

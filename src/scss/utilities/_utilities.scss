@@ -71,9 +71,9 @@ $colour-values: (
 @mixin highlight-rows() {
   @each $att-name, $att-value in $colour-values {
     .highlight-row-#{$att-name} {
-      background-color: tint($att-value, 95);
+      background-color: tint($att-value, 95) !important;
 
-      &.mat-row.cdk-row:hover,
+      &.mat-mdc-row.cdk-row:hover,
       &.mat-row.cdk-row:focus {
         background-color: tint($att-value, 90);
       }
@@ -134,7 +134,7 @@ $colour-values: (
   }
 }
 
-.mat-simple-snackbar > span {
+.mat-mdc-simple-snack-bar > span {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

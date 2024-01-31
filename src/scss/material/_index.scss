@@ -64,12 +64,12 @@ body {
   }
 }
 
-.mat-row.cdk-row {
+.mat-mdc-row.cdk-row {
   &[tabindex="0"] {
     cursor: pointer;
   }
   &:hover {
-    background-color: $color_nhsuk-grey-5;
+    background-color: $color_nhsuk-grey-5 !important;
   }
   &:focus {
     background-color: $color_transparent_nhsuk-blue-50;
@@ -108,6 +108,13 @@ body {
       padding: 0;
     }
   }
+}
+
+.mat-sort-header-content,
+.mdc-data-table__header-cell {
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 12px !important;
+  font-weight: 500;
 }
 
 .dense-1 {

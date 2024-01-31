@@ -24,30 +24,17 @@
   <ng-container *ngIf="isAdmin">
     <mat-divider></mat-divider>
     <mat-card-actions *ngIf="!note.edit">
-      <!-- Temporarily hide delete button until delete feature being implemented -->
-      <!-- <button mat-icon-button aria-label="Delete note" (click)="onDeleteNote()">
-        <mat-icon>delete</mat-icon>
-      </button> -->
       <button mat-icon-button aria-label="Edit note" (click)="note.edit = true">
         <mat-icon>edit</mat-icon>
       </button>
     </mat-card-actions>
+
     <mat-card-actions *ngIf="note.edit">
-      <button mat-icon-button>
-        <mat-icon
-          aria-hidden="false"
-          aria-label="edit note"
-          (click)="onSaveEditNote()"
-          >save</mat-icon
-        >
+      <button mat-icon-button (click)="onSaveEditNote()">
+        <mat-icon aria-hidden="false" aria-label="edit note">save</mat-icon>
       </button>
-      <button mat-icon-button>
-        <mat-icon
-          (click)="note.edit = false"
-          aria-hidden="false"
-          aria-label="edit note"
-          >undo</mat-icon
-        >
+      <button mat-icon-button (click)="note.edit = false">
+        <mat-icon aria-hidden="false" aria-label="edit note">undo</mat-icon>
       </button>
     </mat-card-actions>
   </ng-container>

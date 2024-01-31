@@ -13,7 +13,7 @@ import { MatListModule } from "@angular/material/list";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { MatBadgeModule } from "@angular/material/badge";
 import { MatLegacyTooltipModule as MatTooltipModule } from "@angular/material/legacy-tooltip";
-import { MatLegacyMenuModule as MatMenuModule } from "@angular/material/legacy-menu";
+import { MatMenuModule } from "@angular/material/menu";
 import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from "@angular/material/legacy-progress-spinner";
 import { MatCardModule } from "@angular/material/card";
 import { MatLegacyTabsModule as MatTabsModule } from "@angular/material/legacy-tabs";

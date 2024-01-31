@@ -3,19 +3,19 @@
 
 // remove ng-deep if encapsulation is set to none
 ::ng-deep {
-  .mat-menu-panel {
+  .mat-mdc-menu-panel {
     &.mega-menu {
       max-width: 940.8px;
       @media screen and (max-width: $small) {
         max-width: 98%;
       }
 
-      .mat-menu-content {
+      .mat-mdc-menu-content {
         display: flex;
         flex-wrap: wrap;
       }
 
-      .mat-menu-item {
+      .mat-mdc-menu-item {
         flex: 0 1 20%;
         @media screen and (max-width: $small) {
           flex: 0 1 29%;

@@ -28,7 +28,7 @@ import { MatLegacySlideToggleModule as MatSlideToggleModule } from "@angular/mat
 import { MatStepperModule } from "@angular/material/stepper";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatLegacySnackBarModule as MatSnackBarModule } from "@angular/material/legacy-snack-bar";
-import { MatLegacyProgressBarModule as MatProgressBarModule } from "@angular/material/legacy-progress-bar";
+import { MatProgressBarModule } from "@angular/material/progress-bar";
 
 const materialModules = [
   LayoutModule,

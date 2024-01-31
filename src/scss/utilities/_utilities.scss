@@ -147,20 +147,23 @@ $colour-values: (
   z-index: 999;
 }
 
-.alert-warning {
+.alert-warning,
+.mat-mdc-card.alert-warning {
   color: #856404;
   background-color: #fff3cd;
   border-color: #ffeeba;
 }
-
 .alert-danger,
-.alert-past {
+.alert-past .mat-mdc-card.alert-danger,
+.mat-mdc-card.alert-past {
   color: #721c24;
   background-color: #f8d7da;
   border-color: #f5c6cb;
 }
 .alert-success,
-.alert-future {
+.alert-future,
+.mat-mdc-card.alert-success,
+.mat-mdc-card.alert-future {
   color: #155724;
   background-color: #d4edda;
   border-color: #c3e6cb;

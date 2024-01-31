@@ -90,3 +90,22 @@ body {
 .mat-datepicker-toggle {
   font-size: 25px;
 }
+
+.mat-mdc-card {
+  padding: 16px;
+
+  .mat-mdc-card-title {
+    margin-bottom: 8px;
+    line-height: normal;
+  }
+  .mat-mdc-card-subtitle {
+    margin-bottom: 16px;
+  }
+  .mat-mdc-card-content {
+    padding: 0;
+
+    &:last-child {
+      padding: 0;
+    }
+  }
+}

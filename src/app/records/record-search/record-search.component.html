@@ -1,4 +1,4 @@
-<div class="d-grid record-search">
+<div class="d-grid record-search pt-10 pb-10">
   <div class="d-flex pl-25 pr-20 align-items-center">
     <button
       data-cy="toggleFixedColumnsButton"
@@ -53,35 +53,42 @@
         disableSearchAndSort: disableSearchAndSort$ | async
       } as data"
     >
-      <mat-form-field appearance="outline" class="ml-20" style="width: 360px">
-        <mat-label>{{ searchLabel }}</mat-label>
-        <input
-          matInput
-          type="text"
-          [formControlName]="'searchQuery'"
-          [value]="searchQuery$ | async"
-        />
-        <app-reset-record-list
-          *ngIf="showClearSearchForm"
-          matSuffix
-        ></app-reset-record-list>
-        <button
-          mat-icon-button
-          matSuffix
-          color="primary"
-          aria-label="Recommendations search"
-          type="submit"
-          [disabled]="
-            data.enableAllocateAdmin ||
-            data.enableUpdateConnections ||
-            data.disableSearchAndSort
-          "
+      <div class="dense-2">
+        <mat-form-field
+          appearance="outline"
+          subscriptSizing="dynamic"
+          class="ml-20"
+          style="width: 360px"
         >
-          <mat-icon aria-label="search icon">search</mat-icon>
-        </button>
+          <mat-label>{{ searchLabel }}</mat-label>
+          <input
+            matInput
+            type="text"
+            [formControlName]="'searchQuery'"
+            [value]="searchQuery$ | async"
+          />
+          <app-reset-record-list
+            *ngIf="showClearSearchForm"
+            matSuffix
+          ></app-reset-record-list>
+          <button
+            mat-icon-button
+            matSuffix
+            color="primary"
+            aria-label="Recommendations search"
+            type="submit"
+            [disabled]="
+              data.enableAllocateAdmin ||
+              data.enableUpdateConnections ||
+              data.disableSearchAndSort
+            "
+          >
+            <mat-icon aria-label="search icon">search</mat-icon>
+          </button>
 
-        <mat-error *ngIf="form.invalid">No search terms entered</mat-error>
-      </mat-form-field>
+          <mat-error *ngIf="form.invalid">No search terms entered</mat-error>
+        </mat-form-field>
+      </div>
     </form>
   </div>
 </div>

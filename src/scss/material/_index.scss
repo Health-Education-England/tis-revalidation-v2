@@ -109,3 +109,11 @@ body {
     }
   }
 }
+
+.dense-1 {
+  @include mat.all-component-densities(-1);
+}
+
+.dense-2 {
+  @include mat.all-component-densities(-2);
+}

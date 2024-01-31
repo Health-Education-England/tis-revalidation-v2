@@ -4,6 +4,7 @@
       mat-button
       [matMenuTriggerFor]="subMenu"
       (click)="setActiveItem(menuItem.name)"
+      class="nav-item"
       [ngClass]="{ active: menuItem.name === activeItem }"
     >
       {{ menuItem.name }}

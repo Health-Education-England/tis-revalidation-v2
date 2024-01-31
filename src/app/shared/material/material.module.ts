@@ -6,7 +6,7 @@ import { MatLegacyPaginatorModule as MatPaginatorModule } from "@angular/materia
 import { MatSortModule } from "@angular/material/sort";
 import { MatLegacyTableModule as MatTableModule } from "@angular/material/legacy-table";
 import { MatToolbarModule } from "@angular/material/toolbar";
-import { MatLegacyButtonModule as MatButtonModule } from "@angular/material/legacy-button";
+import { MatButtonModule } from "@angular/material/button";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatIconModule } from "@angular/material/icon";
 import { MatLegacyListModule as MatListModule } from "@angular/material/legacy-list";

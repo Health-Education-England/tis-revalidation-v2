@@ -29,12 +29,14 @@
   font-weight: bold;
 }
 
-.mat-button {
-  line-height: 60px;
+.nav-item {
+  line-height: 60px !important;
   color: #919ea8 !important;
+  height: auto !important;
+  padding: 0 16px;
 
   &.active {
-    border-bottom: 2px solid white;
+    border-bottom: 2px solid #fff;
     border-radius: 0;
     color: white !important;
   }

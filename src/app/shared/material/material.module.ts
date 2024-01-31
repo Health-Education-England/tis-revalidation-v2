@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { LayoutModule } from "@angular/cdk/layout";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatChipsModule } from "@angular/material/chips";
-import { MatLegacyPaginatorModule as MatPaginatorModule } from "@angular/material/legacy-paginator";
+import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatSortModule } from "@angular/material/sort";
 import { MatLegacyTableModule as MatTableModule } from "@angular/material/legacy-table";
 import { MatToolbarModule } from "@angular/material/toolbar";

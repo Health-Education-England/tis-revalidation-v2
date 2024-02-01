@@ -41,7 +41,7 @@
     "@sentry/browser": "^7.64.0",
     "angular-google-tag-manager": "^1.8.0",
     "angulartics2": "^12.2.0",
-    "aws-amplify": "^5.3.5",
+    "aws-amplify": "^5.3.12",
     "browserslist": "^4.20.4",
     "file-saver": "^2.0.5",
     "karma-coverage": "^2.2.0",

@@ -24,9 +24,11 @@
     }
   }
 }
-.programme-names {
-  span {
-    color: #da291c;
-    display: block;
+::ng-deep {
+  .programme-names {
+    .split-item {
+      color: #da291c;
+      display: block;
+    }
   }
 }

@@ -117,10 +117,21 @@ body {
   font-weight: 500;
 }
 
+.mat-mdc-tab-nav-bar {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
 .dense-1 {
   @include mat.all-component-densities(-1);
 }
 
 .dense-2 {
   @include mat.all-component-densities(-2);
+}
+
+.dense-3 {
+  @include mat.all-component-densities(-3);
+  .mdc-list-item__primary-text {
+    font-size: 14px;
+  }
 }

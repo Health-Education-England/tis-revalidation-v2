@@ -52,8 +52,8 @@ describe("MaterialSelectionListComponent", () => {
 
   it("should display the correct form label", () => {
     expect(
-      fixture.debugElement.queryAll(By.css(".mat-list-text"))[0].nativeElement
-        .innerHTML
+      fixture.debugElement.queryAll(By.css(".mat-mdc-list-item"))[0]
+        .nativeElement.innerHTML
     ).toContain("initial option value 1");
   });
 
@@ -73,8 +73,8 @@ describe("MaterialSelectionListComponent", () => {
     fixture.detectChanges();
 
     expect(
-      fixture.debugElement.queryAll(By.css(".mat-list-text"))[0].nativeElement
-        .innerHTML
+      fixture.debugElement.queryAll(By.css(".mat-mdc-list-item"))[0]
+        .nativeElement.innerHTML
     ).toContain("test option value 1");
   });
 });

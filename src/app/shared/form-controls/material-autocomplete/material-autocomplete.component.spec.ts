@@ -1,4 +1,10 @@
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+  waitForAsync
+} from "@angular/core/testing";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import {
   FormsModule,
@@ -105,12 +111,12 @@ describe("MaterialAutocompleteComponent", () => {
     expect(optionLabels).toEqual([query, ...options]);
   });
 
-  it("should hide dropdown when pressing 'Enter' key", async () => {
+  it("should hide dropdown when pressing 'Enter' key", fakeAsync(() => {
     const query = "Clinical";
     const inputElement = fixture.debugElement.query(By.css("input"));
 
     enterSearchItemsAndSubmit(query);
-    await fixture.whenStable();
+    fixture.whenStable();
     fixture.detectChanges();
     inputElement.nativeElement.dispatchEvent(new Event("focusin"));
     const enterKeyEvent = new KeyboardEvent("keydown", {
@@ -118,10 +124,10 @@ describe("MaterialAutocompleteComponent", () => {
     });
     inputElement.nativeElement.dispatchEvent(enterKeyEvent);
     fixture.detectChanges();
-
+    tick(2000);
     const matOptions = document.querySelectorAll("mat-option");
     expect(matOptions.length).toBe(0);
-  });
+  }));
 
   it("should not display the clear button when input is empty", async () => {
     enterSearchItemsAndSubmit("", []);

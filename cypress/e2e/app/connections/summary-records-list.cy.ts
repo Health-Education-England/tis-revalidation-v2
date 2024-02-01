@@ -48,14 +48,14 @@ describe("Connections Summary Records List", () => {
   });
 
   it("should display data in a table with correct columns", () => {
-    cy.get("app-record-list .mat-table th").each(($el) => {
+    cy.get("app-record-list .mat-mdc-table th").each(($el) => {
       expect($el.text().trim()).to.be.oneOf(tableColumnHeaders);
     });
   });
 
   it("should display correct sortable columns.", () => {
     cy.get(
-      "app-record-list .mat-table th .mat-sort-header-container[role='button']"
+      "app-record-list .mat-mdc-table th .mat-sort-header-container[role='button']"
     ).each(($el) => {
       expect($el.text().trim()).to.be.oneOf(sortableColumns);
     });
@@ -65,10 +65,10 @@ describe("Connections Summary Records List", () => {
     cy.get("[data-cy='enable-update-connections']").click();
     cy.get("app-update-connection").should("exist");
     cy.get(
-      ".mat-table th mat-checkbox[data-cy='select-all-records-checkbox']"
+      ".mat-mdc-table th mat-checkbox[data-cy='select-all-records-checkbox']"
     ).should("exist");
     cy.get(
-      ".mat-table td mat-checkbox[data-cy='select-record-checkbox']"
+      ".mat-mdc-table td mat-checkbox[data-cy='select-record-checkbox']"
     ).should("exist");
     cy.get("[data-cy='disable-update-connections']").click();
     cy.get("app-update-connection").should("not.exist");

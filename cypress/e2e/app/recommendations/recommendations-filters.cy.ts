@@ -15,13 +15,13 @@ describe("Recommendations filters", () => {
   it("should show 'Under notice' button as active by default", () => {
     cy.get("[data-cy='filter-records-button_UNDERNOTICE']").should(
       "have.class",
-      "mat-tab-label-active"
+      "mdc-tab--active"
     );
   });
 
   it("should set 'All Doctors' filter button as active when clicked", () => {
     cy.get("[data-cy=filter-records-button_ALLDOCTORS]")
       .click()
-      .should("have.class", "mat-tab-label-active");
+      .should("have.class", "mdc-tab--active");
   });
 });

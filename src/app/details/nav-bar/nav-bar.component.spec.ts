@@ -87,7 +87,7 @@ describe("NavBarComponent", () => {
 
   it("navLinks should have the correct label", () => {
     fixture.debugElement
-      .queryAll(By.css("[data-jasmine='navBarLink']"))
+      .queryAll(By.css("[data-jasmine='navBarLink'] .mdc-tab__text-label"))
 
       .forEach((el) => {
         expect([

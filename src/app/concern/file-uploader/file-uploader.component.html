@@ -2,6 +2,7 @@
 <div *ngIf="uploadFileInProgress$ | async; else notLoading">
   <div class="d-grid grid-container-2-col p-5 mb-20">
     <mat-card
+      appearance="outlined"
       *ngFor="let fileInProgress of filesInUploadProgress$ | async"
       class="file upload highlight"
     >
@@ -48,17 +49,12 @@
       (dragleave)="preventDefaults($event); unHighlight()"
       (drop)="preventDefaults($event); unHighlight(); handleDrop($event)"
     >
-      <mat-card class="file centered upload">
+      <mat-card appearance="outlined" class="file centered upload">
         <mat-card-title>
           Drag and drop supporting documents, or click attach icon to upload:
         </mat-card-title>
         <mat-card-actions>
-          <button
-            mat-button
-            color="accent"
-            mat-mini-fab
-            (click)="fileUploader.click()"
-          >
+          <button color="accent" mat-mini-fab (click)="fileUploader.click()">
             <mat-icon>attachment</mat-icon>
           </button>
           <input

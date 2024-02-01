@@ -3,19 +3,19 @@
 
 // remove ng-deep if encapsulation is set to none
 ::ng-deep {
-  .mat-menu-panel {
+  .mat-mdc-menu-panel {
     &.mega-menu {
       max-width: 940.8px;
       @media screen and (max-width: $small) {
         max-width: 98%;
       }
 
-      .mat-menu-content {
+      .mat-mdc-menu-content {
         display: flex;
         flex-wrap: wrap;
       }
 
-      .mat-menu-item {
+      .mat-mdc-menu-item {
         flex: 0 1 20%;
         @media screen and (max-width: $small) {
           flex: 0 1 29%;
@@ -29,12 +29,14 @@
   font-weight: bold;
 }
 
-.mat-button {
-  line-height: 60px;
+.nav-item {
+  line-height: 60px !important;
   color: #919ea8 !important;
+  height: auto !important;
+  padding: 0 16px;
 
   &.active {
-    border-bottom: 2px solid white;
+    border-bottom: 2px solid #fff;
     border-radius: 0;
     color: white !important;
   }

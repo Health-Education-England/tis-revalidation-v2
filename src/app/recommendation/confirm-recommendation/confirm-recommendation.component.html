@@ -9,9 +9,7 @@
     [ngSwitch]="recommendationType[currentRecommendationType]"
   >
     <ng-container *ngSwitchCase="recommendationType.REVALIDATE">
-      <h2 class="mat-title">
-        Recommendation: {{ recommendationType.REVALIDATE }}
-      </h2>
+      <h2>Recommendation: {{ recommendationType.REVALIDATE }}</h2>
       <p>
         Made pursuant to The Medical Profession (Responsible Officer)
         Regulations and The General Medical Council (Licence to Practise and
@@ -72,7 +70,9 @@
       </p>
     </ng-container>
     <ng-container *ngSwitchCase="recommendationType.DEFER">
-      <h2 class="mat-title">Recommendation: {{ recommendationType.DEFER }}</h2>
+      <h2 class="mat-headline-6">
+        Recommendation: {{ recommendationType.DEFER }}
+      </h2>
       <p>
         Made pursuant to The Medical Profession (Responsible Officer)
         Regulations and The General Medical Council (Licence to Practise and
@@ -125,7 +125,7 @@
       </ul>
     </ng-container>
     <ng-container *ngSwitchCase="recommendationType.NON_ENGAGEMENT">
-      <h2 class="mat-title">
+      <h2 class="mat-headline-6">
         Recommendation: {{ recommendationType.NON_ENGAGEMENT }}
       </h2>
       <p>

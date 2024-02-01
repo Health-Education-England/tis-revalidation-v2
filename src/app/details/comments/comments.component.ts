@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { UntypedFormArray, UntypedFormGroup } from "@angular/forms";
 import { CommentsService } from "./comments.service";
-import { MatLegacyCheckboxChange as MatCheckboxChange } from "@angular/material/legacy-checkbox";
-import { MatLegacyDialogRef as MatDialogRef, MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
+import { MatCheckboxChange } from "@angular/material/checkbox";
+import { MatDialogRef, MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "app-comments",

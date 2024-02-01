@@ -1,36 +1,25 @@
 // Custom Theming for Angular Material
 @use "@angular/material" as mat;
-// For more information: https://material.angular.io/guide/theming
-// Plus imports for other components in your app.
 @import "palette";
+@include mat.core();
 
-$nhsuk-typography: mat.define-legacy-typography-config(
-  $font-family: $nhsuk-font
-);
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
-// TODO(v15): As of v15 mat.legacy-core no longer includes default typography styles.
-//  The following line adds:
-//    1. Default typography styles for all components
-//    2. Styles for typography hierarchy classes (e.g. .mat-headline-1)
-//  If you specify typography styles for the components you use elsewhere, you should delete this line.
-//  If you don't need the default component typographies but still want the hierarchy styles,
-//  you can delete this line and instead use:
-//    `@include mat.legacy-typography-hierarchy($nhsuk-typography);`
-@include mat.all-legacy-component-typographies($nhsuk-typography);
-@include mat.legacy-core();
-
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
 $nhsuk-primary: mat.define-palette($nhsuk-blue);
 $nhsuk-accent: mat.define-palette($nhsuk-warm-yellow);
 $nhsuk-secondary: mat.define-palette($nhsuk-green);
-// The warn palette is optional (defaults to red).
 $nhsuk-warn: mat.define-palette($nhsuk-red);
 
-// Create the theme object (a Sass map containing all of the palettes).
+$nhsuk-typography: mat.define-typography-config(
+  $font-family: $nhsuk-font,
+
+  $button:
+    mat.define-typography-level(
+      $font-weight: 400,
+      $font-size: 0.9rem,
+      $line-height: 1,
+      $letter-spacing: normal
+    )
+);
+
 $nhsuk-theme: mat.define-light-theme(
   (
     color: (
@@ -43,10 +32,10 @@ $nhsuk-theme: mat.define-light-theme(
   )
 );
 
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
+// Legacy - only needed whilst migrating to MDC
 @include mat.all-legacy-component-themes($nhsuk-theme);
+
+@include mat.all-component-themes($nhsuk-theme);
 
 /* You can add global styles to this file, and also import other style files */
 
@@ -63,7 +52,7 @@ body {
 //   box-shadow: 0 0 0 $nhsuk-border-radius $color_nhsuk-yellow;
 // }
 
-.nhsuk-skip-link.mat-raised-button {
+.nhsuk-skip-link.mat-mdc-raised-button {
   outline: $nhsuk-border-radius solid transparent;
   left: -9999px;
   position: absolute;
@@ -75,12 +64,12 @@ body {
   }
 }
 
-.mat-row.cdk-row {
+.mat-mdc-row.cdk-row {
   &[tabindex="0"] {
     cursor: pointer;
   }
   &:hover {
-    background-color: $color_nhsuk-grey-5;
+    background-color: $color_nhsuk-grey-5 !important;
   }
   &:focus {
     background-color: $color_transparent_nhsuk-blue-50;
@@ -100,4 +89,49 @@ body {
 // Added for accessibility purposes while text input disabled
 .mat-datepicker-toggle {
   font-size: 25px;
+}
+
+.mat-mdc-card {
+  padding: 16px;
+
+  .mat-mdc-card-title {
+    margin-bottom: 8px;
+    line-height: normal;
+  }
+  .mat-mdc-card-subtitle {
+    margin-bottom: 16px;
+  }
+  .mat-mdc-card-content {
+    padding: 0;
+
+    &:last-child {
+      padding: 0;
+    }
+  }
+}
+
+.mat-sort-header-content,
+.mdc-data-table__header-cell {
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 12px !important;
+  font-weight: 500;
+}
+
+.mat-mdc-tab-nav-bar {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.dense-1 {
+  @include mat.all-component-densities(-1);
+}
+
+.dense-2 {
+  @include mat.all-component-densities(-2);
+}
+
+.dense-3 {
+  @include mat.all-component-densities(-3);
+  .mdc-list-item__primary-text {
+    font-size: 14px;
+  }
 }

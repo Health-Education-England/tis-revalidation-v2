@@ -7,29 +7,28 @@
     max-height: unset;
   }
 }
-::ng-deep {
-  .mat-list-base .mat-list-item {
-    &.mat-2-line {
-      height: 60px;
-    }
 
-    .mat-list-text {
-      .mat-line {
-        overflow: auto;
-        white-space: normal;
-        text-overflow: unset;
-      }
-      .mat-caption {
-        font-size: 14px;
-        color: tint($color_nhsuk-black, 46%);
-        color: rgba(0, 0, 0, 0.54);
-      }
+.details-list {
+  padding: 20px;
+  .details-list-item {
+    margin-bottom: 28px;
+    & > span {
+      font-size: 14px;
+      display: block;
+    }
+    .details-list-item-title {
+      color: rgba(0, 0, 0, 0.54);
+    }
+    &:last-child {
+      margin-bottom: 0;
     }
   }
+}
+::ng-deep {
   .programme-names {
     .split-item {
-      display: block;
       color: #da291c;
+      display: block;
     }
   }
 }

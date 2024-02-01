@@ -1,4 +1,9 @@
-<nav mat-tab-nav-bar>
+<nav
+  mat-tab-nav-bar
+  mat-stretch-tabs="false"
+  mat-align-tabs="start"
+  [tabPanel]="tabPanel"
+>
   <a
     data-jasmine="navBarLink"
     id="navLinkToList"
@@ -23,3 +28,4 @@
     {{ link.label }}
   </a>
 </nav>
+<mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>

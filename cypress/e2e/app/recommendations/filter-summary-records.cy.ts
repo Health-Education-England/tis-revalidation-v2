@@ -44,16 +44,17 @@ describe("Recommendations", () => {
       it("should display 4 selection options in the 'dbc' selection list labelled accordingly", () => {
         FilterRecords.initFilterPanel();
 
-        cy.get(
-          "[data-cy='selectionListdbcs'] .mat-list-option .mat-list-text"
-        ).should("have.length", 4);
-        cy.get(
-          "[data-cy='selectionListdbcs'] .mat-list-option .mat-list-text"
-        ).each(($el) => {
-          expect($el.text().trim()).to.be.oneOf(
-            formFilters.dbc.map((item) => item.label)
-          );
-        });
+        cy.get("[data-cy='selectionListdbcs'] .mat-mdc-list-item").should(
+          "have.length",
+          4
+        );
+        cy.get("[data-cy='selectionListdbcs'] .mat-mdc-list-item").each(
+          ($el) => {
+            expect($el.text().trim()).to.be.oneOf(
+              formFilters.dbc.map((item) => item.label)
+            );
+          }
+        );
       });
 
       it("should filter summary records list by single dbc when single option selected and submitted", () => {
@@ -114,17 +115,17 @@ describe("Recommendations", () => {
         cy.get("[data-cy='selectionOption1-1RUZV1D']").should("exist");
         cy.get("[data-cy='selectionOption1-1RUZV1D']").click();
 
-        cy.get(".mat-paginator-range-label")
+        cy.get(".mat-mdc-paginator-range-label")
           .invoke("text")
           .then((paginatorText) => {
             FilterRecords.submitForm();
-            cy.get(".mat-paginator-range-label").should(
+            cy.get(".mat-mdc-paginator-range-label").should(
               "not.contain",
               paginatorText
             );
             cy.get("[data-cy='selectionOption1-1RUZV1D']").click();
             FilterRecords.submitForm();
-            cy.get(".mat-paginator-range-label").should(
+            cy.get(".mat-mdc-paginator-range-label").should(
               "contain",
               paginatorText
             );
@@ -136,7 +137,7 @@ describe("Recommendations", () => {
           "/recommendations?active=submissionDate&direction=asc&pageIndex=0&filter=underNotice&programmeName=&dbcs=1-AIIDWT"
         );
 
-        cy.get("app-record-list .mat-table").should("exist");
+        cy.get("app-record-list .mat-mdc-table").should("exist");
         cy.get("td.cdk-column-designatedBody").each(($el) => {
           expect($el.text().trim() === "HEEOE").to.be.false;
         });
@@ -152,14 +153,15 @@ describe("Recommendations", () => {
       it("should display 3 selection options in the 'gmc status' selection list labelled accordingly", () => {
         FilterRecords.initFilterPanel();
 
-        cy.get(
-          "[data-cy='selectionListgmcStatus'] .mat-list-option .mat-list-text"
-        ).should("have.length", 3);
-        cy.get(
-          "[data-cy='selectionListgmcStatus'] .mat-list-option .mat-list-text"
-        ).each(($el) => {
-          expect($el.text().trim()).to.be.oneOf(formFilters.gmcStatus);
-        });
+        cy.get("[data-cy='selectionListgmcStatus'] .mat-mdc-list-item").should(
+          "have.length",
+          3
+        );
+        cy.get("[data-cy='selectionListgmcStatus'] .mat-mdc-list-item").each(
+          ($el) => {
+            expect($el.text().trim()).to.be.oneOf(formFilters.gmcStatus);
+          }
+        );
       });
 
       it("should filter summary records list by single gmc status when single option selected and submitted", () => {
@@ -209,16 +211,17 @@ describe("Recommendations", () => {
       it("should display 4 selection options in the 'TIS status' selection list labelled accordingly", () => {
         FilterRecords.initFilterPanel();
 
-        cy.get(
-          "[data-cy='selectionListtisStatus'] .mat-list-option .mat-list-text"
-        ).should("have.length", 4);
-        cy.get(
-          "[data-cy='selectionListtisStatus'] .mat-list-option .mat-list-text"
-        ).each(($el) => {
-          expect($el.text().trim()).to.be.oneOf(
-            formFilters.tisStatus.map((item) => item.label)
-          );
-        });
+        cy.get("[data-cy='selectionListtisStatus'] .mat-mdc-list-item").should(
+          "have.length",
+          4
+        );
+        cy.get("[data-cy='selectionListtisStatus'] .mat-mdc-list-item").each(
+          ($el) => {
+            expect($el.text().trim()).to.be.oneOf(
+              formFilters.tisStatus.map((item) => item.label)
+            );
+          }
+        );
       });
 
       it("should filter summary records list by single TIS status when single option selected and submitted", () => {
@@ -384,7 +387,7 @@ describe("Recommendations", () => {
         FilterRecords.initFilterPanel();
         FilterRecords.openProgrammeNameDropdown("General");
         FilterRecords.submitForm();
-        cy.get(".mat-table tr:nth-child(2)").click();
+        cy.get(".mat-mdc-table tr:nth-child(2)").click();
         cy.get("app-nav-bar").should("exist");
         cy.get("#navLinkToList").should("exist").click();
         cy.get("[data-cy='formfield_programmeName'] input").should(

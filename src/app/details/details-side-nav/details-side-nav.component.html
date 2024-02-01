@@ -3,61 +3,59 @@
   [ngClass]="{ 'large-display': (isHandset$ | async) === false }"
   *ngIf="traineeDetails$ | async as traineeDetails"
 >
-  <mat-list>
-    <mat-list-item>
-      <div class="mat-caption" mat-line>Name:</div>
-      <div mat-line>
-        {{ traineeDetails.forenames }} {{ traineeDetails.surname }}
-      </div>
-    </mat-list-item>
-    <mat-list-item>
-      <div class="mat-caption" mat-line>GMC No:</div>
-      <div mat-line>{{ traineeDetails.gmcNumber }}</div>
-    </mat-list-item>
-    <mat-list-item>
-      <div class="mat-caption" mat-line>Programme membership type:</div>
-      <div mat-line>
-        {{
+  <div class="details-list">
+    <div class="details-list-item">
+      <span class="details-list-item-title">Name:</span>
+      <span class="details-list-item-line"
+        >{{ traineeDetails.forenames }} {{ traineeDetails.surname }}</span
+      >
+    </div>
+    <div class="details-list-item">
+      <span class="details-list-item-title">GMC No:</span>
+      <span class="details-list-item-line">{{ traineeDetails.gmcNumber }}</span>
+    </div>
+    <div class="details-list-item">
+      <span class="details-list-item-title">Programme membership type:</span>
+      <span class="details-list-item-line"
+        >{{
           traineeDetails.programmeMembershipType === null
             ? "N/A"
             : traineeDetails.programmeMembershipType
         }}
-      </div>
-    </mat-list-item>
-    <mat-list-item>
-      <div class="mat-caption" mat-line>Current programme name:</div>
-      <div
+      </span>
+    </div>
+    <div class="details-list-item">
+      <span class="details-list-item-title">Current programme name:</span>
+      <span
+        class="details-list-item-line programme-names"
         *ngIf="traineeDetails.programmeName; else NoProgramme"
-        mat-line
-        class="programme-names"
         [innerHTML]="traineeDetails.programmeName | splitStringToHTML: ' | '"
-      ></div>
-      <ng-template #NoProgramme mat-line class="programme-names"
-        >N/A</ng-template
-      >
-    </mat-list-item>
+      ></span>
 
-    <mat-list-item>
-      <div class="mat-caption" mat-line>Current grade:</div>
-      <div mat-line>
-        {{
+      <ng-template #NoProgramme mat-line>N/A</ng-template>
+    </div>
+
+    <div class="details-list-item">
+      <span class="details-list-item-title">Current grade:</span>
+      <span class="details-list-item-line"
+        >{{
           traineeDetails.currentGrade === null
             ? "N/A"
             : traineeDetails.currentGrade
         }}
-      </div>
-    </mat-list-item>
-    <mat-list-item>
-      <div class="mat-caption" mat-line>Curriculum end date:</div>
-      <div mat-line>
-        {{
+      </span>
+    </div>
+    <div class="details-list-item">
+      <span class="details-list-item-title">Curriculum end date:</span>
+      <span class="details-list-item-line"
+        >{{
           traineeDetails.curriculumEndDate === null
             ? "N/A"
             : (traineeDetails.curriculumEndDate | date: dateFormat)
         }}
-      </div>
-    </mat-list-item>
-  </mat-list>
+      </span>
+    </div>
+  </div>
   <mat-divider></mat-divider>
   <mat-nav-list>
     <a

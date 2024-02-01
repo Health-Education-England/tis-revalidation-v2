@@ -7,6 +7,9 @@
 }
 
 ::ng-deep {
+  .mat-mdc-table th {
+    white-space: nowrap;
+  }
   .mat-column-programmeName {
     .split-item {
       display: block;
@@ -50,7 +53,7 @@
       width: 180px
     ),
     doctorStatus: (
-      width: 100px
+      width: 120px
     ),
     curriculumEndDate: (
       width: 130px

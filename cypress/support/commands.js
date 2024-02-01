@@ -35,7 +35,7 @@ Cypress.Commands.add("login", () => {
   cy.get("#kc-form-wrapper").find("#password").type(password);
   cy.get("#kc-form-wrapper").find("#kc-login").click();
 
-  cy.get("app-records .mat-table").should("exist");
+  cy.get("app-records .mat-mdc-table").should("exist");
 });
 
 Cypress.Commands.add("loginSession", () => {
@@ -46,6 +46,6 @@ Cypress.Commands.add("loginSession", () => {
     cy.get("#kc-form-wrapper").find("#username").type(username);
     cy.get("#kc-form-wrapper").find("#password").type(password);
     cy.get("#kc-form-wrapper").find("#kc-login").click();
-    cy.get("app-records .mat-table").should("exist");
+    cy.get("app-records .mat-mdc-table").should("exist");
   });
 });

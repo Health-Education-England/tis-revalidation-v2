@@ -78,7 +78,7 @@ describe("RecordListComponent", () => {
 
   it("Should display a table containing doctors summary data", () => {
     expect(
-      fixture.debugElement.nativeElement.querySelector(".mat-table")
+      fixture.debugElement.nativeElement.querySelector(".mat-mdc-table")
     ).toBeTruthy();
   });
 
@@ -94,7 +94,7 @@ describe("RecordListComponent", () => {
 
   it("Should apply fixed class to table columns when display in fixed width mode", () => {
     expect(
-      fixture.debugElement.nativeElement.querySelector(".mat-cell.fixed")
+      fixture.debugElement.nativeElement.querySelector("td.fixed")
     ).toBeTruthy();
   });
 
@@ -104,7 +104,7 @@ describe("RecordListComponent", () => {
     });
     fixture.detectChanges();
     expect(
-      fixture.debugElement.nativeElement.querySelector(".mat-cell.fixed")
+      fixture.debugElement.nativeElement.querySelector("td.fixed")
     ).toBeFalsy();
   });
 

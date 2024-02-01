@@ -32,17 +32,17 @@ describe("Update connections", () => {
     cy.get(updateConnectionActionSelect).click();
 
     cy.get(updateConnectionActionOption).contains(action).click();
-    cy.get(".mat-select-panel").should("not.exist");
+    cy.get(".mat-mdc-select-panel").should("not.exist");
     cy.get(updateConnectionReasonSelect).click();
 
     cy.get(updateConnectionReasonOption).each(($el) => {
       expect($el.text().trim()).to.be.oneOf(reasons);
     });
     cy.get(updateConnectionReasonOption).contains(reasons[0]).click();
-    cy.get(".mat-select-panel").should("not.exist");
+    cy.get(".mat-mdc-select-panel").should("not.exist");
     if (dbc) {
       cy.get("[data-cy='update-connection-dbc']").should("exist").click();
-      cy.get(".mat-select-panel").should("exist");
+      cy.get(".mat-mdc-select-panel").should("exist");
       cy.get("[data-cy='update-connection-dbc-option']").first().click();
     }
     cy.get("[data-cy='update-connection-save']")
@@ -75,10 +75,10 @@ describe("Update connections", () => {
   it("should display buttons in correct state", () => {
     cy.get(
       "app-update-connection button[data-cy='update-connection-reset']"
-    ).should("have.class", "mat-button-disabled");
+    ).should("be.disabled");
     cy.get(
       "app-update-connection button[data-cy='update-connection-save']"
-    ).should("have.class", "mat-button-disabled");
+    ).should("be.disabled");
   });
 
   it("should display correct actions in dropdown", () => {

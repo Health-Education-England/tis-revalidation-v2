@@ -6,7 +6,12 @@
     enableUpdateConnections: enableUpdateConnections$ | async
   } as data"
 >
-  <nav mat-tab-nav-bar>
+  <nav
+    mat-tab-nav-bar
+    mat-stretch-tabs="false"
+    mat-align-tabs="start"
+    [tabPanel]="tabPanel"
+  >
     <a
       *ngFor="let i of filters"
       mat-tab-link
@@ -22,4 +27,5 @@
       </ng-container>
     </a>
   </nav>
+  <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
 </ng-container>

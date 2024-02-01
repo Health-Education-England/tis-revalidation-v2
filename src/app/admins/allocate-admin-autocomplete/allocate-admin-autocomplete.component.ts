@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { UntypedFormBuilder, UntypedFormGroup } from "@angular/forms";
-import { MatLegacyAutocompleteSelectedEvent as MatAutocompleteSelectedEvent } from "@angular/material/legacy-autocomplete";
+import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import {

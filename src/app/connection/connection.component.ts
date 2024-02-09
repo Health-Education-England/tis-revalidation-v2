@@ -26,6 +26,7 @@ import {
 } from "@angular/animations";
 import { DetailsSideNavState } from "../details/details-side-nav/state/details-side-nav.state";
 import { IDetailsSideNav } from "../details/details-side-nav/details-side-nav.interfaces";
+import { CONNECTION_ACTIONS } from "../update-connections/constants";
 
 @Component({
   selector: "app-connection",
@@ -87,7 +88,21 @@ export class ConnectionComponent implements OnInit, OnDestroy {
         trainee.currentGrade !== "Foundation Year 1";
     });
     this.gmcNumber$.subscribe((res) => (this.gmcNumber = res));
-    this.doctorCurrentDbc$.subscribe((res) => (this.doctorCurrentDbc = res));
+    this.doctorCurrentDbc$.subscribe((designatedBody) => {
+      this.doctorCurrentDbc = designatedBody;
+      let updateConnectionActions = CONNECTION_ACTIONS;
+
+      if (designatedBody) {
+        updateConnectionActions = updateConnectionActions.filter(
+          (c) => c.action !== ActionType.ADD_CONNECTION
+        );
+      } else if (!designatedBody) {
+        updateConnectionActions = updateConnectionActions.filter(
+          (c) => c.action !== ActionType.REMOVE_CONNECTION
+        );
+      }
+      this.updateConnectionsService.actions$.next(updateConnectionActions);
+    });
     this.updateConnectionsService.canSave$.next(true);
   }
 

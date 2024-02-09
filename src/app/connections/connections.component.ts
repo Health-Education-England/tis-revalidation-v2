@@ -29,7 +29,7 @@ export class ConnectionsComponent implements OnDestroy {
 
   public selectedItems = [];
   public loading = false;
-
+  currentFilter: string;
   constructor(
     private store: Store,
     private recordsService: RecordsService,
@@ -45,25 +45,42 @@ export class ConnectionsComponent implements OnDestroy {
         this.updateConnectionsService.canSave$.next(
           this.selectedItems.length > 0
         );
+        if (this.currentFilter === ConnectionsFilterType.DISCREPANCIES) {
+          let selectedItems: any[] = items?.filter((item) => item.checked);
+          let actions = CONNECTION_ACTIONS;
+          let selectedActions = [];
+          if (selectedItems?.length) {
+            if (selectedItems.every((item) => item.designatedBody)) {
+              selectedActions = actions.filter(
+                (c) => c.action === ActionType.REMOVE_CONNECTION
+              );
+            } else if (
+              selectedItems.every((checked) => !checked.designatedBody)
+            ) {
+              selectedActions = actions.filter(
+                (c) => c.action === ActionType.ADD_CONNECTION
+              );
+            }
+          }
+
+          this.updateConnectionsService.actions$.next(selectedActions);
+        }
       }
     });
 
     this.filter$.subscribe((filter) => {
       let actions = CONNECTION_ACTIONS;
+      this.currentFilter = filter;
       switch (filter) {
-        case ConnectionsFilterType.ALL:
-          actions = actions.filter(
-            (c) => c.action !== ActionType.UNHIDE_CONNECTION
-          );
-          break;
         case ConnectionsFilterType.HIDDEN:
           actions = actions.filter(
             (c) => c.action !== ActionType.HIDE_CONNECTION
           );
           break;
-        case ConnectionsFilterType.HISTORIC_CONNECTIONS:
+
+        case ConnectionsFilterType.CURRENT_CONNECTIONS:
           actions = actions.filter(
-            (c) => c.action !== ActionType.REMOVE_CONNECTION
+            (c) => c.action !== ActionType.ADD_CONNECTION
           );
           break;
       }
@@ -93,20 +110,20 @@ export class ConnectionsComponent implements OnDestroy {
 
       this.componentSubscription = this.updateConnectionsService
         .updateConnection(payload, formValue.action)
-        .subscribe(
-          (response: IUpdateConnectionResponse) => {
+        .subscribe({
+          next: (response: IUpdateConnectionResponse) => {
             this.snackBarService.openSnackBar(response.message);
           },
-          (error) => {
+          error: (error) => {
             this.snackBarService.openSnackBar(error.message);
           },
-          () => {
+          complete: () => {
             this.store.dispatch(new EnableUpdateConnections(false));
             this.recordsService.enableAllocateAdmin(false);
             this.recordsService.get();
             this.loading = false;
           }
-        );
+        });
     } else {
       this.snackBarService.openSnackBar(
         "Please select doctors to update connections"

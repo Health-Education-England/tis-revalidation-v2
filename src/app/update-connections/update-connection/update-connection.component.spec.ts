@@ -96,10 +96,10 @@ describe("UpdateConnectionComponent", () => {
   });
 
   it("form should add dbc control with user dbcs excluding doctor current dbc when add connection selected", () => {
+    component.ngOnChanges();
     component.updateConnectionForm.controls[actionText].setValue(
       ActionType.ADD_CONNECTION
     );
-
     expect(component.userDbcs.length).toBe(2);
 
     const dbc = component.updateConnectionForm.controls[dbcText];

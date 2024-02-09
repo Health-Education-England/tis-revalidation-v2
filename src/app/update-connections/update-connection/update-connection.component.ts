@@ -1,5 +1,16 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  OnChanges
+} from "@angular/core";
+import {
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators
+} from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { Observable, Subscription } from "rxjs";
 import { AuthService } from "src/app/core/auth/auth.service";
@@ -19,7 +30,7 @@ import { ReferenceState } from "src/app/reference/state/reference.state";
   templateUrl: "./update-connection.component.html",
   styleUrls: ["./update-connection.component.scss"]
 })
-export class UpdateConnectionComponent implements OnInit {
+export class UpdateConnectionComponent implements OnInit, OnChanges {
   @Input() public currentDoctorDbcCode: string;
   @Output() submittFormEvent = new EventEmitter<any>();
 
@@ -49,17 +60,20 @@ export class UpdateConnectionComponent implements OnInit {
     public updateConnectionsService: UpdateConnectionsService
   ) {}
 
-  ngOnInit(): void {
-    this.bindFormControl();
-    this.dbcs$.subscribe((res) => {
-      this.dbcs = res || [];
+  ngOnChanges(): void {
+    this.dbcs$.subscribe((allDbcs) => {
+      this.dbcs = allDbcs || [];
       this.userDbcs =
-        res?.filter(
-          (r) =>
-            this.authService.userDesignatedBodies.includes(r.dbc) &&
-            r.dbc !== this.currentDoctorDbcCode
+        allDbcs?.filter(
+          (dbc) =>
+            this.authService.userDesignatedBodies.includes(dbc.dbc) &&
+            dbc.dbc !== this.currentDoctorDbcCode
         ) || [];
     });
+  }
+
+  ngOnInit(): void {
+    this.bindFormControl();
 
     this.updateConnectionsService.canSave$.subscribe(
       (result) => (this.canSave = result)
@@ -127,9 +141,8 @@ export class UpdateConnectionComponent implements OnInit {
           }
 
           this.reasonControl.setValue("");
-          this.reasons = this.actions.find(
-            (arm) => arm.action === action
-          )?.reasons;
+          this.reasons = this.actions.find((arm) => arm.action === action)
+            ?.reasons;
           this.reasonControl.updateValueAndValidity();
         }
       })

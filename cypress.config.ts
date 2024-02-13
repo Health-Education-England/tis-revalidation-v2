@@ -6,6 +6,7 @@ export default defineConfig({
   chromeWebSecurity: false,
   defaultCommandTimeout: 15000,
   projectId: "7r2r65",
+  blockHosts: ["*.google-analytics.com", "*.hotjar.com"],
   e2e: {
     // We've imported your old cypress plugins here.
     // You may want to clean this up later by importing these.

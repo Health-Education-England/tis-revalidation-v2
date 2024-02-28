@@ -61,6 +61,7 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
 
   isRevalApprover: boolean;
   isDeferrable: boolean = true;
+  isSaving: boolean = false;
   deferralFrom: Date;
 
   constructor(
@@ -109,8 +110,8 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
         .pipe(
           tap((res: IRecommendationSummary) => {
             this.recommendation = res
-              ? Object.assign({}, res)
-              : Object.assign({}, defaultRecommendation);
+              ? { ...res }
+              : { ...defaultRecommendation };
 
             this.bindFormControl();
           })
@@ -142,9 +143,11 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
    * saves form changes as draft
    * @param procced if procced to confirmation is set to true
    */
-  saveDraft(procced: boolean): void {
+  saveDraft(proceed: boolean): void {
     this.recommendationForm.markAllAsTouched();
     if (this.recommendationForm.valid) {
+      this.isSaving = true;
+
       const formValue = this.recommendationForm.value;
       this.recommendation.admin = this.auth.userName;
       this.recommendation.recommendationType = formValue.action;
@@ -164,24 +167,25 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
       this.recommendation.deferralSubReason = formValue.deferralSubReason;
       this.recommendation.gmcNumber = this.gmcNumber;
 
-      const redirectUrl = procced ? "../confirm" : "../";
+      const redirectUrl = proceed ? "../confirm" : "../";
 
       this.componentSubscriptions.push(
         this.recommendationHistoryService
           .saveRecommendation(this.recommendation)
           .pipe(
-            tap(
-              (res) => {
-                if (!procced) {
+            tap({
+              next: (res) => {
+                if (!proceed) {
                   this.successResponse(res);
                 }
               },
-              (error) => this.errorFnc(error)
-            ),
+              error: (error) => this.errorFnc(error)
+            }),
             catchError(this.errorFnc)
           )
           .subscribe(() => {
             this.store.dispatch(new Get(this.gmcNumber)).subscribe(() => {
+              this.isSaving = false;
               this.router.navigate([redirectUrl], {
                 relativeTo: this.activatedRoute
               });
@@ -342,6 +346,7 @@ export class CreateRecommendationComponent implements OnInit, OnDestroy {
 
   private errorFnc(err: any): Observable<any> {
     this.snackBarService.openSnackBar(err);
+    this.isSaving = false;
     return of(err);
   }
 

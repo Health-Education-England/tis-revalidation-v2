@@ -18,6 +18,7 @@ describe("CreateRecommendationComponent", () => {
   let component: CreateRecommendationComponent;
   let fixture: ComponentFixture<CreateRecommendationComponent>;
   let store: Store;
+  let auth: AuthService;
   const activatedRoute = {
     parent: { snapshot: { params: { gmcNumber: 0 } } }
   };
@@ -34,8 +35,8 @@ describe("CreateRecommendationComponent", () => {
     designatedBody: "1-AIIDSA",
     gmcSubmissionDate: new Date("2222-12-21")
   };
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
       imports: [
         MaterialModule,
         RouterTestingModule,
@@ -56,7 +57,8 @@ describe("CreateRecommendationComponent", () => {
       declarations: [CreateRecommendationComponent]
     }).compileComponents();
     store = TestBed.inject(Store);
-  });
+    auth = TestBed.inject(AuthService);
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CreateRecommendationComponent);
@@ -105,5 +107,60 @@ describe("CreateRecommendationComponent", () => {
     expect(
       fixture.debugElement.queryAll(By.css(".deferral-blocked-message")).length
     ).toBe(0);
+  });
+
+  it("should display Make Recommendation button when admin is approver", () => {
+    auth.isRevalApprover = true;
+    component.ngOnInit();
+    fixture.detectChanges();
+    const makeRecommendationButton = fixture.debugElement.query(
+      By.css("[data-cy = 'btnMakeRecommendation']")
+    ).nativeElement;
+    expect(makeRecommendationButton).toBeTruthy();
+  });
+
+  it("should display the Save draft button as active by default", () => {
+    expect(
+      fixture.debugElement.query(By.css("[data-cy = 'btnSaveDraft']"))
+        .nativeElement.disabled
+    ).toBeFalsy();
+  });
+
+  it("should display the Save draft and Make Recommendation buttons as disabled on click", () => {
+    spyOn(component, "saveDraft").and.callFake(() => {
+      component.isSaving = true;
+    });
+    auth.isRevalApprover = true;
+    component.ngOnInit();
+    fixture.detectChanges();
+
+    const saveButton = fixture.debugElement.query(
+      By.css("[data-cy = 'btnSaveDraft']")
+    ).nativeElement;
+
+    const makeRecommendationButton = fixture.debugElement.query(
+      By.css("[data-cy = 'btnMakeRecommendation']")
+    ).nativeElement;
+
+    const matSelect = fixture.debugElement.query(
+      By.css("[data-cy='selectRecommendation']")
+    ).nativeElement;
+    matSelect.click();
+    fixture.detectChanges();
+
+    const matOption = fixture.debugElement.queryAll(
+      By.css(".mat-mdc-option")
+    )[2].nativeElement;
+
+    matOption.click();
+
+    fixture.detectChanges();
+
+    saveButton.click();
+
+    fixture.detectChanges();
+    expect(component.saveDraft).toHaveBeenCalledWith(false);
+    expect(saveButton.disabled).toBeTruthy();
+    expect(makeRecommendationButton.disabled).toBeTruthy();
   });
 });

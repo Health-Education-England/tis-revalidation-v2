@@ -21,7 +21,7 @@
   <div class="d-grid grid-container-2-col">
     <mat-form-field>
       <mat-label>Make a recommendation</mat-label>
-      <mat-select formControlName="action">
+      <mat-select data-cy="selectRecommendation" formControlName="action">
         <mat-option
           *ngFor="let revalType of recommendationType | keyvalue"
           [value]="revalType.key"
@@ -101,6 +101,7 @@
       mat-raised-button
       (click)="saveDraft(false)"
       color="accent"
+      [disabled]="isSaving"
     >
       Save draft
     </button>
@@ -111,6 +112,7 @@
       mat-button
       mat-raised-button
       color="primary"
+      [disabled]="isSaving"
     >
       Make recommendation
     </button>

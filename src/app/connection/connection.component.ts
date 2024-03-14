@@ -45,7 +45,7 @@ import { IDetailsSideNav } from "../details/details-side-nav/details-side-nav.in
 export class ConnectionComponent implements OnInit, OnDestroy {
   @Select(ConnectionState.connectionHistory)
   public connectionHistory$: Observable<IConnectionHistory[]>;
-
+  connectionHistory: IConnectionHistory[];
   @Select(ConnectionState.gmcNumber)
   public gmcNumber$: Observable<number>;
 
@@ -55,13 +55,23 @@ export class ConnectionComponent implements OnInit, OnDestroy {
   @Select(DetailsSideNavState.traineeDetails)
   traineeDetails$: Observable<IDetailsSideNav>;
 
-  dateFormat = environment.dateFormat;
+  admins: string[] = [
+    "Bob Fossil",
+    "Bob Fossil",
+    "Naboo",
+    "Bob Fossil",
+    "Dixon Bainbridge",
+    "Mrs Gideon",
+    "Bollo"
+  ];
+  dateFormat = environment.dateTimeFormat;
   connectionsColumnsToDisplay = [
     "newDesignatedBodyCode",
     "previousDesignatedBodyCode",
     "requestType",
     "reasonMessage",
-    "requestTime"
+    "requestTime",
+    "admin"
   ];
   componentSubscription: Subscription;
   dbcs: IDesignatedBody[] = [];
@@ -80,6 +90,16 @@ export class ConnectionComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.connectionHistory$.subscribe((data) => {
+      let index = 0;
+      data.map((item: IConnectionHistory) => {
+        item.admin =
+          this.admins[Math.floor(Math.random() * this.admins.length)];
+        index++;
+        return item;
+      });
+      this.connectionHistory = data;
+    });
     this.traineeDetails$.subscribe((trainee) => {
       this.enableUpdateConnection =
         this.authService.isRevalAdmin &&

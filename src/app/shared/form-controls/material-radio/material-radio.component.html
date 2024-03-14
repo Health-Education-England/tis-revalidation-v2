@@ -1,0 +1,15 @@
+<div data-jasmine="formControl" [formGroup]="form" class="mb-20">
+  <mat-radio-group
+    aria-label="Select an option"
+    [formControlName]="controlProperties.key"
+  >
+    <div class="h2">{{ controlProperties.label }}</div>
+    <mat-radio-button
+      style="display: block"
+      *ngFor="let option of controlProperties.options"
+      [value]="option.key"
+    >
+      {{ option.value }}
+    </mat-radio-button>
+  </mat-radio-group>
+</div>

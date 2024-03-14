@@ -22,8 +22,38 @@ export const TABLE_FILTERS_FORM_BASE: Array<
   {
     key: "programmeName",
     label: "Programme name",
-    order: 1,
+    order: 2,
     controlType: FormControlType.AUTOCOMPLETE,
     placeholder: "Start typing..."
+  },
+  {
+    pageFilters: ["hidden", "discrepancies"],
+    key: "gmcStatus",
+    label: "Designated body connection status",
+    order: 1,
+    controlType: FormControlType.RADIO,
+    options: [
+      {
+        key: "connected",
+        value: "Connected"
+      },
+      {
+        key: "disconnected",
+        value: "Disconnected"
+      }
+    ],
+    initialValue: []
+  },
+  {
+    key: "submissionDateStart",
+    label: "Submission start date",
+    order: 3,
+    controlType: FormControlType.DATE_PICKER
+  },
+  {
+    key: "submissionDateEnd",
+    label: "Submission end date",
+    order: 4,
+    controlType: FormControlType.DATE_PICKER
   }
 ];

@@ -11,6 +11,7 @@ import { Observable, Subscription, map } from "rxjs";
 import { UpdateConnectionsService } from "../update-connections/services/update-connections.service";
 import { RecordsService } from "./services/records.service";
 import { ConnectionsFilterType } from "../connections/connections.interfaces";
+import { RecommendationsFilterType } from "../recommendations/recommendations.interfaces";
 
 @Component({
   selector: "app-records",
@@ -20,6 +21,11 @@ import { ConnectionsFilterType } from "../connections/connections.interfaces";
 export class RecordsComponent implements OnInit, OnDestroy {
   @Output() updateConnections = new EventEmitter<any>();
   @Input() public loading: boolean;
+
+  public filter$: Observable<
+    ConnectionsFilterType | RecommendationsFilterType
+  > = this.store.select((state) => state[this.recordsService.stateName].filter);
+
   showTableFilters: boolean;
   filterPanelOpen: boolean;
   public subscriptions: Subscription = new Subscription();

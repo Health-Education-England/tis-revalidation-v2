@@ -1,0 +1,21 @@
+<div data-jasmine="formControl" [formGroup]="form">
+  <mat-form-field>
+    <mat-label>{{ controlProperties.label }}</mat-label>
+    <input
+      readonly
+      (ngModelChange)="toggleDelete()"
+      [formControlName]="controlProperties.key"
+      matInput
+      [matDatepicker]="picker"
+    />
+    <mat-datepicker-toggle
+      [hidden]="!showClearIcon"
+      matIconSuffix
+      (click)="clearDate()"
+    >
+      <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+    </mat-datepicker-toggle>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+</div>

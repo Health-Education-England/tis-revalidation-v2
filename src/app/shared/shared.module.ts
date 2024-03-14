@@ -15,13 +15,16 @@ import { MaterialAutocompleteComponent } from "./form-controls/material-autocomp
 import { RemoveWhitespacePipe } from "./pipes/remove-whitespace.pipe";
 import { SplitStringToHTMLPipe } from "./pipes/split-string-to-html.pipe";
 import { FormatDesignatedBodyPipe } from "./pipes/format-designated-body.pipe";
-
+import { MaterialDatepickerComponent } from "./form-controls/material-datepicker/material-datepicker.component";
+import { MaterialRadioComponent } from "./form-controls/material-radio/material-radio.component";
+import { CustomDateFormatPipe } from "./pipes/custom-date-format.pipe";
 const modulePipes = [
   StripHtmlPipe,
   FileBytesPipe,
   SplitStringToHTMLPipe,
   RemoveWhitespacePipe,
-  FormatDesignatedBodyPipe
+  FormatDesignatedBodyPipe,
+  CustomDateFormatPipe
 ];
 @NgModule({
   declarations: [
@@ -32,8 +35,10 @@ const modulePipes = [
     FormControllerComponent,
     MaterialSelectionListComponent,
     MaterialAutocompleteComponent,
-
-    SplitStringToHTMLPipe
+    MaterialDatepickerComponent,
+    SplitStringToHTMLPipe,
+    CustomDateFormatPipe,
+    MaterialRadioComponent
   ],
   imports: [RouterModule, MaterialModule, ReactiveFormsModule, CommonModule],
   exports: [...modulePipes, FormControllerComponent],

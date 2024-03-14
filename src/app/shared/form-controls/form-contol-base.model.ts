@@ -1,9 +1,10 @@
 export interface FormControlBase {
+  pageFilters?: string[];
   key: string;
   label?: string;
   initialValue?: any;
   required?: boolean;
-  order: number;
+  order?: number;
   controlType: string;
   text?: string;
   placeholder?: string;
@@ -17,5 +18,7 @@ export interface AutocompleteControl extends FormControlBase {
 
 export enum FormControlType {
   AUTOCOMPLETE = "autocomplete",
-  SELECTION_LIST = "selectionList"
+  SELECTION_LIST = "selectionList",
+  RADIO = "radio",
+  DATE_PICKER = "datePicker"
 }

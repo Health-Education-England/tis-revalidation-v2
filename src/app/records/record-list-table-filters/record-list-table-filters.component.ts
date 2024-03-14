@@ -1,7 +1,21 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  OnChanges,
+  Input,
+  SimpleChanges
+} from "@angular/core";
 import { UntypedFormGroup } from "@angular/forms";
 import { Store } from "@ngxs/store";
-import { Observable, Subscription } from "rxjs";
+import {
+  Observable,
+  Subscription,
+  concatMap,
+  flatMap,
+  map,
+  mergeMap
+} from "rxjs";
 import {
   FormControlBase,
   AutocompleteControl
@@ -14,12 +28,19 @@ import { RecordsService } from "../services/records.service";
   templateUrl: "./record-list-table-filters.component.html",
   styleUrls: ["./record-list-table-filters.component.scss"]
 })
-export class RecordListTableFiltersComponent implements OnInit, OnDestroy {
+export class RecordListTableFiltersComponent
+  implements OnInit, OnDestroy, OnChanges
+{
+  @Input() filter: string;
+
   activeTableFilters: ITableFilters;
   formControls: (FormControlBase | AutocompleteControl)[] = [];
   form!: UntypedFormGroup;
   subscriptions: Subscription = new Subscription();
-  constructor(private recordsService: RecordsService, private store: Store) {}
+  constructor(
+    private recordsService: RecordsService,
+    private store: Store
+  ) {}
   public tableFilters$: Observable<any> = this.store.select(
     (state) => state[this.recordsService.stateName].tableFilters
   );
@@ -43,7 +64,7 @@ export class RecordListTableFiltersComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnInit(): void {
+  ngOnChanges(changes: SimpleChanges): void {
     this.tableFilters$.subscribe((filters: ITableFilters) => {
       if (filters) {
         this.activeTableFilters = filters;
@@ -53,15 +74,29 @@ export class RecordListTableFiltersComponent implements OnInit, OnDestroy {
     this.recordsService.onTableFilterFormReset.subscribe(() => {
       this.form.reset();
     });
-    this.recordsService.tableFiltersFormData.subscribe((formData) => {
-      this.formControls = formData;
-      this.form = this.recordsService.toFormGroup(
-        this.formControls,
-        this.activeTableFilters
-      );
-      this.activeTableFilters && this.form.markAsDirty();
-    });
+    this.recordsService.tableFiltersFormData
+      .pipe(
+        map((tableFilters) =>
+          tableFilters.filter(
+            (filter) =>
+              filter.pageFilters?.includes(this.filter) || !filter.pageFilters
+          )
+        )
+      )
+      .subscribe((formData) => {
+        console.log("FORM DATA", formData);
+        if (formData) {
+          this.formControls = formData;
+          this.form = this.recordsService.toFormGroup(
+            this.formControls,
+            this.activeTableFilters
+          );
+          this.activeTableFilters && this.form.markAsDirty();
+        }
+      });
   }
+
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();

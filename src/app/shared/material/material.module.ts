@@ -29,6 +29,7 @@ import { MatStepperModule } from "@angular/material/stepper";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
+import { MatRadioModule } from "@angular/material/radio";
 
 const materialModules = [
   LayoutModule,
@@ -60,7 +61,8 @@ const materialModules = [
   MatCheckboxModule,
   MatSnackBarModule,
   MatAutocompleteModule,
-  MatProgressBarModule
+  MatProgressBarModule,
+  MatRadioModule
 ];
 
 @NgModule({

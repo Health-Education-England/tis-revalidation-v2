@@ -10,4 +10,17 @@
     [form]="form"
   >
   </app-material-autocomplete>
+
+  <app-material-datepicker
+    *ngSwitchCase="formControlType.DATE_PICKER"
+    [controlProperties]="control"
+    [form]="form"
+  >
+  </app-material-datepicker>
+  <app-material-radio
+    *ngSwitchCase="formControlType.RADIO"
+    [controlProperties]="control"
+    [form]="form"
+  >
+  </app-material-radio>
 </div>

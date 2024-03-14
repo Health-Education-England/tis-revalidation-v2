@@ -45,6 +45,10 @@ export class ConnectionsResolver extends RecordsResolver {
         label: "DISCREPANCIES",
         name: ConnectionsFilterType.DISCREPANCIES
       },
+      {
+        label: "HIDDEN",
+        name: ConnectionsFilterType.HIDDEN
+      },
 
       {
         label: "FAILED GMC UPDATES",
@@ -81,9 +85,11 @@ export class ConnectionsResolver extends RecordsResolver {
     } else {
       const filters: IConnectionsTableFilters = {};
       TABLE_FILTERS_FORM_BASE.forEach((filter) => {
-        filters[filter.key] = filter.options
-          ? route.queryParams[filter.key]?.split(",")
-          : route.queryParams[filter.key];
+        if (!Array.isArray(filter.key)) {
+          filters[filter.key] = filter.options
+            ? route.queryParams[filter.key]?.split(",")
+            : route.queryParams[filter.key];
+        }
       });
 
       if (Object.values(filters).some((filter) => filter)) {

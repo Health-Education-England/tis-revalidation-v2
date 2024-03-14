@@ -8,7 +8,9 @@
 </div>
 
 <ng-template #notLoading>
-  <app-exceptions-log *ngIf="isExceptionsLog$ | async; else showRecords"></app-exceptions-log>
+  <app-exceptions-log
+    *ngIf="isExceptionsLog$ | async; else showRecords"
+  ></app-exceptions-log>
   <ng-template #showRecords>
     <div class="d-grid records-top-section align-items-center sticky-toolbar">
       <app-record-search></app-record-search>
@@ -35,7 +37,9 @@
         [opened]="filterPanelOpen"
         [disableClose]="true"
       >
-        <app-record-list-table-filters></app-record-list-table-filters>
+        <app-record-list-table-filters
+          [filter]="filter$ | async"
+        ></app-record-list-table-filters>
       </mat-drawer>
       <mat-drawer-content>
         <app-record-list></app-record-list>

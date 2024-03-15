@@ -16,8 +16,13 @@
   <ng-template #notLoading>
     <!--  error -->
     <div *ngIf="data.error; else items" class="d-grid justify-content-center">
-      <mat-chip-listbox class="mat-chip-list-stacked" aria-orientation="vertical">
-        <mat-chip-option selected color="warn">{{ data.error }}</mat-chip-option>
+      <mat-chip-listbox
+        class="mat-chip-list-stacked"
+        aria-orientation="vertical"
+      >
+        <mat-chip-option selected color="warn">{{
+          data.error
+        }}</mat-chip-option>
       </mat-chip-listbox>
     </div>
 
@@ -53,6 +58,7 @@
             >
               <!-- header cell -->
               <th
+                [ngClass]="(fixedColumns$ | async) && 'fixed'"
                 mat-header-cell
                 *matHeaderCellDef
                 [mat-sort-header]="i.name"

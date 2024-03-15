@@ -7,9 +7,6 @@
 }
 
 ::ng-deep {
-  .mat-mdc-table th {
-    white-space: nowrap;
-  }
   .mat-column-programmeName {
     .split-item {
       display: block;
@@ -20,6 +17,9 @@
       padding-bottom: 4px;
     }
   }
+}
+th.fixed {
+  white-space: nowrap;
 }
 
 // common columns

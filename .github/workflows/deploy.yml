@@ -95,6 +95,14 @@ jobs:
           SLACK_ICON_EMOJI: ":test_tube_red:"
           SLACK_COLOR: FF0000
 
+  clear-outdated-runs:
+    needs: cypress-e2e
+    uses: health-education-england/.github/.github/workflows/clear-runs.yml@main
+    with:
+      environment: prod
+    secrets:
+      reject-pat: ${{ secrets.PAT_REJECT_APPROVALS }}
+
   deploy-prod:
     name: Build and deploy to production on S3
     runs-on: ubuntu-latest

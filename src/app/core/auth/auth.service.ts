@@ -74,6 +74,6 @@ export class AuthService {
   }
 
   signOut(): Promise<any> {
-    return Auth.signOut({ global: true });
+    return Auth.signOut();
   }
 }

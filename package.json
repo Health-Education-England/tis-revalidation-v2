@@ -61,7 +61,7 @@
     "@angular/cli": "^16.2.12",
     "@angular/compiler-cli": "^16.2.12",
     "@angular/language-service": "^16.2.12",
-    "@ngxs/devtools-plugin": "^3.8.2",
+    "@ngxs/devtools-plugin": "^18.1.4",
     "@react-native-community/netinfo": "^9.5.0",
     "@types/jasmine": "^4.6.4",
     "@types/jasminewd2": "^2.0.13",

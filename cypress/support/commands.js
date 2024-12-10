@@ -27,25 +27,18 @@
 const username = Cypress.env("username");
 const password = Cypress.env("password");
 
-Cypress.Commands.add("login", () => {
-  cy.visit("/");
-  cy.get("form").eq(1).as("form");
-  cy.get("@form").find(".idpButton-customizable").click();
-  cy.get("#kc-form-wrapper").find("#username").type(username);
-  cy.get("#kc-form-wrapper").find("#password").type(password);
-  cy.get("#kc-form-wrapper").find("#kc-login").click();
-
-  cy.get("app-records .mat-mdc-table").should("exist");
-});
-
 Cypress.Commands.add("loginSession", () => {
   cy.session(username, () => {
     cy.visit("/");
-    cy.get("form").eq(1).as("form");
-    cy.get("@form").find(".idpButton-customizable").click();
-    cy.get("#kc-form-wrapper").find("#username").type(username);
-    cy.get("#kc-form-wrapper").find("#password").type(password);
-    cy.get("#kc-form-wrapper").find("#kc-login").click();
-    cy.get("app-records .mat-mdc-table").should("exist");
+    cy.get('.modal-content.visible-lg')
+      .find('#signInFormUsername')
+      .type(username);
+    cy.get('.modal-content.visible-lg')
+      .find('#signInFormPassword')
+      .type(password, { log: false });
+    cy.get('.modal-content.visible-lg')
+      .find('.submitButton-customizable')
+      .click();
+    cy.url().should('contain', 'recommendations');
   });
 });

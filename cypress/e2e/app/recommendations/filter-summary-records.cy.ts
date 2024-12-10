@@ -10,15 +10,15 @@ describe("Recommendations", () => {
         {
           value: "1-1RUZV1D",
           label: "Kent, Surrey and Sussex",
-          abbr: "HEKSS"
+          abbr: "KSS"
         },
         {
           value: "1-1RUZV4H",
           label: "North Central and East London",
-          abbr: "HENCEL"
+          abbr: "NCEL"
         },
-        { value: "1-1RUZV6H", label: "North West London", abbr: "HEWL" },
-        { value: "1-1RSSQ5L", label: "South London", abbr: "HESL" }
+        { value: "1-1RUZV6H", label: "North West London", abbr: "WL" },
+        { value: "1-1RSSQ5L", label: "South London", abbr: "SL" }
       ],
 
       gmcStatus: ["Approved", "Rejected", "Under Review"],
@@ -64,7 +64,7 @@ describe("Recommendations", () => {
         cy.get("[data-cy='selectionOption1-1RUZV1D']").click();
         FilterRecords.submitForm();
         cy.get("td.cdk-column-designatedBody").each(($el) => {
-          expect($el.text().trim()).to.equal("HEKSS");
+          expect($el.text().trim()).to.equal("KSS");
         });
       });
 
@@ -105,7 +105,7 @@ describe("Recommendations", () => {
               expect($el.text().trim()).to.equal(value);
             });
             cy.get("td.cdk-column-designatedBody").each(($el) => {
-              expect($el.text().trim()).to.equal("HEKSS");
+              expect($el.text().trim()).to.equal("KSS");
             });
           });
       });
@@ -139,7 +139,7 @@ describe("Recommendations", () => {
 
         cy.get("app-record-list .mat-mdc-table").should("exist");
         cy.get("td.cdk-column-designatedBody").each(($el) => {
-          expect($el.text().trim() === "HEEOE").to.be.false;
+          expect($el.text().trim() === "EOE").to.be.false;
         });
       });
     });
@@ -367,7 +367,7 @@ describe("Recommendations", () => {
       it("should update summary table displaying trainees with matching TIS admin name only", () => {
         FilterRecords.initFilterPanel();
 
-        FilterRecords.openTisAdminDropdown("Steve");
+        FilterRecords.openTisAdminDropdown("Reval");
         cy.get("mat-option")
           .first()
           .invoke("text")

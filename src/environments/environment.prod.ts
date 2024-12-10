@@ -8,11 +8,11 @@ const env: Partial<IEnvironment> = {
   gtmID: "GTM-MLTQS7XR",
   awsConfig: {
     bucketName: "tis-revalidation-concerns-upload-prod",
-    domain: "auth.tis.nhs.uk",
+    domain: "tis-prod.auth.eu-west-2.amazoncognito.com",
+    userPoolId: "eu-west-2_6g9Rz2m0r",
+    userPoolWebClientId: "503a0fda33b8ndblni35cf4ba6",
     redirectSignIn: "https://revalidation.tis.nhs.uk",
-    redirectSignOut: "https://revalidation.tis.nhs.uk",
-    userPoolId: "eu-west-2_r3l1XtMDD",
-    userPoolWebClientId: "4o37rm9tbid1u066hr500be5n3"
+    redirectSignOut: "https://revalidation.tis.nhs.uk"
   }
 };
 export const environment = {

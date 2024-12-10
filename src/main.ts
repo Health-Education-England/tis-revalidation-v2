@@ -15,6 +15,7 @@ if (environment.production) {
 
 const AWS_CONFIG = {
   Auth: {
+    storage: window.sessionStorage,
     region: environment.awsConfig.region,
     userPoolId: environment.awsConfig.userPoolId,
     userPoolWebClientId: environment.awsConfig.userPoolWebClientId,

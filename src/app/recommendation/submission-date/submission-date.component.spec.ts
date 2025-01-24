@@ -23,7 +23,9 @@ describe("SubmissionDateComponent", () => {
     underNotice: null,
     revalidations: [],
     designatedBody: "1-AIIDSA",
-    gmcSubmissionDate: new Date("2025-01-01")
+    gmcSubmissionDate: new Date(
+      new Date().setFullYear(new Date().getFullYear() + 1)
+    )
   };
 
   beforeEach(async () => {

@@ -1,13 +1,21 @@
-<div [ngSwitch]="control?.controlType">
-  <app-material-selection-list
-    *ngSwitchCase="formControlType.SELECTION_LIST"
-    [controlProperties]="control"
-    [form]="form"
-  ></app-material-selection-list>
-  <app-material-autocomplete
-    *ngSwitchCase="formControlType.AUTOCOMPLETE"
-    [controlProperties]="control"
-    [form]="form"
-  >
-  </app-material-autocomplete>
-</div>
+<ng-container *ngIf="!hidden">
+  <div [ngSwitch]="control?.controlType">
+    <app-material-checkbox
+      *ngSwitchCase="formControlType.CHECKBOX"
+      [controlProperties]="control"
+      [form]="form"
+    >
+    </app-material-checkbox>
+    <app-material-selection-list
+      *ngSwitchCase="formControlType.SELECTION_LIST"
+      [controlProperties]="control"
+      [form]="form"
+    ></app-material-selection-list>
+    <app-material-autocomplete
+      *ngSwitchCase="formControlType.AUTOCOMPLETE"
+      [controlProperties]="control"
+      [form]="form"
+    >
+    </app-material-autocomplete>
+  </div>
+</ng-container>

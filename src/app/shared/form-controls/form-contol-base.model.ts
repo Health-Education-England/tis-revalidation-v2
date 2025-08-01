@@ -1,13 +1,20 @@
 export interface FormControlBase {
   key: string;
   label?: string;
+  value?: string;
+  valueProperty?: string;
   initialValue?: any;
   required?: boolean;
   order: number;
   controlType: string;
   text?: string;
   placeholder?: string;
-  options?: { key: string; value: string }[];
+  filterType?: string;
+  options?: {
+    key: string;
+    value?: string;
+    valueProperty?: string;
+  }[];
 }
 
 export interface AutocompleteControl extends FormControlBase {
@@ -17,5 +24,6 @@ export interface AutocompleteControl extends FormControlBase {
 
 export enum FormControlType {
   AUTOCOMPLETE = "autocomplete",
-  SELECTION_LIST = "selectionList"
+  SELECTION_LIST = "selectionList",
+  CHECKBOX = "checkbox"
 }

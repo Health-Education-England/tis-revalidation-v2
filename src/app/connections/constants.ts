@@ -3,6 +3,7 @@ import {
   FormControlBase,
   FormControlType
 } from "../shared/form-controls/form-contol-base.model";
+import { ConnectionsFilterType } from "./connections.interfaces";
 export const COLUMN_DATA: [string, string, boolean][] = [
   ["Current programme name", "programmeName", false],
   ["GMC Submission date", "submissionDate", false],
@@ -22,8 +23,25 @@ export const TABLE_FILTERS_FORM_BASE: Array<
   {
     key: "programmeName",
     label: "Programme name",
-    order: 1,
+    order: 3,
     controlType: FormControlType.AUTOCOMPLETE,
     placeholder: "Start typing..."
+  },
+
+  {
+    key: "tisDesignatedBodies",
+    label: "Ready for connection",
+    valueProperty: "userDesignatedBodies",
+    order: 1,
+    controlType: FormControlType.CHECKBOX,
+    filterType: ConnectionsFilterType.DISCREPANCIES
+  },
+  {
+    key: "dbcs",
+    label: "Ready for disconnection",
+    valueProperty: "userDesignatedBodies",
+    order: 2,
+    controlType: FormControlType.CHECKBOX,
+    filterType: ConnectionsFilterType.DISCREPANCIES
   }
 ];

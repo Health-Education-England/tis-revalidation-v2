@@ -33,13 +33,13 @@ export class FormControllerComponent implements OnInit {
 
   ngOnInit(): void {
     this.filter$.subscribe((filter: string) => {
-      if (this.control.filterType && this.control.filterType !== filter) {
+      if (this.control?.filterType && this.control?.filterType !== filter) {
         this.hidden = true;
       } else {
         this.hidden = false;
       }
     });
-    if (this.control.valueProperty) {
+    if (this.control?.valueProperty) {
       this.control.value = this.formControllService[this.control.valueProperty];
     }
   }

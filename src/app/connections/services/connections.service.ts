@@ -19,12 +19,30 @@ export class ConnectionsService {
   public generateParams(): HttpParams {
     const snapshot: ConnectionsStateModel = this.store.snapshot().connections;
     let params: HttpParams = this.recordsService.generateParams(snapshot);
-
     params = params
       .append("filter", snapshot.filter)
-      .append("dbcs", this.authService.userDesignatedBodies.join(","))
       .append("programmeName", snapshot.tableFilters?.programmeName || "");
 
+    if (snapshot.filter === "discrepancies") {
+      params = params
+        .append(
+          "dbcs",
+          snapshot.tableFilters
+            ? snapshot.tableFilters.dbcs
+            : this.authService.userDesignatedBodies.join(",")
+        )
+        .append(
+          "tisDesignatedBodies",
+          snapshot.tableFilters
+            ? snapshot.tableFilters.tisDesignatedBodies
+            : this.authService.userDesignatedBodies.join(",")
+        );
+    } else {
+      params = params.append(
+        "dbcs",
+        this.authService.userDesignatedBodies.join(",")
+      );
+    }
     return params;
   }
 

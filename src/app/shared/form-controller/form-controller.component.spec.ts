@@ -17,10 +17,11 @@ import {
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { MaterialSelectionListComponent } from "../form-controls/material-selection-list/material-selection-list.component";
 import { RemoveWhitespacePipe } from "../pipes/remove-whitespace.pipe";
+import { NgxsModule, Store } from "@ngxs/store";
 describe("FormControllerComponent", () => {
   let component: FormControllerComponent;
   let fixture: ComponentFixture<FormControllerComponent>;
-
+  let store: Store;
   const formControls: (FormControlBase | AutocompleteControl)[] = [
     {
       key: "selectionList1_Key",
@@ -40,6 +41,7 @@ describe("FormControllerComponent", () => {
         }
       ],
       order: 1,
+      filterType: "discrepancies",
       controlType: "selectionList",
       initialValue: []
     },
@@ -60,19 +62,33 @@ describe("FormControllerComponent", () => {
         HttpClientTestingModule,
         NoopAnimationsModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        NgxsModule.forRoot()
       ],
       declarations: [
         FormControllerComponent,
         MaterialAutocompleteComponent,
         MaterialSelectionListComponent,
         RemoveWhitespacePipe
-      ]
+      ],
+      providers: [Store]
     }).compileComponents();
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(FormControllerComponent);
+    store = TestBed.inject(Store);
+    store.reset({
+      connections: {
+        filter: "currentConnections",
+        sort: {
+          active: "submissionDate",
+          direction: "asc"
+        },
+        pageIndex: 1,
+        tableFilters: null
+      }
+    });
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

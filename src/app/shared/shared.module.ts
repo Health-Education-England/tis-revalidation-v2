@@ -15,6 +15,7 @@ import { MaterialAutocompleteComponent } from "./form-controls/material-autocomp
 import { RemoveWhitespacePipe } from "./pipes/remove-whitespace.pipe";
 import { SplitStringToHTMLPipe } from "./pipes/split-string-to-html.pipe";
 import { FormatDesignatedBodyPipe } from "./pipes/format-designated-body.pipe";
+import { MaterialCheckboxComponent } from './form-controls/material-checkbox/material-checkbox.component';
 
 const modulePipes = [
   StripHtmlPipe,
@@ -33,7 +34,8 @@ const modulePipes = [
     MaterialSelectionListComponent,
     MaterialAutocompleteComponent,
 
-    SplitStringToHTMLPipe
+    SplitStringToHTMLPipe,
+      MaterialCheckboxComponent
   ],
   imports: [RouterModule, MaterialModule, ReactiveFormsModule, CommonModule],
   exports: [...modulePipes, FormControllerComponent],

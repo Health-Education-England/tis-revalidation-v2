@@ -1,10 +1,15 @@
 import { enableProdMode } from "@angular/core";
 import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
-import { Amplify, Auth } from "aws-amplify";
-import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth/lib-esm/types";
-import { CognitoUserSession } from "amazon-cognito-identity-js";
+import { Amplify } from "aws-amplify";
 import { AppModule } from "./app/app.module";
 import { environment } from "./environments/environment";
+
+import {
+  fetchAuthSession,
+  signInWithRedirect,
+  AuthSession,
+  signOut
+} from 'aws-amplify/auth';
 
 const redirectKey = "reval_redirectLocation";
 const location = window.location;
@@ -15,35 +20,38 @@ if (environment.production) {
 
 const AWS_CONFIG = {
   Auth: {
-    storage: window.sessionStorage,
-    region: environment.awsConfig.region,
-    userPoolId: environment.awsConfig.userPoolId,
-    userPoolWebClientId: environment.awsConfig.userPoolWebClientId,
-    authenticationFlowType: environment.awsConfig.authenticationFlowType,
-    mandatorySignIn: environment.awsConfig.mandatorySignIn,
-    oauth: {
-      domain: environment.awsConfig.domain,
-      scope: environment.awsConfig.scope,
-      redirectSignIn: environment.awsConfig.redirectSignIn,
-      redirectSignOut: environment.awsConfig.redirectSignOut,
-      responseType: environment.awsConfig.responseType
+    Storage: window.sessionStorage,
+    Cognito: {
+      userPoolId: environment.awsConfig.userPoolId,
+      userPoolClientId: environment.awsConfig.userPoolWebClientId,
+      mandatorySignIn: environment.awsConfig.mandatorySignIn,
+      authenticationFlowType: environment.awsConfig.authenticationFlowType,
+      loginWith: {
+        oauth: {
+          domain: environment.awsConfig.domain,
+          scopes: environment.awsConfig.scope,
+          redirectSignIn: environment.awsConfig.redirectSignIn,
+          redirectSignOut: environment.awsConfig.redirectSignOut,
+          responseType: environment.awsConfig.responseType as 'code' | 'token'
+        }
+      }
     }
   }
 };
 
 Amplify.configure(AWS_CONFIG);
 
-Auth.currentSession()
-  .then((cognitoUserSession: CognitoUserSession) => {
-    const cognitoIdToken = cognitoUserSession.getIdToken();
-    const roles = cognitoIdToken.payload["cognito:roles"];
+fetchAuthSession()
+  .then((cognitoUserSession: AuthSession) => {
+    const cognitoIdToken = cognitoUserSession.tokens.idToken;
+    const roles = cognitoIdToken.payload["cognito:roles"] as string[]|| [];
 
     if (roles.includes("HEE Admin Revalidation")) {
       platformBrowserDynamic()
         .bootstrapModule(AppModule)
         .catch((err) => console.error(err));
     } else {
-      Auth.signOut();
+      signOut()
       window.localStorage.removeItem(redirectKey);
       alert("Please contact administrator for access");
     }
@@ -53,7 +61,5 @@ Auth.currentSession()
       redirectKey,
       `${location.pathname}${location.search}${location.hash}`
     );
-    Auth.federatedSignIn({
-      provider: CognitoHostedUIIdentityProvider.Cognito
-    });
+    signInWithRedirect();
   });

@@ -11,8 +11,8 @@ const env: Partial<IEnvironment> = {
     domain: "tis-prod.auth.eu-west-2.amazoncognito.com",
     userPoolId: "eu-west-2_6g9Rz2m0r",
     userPoolWebClientId: "503a0fda33b8ndblni35cf4ba6",
-    redirectSignIn: "https://revalidation.tis.nhs.uk",
-    redirectSignOut: "https://revalidation.tis.nhs.uk"
+    redirectSignIn: ["https://revalidation.tis.nhs.uk"],
+    redirectSignOut: ["https://revalidation.tis.nhs.uk"]
   }
 };
 export const environment = {

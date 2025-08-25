@@ -9,8 +9,8 @@ const env: Partial<IEnvironment> = {
     domain: "tis-preprod.auth.eu-west-2.amazoncognito.com",
     userPoolId: "eu-west-2_sNYQvAsaG",
     userPoolWebClientId: "12apcktrr55idvu3hdhga9p1e5",
-    redirectSignIn: "https://stage-revalidation.tis.nhs.uk",
-    redirectSignOut: "https://stage-revalidation.tis.nhs.uk"
+    redirectSignIn: ["https://stage-revalidation.tis.nhs.uk"],
+    redirectSignOut: ["https://stage-revalidation.tis.nhs.uk"]
   }
 };
 

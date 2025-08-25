@@ -8,6 +8,7 @@ import {
 import { Observable, throwError } from "rxjs";
 import { switchMap, catchError } from "rxjs/operators";
 import { AuthService } from "./auth.service";
+import { AuthSession } from "aws-amplify/auth";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -18,11 +19,10 @@ export class AuthInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     return this.authService.currentSession().pipe(
-      switchMap((res) => {
-        const authorization = res.getIdToken();
+      switchMap((session: AuthSession) => {
         request = request.clone({
           setHeaders: {
-            Authorization: `${authorization.getJwtToken()}`
+            Authorization: `${session.tokens?.idToken?.toString()}`
           }
         });
         return next.handle(request);

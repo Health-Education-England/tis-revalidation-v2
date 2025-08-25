@@ -3,6 +3,7 @@ import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
 import { Amplify } from "aws-amplify";
 import { AppModule } from "./app/app.module";
 import { environment } from "./environments/environment";
+import { sessionStorage } from 'aws-amplify/utils';
 
 import {
   fetchAuthSession,
@@ -10,6 +11,7 @@ import {
   AuthSession,
   signOut
 } from 'aws-amplify/auth';
+import { cognitoUserPoolsTokenProvider } from 'aws-amplify/auth/cognito';
 
 const redirectKey = "reval_redirectLocation";
 const location = window.location;
@@ -20,7 +22,6 @@ if (environment.production) {
 
 const AWS_CONFIG = {
   Auth: {
-    Storage: window.sessionStorage,
     Cognito: {
       userPoolId: environment.awsConfig.userPoolId,
       userPoolClientId: environment.awsConfig.userPoolWebClientId,
@@ -40,6 +41,8 @@ const AWS_CONFIG = {
 };
 
 Amplify.configure(AWS_CONFIG);
+
+cognitoUserPoolsTokenProvider.setKeyValueStorage(sessionStorage);
 
 fetchAuthSession()
   .then((cognitoUserSession: AuthSession) => {

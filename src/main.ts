@@ -54,7 +54,7 @@ fetchAuthSession()
         .bootstrapModule(AppModule)
         .catch((err) => console.error(err));
     } else {
-      signOut()
+      signOut();
       window.localStorage.removeItem(redirectKey);
       alert("Please contact administrator for access");
     }

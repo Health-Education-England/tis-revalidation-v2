@@ -96,7 +96,7 @@ describe("AuthService", () => {
     });
   });
 
-  it("should invoke Auth federated signin when currentsession is not avaialbel", () => {
+  it("should invoke signin when currentsession is not avaialbel", () => {
     spyOn(service, "currentSession").and.returnValue(EMPTY);
 
     spyOn(service, "signIn");
@@ -109,7 +109,7 @@ describe("AuthService", () => {
     );
   });
 
-  it("should invoke Auth federated signin when signin called", async () => {
+  it("should invoke signin when signin called", async () => {
     const signInWithRedirect = "signInWithRedirect";
     spyOn(authWrapper, signInWithRedirect).and.returnValue(Promise.resolve());
 
@@ -117,7 +117,7 @@ describe("AuthService", () => {
     expect(authWrapper[signInWithRedirect]).toHaveBeenCalled();
   });
 
-  it("should invoke Auth signOut when signOut called", async () => {
+  it("should invoke signOut when signOut called", async () => {
     const signOut = "signOut";
     spyOn(authWrapper, signOut).and.returnValue(Promise.resolve());
 

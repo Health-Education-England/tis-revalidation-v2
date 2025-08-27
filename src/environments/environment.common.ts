@@ -29,8 +29,8 @@ export const commonEnv: IEnvironment = {
     bucketName: "tis-revalidation-concerns-upload-preprod",
     domain: "tis-local.auth.eu-west-2.amazoncognito.com",
     mandatorySignIn: true,
-    redirectSignIn: "http://localhost:4200",
-    redirectSignOut: "http://localhost:4200",
+    redirectSignIn: ["http://localhost:4200"],
+    redirectSignOut: ["http://localhost:4200"],
     userPoolId: "eu-west-2_Hc4ETnUXM",
     userPoolWebClientId: "5bp1jqpo2nklag4hpkebqk6r8d"
   }

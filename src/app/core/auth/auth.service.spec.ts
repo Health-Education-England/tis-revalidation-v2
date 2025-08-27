@@ -1,10 +1,10 @@
 import { TestBed } from "@angular/core/testing";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { HttpClient } from "@angular/common/http";
-import { Auth } from "aws-amplify";
-import { CognitoUserSession } from "amazon-cognito-identity-js";
 import { AuthService } from "./auth.service";
 import { EMPTY } from "rxjs";
+import { authWrapper } from "./auth-wrapper";
+import { AuthSession } from "aws-amplify/auth";
 
 describe("AuthService", () => {
   let service: AuthService;
@@ -31,12 +31,11 @@ describe("AuthService", () => {
   });
 
   it("should give the current user session when currentSession is called", () => {
-    spyOn(Auth, "currentSession").and.callFake(() =>
+    spyOn(authWrapper, "fetchAuthSession").and.callFake(() =>
       Promise.resolve(createMockSession(defaultPayload))
     );
 
     service.currentSession().subscribe((curresntSession) => {
-      expect(curresntSession.isValid()).toBeTruthy();
       expect(service.userName).toBe("dummy@dummy.com");
       expect(service.fullName).toBe("Name FName");
       expect(service.isRevalAdmin).toBeFalsy();
@@ -48,7 +47,7 @@ describe("AuthService", () => {
     const payload: { [key: string]: any } = { ...defaultPayload };
     payload["cognito:roles"] = ["role1", "role2", "RevalAdmin"];
 
-    spyOn(Auth, "currentSession").and.callFake(() =>
+    spyOn(authWrapper, 'fetchAuthSession').and.callFake(() =>
       Promise.resolve(createMockSession(payload))
     );
 
@@ -61,7 +60,7 @@ describe("AuthService", () => {
     const payload: { [key: string]: any } = { ...defaultPayload };
     payload["cognito:groups"] = ["1-DBC", "2-DBC", "1-1RUZV1D"];
 
-    spyOn(Auth, "currentSession").and.callFake(() =>
+    spyOn(authWrapper, 'fetchAuthSession').and.callFake(() =>
       Promise.resolve(createMockSession(payload))
     );
 
@@ -75,7 +74,7 @@ describe("AuthService", () => {
     const payload: { [key: string]: any } = { ...defaultPayload };
     payload["cognito:roles"] = null;
 
-    spyOn(Auth, "currentSession").and.callFake(() =>
+    spyOn(authWrapper, 'fetchAuthSession').and.callFake(() =>
       Promise.resolve(createMockSession(payload))
     );
 
@@ -88,7 +87,7 @@ describe("AuthService", () => {
     const payload: { [key: string]: any } = { ...defaultPayload };
     payload["cognito:groups"] = null;
 
-    spyOn(Auth, "currentSession").and.callFake(() =>
+    spyOn(authWrapper, 'fetchAuthSession').and.callFake(() =>
       Promise.resolve(createMockSession(payload))
     );
 
@@ -97,7 +96,7 @@ describe("AuthService", () => {
     });
   });
 
-  it("should invoke Auth federated signin when currentsession is not avaialbel", () => {
+  it("should invoke signin when currentsession is not avaialbel", () => {
     spyOn(service, "currentSession").and.returnValue(EMPTY);
 
     spyOn(service, "signIn");
@@ -110,36 +109,36 @@ describe("AuthService", () => {
     );
   });
 
-  it("should invoke Auth federated signin when signin called", async () => {
-    const federatedSignIn = "federatedSignIn";
-    spyOn(Auth, federatedSignIn);
+  it("should invoke signin when signin called", async () => {
+    const signInWithRedirect = "signInWithRedirect";
+    spyOn(authWrapper, signInWithRedirect).and.returnValue(Promise.resolve());
 
     await service.signIn();
-    expect(Auth[federatedSignIn]).toHaveBeenCalled();
+    expect(authWrapper[signInWithRedirect]).toHaveBeenCalled();
   });
 
-  it("should invoke Auth signOut when signOut called", async () => {
+  it("should invoke signOut when signOut called", async () => {
     const signOut = "signOut";
-    spyOn(Auth, signOut);
+    spyOn(authWrapper, signOut).and.returnValue(Promise.resolve());
 
     await service.signOut();
-    expect(Auth[signOut]).toHaveBeenCalled();
+    expect(authWrapper[signOut]).toHaveBeenCalled();
   });
 
   function createMockSession(payload: {
     [key: string]: any;
-  }): CognitoUserSession {
+  }): AuthSession {
     return {
-      getIdToken: () => ({
-        payload,
-        getJwtToken: () => null,
-        getIssuedAt: () => null,
-        getExpiration: () => null,
-        decodePayload: () => null
-      }),
-      getAccessToken: () => null,
-      getRefreshToken: () => null,
-      isValid: () => true
+      tokens: {
+        idToken: {
+          payload,
+          toString: () => null,
+        },
+        accessToken: {
+          payload,
+          toString: () => null,
+        }
+      }
     };
   }
 });

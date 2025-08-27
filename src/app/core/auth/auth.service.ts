@@ -1,7 +1,4 @@
 import { Injectable } from "@angular/core";
-import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth/lib-esm/types";
-import { CognitoUserSession } from "amazon-cognito-identity-js";
-import { Auth } from "aws-amplify";
 import { from, Observable } from "rxjs";
 import { catchError, tap } from "rxjs/operators";
 import {
@@ -10,6 +7,8 @@ import {
   BETA_ROLES
 } from "src/environments/constants";
 import { environment } from "@environment";
+import { authWrapper } from "./auth-wrapper";
+import { AuthSession } from "aws-amplify/auth";
 
 @Injectable({
   providedIn: "root"
@@ -26,36 +25,37 @@ export class AuthService {
   public isRevalApprover = false;
   public isRevalBeta = false;
 
-  currentSession(): Observable<CognitoUserSession> {
-    return from(Auth.currentSession()).pipe(
-      tap((cognitoUserSession: CognitoUserSession) => {
-        const cognitoIdToken = cognitoUserSession.getIdToken();
+  currentSession(): Observable<AuthSession> {
+    return from(authWrapper.fetchAuthSession()).pipe(
+      tap((cognitoUserSession: AuthSession) => {
+        if (cognitoUserSession.tokens) {
+          const cognitoIdToken = cognitoUserSession.tokens.idToken;
+          this.userName = cognitoIdToken?.payload[this.userNameClaimKey] as string;
+          this.fullName = `${cognitoIdToken?.payload["given_name"] as string} ${cognitoIdToken?.payload["family_name"] as string}`;
+          this.email = cognitoIdToken?.payload["email"] as string;
+          this.roles = cognitoIdToken?.payload["cognito:roles"] as string[]|| [];
+          this.isRevalAdmin = this.roles.some((role) =>
+            ADMIN_ROLES.includes(role)
+          );
 
-        this.userName = cognitoIdToken.payload[this.userNameClaimKey];
-        this.fullName = `${cognitoIdToken.payload.given_name} ${cognitoIdToken.payload.family_name}`;
-        this.email = cognitoIdToken.payload.email;
-        this.roles = cognitoIdToken.payload["cognito:roles"] || [];
-        this.isRevalAdmin = this.roles.some((role) =>
-          ADMIN_ROLES.includes(role)
-        );
+          this.isRevalApprover = this.roles.some((role) =>
+            APPROVER_ROLES.includes(role)
+          );
+          this.isRevalBeta = this.roles.some((role) => BETA_ROLES.includes(role));
 
-        this.isRevalApprover = this.roles.some((role) =>
-          APPROVER_ROLES.includes(role)
-        );
-        this.isRevalBeta = this.roles.some((role) => BETA_ROLES.includes(role));
+          let dbcs: string[] = cognitoIdToken?.payload["cognito:groups"] as string[] || [];
+          let londonDBCodes: string[] = environment.londonDBCs.map(
+            (dbc) => dbc.key
+          );
+          this.inludesLondonDbcs = dbcs.some((dbc) =>
+            londonDBCodes.includes(dbc)
+          );
 
-        let dbcs: string[] = cognitoIdToken.payload["cognito:groups"] || [];
-        let londonDBCodes: string[] = environment.londonDBCs.map(
-          (dbc) => dbc.key
-        );
-        this.inludesLondonDbcs = dbcs.some((dbc) =>
-          londonDBCodes.includes(dbc)
-        );
-
-        if (this.inludesLondonDbcs) {
-          dbcs = Array.from(new Set([...londonDBCodes, ...dbcs]));
+          if (this.inludesLondonDbcs) {
+            dbcs = Array.from(new Set([...londonDBCodes, ...dbcs]));
+          }
+          this.userDesignatedBodies = dbcs;
         }
-        this.userDesignatedBodies = dbcs;
       }),
       catchError(() => {
         window.localStorage.setItem(
@@ -68,12 +68,10 @@ export class AuthService {
   }
 
   signIn(): Promise<any> {
-    return Auth.federatedSignIn({
-      provider: CognitoHostedUIIdentityProvider.Cognito
-    });
+    return authWrapper.signInWithRedirect();
   }
 
   signOut(): Promise<any> {
-    return Auth.signOut();
+    return authWrapper.signOut();
   }
 }

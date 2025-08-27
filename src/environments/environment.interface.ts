@@ -18,8 +18,8 @@ export interface IAWSConfig {
   readonly bucketName: string;
   readonly domain: string;
   readonly mandatorySignIn: boolean;
-  readonly redirectSignIn: string;
-  readonly redirectSignOut: string;
+  readonly redirectSignIn: string[];
+  readonly redirectSignOut: string[];
   readonly region: string;
   readonly responseType: string;
   readonly scope: string[];

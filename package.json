@@ -1,6 +1,6 @@
 {
   "name": "revalidation",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "scripts": {
     "ng": "ng",
     "start": "npm run build:misc && ng serve",
@@ -41,7 +41,7 @@
     "@sentry/browser": "^8.33.0",
     "angular-google-tag-manager": "^1.8.0",
     "angulartics2": "^12.2.0",
-    "aws-amplify": "^5.3.15",
+    "aws-amplify": "^6.15.4",
     "browserslist": "^4.22.3",
     "file-saver": "^2.0.5",
     "karma-coverage": "^2.2.1",

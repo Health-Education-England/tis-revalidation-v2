@@ -18,7 +18,7 @@ export class FormControllerComponent implements OnInit {
     private formControllService: FormControllerService,
     private store: Store,
     private recordsService: RecordsService
-  ) {}
+  ) { }
   public tableFilters$: Observable<any> = this.store.select(
     (state) => state[this.recordsService.stateName].tableFilters
   );
@@ -41,6 +41,10 @@ export class FormControllerComponent implements OnInit {
     });
     if (this.control?.valueProperty) {
       this.control.value = this.formControllService[this.control.valueProperty];
+      let currentFormState = this.form.get(this.control.key)
+      currentFormState?.setValue(
+        this.control.initialValueFromService && !this.form.dirty ? this.control.value : currentFormState.value
+      );
     }
   }
 }

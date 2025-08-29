@@ -1,3 +1,4 @@
+import { init } from "@sentry/browser";
 import {
   AutocompleteControl,
   FormControlBase,
@@ -34,7 +35,8 @@ export const TABLE_FILTERS_FORM_BASE: Array<
     valueProperty: "userDesignatedBodies",
     order: 1,
     controlType: FormControlType.CHECKBOX,
-    filterType: ConnectionsFilterType.DISCREPANCIES
+    filterType: ConnectionsFilterType.DISCREPANCIES,
+    initialValueFromService: true
   },
   {
     key: "dbcs",
@@ -42,6 +44,7 @@ export const TABLE_FILTERS_FORM_BASE: Array<
     valueProperty: "userDesignatedBodies",
     order: 2,
     controlType: FormControlType.CHECKBOX,
-    filterType: ConnectionsFilterType.DISCREPANCIES
+    filterType: ConnectionsFilterType.DISCREPANCIES,
+    initialValueFromService: true
   }
 ];

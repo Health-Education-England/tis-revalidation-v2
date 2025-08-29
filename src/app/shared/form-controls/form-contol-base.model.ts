@@ -15,6 +15,7 @@ export interface FormControlBase {
     value?: string;
     valueProperty?: string;
   }[];
+  initialValueFromService?: boolean;
 }
 
 export interface AutocompleteControl extends FormControlBase {

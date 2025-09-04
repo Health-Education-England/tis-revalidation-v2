@@ -24,16 +24,17 @@ export class ConnectionsService {
       .append("programmeName", snapshot.tableFilters?.programmeName || "");
 
     if (snapshot.filter === "discrepancies") {
+      let noneSelected = !(snapshot.tableFilters?.dbcs || snapshot.tableFilters?.tisDesignatedBodies)
       params = params
         .append(
           "dbcs",
-          snapshot.tableFilters
+          snapshot.tableFilters && !noneSelected
             ? snapshot.tableFilters.dbcs
             : this.authService.userDesignatedBodies.join(",")
         )
         .append(
           "tisDesignatedBodies",
-          snapshot.tableFilters
+          snapshot.tableFilters && !noneSelected
             ? snapshot.tableFilters.tisDesignatedBodies
             : this.authService.userDesignatedBodies.join(",")
         );

@@ -1,4 +1,5 @@
 import { defineConfig } from "cypress";
+import cypressOtp from "cypress-otp";
 
 export default defineConfig({
   viewportWidth: 1920,
@@ -17,6 +18,7 @@ export default defineConfig({
     //experimentalSessionAndOrigin: true, //required to allow cross origin for hosted ui login
     experimentalRunAllSpecs: true,
     setupNodeEvents(on, config) {
+      on("task", { generateOTP: cypressOtp });
       return require("./cypress/plugins/index.js")(on, config);
     },
     baseUrl: "https://stage-revalidation.tis.nhs.uk/"

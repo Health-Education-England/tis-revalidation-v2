@@ -64,7 +64,8 @@ jobs:
           CYPRESS_baseUrl: https://stage-revalidation.tis.nhs.uk/
           CYPRESS_password: ${{ secrets.E2E_TEST_PASS }}
           CYPRESS_username: ${{ secrets.E2E_TEST_USER }}
-          CYPRESS_secret: ${{ secrets.E2E_TEST_SECRET }}
+          CYPRESS_totpKey: ${{ secrets.E2E_TEST_TOTP_KEY }}
+
           # for recording results and videos to Cypress Dashborad
           CYPRESS_RECORD_KEY: ${{secrets.CYPRESS_RECORD_KEY}}
           CYPRESS_coverage: false

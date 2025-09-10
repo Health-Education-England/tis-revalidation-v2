@@ -32,7 +32,7 @@ jobs:
           role-to-assume: arn:aws:iam::430723991443:role/github-actions-deployer-role
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Run linting
         run: npm run lint

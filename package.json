@@ -1,6 +1,6 @@
 {
   "name": "revalidation",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "scripts": {
     "ng": "ng",
     "start": "npm run build:misc && ng serve",
@@ -43,6 +43,7 @@
     "angulartics2": "^12.2.0",
     "aws-amplify": "^6.15.4",
     "browserslist": "^4.22.3",
+    "cypress-otp": "^1.0.3",
     "file-saver": "^2.0.5",
     "karma-coverage": "^2.2.1",
     "nhsuk-frontend": "^7.1.0",
@@ -71,7 +72,7 @@
     "browserslist-useragent-regexp": "^3.0.2",
     "buffer": "^6.0.3",
     "codelyzer": "^6.0.0",
-    "cypress": "^13.6.6",
+    "cypress": "^15.1.0",
     "eslint": "^8.17.0",
     "husky": "^8.0.3",
     "jasmine-core": "~5.1.0",

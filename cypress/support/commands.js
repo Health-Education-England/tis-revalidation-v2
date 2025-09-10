@@ -26,19 +26,23 @@
 
 const username = Cypress.env("username");
 const password = Cypress.env("password");
+const totpKey = Cypress.env("totpKey");
 
 Cypress.Commands.add("loginSession", () => {
   cy.session(username, () => {
     cy.visit("/");
-    cy.get('.modal-content.visible-lg')
-      .find('#signInFormUsername')
+    cy.get(".modal-content.visible-lg")
+      .find("#signInFormUsername")
       .type(username);
-    cy.get('.modal-content.visible-lg')
-      .find('#signInFormPassword')
+    cy.get(".modal-content.visible-lg")
+      .find("#signInFormPassword")
       .type(password, { log: false });
-    cy.get('.modal-content.visible-lg')
-      .find('.submitButton-customizable')
+    cy.get(".modal-content.visible-lg")
+      .find(".submitButton-customizable")
       .click();
-    cy.url().should('contain', 'recommendations');
+    cy.task("generateOTP", totpKey, { log: false }).then((token) => {
+      cy.get("#totpCodeInput").type(`${token}{enter}`);
+    });
+    cy.url().should("contain", "recommendations");
   });
 });

@@ -8,7 +8,7 @@ export class RecordListStateModel {
 @State<RecordListStateModel>({
   name: "recordList",
   defaults: {
-    fixedColumns: true
+    fixedColumns: false
   }
 })
 @Injectable()

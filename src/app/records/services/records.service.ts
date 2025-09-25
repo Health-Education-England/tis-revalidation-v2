@@ -67,7 +67,7 @@ export class RecordsService {
   public resetSearchForm$: BehaviorSubject<boolean> = new BehaviorSubject(null);
   public onTableFilterFormReset = new Subject<void>();
   public toggleTableFilterPanel$: BehaviorSubject<boolean> =
-    new BehaviorSubject(false);
+    new BehaviorSubject(true);
 
   public stateName: string;
   public dateColumns: string[];

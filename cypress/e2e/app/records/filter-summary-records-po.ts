@@ -1,14 +1,16 @@
 export class FilterRecords {
   static toggleFilterPanel = () => {
     cy.get("[data-cy='toggleTableFiltersButton']").click();
-    cy.get(".filters-drawer-container .mat-drawer-opened").should("exist");
-    cy.get("[data-cy='toggleTableFiltersButton']").click();
     cy.get(".filters-drawer-container .mat-drawer-opened").should("not.exist");
+    cy.get("[data-cy='toggleTableFiltersButton']").click();
+    cy.get(".filters-drawer-container .mat-drawer-opened").should("exist");
   };
 
   static openProgrammeNameDropdown = (query: string = "General Practice") => {
     cy.get(".mat-mdc-autocomplete-panel mat-option").should("not.exist");
-    cy.get("[data-cy='formfield_programmeName'] input").type(query);
+    cy.get("[data-cy='formfield_programmeName'] input").type(query, {
+      force: true
+    });
     cy.get(
       ".mat-mdc-autocomplete-panel [data-cy='autocomplete-option']"
     ).should("exist");
@@ -27,11 +29,17 @@ export class FilterRecords {
     cy.get("app-record-list .mat-mdc-table").should("exist");
   };
 
-  static initFilterPanel = (path: string = "/recommendations") => {
+  static initFilterPanel = (
+    path: string = "/recommendations",
+    isOpen: boolean = true
+  ) => {
     cy.visit(path);
     cy.get("app-record-list .mat-mdc-table").should("exist");
-    cy.get("[data-cy='toggleTableFiltersButton']").click();
+    if (!isOpen) {
+      cy.get("[data-cy='toggleTableFiltersButton']").click();
+    }
     cy.get("app-form-controller").should("exist");
+    cy.scrollTo(0, 0);
   };
 
   static checkButtonsDisabled = (status: string = "be disabled") => {

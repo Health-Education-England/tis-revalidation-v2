@@ -7,6 +7,8 @@
   >
     <div class="h2">{{ controlProperties.label }}</div>
     <mat-list-option
+      [matTooltip]="option.value.length > 27 ? option.value : null"
+      matTooltipShowDelay="400"
       *ngFor="let option of controlProperties.options"
       [value]="option.key"
       [attr.data-cy]="'selectionOption' + option.key | removeWhitespace"

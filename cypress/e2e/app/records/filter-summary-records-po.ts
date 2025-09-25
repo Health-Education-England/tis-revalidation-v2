@@ -29,7 +29,7 @@ export class FilterRecords {
     cy.get("app-record-list .mat-mdc-table").should("exist");
   };
 
-  static initFilterPanel = (
+  static readonly initFilterPanel = (
     path: string = "/recommendations",
     isOpen: boolean = true
   ) => {

@@ -195,13 +195,13 @@ export class RecordsService {
     };
     const tableFilters = snapshot.tableFilters;
     if (tableFilters) {
-      Object.keys(tableFilters).forEach((key) => {
+      for (const key of Object.keys(tableFilters)) {
         if (Array.isArray(tableFilters[key])) {
           params[key] = tableFilters[key].join(",");
         } else {
           params[key] = tableFilters[key];
         }
-      });
+      }
     }
     return params;
   }
@@ -315,11 +315,11 @@ export class RecordsService {
   public toFormGroup(controls: FormControlBase[], formData: any = {}) {
     const group: any = {};
 
-    controls.forEach((control) => {
+    for (const control of controls) {
       group[control.key] = new UntypedFormControl(
         formData[control.key] || control.initialValue || ""
       );
-    });
+    }
     return new UntypedFormGroup(group);
   }
 

@@ -4,7 +4,7 @@ describe("Save and submit recommendation", () => {
   });
 
   const openDetailPage = (tisStatus: string = "NOT_STARTED") => {
-    const url = `/recommendations?active=submissionDate&direction=asc&pageIndex=0&filter=underNotice&programmeName=&gmcStatus=&tisStatus=${tisStatus}&dbcs=&admin=`;
+    const url = `/recommendations?active=submissionDate&direction=asc&pageIndex=0&filter=underNotice&programmeName=&gmcStatus=&tisStatus=${tisStatus}&dbcs=1-1RUZV1D&admin=`;
     cy.visit(url);
     cy.get("app-record-list tbody tr").each(($el) => {
       const gmcStatus = $el

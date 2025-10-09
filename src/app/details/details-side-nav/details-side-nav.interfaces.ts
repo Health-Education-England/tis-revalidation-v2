@@ -6,6 +6,7 @@ export interface IDetailsSideNav {
   curriculumEndDate: string;
   programmeMembershipType: string;
   programmeName: string;
+  programmeEndDate: string;
   currentGrade: string;
   tisPersonId: number;
   notes?: INote[];

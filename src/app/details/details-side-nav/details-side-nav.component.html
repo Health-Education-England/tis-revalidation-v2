@@ -15,7 +15,7 @@
       <span class="details-list-item-line">{{ traineeDetails.gmcNumber }}</span>
     </div>
     <div class="details-list-item">
-      <span class="details-list-item-title">Programme membership type:</span>
+      <span class="details-list-item-title">Programme membership type</span>
       <span class="details-list-item-line"
         >{{
           traineeDetails.programmeMembershipType === null
@@ -25,7 +25,7 @@
       </span>
     </div>
     <div class="details-list-item">
-      <span class="details-list-item-title">Current programme name:</span>
+      <span class="details-list-item-title">Current programme name</span>
       <span
         class="details-list-item-line programme-names"
         *ngIf="traineeDetails.programmeName; else NoProgramme"
@@ -36,22 +36,32 @@
     </div>
 
     <div class="details-list-item">
-      <span class="details-list-item-title">Current grade:</span>
+      <span class="details-list-item-title">Programme end date</span>
       <span class="details-list-item-line"
         >{{
-          traineeDetails.currentGrade === null
-            ? "N/A"
-            : traineeDetails.currentGrade
+          traineeDetails.programmeEndDate
+            ? (traineeDetails.programmeEndDate | date: dateFormat)
+            : "N/A"
         }}
       </span>
     </div>
     <div class="details-list-item">
-      <span class="details-list-item-title">Curriculum end date:</span>
+      <span class="details-list-item-title">Curriculum end date</span>
       <span class="details-list-item-line"
         >{{
           traineeDetails.curriculumEndDate === null
             ? "N/A"
             : (traineeDetails.curriculumEndDate | date: dateFormat)
+        }}
+      </span>
+    </div>
+    <div class="details-list-item">
+      <span class="details-list-item-title">Current grade</span>
+      <span class="details-list-item-line"
+        >{{
+          traineeDetails.currentGrade === null
+            ? "N/A"
+            : traineeDetails.currentGrade
         }}
       </span>
     </div>

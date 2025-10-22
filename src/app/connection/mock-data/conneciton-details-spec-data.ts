@@ -16,7 +16,8 @@ const connectionHistory: IConnectionHistory[] = [
     requestType: "ADD",
     requestTime: new Date(),
     responseCode: "80",
-    responseMessage: "Missing / Invalid Designated Body code"
+    responseMessage: "Missing / Invalid Designated Body code",
+    updatedBy: "reval.admin@hee.nhs.uk"
   },
   {
     connectionId: "08f0b3dc-7ce6-4657-a7a7-12504fbdb72c",
@@ -29,7 +30,8 @@ const connectionHistory: IConnectionHistory[] = [
     requestType: "REMOVE",
     requestTime: new Date(),
     responseCode: "100",
-    responseMessage: "Doctor already associated with your Designated Body"
+    responseMessage: "Doctor already associated with your Designated Body",
+    updatedBy: "reval.admin@hee.nhs.uk"
   }
 ];
 

@@ -21,6 +21,7 @@ export interface IConnectionHistory {
   requestTime: Date;
   responseCode: string;
   responseMessage: string;
+  updatedBy: string;
 }
 
 export interface IUserDBC {

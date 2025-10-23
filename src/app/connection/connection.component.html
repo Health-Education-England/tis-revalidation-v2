@@ -11,7 +11,9 @@
     *ngIf="connectionHistory$ | async as connectionHistory"
   >
     <mat-card class="mb-20" appearance="outlined">
-      <mat-card-title>Connection history</mat-card-title>
+      <mat-card-title
+        >Connection history - including external GMC updates</mat-card-title
+      >
       <table
         mat-table
         [dataSource]="connectionHistory"
@@ -48,7 +50,7 @@
         <ng-container matColumnDef="requestType">
           <th mat-header-cell scope="col" *matHeaderCellDef>Request type</th>
           <td mat-cell *matCellDef="let element">
-            {{ element.requestType }}
+            {{ element.requestType ? element.requestType : "EXTERNAL" }}
           </td>
         </ng-container>
 
@@ -60,9 +62,16 @@
         </ng-container>
 
         <ng-container matColumnDef="requestTime">
-          <th mat-header-cell scope="col" *matHeaderCellDef>Last updated</th>
+          <th mat-header-cell scope="col" *matHeaderCellDef>Updated</th>
           <td mat-cell *matCellDef="let element">
             {{ element.requestTime | date: dateFormat }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="updatedBy">
+          <th mat-header-cell scope="col" *matHeaderCellDef>Updated by</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.updatedBy | AdminName: "username" }}
           </td>
         </ng-container>
 
@@ -73,6 +82,7 @@
             [attr.colspan]="connectionsColumnsToDisplay.length"
           >
             <div
+              *ngIf="element.responseCode"
               class="element-detail"
               [@detailExpand]="
                 element === expandedElement ? 'expanded' : 'collapsed'
@@ -105,7 +115,10 @@
           (click)="currentExpanded(element, $event)"
           (keyup.enter)="currentExpanded(element, $event)"
           (keyup.space)="currentExpanded(element, $event)"
-          [class.highlight-row-warn]="element.responseCode !== '0'"
+          [class.highlight-row-secondary]="!element.responseCode"
+          [class.highlight-row-warn]="
+            element.responseCode && element.responseCode !== '0'
+          "
           [class.highlight-row-success]="element.responseCode === '0'"
         ></tr>
         <tr

@@ -61,7 +61,8 @@ export class ConnectionComponent implements OnInit, OnDestroy {
     "previousDesignatedBodyCode",
     "requestType",
     "reasonMessage",
-    "requestTime"
+    "requestTime",
+    "updatedBy"
   ];
   componentSubscription: Subscription;
   dbcs: IDesignatedBody[] = [];

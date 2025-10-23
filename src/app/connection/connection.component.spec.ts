@@ -29,7 +29,8 @@ describe("ConnectionComponent", () => {
     requestType: "ADD",
     requestTime: new Date(),
     responseCode: "0",
-    responseMessage: "Sussess"
+    responseMessage: "Sussess",
+    updatedBy: "bobfossil@hee.nhs.uk"
   };
 
   beforeEach(async () => {
@@ -169,10 +170,10 @@ describe("ConnectionComponent", () => {
         doctors: [
           {
             gmcId: 123456,
-            currentDesignatedBodyCode: "1-ABCDE",
+            currentDesignatedBodyCode: "1-ABCDE"
           }
         ],
-        admin:""
+        admin: ""
       },
       ActionType.REMOVE_CONNECTION
     );

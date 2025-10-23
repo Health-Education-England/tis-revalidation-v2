@@ -24,7 +24,8 @@ $colour-values: (
   warn: $color_nhsuk-red,
   success: $color_nhsuk-green,
   primary: $color_nhsuk-blue,
-  accent: $color_nhsuk-warm-yellow
+  accent: $color_nhsuk-warm-yellow,
+  secondary: $color_nhsuk-grey-2
 ) !default;
 
 @mixin icon-colours() {

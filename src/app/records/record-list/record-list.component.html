@@ -61,7 +61,7 @@
                 [ngClass]="(fixedColumns$ | async) && 'fixed'"
                 mat-header-cell
                 *matHeaderCellDef
-                [mat-sort-header]="i.name"
+                [mat-sort-header]="i.sortBy"
                 scope="col"
                 [disabled]="
                   data.enableUpdateConnections ||

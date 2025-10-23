@@ -18,8 +18,11 @@ describe("Connections Summary Records List", () => {
   const sortableColumns = [
     "First name",
     "Last name",
+    "GMC No",
+    "GMC Submission date",
     "GMC Designated body",
-    "Programme owner"
+    "Programme owner",
+    "Programme membership"
   ];
 
   const filters = [

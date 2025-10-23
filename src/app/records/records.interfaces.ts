@@ -8,6 +8,7 @@ export interface IRecordDataCell {
   label?: string;
   name: string;
   enableSort?: boolean;
+  sortBy?: string;
 }
 
 export interface ITotalCounts {

@@ -4,12 +4,12 @@ import {
   FormControlType
 } from "../shared/form-controls/form-contol-base.model";
 import { ConnectionsFilterType } from "./connections.interfaces";
-export const COLUMN_DATA: [string, string, boolean][] = [
+export const COLUMN_DATA: [string, string, boolean, string?][] = [
   ["Current programme name", "programmeName", false],
-  ["GMC Submission date", "submissionDate", false],
+  ["GMC Submission date", "submissionDate", true],
   ["GMC Designated body", "designatedBody", true],
   ["Programme owner", "tcsDesignatedBody", true],
-  ["Programme membership", "programmeMembershipType", false]
+  ["Programme membership", "programmeMembershipType", true, "membershipType"]
 ];
 export const EXCEPTIONSLOG_COLUMN_DATA: { name: string; label: string }[] = [
   { name: "timestamp", label: "Date/time" },

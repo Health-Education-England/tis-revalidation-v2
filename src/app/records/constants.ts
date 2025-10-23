@@ -20,7 +20,7 @@ export const RECORDS_COLUMN_DATA: IRecordDataCell[] = [
   {
     label: "GMC No",
     name: "gmcReferenceNumber",
-    enableSort: false
+    enableSort: true
   }
 ];
 
@@ -31,9 +31,9 @@ export const generateColumnData = (data: any[][]): IRecordDataCell[] => {
     generatedData.push({
       label: item[0],
       name: item[1],
-      enableSort: item[2]
+      enableSort: item[2],
+      sortBy: item[3] || item[1]
     });
   });
-
   return generatedData;
 };

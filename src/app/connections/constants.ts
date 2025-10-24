@@ -1,3 +1,4 @@
+import { environment } from "@environment";
 import {
   AutocompleteControl,
   FormControlBase,
@@ -26,12 +27,13 @@ export const TABLE_FILTERS_FORM_BASE: Array<
     order: 3,
     controlType: FormControlType.AUTOCOMPLETE,
     placeholder: "Start typing..."
-  },
+  }
+];
 
+export const TABLE_FILTERS_FORM_DBC: FormControlBase[] = [
   {
     key: "tisDesignatedBodies",
     label: "Ready for connection",
-    valueProperty: "userDesignatedBodies",
     order: 1,
     controlType: FormControlType.CHECKBOX,
     filterType: ConnectionsFilterType.DISCREPANCIES
@@ -39,9 +41,29 @@ export const TABLE_FILTERS_FORM_BASE: Array<
   {
     key: "dbcs",
     label: "Ready for disconnection",
-    valueProperty: "userDesignatedBodies",
     order: 2,
     controlType: FormControlType.CHECKBOX,
+    filterType: ConnectionsFilterType.DISCREPANCIES
+  }
+];
+
+export const TABLE_FILTERS_FORM_DBC_LONDON: FormControlBase[] = [
+  {
+    key: "dbcs",
+    label: "Ready for disconnection from",
+    options: environment.londonDBCs,
+    order: 1,
+    controlType: FormControlType.SELECTION_LIST,
+    initialValue: [],
+    filterType: ConnectionsFilterType.DISCREPANCIES
+  },
+  {
+    key: "tisDesignatedBodies",
+    label: "Ready for connection to",
+    options: environment.londonDBCs,
+    order: 2,
+    controlType: FormControlType.SELECTION_LIST,
+    initialValue: [],
     filterType: ConnectionsFilterType.DISCREPANCIES
   }
 ];

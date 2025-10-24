@@ -24,20 +24,23 @@ export class ConnectionsService {
       .append("programmeName", snapshot.tableFilters?.programmeName || "");
 
     if (snapshot.filter === "discrepancies") {
-      let noneSelected = !(snapshot.tableFilters?.dbcs || snapshot.tableFilters?.tisDesignatedBodies)
-      params = params
-        .append(
-          "dbcs",
-          snapshot.tableFilters && !noneSelected
-            ? snapshot.tableFilters.dbcs
-            : this.authService.userDesignatedBodies.join(",")
-        )
-        .append(
-          "tisDesignatedBodies",
-          snapshot.tableFilters && !noneSelected
-            ? snapshot.tableFilters.tisDesignatedBodies
-            : this.authService.userDesignatedBodies.join(",")
-        );
+      let noneSelected = !(
+        snapshot.tableFilters?.dbcs ||
+        snapshot.tableFilters?.tisDesignatedBodies
+      );
+
+      params = params.append(
+        "dbcs",
+        snapshot.tableFilters && !noneSelected
+          ? snapshot.tableFilters.dbcs
+          : this.authService.userDesignatedBodies.join(",")
+      );
+      params = params.append(
+        "tisDesignatedBodies",
+        snapshot.tableFilters && !noneSelected
+          ? snapshot.tableFilters.tisDesignatedBodies
+          : this.authService.userDesignatedBodies.join(",")
+      );
     } else {
       params = params.append(
         "dbcs",

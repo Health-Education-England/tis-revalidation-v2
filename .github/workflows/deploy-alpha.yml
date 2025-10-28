@@ -14,16 +14,16 @@ jobs:
     environment: alpha
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4.0.2
+        uses: actions/setup-node@v6
         with:
           node-version: 18.12.0
           cache: npm
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@v5
         with:
           aws-region: eu-west-2
           role-to-assume: arn:aws:iam::430723991443:role/github-actions-deployer-role

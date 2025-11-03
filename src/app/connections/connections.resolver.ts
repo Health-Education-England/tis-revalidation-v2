@@ -10,12 +10,15 @@ import {
   ConnectionsFilterType,
   IConnectionsTableFilters
 } from "./connections.interfaces";
-import { COLUMN_DATA, TABLE_FILTERS_FORM_DBC_LONDON } from "./constants";
+import {
+  COLUMN_DATA,
+  TABLE_FILTERS_FORM_DBC_LONDON,
+  TABLE_FILTERS_FORM_DBC
+} from "./constants";
 import { stateName } from "../records/records.interfaces";
 import { TABLE_FILTERS_FORM_BASE } from "../connections/constants";
 import { FormControlBase } from "../shared/form-controls/form-contol-base.model";
 import { AuthService } from "../core/auth/auth.service";
-import { TABLE_FILTERS_FORM_DBC } from "./constants";
 @Injectable()
 export class ConnectionsResolver extends RecordsResolver {
   constructor(

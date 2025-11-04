@@ -6,6 +6,13 @@
 </div>
 
 <ng-template #notSubmitting>
+  <mat-card class="mb-20" appearance="outlined">
+    <mat-card-title>Current designated body</mat-card-title>
+    <ng-container *ngIf="doctorCurrentDbc$ | async; else NoDBC">
+      {{ doctorCurrentDbc$ | async | formatDesignatedBody: "name" }}
+    </ng-container>
+    <ng-template #NoDBC> No current connection </ng-template>
+  </mat-card>
   <div
     class="table-container"
     *ngIf="connectionHistory$ | async as connectionHistory"

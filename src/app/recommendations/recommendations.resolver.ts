@@ -2,7 +2,6 @@ import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
-import { finalize, filter, take } from "rxjs/operators";
 
 import { generateColumnData } from "../records/constants";
 import { RecordsResolver } from "../records/records.resolver";
@@ -18,7 +17,7 @@ import {
 } from "./recommendations.interfaces";
 import { AuthService } from "../core/auth/auth.service";
 import { UpdateConnectionsService } from "../update-connections/services/update-connections.service";
-import { ITableFilters, stateName } from "../records/records.interfaces";
+import { stateName } from "../records/records.interfaces";
 import {
   AutocompleteControl,
   FormControlBase
@@ -26,10 +25,7 @@ import {
 import { IAdmin } from "../admins/admins.interfaces";
 
 @Injectable()
-export class RecommendationsResolver
-  extends RecordsResolver
-  
-{
+export class RecommendationsResolver extends RecordsResolver {
   constructor(
     protected store: Store,
     protected recordsService: RecordsService,
@@ -44,28 +40,22 @@ export class RecommendationsResolver
     (state) => state.admins.items
   );
 
-  private async initFiltersFormData() {
-    this.admins$
-      .pipe(
-        filter((data) => !!data),
-        take(1),
-        finalize(() => {
-          if (this.authService.inludesLondonDbcs) {
-            TABLE_FILTERS_FORM_BASE?.push(TABLE_FILTERS_FORM_DBC);
-          }
-          this.recordsService.tableFiltersFormData.next(
-            [...TABLE_FILTERS_FORM_BASE].sort(
-              (a: FormControlBase, b: FormControlBase) => a.order - b.order
-            )
-          );
-        })
+  private initFiltersFormData() {
+    if (this.authService.inludesLondonDbcs) {
+      TABLE_FILTERS_FORM_BASE?.push(TABLE_FILTERS_FORM_DBC);
+    }
+    this.recordsService.tableFiltersFormData.next(
+      [...TABLE_FILTERS_FORM_BASE].sort(
+        (a: FormControlBase, b: FormControlBase) => a.order - b.order
       )
-      .subscribe((admins: IAdmin[]) => {
-        const tisAdminFormField = TABLE_FILTERS_FORM_BASE.find(
-          ({ key }) => key === "admin"
-        ) as AutocompleteControl;
-        tisAdminFormField.data = admins.map((admin: IAdmin) => admin.fullName);
-      });
+    );
+
+    this.admins$.subscribe((admins: IAdmin[]) => {
+      const tisAdminFormField = TABLE_FILTERS_FORM_BASE.find(
+        ({ key }) => key === "admin"
+      ) as AutocompleteControl;
+      tisAdminFormField.data = admins?.map((admin: IAdmin) => admin.fullName);
+    });
   }
   private initialiseData(): void {
     this.recordsService.stateName = stateName.RECOMMENDATIONS;

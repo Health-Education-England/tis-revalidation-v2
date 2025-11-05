@@ -35,6 +35,7 @@ export const TABLE_FILTERS_FORM_DBC: FormControlBase[] = [
     key: "tisDesignatedBodies",
     label: "Ready for connection",
     order: 1,
+    valueProperty: "userDesignatedBodies",
     controlType: FormControlType.CHECKBOX,
     filterType: ConnectionsFilterType.DISCREPANCIES
   },
@@ -42,6 +43,7 @@ export const TABLE_FILTERS_FORM_DBC: FormControlBase[] = [
     key: "dbcs",
     label: "Ready for disconnection",
     order: 2,
+    valueProperty: "userDesignatedBodies",
     controlType: FormControlType.CHECKBOX,
     filterType: ConnectionsFilterType.DISCREPANCIES
   }

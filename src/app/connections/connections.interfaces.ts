@@ -34,6 +34,6 @@ export enum ConnectionsFilterType {
 
 export interface IConnectionsTableFilters extends ITableFilters {
   programmeName?: string;
-  tisDesignatedBodies?: string;
-  dbcs?: string;
+  tisDesignatedBodies?: string | string[];
+  dbcs?: string | string[];
 }

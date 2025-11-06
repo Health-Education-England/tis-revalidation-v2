@@ -96,8 +96,7 @@ export const menuItems: IMenuItem[] = JSON.parse(
                 "type": 0,
                 "route": "/connections",
                 "name": "Connections",
-                "description": "",
-                "beta": "true"
+                "description": ""
             }               
         ]
     },

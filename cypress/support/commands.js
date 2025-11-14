@@ -24,9 +24,9 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
-const username = Cypress.env("username");
-const password = Cypress.env("password");
-const totpKey = Cypress.env("totpKey");
+const username = Cypress.env("reval_username");
+const password = Cypress.env("reval_password");
+const totpKey = Cypress.env("reval_totpKey");
 
 Cypress.Commands.add("loginSession", () => {
   cy.session(username, () => {

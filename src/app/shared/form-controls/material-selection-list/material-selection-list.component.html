@@ -1,11 +1,15 @@
 <div data-jasmine="formControl" class="dense-3" [formGroup]="form">
+  <label [attr.for]="'list_' + controlProperties.key" class="h2">{{
+    controlProperties.label
+  }}</label>
+
   <mat-selection-list
     [attr.data-cy]="'selectionList' + controlProperties.key | removeWhitespace"
     class="mb-20"
     color="primary"
     [formControlName]="controlProperties.key"
+    [id]="'list_' + controlProperties.key"
   >
-    <div class="h2">{{ controlProperties.label }}</div>
     <mat-list-option
       [matTooltip]="option.value.length > 27 ? option.value : null"
       matTooltipShowDelay="400"

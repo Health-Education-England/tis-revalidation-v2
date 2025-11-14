@@ -42,7 +42,9 @@ export class AppComponent implements OnInit {
           pageName: event.url
         };
 
-        this.gtmService.pushTag(gtmTag);
+        if (environment.production) {
+          this.gtmService.pushTag(gtmTag);
+        }
       });
   }
 }

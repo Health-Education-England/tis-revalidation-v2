@@ -1,26 +1,39 @@
 import { defineConfig } from "cypress";
 import cypressOtp from "cypress-otp";
 
+import createBundler from "@bahmutov/cypress-esbuild-preprocessor";
+import { addCucumberPreprocessorPlugin } from "@badeball/cypress-cucumber-preprocessor";
+import { createEsbuildPlugin } from "@badeball/cypress-cucumber-preprocessor/esbuild";
+
 export default defineConfig({
   viewportWidth: 1920,
   viewportHeight: 1080,
   chromeWebSecurity: false,
-  defaultCommandTimeout: 15000,
-  projectId: "7r2r65",
+  defaultCommandTimeout: 30000,
   blockHosts: ["*.google-analytics.com", "*.hotjar.com"],
   retries: {
-    runMode: 3,
+    runMode: 2,
     openMode: 0
   },
   e2e: {
-    // We've imported your old cypress plugins here.
-    // You may want to clean this up later by importing these.
-    //experimentalSessionAndOrigin: true, //required to allow cross origin for hosted ui login
-    experimentalRunAllSpecs: true,
-    setupNodeEvents(on, config) {
+    specPattern: ["./cypress/e2e/cucumber/**/*.feature"],
+
+    async setupNodeEvents(
+      on: Cypress.PluginEvents,
+      config: Cypress.PluginConfigOptions
+    ): Promise<Cypress.PluginConfigOptions> {
+      await addCucumberPreprocessorPlugin(on, config);
+      const bundler = createBundler({
+        plugins: [createEsbuildPlugin(config)]
+      });
+      on("file:preprocessor", bundler);
+
       on("task", { generateOTP: cypressOtp });
-      return require("./cypress/plugins/index.js")(on, config);
+
+      return config;
     },
+    experimentalRunAllSpecs: true,
+
     baseUrl: "https://stage-revalidation.tis.nhs.uk/"
   }
 });

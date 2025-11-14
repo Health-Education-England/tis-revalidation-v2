@@ -1,8 +1,8 @@
 <form [formGroup]="form" *ngIf="items$ | async">
   <mat-form-field class="app-allocate-admin-autocomplete">
+    <mat-label>Select admin</mat-label>
     <input
       type="text"
-      placeholder="Select admin"
       aria-label="Select admin"
       matInput
       [formControlName]="'autocomplete'"

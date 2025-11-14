@@ -1,0 +1,24 @@
+{
+  "nonGlobalStepDefinitions": true,
+  "stepDefinitions": [
+    "cypress/e2e/cucumber/[filepath].ts",
+    "cypress/e2e/cucumber/shared/*.ts"
+  ],
+  "pretty": {
+    "enabled": true
+  },
+  "messages": {
+    "enabled": true,
+    "output": "./cypress/e2e/reports/json/cucumber-messages.ndjson"
+  },
+  "json": {
+    "enabled": true,
+    "output": "./cypress/e2e/reports/json/cucumber.json"
+  },
+  "html": {
+    "enabled": true,
+    "output": "./cypress/e2e/reports/html/cucumber-report.html"
+  },
+  "filterSpecs": true,
+  "omitfiltered": true
+}

@@ -10,7 +10,19 @@ export const COLUMN_DATA: [string, string, boolean, string?][] = [
   ["GMC Submission date", "submissionDate", true],
   ["GMC Designated body", "designatedBody", true],
   ["Programme owner", "tcsDesignatedBody", true],
-  ["Programme membership", "programmeMembershipType", true, "membershipType"]
+  ["Programme membership", "programmeMembershipType", true, "membershipType"],
+  [
+    "Current programme membership start date",
+    "programmeMembershipStartDate",
+    true,
+    "membershipStartDate"
+  ],
+  [
+    "Current programme membership end date",
+    "programmeMembershipEndDate",
+    true,
+    "membershipEndDate"
+  ]
 ];
 export const EXCEPTIONSLOG_COLUMN_DATA: { name: string; label: string }[] = [
   { name: "timestamp", label: "Date/time" },

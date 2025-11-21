@@ -5,25 +5,50 @@ import {
   FormControlType
 } from "../shared/form-controls/form-contol-base.model";
 import { ConnectionsFilterType } from "./connections.interfaces";
-export const COLUMN_DATA: [string, string, boolean, string?][] = [
-  ["Current programme name", "programmeName", false],
-  ["GMC Submission date", "submissionDate", true],
-  ["GMC Designated body", "designatedBody", true],
-  ["Programme owner", "tcsDesignatedBody", true],
-  ["Programme membership", "programmeMembershipType", true, "membershipType"],
-  [
-    "Current programme membership start date",
-    "programmeMembershipStartDate",
-    true,
-    "membershipStartDate"
-  ],
-  [
-    "Current programme membership end date",
-    "programmeMembershipEndDate",
-    true,
-    "membershipEndDate"
-  ]
+import { IRecordDataCell } from "../records/records.interfaces";
+
+export const COLUMN_DATA: IRecordDataCell[] = [
+  {
+    label: "GMC Submission date",
+    name: "submissionDate",
+    enableSort: true
+  },
+  {
+    label: "GMC Designated body",
+    name: "designatedBody",
+    enableSort: true
+  },
+  {
+    label: "Programme owner",
+    name: "tcsDesignatedBody",
+    enableSort: true
+  },
+  {
+    label: "Programme name",
+    name: "programmeName",
+    enableSort: false
+  },
+
+  {
+    label: "Programme membership",
+    name: "programmeMembershipType",
+    enableSort: true,
+    sortBy: "membershipType"
+  },
+  {
+    label: "Programme membership start date",
+    name: "programmeMembershipStartDate",
+    enableSort: true,
+    sortBy: "membershipStartDate"
+  },
+  {
+    label: "Programme membership end date",
+    name: "programmeMembershipEndDate",
+    enableSort: true,
+    sortBy: "membershipEndDate"
+  }
 ];
+
 export const EXCEPTIONSLOG_COLUMN_DATA: { name: string; label: string }[] = [
   { name: "timestamp", label: "Date/time" },
   { name: "gmcId", label: "GMC Number" },

@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { Observable, of } from "rxjs";
-import { generateColumnData } from "../records/constants";
+import { RECORDS_COLUMN_DATA } from "../records/constants";
 import { RecordsResolver } from "../records/records.resolver";
 import { RecordsService } from "../records/services/records.service";
 import { UpdateConnectionsService } from "../update-connections/services/update-connections.service";
@@ -41,7 +41,8 @@ export class ConnectionsResolver extends RecordsResolver {
       "programmeMembershipStartDate",
       "programmeMembershipEndDate"
     ];
-    this.recordsService.columnData = generateColumnData(COLUMN_DATA);
+    this.recordsService.columnData = [...RECORDS_COLUMN_DATA, ...COLUMN_DATA];
+
     this.recordsService.filters = [
       {
         label: "CURRENT CONNECTIONS",

@@ -58,6 +58,7 @@
             >
               <!-- header cell -->
               <th
+                [class]="i.class"
                 [ngClass]="(fixedColumns$ | async) && 'fixed'"
                 mat-header-cell
                 *matHeaderCellDef
@@ -88,8 +89,10 @@
 
               <!-- mat cell -->
               <td
+                [class]="i.class"
                 mat-cell
                 [ngClass]="(fixedColumns$ | async) && 'fixed'"
+                [ngStyle]=""
                 *matCellDef="let element"
               >
                 <!-- checkbox -->

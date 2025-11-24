@@ -117,3 +117,13 @@ th.fixed {
     )
   )
 );
+
+.cell-highlight {
+  background-color: #fafafa !important;
+  &.start {
+    border-left: 1px solid #ddd;
+  }
+  &.end {
+    border-right: 1px solid #ddd9;
+  }
+}

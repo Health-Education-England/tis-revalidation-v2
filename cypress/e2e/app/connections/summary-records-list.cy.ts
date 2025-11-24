@@ -13,7 +13,9 @@ describe("Connections Summary Records List", () => {
     "GMC Designated body",
     "TIS Designated body",
     "Programme owner",
-    "Programme membership"
+    "Programme membership",
+    "Current programme membership start date",
+    "Current programme membership end date"
   ];
   const sortableColumns = [
     "First name",
@@ -22,7 +24,9 @@ describe("Connections Summary Records List", () => {
     "GMC Submission date",
     "GMC Designated body",
     "Programme owner",
-    "Programme membership"
+    "Programme membership",
+    "Current programme membership start date",
+    "Current programme membership end date"
   ];
 
   const filters = [

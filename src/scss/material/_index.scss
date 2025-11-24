@@ -70,6 +70,10 @@ body {
   }
   &:hover {
     background-color: $color_nhsuk-grey-5 !important;
+    td {
+      background-color: $color_nhsuk-grey-5 !important;
+      border-bottom-color: $color_nhsuk-grey-3;
+    }
   }
   &:focus {
     background-color: $color_transparent_nhsuk-blue-50;
@@ -115,6 +119,7 @@ body {
   color: rgba(0, 0, 0, 0.54);
   font-size: 12px !important;
   font-weight: 500;
+  text-align: left !important;
 }
 
 .mat-mdc-tab-nav-bar {

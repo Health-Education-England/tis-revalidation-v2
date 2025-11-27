@@ -9,7 +9,7 @@
     <app-material-selection-list
       *ngSwitchCase="formControlType.SELECTION_LIST"
       [controlProperties]="control"
-      [form]="form"
+      [formControlName]="control.key"
     ></app-material-selection-list>
     <app-material-autocomplete
       *ngSwitchCase="formControlType.AUTOCOMPLETE"

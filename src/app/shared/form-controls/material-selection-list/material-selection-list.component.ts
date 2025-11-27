@@ -40,7 +40,6 @@ export class MaterialSelectionListComponent implements ControlValueAccessor {
   onTouch: OnTouchFn = () => {};
 
   writeValue(value: any): void {
-    if (value === null) return;
     this.selectionForm.get("selectionList").setValue(value);
   }
   registerOnChange(fn: OnChangeFn<string>): void {

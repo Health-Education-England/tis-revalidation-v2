@@ -120,7 +120,6 @@ export class MaterialAutocompleteComponent
   onTouch: OnTouchFn = () => {};
 
   writeValue(value: string): void {
-    if (value === null) return;
     this.autocompleteForm.get("autocompleteInput").setValue(value);
   }
   registerOnChange(fn: OnChangeFn<string>): void {

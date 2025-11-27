@@ -26,6 +26,8 @@ export class MaterialCheckboxComponent implements ControlValueAccessor {
   value: string;
 
   onCheck(matCheckBoxChange: MatCheckboxChange) {
+    this.checked = matCheckBoxChange.checked;
+
     if (matCheckBoxChange.checked) {
       this.value = this.controlProperties.value;
     } else {
@@ -41,6 +43,8 @@ export class MaterialCheckboxComponent implements ControlValueAccessor {
   writeValue(value: string): void {
     if (value) {
       this.checked = true;
+    } else {
+      this.checked = false;
     }
   }
   registerOnChange(fn: OnChangeFn<string>): void {

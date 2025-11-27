@@ -14,7 +14,7 @@
     <app-material-autocomplete
       *ngSwitchCase="formControlType.AUTOCOMPLETE"
       [controlProperties]="control"
-      [form]="form"
+      [formControlName]="control.key"
     >
     </app-material-autocomplete>
   </div>

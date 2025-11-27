@@ -1,9 +1,9 @@
 <ng-container *ngIf="!hidden">
-  <div [ngSwitch]="control?.controlType">
+  <div [ngSwitch]="control?.controlType" [formGroup]="form">
     <app-material-checkbox
       *ngSwitchCase="formControlType.CHECKBOX"
       [controlProperties]="control"
-      [form]="form"
+      [formControlName]="control.key"
     >
     </app-material-checkbox>
     <app-material-selection-list

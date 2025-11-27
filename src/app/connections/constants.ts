@@ -57,15 +57,7 @@ export const EXCEPTIONSLOG_COLUMN_DATA: { name: string; label: string }[] = [
 
 export const TABLE_FILTERS_FORM_BASE: Array<
   FormControlBase | AutocompleteControl
-> = [
-  {
-    key: "programmeName",
-    label: "Programme name",
-    order: 3,
-    controlType: FormControlType.AUTOCOMPLETE,
-    placeholder: "Start typing..."
-  }
-];
+> = [];
 
 export const TABLE_FILTERS_FORM_DBC: FormControlBase[] = [
   {

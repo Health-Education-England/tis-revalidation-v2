@@ -59,7 +59,7 @@ export class ConnectionsResolver extends RecordsResolver {
       }
     ];
 
-    if (this.authService.inludesLondonDbcs) {
+    if (!this.authService.inludesLondonDbcs) {
       TABLE_FILTERS_FORM_BASE?.push(...TABLE_FILTERS_FORM_DBC_LONDON);
     } else {
       TABLE_FILTERS_FORM_BASE?.push(...TABLE_FILTERS_FORM_DBC);

@@ -19,7 +19,10 @@ export class RecordListTableFiltersComponent implements OnInit, OnDestroy {
   formControls: (FormControlBase | AutocompleteControl)[] = [];
   form!: UntypedFormGroup;
   subscriptions: Subscription = new Subscription();
-  constructor(private recordsService: RecordsService, private store: Store) {}
+  constructor(
+    private recordsService: RecordsService,
+    private store: Store
+  ) {}
   public tableFilters$: Observable<any> = this.store.select(
     (state) => state[this.recordsService.stateName].tableFilters
   );
@@ -60,6 +63,10 @@ export class RecordListTableFiltersComponent implements OnInit, OnDestroy {
         this.activeTableFilters
       );
       this.activeTableFilters && this.form.markAsDirty();
+    });
+
+    this.form.valueChanges.subscribe((v) => {
+      console.log(v);
     });
   }
 

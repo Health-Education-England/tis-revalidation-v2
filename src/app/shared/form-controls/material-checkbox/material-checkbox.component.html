@@ -1,15 +1,5 @@
-<div data-testid="form-control-checkbox" [formGroup]="form">
-  <mat-checkbox
-    [checked]="
-      form.get(controlProperties.key)?.value === controlProperties.value
-    "
-    (change)="
-      form
-        .get(controlProperties.key)
-        ?.setValue($event.checked ? controlProperties.value : '')
-    "
-    [formControlName]="controlProperties.key"
-  >
+<div data-testid="form-control-checkbox">
+  <mat-checkbox [checked]="isChecked" (change)="onCheck($event)">
     {{ controlProperties.label }}
   </mat-checkbox>
 </div>

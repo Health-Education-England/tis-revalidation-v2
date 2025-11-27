@@ -27,3 +27,6 @@ export enum FormControlType {
   SELECTION_LIST = "selectionList",
   CHECKBOX = "checkbox"
 }
+
+export type OnChangeFn<T> = (value: T) => void;
+export type OnTouchFn = () => void;

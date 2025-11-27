@@ -19,9 +19,18 @@ export class ConnectionsService {
   public generateParams(): HttpParams {
     const snapshot: ConnectionsStateModel = this.store.snapshot().connections;
     let params: HttpParams = this.recordsService.generateParams(snapshot);
+    snapshot.tableFilters?.programmeEndDateStart;
     params = params
       .append("filter", snapshot.filter)
-      .append("programmeName", snapshot.tableFilters?.programmeName || "");
+      .append("programmeName", snapshot.tableFilters?.programmeName || "")
+      .append(
+        "programmeEndDateStart",
+        snapshot.tableFilters?.programmeEndDateStart || ""
+      )
+      .append(
+        "programmeEndDateEnd",
+        snapshot.tableFilters?.programmeEndDateEnd || ""
+      );
 
     if (snapshot.filter === "discrepancies") {
       let isDBSelected =

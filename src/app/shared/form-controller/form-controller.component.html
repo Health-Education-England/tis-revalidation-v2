@@ -10,12 +10,22 @@
       *ngSwitchCase="formControlType.SELECTION_LIST"
       [controlProperties]="control"
       [form]="form"
+      (changed)="onChange()"
     ></app-material-selection-list>
     <app-material-autocomplete
       *ngSwitchCase="formControlType.AUTOCOMPLETE"
       [controlProperties]="control"
       [form]="form"
+      (changed)="onChange()"
     >
     </app-material-autocomplete>
+
+    <app-material-date-range-picker
+      *ngSwitchCase="formControlType.DATERANGEPICKER"
+      [controlProperties]="control"
+      [form]="form"
+      (changed)="onChange()"
+    >
+    </app-material-date-range-picker>
   </div>
 </ng-container>

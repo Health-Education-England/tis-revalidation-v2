@@ -168,7 +168,7 @@ export class ConnectionsState extends RecordsState {
     return super.resetFilterHandler(ctx, ConnectionsFilterType.ALL);
   }
   @Action(SetConnectionsTableFilters)
-  setRecommendationsTableFilters(
+  setConnectionsTableFilters(
     ctx: StateContext<ConnectionsStateModel>,
     action: SetConnectionsTableFilters
   ) {

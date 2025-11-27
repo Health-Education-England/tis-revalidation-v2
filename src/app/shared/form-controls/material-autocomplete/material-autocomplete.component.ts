@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { UntypedFormGroup } from "@angular/forms";
 import {
   debounceTime,
@@ -19,6 +19,7 @@ import { AutocompleteService } from "./autocomplete.service";
 export class MaterialAutocompleteComponent implements OnInit {
   @Input() controlProperties!: AutocompleteControl;
   @Input() form!: UntypedFormGroup;
+  @Output() changed = new EventEmitter<void>();
   debounceTime: number = 500;
   minLengthTerm: number = 3;
   filteredItems: any;
@@ -32,6 +33,7 @@ export class MaterialAutocompleteComponent implements OnInit {
   onSelected() {
     this.form.controls[this.controlProperties.key].updateValueAndValidity();
     this.form.markAsDirty();
+    this.changed.emit();
   }
 
   clearSelection() {

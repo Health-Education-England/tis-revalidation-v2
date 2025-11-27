@@ -1,5 +1,6 @@
 <div data-jasmine="formControl" class="dense-3" [formGroup]="form">
   <mat-selection-list
+    (selectionChange)="onChange()"
     [attr.data-cy]="'selectionList' + controlProperties.key | removeWhitespace"
     class="mb-20"
     color="primary"

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { ActivatedRouteSnapshot } from "@angular/router";
+import { ActivatedRouteSnapshot, Params } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { Observable, of } from "rxjs";
 import { generateColumnData } from "../records/constants";
@@ -72,14 +72,16 @@ export class ConnectionsResolver extends RecordsResolver {
   }
 
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const tableFiltersState: IConnectionsTableFilters =
-      this.store.selectSnapshot(
-        (snapshot) => snapshot.connections.tableFilters
-      );
     if (route.queryParams.filter === ConnectionsFilterType.EXCEPTIONSLOG) {
       this.recordsService.filter(route.queryParams.filter);
       return of(null);
     }
+
+    const tableFiltersState: IConnectionsTableFilters =
+      this.store.selectSnapshot(
+        (snapshot) => snapshot.connections.tableFilters
+      );
+
     const filterParamsExists = Object.keys(route.queryParams).some((param) =>
       TABLE_FILTERS_FORM_BASE.map((tableFilter) => tableFilter.key).includes(
         param
@@ -97,7 +99,6 @@ export class ConnectionsResolver extends RecordsResolver {
           ? route.queryParams[filter.key]?.split(",")
           : route.queryParams[filter.key];
       });
-
       if (Object.values(filters).some((filter) => filter)) {
         this.recordsService.setTableFilters(filters);
         this.recordsService.toggleTableFilterPanel$.next(true);

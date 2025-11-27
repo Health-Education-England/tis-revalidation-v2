@@ -1,0 +1,21 @@
+<div data-jasmine="formControl" [formGroup]="form">
+  <mat-form-field>
+    <mat-label>{{ controlProperties.label }}</mat-label>
+    <mat-date-range-input [rangePicker]="picker">
+      <input
+        matStartDate
+        [formControlName]="controlProperties.key + 'Start'"
+        placeholder="Start date"
+        (dateChange)="onChange()"
+      />
+      <input
+        (dateChange)="onChange()"
+        matEndDate
+        [formControlName]="controlProperties.key + 'End'"
+        placeholder="End date"
+      />
+    </mat-date-range-input>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-date-range-picker #picker></mat-date-range-picker>
+  </mat-form-field>
+</div>

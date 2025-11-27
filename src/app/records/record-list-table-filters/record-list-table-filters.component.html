@@ -11,7 +11,7 @@
         <button
           data-jasmine="clearFiltersButton"
           class="mr-10"
-          [disabled]="!form.valid || !form.dirty"
+          [disabled]="!form?.valid || !form?.dirty"
           type="button"
           mat-button
           mat-raised-button
@@ -35,6 +35,7 @@
     <div class="p-10 mb-20">
       <div *ngFor="let control of formControls" class="form-row">
         <app-form-controller
+          (changed)="onChange()"
           [control]="control"
           [form]="form"
         ></app-form-controller>

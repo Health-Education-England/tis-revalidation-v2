@@ -19,7 +19,10 @@ export class RecordListTableFiltersComponent implements OnInit, OnDestroy {
   formControls: (FormControlBase | AutocompleteControl)[] = [];
   form!: UntypedFormGroup;
   subscriptions: Subscription = new Subscription();
-  constructor(private recordsService: RecordsService, private store: Store) {}
+  constructor(
+    private recordsService: RecordsService,
+    private store: Store
+  ) {}
   public tableFilters$: Observable<any> = this.store.select(
     (state) => state[this.recordsService.stateName].tableFilters
   );
@@ -36,11 +39,16 @@ export class RecordListTableFiltersComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.recordsService.resetPaginator();
+    console.log("this.form.value", this.form.value);
     this.subscriptions.add(
       this.recordsService.setTableFilters(this.form.value).subscribe(() => {
         this.recordsService.updateRoute();
       })
     );
+  }
+
+  onChange() {
+    this.onSubmit();
   }
 
   ngOnInit(): void {

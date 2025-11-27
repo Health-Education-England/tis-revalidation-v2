@@ -16,7 +16,9 @@ export interface FormControlBase {
     valueProperty?: string;
   }[];
 }
-
+export interface DatePickerControl extends FormControlBase {
+  type: "fixed" | "range";
+}
 export interface AutocompleteControl extends FormControlBase {
   minLengthTerm?: number;
   data?: string[];
@@ -25,5 +27,6 @@ export interface AutocompleteControl extends FormControlBase {
 export enum FormControlType {
   AUTOCOMPLETE = "autocomplete",
   SELECTION_LIST = "selectionList",
-  CHECKBOX = "checkbox"
+  CHECKBOX = "checkbox",
+  DATERANGEPICKER = "daterangepicker"
 }

@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { CommonModule, DatePipe } from "@angular/common";
 import { RouterModule } from "@angular/router";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MaterialModule } from "./material/material.module";
@@ -15,7 +15,8 @@ import { MaterialAutocompleteComponent } from "./form-controls/material-autocomp
 import { RemoveWhitespacePipe } from "./pipes/remove-whitespace.pipe";
 import { SplitStringToHTMLPipe } from "./pipes/split-string-to-html.pipe";
 import { FormatDesignatedBodyPipe } from "./pipes/format-designated-body.pipe";
-import { MaterialCheckboxComponent } from './form-controls/material-checkbox/material-checkbox.component';
+import { MaterialCheckboxComponent } from "./form-controls/material-checkbox/material-checkbox.component";
+import { MaterialDateRangePickerComponent } from "./form-controls/material-date-range-picker/material-date-range-picker.component";
 
 const modulePipes = [
   StripHtmlPipe,
@@ -35,10 +36,11 @@ const modulePipes = [
     MaterialAutocompleteComponent,
 
     SplitStringToHTMLPipe,
-      MaterialCheckboxComponent
+    MaterialCheckboxComponent,
+    MaterialDateRangePickerComponent
   ],
   imports: [RouterModule, MaterialModule, ReactiveFormsModule, CommonModule],
   exports: [...modulePipes, FormControllerComponent],
-  providers: [ApiService]
+  providers: [ApiService, DatePipe]
 })
 export class SharedModule {}

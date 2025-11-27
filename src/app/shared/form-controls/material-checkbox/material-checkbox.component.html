@@ -3,13 +3,9 @@
     [checked]="
       form.get(controlProperties.key)?.value === controlProperties.value
     "
-    (change)="
-      form
-        .get(controlProperties.key)
-        ?.setValue($event.checked ? controlProperties.value : '')
-    "
+    (change)="onChange($event)"
     [formControlName]="controlProperties.key"
   >
-    {{ controlProperties.label }}
+    {{ controlProperties.label }}asdasd
   </mat-checkbox>
 </div>

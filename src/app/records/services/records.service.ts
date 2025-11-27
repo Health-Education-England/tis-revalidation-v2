@@ -8,7 +8,8 @@ import { switchMap, take } from "rxjs/operators";
 
 import {
   FormControlBase,
-  AutocompleteControl
+  AutocompleteControl,
+  FormControlType
 } from "src/app/shared/form-controls/form-contol-base.model";
 import {
   ClearConcernsSearch,
@@ -59,6 +60,7 @@ import {
   UpdateRecommendationsQueryParams
 } from "../../recommendations/state/recommendations.actions";
 import { IFilter, IRecordDataCell, ITableFilters } from "../records.interfaces";
+import { IConnectionsTableFilters } from "src/app/connections/connections.interfaces";
 
 @Injectable({
   providedIn: "root"
@@ -194,6 +196,7 @@ export class RecordsService {
       ...(snapshot.searchQuery && { searchQuery: snapshot.searchQuery })
     };
     const tableFilters = snapshot.tableFilters;
+    console.log("tableFilters", tableFilters);
     if (tableFilters) {
       for (const key of Object.keys(tableFilters)) {
         if (Array.isArray(tableFilters[key])) {
@@ -249,7 +252,7 @@ export class RecordsService {
     return this.store.dispatch(new this.clearSearchAction());
   }
 
-  public setTableFilters(filters: ITableFilters): Observable<any> {
+  public setTableFilters(filters: IConnectionsTableFilters): Observable<any> {
     this.handleUndefinedAction("setTableFilters");
     return this.store.dispatch(new this.setTableFiltersAction(filters));
   }
@@ -316,9 +319,18 @@ export class RecordsService {
     const group: any = {};
 
     for (const control of controls) {
-      group[control.key] = new UntypedFormControl(
-        formData[control.key] || control.initialValue || ""
-      );
+      if (control.controlType === FormControlType.DATERANGEPICKER) {
+        group[control.key + "Start"] = new UntypedFormControl(
+          formData[control.key + "Start"] || control.initialValue || ""
+        );
+        group[control.key + "End"] = new UntypedFormControl(
+          formData[control.key + "End"] || control.initialValue || ""
+        );
+      } else {
+        group[control.key] = new UntypedFormControl(
+          formData[control.key] || control.initialValue || ""
+        );
+      }
     }
     return new UntypedFormGroup(group);
   }

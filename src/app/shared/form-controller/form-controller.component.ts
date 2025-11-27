@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { UntypedFormGroup } from "@angular/forms";
 import {
   FormControlBase,
@@ -30,6 +30,7 @@ export class FormControllerComponent implements OnInit {
   hidden: boolean = false;
   @Input() control!: FormControlBase;
   @Input() form!: UntypedFormGroup;
+  @Output() changed = new EventEmitter<void>();
 
   ngOnInit(): void {
     this.filter$.subscribe((filter: string) => {
@@ -42,5 +43,10 @@ export class FormControllerComponent implements OnInit {
     if (this.control?.valueProperty) {
       this.control.value = this.formControllService[this.control.valueProperty];
     }
+  }
+
+  onChange() {
+    console.log("controller changed");
+    this.changed.emit();
   }
 }

@@ -57,7 +57,7 @@ export const EXCEPTIONSLOG_COLUMN_DATA: { name: string; label: string }[] = [
 ];
 
 export const TABLE_FILTERS_FORM_BASE: Array<
-  FormControlBase | DateRangeControl
+  FormControlBase | DateRangeControl | AutocompleteControl
 > = [
   {
     key: "programmeName",

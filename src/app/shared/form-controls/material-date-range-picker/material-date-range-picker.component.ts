@@ -2,7 +2,6 @@ import { Component, HostListener, Input, OnInit } from "@angular/core";
 import * as day from "dayjs";
 import {
   DateRangeControl,
-  FormControlBase,
   OnChangeFn,
   OnTouchFn
 } from "../form-contol-base.model";
@@ -27,7 +26,7 @@ import {
 export class MaterialDateRangePickerComponent
   implements OnInit, ControlValueAccessor
 {
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(readonly formBuilder: FormBuilder) {}
 
   dateRangeForm: FormGroup;
 

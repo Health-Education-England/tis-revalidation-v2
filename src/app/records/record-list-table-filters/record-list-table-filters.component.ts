@@ -21,8 +21,8 @@ export class RecordListTableFiltersComponent implements OnInit, OnDestroy {
   form!: UntypedFormGroup;
   subscriptions: Subscription = new Subscription();
   constructor(
-    private recordsService: RecordsService,
-    private store: Store,
+    readonly recordsService: RecordsService,
+    readonly store: Store,
     readonly utilitiesService: UtilitiesService
   ) {}
   public tableFilters$: Observable<any> = this.store.select(
@@ -42,7 +42,7 @@ export class RecordListTableFiltersComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.recordsService.resetPaginator();
     const formData = this.utilitiesService.flattenObject(
-      JSON.parse(JSON.stringify(this.form.value))
+      structuredClone(this.form.value)
     );
     this.subscriptions.add(
       this.recordsService.setTableFilters(formData).subscribe(() => {

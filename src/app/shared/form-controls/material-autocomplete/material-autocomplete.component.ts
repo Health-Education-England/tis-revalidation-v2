@@ -47,8 +47,8 @@ export class MaterialAutocompleteComponent
   options: any[];
 
   constructor(
-    private autocompleteService: AutocompleteService,
-    private formBuilder: FormBuilder
+    readonly autocompleteService: AutocompleteService,
+    readonly formBuilder: FormBuilder
   ) {}
 
   onSelected() {
@@ -70,7 +70,7 @@ export class MaterialAutocompleteComponent
         .get("autocompleteInput")
         .valueChanges.pipe(
           filter((inputValue) => {
-            this.showClearButton = inputValue?.length > 0 ? true : false;
+            this.showClearButton = inputValue?.length > 0;
             if (
               inputValue !== null &&
               inputValue.length >= this.minLengthTerm

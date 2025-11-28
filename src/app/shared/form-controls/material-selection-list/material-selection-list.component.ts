@@ -23,7 +23,7 @@ import { MatSelectionListChange } from "@angular/material/list";
   ]
 })
 export class MaterialSelectionListComponent implements ControlValueAccessor {
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(readonly formBuilder: FormBuilder) {}
 
   @Input() controlProperties!: FormControlBase;
   selectionForm = this.formBuilder.group({

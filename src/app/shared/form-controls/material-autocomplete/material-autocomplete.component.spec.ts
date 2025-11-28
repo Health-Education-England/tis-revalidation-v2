@@ -9,8 +9,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import {
   FormsModule,
   ReactiveFormsModule,
-  UntypedFormControl,
-  UntypedFormGroup
+  UntypedFormControl
 } from "@angular/forms";
 import { MaterialModule } from "src/app/shared/material/material.module";
 
@@ -20,7 +19,7 @@ import { MaterialAutocompleteComponent } from "./material-autocomplete.component
 import { AutocompleteService } from "./autocomplete.service";
 import { of } from "rxjs";
 
-fdescribe("MaterialAutocompleteComponent", () => {
+describe("MaterialAutocompleteComponent", () => {
   let component: MaterialAutocompleteComponent;
   let fixture: ComponentFixture<MaterialAutocompleteComponent>;
   let mockAutocompleteService = jasmine.createSpyObj(["getItems"]);

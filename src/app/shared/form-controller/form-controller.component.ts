@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { UntypedFormGroup } from "@angular/forms";
 import {
+  AutocompleteControl,
   FormControlBase,
   FormControlType
 } from "../form-controls/form-contol-base.model";
@@ -28,7 +29,7 @@ export class FormControllerComponent implements OnInit {
   );
   formControlType: typeof FormControlType = FormControlType;
   hidden: boolean = false;
-  @Input() control!: FormControlBase;
+  @Input() control!: FormControlBase | AutocompleteControl;
   @Input() form!: UntypedFormGroup;
 
   ngOnInit(): void {

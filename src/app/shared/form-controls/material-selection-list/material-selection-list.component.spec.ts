@@ -3,12 +3,7 @@ import { MaterialSelectionListComponent } from "./material-selection-list.compon
 import { FormControlBase } from "../form-contol-base.model";
 import { MaterialModule } from "src/app/shared/material/material.module";
 import { RemoveWhitespacePipe } from "../../pipes/remove-whitespace.pipe";
-import {
-  UntypedFormControl,
-  UntypedFormGroup,
-  FormsModule,
-  ReactiveFormsModule
-} from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
 
 describe("MaterialSelectionListComponent", () => {
@@ -38,11 +33,6 @@ describe("MaterialSelectionListComponent", () => {
     fixture = TestBed.createComponent(MaterialSelectionListComponent);
     component = fixture.componentInstance;
     component.controlProperties = controlProperties;
-    const group: any = {};
-    group[component.controlProperties.key] = new UntypedFormControl(
-      data[component.controlProperties.key] || ""
-    );
-    component.form = new UntypedFormGroup(group);
     fixture.detectChanges();
   });
 

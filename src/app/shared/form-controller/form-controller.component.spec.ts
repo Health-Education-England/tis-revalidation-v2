@@ -18,6 +18,7 @@ import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { MaterialSelectionListComponent } from "../form-controls/material-selection-list/material-selection-list.component";
 import { RemoveWhitespacePipe } from "../pipes/remove-whitespace.pipe";
 import { NgxsModule, Store } from "@ngxs/store";
+import { RecordsService } from "src/app/records/services/records.service";
 describe("FormControllerComponent", () => {
   let component: FormControllerComponent;
   let fixture: ComponentFixture<FormControllerComponent>;
@@ -71,7 +72,7 @@ describe("FormControllerComponent", () => {
         MaterialSelectionListComponent,
         RemoveWhitespacePipe
       ],
-      providers: [Store]
+      providers: [Store, RecordsService]
     }).compileComponents();
   });
 
@@ -89,6 +90,7 @@ describe("FormControllerComponent", () => {
         tableFilters: null
       }
     });
+
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

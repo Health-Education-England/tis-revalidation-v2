@@ -70,6 +70,7 @@
               "crypto-js/hmac-sha256",
               "crypto-js/lib-typedarrays",
               "crypto-js/sha256",
+              "dayjs",
               "fast-xml-parser",
               "file-saver",
               "isomorphic-unfetch",

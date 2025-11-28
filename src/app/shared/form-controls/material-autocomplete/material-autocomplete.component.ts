@@ -70,7 +70,7 @@ export class MaterialAutocompleteComponent
         .get("autocompleteInput")
         .valueChanges.pipe(
           filter((inputValue) => {
-            this.showClearButton = inputValue.length > 0 ? true : false;
+            this.showClearButton = inputValue?.length > 0 ? true : false;
             if (
               inputValue !== null &&
               inputValue.length >= this.minLengthTerm

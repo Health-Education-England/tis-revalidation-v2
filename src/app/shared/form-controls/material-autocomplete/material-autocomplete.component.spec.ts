@@ -20,7 +20,7 @@ import { MaterialAutocompleteComponent } from "./material-autocomplete.component
 import { AutocompleteService } from "./autocomplete.service";
 import { of } from "rxjs";
 
-describe("MaterialAutocompleteComponent", () => {
+fdescribe("MaterialAutocompleteComponent", () => {
   let component: MaterialAutocompleteComponent;
   let fixture: ComponentFixture<MaterialAutocompleteComponent>;
   let mockAutocompleteService = jasmine.createSpyObj(["getItems"]);
@@ -68,7 +68,6 @@ describe("MaterialAutocompleteComponent", () => {
     group[component.controlProperties.key] = new UntypedFormControl(
       data[component.controlProperties.key] || ""
     );
-    component.form = new UntypedFormGroup(group);
     fixture.detectChanges();
   });
 

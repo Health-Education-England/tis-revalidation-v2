@@ -6,29 +6,16 @@
     [formGroup]="form"
   >
     <div class="filter-form-header">
-      <h2 class="mb-0">Filters</h2>
-      <div class="d-flex justify-content-end">
+      <div class="d-flex justify-content-between">
+        <h2 class="mb-0">Filters</h2>
         <button
+          color="primary"
+          *ngIf="tableFilters$ | async as tableFilters"
           data-jasmine="clearFiltersButton"
-          class="mr-10"
-          [disabled]="!form.valid || !form.dirty"
-          type="button"
           mat-button
-          mat-raised-button
-          color="secondary"
           (click)="clearFilters()"
         >
-          Clear filters
-        </button>
-        <button
-          data-jasmine="submitFormButton"
-          [disabled]="!form.valid || !form.dirty"
-          type="submit"
-          mat-button
-          mat-raised-button
-          color="primary"
-        >
-          Apply filters
+          Clear all
         </button>
       </div>
     </div>

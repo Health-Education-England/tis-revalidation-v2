@@ -8,7 +8,9 @@ import { switchMap, take } from "rxjs/operators";
 
 import {
   FormControlBase,
-  AutocompleteControl
+  AutocompleteControl,
+  FormControlType,
+  DateRangeControl
 } from "src/app/shared/form-controls/form-contol-base.model";
 import {
   ClearConcernsSearch,
@@ -312,12 +314,30 @@ export class RecordsService {
     return this.store.dispatch(new this.toggleAllCheckboxesAction());
   }
 
-  public toFormGroup(controls: FormControlBase[], formData: any = {}) {
+  public toFormGroup(
+    formControls: (FormControlBase | AutocompleteControl | DateRangeControl)[],
+    activeFilters: any = {}
+  ) {
     const group: any = {};
+    let activeFilterValue: any;
+    for (const control of formControls) {
+      if (control.controlType === FormControlType.DATERANGE) {
+        activeFilterValue = {
+          [(control as DateRangeControl).startRangeControl]:
+            activeFilters[
+              control.key + (control as DateRangeControl).startRangeControl
+            ] || "",
+          [(control as DateRangeControl).endRangeControl]:
+            activeFilters[
+              control.key + (control as DateRangeControl).endRangeControl
+            ] || ""
+        };
+      } else {
+        activeFilterValue = activeFilters[control.key];
+      }
 
-    for (const control of controls) {
       group[control.key] = new UntypedFormControl(
-        formData[control.key] || control.initialValue || ""
+        activeFilterValue || control.initialValue || ""
       );
     }
     return new UntypedFormGroup(group);

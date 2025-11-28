@@ -17,5 +17,12 @@
       [formControlName]="control.key"
     >
     </app-material-autocomplete>
+
+    <app-material-date-range-picker
+      *ngSwitchCase="formControlType.DATERANGE"
+      [controlProperties]="control"
+      [formControlName]="control.key"
+    >
+    </app-material-date-range-picker>
   </div>
 </ng-container>

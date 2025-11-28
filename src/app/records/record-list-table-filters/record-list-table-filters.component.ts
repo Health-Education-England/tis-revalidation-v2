@@ -1,13 +1,14 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { UntypedFormGroup } from "@angular/forms";
 import { Store } from "@ngxs/store";
-import { Observable, Subscription } from "rxjs";
+import { combineLatest, concatMap, Observable, Subscription } from "rxjs";
 import {
   FormControlBase,
   AutocompleteControl
 } from "src/app/shared/form-controls/form-contol-base.model";
 import { ITableFilters } from "../records.interfaces";
 import { RecordsService } from "../services/records.service";
+import { UtilitiesService } from "src/app/shared/services/utilities/utilities.service";
 
 @Component({
   selector: "app-record-list-table-filters",
@@ -19,7 +20,11 @@ export class RecordListTableFiltersComponent implements OnInit, OnDestroy {
   formControls: (FormControlBase | AutocompleteControl)[] = [];
   form!: UntypedFormGroup;
   subscriptions: Subscription = new Subscription();
-  constructor(private recordsService: RecordsService, private store: Store) {}
+  constructor(
+    private recordsService: RecordsService,
+    private store: Store,
+    readonly utilitiesService: UtilitiesService
+  ) {}
   public tableFilters$: Observable<any> = this.store.select(
     (state) => state[this.recordsService.stateName].tableFilters
   );
@@ -36,30 +41,38 @@ export class RecordListTableFiltersComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.recordsService.resetPaginator();
+    const formData = this.utilitiesService.flattenObject(
+      JSON.parse(JSON.stringify(this.form.value))
+    );
     this.subscriptions.add(
-      this.recordsService.setTableFilters(this.form.value).subscribe(() => {
+      this.recordsService.setTableFilters(formData).subscribe(() => {
         this.recordsService.updateRoute();
       })
     );
   }
 
   ngOnInit(): void {
-    this.tableFilters$.subscribe((filters: ITableFilters) => {
-      if (filters) {
-        this.activeTableFilters = filters;
-      }
-    });
+    combineLatest([
+      this.recordsService.tableFiltersFormData,
+      this.tableFilters$
+    ])
+      .pipe(
+        concatMap(([formControls, activeFilters]) => {
+          this.formControls = formControls;
+
+          this.form = this.recordsService.toFormGroup(
+            formControls,
+            activeFilters || {}
+          );
+          return this.form.valueChanges;
+        })
+      )
+      .subscribe(() => {
+        this.onSubmit();
+      });
 
     this.recordsService.onTableFilterFormReset.subscribe(() => {
       this.form.reset();
-    });
-    this.recordsService.tableFiltersFormData.subscribe((formData) => {
-      this.formControls = formData;
-      this.form = this.recordsService.toFormGroup(
-        this.formControls,
-        this.activeTableFilters
-      );
-      this.activeTableFilters && this.form.markAsDirty();
     });
   }
 

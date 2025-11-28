@@ -36,4 +36,6 @@ export interface IConnectionsTableFilters extends ITableFilters {
   programmeName?: string;
   tisDesignatedBodies?: string | string[];
   dbcs?: string | string[];
+  membershipEndDateFrom?: string;
+  membershipEndDateTo?: string;
 }

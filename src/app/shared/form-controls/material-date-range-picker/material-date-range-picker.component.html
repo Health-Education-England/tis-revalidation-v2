@@ -1,5 +1,5 @@
 <div data-jasmine="formControl" [formGroup]="dateRangeForm">
-  <mat-form-field>
+  <mat-form-field attr.data-cy="formfield_{{ controlProperties.key }}">
     <mat-label>{{ controlProperties.label }}</mat-label>
     <mat-date-range-input [rangePicker]="picker">
       <input

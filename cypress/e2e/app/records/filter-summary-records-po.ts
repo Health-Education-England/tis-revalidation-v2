@@ -16,9 +16,10 @@ export class FilterRecords {
     ).should("exist");
   };
 
-  static openTisAdminDropdown = (query: string = "St") => {
+  static openTisAdminDropdown = (query: string = "Stev") => {
     cy.get(".mat-mdc-autocomplete-panel mat-option").should("not.exist");
     cy.get("[data-cy='formfield_admin'] input").type(query);
+    cy.wait(1000);
     cy.get(
       ".mat-mdc-autocomplete-panel [data-cy='autocomplete-option']"
     ).should("exist");
@@ -66,9 +67,6 @@ export class FilterRecords {
   };
 
   static submitForm = () => {
-    cy.get(
-      "[data-cy='tableFiltersForm'] button[data-jasmine='submitFormButton']"
-    ).click();
     cy.get("app-record-list .mat-mdc-table").should("exist");
     cy.wait(1000);
   };

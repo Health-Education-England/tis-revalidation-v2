@@ -25,8 +25,8 @@
         }}</mat-chip-option>
       </mat-chip-listbox>
     </div>
-
     <!-- Records list -->
+
     <ng-template #items>
       <ng-container *ngIf="data.totalResults; else noResults">
         <div class="table-container">
@@ -52,12 +52,31 @@
             <caption class="collapsed no-height">
               Records list
             </caption>
+
+            <ng-container *ngFor="let columnGroup of columnGroupData">
+              <ng-container [matColumnDef]="columnGroup.matColumnDef">
+                <th
+                  class="column-group-header start end"
+                  [ngClass]="columnGroup.class"
+                  mat-header-cell
+                  *matHeaderCellDef
+                  [attr.colspan]="columnGroup.count"
+                >
+                  {{ columnGroup.name }}
+                </th>
+              </ng-container>
+            </ng-container>
+
             <ng-container
               *ngFor="let i of columnData"
               matColumnDef="{{ i.name }}"
             >
               <!-- header cell -->
               <th
+                style="
+                  border-bottom: 1px solid #aaa;
+                  background-color: #f5f5f5 !important;
+                "
                 [class]="i.class"
                 [ngClass]="(fixedColumns$ | async) && 'fixed'"
                 mat-header-cell
@@ -155,6 +174,10 @@
                   </ng-template>
                 </ng-template>
               </td>
+            </ng-container>
+
+            <ng-container *ngIf="showColumnGroups">
+              <tr mat-header-row *matHeaderRowDef="columnGroupDefinitions"></tr>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="columnNames"></tr>

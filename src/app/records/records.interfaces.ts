@@ -10,6 +10,14 @@ export interface IRecordDataCell {
   enableSort?: boolean;
   sortBy?: string;
   class?: string;
+  columnGroup?: string;
+}
+
+export interface IColumnGroups {
+  name: string;
+  count: number;
+  matColumnDef: string;
+  class: string;
 }
 
 export interface ITotalCounts {

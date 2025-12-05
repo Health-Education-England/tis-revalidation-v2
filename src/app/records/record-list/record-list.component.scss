@@ -1,5 +1,6 @@
 @import "../../../../node_modules/nhsuk-frontend/packages/core/settings/colours";
 @import "../../../scss/utilities/spacing-helpers";
+@import "../../../scss/nhsuk/colours";
 
 .is-under-notice td:first-child {
   padding-left: 20px;
@@ -118,12 +119,33 @@ th.fixed {
   )
 );
 
+$nhs-colours: (
+  nhs-blue: $color_nhsuk-blue,
+  nhs-green: $color_nhsuk-green,
+  nhs-red: $color_nhsuk-red,
+  nhs-purple: $color_nhsuk-purple,
+  nhs-pink: $color_nhsuk-dark-pink
+) !default;
+
+@mixin cell-highlights() {
+  @each $colour-name, $colour-value in $nhs-colours {
+    .cell-highlight-#{$colour-name} {
+      background-color: tint($colour-value, 80%) !important;
+    }
+  }
+}
+@include cell-highlights();
+
+.column-group-header {
+  font-weight: bold;
+  background-color: #f0f0f0 !important;
+}
+
 .cell-highlight {
-  background-color: #fafafa !important;
   &.start {
-    border-left: 1px solid #ddd;
+    border-left: 2px solid #ccc;
   }
   &.end {
-    border-right: 1px solid #ddd9;
+    border-right: 2px solid #ccc;
   }
 }

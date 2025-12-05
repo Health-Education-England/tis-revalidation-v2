@@ -1,10 +1,11 @@
 @import "nhsuk-frontend/packages/core/settings/colours";
+@import "../nhsuk/colours";
 // re-usable styles and mixins
 
 h2,
 .h2 {
   font-size: 12px;
-  font-weight: bold;
+  font-weight: bold !important;
   padding-bottom: 10px;
 }
 .no-decoration-link {

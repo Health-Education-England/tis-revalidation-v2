@@ -9,43 +9,67 @@ import { IRecordDataCell } from "../records/records.interfaces";
 
 export const COLUMN_DATA: IRecordDataCell[] = [
   {
-    label: "GMC Submission date",
+    label: "Submission date",
     name: "submissionDate",
-    enableSort: true
+    enableSort: true,
+    columnGroup: "GMC",
+    class: "cell-highlight start"
   },
   {
-    label: "GMC Designated body",
+    label: "Designated body",
     name: "designatedBody",
-    enableSort: true
+    enableSort: true,
+    columnGroup: "GMC",
+    class: "cell-highlight end"
   },
   {
-    label: "Programme owner",
+    label: "Owner",
     name: "tcsDesignatedBody",
-    enableSort: true
+    enableSort: true,
+    columnGroup: "Current programme"
   },
   {
-    label: "Programme name",
+    label: "Name",
     name: "programmeName",
-    enableSort: false
+    enableSort: false,
+    columnGroup: "Current programme"
   },
 
   {
-    label: "Programme membership",
+    label: "Membership type",
     name: "programmeMembershipType",
     enableSort: true,
-    sortBy: "membershipType"
+    sortBy: "membershipType",
+    columnGroup: "Current programme"
   },
   {
-    label: "Programme membership start date",
+    label: "Membership start date",
     name: "programmeMembershipStartDate",
     enableSort: true,
-    sortBy: "membershipStartDate"
+    sortBy: "membershipStartDate",
+    columnGroup: "Current programme"
   },
   {
-    label: "Programme membership end date",
+    label: "Membership end date",
     name: "programmeMembershipEndDate",
     enableSort: true,
-    sortBy: "membershipEndDate"
+    sortBy: "membershipEndDate",
+    columnGroup: "Current programme"
+  },
+
+  {
+    label: "Last updated",
+    name: "lastConnectionDateTime",
+    enableSort: true,
+    columnGroup: "Updated",
+    class: "cell-highlight start"
+  },
+  {
+    label: "Updated",
+    name: "updatedBy",
+    enableSort: true,
+    columnGroup: "Updated",
+    class: "cell-highlight end"
   }
 ];
 

@@ -10,17 +10,20 @@ export const RECORDS_COLUMN_DATA: IRecordDataCell[] = [
   {
     label: "First name",
     name: "doctorFirstName",
-    enableSort: true
+    enableSort: true,
+    columnGroup: "Trainee"
   },
   {
     label: "Last name",
     name: "doctorLastName",
-    enableSort: true
+    enableSort: true,
+    columnGroup: "Trainee"
   },
   {
     label: "GMC No",
     name: "gmcReferenceNumber",
-    enableSort: true
+    enableSort: true,
+    columnGroup: "Trainee"
   }
 ];
 

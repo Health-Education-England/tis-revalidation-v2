@@ -73,18 +73,28 @@ export class ConnectionsResolver extends RecordsResolver {
   }
 
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const tableFiltersState: IConnectionsTableFilters =
-      this.store.selectSnapshot(
-        (snapshot) => snapshot.connections.tableFilters
-      );
     if (route.queryParams.filter === ConnectionsFilterType.EXCEPTIONSLOG) {
       this.recordsService.filter(route.queryParams.filter);
       return of(null);
     }
+
+    const tableFiltersState: IConnectionsTableFilters =
+      this.store.selectSnapshot(
+        (snapshot) => snapshot.connections.tableFilters
+      );
+
+    const filterKeys = TABLE_FILTERS_FORM_BASE.flatMap((tableFilter: any) => {
+      if (tableFilter.controlType === "daterange") {
+        return [
+          tableFilter.key + tableFilter.startRangeControl,
+          tableFilter.key + tableFilter.endRangeControl
+        ];
+      }
+      return tableFilter.key;
+    });
+
     const filterParamsExists = Object.keys(route.queryParams).some((param) =>
-      TABLE_FILTERS_FORM_BASE.map((tableFilter) => tableFilter.key).includes(
-        param
-      )
+      filterKeys.includes(param)
     );
 
     if (tableFiltersState && !filterParamsExists) {
@@ -93,10 +103,12 @@ export class ConnectionsResolver extends RecordsResolver {
       this.recordsService.resetTableFiltersForm();
     } else {
       const filters: IConnectionsTableFilters = {};
-      TABLE_FILTERS_FORM_BASE.forEach((filter) => {
-        filters[filter.key] = filter.options
-          ? route.queryParams[filter.key]?.split(",")
-          : route.queryParams[filter.key];
+      filterKeys.forEach((filterKey) => {
+        filters[filterKey] = TABLE_FILTERS_FORM_BASE.find(
+          (item) => item.key === filterKey
+        )?.options
+          ? route.queryParams[filterKey]?.split(",")
+          : route.queryParams[filterKey];
       });
 
       if (Object.values(filters).some((filter) => filter)) {

@@ -1,9 +1,10 @@
-<div data-jasmine="formControl" class="dense-3" [formGroup]="form">
+<div data-jasmine="formControl" class="dense-3" [formGroup]="selectionForm">
   <mat-selection-list
+    formControlName="selectionList"
+    (selectionChange)="onSelectionChange($event)"
     [attr.data-cy]="'selectionList' + controlProperties.key | removeWhitespace"
     class="mb-20"
     color="primary"
-    [formControlName]="controlProperties.key"
   >
     <div class="h2">{{ controlProperties.label }}</div>
     <mat-list-option

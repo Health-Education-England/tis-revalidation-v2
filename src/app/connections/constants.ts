@@ -1,6 +1,7 @@
 import { environment } from "@environment";
 import {
   AutocompleteControl,
+  DateRangeControl,
   FormControlBase,
   FormControlType
 } from "../shared/form-controls/form-contol-base.model";
@@ -56,7 +57,7 @@ export const EXCEPTIONSLOG_COLUMN_DATA: { name: string; label: string }[] = [
 ];
 
 export const TABLE_FILTERS_FORM_BASE: Array<
-  FormControlBase | AutocompleteControl
+  FormControlBase | DateRangeControl | AutocompleteControl
 > = [
   {
     key: "programmeName",
@@ -64,6 +65,14 @@ export const TABLE_FILTERS_FORM_BASE: Array<
     order: 3,
     controlType: FormControlType.AUTOCOMPLETE,
     placeholder: "Start typing..."
+  },
+  {
+    key: "membershipEndDate",
+    label: "Membership end date",
+    order: 4,
+    controlType: FormControlType.DATERANGE,
+    startRangeControl: "From",
+    endRangeControl: "To"
   }
 ];
 

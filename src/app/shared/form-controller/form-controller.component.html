@@ -1,21 +1,28 @@
-<ng-container *ngIf="!hidden">
-  <div [ngSwitch]="control?.controlType">
+<ng-container *ngIf="!hidden && form">
+  <div [ngSwitch]="control?.controlType" [formGroup]="form">
     <app-material-checkbox
       *ngSwitchCase="formControlType.CHECKBOX"
       [controlProperties]="control"
-      [form]="form"
+      [formControlName]="control.key"
     >
     </app-material-checkbox>
     <app-material-selection-list
       *ngSwitchCase="formControlType.SELECTION_LIST"
       [controlProperties]="control"
-      [form]="form"
+      [formControlName]="control.key"
     ></app-material-selection-list>
     <app-material-autocomplete
       *ngSwitchCase="formControlType.AUTOCOMPLETE"
       [controlProperties]="control"
-      [form]="form"
+      [formControlName]="control.key"
     >
     </app-material-autocomplete>
+
+    <app-material-date-range-picker
+      *ngSwitchCase="formControlType.DATERANGE"
+      [controlProperties]="control"
+      [formControlName]="control.key"
+    >
+    </app-material-date-range-picker>
   </div>
 </ng-container>

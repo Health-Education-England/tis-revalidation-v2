@@ -16,6 +16,7 @@ import { RemoveWhitespacePipe } from "./pipes/remove-whitespace.pipe";
 import { SplitStringToHTMLPipe } from "./pipes/split-string-to-html.pipe";
 import { FormatDesignatedBodyPipe } from "./pipes/format-designated-body.pipe";
 import { MaterialCheckboxComponent } from './form-controls/material-checkbox/material-checkbox.component';
+import { MaterialDateRangePickerComponent } from './form-controls/material-date-range-picker/material-date-range-picker.component';
 
 const modulePipes = [
   StripHtmlPipe,
@@ -35,7 +36,8 @@ const modulePipes = [
     MaterialAutocompleteComponent,
 
     SplitStringToHTMLPipe,
-      MaterialCheckboxComponent
+      MaterialCheckboxComponent,
+      MaterialDateRangePickerComponent
   ],
   imports: [RouterModule, MaterialModule, ReactiveFormsModule, CommonModule],
   exports: [...modulePipes, FormControllerComponent],

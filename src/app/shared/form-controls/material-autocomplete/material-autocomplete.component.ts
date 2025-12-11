@@ -1,5 +1,10 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { UntypedFormGroup } from "@angular/forms";
+import { Component, OnInit, Input, HostListener } from "@angular/core";
+import {
+  ControlValueAccessor,
+  FormBuilder,
+  FormGroup,
+  NG_VALUE_ACCESSOR
+} from "@angular/forms";
 import {
   debounceTime,
   distinctUntilChanged,
@@ -8,44 +13,64 @@ import {
   switchMap,
   tap
 } from "rxjs/operators";
-import { AutocompleteControl } from "../form-contol-base.model";
+import {
+  AutocompleteControl,
+  OnChangeFn,
+  OnTouchFn
+} from "../form-contol-base.model";
 import { AutocompleteService } from "./autocomplete.service";
 
 @Component({
   selector: "app-material-autocomplete",
   templateUrl: "./material-autocomplete.component.html",
-  styleUrls: ["./material-autocomplete.component.scss"]
+  styleUrls: ["./material-autocomplete.component.scss"],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi: true,
+      useExisting: MaterialAutocompleteComponent
+    }
+  ]
 })
-export class MaterialAutocompleteComponent implements OnInit {
+export class MaterialAutocompleteComponent
+  implements OnInit, ControlValueAccessor
+{
   @Input() controlProperties!: AutocompleteControl;
-  @Input() form!: UntypedFormGroup;
+
+  disabled = false;
+  autocompleteForm: FormGroup;
   debounceTime: number = 500;
   minLengthTerm: number = 3;
   filteredItems: any;
+  showClearButton = false;
   isLoading: boolean;
-  isNoMatches: boolean;
-
   options: any[];
 
-  constructor(private autocompleteService: AutocompleteService) {}
+  constructor(
+    readonly autocompleteService: AutocompleteService,
+    readonly formBuilder: FormBuilder
+  ) {}
 
   onSelected() {
-    this.form.controls[this.controlProperties.key].updateValueAndValidity();
-    this.form.markAsDirty();
+    this.onChange(this.autocompleteForm.get("autocompleteInput").value);
   }
 
   clearSelection() {
-    this.form.controls[this.controlProperties.key].setValue("");
+    this.autocompleteForm.get("autocompleteInput").setValue("");
     this.filteredItems = [];
   }
 
   ngOnInit() {
-    this.minLengthTerm =
-      this.controlProperties.minLengthTerm || this.minLengthTerm;
+    this.autocompleteForm = this.formBuilder.group({
+      autocompleteInput: ""
+    });
+
     this.controlProperties &&
-      this.form.controls[this.controlProperties.key].valueChanges
-        .pipe(
+      this.autocompleteForm
+        .get("autocompleteInput")
+        .valueChanges.pipe(
           filter((inputValue) => {
+            this.showClearButton = inputValue?.length > 0;
             if (
               inputValue !== null &&
               inputValue.length >= this.minLengthTerm
@@ -57,7 +82,7 @@ export class MaterialAutocompleteComponent implements OnInit {
           }),
           distinctUntilChanged(),
           debounceTime(this.debounceTime),
-          tap(() => {
+          tap((v) => {
             this.filteredItems = [];
             this.isLoading = true;
           }),
@@ -84,11 +109,32 @@ export class MaterialAutocompleteComponent implements OnInit {
         .subscribe((data: any) => {
           if (data?.length) {
             this.filteredItems = data;
-            this.isNoMatches = false;
           } else {
-            this.isNoMatches = true;
             this.filteredItems = [];
           }
         });
+  }
+
+  // ControlValueAccessor
+  onChange: OnChangeFn<string> = () => {};
+  onTouch: OnTouchFn = () => {};
+
+  writeValue(value: string): void {
+    this.autocompleteForm.get("autocompleteInput").setValue(value);
+  }
+  registerOnChange(fn: OnChangeFn<string>): void {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn: OnTouchFn): void {
+    this.onTouch = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+  }
+
+  @HostListener("focusout")
+  onFocusOut() {
+    this.onTouch();
   }
 }

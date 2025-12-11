@@ -176,29 +176,15 @@ describe("Record List Table FIlters", () => {
     flush();
   }));
 
-  it("should disable submit button when form is blank", () => {
-    component.clearFilters();
-    fixture.detectChanges();
-    const submitFormButton = fixture.debugElement.query(
-      By.css("[data-jasmine='submitFormButton']")
-    ).nativeElement;
-    expect(submitFormButton.getAttribute("disabled")).toEqual("true");
-  });
-
-  it("should call onSubmit when submit button is clicked", () => {
+  it("should call onSubmit when filter is changed", () => {
     const spySubmitForm = spyOn(component, "onSubmit");
     const matOption = fixture.debugElement.query(By.css("mat-list-option"));
     matOption.nativeElement.click();
     fixture.detectChanges();
-    const submitFormButton = fixture.debugElement.query(
-      By.css("[data-jasmine='submitFormButton']")
-    ).nativeElement;
-    submitFormButton.click();
-    fixture.detectChanges();
     expect(spySubmitForm).toHaveBeenCalled();
   });
 
-  it("should reset form when 'Clear filters' button is clicked", fakeAsync(() => {
+  it("should set expected query params when filter is applied", fakeAsync(() => {
     spyOn(router, "navigate");
     const snapshot: RecommendationsStateModel =
       store.snapshot().recommendations;
@@ -206,7 +192,6 @@ describe("Record List Table FIlters", () => {
     matOption.nativeElement.click();
     fixture.detectChanges();
 
-    component.onSubmit();
     fixture.detectChanges();
     expect(router.navigate).toHaveBeenCalledWith(["/"], {
       queryParams: {

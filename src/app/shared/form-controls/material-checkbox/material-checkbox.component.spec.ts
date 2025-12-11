@@ -3,12 +3,7 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { MaterialCheckboxComponent } from "./material-checkbox.component";
 import { FormControlBase } from "../form-contol-base.model";
 import { MaterialModule } from "../../material/material.module";
-import {
-  FormsModule,
-  ReactiveFormsModule,
-  UntypedFormControl,
-  UntypedFormGroup
-} from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
 
 describe("MaterialCheckboxComponent", () => {
@@ -30,11 +25,7 @@ describe("MaterialCheckboxComponent", () => {
     fixture = TestBed.createComponent(MaterialCheckboxComponent);
     component = fixture.componentInstance;
     component.controlProperties = controlProperties;
-    const group: any = {};
-    group[component.controlProperties.key] = new UntypedFormControl(
-      data[component.controlProperties.key] || ""
-    );
-    component.form = new UntypedFormGroup(group);
+
     fixture.detectChanges();
   });
 

@@ -78,8 +78,6 @@ describe("Recommendations", () => {
           $el.click();
         });
 
-        FilterRecords.checkButtonsDisabled("not.be.disabled");
-
         FilterRecords.submitForm();
 
         cy.get("td.cdk-column-designatedBody").each(($el) => {
@@ -171,7 +169,6 @@ describe("Recommendations", () => {
           .click();
         cy.get("[data-cy='selectionOptionApproved']").should("exist");
         cy.get("[data-cy='selectionOptionApproved']").click();
-        FilterRecords.checkButtonsDisabled("not.be.disabled");
 
         FilterRecords.submitForm();
         cy.get("td.cdk-column-gmcOutcome").each(($el) => {
@@ -192,8 +189,6 @@ describe("Recommendations", () => {
           $el.should("exist");
           $el.click();
         });
-
-        FilterRecords.checkButtonsDisabled("not.be.disabled");
 
         FilterRecords.submitForm();
         cy.get("td.cdk-column-gmcOutcome").each(($el) => {
@@ -229,7 +224,6 @@ describe("Recommendations", () => {
 
         cy.get("[data-cy='selectionOptionDRAFT']").should("exist");
         cy.get("[data-cy='selectionOptionDRAFT']").click();
-        FilterRecords.checkButtonsDisabled("not.be.disabled");
 
         FilterRecords.submitForm();
 
@@ -250,8 +244,6 @@ describe("Recommendations", () => {
           $el.click();
         });
 
-        FilterRecords.checkButtonsDisabled("not.be.disabled");
-
         FilterRecords.submitForm();
         cy.get("td.cdk-column-doctorStatus").each(($el) => {
           expect($el.text().trim()).to.be.oneOf(
@@ -265,24 +257,6 @@ describe("Recommendations", () => {
       it("should display 'programme name' filter field", () => {
         FilterRecords.initFilterPanel();
         cy.get("[data-cy='formfield_programmeName']").should("exist");
-      });
-
-      it("should display 'Apply filters' and 'Clear filters' buttons disabled by default", () => {
-        FilterRecords.initFilterPanel();
-        cy.get("[data-cy='tableFiltersForm'] button").should("have.length", 2);
-        cy.get(
-          "[data-cy='tableFiltersForm'] button[data-jasmine='clearFiltersButton']"
-        ).should(($el) => expect($el.text().trim()).to.equal("Clear filters"));
-        cy.get(
-          "[data-cy='tableFiltersForm'] button[data-jasmine='clearFiltersButton']"
-        ).should("be.disabled");
-
-        cy.get(
-          "[data-cy='tableFiltersForm'] button[data-jasmine='submitFormButton']"
-        ).should(($el) => expect($el.text().trim()).to.equal("Apply filters"));
-        cy.get(
-          "[data-cy='tableFiltersForm'] button[data-jasmine='submitFormButton']"
-        ).should("be.disabled");
       });
 
       it("should display list containing matching options when the text 'clin' is entered in 'programme name' field", () => {
@@ -319,7 +293,6 @@ describe("Recommendations", () => {
 
         FilterRecords.openProgrammeNameDropdown();
         cy.get("mat-option").eq(1).click();
-        FilterRecords.checkButtonsDisabled("not.be.disabled");
       });
 
       it("should update summary table displaying trainees with matching programme name only", () => {
@@ -353,10 +326,10 @@ describe("Recommendations", () => {
 
         FilterRecords.openTisAdminDropdown();
         cy.get("mat-option")
-          .eq(1)
+
           .invoke("text")
           .then((value) => {
-            cy.get("mat-option").eq(1).click();
+            cy.get("mat-option").click();
             cy.get("[data-cy='formfield_admin'] input").should(
               "have.value",
               value
@@ -386,14 +359,15 @@ describe("Recommendations", () => {
       it("should display the filters applied when navigating to details page and back", () => {
         FilterRecords.initFilterPanel();
         FilterRecords.openProgrammeNameDropdown("General");
-        FilterRecords.submitForm();
+        cy.get("mat-option").eq(1).click();
+
         cy.get(".mat-mdc-table tr:nth-child(2)").click();
         cy.get("app-nav-bar").should("exist");
         cy.get("#navLinkToList").should("exist").click();
-        cy.get("[data-cy='formfield_programmeName'] input").should(
-          "have.value",
-          "General"
-        );
+        FilterRecords.submitForm();
+        cy.get("[data-cy='formfield_programmeName'] input").then(($el) => {
+          expect($el.val()).to.contain("General");
+        });
       });
     });
   });

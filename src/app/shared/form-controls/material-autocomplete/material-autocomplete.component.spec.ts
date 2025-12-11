@@ -9,8 +9,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import {
   FormsModule,
   ReactiveFormsModule,
-  UntypedFormControl,
-  UntypedFormGroup
+  UntypedFormControl
 } from "@angular/forms";
 import { MaterialModule } from "src/app/shared/material/material.module";
 
@@ -68,7 +67,6 @@ describe("MaterialAutocompleteComponent", () => {
     group[component.controlProperties.key] = new UntypedFormControl(
       data[component.controlProperties.key] || ""
     );
-    component.form = new UntypedFormGroup(group);
     fixture.detectChanges();
   });
 

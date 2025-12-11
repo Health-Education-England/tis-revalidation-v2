@@ -13,6 +13,29 @@ describe("Connections", () => {
       FilterRecords.toggleFilterPanel();
     });
 
+    describe("Filter by Membership End Date", () => {
+      it("should display 'membership end date' filter field", () => {
+        FilterRecords.initFilterPanel(path);
+        cy.get("[data-cy='formfield_membershipEndDate']").should("exist");
+      });
+
+      it("should select a date range", () => {
+        FilterRecords.initFilterPanel(path);
+        cy.get("mat-datepicker-toggle button").click();
+        cy.wait(500);
+        cy.get("mat-calendar button.mat-calendar-body-cell").first().click();
+        cy.wait(500);
+        cy.get("mat-calendar button.mat-calendar-body-cell").last().click();
+        cy.wait(500);
+        cy.get("mat-date-range-input input.mat-start-date")
+          .invoke("val")
+          .should("not.be.empty");
+        cy.get("mat-date-range-input input.mat-end-date")
+          .invoke("val")
+          .should("not.be.empty");
+      });
+    });
+
     describe("Filter by Programme Name", () => {
       it("should display 'programme name' filter field", () => {
         FilterRecords.initFilterPanel(path);

@@ -1,4 +1,8 @@
-<div data-jasmine="formControl" data-cy="formFieldWrapper" [formGroup]="form">
+<div
+  data-jasmine="formControl"
+  data-cy="formFieldWrapper"
+  [formGroup]="autocompleteForm"
+>
   <mat-form-field
     attr.data-cy="formfield_{{ controlProperties.key }}"
     *ngIf="controlProperties"
@@ -11,12 +15,12 @@
       #trigger="matAutocompleteTrigger"
       (keydown.enter)="$event.target.blur(); trigger.closePanel()"
       [matAutocomplete]="auto"
-      [formControlName]="controlProperties.key"
       [placeholder]="controlProperties.placeholder"
+      formControlName="autocompleteInput"
     />
 
     <button
-      *ngIf="this.form.controls[this.controlProperties.key].value"
+      *ngIf="showClearButton"
       matSuffix
       mat-icon-button
       aria-label="Clear"
@@ -43,5 +47,4 @@
       </ng-container>
     </mat-autocomplete>
   </mat-form-field>
-  <div class="mat-error error" *ngIf="isNoMatches">No matches found.</div>
 </div>

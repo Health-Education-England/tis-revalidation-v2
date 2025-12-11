@@ -33,6 +33,14 @@ module.exports = function (config) {
     autoWatch: true,
     browsers: ["Chrome"],
     singleRun: false,
-    restartOnFileChange: true
+    restartOnFileChange: true,
+    mochaReporter: {
+      autowatch: true,
+      ignoreSkipped: true,
+      maxLogLines: -1
+    },
+    specReporter: {
+      suppressSkipped: true
+    }
   });
 };

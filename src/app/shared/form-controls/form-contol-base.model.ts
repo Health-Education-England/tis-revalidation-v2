@@ -22,8 +22,18 @@ export interface AutocompleteControl extends FormControlBase {
   data?: string[];
 }
 
+export interface DateRangeControl extends FormControlBase {
+  startRangeControl: string;
+  endRangeControl: string;
+  outputDateFormat?: string;
+}
+
 export enum FormControlType {
   AUTOCOMPLETE = "autocomplete",
   SELECTION_LIST = "selectionList",
-  CHECKBOX = "checkbox"
+  CHECKBOX = "checkbox",
+  DATERANGE = "daterange"
 }
+
+export type OnChangeFn<T> = (value: T) => void;
+export type OnTouchFn = () => void;

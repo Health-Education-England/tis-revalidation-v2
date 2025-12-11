@@ -21,7 +21,15 @@ export class ConnectionsService {
     let params: HttpParams = this.recordsService.generateParams(snapshot);
     params = params
       .append("filter", snapshot.filter)
-      .append("programmeName", snapshot.tableFilters?.programmeName || "");
+      .append("programmeName", snapshot.tableFilters?.programmeName || "")
+      .append(
+        "membershipEndDateFrom",
+        snapshot.tableFilters?.membershipEndDateFrom || ""
+      )
+      .append(
+        "membershipEndDateTo",
+        snapshot.tableFilters?.membershipEndDateTo || ""
+      );
 
     if (snapshot.filter === "discrepancies") {
       let isDBSelected =

@@ -25,5 +25,18 @@
     </mat-date-range-input>
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-date-range-picker #picker></mat-date-range-picker>
+    <!-- Error messages -->
+    <mat-error
+      *ngIf="
+        dateRangeForm.controls[
+          this.controlProperties.startRangeControl
+        ].hasError('matStartDateInvalid') &&
+        dateRangeForm.controls[this.controlProperties.endRangeControl].hasError(
+          'matEndDateInvalid'
+        )
+      "
+    >
+      Invalid date range
+    </mat-error>
   </mat-form-field>
 </div>

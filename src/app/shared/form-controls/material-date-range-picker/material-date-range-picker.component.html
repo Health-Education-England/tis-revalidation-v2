@@ -4,17 +4,23 @@
     <mat-date-range-input [rangePicker]="picker">
       <input
         (dateChange)="onDateChange($event, controlProperties.startRangeControl)"
+        #inputFrom
         matStartDate
         [formControlName]="controlProperties.startRangeControl"
         placeholder="Start date"
+        (keyup.enter)="inputTo.focus()"
+        (keydown.enter)="$event.preventDefault()"
       />
       <input
         (dateChange)="
           onDateChange($event, this.controlProperties.endRangeControl)
         "
+        #inputTo
         matEndDate
         [formControlName]="this.controlProperties.endRangeControl"
         placeholder="End date"
+        (keyup.enter)="inputTo.blur()"
+        (keydown.enter)="$event.preventDefault()"
       />
     </mat-date-range-input>
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>

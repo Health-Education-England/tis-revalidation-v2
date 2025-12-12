@@ -27,7 +27,6 @@ export class MaterialDateRangePickerComponent
   implements OnInit, ControlValueAccessor
 {
   constructor(readonly formBuilder: FormBuilder) {}
-
   dateRangeForm: FormGroup;
 
   ngOnInit(): void {

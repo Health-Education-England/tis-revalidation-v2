@@ -44,11 +44,6 @@ export class MaterialDateRangePickerComponent
         this.controlProperties.outputDateFormat || "YYYY-MM-DD"
       );
       this.dateRangeForm.get(control).setValue(formatted);
-      if (control === this.controlProperties.startRangeControl) {
-        this.dateRangeForm
-          .get(this.controlProperties.endRangeControl)
-          .setValue(null);
-      }
       this.onChange(this.dateRangeForm.value);
     }
   }

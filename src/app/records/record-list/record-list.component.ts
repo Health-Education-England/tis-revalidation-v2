@@ -22,6 +22,7 @@ export class RecordListComponent implements OnDestroy {
   public detailsRoute: string = this.recordsService.detailsRoute;
 
   public dateFormat: string = environment.dateFormat;
+  public dateTimeFormat: string = environment.dateTimeFormat;
   public params: Params;
 
   public allChecked$: Observable<boolean> = this.store.select(

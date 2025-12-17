@@ -6,6 +6,7 @@ import { Observable } from "rxjs";
 import { generateColumnData } from "../records/constants";
 import { RecordsResolver } from "../records/records.resolver";
 import { RecordsService } from "../records/services/records.service";
+import { RECORDS_COLUMN_DATA } from "../records/constants";
 import {
   COLUMN_DATA,
   TABLE_FILTERS_FORM_BASE,
@@ -62,25 +63,17 @@ export class RecommendationsResolver extends RecordsResolver {
     this.recordsService.detailsRoute = "/recommendation";
     this.recordsService.showTableFilters = true;
     this.recordsService.setRecommendationsActions();
-    this.recordsService.dateColumns = [
-      "curriculumEndDate",
-      "submissionDate",
-      "dateAdded",
-      "lastUpdatedDate"
-    ];
-
     this.initFiltersFormData();
 
-    if (this.authService.inludesLondonDbcs) {
-      const statusIndex = COLUMN_DATA.findIndex((dbc) => dbc[0] === "Status");
-      COLUMN_DATA.splice(statusIndex + 1, 0, [
-        "Designated body",
-        "designatedBody",
-        false
-      ]);
+    if (!this.authService.inludesLondonDbcs) {
+      this.recordsService.columnData = [
+        ...RECORDS_COLUMN_DATA,
+        ...COLUMN_DATA.filter((column) => column.isLondonOnly !== true)
+      ];
+    } else {
+      this.recordsService.columnData = [...RECORDS_COLUMN_DATA, ...COLUMN_DATA];
     }
 
-    this.recordsService.columnData = generateColumnData(COLUMN_DATA);
     this.recordsService.filters = [
       {
         label: "ALL DOCTORS",

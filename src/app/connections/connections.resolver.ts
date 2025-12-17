@@ -36,12 +36,7 @@ export class ConnectionsResolver extends RecordsResolver {
     this.recordsService.detailsRoute = "/connection";
     this.recordsService.showTableFilters = true;
     this.recordsService.setConnectionsActions();
-    this.recordsService.dateColumns = [
-      "submissionDate",
-      "programmeMembershipStartDate",
-      "programmeMembershipEndDate",
-      "lastConnectionDateTime"
-    ];
+
     this.recordsService.columnData = [...RECORDS_COLUMN_DATA, ...COLUMN_DATA];
 
     this.recordsService.filters = [

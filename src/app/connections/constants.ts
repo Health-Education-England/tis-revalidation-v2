@@ -12,17 +12,20 @@ export const COLUMN_DATA: IRecordDataCell[] = [
   {
     label: "GMC Submission date",
     name: "submissionDate",
-    enableSort: true
+    enableSort: true,
+    displayType: "date"
   },
   {
     label: "GMC Designated body",
     name: "designatedBody",
-    enableSort: true
+    enableSort: true,
+    displayType: "dbc"
   },
   {
     label: "Programme owner",
     name: "tcsDesignatedBody",
-    enableSort: true
+    enableSort: true,
+    displayType: "dbc"
   },
   {
     label: "Programme name",
@@ -40,23 +43,27 @@ export const COLUMN_DATA: IRecordDataCell[] = [
     label: "Programme membership start date",
     name: "programmeMembershipStartDate",
     enableSort: true,
-    sortBy: "membershipStartDate"
+    sortBy: "membershipStartDate",
+    displayType: "date"
   },
   {
     label: "Programme membership end date",
     name: "programmeMembershipEndDate",
     enableSort: true,
-    sortBy: "membershipEndDate"
+    sortBy: "membershipEndDate",
+    displayType: "date"
   },
   {
     label: "Last updated",
     name: "lastConnectionDateTime",
-    enableSort: true
+    enableSort: true,
+    displayType: "datetime"
   },
   {
     label: "Last updated by",
     name: "updatedBy",
-    enableSort: true
+    enableSort: true,
+    displayType: "admin"
   }
 ];
 

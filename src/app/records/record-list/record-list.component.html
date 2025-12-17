@@ -112,7 +112,12 @@
                 </mat-checkbox>
 
                 <!-- render allocate admin component or admin name -->
-                <ng-container *ngIf="i.name === 'admin'; else notAdminCell">
+                <ng-container
+                  *ngIf="
+                    i.name === 'admin' || i.name === 'updatedBy';
+                    else notAdminCell
+                  "
+                >
                   <a
                     *ngIf="element[i.name]"
                     [matTooltip]="element[i.name] | AdminName: 'email'"

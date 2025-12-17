@@ -47,6 +47,16 @@ export const COLUMN_DATA: IRecordDataCell[] = [
     name: "programmeMembershipEndDate",
     enableSort: true,
     sortBy: "membershipEndDate"
+  },
+  {
+    label: "Last updated",
+    name: "lastConnectionDateTime",
+    enableSort: true
+  },
+  {
+    label: "Last updated by",
+    name: "updatedBy",
+    enableSort: true
   }
 ];
 

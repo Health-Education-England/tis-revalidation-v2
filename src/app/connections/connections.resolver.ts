@@ -39,7 +39,8 @@ export class ConnectionsResolver extends RecordsResolver {
     this.recordsService.dateColumns = [
       "submissionDate",
       "programmeMembershipStartDate",
-      "programmeMembershipEndDate"
+      "programmeMembershipEndDate",
+      "lastConnectionDateTime"
     ];
     this.recordsService.columnData = [...RECORDS_COLUMN_DATA, ...COLUMN_DATA];
 

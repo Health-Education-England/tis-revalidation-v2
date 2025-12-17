@@ -114,7 +114,8 @@
                 <!-- render allocate admin component or admin name -->
                 <ng-container
                   *ngIf="
-                    i.name === 'admin' || i.name === 'updatedBy';
+                    (admins$ | async) &&
+                      (i.name === 'admin' || i.name === 'updatedBy');
                     else notAdminCell
                   "
                 >

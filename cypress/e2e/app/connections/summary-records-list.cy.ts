@@ -15,7 +15,9 @@ describe("Connections Summary Records List", () => {
     "Programme name",
     "Programme membership",
     "Programme membership start date",
-    "Programme membership end date"
+    "Programme membership end date",
+    "Connection last updated",
+    "Connection last updated by"
   ];
   const sortableColumns = [
     "First name",
@@ -26,7 +28,9 @@ describe("Connections Summary Records List", () => {
     "Programme owner",
     "Programme membership",
     "Programme membership start date",
-    "Programme membership end date"
+    "Programme membership end date",
+    "Connection last updated",
+    "Connection last updated by"
   ];
 
   const filters = [

@@ -2,8 +2,6 @@ import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
-
-import { generateColumnData } from "../records/constants";
 import { RecordsResolver } from "../records/records.resolver";
 import { RecordsService } from "../records/services/records.service";
 import { RECORDS_COLUMN_DATA } from "../records/constants";
@@ -65,13 +63,13 @@ export class RecommendationsResolver extends RecordsResolver {
     this.recordsService.setRecommendationsActions();
     this.initFiltersFormData();
 
-    if (!this.authService.inludesLondonDbcs) {
+    if (this.authService.inludesLondonDbcs) {
+      this.recordsService.columnData = [...RECORDS_COLUMN_DATA, ...COLUMN_DATA];
+    } else {
       this.recordsService.columnData = [
         ...RECORDS_COLUMN_DATA,
         ...COLUMN_DATA.filter((column) => column.isLondonOnly !== true)
       ];
-    } else {
-      this.recordsService.columnData = [...RECORDS_COLUMN_DATA, ...COLUMN_DATA];
     }
 
     this.recordsService.filters = [

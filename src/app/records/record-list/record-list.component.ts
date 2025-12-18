@@ -9,6 +9,7 @@ import { UpdateConnectionsService } from "src/app/update-connections/services/up
 import { ClearAllocateList } from "../../admins/state/admins.actions";
 import { IRecordDataCell } from "../records.interfaces";
 import { RecordsService } from "../services/records.service";
+import { IAdmin } from "src/app/admins/admins.interfaces";
 
 @Component({
   selector: "app-record-list",
@@ -21,6 +22,7 @@ export class RecordListComponent implements OnDestroy {
   public detailsRoute: string = this.recordsService.detailsRoute;
 
   public dateFormat: string = environment.dateFormat;
+  public dateTimeFormat: string = environment.dateTimeFormat;
   public params: Params;
 
   public allChecked$: Observable<boolean> = this.store.select(
@@ -57,6 +59,10 @@ export class RecordListComponent implements OnDestroy {
 
   public fixedColumns$: Observable<boolean> = this.store.select(
     (state) => state.recordList.fixedColumns
+  );
+
+  public admins$: Observable<IAdmin> = this.store.select(
+    (state) => state.admins.items
   );
 
   constructor(

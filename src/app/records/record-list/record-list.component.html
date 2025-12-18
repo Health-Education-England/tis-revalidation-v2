@@ -111,8 +111,9 @@
                 >
                 </mat-checkbox>
 
-                <!-- render allocate admin component or admin name -->
-                <ng-container *ngIf="i.name === 'admin'; else notAdminCell">
+                <ng-container
+                  *ngIf="(admins$ | async) && i.displayType === 'admin'"
+                >
                   <a
                     *ngIf="element[i.name]"
                     [matTooltip]="element[i.name] | AdminName: 'email'"
@@ -123,37 +124,30 @@
                   >
                 </ng-container>
 
-                <!-- remaining cells -->
-                <ng-template #notAdminCell>
-                  <!-- cell value | format date -->
+                <ng-container *ngIf="i.displayType === 'date'">
+                  {{ element[i.name] | date: dateFormat }}
+                </ng-container>
 
-                  <ng-container
-                    *ngIf="dateColumns.includes(i.name); else notDate"
-                  >
-                    {{ element[i.name] | date: dateFormat }}
-                  </ng-container>
-                  <!-- cell value | no formatting needed -->
-                  <ng-template #notDate>
-                    <div
-                      *ngIf="i.name === 'programmeName'; else NotProgramme"
-                      [innerHTML]="element[i.name] | splitStringToHTML"
-                    ></div>
-                    <ng-template #NotProgramme>
-                      <ng-container
-                        *ngIf="
-                          i.name === 'designatedBody' ||
-                            i.name === 'tcsDesignatedBody';
-                          else NotDBC
-                        "
-                      >
-                        {{ element[i.name] | formatDesignatedBody: "abbr" }}
-                      </ng-container>
-                      <ng-template #NotDBC>
-                        {{ element[i.name] }}
-                      </ng-template>
-                    </ng-template>
-                  </ng-template>
-                </ng-template>
+                <ng-container *ngIf="i.displayType === 'datetime'">
+                  {{ element[i.name] | date: dateTimeFormat }}
+                </ng-container>
+
+                <ng-container *ngIf="i.displayType === 'relativedate'">
+                  {{ element[i.name] | relativeDate }}
+                </ng-container>
+
+                <div
+                  *ngIf="i.displayType === 'array'"
+                  [innerHTML]="element[i.name] | splitStringToHTML"
+                ></div>
+                <ng-container *ngIf="i.displayType === 'dbc'">
+                  {{ element[i.name] | formatDesignatedBody: "abbr" }}
+                </ng-container>
+                <ng-container
+                  *ngIf="!i.displayType || i.displayType === 'string'"
+                >
+                  {{ element[i.name] }}
+                </ng-container>
               </td>
             </ng-container>
 

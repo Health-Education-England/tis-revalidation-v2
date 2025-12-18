@@ -2,10 +2,9 @@ import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
-
-import { generateColumnData } from "../records/constants";
 import { RecordsResolver } from "../records/records.resolver";
 import { RecordsService } from "../records/services/records.service";
+import { RECORDS_COLUMN_DATA } from "../records/constants";
 import {
   COLUMN_DATA,
   TABLE_FILTERS_FORM_BASE,
@@ -62,25 +61,17 @@ export class RecommendationsResolver extends RecordsResolver {
     this.recordsService.detailsRoute = "/recommendation";
     this.recordsService.showTableFilters = true;
     this.recordsService.setRecommendationsActions();
-    this.recordsService.dateColumns = [
-      "curriculumEndDate",
-      "submissionDate",
-      "dateAdded",
-      "lastUpdatedDate"
-    ];
-
     this.initFiltersFormData();
 
     if (this.authService.inludesLondonDbcs) {
-      const statusIndex = COLUMN_DATA.findIndex((dbc) => dbc[0] === "Status");
-      COLUMN_DATA.splice(statusIndex + 1, 0, [
-        "Designated body",
-        "designatedBody",
-        false
-      ]);
+      this.recordsService.columnData = [...RECORDS_COLUMN_DATA, ...COLUMN_DATA];
+    } else {
+      this.recordsService.columnData = [
+        ...RECORDS_COLUMN_DATA,
+        ...COLUMN_DATA.filter((column) => column.isLondonOnly !== true)
+      ];
     }
 
-    this.recordsService.columnData = generateColumnData(COLUMN_DATA);
     this.recordsService.filters = [
       {
         label: "ALL DOCTORS",

@@ -10,6 +10,7 @@ import {
   AutocompleteControl,
   FormControlType
 } from "../shared/form-controls/form-contol-base.model";
+import { IRecordDataCell } from "../records/records.interfaces";
 
 function getEnumKeyByEnumValue<T extends { [index: string]: string }>(
   myEnum: T,
@@ -19,15 +20,64 @@ function getEnumKeyByEnumValue<T extends { [index: string]: string }>(
   return keys.length > 0 ? keys[0] : null;
 }
 
-export const COLUMN_DATA: [string, string, boolean][] = [
-  ["GMC Submission due date", "submissionDate", true],
-  ["GMC Status", "gmcOutcome", false],
-  ["TIS Status", "doctorStatus", false],
-  ["Current programme name", "programmeName", false],
-  ["Programme membership type", "programmeMembershipType", false],
-  ["Curriculum end date", "curriculumEndDate", false],
-  ["Admin", "admin", false],
-  ["Last updated", "lastUpdatedDate", false]
+export const COLUMN_DATA: IRecordDataCell[] = [
+  {
+    label: "Designated body",
+    name: "designatedBody",
+    enableSort: false,
+    displayType: "dbc",
+    isLondonOnly: true
+  },
+
+  {
+    label: "GMC Submission due date",
+    name: "submissionDate",
+    enableSort: true,
+    displayType: "date"
+  },
+
+  {
+    label: "GMC Status",
+    name: "gmcOutcome",
+    enableSort: false
+  },
+
+  {
+    label: "TIS Status",
+    name: "doctorStatus",
+    enableSort: false
+  },
+  {
+    label: "Current programme name",
+    name: "programmeName",
+    enableSort: false
+  },
+
+  {
+    label: "Programme membership type",
+    name: "programmeMembershipType",
+    enableSort: false
+  },
+
+  {
+    label: "Curriculum end date",
+    name: "curriculumEndDate",
+    enableSort: false,
+    displayType: "date"
+  },
+  {
+    label: "Admin",
+    name: "admin",
+    enableSort: false,
+    displayType: "admin"
+  },
+
+  {
+    label: "Last updated",
+    name: "lastUpdatedDate",
+    enableSort: false,
+    displayType: "date"
+  }
 ];
 
 export const RECOMMENDATION_SORT: Sort = {

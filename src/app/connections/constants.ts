@@ -54,13 +54,13 @@ export const COLUMN_DATA: IRecordDataCell[] = [
     displayType: "date"
   },
   {
-    label: "Last updated",
+    label: "Connection last updated",
     name: "lastConnectionDateTime",
     enableSort: true,
-    displayType: "datetime"
+    displayType: "relativedate"
   },
   {
-    label: "Last updated by",
+    label: "Connection last updated by",
     name: "updatedBy",
     enableSort: true,
     displayType: "admin"

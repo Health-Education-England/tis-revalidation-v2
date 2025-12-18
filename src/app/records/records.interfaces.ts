@@ -9,7 +9,14 @@ export interface IRecordDataCell {
   name: string;
   enableSort?: boolean;
   sortBy?: string;
-  displayType?: "date" | "datetime" | "string" | "array" | "admin" | "dbc";
+  displayType?:
+    | "date"
+    | "datetime"
+    | "string"
+    | "array"
+    | "admin"
+    | "dbc"
+    | "relativedate";
   class?: string;
   isLondonOnly?: boolean;
 }

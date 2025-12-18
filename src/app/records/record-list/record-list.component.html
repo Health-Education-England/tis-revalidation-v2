@@ -132,6 +132,10 @@
                   {{ element[i.name] | date: dateTimeFormat }}
                 </ng-container>
 
+                <ng-container *ngIf="i.displayType === 'relativedate'">
+                  {{ element[i.name] | relativeDate }}
+                </ng-container>
+
                 <div
                   *ngIf="i.displayType === 'array'"
                   [innerHTML]="element[i.name] | splitStringToHTML"

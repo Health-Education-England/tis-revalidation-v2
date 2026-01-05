@@ -90,4 +90,31 @@ export class FilterRecords {
         );
       });
   };
+
+  static readonly selectDateRange = (element: string) => {
+    cy.get(`${element} mat-datepicker-toggle button`).click();
+    cy.wait(500);
+    cy.get("mat-calendar button.mat-calendar-body-cell").first().click();
+    cy.wait(500);
+    cy.get("mat-calendar button.mat-calendar-body-cell").last().click();
+    cy.wait(500);
+    cy.get(`${element} mat-date-range-input input.mat-start-date`)
+      .invoke("val")
+      .should("not.be.empty");
+    cy.get(`${element} mat-date-range-input input.mat-end-date`)
+      .invoke("val")
+      .should("not.be.empty");
+  };
+
+  static readonly populateDateRange = (element: string) => {
+    cy.get(`${element} mat-date-range-input input.mat-start-date`).type(
+      "01/01/2026"
+    );
+    cy.wait(500);
+    cy.get(`${element} mat-date-range-input input.mat-end-date`).type(
+      "10/01/2026"
+    );
+    cy.get(`${element} mat-date-range-input input.mat-end-date`).blur();
+    cy.wait(500);
+  };
 }

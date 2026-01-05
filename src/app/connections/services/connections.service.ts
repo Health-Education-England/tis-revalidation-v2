@@ -29,6 +29,14 @@ export class ConnectionsService {
       .append(
         "membershipEndDateTo",
         snapshot.tableFilters?.membershipEndDateTo || ""
+      )
+      .append(
+        "submissionDateFrom",
+        snapshot.tableFilters?.submissionDateFrom || ""
+      )
+      .append(
+        "submissionDateTo",
+        snapshot.tableFilters?.submissionDateTo || ""
       );
 
     if (snapshot.filter === "discrepancies") {

@@ -86,6 +86,14 @@ export const TABLE_FILTERS_FORM_BASE: Array<
   {
     key: "membershipEndDate",
     label: "Membership end date",
+    order: 5,
+    controlType: FormControlType.DATERANGE,
+    startRangeControl: "From",
+    endRangeControl: "To"
+  },
+  {
+    key: "submissionDate",
+    label: "GMC submission date",
     order: 4,
     controlType: FormControlType.DATERANGE,
     startRangeControl: "From",

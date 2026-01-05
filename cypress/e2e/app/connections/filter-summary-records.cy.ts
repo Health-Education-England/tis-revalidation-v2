@@ -13,6 +13,27 @@ describe("Connections", () => {
       FilterRecords.toggleFilterPanel();
     });
 
+    describe("Filter by GMC submission date", () => {
+      it("should display 'GMC submission date' filter field", () => {
+        FilterRecords.initFilterPanel(path);
+        cy.get("[data-cy='formfield_submissionDate']").should("exist");
+      });
+
+      it("should select a date range", () => {
+        FilterRecords.initFilterPanel(path);
+        FilterRecords.selectDateRange("[data-cy='formfield_submissionDate']");
+      });
+
+      it("should update url to include submission date params", () => {
+        FilterRecords.initFilterPanel(path);
+        FilterRecords.populateDateRange("[data-cy='formfield_submissionDate']");
+        cy.url().should(
+          "contain",
+          "submissionDateFrom=2026-01-01&submissionDateTo=2026-01-10"
+        );
+      });
+    });
+
     describe("Filter by Membership End Date", () => {
       it("should display 'membership end date' filter field", () => {
         FilterRecords.initFilterPanel(path);
@@ -21,18 +42,20 @@ describe("Connections", () => {
 
       it("should select a date range", () => {
         FilterRecords.initFilterPanel(path);
-        cy.get("mat-datepicker-toggle button").click();
-        cy.wait(500);
-        cy.get("mat-calendar button.mat-calendar-body-cell").first().click();
-        cy.wait(500);
-        cy.get("mat-calendar button.mat-calendar-body-cell").last().click();
-        cy.wait(500);
-        cy.get("mat-date-range-input input.mat-start-date")
-          .invoke("val")
-          .should("not.be.empty");
-        cy.get("mat-date-range-input input.mat-end-date")
-          .invoke("val")
-          .should("not.be.empty");
+        FilterRecords.selectDateRange(
+          "[data-cy='formfield_membershipEndDate']"
+        );
+      });
+
+      it("should update url to include membership end date params", () => {
+        FilterRecords.initFilterPanel(path);
+        FilterRecords.populateDateRange(
+          "[data-cy='formfield_membershipEndDate']"
+        );
+        cy.url().should(
+          "contain",
+          "membershipEndDateFrom=2026-01-01&membershipEndDateTo=2026-01-10"
+        );
       });
     });
 

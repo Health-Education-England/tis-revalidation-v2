@@ -38,4 +38,6 @@ export interface IConnectionsTableFilters extends ITableFilters {
   dbcs?: string | string[];
   membershipEndDateFrom?: string;
   membershipEndDateTo?: string;
+  submissionDateFrom?: string;
+  submissionDateTo?: string;
 }

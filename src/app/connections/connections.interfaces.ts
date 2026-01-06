@@ -40,4 +40,6 @@ export interface IConnectionsTableFilters extends ITableFilters {
   membershipEndDateTo?: string;
   submissionDateFrom?: string;
   submissionDateTo?: string;
+  lastConnectionDateTimeFrom?: string;
+  lastConnectionDateTimeTo?: string;
 }

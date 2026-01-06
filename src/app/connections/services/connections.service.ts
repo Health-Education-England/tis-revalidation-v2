@@ -34,9 +34,14 @@ export class ConnectionsService {
         "submissionDateFrom",
         snapshot.tableFilters?.submissionDateFrom || ""
       )
+      .append("submissionDateTo", snapshot.tableFilters?.submissionDateTo || "")
       .append(
-        "submissionDateTo",
-        snapshot.tableFilters?.submissionDateTo || ""
+        "lastConnectionDateTimeFrom",
+        snapshot.tableFilters?.lastConnectionDateTimeFrom || ""
+      )
+      .append(
+        "lastConnectionDateTimeTo",
+        snapshot.tableFilters?.lastConnectionDateTimeTo || ""
       );
 
     if (snapshot.filter === "discrepancies") {

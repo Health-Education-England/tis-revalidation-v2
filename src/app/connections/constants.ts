@@ -84,6 +84,14 @@ export const TABLE_FILTERS_FORM_BASE: Array<
     placeholder: "Start typing..."
   },
   {
+    key: "submissionDate",
+    label: "GMC submission date",
+    order: 4,
+    controlType: FormControlType.DATERANGE,
+    startRangeControl: "From",
+    endRangeControl: "To"
+  },
+  {
     key: "membershipEndDate",
     label: "Membership end date",
     order: 5,
@@ -92,9 +100,9 @@ export const TABLE_FILTERS_FORM_BASE: Array<
     endRangeControl: "To"
   },
   {
-    key: "submissionDate",
-    label: "GMC submission date",
-    order: 4,
+    key: "lastConnectionDateTime",
+    label: "Connection last updated",
+    order: 6,
     controlType: FormControlType.DATERANGE,
     startRangeControl: "From",
     endRangeControl: "To"

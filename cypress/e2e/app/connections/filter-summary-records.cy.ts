@@ -59,6 +59,31 @@ describe("Connections", () => {
       });
     });
 
+    describe("Filter by Last connection updated", () => {
+      it("should display 'membership end date' filter field", () => {
+        FilterRecords.initFilterPanel(path);
+        cy.get("[data-cy='formfield_lastConnectionDateTime']").should("exist");
+      });
+
+      it("should select a date range", () => {
+        FilterRecords.initFilterPanel(path);
+        FilterRecords.selectDateRange(
+          "[data-cy='formfield_lastConnectionDateTime']"
+        );
+      });
+
+      it("should update url to include last connection updated date params", () => {
+        FilterRecords.initFilterPanel(path);
+        FilterRecords.populateDateRange(
+          "[data-cy='formfield_lastConnectionDateTime']"
+        );
+        cy.url().should(
+          "contain",
+          "formfield_lastConnectionDateTimeFrom=2026-01-01&formfield_lastConnectionDateTimeTo=2026-01-10"
+        );
+      });
+    });
+
     describe("Filter by Programme Name", () => {
       it("should display 'programme name' filter field", () => {
         FilterRecords.initFilterPanel(path);

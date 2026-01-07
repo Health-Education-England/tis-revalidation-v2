@@ -5,7 +5,8 @@ import { RecordsService } from "../../records/services/records.service";
 import { ConnectionsFilterType } from "../connections.interfaces";
 import { ConnectionsStateModel } from "../state/connections.state";
 import { AuthService } from "../../core/auth/auth.service";
-
+import { AdminsStateModel } from "src/app/admins/state/admins.state";
+import { IAdmin } from "src/app/admins/admins.interfaces";
 @Injectable({
   providedIn: "root"
 })
@@ -18,7 +19,16 @@ export class ConnectionsService {
 
   public generateParams(): HttpParams {
     const snapshot: ConnectionsStateModel = this.store.snapshot().connections;
+    const admins: AdminsStateModel = this.store.snapshot().admins;
     let params: HttpParams = this.recordsService.generateParams(snapshot);
+    let updatedByParam: string;
+    if (snapshot.tableFilters?.updatedBy && admins.items) {
+      const selectedAdmin = admins.items?.find(
+        (admin: IAdmin) => admin.fullName === snapshot.tableFilters.updatedBy
+      );
+      updatedByParam = selectedAdmin?.email || snapshot.tableFilters.updatedBy;
+    }
+
     params = params
       .append("filter", snapshot.filter)
       .append("programmeName", snapshot.tableFilters?.programmeName || "")
@@ -42,7 +52,8 @@ export class ConnectionsService {
       .append(
         "lastConnectionDateTimeTo",
         snapshot.tableFilters?.lastConnectionDateTimeTo || ""
-      );
+      )
+      .append("updatedBy", updatedByParam || "");
 
     if (snapshot.filter === "discrepancies") {
       let isDBSelected =

@@ -20,6 +20,7 @@ export interface FormControlBase {
 export interface AutocompleteControl extends FormControlBase {
   minLengthTerm?: number;
   data?: string[];
+  dataService?: string;
 }
 
 export interface DateRangeControl extends FormControlBase {

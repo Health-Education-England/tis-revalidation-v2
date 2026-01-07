@@ -9,7 +9,6 @@ import {
   debounceTime,
   distinctUntilChanged,
   filter,
-  finalize,
   switchMap,
   tap
 } from "rxjs/operators";
@@ -19,7 +18,6 @@ import {
   OnTouchFn
 } from "../form-contol-base.model";
 import { AutocompleteService } from "./autocomplete.service";
-
 @Component({
   selector: "app-material-autocomplete",
   templateUrl: "./material-autocomplete.component.html",
@@ -40,7 +38,7 @@ export class MaterialAutocompleteComponent
   disabled = false;
   autocompleteForm: FormGroup;
   debounceTime: number = 500;
-  minLengthTerm: number = 3;
+  minLengthTerm: number;
   filteredItems: any;
   showClearButton = false;
   isLoading: boolean;
@@ -56,7 +54,11 @@ export class MaterialAutocompleteComponent
   }
 
   clearSelection() {
-    this.autocompleteForm.get("autocompleteInput").setValue("");
+    this.onChange("");
+    // setTimeout avoids the ExpressionChangedAfterItHasBeenCheckedError
+    setTimeout(() => {
+      this.autocompleteForm.get("autocompleteInput").reset();
+    });
     this.filteredItems = [];
   }
 
@@ -64,7 +66,7 @@ export class MaterialAutocompleteComponent
     this.autocompleteForm = this.formBuilder.group({
       autocompleteInput: ""
     });
-
+    this.minLengthTerm = this.controlProperties?.minLengthTerm ?? 3;
     this.controlProperties &&
       this.autocompleteForm
         .get("autocompleteInput")
@@ -88,25 +90,26 @@ export class MaterialAutocompleteComponent
           }),
           switchMap((inputValue: string) => {
             if (this.controlProperties.data?.length) {
-              return this.autocompleteService
-                .filterItems(inputValue, this.controlProperties.data)
-                .pipe(
-                  finalize(() => {
-                    this.isLoading = false;
-                  })
-                );
+              return this.autocompleteService.filterItems(
+                inputValue,
+                this.controlProperties.data
+              );
+            } else if (this.controlProperties.dataService) {
+              const args = {
+                query: inputValue,
+                key: this.controlProperties.key
+              };
+              return this.autocompleteService[
+                this.controlProperties.dataService
+              ](args).pipe(tap((items: any[]) => items.unshift(inputValue)));
             }
             return this.autocompleteService
               .getItems(this.controlProperties.key, inputValue)
-              .pipe(
-                tap((items) => items.unshift(inputValue)),
-                finalize(() => {
-                  this.isLoading = false;
-                })
-              );
+              .pipe(tap((items) => items.unshift(inputValue)));
           })
         )
         .subscribe((data: any) => {
+          this.isLoading = false;
           if (data?.length) {
             this.filteredItems = data;
           } else {

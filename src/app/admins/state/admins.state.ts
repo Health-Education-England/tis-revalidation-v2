@@ -26,7 +26,7 @@ export class AdminsStateModel {
 @State<AdminsStateModel>({
   name: "admins",
   defaults: {
-    items: null,
+    items: [],
     allocateList: []
   }
 })

@@ -17,11 +17,7 @@ import {
 import { AuthService } from "../core/auth/auth.service";
 import { UpdateConnectionsService } from "../update-connections/services/update-connections.service";
 import { stateName } from "../records/records.interfaces";
-import {
-  AutocompleteControl,
-  FormControlBase
-} from "../shared/form-controls/form-contol-base.model";
-import { IAdmin } from "../admins/admins.interfaces";
+import { FormControlBase } from "../shared/form-controls/form-contol-base.model";
 
 @Injectable()
 export class RecommendationsResolver extends RecordsResolver {

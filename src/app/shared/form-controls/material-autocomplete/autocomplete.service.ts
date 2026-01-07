@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { map, Observable, of, tap } from "rxjs";
+import { map, Observable, of } from "rxjs";
 import { AuthService } from "src/app/core/auth/auth.service";
 import { environment } from "@environment";
 import { Store } from "@ngxs/store";
@@ -14,8 +14,8 @@ export interface AutocompleteResults {
 })
 export class AutocompleteService {
   constructor(
-    private http: HttpClient,
-    private authService: AuthService,
+    readonly http: HttpClient,
+    readonly authService: AuthService,
     readonly store: Store
   ) {}
 
@@ -35,10 +35,8 @@ export class AutocompleteService {
     const query = args["query"];
     return this.admins$.pipe(
       map((admins: IAdmin[]) => {
-        const fullNames = [
-          ...admins?.map((admin) => admin.fullName),
-          "Updated by GMC"
-        ];
+        const adminFullnames = admins?.map((admin) => admin.fullName) || [];
+        const fullNames = [...adminFullnames, "Updated by GMC"];
         return fullNames.filter((fullname) =>
           fullname.toLowerCase().includes(query.toLowerCase())
         );

@@ -35,10 +35,6 @@ export class RecommendationsResolver extends RecordsResolver {
     this.initialiseData();
   }
 
-  admins$: Observable<IAdmin[]> = this.store.select(
-    (state) => state.admins.items
-  );
-
   private initFiltersFormData() {
     if (this.authService.inludesLondonDbcs) {
       TABLE_FILTERS_FORM_BASE?.push(TABLE_FILTERS_FORM_DBC);
@@ -48,13 +44,6 @@ export class RecommendationsResolver extends RecordsResolver {
         (a: FormControlBase, b: FormControlBase) => a.order - b.order
       )
     );
-
-    this.admins$.subscribe((admins: IAdmin[]) => {
-      const tisAdminFormField = TABLE_FILTERS_FORM_BASE.find(
-        ({ key }) => key === "admin"
-      ) as AutocompleteControl;
-      tisAdminFormField.data = admins?.map((admin: IAdmin) => admin.fullName);
-    });
   }
   private initialiseData(): void {
     this.recordsService.stateName = stateName.RECOMMENDATIONS;

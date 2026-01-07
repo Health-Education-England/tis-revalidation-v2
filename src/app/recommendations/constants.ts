@@ -164,7 +164,7 @@ export const TABLE_FILTERS_FORM_BASE: Array<
     controlType: FormControlType.AUTOCOMPLETE,
     placeholder: "Start typing...",
     minLengthTerm: 2,
-    data: []
+    dataService: "getAdmins"
   }
 ];
 

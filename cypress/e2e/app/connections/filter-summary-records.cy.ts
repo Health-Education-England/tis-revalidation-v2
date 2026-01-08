@@ -139,19 +139,31 @@ describe("Connections", () => {
 
       it("should display list containing matching options when the text is entered in 'Updated by' field", () => {
         FilterRecords.initFilterPanel(path);
-        FilterRecords.openDropdown("[data-cy='formfield_updatedBy']", "Reval");
-        cy.get("mat-option").should("have.length.above", 1);
+        FilterRecords.openDropdown(
+          "[data-cy='formfield_updatedBy']",
+          "Reval",
+          0
+        );
+        cy.get("mat-option").should("have.length", 1);
       });
 
       it("should display list where first item matches input text", () => {
         FilterRecords.initFilterPanel(path);
-        FilterRecords.openDropdown("[data-cy='formfield_updatedBy']", "Reval");
+        FilterRecords.openDropdown(
+          "[data-cy='formfield_updatedBy']",
+          "Reval",
+          0
+        );
         cy.get("mat-option").first().should("contain", "Reval");
       });
 
       it("should update summary table displaying trainees with matching programme name only", () => {
         FilterRecords.initFilterPanel(path);
-        FilterRecords.openDropdown("[data-cy='formfield_updatedBy']", "Reval");
+        FilterRecords.openDropdown(
+          "[data-cy='formfield_updatedBy']",
+          "Reval",
+          0
+        );
         cy.get("td.cdk-column-updatedBy").each(($el) => {
           expect($el.text().trim()).to.equal("Reval EndToEndTester");
         });

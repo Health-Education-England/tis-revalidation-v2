@@ -1,8 +1,10 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, of } from "rxjs";
+import { map, Observable, of } from "rxjs";
 import { AuthService } from "src/app/core/auth/auth.service";
 import { environment } from "@environment";
+import { Store } from "@ngxs/store";
+import { IAdmin } from "src/app/admins/admins.interfaces";
 export interface AutocompleteResults {
   results: string[];
 }
@@ -11,13 +13,34 @@ export interface AutocompleteResults {
   providedIn: "root"
 })
 export class AutocompleteService {
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(
+    readonly http: HttpClient,
+    readonly authService: AuthService,
+    readonly store: Store
+  ) {}
+
+  admins$: Observable<IAdmin[]> = this.store.select(
+    (state) => state.admins.items
+  );
 
   filterItems(value: string, items: string[] = []): Observable<string[]> {
     return of(
       items.filter((name: string) =>
         name.toLowerCase().includes(value.toLowerCase())
       )
+    );
+  }
+
+  getAdmins(args: {}): Observable<any[]> {
+    const query = args["query"];
+    return this.admins$.pipe(
+      map((admins: IAdmin[]) => {
+        const adminFullnames = admins?.map((admin) => admin.fullName) || [];
+        const fullNames = [...adminFullnames, "Updated by GMC"];
+        return fullNames.filter((fullname) =>
+          fullname.toLowerCase().includes(query.toLowerCase())
+        );
+      })
     );
   }
 

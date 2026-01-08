@@ -10,3 +10,7 @@
   position: sticky;
   top: 68px;
 }
+
+::ng-deep mat-label {
+  font-size: small;
+}

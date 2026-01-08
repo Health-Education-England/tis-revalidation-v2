@@ -1,8 +1,9 @@
 import { ActivatedRouteSnapshot, Params } from "@angular/router";
 import { Store } from "@ngxs/store";
-import { Observable } from "rxjs";
+import { concatMap, filter, Observable } from "rxjs";
 import { UpdateConnectionsService } from "../update-connections/services/update-connections.service";
 import { RecordsService } from "./services/records.service";
+import { IAdmin } from "../admins/admins.interfaces";
 
 export class RecordsResolver {
   constructor(
@@ -10,6 +11,10 @@ export class RecordsResolver {
     protected recordsService: RecordsService,
     protected updateConnectionsService: UpdateConnectionsService
   ) {}
+
+  admins$: Observable<IAdmin[]> = this.store
+    .select((state) => state.admins.items)
+    .pipe(filter((admins) => !!admins));
 
   /**
    * Check to see if any query params exist
@@ -36,7 +41,7 @@ export class RecordsResolver {
       this.updateConnectionsService?.enableUpdateConnections(false);
     }
 
-    return this.recordsService.get();
+    return this.admins$.pipe(concatMap(() => this.recordsService.get()));
   }
 
   private checkSorting(queryParams: Params, state: any): void {

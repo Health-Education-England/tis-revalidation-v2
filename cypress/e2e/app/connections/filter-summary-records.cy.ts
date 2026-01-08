@@ -79,7 +79,7 @@ describe("Connections", () => {
         );
         cy.url().should(
           "contain",
-          "formfield_lastConnectionDateTimeFrom=2026-01-01&formfield_lastConnectionDateTimeTo=2026-01-10"
+          "lastConnectionDateTimeFrom=2026-01-01&lastConnectionDateTimeTo=2026-01-10"
         );
       });
     });
@@ -92,29 +92,69 @@ describe("Connections", () => {
 
       it("should display list containing matching options when the text is entered in 'programme name' field", () => {
         FilterRecords.initFilterPanel(path);
-        FilterRecords.openProgrammeNameDropdown();
+        FilterRecords.openDropdown(
+          "[data-cy='formfield_programmeName']",
+          "General Practice - Bromley LDN"
+        );
         cy.get("mat-option").should("have.length.above", 1);
       });
 
       it("should display list where first item matches input text", () => {
         FilterRecords.initFilterPanel(path);
-        const query = "General";
-        FilterRecords.openProgrammeNameDropdown(query);
-        cy.get("mat-option").first().should("contain", query);
+        FilterRecords.openDropdown(
+          "[data-cy='formfield_programmeName']",
+          "General Practice - Bromley LDN"
+        );
+        cy.get("mat-option")
+          .first()
+          .should("contain", "General Practice - Bromley LDN");
       });
 
       it("should update summary table displaying trainees with matching programme name only", () => {
         FilterRecords.initFilterPanel(path);
-
-        FilterRecords.openProgrammeNameDropdown();
-
-        FilterRecords.checkSummaryTableIsFiltered();
+        FilterRecords.openDropdown(
+          "[data-cy='formfield_programmeName']",
+          "General Practice - Bromley LDN"
+        );
+        cy.get("td.cdk-column-programmeName").each(($el) => {
+          expect($el.text().trim()).to.equal("General Practice - Bromley LDN");
+        });
       });
 
       it("should reset summary table results when 'Clear fliters' button is clicked", () => {
         FilterRecords.initFilterPanel(path);
-        FilterRecords.openProgrammeNameDropdown();
+        FilterRecords.openDropdown(
+          "[data-cy='formfield_programmeName']",
+          "General Practice - Bromley LDN"
+        );
         FilterRecords.resetForm();
+      });
+    });
+
+    describe("Filter by Updated by", () => {
+      it("should display 'Updated by' filter field", () => {
+        FilterRecords.initFilterPanel(path);
+        cy.get("[data-cy='formfield_updatedBy']").should("exist");
+      });
+
+      it("should display list containing matching options when the text is entered in 'Updated by' field", () => {
+        FilterRecords.initFilterPanel(path);
+        FilterRecords.openDropdown("[data-cy='formfield_updatedBy']", "Reval");
+        cy.get("mat-option").should("have.length.above", 1);
+      });
+
+      it("should display list where first item matches input text", () => {
+        FilterRecords.initFilterPanel(path);
+        FilterRecords.openDropdown("[data-cy='formfield_updatedBy']", "Reval");
+        cy.get("mat-option").first().should("contain", "Reval");
+      });
+
+      it("should update summary table displaying trainees with matching programme name only", () => {
+        FilterRecords.initFilterPanel(path);
+        FilterRecords.openDropdown("[data-cy='formfield_updatedBy']", "Reval");
+        cy.get("td.cdk-column-updatedBy").each(($el) => {
+          expect($el.text().trim()).to.equal("Reval EndToEndTester");
+        });
       });
     });
   });

@@ -106,6 +106,15 @@ export const TABLE_FILTERS_FORM_BASE: Array<
     controlType: FormControlType.DATERANGE,
     startRangeControl: "From",
     endRangeControl: "To"
+  },
+  {
+    key: "updatedBy",
+    label: "Connection last updated by",
+    order: 7,
+    controlType: FormControlType.AUTOCOMPLETE,
+    placeholder: "Start typing...",
+    minLengthTerm: 1,
+    dataService: "getAdmins"
   }
 ];
 

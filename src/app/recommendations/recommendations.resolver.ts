@@ -17,11 +17,7 @@ import {
 import { AuthService } from "../core/auth/auth.service";
 import { UpdateConnectionsService } from "../update-connections/services/update-connections.service";
 import { stateName } from "../records/records.interfaces";
-import {
-  AutocompleteControl,
-  FormControlBase
-} from "../shared/form-controls/form-contol-base.model";
-import { IAdmin } from "../admins/admins.interfaces";
+import { FormControlBase } from "../shared/form-controls/form-contol-base.model";
 
 @Injectable()
 export class RecommendationsResolver extends RecordsResolver {
@@ -35,10 +31,6 @@ export class RecommendationsResolver extends RecordsResolver {
     this.initialiseData();
   }
 
-  admins$: Observable<IAdmin[]> = this.store.select(
-    (state) => state.admins.items
-  );
-
   private initFiltersFormData() {
     if (this.authService.inludesLondonDbcs) {
       TABLE_FILTERS_FORM_BASE?.push(TABLE_FILTERS_FORM_DBC);
@@ -48,13 +40,6 @@ export class RecommendationsResolver extends RecordsResolver {
         (a: FormControlBase, b: FormControlBase) => a.order - b.order
       )
     );
-
-    this.admins$.subscribe((admins: IAdmin[]) => {
-      const tisAdminFormField = TABLE_FILTERS_FORM_BASE.find(
-        ({ key }) => key === "admin"
-      ) as AutocompleteControl;
-      tisAdminFormField.data = admins?.map((admin: IAdmin) => admin.fullName);
-    });
   }
   private initialiseData(): void {
     this.recordsService.stateName = stateName.RECOMMENDATIONS;

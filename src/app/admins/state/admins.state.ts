@@ -26,7 +26,7 @@ export class AdminsStateModel {
 @State<AdminsStateModel>({
   name: "admins",
   defaults: {
-    items: [],
+    items: null,
     allocateList: []
   }
 })
@@ -80,7 +80,8 @@ export class AdminsState {
   getError(ctx: StateContext<AdminsStateModel>, action: GetError) {
     this.snackBarService.openSnackBar(action.error);
     return ctx.patchState({
-      error: action.error
+      error: action.error,
+      items: []
     });
   }
 

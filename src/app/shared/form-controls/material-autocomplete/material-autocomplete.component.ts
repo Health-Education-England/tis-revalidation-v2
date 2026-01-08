@@ -101,7 +101,7 @@ export class MaterialAutocompleteComponent
               };
               return this.autocompleteService[
                 this.controlProperties.dataService
-              ](args).pipe(tap((items: any[]) => items.unshift(inputValue)));
+              ](args);
             }
             return this.autocompleteService
               .getItems(this.controlProperties.key, inputValue)

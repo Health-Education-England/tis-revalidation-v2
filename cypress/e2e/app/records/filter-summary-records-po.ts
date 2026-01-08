@@ -6,7 +6,7 @@ export class FilterRecords {
     cy.get(".filters-drawer-container .mat-drawer-opened").should("exist");
   };
 
-  static openDropdown = (element: string, query: string) => {
+  static openDropdown = (element: string, query: string, optionsIndex = 1) => {
     cy.get(".mat-mdc-autocomplete-panel mat-option").should("not.exist");
     cy.get(`${element} input`).type(query, {
       force: true
@@ -14,7 +14,7 @@ export class FilterRecords {
     cy.get(
       ".mat-mdc-autocomplete-panel [data-cy='autocomplete-option']"
     ).should("exist");
-    cy.get("mat-option").eq(1).click();
+    cy.get("mat-option").eq(optionsIndex).click();
   };
 
   static openFilterTab = (label: string) => {

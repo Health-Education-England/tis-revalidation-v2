@@ -309,16 +309,16 @@ describe("Recommendations", () => {
         cy.get("[data-cy='formfield_admin']").should("exist");
       });
 
-      it("should display list containing matching options when the text 'clin' is entered in 'programme name' field", () => {
+      it("should display list containing matching options when the text 'Reval' is entered in 'TIS admin' field", () => {
         FilterRecords.initFilterPanel();
-        FilterRecords.openDropdown("[data-cy='formfield_admin']", "Reval");
+        FilterRecords.openDropdown("[data-cy='formfield_admin']", "Reval", 0);
         cy.get("mat-option").should("have.length.above", 0);
       });
 
       it("should set value of textbox matching selected item from list", () => {
         FilterRecords.initFilterPanel();
 
-        FilterRecords.openDropdown("[data-cy='formfield_admin']", "Reval");
+        FilterRecords.openDropdown("[data-cy='formfield_admin']", "Reval", 0);
         cy.get("[data-cy='formfield_admin'] input").should(
           "have.value",
           "Reval EndToEndTester"
@@ -327,7 +327,7 @@ describe("Recommendations", () => {
 
       it("should update summary table displaying trainees with matching TIS admin name only", () => {
         FilterRecords.initFilterPanel();
-        FilterRecords.openDropdown("[data-cy='formfield_admin']", "Reval");
+        FilterRecords.openDropdown("[data-cy='formfield_admin']", "Reval", 0);
         FilterRecords.submitForm();
 
         cy.get("td.cdk-column-admin").each(($el) => {

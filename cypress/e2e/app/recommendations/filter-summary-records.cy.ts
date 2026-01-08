@@ -89,23 +89,17 @@ describe("Recommendations", () => {
 
       it("should filter by both 'programme name' and 'dbc' when both filters selected", () => {
         FilterRecords.initFilterPanel();
-
-        FilterRecords.openProgrammeNameDropdown("Neurology KSS");
-        cy.get("mat-option")
-          .eq(1)
-          .invoke("text")
-          .then((value) => {
-            cy.get("mat-option").eq(1).click();
-            cy.get("[data-cy='selectionOption1-1RUZV1D']").click();
-
-            FilterRecords.submitForm();
-            cy.get("td.cdk-column-programmeName").each(($el) => {
-              expect($el.text().trim()).to.equal(value);
-            });
-            cy.get("td.cdk-column-designatedBody").each(($el) => {
-              expect($el.text().trim()).to.equal("KSS");
-            });
-          });
+        FilterRecords.openDropdown(
+          "[data-cy='formfield_programmeName']",
+          "Neurology KSS"
+        );
+        cy.get("[data-cy='selectionOption1-1RUZV1D']").click();
+        cy.get("td.cdk-column-programmeName").each(($el) => {
+          expect($el.text().trim()).to.equal("Neurology KSS");
+        });
+        cy.get("td.cdk-column-designatedBody").each(($el) => {
+          expect($el.text().trim()).to.equal("KSS");
+        });
       });
 
       it("should display all London/KSS dbcs when no filter selected and submitted", () => {
@@ -167,6 +161,7 @@ describe("Recommendations", () => {
         cy.get("[data-cy=filter-records-button_ALLDOCTORS]")
           .should("exist")
           .click();
+        cy.wait(500);
         cy.get("[data-cy='selectionOptionApproved']").should("exist");
         cy.get("[data-cy='selectionOptionApproved']").click();
 
@@ -261,50 +256,49 @@ describe("Recommendations", () => {
 
       it("should display list containing matching options when the text 'clin' is entered in 'programme name' field", () => {
         FilterRecords.initFilterPanel();
-        FilterRecords.openProgrammeNameDropdown();
+        FilterRecords.openDropdown(
+          "[data-cy='formfield_programmeName']",
+          "General Practice - Bromley LDN"
+        );
         cy.get("mat-option").should("have.length.above", 1);
       });
-
       it("should display list where first item matches input text", () => {
         FilterRecords.initFilterPanel();
-        const query = "Clinical";
-        FilterRecords.openProgrammeNameDropdown(query);
-        cy.get("mat-option").first().should("contain", query);
+        FilterRecords.openDropdown(
+          "[data-cy='formfield_programmeName']",
+          "General Practice - Bromley LDN"
+        );
+        cy.get("mat-option")
+          .first()
+          .should("contain", "General Practice - Bromley LDN");
       });
-
       it("should set value of textbox matching selected item from list", () => {
         FilterRecords.initFilterPanel();
-
-        FilterRecords.openProgrammeNameDropdown();
-        cy.get("mat-option")
-          .eq(1)
-          .invoke("text")
-          .then((value) => {
-            cy.get("mat-option").eq(1).click();
-            cy.get("[data-cy='formfield_programmeName'] input").should(
-              "have.value",
-              value
-            );
-          });
+        FilterRecords.openDropdown(
+          "[data-cy='formfield_programmeName']",
+          "General Practice - Bromley LDN"
+        );
+        cy.get("[data-cy='formfield_programmeName'] input").should(
+          "have.value",
+          "General Practice - Bromley LDN"
+        );
       });
-
-      it("should enable both buttons when item selected from list", () => {
-        FilterRecords.initFilterPanel();
-
-        FilterRecords.openProgrammeNameDropdown();
-        cy.get("mat-option").eq(1).click();
-      });
-
       it("should update summary table displaying trainees with matching programme name only", () => {
         FilterRecords.initFilterPanel();
-
-        FilterRecords.openProgrammeNameDropdown();
-        FilterRecords.checkSummaryTableIsFiltered();
+        FilterRecords.openDropdown(
+          "[data-cy='formfield_programmeName']",
+          "General Practice - Bromley LDN"
+        );
+        cy.get("td.cdk-column-programmeName").each(($el) => {
+          expect($el.text().trim()).to.equal("General Practice - Bromley LDN");
+        });
       });
-
       it("should reset summary table results when 'Clear fliters' button is clicked", () => {
         FilterRecords.initFilterPanel();
-        FilterRecords.openProgrammeNameDropdown();
+        FilterRecords.openDropdown(
+          "[data-cy='formfield_programmeName']",
+          "General Practice - Bromley LDN"
+        );
         FilterRecords.resetForm();
       });
     });
@@ -317,50 +311,39 @@ describe("Recommendations", () => {
 
       it("should display list containing matching options when the text 'clin' is entered in 'programme name' field", () => {
         FilterRecords.initFilterPanel();
-        FilterRecords.openTisAdminDropdown();
+        FilterRecords.openDropdown("[data-cy='formfield_admin']", "Reval");
         cy.get("mat-option").should("have.length.above", 0);
       });
 
       it("should set value of textbox matching selected item from list", () => {
         FilterRecords.initFilterPanel();
 
-        FilterRecords.openTisAdminDropdown();
-        cy.get("mat-option")
-
-          .invoke("text")
-          .then((value) => {
-            cy.get("mat-option").click();
-            cy.get("[data-cy='formfield_admin'] input").should(
-              "have.value",
-              value
-            );
-          });
+        FilterRecords.openDropdown("[data-cy='formfield_admin']", "Reval");
+        cy.get("[data-cy='formfield_admin'] input").should(
+          "have.value",
+          "Reval EndToEndTester"
+        );
       });
 
       it("should update summary table displaying trainees with matching TIS admin name only", () => {
         FilterRecords.initFilterPanel();
+        FilterRecords.openDropdown("[data-cy='formfield_admin']", "Reval");
+        FilterRecords.submitForm();
 
-        FilterRecords.openTisAdminDropdown("Reval");
-        cy.get("mat-option")
-          .first()
-          .invoke("text")
-          .then((value) => {
-            cy.get("mat-option").first().click();
-            FilterRecords.submitForm();
-
-            cy.get("td.cdk-column-admin").each(($el) => {
-              expect($el.text().trim()).to.equal(value);
-            });
-          });
+        cy.get("td.cdk-column-admin").each(($el) => {
+          expect($el.text().trim()).to.equal("Reval EndToEndTester");
+        });
       });
     });
 
     describe("Filters persist", () => {
       it("should display the filters applied when navigating to details page and back", () => {
         FilterRecords.initFilterPanel();
-        FilterRecords.openProgrammeNameDropdown("General");
-        cy.get("mat-option").eq(1).click();
-
+        FilterRecords.openDropdown(
+          "[data-cy='formfield_programmeName']",
+          "General Practice - Bromley LDN"
+        );
+        FilterRecords.submitForm();
         cy.get(".mat-mdc-table tr:nth-child(2)").click();
         cy.get("app-nav-bar").should("exist");
         cy.get("#navLinkToList").should("exist").click();

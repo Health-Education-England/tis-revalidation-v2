@@ -6,23 +6,15 @@ export class FilterRecords {
     cy.get(".filters-drawer-container .mat-drawer-opened").should("exist");
   };
 
-  static openProgrammeNameDropdown = (query: string = "General Practice") => {
+  static openDropdown = (element: string, query: string) => {
     cy.get(".mat-mdc-autocomplete-panel mat-option").should("not.exist");
-    cy.get("[data-cy='formfield_programmeName'] input").type(query, {
+    cy.get(`${element} input`).type(query, {
       force: true
     });
     cy.get(
       ".mat-mdc-autocomplete-panel [data-cy='autocomplete-option']"
     ).should("exist");
-  };
-
-  static openTisAdminDropdown = (query: string = "Stev") => {
-    cy.get(".mat-mdc-autocomplete-panel mat-option").should("not.exist");
-    cy.get("[data-cy='formfield_admin'] input").type(query);
-    cy.wait(1000);
-    cy.get(
-      ".mat-mdc-autocomplete-panel [data-cy='autocomplete-option']"
-    ).should("exist");
+    cy.get("mat-option").eq(1).click();
   };
 
   static openFilterTab = (label: string) => {
@@ -41,6 +33,7 @@ export class FilterRecords {
     }
     cy.get("app-form-controller").should("exist");
     cy.scrollTo(0, 0);
+    cy.wait(1000);
   };
 
   static checkButtonsDisabled = (status: string = "be disabled") => {
@@ -72,7 +65,6 @@ export class FilterRecords {
   };
 
   static resetForm = () => {
-    cy.get("mat-option").eq(1).click();
     cy.get(".mat-mdc-paginator-range-label")
       .invoke("text")
       .then((paginatorText) => {

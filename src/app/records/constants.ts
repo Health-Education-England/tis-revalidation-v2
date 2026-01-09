@@ -10,7 +10,8 @@ export const RECORDS_COLUMN_DATA: IRecordDataCell[] = [
   {
     label: "First name",
     name: "doctorFirstName",
-    enableSort: true
+    enableSort: true,
+    class: "fixed"
   },
   {
     label: "Last name",

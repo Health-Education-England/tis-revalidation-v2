@@ -41,7 +41,8 @@ import {
   ToggleConnectionsCheckbox,
   SetConnectionsTableFilters,
   ClearConnectionsTableFilters,
-  UpdateConnectionsQueryParams
+  UpdateConnectionsQueryParams,
+  SetConnectionsDisplayTableColumns
 } from "../../connections/state/connections.actions";
 import {
   ClearRecommendationsSearch,
@@ -98,6 +99,7 @@ export class RecordsService {
   public setTableFiltersAction: any;
   public clearTableFiltersAction: any;
   public updateQueryParamsAction: any;
+  public setDisplayTableColumnsAction: any;
 
   constructor(
     private http: HttpClient,
@@ -154,6 +156,7 @@ export class RecordsService {
     this.setTableFiltersAction = SetConnectionsTableFilters;
     this.clearTableFiltersAction = ClearConnectionsTableFilters;
     this.updateQueryParamsAction = UpdateConnectionsQueryParams;
+    this.setDisplayTableColumnsAction = SetConnectionsDisplayTableColumns;
   }
 
   public getRecords<T>(endPoint: string, params?: HttpParams): Observable<T> {
@@ -259,6 +262,15 @@ export class RecordsService {
   public clearTableFilters(): Observable<any> {
     this.handleUndefinedAction("clearTableFilters");
     return this.store.dispatch(new this.clearTableFiltersAction());
+  }
+
+  public setDisplayTableColumns(
+    displayColumns: { name: string; label: string }[]
+  ): Observable<any> {
+    this.handleUndefinedAction("setDisplayTableColumns");
+    return this.store.dispatch(
+      new this.setDisplayTableColumnsAction(displayColumns)
+    );
   }
 
   public filter(filter: string): Observable<any> {

@@ -33,7 +33,8 @@ import {
   ToggleConnectionsCheckbox,
   SetConnectionsTableFilters,
   ClearConnectionsTableFilters,
-  UpdateConnectionsQueryParams
+  UpdateConnectionsQueryParams,
+  SetConnectionsDisplayTableColumns
 } from "./connections.actions";
 
 export class ConnectionsStateModel extends RecordsStateModel<
@@ -167,6 +168,7 @@ export class ConnectionsState extends RecordsState {
   resetFilter(ctx: StateContext<ConnectionsStateModel>) {
     return super.resetFilterHandler(ctx, ConnectionsFilterType.ALL);
   }
+
   @Action(SetConnectionsTableFilters)
   setRecommendationsTableFilters(
     ctx: StateContext<ConnectionsStateModel>,
@@ -178,6 +180,14 @@ export class ConnectionsState extends RecordsState {
   @Action(ClearConnectionsTableFilters)
   clearRecommendationsTableFilters(ctx: StateContext<ConnectionsStateModel>) {
     return super.clearTableFiltersHandler(ctx);
+  }
+
+  @Action(SetConnectionsDisplayTableColumns)
+  setDisplayTableColumns(
+    ctx: StateContext<ConnectionsStateModel>,
+    action: SetConnectionsDisplayTableColumns
+  ) {
+    return super.setDisplayTableColumnsHandler(ctx, action);
   }
 
   @Action(ToggleConnectionsCheckbox)

@@ -1,10 +1,10 @@
-import { Component, OnDestroy } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Sort as ISort } from "@angular/material/sort";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { environment } from "@environment";
 import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
-import { take } from "rxjs/operators";
+import { delay, map, take } from "rxjs/operators";
 import { UpdateConnectionsService } from "src/app/update-connections/services/update-connections.service";
 import { ClearAllocateList } from "../../admins/state/admins.actions";
 import { IRecordDataCell } from "../records.interfaces";
@@ -16,7 +16,7 @@ import { IAdmin } from "src/app/admins/admins.interfaces";
   templateUrl: "./record-list.component.html",
   styleUrls: ["./record-list.component.scss"]
 })
-export class RecordListComponent implements OnDestroy {
+export class RecordListComponent implements OnInit, OnDestroy {
   public columnData: IRecordDataCell[] = this.recordsService.columnData;
   public dateColumns: string[] = this.recordsService.dateColumns;
   public detailsRoute: string = this.recordsService.detailsRoute;
@@ -24,6 +24,7 @@ export class RecordListComponent implements OnDestroy {
   public dateFormat: string = environment.dateFormat;
   public dateTimeFormat: string = environment.dateTimeFormat;
   public params: Params;
+  public displayColumns: string[];
 
   public allChecked$: Observable<boolean> = this.store.select(
     (state) => state[this.recordsService.stateName].allChecked
@@ -57,6 +58,10 @@ export class RecordListComponent implements OnDestroy {
     (state) => state[this.recordsService.stateName].disableSearchAndSort
   );
 
+  public displayColumns$: Observable<string[]> = this.store.select(
+    (state) => state[this.recordsService.stateName].displayColumns
+  );
+
   public fixedColumns$: Observable<boolean> = this.store.select(
     (state) => state.recordList.fixedColumns
   );
@@ -72,6 +77,15 @@ export class RecordListComponent implements OnDestroy {
     protected store: Store,
     private updateConnectionsService: UpdateConnectionsService
   ) {}
+  ngOnInit(): void {
+    this.displayColumns$.subscribe((columns) => {
+      if (columns) {
+        this.displayColumns = columns;
+      } else {
+        this.displayColumns = this.columnNames;
+      }
+    });
+  }
 
   public get columnNames(): string[] {
     return this.columnData.map((i) => i.name);

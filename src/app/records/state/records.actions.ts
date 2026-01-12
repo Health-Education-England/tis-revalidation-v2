@@ -5,7 +5,10 @@ export class GetSuccessPayload<T> {
 }
 
 export class SortPayload {
-  constructor(public column: string, public direction: "asc" | "desc" | "") {}
+  constructor(
+    public column: string,
+    public direction: "asc" | "desc" | ""
+  ) {}
 }
 
 export class FilterPayload<T> {
@@ -14,6 +17,10 @@ export class FilterPayload<T> {
 
 export class TableFiltersPayload<T> {
   constructor(public tableFilters: T) {}
+}
+
+export class DisplayTableColumnsPayload {
+  constructor(public displayColumns: string[]) {}
 }
 export class SearchPayload {
   constructor(public searchQuery: string) {}

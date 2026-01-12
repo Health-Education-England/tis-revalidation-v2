@@ -1,5 +1,8 @@
 <div class="d-grid record-search pt-10 pb-10">
   <div class="d-flex pl-25 pr-20 align-items-center">
+    <app-record-list-columns
+      *ngIf="isConnectionsSummary"
+    ></app-record-list-columns>
     <button
       data-cy="toggleFixedColumnsButton"
       color="primary"

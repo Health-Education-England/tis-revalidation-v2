@@ -19,25 +19,35 @@ import { stateName } from "../records/records.interfaces";
 import { TABLE_FILTERS_FORM_BASE } from "../connections/constants";
 import { FormControlBase } from "../shared/form-controls/form-contol-base.model";
 import { AuthService } from "../core/auth/auth.service";
+import { LocalStorageService } from "../shared/services/local-storage/local-storage.service";
 @Injectable()
 export class ConnectionsResolver extends RecordsResolver {
   constructor(
     protected store: Store,
     protected recordsService: RecordsService,
     protected updateConnectionsService: UpdateConnectionsService,
-    readonly authService: AuthService
+    readonly authService: AuthService,
+    readonly localStorageService: LocalStorageService
   ) {
     super(store, recordsService, updateConnectionsService);
     this.initialiseData();
   }
 
   private initialiseData(): void {
+    let displayColumns: any[] = this.localStorageService.getItem(
+      "ConnectionsDisplayColumns"
+    );
     this.recordsService.stateName = stateName.CONNECTIONS;
     this.recordsService.detailsRoute = "/connection";
     this.recordsService.showTableFilters = true;
     this.recordsService.setConnectionsActions();
-
     this.recordsService.columnData = [...RECORDS_COLUMN_DATA, ...COLUMN_DATA];
+    if (!displayColumns) {
+      displayColumns = this.recordsService.columnData.map(
+        (column) => column.name
+      );
+    }
+    this.recordsService.setDisplayTableColumns(displayColumns);
 
     this.recordsService.filters = [
       {

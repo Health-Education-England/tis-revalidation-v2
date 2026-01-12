@@ -1,4 +1,5 @@
 import {
+  DisplayTableColumnsPayload,
   EnableAllocateAdminPayload,
   FilterPayload,
   GetSuccessPayload,
@@ -52,6 +53,9 @@ export class ClearConnectionsSearch {
   static readonly type = `[Connections] Clear Search`;
 }
 
+export class SetConnectionsDisplayTableColumns extends DisplayTableColumnsPayload {
+  static readonly type = `[Connections] Set Display Table Columns`;
+}
 export class SetConnectionsTableFilters extends TableFiltersPayload<IConnectionsTableFilters> {
   static readonly type = `[Connections] Filter Table`;
 }

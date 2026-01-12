@@ -1,0 +1,43 @@
+<button
+  matButton
+  [matMenuTriggerFor]="menu"
+  data-cy="diplayedColumns"
+  [matTooltip]="isColumnsHidden ? 'Show table columns' : 'Hide table columns'"
+  matTooltipPosition="below"
+  matTooltipShowDelay="500"
+  mat-icon-button
+  aria-label="Show/hide table columns"
+>
+  <mat-icon
+    color="primary"
+    *ngIf="!isColumnsHidden"
+    class="material-icons-outlined"
+    >visibility_off</mat-icon
+  >
+
+  <mat-icon
+    style="color: green"
+    *ngIf="isColumnsHidden"
+    class="material-icons-outlined"
+    >visibility_on</mat-icon
+  >
+</button>
+<mat-menu #menu="matMenu">
+  <div class="p-10 pt-0">
+    <form [formGroup]="form" (click)="$event.stopPropagation()">
+      <h2 class="m-0 pt-0" style="border-bottom: 1px solid #d0d0d0">
+        Show/hide summary table columns
+      </h2>
+
+      <mat-selection-list formControlName="tableColumns">
+        <mat-list-option
+          [disabled]="displayColumn.name === 'doctorFirstName'"
+          *ngFor="let displayColumn of columnData"
+          [value]="displayColumn.name"
+          >{{ displayColumn.label }}</mat-list-option
+        >
+      </mat-selection-list>
+    </form>
+    <button mat-button mat-raised-button color="primary">Close</button>
+  </div>
+</mat-menu>

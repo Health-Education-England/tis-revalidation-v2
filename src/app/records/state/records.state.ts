@@ -35,7 +35,8 @@ export const defaultRecordsState = {
   totalResults: null,
   totalCounts: null,
   tableFilters: null,
-  queryParams: null
+  queryParams: null,
+  displayColumns: null
 };
 
 export class RecordsState {
@@ -201,6 +202,12 @@ export class RecordsState {
   protected clearTableFiltersHandler(ctx: StateContext<any>) {
     ctx.patchState({
       tableFilters: null
+    });
+  }
+
+  protected setDisplayTableColumnsHandler(ctx: StateContext<any>, action: any) {
+    ctx.patchState({
+      displayColumns: action.displayColumns
     });
   }
 

@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { ReactiveFormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AdminsModule } from "../admins/admins.module";
 import { MaterialModule } from "../shared/material/material.module";
 import { SharedModule } from "../shared/shared.module";
@@ -17,6 +17,7 @@ import { RecordListTableFiltersComponent } from "./record-list-table-filters/rec
 import { RecordListState } from "./record-list/state/record-list.state";
 import { NgxsModule } from "@ngxs/store";
 import { ExceptionsLogComponent } from "../connections/exceptions-log/exceptions-log.component";
+import { RecordListColumnsComponent } from "./record-list-columns/record-list-columns.component";
 const components: any[] = [
   RecordListComponent,
   RecordListFiltersComponent,
@@ -26,6 +27,7 @@ const components: any[] = [
   RefreshDataBtnComponent,
   ResetRecordListComponent,
   RecordListTableFiltersComponent,
+  RecordListColumnsComponent,
   ExceptionsLogComponent
 ];
 
@@ -33,6 +35,8 @@ const components: any[] = [
   declarations: components,
   providers: [RecordsService],
   imports: [
+    FormsModule,
+    ReactiveFormsModule,
     CommonModule,
     MaterialModule,
     AdminsModule,

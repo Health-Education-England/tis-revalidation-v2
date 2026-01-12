@@ -151,10 +151,10 @@
               </td>
             </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="columnNames"></tr>
+            <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
             <tr
               mat-row
-              *matRowDef="let row; columns: columnNames"
+              *matRowDef="let row; columns: displayColumns"
               (click)="
                 navigateToDetails(
                   $event,

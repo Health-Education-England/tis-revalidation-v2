@@ -61,6 +61,7 @@ export class ConnectionComponent implements OnInit, OnDestroy {
     "previousDesignatedBodyCode",
     "requestType",
     "reasonMessage",
+    "responseMessage",
     "requestTime",
     "updatedBy"
   ];

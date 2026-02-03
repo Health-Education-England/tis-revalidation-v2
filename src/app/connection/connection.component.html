@@ -24,7 +24,6 @@
       <table
         mat-table
         [dataSource]="connectionHistory"
-        multiTemplateDataRows
         class="w-100"
         data-cy="connection-history-table"
       >
@@ -61,6 +60,13 @@
           </td>
         </ng-container>
 
+        <ng-container matColumnDef="responseMessage">
+          <th mat-header-cell scope="col" *matHeaderCellDef>GMC Response</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.responseMessage }}
+          </td>
+        </ng-container>
+
         <ng-container matColumnDef="reasonMessage">
           <th mat-header-cell scope="col" *matHeaderCellDef>Reason</th>
           <td mat-cell *matCellDef="let element">
@@ -82,31 +88,6 @@
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="expandedDetail">
-          <td
-            mat-cell
-            *matCellDef="let element"
-            [attr.colspan]="connectionsColumnsToDisplay.length"
-          >
-            <div
-              *ngIf="element.responseCode"
-              class="element-detail"
-              [@detailExpand]="
-                element === expandedElement ? 'expanded' : 'collapsed'
-              "
-            >
-              <div class="element-expanded">
-                <h3 class="mat-h3">
-                  GMC Response:
-                  <span>
-                    {{ element.responseMessage }}
-                  </span>
-                </h3>
-              </div>
-            </div>
-          </td>
-        </ng-container>
-
         <tr
           mat-header-row
           *matHeaderRowDef="connectionsColumnsToDisplay"
@@ -118,20 +99,11 @@
           mat-row
           *matRowDef="let element; columns: connectionsColumnsToDisplay"
           class="element-row"
-          [class.expanded-row]="expandedElement === element"
-          (click)="currentExpanded(element, $event)"
-          (keyup.enter)="currentExpanded(element, $event)"
-          (keyup.space)="currentExpanded(element, $event)"
           [class.highlight-row-secondary]="!element.responseCode"
           [class.highlight-row-warn]="
             element.responseCode && element.responseCode !== '0'
           "
           [class.highlight-row-success]="element.responseCode === '0'"
-        ></tr>
-        <tr
-          mat-row
-          *matRowDef="let row; columns: ['expandedDetail']"
-          class="detail-row"
         ></tr>
 
         <ng-container matColumnDef="noRecord">

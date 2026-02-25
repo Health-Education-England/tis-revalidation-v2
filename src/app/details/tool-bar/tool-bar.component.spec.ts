@@ -61,21 +61,20 @@ describe("NoteCardComponent", () => {
     expect(component).toBeTruthy();
   });
 
-  it("should display 'speaker_notes' mat-icon by default", () => {
+  it("should display 'show notes' when  isOpen is false", () => {
     const { debugElement } = fixture;
     const { nativeElement } = debugElement;
-    const el = nativeElement.querySelector(".note-icon-open");
-    fixture.detectChanges();
+    const el = nativeElement.querySelector("[data-testid='button-show-notes']");
     expect(el).toBeTruthy();
   });
 
-  it("should display 'speaker_notes_OFF' mat-icon when drawer is open", () => {
+  it("should display 'hide notes' when drawer is open", () => {
     const { debugElement } = fixture;
     const { nativeElement } = debugElement;
     const button = nativeElement.querySelector("button.toggle-drawer");
     button.click();
     fixture.detectChanges();
-    const el = nativeElement.querySelector(".note-icon-close");
+    const el = nativeElement.querySelector("[data-testid='button-hide-notes']");
     expect(el).toBeTruthy();
   });
 

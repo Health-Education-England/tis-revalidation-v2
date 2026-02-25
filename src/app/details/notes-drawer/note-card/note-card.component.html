@@ -15,27 +15,35 @@
       #noteTextarea
       cdkTextareaAutosize
       cdkAutosizeMinRows="1"
-      cdkAutosizeMaxRows="5"
+      cdkAutosizeMaxRows="20"
       matInput
       placeholder="Note text"
       >{{ note.text }}</textarea
     >
   </mat-form-field>
   <ng-container *ngIf="isAdmin">
-    <mat-divider></mat-divider>
+    <mat-divider class="mt-20"></mat-divider>
     <mat-card-actions *ngIf="!note.edit">
-      <button mat-icon-button aria-label="Edit note" (click)="note.edit = true">
-        <mat-icon>edit</mat-icon>
+      <button
+        mat-button
+        color="primary"
+        aria-label="Edit note"
+        (click)="note.edit = true"
+      >
+        Edit
       </button>
     </mat-card-actions>
 
     <mat-card-actions *ngIf="note.edit">
-      <button mat-icon-button (click)="onSaveEditNote()">
-        <mat-icon aria-hidden="false" aria-label="edit note">save</mat-icon>
+      <button
+        class="mr-10"
+        color="primary"
+        mat-raised-button
+        (click)="onSaveEditNote()"
+      >
+        Save
       </button>
-      <button mat-icon-button (click)="note.edit = false">
-        <mat-icon aria-hidden="false" aria-label="edit note">undo</mat-icon>
-      </button>
+      <button mat-raised-button (click)="note.edit = false">Undo</button>
     </mat-card-actions>
   </ng-container>
 </mat-card>

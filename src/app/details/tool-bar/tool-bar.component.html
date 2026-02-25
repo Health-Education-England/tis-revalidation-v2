@@ -21,21 +21,20 @@
   <ng-container>
     <button
       (click)="toggleNotesDrawer()"
-      mat-icon-button
+      color="secondary"
+      mat-raised-button
       aria-label="Toggle notes"
       class="toggle-drawer"
+      [matBadge]="matBadge"
+      data-testid="button-toggle-notes"
     >
       <ng-container *ngIf="{ value: isOpen$ | async } as isOpen">
-        <mat-icon
-          class="note-icon-open"
-          [matBadge]="matBadge"
-          *ngIf="!isOpen.value"
-          color="primary"
-          >speaker_notes</mat-icon
+        <span *ngIf="!isOpen.value" data-testid="button-show-notes"
+          >Show notes</span
         >
 
-        <mat-icon class="note-icon-close" *ngIf="isOpen.value" color="primary"
-          >speaker_notes_off</mat-icon
+        <span *ngIf="isOpen.value" data-testid="button-hide-notes"
+          >Hide notes</span
         >
       </ng-container>
     </button>

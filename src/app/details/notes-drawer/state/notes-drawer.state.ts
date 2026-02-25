@@ -7,7 +7,7 @@ export class NotesDrawerStateModel {
 }
 
 export const initialNotesDrawerState: NotesDrawerStateModel = {
-  isOpen: false
+  isOpen: true
 };
 
 @State<NotesDrawerStateModel>({

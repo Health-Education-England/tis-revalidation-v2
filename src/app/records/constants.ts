@@ -22,6 +22,12 @@ export const RECORDS_COLUMN_DATA: IRecordDataCell[] = [
     label: "GMC No",
     name: "gmcReferenceNumber",
     enableSort: true
+  },
+  {
+    label: "Notes",
+    name: "notes",
+    enableSort: false,
+    displayType: "boolean"
   }
 ];
 

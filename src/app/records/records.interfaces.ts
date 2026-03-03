@@ -16,7 +16,8 @@ export interface IRecordDataCell {
     | "array"
     | "admin"
     | "dbc"
-    | "relativedate";
+    | "relativedate"
+    | "boolean";
   class?: string;
   isLondonOnly?: boolean;
 }

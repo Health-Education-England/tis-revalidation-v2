@@ -8,6 +8,7 @@ describe("Connections Summary Records List", () => {
     "First name",
     "Last name",
     "GMC No",
+    "Notes",
     "GMC Submission date",
     "GMC Designated body",
     "TIS Designated body",

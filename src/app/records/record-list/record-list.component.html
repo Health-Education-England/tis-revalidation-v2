@@ -149,7 +149,9 @@
                 <ng-container
                   *ngIf="!i.displayType || i.displayType === 'string'"
                 >
-                  {{ element[i.name] }}
+                 <span  *ngIf="i.name === 'programmeName'; else NotProgramme" [innerHTML]="element[i.name] | splitStringToHTML"></span>
+                 <ng-template #NotProgramme>{{element[i.name]}}</ng-template>
+                
                 </ng-container>
               </td>
             </ng-container>

@@ -224,25 +224,25 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "revalidation:build",
-            "proxyConfig": "proxy.conf.json"
+            "proxyConfig": "proxy.conf.json",
+            "buildTarget": "revalidation:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "revalidation:build:production"
+              "buildTarget": "revalidation:build:production"
             },
             "staging": {
-              "browserTarget": "revalidation:build:staging"
+              "buildTarget": "revalidation:build:staging"
             },
             "mocky": {
-              "browserTarget": "revalidation:build:mocky"
+              "buildTarget": "revalidation:build:mocky"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "revalidation:build"
+            "buildTarget": "revalidation:build"
           }
         },
         "test": {

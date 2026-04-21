@@ -5,6 +5,7 @@ import { DEFAULT_SORT } from "../constants";
 import { ITotalCounts } from "../records.interfaces";
 import { RecordsService } from "../services/records.service";
 import { Params } from "@angular/router";
+import { ConnectionsFilterType } from "src/app/connections/connections.interfaces";
 export class RecordsStateModel<T, F, T2 = {}> {
   public allChecked: boolean;
   public enableAllocateAdmin?: boolean;
@@ -60,7 +61,7 @@ export class RecordsState {
   }
 
   static items<T>() {
-    return createSelector([this], (state: { items: T[] }) => {
+     return createSelector([this], (state: { items: T[] }) => {
       return state.items;
     });
   }
@@ -129,10 +130,14 @@ export class RecordsState {
   protected getSuccessHandler(
     ctx: StateContext<any>,
     action: any,
-    sliceName: string
+    filterName: string
   ) {
+    let itemsKey = "connections"
+    if(filterName === ConnectionsFilterType.HIDDEN) {
+      itemsKey = ConnectionsFilterType.HIDDEN
+    }
     ctx.patchState({
-      items: action.response[sliceName],
+      items: action.response[itemsKey],
       totalResults: action.response.totalResults,
       allChecked: false,
       someChecked: false

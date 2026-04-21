@@ -48,6 +48,10 @@ export class ConnectionsResolver extends RecordsResolver {
         label: "DISCREPANCIES",
         name: ConnectionsFilterType.DISCREPANCIES
       },
+      {
+        label: "HIDDEN",
+        name: ConnectionsFilterType.HIDDEN
+      },
 
       {
         label: "FAILED GMC UPDATES",

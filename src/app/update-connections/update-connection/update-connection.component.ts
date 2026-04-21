@@ -1,7 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
+import {
+  FormControl,
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators
+} from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
-import { Observable, Subscription } from "rxjs";
+import { concatMap, map, Observable, Subscription } from "rxjs";
 import { AuthService } from "src/app/core/auth/auth.service";
 import { IDesignatedBody } from "src/app/reference/reference.interfaces";
 import {
@@ -11,9 +16,15 @@ import {
 import { ActionType, IAction, IReason } from "../update-connections.interfaces";
 import { UpdateConnectionsService } from "../services/update-connections.service";
 import { Select, Store } from "@ngxs/store";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { ReferenceState } from "src/app/reference/state/reference.state";
-
+import { RecordsService } from "src/app/records/services/records.service";
+import { ConnectionsFilterType } from "src/app/connections/connections.interfaces";
+import {
+  CONNECTION_ACTIONS,
+  HIDE_DISCRPANCY_ACTION,
+  SHOW_DISCREPANCY_ACTION
+} from "../constants";
 @Component({
   selector: "app-update-connection",
   templateUrl: "./update-connection.component.html",
@@ -39,15 +50,20 @@ export class UpdateConnectionComponent implements OnInit {
   canSave = true;
   canCancel = false;
 
-  addConnectionSelected = false;
+  showDbcField = false;
 
   constructor(
-    private store: Store,
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private authService: AuthService,
     public dialog: MatDialog,
-    public updateConnectionsService: UpdateConnectionsService
+    public updateConnectionsService: UpdateConnectionsService,
+    public recordsService: RecordsService
   ) {}
+
+  filter$ = this.activatedRoute.queryParams.pipe(
+    map((param) => param["filter"])
+  );
 
   ngOnInit(): void {
     this.bindFormControl();
@@ -69,9 +85,18 @@ export class UpdateConnectionComponent implements OnInit {
       (result) => (this.canCancel = result)
     );
 
-    this.updateConnectionsService.actions$.subscribe(
-      (result) => (this.actions = result)
-    );
+    this.filter$.subscribe((filter) => {
+      switch (filter) {
+        case ConnectionsFilterType.DISCREPANCIES:
+          this.actions = [...CONNECTION_ACTIONS, HIDE_DISCRPANCY_ACTION];
+          break;
+        case ConnectionsFilterType.HIDDEN:
+          this.actions = [SHOW_DISCREPANCY_ACTION];
+          break;
+        default:
+          this.actions = [...CONNECTION_ACTIONS];
+      }
+    });
   }
 
   onSubmit() {
@@ -93,7 +118,7 @@ export class UpdateConnectionComponent implements OnInit {
 
   resetForm() {
     this.updateConnectionForm.reset();
-    this.addConnectionSelected = false;
+    this.showDbcField = false;
     this.reasons = [];
   }
 
@@ -115,9 +140,11 @@ export class UpdateConnectionComponent implements OnInit {
     this.componentSubscriptions.push(
       this.actionControl.valueChanges.subscribe((action) => {
         if (action) {
-          this.addConnectionSelected = action === ActionType.ADD_CONNECTION;
+          this.showDbcField =
+            action === ActionType.ADD_CONNECTION ||
+            action === ActionType.HIDE_DISCREPANCY;
 
-          if (this.addConnectionSelected) {
+          if (this.showDbcField) {
             this.dbcControl.setValidators(Validators.required);
             this.updateConnectionForm.addControl("dbc", this.dbcControl);
             this.dbcControl.updateValueAndValidity();
@@ -127,9 +154,8 @@ export class UpdateConnectionComponent implements OnInit {
           }
 
           this.reasonControl.setValue("");
-          this.reasons = this.actions.find(
-            (arm) => arm.action === action
-          )?.reasons;
+          this.reasons = this.actions.find((arm) => arm.action === action)
+            ?.reasons;
           this.reasonControl.updateValueAndValidity();
         }
       })

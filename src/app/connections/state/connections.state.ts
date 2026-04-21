@@ -76,6 +76,10 @@ export class ConnectionsState extends RecordsState {
         endPoint = `${endPoint}/connected`;
         break;
 
+      case ConnectionsFilterType.HIDDEN:
+        endPoint = `${endPoint}/discrepancies/hidden`;
+        break;
+
       default:
         endPoint = `${endPoint}/connected`;
     }
@@ -106,7 +110,7 @@ export class ConnectionsState extends RecordsState {
     ctx: StateContext<ConnectionsStateModel>,
     action: GetConnectionsSuccess
   ) {
-    return super.getSuccessHandler(ctx, action, "connections");
+    return super.getSuccessHandler(ctx, action, this.connectionsService.getFilter());
   }
 
   @Action(GetConnectionsError)

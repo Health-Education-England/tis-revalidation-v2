@@ -28,7 +28,7 @@ export enum ConnectionsFilterType {
   CURRENT_CONNECTIONS = "currentConnections",
   DISCREPANCIES = "discrepancies",
   ALL = "all",
-  HIDDEN = "hidden",
+  HIDDEN = "hiddenDiscrepancies",
   EXCEPTIONSLOG = "exceptionsLog"
 }
 

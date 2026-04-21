@@ -25,7 +25,10 @@ export class UpdateConnectionsService {
 
   public stateName = "updateConnections";
 
-  constructor(private http: HttpClient, private store: Store) {}
+  constructor(
+    private http: HttpClient,
+    private store: Store
+  ) {}
 
   public enableUpdateConnections(
     enableUpdateConnections: boolean
@@ -40,6 +43,7 @@ export class UpdateConnectionsService {
     actionType: ActionType
   ): Observable<IUpdateConnectionResponse> {
     let action: string;
+    let method: "POST" | "DELETE" = "POST";
     switch (actionType) {
       case ActionType.ADD_CONNECTION:
         action = "add";
@@ -49,12 +53,13 @@ export class UpdateConnectionsService {
         action = "remove";
         break;
 
-      case ActionType.HIDE_CONNECTION:
-        action = "hide";
+      case ActionType.HIDE_DISCREPANCY:
+        action = "discrepancies/hidden";
+        method = "POST";
         break;
 
-      case ActionType.UNHIDE_CONNECTION:
-        action = "unhide";
+      case ActionType.SHOW_DISCREPANCY:
+        action = "discrepancies/show";
         break;
     }
 

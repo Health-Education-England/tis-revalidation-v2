@@ -47,10 +47,7 @@
         </mat-form-field>
       </ng-template>
 
-      <mat-form-field
-        *ngIf="addConnectionSelected"
-        data-cy="update-connection-dbc"
-      >
+      <mat-form-field *ngIf="showDbcField" data-cy="update-connection-dbc">
         <mat-label>Dbc</mat-label>
         <mat-select formControlName="dbc">
           <mat-option
@@ -95,7 +92,6 @@
         >
           Reset
         </button>
-
         <button
           data-cy="update-connection-save"
           mat-button

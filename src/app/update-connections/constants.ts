@@ -24,3 +24,13 @@ export const CONNECTION_ACTIONS: IAction[] = [
     ]
   }
 ];
+
+export const HIDE_DISCRPANCY_ACTION: IAction = {
+  action: ActionType.HIDE_DISCREPANCY,
+  reasons: []
+};
+
+export const SHOW_DISCREPANCY_ACTION: IAction = {
+  action: ActionType.SHOW_DISCREPANCY,
+  reasons: []
+};

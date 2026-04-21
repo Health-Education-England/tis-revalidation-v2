@@ -65,7 +65,7 @@ describe("UpdateConnectionsService", () => {
   it("should hide selected connection", () => {
     const endPoint = `${environment.appUrls.getConnections}/hide`;
 
-    service.updateConnection({}, ActionType.HIDE_CONNECTION).subscribe();
+    service.updateConnection({}, ActionType.HIDE_DISCREPANCY).subscribe();
 
     const mockHttp = http.expectOne(endPoint);
     expect(mockHttp.request.method).toBe("POST");
@@ -76,7 +76,7 @@ describe("UpdateConnectionsService", () => {
   it("should unhide selected connection", () => {
     const endPoint = `${environment.appUrls.getConnections}/unhide`;
 
-    service.updateConnection({}, ActionType.UNHIDE_CONNECTION).subscribe();
+    service.updateConnection({}, ActionType.SHOW_DISCREPANCY).subscribe();
 
     const mockHttp = http.expectOne(endPoint);
     expect(mockHttp.request.method).toBe("POST");

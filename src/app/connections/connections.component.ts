@@ -7,7 +7,12 @@ import { SnackBarService } from "../shared/services/snack-bar/snack-bar.service"
 import { CONNECTION_ACTIONS } from "../update-connections/constants";
 import { UpdateConnectionsService } from "../update-connections/services/update-connections.service";
 import { EnableUpdateConnections } from "../update-connections/state/update-connections.actions";
-import { ActionType } from "../update-connections/update-connections.interfaces";
+import {
+  ActionType,
+  IDoctor,
+  IHideDiscrepancyPayload,
+  IUpdateConnection
+} from "../update-connections/update-connections.interfaces";
 import { ConnectionsFilterType } from "./connections.interfaces";
 import { AuthService } from "../core/auth/auth.service";
 
@@ -53,12 +58,12 @@ export class ConnectionsComponent implements OnDestroy {
       switch (filter) {
         case ConnectionsFilterType.ALL:
           actions = actions.filter(
-            (c) => c.action !== ActionType.UNHIDE_CONNECTION
+            (c) => c.action !== ActionType.SHOW_DISCREPANCY
           );
           break;
         case ConnectionsFilterType.HIDDEN:
           actions = actions.filter(
-            (c) => c.action !== ActionType.HIDE_CONNECTION
+            (c) => c.action !== ActionType.HIDE_DISCREPANCY
           );
           break;
         case ConnectionsFilterType.HISTORIC_CONNECTIONS:
@@ -73,23 +78,35 @@ export class ConnectionsComponent implements OnDestroy {
   }
 
   updateConnections(formValue: any) {
+    console.log("Form value: ", formValue);
     if (this.selectedItems.length > 0) {
       this.loading = true;
-      const doctors = this.selectedItems.map((item) => ({
+      const doctors: IDoctor[] = this.selectedItems.map((item) => ({
         gmcId: item.gmcReferenceNumber,
         currentDesignatedBodyCode: item.designatedBody,
         programmeOwnerDesignatedBodyCode: item.tcsDesignatedBody
       }));
 
       const admin = this.authService.userName;
-
-      const payload = {
-        changeReason: formValue.reason,
-        designatedBodyCode:
-          formValue.action === ActionType.ADD_CONNECTION ? formValue.dbc : null,
-        doctors,
-        admin: admin
-      };
+      let payload: IUpdateConnection | IHideDiscrepancyPayload;
+      if (formValue.action === ActionType.HIDE_DISCREPANCY) {
+        payload = {
+          reason: formValue.reason,
+          hiddenForDesignatedBodyCode: formValue.dbc,
+          doctors,
+          hiddenBy: admin
+        };
+      } else {
+        payload = {
+          changeReason: formValue.reason,
+          designatedBodyCode:
+            formValue.action === ActionType.ADD_CONNECTION
+              ? formValue.dbc
+              : null,
+          doctors,
+          admin: admin
+        };
+      }
 
       this.componentSubscription = this.updateConnectionsService
         .updateConnection(payload, formValue.action)

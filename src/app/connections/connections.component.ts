@@ -56,7 +56,7 @@ export class ConnectionsComponent implements OnDestroy {
             (c) => c.action !== ActionType.UNHIDE_CONNECTION
           );
           break;
-        case ConnectionsFilterType.HIDDEN:
+        case ConnectionsFilterType.HIDDEN_DISCREPANCIES:
           actions = actions.filter(
             (c) => c.action !== ActionType.HIDE_CONNECTION
           );

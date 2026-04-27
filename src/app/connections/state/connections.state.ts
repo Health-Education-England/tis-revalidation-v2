@@ -71,11 +71,12 @@ export class ConnectionsState extends RecordsState {
       case ConnectionsFilterType.DISCREPANCIES:
         endPoint = `${endPoint}/discrepancies`;
         break;
-
+      case ConnectionsFilterType.HIDDEN_DISCREPANCIES:
+        endPoint = `${endPoint}/discrepancies/hidden`;
+        break;
       case ConnectionsFilterType.CURRENT_CONNECTIONS:
         endPoint = `${endPoint}/connected`;
         break;
-
       default:
         endPoint = `${endPoint}/connected`;
     }
@@ -106,7 +107,14 @@ export class ConnectionsState extends RecordsState {
     ctx: StateContext<ConnectionsStateModel>,
     action: GetConnectionsSuccess
   ) {
-    return super.getSuccessHandler(ctx, action, "connections");
+    let itemsKey: string = "connections";
+    if (
+      this.connectionsService.getFilter() ===
+      ConnectionsFilterType.HIDDEN_DISCREPANCIES
+    ) {
+      itemsKey = ConnectionsFilterType.HIDDEN_DISCREPANCIES;
+    }
+    return super.getSuccessHandler(ctx, action, itemsKey);
   }
 
   @Action(GetConnectionsError)
@@ -156,7 +164,7 @@ export class ConnectionsState extends RecordsState {
       filter: action.filter,
       disableSearchAndSort:
         action.filter !== ConnectionsFilterType.ALL &&
-        action.filter !== ConnectionsFilterType.HIDDEN &&
+        action.filter !== ConnectionsFilterType.HIDDEN_DISCREPANCIES &&
         action.filter !== ConnectionsFilterType.CURRENT_CONNECTIONS &&
         action.filter !== ConnectionsFilterType.HISTORIC_CONNECTIONS &&
         action.filter !== ConnectionsFilterType.DISCREPANCIES

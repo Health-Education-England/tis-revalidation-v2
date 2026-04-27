@@ -129,10 +129,10 @@ export class RecordsState {
   protected getSuccessHandler(
     ctx: StateContext<any>,
     action: any,
-    sliceName: string
+    itemsKey: string
   ) {
     ctx.patchState({
-      items: action.response[sliceName],
+      items: action.response[itemsKey],
       totalResults: action.response.totalResults,
       allChecked: false,
       someChecked: false

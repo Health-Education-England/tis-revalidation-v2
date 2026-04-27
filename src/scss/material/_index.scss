@@ -32,7 +32,6 @@ $nhsuk-theme: mat.define-light-theme(
   )
 );
 
-// Legacy - only needed whilst migrating to MDC
 @include mat.all-component-themes($nhsuk-theme);
 
 /* You can add global styles to this file, and also import other style files */

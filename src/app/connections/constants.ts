@@ -10,6 +10,12 @@ import { IRecordDataCell } from "../records/records.interfaces";
 
 export const COLUMN_DATA: IRecordDataCell[] = [
   {
+    label: "Notes",
+    name: "notes",
+    enableSort: false,
+    displayType: "boolean"
+  },
+  {
     label: "GMC Submission date",
     name: "submissionDate",
     enableSort: true,

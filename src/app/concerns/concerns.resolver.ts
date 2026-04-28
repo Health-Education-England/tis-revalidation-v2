@@ -3,14 +3,13 @@ import { ActivatedRouteSnapshot } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { ConcernStatus } from "../concern/concern.interfaces";
-import { generateColumnData } from "../records/constants";
 import { RecordsResolver } from "../records/records.resolver";
 import { RecordsService } from "../records/services/records.service";
 import { UpdateConnectionsService } from "../update-connections/services/update-connections.service";
 import { COLUMN_DATA } from "./constants";
 
 @Injectable()
-export class ConcernsResolver extends RecordsResolver  {
+export class ConcernsResolver extends RecordsResolver {
   constructor(
     protected store: Store,
     protected recordsService: RecordsService,
@@ -25,13 +24,7 @@ export class ConcernsResolver extends RecordsResolver  {
     this.recordsService.detailsRoute = "/concern";
     this.recordsService.showTableFilters = false;
     this.recordsService.setConcernsActions();
-    this.recordsService.dateColumns = [
-      "closedDate",
-      "dateRaised",
-      "dateAdded",
-      "followUpDate"
-    ];
-    this.recordsService.columnData = generateColumnData(COLUMN_DATA);
+    this.recordsService.columnData = [...COLUMN_DATA];
     this.recordsService.filters = [
       {
         label: "OPEN",

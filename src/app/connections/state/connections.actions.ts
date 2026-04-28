@@ -1,4 +1,5 @@
 import {
+  ColumnDataPayload,
   EnableAllocateAdminPayload,
   FilterPayload,
   GetSuccessPayload,
@@ -82,4 +83,8 @@ export class ToggleAllConnectionsCheckboxes {
 
 export class UpdateConnectionsQueryParams extends QueryParamsPayload {
   static readonly type = "[Connections] Update query params";
+}
+
+export class UpdateConnectionsColumnData extends ColumnDataPayload {
+  static readonly type = "[Connections] Update column data";
 }

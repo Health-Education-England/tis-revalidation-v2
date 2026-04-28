@@ -35,7 +35,8 @@ import {
   SortRecommendations,
   ToggleAllRecommendationsCheckboxes,
   ToggleRecommendationsCheckbox,
-  UpdateRecommendationsQueryParams
+  UpdateRecommendationsQueryParams,
+  UpdateRecommendationsColumnData
 } from "./recommendations.actions";
 
 export class RecommendationsStateModel extends RecordsStateModel<
@@ -213,5 +214,13 @@ export class RecommendationsState extends RecordsState {
     action: UpdateRecommendationsQueryParams
   ) {
     return super.updateQueryParamsHandler(ctx, action.params);
+  }
+
+  @Action(UpdateRecommendationsColumnData)
+  updateColumnData(
+    ctx: StateContext<RecommendationsStateModel>,
+    action: UpdateRecommendationsColumnData
+  ) {
+    return super.updateColumnDataHandler(ctx, action.columnData);
   }
 }

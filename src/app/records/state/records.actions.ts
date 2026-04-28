@@ -1,11 +1,15 @@
 import { Params } from "@angular/router";
+import { IRecordDataCell } from "../records.interfaces";
 
 export class GetSuccessPayload<T> {
   constructor(public response: T) {}
 }
 
 export class SortPayload {
-  constructor(public column: string, public direction: "asc" | "desc" | "") {}
+  constructor(
+    public column: string,
+    public direction: "asc" | "desc" | ""
+  ) {}
 }
 
 export class FilterPayload<T> {
@@ -33,4 +37,8 @@ export class ToggleCheckboxPayload {
 
 export class QueryParamsPayload {
   constructor(public params: Params) {}
+}
+
+export class ColumnDataPayload {
+  constructor(public columnData: IRecordDataCell[]) {}
 }

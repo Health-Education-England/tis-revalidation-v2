@@ -33,8 +33,10 @@ import {
   ToggleConnectionsCheckbox,
   SetConnectionsTableFilters,
   ClearConnectionsTableFilters,
-  UpdateConnectionsQueryParams
+  UpdateConnectionsQueryParams,
+  UpdateConnectionsColumnData
 } from "./connections.actions";
+import { IRecordDataCell } from "src/app/records/records.interfaces";
 
 export class ConnectionsStateModel extends RecordsStateModel<
   ConnectionsFilterType,
@@ -43,6 +45,7 @@ export class ConnectionsStateModel extends RecordsStateModel<
 > {
   public filter: ConnectionsFilterType;
   public disableSearchAndSort: boolean;
+  public columnData: IRecordDataCell[];
 }
 
 @State<ConnectionsStateModel>({
@@ -207,5 +210,13 @@ export class ConnectionsState extends RecordsState {
     action: UpdateConnectionsQueryParams
   ) {
     return super.updateQueryParamsHandler(ctx, action.params);
+  }
+
+  @Action(UpdateConnectionsColumnData)
+  updateColumnData(
+    ctx: StateContext<ConnectionsStateModel>,
+    action: UpdateConnectionsColumnData
+  ) {
+    return super.updateColumnDataHandler(ctx, action.columnData);
   }
 }

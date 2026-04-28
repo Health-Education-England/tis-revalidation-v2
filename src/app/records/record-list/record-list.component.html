@@ -53,7 +53,7 @@
               Records list
             </caption>
             <ng-container
-              *ngFor="let i of columnData"
+              *ngFor="let i of columnData$ | async"
               matColumnDef="{{ i.name }}"
             >
               <!-- header cell -->
@@ -149,9 +149,11 @@
                 <ng-container
                   *ngIf="!i.displayType || i.displayType === 'string'"
                 >
-                 <span  *ngIf="i.name === 'programmeName'; else NotProgramme" [innerHTML]="element[i.name] | splitStringToHTML"></span>
-                 <ng-template #NotProgramme>{{element[i.name]}}</ng-template>
-                
+                  <span
+                    *ngIf="i.name === 'programmeName'; else NotProgramme"
+                    [innerHTML]="element[i.name] | splitStringToHTML"
+                  ></span>
+                  <ng-template #NotProgramme>{{ element[i.name] }}</ng-template>
                 </ng-container>
               </td>
             </ng-container>

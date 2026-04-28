@@ -24,14 +24,25 @@ module.exports = function (config) {
     reporters: ["mocha", "kjhtml"],
     port: 9876,
     colors: true,
-    logLevel: config.LOG_DISABLE,
+    logLevel: config.LOG_INFO,
     browserConsoleLogOptions: {
-      level: "error",
+      level: "",
       format: "%b %T: %m",
       terminal: true
     },
     autoWatch: true,
-    browsers: ["Chrome"],
+    browsers: ["CustomChromeHeadless"],
+    customLaunchers: {
+      CustomChromeHeadless: {
+        base: "ChromeHeadless",
+        flags: ["--no-sandbox", "--disable-web-security", "--disable-gpu"]
+      },
+      Chrome_with_debugging: {
+        base: "Chrome",
+        flags: ["--remote-debugging-port=9222"],
+        debug: true
+      }
+    },
     singleRun: false,
     restartOnFileChange: true,
     mochaReporter: {

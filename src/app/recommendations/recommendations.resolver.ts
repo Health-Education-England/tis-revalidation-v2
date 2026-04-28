@@ -49,12 +49,15 @@ export class RecommendationsResolver extends RecordsResolver {
     this.initFiltersFormData();
 
     if (this.authService.inludesLondonDbcs) {
-      this.recordsService.columnData = [...RECORDS_COLUMN_DATA, ...COLUMN_DATA];
+      this.recordsService.updateColumnData([
+        ...RECORDS_COLUMN_DATA,
+        ...COLUMN_DATA
+      ]);
     } else {
-      this.recordsService.columnData = [
+      this.recordsService.updateColumnData([
         ...RECORDS_COLUMN_DATA,
         ...COLUMN_DATA.filter((column) => column.isLondonOnly !== true)
-      ];
+      ]);
     }
 
     this.recordsService.filters = [

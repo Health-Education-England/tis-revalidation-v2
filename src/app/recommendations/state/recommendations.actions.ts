@@ -7,7 +7,8 @@ import {
   SortPayload,
   ToggleCheckboxPayload,
   TableFiltersPayload,
-  QueryParamsPayload
+  QueryParamsPayload,
+  ColumnDataPayload
 } from "../../records/state/records.actions";
 import { HttpErrorPayload } from "../../shared/services/error/error.service";
 import {
@@ -82,4 +83,8 @@ export class ToggleAllRecommendationsCheckboxes {
 
 export class UpdateRecommendationsQueryParams extends QueryParamsPayload {
   static readonly type = "[Recommendations] Update query params";
+}
+
+export class UpdateRecommendationsColumnData extends ColumnDataPayload {
+  static readonly type = "[Recommendations] Update column data";
 }

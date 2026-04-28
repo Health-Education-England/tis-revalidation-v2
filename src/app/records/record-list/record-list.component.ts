@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Sort as ISort } from "@angular/material/sort";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { environment } from "@environment";
@@ -16,8 +16,7 @@ import { IAdmin } from "src/app/admins/admins.interfaces";
   templateUrl: "./record-list.component.html",
   styleUrls: ["./record-list.component.scss"]
 })
-export class RecordListComponent implements OnDestroy {
-  public columnData: IRecordDataCell[] = this.recordsService.columnData;
+export class RecordListComponent implements OnInit, OnDestroy {
   public dateColumns: string[] = this.recordsService.dateColumns;
   public detailsRoute: string = this.recordsService.detailsRoute;
 
@@ -65,6 +64,10 @@ export class RecordListComponent implements OnDestroy {
     (state) => state.admins.items
   );
 
+  public columnData$: Observable<IRecordDataCell[]> = this.store.select(
+    (state) => state[this.recordsService.stateName].columnData
+  );
+
   constructor(
     protected activatedRoute: ActivatedRoute,
     protected recordsService: RecordsService,
@@ -72,10 +75,13 @@ export class RecordListComponent implements OnDestroy {
     protected store: Store,
     private updateConnectionsService: UpdateConnectionsService
   ) {}
-
-  public get columnNames(): string[] {
-    return this.columnData.map((i) => i.name);
+  ngOnInit(): void {
+    this.columnData$.subscribe((columnData) => {
+      this.columnNames = columnData?.map((i) => i.name);
+    });
   }
+
+  columnNames: string[] = [];
 
   /**
    * Handler method for navigating from summary to details screen

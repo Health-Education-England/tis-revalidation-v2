@@ -67,6 +67,28 @@ export const COLUMN_DATA: IRecordDataCell[] = [
   }
 ];
 
+export const HIDDEN_DISCREPANCIES_COLUMN_DATA: IRecordDataCell[] = [
+  {
+    label: "GMC Designated body",
+    name: "designatedBody",
+    enableSort: true,
+    displayType: "dbc"
+  },
+
+  {
+    label: "Programme owner",
+    name: "tcsDesignatedBody",
+    enableSort: true,
+    displayType: "dbc"
+  },
+
+  {
+    label: "Programme name",
+    name: "programmeName",
+    enableSort: false
+  }
+];
+
 export const EXCEPTIONSLOG_COLUMN_DATA: { name: string; label: string }[] = [
   { name: "timestamp", label: "Date/time" },
   { name: "gmcId", label: "GMC Number" },

@@ -117,7 +117,11 @@ export const TABLE_FILTERS_FORM_BASE: Array<
     order: 4,
     controlType: FormControlType.DATERANGE,
     startRangeControl: "From",
-    endRangeControl: "To"
+    endRangeControl: "To",
+    filterType: [
+      ConnectionsFilterType.DISCREPANCIES,
+      ConnectionsFilterType.CURRENT_CONNECTIONS
+    ]
   },
   {
     key: "membershipEndDate",
@@ -125,7 +129,11 @@ export const TABLE_FILTERS_FORM_BASE: Array<
     order: 5,
     controlType: FormControlType.DATERANGE,
     startRangeControl: "From",
-    endRangeControl: "To"
+    endRangeControl: "To",
+    filterType: [
+      ConnectionsFilterType.DISCREPANCIES,
+      ConnectionsFilterType.CURRENT_CONNECTIONS
+    ]
   },
   {
     key: "lastConnectionDateTime",
@@ -133,7 +141,11 @@ export const TABLE_FILTERS_FORM_BASE: Array<
     order: 6,
     controlType: FormControlType.DATERANGE,
     startRangeControl: "From",
-    endRangeControl: "To"
+    endRangeControl: "To",
+    filterType: [
+      ConnectionsFilterType.DISCREPANCIES,
+      ConnectionsFilterType.CURRENT_CONNECTIONS
+    ]
   },
   {
     key: "updatedBy",
@@ -142,7 +154,11 @@ export const TABLE_FILTERS_FORM_BASE: Array<
     controlType: FormControlType.AUTOCOMPLETE,
     placeholder: "Start typing...",
     minLengthTerm: 1,
-    dataService: "getAdmins"
+    dataService: "getAdmins",
+    filterType: [
+      ConnectionsFilterType.DISCREPANCIES,
+      ConnectionsFilterType.CURRENT_CONNECTIONS
+    ]
   }
 ];
 
@@ -153,7 +169,7 @@ export const TABLE_FILTERS_FORM_DBC: FormControlBase[] = [
     order: 1,
     valueProperty: "userDesignatedBodies",
     controlType: FormControlType.CHECKBOX,
-    filterType: ConnectionsFilterType.DISCREPANCIES
+    filterType: [ConnectionsFilterType.DISCREPANCIES]
   },
   {
     key: "dbcs",
@@ -161,7 +177,7 @@ export const TABLE_FILTERS_FORM_DBC: FormControlBase[] = [
     order: 2,
     valueProperty: "userDesignatedBodies",
     controlType: FormControlType.CHECKBOX,
-    filterType: ConnectionsFilterType.DISCREPANCIES
+    filterType: [ConnectionsFilterType.DISCREPANCIES]
   }
 ];
 
@@ -173,7 +189,7 @@ export const TABLE_FILTERS_FORM_DBC_LONDON: FormControlBase[] = [
     order: 1,
     controlType: FormControlType.SELECTION_LIST,
     initialValue: [],
-    filterType: ConnectionsFilterType.DISCREPANCIES
+    filterType: [ConnectionsFilterType.DISCREPANCIES]
   },
   {
     key: "tisDesignatedBodies",
@@ -182,6 +198,6 @@ export const TABLE_FILTERS_FORM_DBC_LONDON: FormControlBase[] = [
     order: 2,
     controlType: FormControlType.SELECTION_LIST,
     initialValue: [],
-    filterType: ConnectionsFilterType.DISCREPANCIES
+    filterType: [ConnectionsFilterType.DISCREPANCIES]
   }
 ];

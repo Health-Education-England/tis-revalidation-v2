@@ -34,10 +34,13 @@ export class FormControllerComponent implements OnInit {
 
   ngOnInit(): void {
     this.filter$.subscribe((filter: string) => {
-      if (this.control?.filterType.includes(filter)) {
-        this.hidden = false;
-      } else {
-        this.hidden = true;
+      this.hidden = false;
+      if (this.control?.filterType) {
+        if (this.control?.filterType.includes(filter)) {
+          this.hidden = false;
+        } else {
+          this.hidden = true;
+        }
       }
     });
     if (this.control?.valueProperty) {

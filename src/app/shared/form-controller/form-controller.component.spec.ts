@@ -19,6 +19,7 @@ import { MaterialSelectionListComponent } from "../form-controls/material-select
 import { RemoveWhitespacePipe } from "../pipes/remove-whitespace.pipe";
 import { NgxsModule, Store } from "@ngxs/store";
 import { RecordsService } from "src/app/records/services/records.service";
+import { ConnectionsFilterType } from "src/app/connections/connections.interfaces";
 describe("FormControllerComponent", () => {
   let component: FormControllerComponent;
   let fixture: ComponentFixture<FormControllerComponent>;
@@ -42,7 +43,7 @@ describe("FormControllerComponent", () => {
         }
       ],
       order: 1,
-      filterType: "discrepancies",
+      filterType: [ConnectionsFilterType.CURRENT_CONNECTIONS],
       controlType: "selectionList",
       initialValue: []
     },
@@ -81,13 +82,14 @@ describe("FormControllerComponent", () => {
     store = TestBed.inject(Store);
     store.reset({
       connections: {
-        filter: "currentConnections",
+        filter: ConnectionsFilterType.CURRENT_CONNECTIONS,
         sort: {
           active: "submissionDate",
           direction: "asc"
         },
         pageIndex: 1,
-        tableFilters: null
+        tableFilters: null,
+        columnData: []
       }
     });
 

@@ -8,13 +8,11 @@ import {
 } from "@angular/core/testing";
 import { Sort as ISort } from "@angular/material/sort";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
-import { Router } from "@angular/router";
-import { RouterTestingModule } from "@angular/router/testing";
+import { Router, RouterModule } from "@angular/router";
 import { NgxsModule, Store } from "@ngxs/store";
 import { AdminsModule } from "../../admins/admins.module";
 import { ClearAllocateList } from "../../admins/state/admins.actions";
 import { AdminsState } from "../../admins/state/admins.state";
-import { COLUMN_DATA } from "../../concerns/constants";
 import {
   RecommendationStatus,
   RecommendationGmcOutcome
@@ -67,7 +65,7 @@ describe("RecordListComponent", () => {
         MaterialModule,
         NoopAnimationsModule,
         HttpClientTestingModule,
-        RouterTestingModule,
+        RouterModule.forRoot([]),
         AdminsModule,
         NgxsModule.forRoot([RecommendationsState, AdminsState, RecordListState])
       ]

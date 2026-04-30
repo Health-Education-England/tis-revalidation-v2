@@ -12,9 +12,10 @@ import { ConnectionRoutingModule } from "./connection-routing.module";
 import { ConnectionResolver } from "./connection.resolver";
 import { ConnectionService } from "./services/connection.service";
 import { ConnectionState } from "./state/connection.state";
+import { ConnectionHiddenDiscrepanciesComponent } from "./connection-hidden-discrepancies/connection-hidden-discrepancies.component";
 
 @NgModule({
-  declarations: [ConnectionComponent],
+  declarations: [ConnectionComponent, ConnectionHiddenDiscrepanciesComponent],
   imports: [
     CommonModule,
     MaterialModule,

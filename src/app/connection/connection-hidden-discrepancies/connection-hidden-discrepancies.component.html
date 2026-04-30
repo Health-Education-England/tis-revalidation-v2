@@ -1,0 +1,66 @@
+<mat-card class="mb-20" appearance="outlined">
+  <mat-card-title>Hidden discrepancy details</mat-card-title>
+  <table
+    mat-table
+    [dataSource]="hiddenDiscrepancies"
+    class="w-100"
+    data-cy="hidden-discrepancies-table"
+  >
+    <caption class="collapsed sr-only">
+      Hidden discrepancies
+    </caption>
+    <ng-container matColumnDef="hiddenForDesignatedBodyCode">
+      <th mat-header-cell scope="col" *matHeaderCellDef>Hidden for DBC</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.hiddenForDesignatedBodyCode | formatDesignatedBody: "abbr" }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="hiddenBy">
+      <th mat-header-cell scope="col" *matHeaderCellDef>Hidden by</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.hiddenBy }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="reason">
+      <th mat-header-cell scope="col" *matHeaderCellDef>Reason</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.reason }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="hiddenDateTime">
+      <th mat-header-cell scope="col" *matHeaderCellDef>Date hidden</th>
+      <td style="text-wrap: nowrap" mat-cell *matCellDef="let element">
+        {{ element.hiddenDateTime | date: dateFormat }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell scope="col" *matHeaderCellDef></th>
+      <td *matCellDef="let element">
+        <button
+          (click)="onShowDiscrepancy(element.id)"
+          mat-raised-button
+          color="primary"
+          data-testid="button-show-discrepancy"
+        >
+          Show
+        </button>
+      </td>
+    </ng-container>
+
+    <tr
+      mat-header-row
+      *matHeaderRowDef="hiddenDiscrepanciesColumnsToDisplay"
+      class="element-row"
+    ></tr>
+    <tr
+      tabindex="0"
+      mat-row
+      *matRowDef="let element; columns: hiddenDiscrepanciesColumnsToDisplay"
+      class="element-row"
+    ></tr>
+  </table>
+</mat-card>

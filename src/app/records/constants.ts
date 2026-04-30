@@ -22,25 +22,5 @@ export const RECORDS_COLUMN_DATA: IRecordDataCell[] = [
     label: "GMC No",
     name: "gmcReferenceNumber",
     enableSort: true
-  },
-  {
-    label: "Notes",
-    name: "notes",
-    enableSort: false,
-    displayType: "boolean"
   }
 ];
-
-export const generateColumnData = (data: any[][]): IRecordDataCell[] => {
-  const generatedData: IRecordDataCell[] = [...RECORDS_COLUMN_DATA];
-
-  data.forEach((item: any[]) => {
-    generatedData.push({
-      label: item[0],
-      name: item[1],
-      enableSort: item[2],
-      sortBy: item[3] || item[1]
-    });
-  });
-  return generatedData;
-};

@@ -1,11 +1,28 @@
-export const COLUMN_DATA: [string, string, boolean][] = [
-  ["Programme", "programme", false],
-  ["Date raised", "dateRaised", false],
-  ["Type", "type", false],
-  ["Site", "site", false],
-  ["Source", "source", false],
-  ["Status", "status", false],
-  ["Admin", "admin", false],
-  ["Follow-up date", "followUpDate", false],
-  ["Closed date", "closedDate", false]
+import { IRecordDataCell } from "../records/records.interfaces";
+
+export const COLUMN_DATA: IRecordDataCell[] = [
+  { label: "Programme", name: "programme", enableSort: false },
+  {
+    label: "Date raised",
+    name: "dateRaised",
+    enableSort: false,
+    displayType: "date"
+  },
+  { label: "Type", name: "type", enableSort: false },
+  { label: "Site", name: "site", enableSort: false },
+  { label: "Source", name: "source", enableSort: false },
+  { label: "Status", name: "status", enableSort: false },
+  { label: "Admin", name: "admin", enableSort: false },
+  {
+    label: "Follow-up date",
+    name: "followUpDate",
+    enableSort: false,
+    displayType: "date"
+  },
+  {
+    label: "Closed date",
+    name: "closedDate",
+    enableSort: false,
+    displayType: "date"
+  }
 ];

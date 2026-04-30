@@ -22,6 +22,12 @@ function getEnumKeyByEnumValue<T extends { [index: string]: string }>(
 
 export const COLUMN_DATA: IRecordDataCell[] = [
   {
+    label: "Notes",
+    name: "notes",
+    enableSort: false,
+    displayType: "boolean"
+  },
+  {
     label: "Designated body",
     name: "designatedBody",
     enableSort: false,

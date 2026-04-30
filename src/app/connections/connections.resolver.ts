@@ -13,7 +13,8 @@ import {
 import {
   COLUMN_DATA,
   TABLE_FILTERS_FORM_DBC_LONDON,
-  TABLE_FILTERS_FORM_DBC
+  TABLE_FILTERS_FORM_DBC,
+  HIDDEN_DISCREPANCIES_COLUMN_DATA
 } from "./constants";
 import { stateName } from "../records/records.interfaces";
 import { TABLE_FILTERS_FORM_BASE } from "../connections/constants";
@@ -48,6 +49,10 @@ export class ConnectionsResolver extends RecordsResolver {
         label: "DISCREPANCIES",
         name: ConnectionsFilterType.DISCREPANCIES
       },
+      {
+        label: "HIDDEN DISCREPANCIES",
+        name: ConnectionsFilterType.HIDDEN_DISCREPANCIES
+      },
 
       {
         label: "FAILED GMC UPDATES",
@@ -69,9 +74,21 @@ export class ConnectionsResolver extends RecordsResolver {
   }
 
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    if (route.queryParams.filter === ConnectionsFilterType.EXCEPTIONSLOG) {
-      this.recordsService.filter(route.queryParams.filter);
-      return of(null);
+    switch (route.queryParams.filter) {
+      case ConnectionsFilterType.EXCEPTIONSLOG:
+        this.recordsService.filter(route.queryParams.filter);
+        return of(null);
+      case ConnectionsFilterType.HIDDEN_DISCREPANCIES:
+        this.recordsService.updateColumnData([
+          ...RECORDS_COLUMN_DATA,
+          ...HIDDEN_DISCREPANCIES_COLUMN_DATA
+        ]);
+        break;
+      default:
+        this.recordsService.updateColumnData([
+          ...RECORDS_COLUMN_DATA,
+          ...COLUMN_DATA
+        ]);
     }
 
     const tableFiltersState: IConnectionsTableFilters =

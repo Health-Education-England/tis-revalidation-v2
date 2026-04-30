@@ -41,7 +41,8 @@ import {
   ToggleConnectionsCheckbox,
   SetConnectionsTableFilters,
   ClearConnectionsTableFilters,
-  UpdateConnectionsQueryParams
+  UpdateConnectionsQueryParams,
+  UpdateConnectionsColumnData
 } from "../../connections/state/connections.actions";
 import {
   ClearRecommendationsSearch,
@@ -58,7 +59,8 @@ import {
   ToggleRecommendationsCheckbox,
   SetRecommendationsTableFilters,
   ClearRecommendationsTableFilters,
-  UpdateRecommendationsQueryParams
+  UpdateRecommendationsQueryParams,
+  UpdateRecommendationsColumnData
 } from "../../recommendations/state/recommendations.actions";
 import { IFilter, IRecordDataCell, ITableFilters } from "../records.interfaces";
 
@@ -98,6 +100,7 @@ export class RecordsService {
   public setTableFiltersAction: any;
   public clearTableFiltersAction: any;
   public updateQueryParamsAction: any;
+  public updateColumnDataAction: any;
 
   constructor(
     private http: HttpClient,
@@ -121,6 +124,7 @@ export class RecordsService {
     this.setTableFiltersAction = SetRecommendationsTableFilters;
     this.clearTableFiltersAction = ClearRecommendationsTableFilters;
     this.updateQueryParamsAction = UpdateRecommendationsQueryParams;
+    this.updateColumnDataAction = UpdateRecommendationsColumnData;
   }
 
   public setConcernsActions(): void {
@@ -154,6 +158,7 @@ export class RecordsService {
     this.setTableFiltersAction = SetConnectionsTableFilters;
     this.clearTableFiltersAction = ClearConnectionsTableFilters;
     this.updateQueryParamsAction = UpdateConnectionsQueryParams;
+    this.updateColumnDataAction = UpdateConnectionsColumnData;
   }
 
   public getRecords<T>(endPoint: string, params?: HttpParams): Observable<T> {
@@ -346,5 +351,10 @@ export class RecordsService {
   public updateQueryParams(params: Params): Observable<any> {
     this.handleUndefinedAction("updateQueryParams");
     return this.store.dispatch(new this.updateQueryParamsAction(params));
+  }
+
+  public updateColumnData(columnData: IRecordDataCell[]): Observable<any> {
+    this.handleUndefinedAction("updateColumnData");
+    return this.store.dispatch(new this.updateColumnDataAction(columnData));
   }
 }

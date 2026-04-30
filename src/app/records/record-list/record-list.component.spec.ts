@@ -1,14 +1,18 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+  waitForAsync
+} from "@angular/core/testing";
 import { Sort as ISort } from "@angular/material/sort";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
-import { Router } from "@angular/router";
-import { RouterTestingModule } from "@angular/router/testing";
+import { Router, RouterModule } from "@angular/router";
 import { NgxsModule, Store } from "@ngxs/store";
 import { AdminsModule } from "../../admins/admins.module";
 import { ClearAllocateList } from "../../admins/state/admins.actions";
 import { AdminsState } from "../../admins/state/admins.state";
-import { COLUMN_DATA } from "../../concerns/constants";
 import {
   RecommendationStatus,
   RecommendationGmcOutcome
@@ -17,10 +21,35 @@ import { IRecommendation } from "../../recommendations/recommendations.interface
 import { mockRecommendationsResponse } from "../../recommendations/services/recommendations.service.spec";
 import { RecommendationsState } from "../../recommendations/state/recommendations.state";
 import { MaterialModule } from "../../shared/material/material.module";
-import { DEFAULT_SORT, generateColumnData } from "../constants";
+import { DEFAULT_SORT } from "../constants";
 import { RecordsService } from "../services/records.service";
 import { RecordListComponent } from "./record-list.component";
 import { RecordListState } from "./state/record-list.state";
+import { IRecordDataCell } from "../records.interfaces";
+import { FormatDesignatedBodyPipe } from "src/app/shared/pipes/format-designated-body.pipe";
+
+const MOCK_COLUMN_DATA: IRecordDataCell[] = [
+  {
+    label: "Designated body",
+    name: "designatedBody",
+    enableSort: false,
+    displayType: "dbc",
+    isLondonOnly: true
+  },
+
+  {
+    label: "GMC Submission due date",
+    name: "submissionDate",
+    enableSort: true,
+    displayType: "date"
+  },
+
+  {
+    label: "GMC Status",
+    name: "gmcOutcome",
+    enableSort: false
+  }
+];
 
 describe("RecordListComponent", () => {
   let store: Store;
@@ -31,12 +60,12 @@ describe("RecordListComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [RecordListComponent],
+      declarations: [RecordListComponent, FormatDesignatedBodyPipe],
       imports: [
         MaterialModule,
         NoopAnimationsModule,
         HttpClientTestingModule,
-        RouterTestingModule,
+        RouterModule.forRoot([]),
         AdminsModule,
         NgxsModule.forRoot([RecommendationsState, AdminsState, RecordListState])
       ]
@@ -60,14 +89,11 @@ describe("RecordListComponent", () => {
         enableUpdateConnections: false,
         disableSearchAndSort: false,
         allChecked: false,
-        someChecked: false
+        someChecked: false,
+        columnData: [...MOCK_COLUMN_DATA]
       },
       recordList: { fixedColumns: true }
     });
-    component.columnData = generateColumnData(COLUMN_DATA);
-    component.dateColumns = [
-      "curriculumEndDate,submissionDate,dateAdded,lastUpdatedDate"
-    ];
 
     fixture.detectChanges();
   });
@@ -129,11 +155,23 @@ describe("RecordListComponent", () => {
     });
   });
 
-  it("`columnNames()` should return an array of strings", () => {
-    component.columnData = generateColumnData(COLUMN_DATA);
+  it("columnNames should return an array of strings", fakeAsync(() => {
+    store.reset({
+      recommendations: {
+        columnData: [
+          {
+            label: "New label",
+            name: "newName",
+            enableSort: true
+          }
+        ]
+      }
+    });
+    tick();
+
     expect(component.columnNames).toBeInstanceOf(Array);
-    expect(component.columnNames[0]).toEqual("doctorFirstName");
-  });
+    expect(component.columnNames[0]).toEqual("newName");
+  }));
 
   it("'navigateToDetails()' should navigate to details route", () => {
     const mockEvent: Event = new MouseEvent("click");

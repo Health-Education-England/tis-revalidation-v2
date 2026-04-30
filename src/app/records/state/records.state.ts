@@ -35,7 +35,8 @@ export const defaultRecordsState = {
   totalResults: null,
   totalCounts: null,
   tableFilters: null,
-  queryParams: null
+  queryParams: null,
+  columnData: []
 };
 
 export class RecordsState {
@@ -129,10 +130,10 @@ export class RecordsState {
   protected getSuccessHandler(
     ctx: StateContext<any>,
     action: any,
-    sliceName: string
+    itemsKey: string
   ) {
     ctx.patchState({
-      items: action.response[sliceName],
+      items: action.response[itemsKey],
       totalResults: action.response.totalResults,
       allChecked: false,
       someChecked: false
@@ -213,6 +214,12 @@ export class RecordsState {
   protected updateQueryParamsHandler(ctx: StateContext<any>, action: any) {
     ctx.patchState({
       queryParams: action
+    });
+  }
+
+  protected updateColumnDataHandler(ctx: StateContext<any>, action: any) {
+    ctx.patchState({
+      columnData: action
     });
   }
 

@@ -9,7 +9,7 @@ export interface FormControlBase {
   controlType: string;
   text?: string;
   placeholder?: string;
-  filterType?: string;
+  filterType?: string[];
   options?: {
     key: string;
     value?: string;

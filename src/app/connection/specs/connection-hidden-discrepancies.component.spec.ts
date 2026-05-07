@@ -50,6 +50,9 @@ describe("ConnectionHiddenDiscrepanciesComponent", () => {
       .query(By.css("[data-testid='button-show-discrepancy']"))
       .nativeElement.click();
     fixture.detectChanges();
-    expect(eventEmitterSpy).toHaveBeenCalledWith("69cb99444dadd14f27a0d092");
+    expect(eventEmitterSpy).toHaveBeenCalledWith({
+      discrepancyId: "69cb99444dadd14f27a0d092",
+      hiddenForDesignatedBodyCode: "1-RSSQ05"
+    });
   });
 });

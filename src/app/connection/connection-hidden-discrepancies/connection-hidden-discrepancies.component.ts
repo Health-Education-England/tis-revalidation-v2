@@ -1,5 +1,8 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { IHiddenDiscrepancy } from "../connection.interfaces";
+import {
+  IHiddenDiscrepancy,
+  IShowDiscrepancyParameters
+} from "../connection.interfaces";
 import { environment } from "@environment";
 
 @Component({
@@ -9,9 +12,19 @@ import { environment } from "@environment";
 export class ConnectionHiddenDiscrepanciesComponent {
   @Input() hiddenDiscrepancies: IHiddenDiscrepancy[];
   @Input() hiddenDiscrepanciesColumnsToDisplay: string[];
-  @Output() showDiscrepancy = new EventEmitter<string>();
+  @Input() updatingDiscrepancyIds: string[] = [];
+
+  @Output() showDiscrepancy = new EventEmitter<IShowDiscrepancyParameters>();
   dateFormat = environment.dateFormat;
-  onShowDiscrepancy(discrepancyId: string) {
-    this.showDiscrepancy.emit(discrepancyId);
+  onShowDiscrepancy(
+    discrepancyId: string,
+    hiddenForDesignatedBodyCode: string
+  ) {
+    let showDiscrepancyParameters: IShowDiscrepancyParameters = {
+      discrepancyId: discrepancyId,
+      hiddenForDesignatedBodyCode: hiddenForDesignatedBodyCode
+    };
+
+    this.showDiscrepancy.emit(showDiscrepancyParameters);
   }
 }

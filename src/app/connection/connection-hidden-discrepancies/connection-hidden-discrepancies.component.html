@@ -14,7 +14,7 @@
     class="w-100"
     data-cy="hidden-discrepancies-table"
   >
-    <caption class="collapsed sr-only">
+    <caption class="sr-only">
       Hidden discrepancies
     </caption>
     <ng-container matColumnDef="hiddenForDesignatedBodyCode">
@@ -46,7 +46,14 @@
     </ng-container>
 
     <ng-container matColumnDef="id">
-      <th mat-header-cell scope="col" *matHeaderCellDef></th>
+      <th
+        class="text-align-right"
+        mat-header-cell
+        scope="col"
+        *matHeaderCellDef
+      >
+        <span class="sr-only">Action</span>
+      </th>
       <td class="text-align-right" mat-cell *matCellDef="let element">
         <button
           [disabled]="updatingDiscrepancyIds.includes(element.id)"

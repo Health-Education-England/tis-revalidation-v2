@@ -4,36 +4,44 @@
   >
     <mat-spinner></mat-spinner>
   </div>
-} @else if (connectionHistory$ | async) {
-  @if ((hiddenDiscrepancies$ | async)?.length) {
-    <app-connection-hidden-discrepancies
-      [updatingDiscrepancyIds]="updatingDiscrepancyIds"
-      data-testid="component-hidden-discrepancies"
-      [hiddenDiscrepanciesColumnsToDisplay]="
-        hiddenDiscrepanciesColumnsToDisplay
-      "
-      [hiddenDiscrepancies]="hiddenDiscrepancies$ | async"
-      (showDiscrepancy)="showDiscrepancy($event)"
-    ></app-connection-hidden-discrepancies>
-  }
+} @else {
+  @if (connectionHistory$ | async; as connectionHistory) {
+    @if (hiddenDiscrepancies$ | async; as hiddenDiscrepancies) {
+      <mat-card class="mb-20" appearance="outlined">
+        <mat-card-title>Current designated body</mat-card-title>
+        <ng-container *ngIf="doctorCurrentDbc$ | async; else NoDBC">
+          {{ doctorCurrentDbc$ | async | formatDesignatedBody: "name" }}
+        </ng-container>
+        <ng-template #NoDBC> No current connection </ng-template>
+      </mat-card>
 
-  <mat-card class="mb-20" appearance="outlined">
-    <mat-card-title>Current designated body</mat-card-title>
-    <ng-container *ngIf="doctorCurrentDbc$ | async; else NoDBC">
-      {{ doctorCurrentDbc$ | async | formatDesignatedBody: "name" }}
-    </ng-container>
-    <ng-template #NoDBC> No current connection </ng-template>
-  </mat-card>
+      @if (hiddenDiscrepancies.length) {
+        <app-connection-hidden-discrepancies
+          data-testid="component-hidden-discrepancies"
+          [hiddenDiscrepanciesColumnsToDisplay]="
+            hiddenDiscrepanciesColumnsToDisplay
+          "
+          [hiddenDiscrepancies]="hiddenDiscrepancies"
+          (showDiscrepancy)="showDiscrepancy($event)"
+        ></app-connection-hidden-discrepancies>
+      }
 
-  <app-connection-history
-    [connectionsColumnsToDisplay]="connectionsColumnsToDisplay"
-    [connectionHistory]="connectionHistory$ | async"
-  ></app-connection-history>
-  @if (enableUpdateConnection && !(hiddenDiscrepancies$ | async)?.length) {
-    <app-update-connection
-      [currentDoctorDbcCode]="doctorCurrentDbc"
-      (submittFormEvent)="updateConnection($event)"
-    >
-    </app-update-connection>
+      <app-connection-history
+        [connectionsColumnsToDisplay]="connectionsColumnsToDisplay"
+        [connectionHistory]="connectionHistory"
+      ></app-connection-history>
+      @if (hiddenDiscrepancies.length) {
+        <mat-card appearance="outlined">
+          <mat-card-title>Update connection</mat-card-title>
+          Updating connections is not permitted for hidden discrepancies.
+        </mat-card>
+      } @else if (enableUpdateConnection) {
+        <app-update-connection
+          [currentDoctorDbcCode]="doctorCurrentDbc"
+          (submittFormEvent)="updateConnection($event)"
+        >
+        </app-update-connection>
+      }
+    }
   }
 }

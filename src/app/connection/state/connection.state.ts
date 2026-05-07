@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
-import { map } from "rxjs/operators";
+import { tap } from "rxjs/operators";
 import {
   IConnectionResponse,
   IConnectionHistory,
@@ -55,7 +55,7 @@ export class ConnectionState {
       throw new Error(`gmcNumber ${payload} must be of type number`);
     }
     return this.service.getConnectionHistory(payload).pipe(
-      map((response: IConnectionResponse) => {
+      tap((response: IConnectionResponse) => {
         patchState({
           gmcNumber: payload,
           connectionHistory: response.connection.connectionHistory,

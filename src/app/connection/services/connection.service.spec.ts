@@ -34,4 +34,16 @@ describe("ConcernService", () => {
 
     http.verify();
   });
+
+  it("should call show discrepancy endpoint", () => {
+    const discrepancyID = 1234567;
+    const endPoint = `${environment.appUrls.showDiscrepancy}/${discrepancyID}`;
+
+    service.showDiscrepancy(discrepancyID).subscribe();
+
+    const mockHttp = http.expectOne(endPoint);
+    expect(mockHttp.request.method).toBe("DELETE");
+
+    http.verify();
+  });
 });

@@ -1,4 +1,4 @@
-import { Component, Input, input } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { IConnectionHistory } from "../connection.interfaces";
 import { environment } from "@environment";
 @Component({

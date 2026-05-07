@@ -79,7 +79,7 @@ export class ConnectionComponent implements OnInit, OnDestroy {
     private store: Store,
     private authService: AuthService,
     private snackBarService: SnackBarService,
-    private updateConnectionsService: UpdateConnectionsService,
+    readonly updateConnectionsService: UpdateConnectionsService,
     readonly connectionService: ConnectionService,
     public dialog: MatDialog,
     readonly formatDesignatedBodyPipe: FormatDesignatedBodyPipe

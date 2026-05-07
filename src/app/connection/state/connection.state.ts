@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
-import { map, tap } from "rxjs/operators";
+import { map } from "rxjs/operators";
 import {
   IConnectionResponse,
   IConnectionHistory,

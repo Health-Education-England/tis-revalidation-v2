@@ -1,6 +1,5 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { of, Subscription, throwError } from "rxjs";
@@ -50,21 +49,6 @@ describe("ConnectionComponent", () => {
   let snackBarService: SnackBarService;
   let connectionService: ConnectionService;
   let store: Store;
-
-  const element: IConnectionHistory = {
-    connectionId: "123456",
-    gmcId: "123456",
-    gmcClientId: "client-id",
-    newDesignatedBodyCode: "1-ASDFG",
-    previousDesignatedBodyCode: "1-FGHJK",
-    reason: "Some reason",
-    reasonMessage: "Some reason",
-    requestType: "ADD",
-    requestTime: new Date(),
-    responseCode: "0",
-    responseMessage: "Sussess",
-    updatedBy: "bobfossil@hee.nhs.uk"
-  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

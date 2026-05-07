@@ -10,6 +10,12 @@ import { IConnectionResponse } from "../connection.interfaces";
 export class ConnectionService {
   constructor(private http: HttpClient) {}
 
+  showDiscrepancy(discrepancyId): Observable<any> {
+    return this.http.delete<void>(
+      `${environment.appUrls.showDiscrepancy}/${discrepancyId}`
+    );
+  }
+
   getConnectionHistory(
     gmcNumber: number
   ): Observable<IConnectionResponse | any> {

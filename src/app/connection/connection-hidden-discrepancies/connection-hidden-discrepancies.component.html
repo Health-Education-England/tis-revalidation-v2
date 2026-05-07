@@ -40,7 +40,7 @@
 
     <ng-container matColumnDef="hiddenDateTime">
       <th mat-header-cell scope="col" *matHeaderCellDef>Date hidden</th>
-      <td style="text-wrap: nowrap" mat-cell *matCellDef="let element">
+      <td class="no-wrap" mat-cell *matCellDef="let element">
         {{ element.hiddenDateTime | date: dateFormat }}
       </td>
     </ng-container>

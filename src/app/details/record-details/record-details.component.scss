@@ -5,6 +5,7 @@ $child-navbar-height: 48px;
 $toolbar-height: 64px;
 
 .main-col {
+  flex-grow: 2;
   grid-template-rows: auto auto;
 }
 
@@ -20,7 +21,8 @@ $toolbar-height: 64px;
 
 .notes-drawer-container {
   min-height: calc(
-    100vh - #{$main-navbar-height} - #{$child-navbar-height} - #{$toolbar-height}
+    100vh - #{$main-navbar-height} - #{$child-navbar-height} -
+      #{$toolbar-height}
   );
 }
 

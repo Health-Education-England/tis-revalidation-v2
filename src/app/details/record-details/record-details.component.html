@@ -1,7 +1,7 @@
 <app-nav-bar></app-nav-bar>
 <ng-container>
   <ng-container *ngIf="{ isHandset: isHandset$ | async }; let device">
-    <div class="record-details" [ngClass]="{ 'd-grid': !device.isHandset }">
+    <div class="record-details" [ngClass]="{ 'd-flex': !device.isHandset }">
       <div class="left-nav" *ngIf="!device.isHandset">
         <app-details-side-nav></app-details-side-nav>
       </div>

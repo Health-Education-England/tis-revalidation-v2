@@ -123,7 +123,7 @@ export class ConnectionComponent implements OnInit, OnDestroy {
           this.connectionService
             .showDiscrepancy(params.discrepancyId)
             .subscribe({
-              next: (back) => {
+              next: () => {
                 this.snackBarService.openSnackBar(
                   `Update successful. Discrepancy will now appear on the discrepancies list for admins assigned to ${formattedDbc} designated body.`
                 );
@@ -176,6 +176,7 @@ export class ConnectionComponent implements OnInit, OnDestroy {
         },
         error: (error) => {
           this.snackBarService.openSnackBar(error.message);
+          this.submitting = false;
         },
         complete: () => {
           this.submitting = false;

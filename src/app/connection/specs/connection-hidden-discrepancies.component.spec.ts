@@ -9,6 +9,7 @@ import { By } from "@angular/platform-browser";
 import { MatTableModule } from "@angular/material/table";
 import { MatCardModule } from "@angular/material/card";
 import { Pipe, PipeTransform } from "@angular/core";
+import { MatButtonModule } from "@angular/material/button";
 
 @Pipe({ name: "formatDesignatedBody" })
 class MockFormatDesignatedBodyPipe implements PipeTransform {
@@ -27,7 +28,7 @@ describe("ConnectionHiddenDiscrepanciesComponent", () => {
         ConnectionHiddenDiscrepanciesComponent,
         MockFormatDesignatedBodyPipe
       ],
-      imports: [MatTableModule, MatCardModule]
+      imports: [MatTableModule, MatCardModule, MatButtonModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ConnectionHiddenDiscrepanciesComponent);

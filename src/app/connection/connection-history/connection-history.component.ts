@@ -8,6 +8,5 @@ import { environment } from "@environment";
 export class ConnectionHistoryComponent {
   @Input() connectionHistory: IConnectionHistory[];
   @Input() connectionsColumnsToDisplay: string[];
-  @Input() doctorCurrentDbc: string;
   dateFormat = environment.dateFormat;
 }

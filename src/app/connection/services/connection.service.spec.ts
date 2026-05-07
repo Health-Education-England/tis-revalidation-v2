@@ -36,7 +36,7 @@ describe("ConcernService", () => {
   });
 
   it("should call show discrepancy endpoint", () => {
-    const discrepancyID = 1234567;
+    const discrepancyID = "1234567";
     const endPoint = `${environment.appUrls.showDiscrepancy}/${discrepancyID}`;
 
     service.showDiscrepancy(discrepancyID).subscribe();

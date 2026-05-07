@@ -10,7 +10,6 @@ import { ConnectionComponent } from "../connection.component";
 import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
 import { ActionType } from "../../update-connections/update-connections.interfaces";
 import { UpdateConnectionsService } from "../../update-connections/services/update-connections.service";
-import { IConnectionHistory } from "../connection.interfaces";
 import { RouterModule } from "@angular/router";
 import { ConnectionHistoryComponent } from "../connection-history/connection-history.component";
 import { mockConnectionResponse } from "./mock-data/connection-details-spec-data";
@@ -146,7 +145,7 @@ describe("ConnectionComponent", () => {
     const message = "Request failed";
     spyOn(snackBarService, "openSnackBar");
     spyOn(updateConnectionService, "updateConnection").and.returnValue(
-      throwError({ message })
+      throwError(() => new Error(message))
     );
 
     const formValue = {
@@ -158,8 +157,6 @@ describe("ConnectionComponent", () => {
     component.doctorCurrentDbc = "1-ABCDE";
     component.gmcNumber = 123456;
     component.updateConnection(formValue);
-
-    expect(component.submitting).toBeTruthy();
     expect(snackBarService.openSnackBar).toHaveBeenCalledWith(message);
   });
 
@@ -242,7 +239,7 @@ describe("ConnectionComponent", () => {
     const serviceSpy = spyOn(
       connectionService,
       "showDiscrepancy"
-    ).and.returnValue(of(true));
+    ).and.returnValue(of(void 0));
     component.showDiscrepancy({
       discrepancyId: "69cb99444dadd14f27a0d092",
       hiddenForDesignatedBodyCode: "1-1RUZV1D"

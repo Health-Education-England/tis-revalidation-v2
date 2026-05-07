@@ -10,7 +10,6 @@ $toolbar-height: 64px;
 }
 
 .record-details {
-  grid-template-columns: 280px 1px auto;
   min-height: calc(100vh - #{$main-navbar-height} - #{$child-navbar-height});
 
   .record-content-container {

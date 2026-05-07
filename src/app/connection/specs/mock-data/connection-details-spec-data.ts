@@ -94,9 +94,9 @@ const designatedBodyCode: IUserDBC = {
 
 export const mockConnectionResponse: IConnectionResponse = {
   designatedBodyCode,
+  hiddenDiscrepancies,
   connection: {
-    connectionHistory,
-    hiddenDiscrepancies
+    connectionHistory
   }
 };
 

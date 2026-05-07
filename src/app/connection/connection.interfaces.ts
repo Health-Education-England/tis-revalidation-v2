@@ -1,8 +1,8 @@
 export interface IConnectionResponse {
   designatedBodyCode: IUserDBC;
+  hiddenDiscrepancies?: IHiddenDiscrepancy[];
   connection: {
     connectionHistory: IConnectionHistory[];
-    hiddenDiscrepancies?: IHiddenDiscrepancy[];
   };
 }
 

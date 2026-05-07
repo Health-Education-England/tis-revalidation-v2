@@ -59,7 +59,7 @@ export class ConnectionState {
         patchState({
           gmcNumber: payload,
           connectionHistory: response.connection.connectionHistory,
-          hiddenDiscrepancies: response.connection.hiddenDiscrepancies,
+          hiddenDiscrepancies: response.hiddenDiscrepancies,
           doctorCurrentDbc: response.designatedBodyCode.designatedBodyCode
         });
       })

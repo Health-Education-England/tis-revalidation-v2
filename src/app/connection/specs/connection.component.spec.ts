@@ -103,8 +103,7 @@ describe("ConnectionComponent", () => {
       connection: {
         gmcNumber: null,
         connectionHistory: mockConnectionResponse.connection.connectionHistory,
-        hiddenDiscrepancies:
-          mockConnectionResponse.connection.hiddenDiscrepancies,
+        hiddenDiscrepancies: mockConnectionResponse.hiddenDiscrepancies,
         doctorCurrentDbc: null
       }
     });

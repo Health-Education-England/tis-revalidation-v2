@@ -32,8 +32,7 @@ describe("ConnectionHiddenDiscrepanciesComponent", () => {
 
     fixture = TestBed.createComponent(ConnectionHiddenDiscrepanciesComponent);
     component = fixture.componentInstance;
-    component.hiddenDiscrepancies =
-      mockConnectionResponse.connection.hiddenDiscrepancies;
+    component.hiddenDiscrepancies = mockConnectionResponse.hiddenDiscrepancies;
     component.hiddenDiscrepanciesColumnsToDisplay =
       mockHiddenDiscrepanciesColumnsToDisplay;
     fixture.detectChanges();

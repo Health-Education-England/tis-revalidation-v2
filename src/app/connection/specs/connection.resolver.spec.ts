@@ -5,11 +5,11 @@ import { ActivatedRouteSnapshot, Router } from "@angular/router";
 import { Component } from "@angular/core";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 
-import { ConnectionResolver } from "./connection.resolver";
-import { MaterialModule } from "../shared/material/material.module";
-import { ConnectionState } from "./state/connection.state";
-import { Get } from "./state/connection.actions";
-import { RecordsService } from "../records/services/records.service";
+import { ConnectionResolver } from "../connection.resolver";
+import { MaterialModule } from "../../shared/material/material.module";
+import { ConnectionState } from "../state/connection.state";
+import { Get } from "../state/connection.actions";
+import { RecordsService } from "../../records/services/records.service";
 
 @Component({
   template: `blank`

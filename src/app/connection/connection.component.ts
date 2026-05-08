@@ -5,6 +5,8 @@ import { Observable, Subscription } from "rxjs";
 import { environment } from "@environment";
 import {
   IConnectionHistory,
+  IHiddenDiscrepancy,
+  IShowDiscrepancyParameters,
   IUpdateConnectionResponse
 } from "./connection.interfaces";
 import { ConnectionState } from "./state/connection.state";
@@ -17,34 +19,26 @@ import {
 } from "../update-connections/update-connections.interfaces";
 import { UpdateConnectionsService } from "../update-connections/services/update-connections.service";
 import { Get } from "./state/connection.actions";
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger
-} from "@angular/animations";
 import { DetailsSideNavState } from "../details/details-side-nav/state/details-side-nav.state";
 import { IDetailsSideNav } from "../details/details-side-nav/details-side-nav.interfaces";
+import { ConnectionService } from "./services/connection.service";
+import {
+  ConfirmDialogComponent,
+  ConfirmDialogModel
+} from "../shared/confirm-dialog/confirm-dialog.component";
+import { MatDialog } from "@angular/material/dialog";
+import { FormatDesignatedBodyPipe } from "../shared/pipes/format-designated-body.pipe";
 
 @Component({
   selector: "app-connection",
-  templateUrl: "./connection.component.html",
-  styleUrls: ["./connection.component.scss"],
-  animations: [
-    trigger("detailExpand", [
-      state("collapsed", style({ height: "0px", minHeight: "0" })),
-      state("expanded", style({ height: "*" })),
-      transition(
-        "expanded <=> collapsed",
-        animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)")
-      )
-    ])
-  ]
+  templateUrl: "./connection.component.html"
 })
 export class ConnectionComponent implements OnInit, OnDestroy {
   @Select(ConnectionState.connectionHistory)
   public connectionHistory$: Observable<IConnectionHistory[]>;
+
+  @Select(ConnectionState.hiddenDiscrepancies)
+  public hiddenDiscrepancies$: Observable<IHiddenDiscrepancy[]>;
 
   @Select(ConnectionState.gmcNumber)
   public gmcNumber$: Observable<number>;
@@ -65,6 +59,13 @@ export class ConnectionComponent implements OnInit, OnDestroy {
     "requestTime",
     "updatedBy"
   ];
+  hiddenDiscrepanciesColumnsToDisplay = [
+    "hiddenForDesignatedBodyCode",
+    "hiddenBy",
+    "reason",
+    "hiddenDateTime",
+    "id"
+  ];
   componentSubscription: Subscription;
   dbcs: IDesignatedBody[] = [];
   gmcNumber: number;
@@ -73,12 +74,15 @@ export class ConnectionComponent implements OnInit, OnDestroy {
   enableUpdateConnection = false;
   submitting = false;
   programmeOwnerDBC: string;
-
+  updatingDiscrepancyIds: string[] = [];
   constructor(
     private store: Store,
     private authService: AuthService,
     private snackBarService: SnackBarService,
-    private updateConnectionsService: UpdateConnectionsService
+    readonly updateConnectionsService: UpdateConnectionsService,
+    readonly connectionService: ConnectionService,
+    public dialog: MatDialog,
+    readonly formatDesignatedBodyPipe: FormatDesignatedBodyPipe
   ) {}
 
   ngOnInit(): void {
@@ -97,6 +101,52 @@ export class ConnectionComponent implements OnInit, OnDestroy {
     if (this.componentSubscription) {
       this.componentSubscription.unsubscribe();
     }
+  }
+
+  showDiscrepancy(params: IShowDiscrepancyParameters) {
+    const formattedDbc = this.formatDesignatedBodyPipe.transform(
+      params.hiddenForDesignatedBodyCode,
+      "abbr"
+    );
+    const dialogData = new ConfirmDialogModel(
+      "Show discrepancy",
+      `Are you sure you want to show this discrepancy for ${formattedDbc}?`,
+      "Cancel",
+      "Show"
+    );
+    this.dialog
+      .open(ConfirmDialogComponent, { data: dialogData })
+      .afterClosed()
+      .subscribe((result) => {
+        if (result) {
+          this.updatingDiscrepancyIds.push(params.discrepancyId);
+          this.connectionService
+            .showDiscrepancy(params.discrepancyId)
+            .subscribe({
+              next: () => {
+                this.snackBarService.openSnackBar(
+                  `Update successful. Discrepancy will now appear on the discrepancies list for admins assigned to ${formattedDbc} designated body.`
+                );
+                this.updatingDiscrepancyIds =
+                  this.updatingDiscrepancyIds.filter(
+                    (id) => id !== params.discrepancyId
+                  );
+                this.store.dispatch(new Get(this.gmcNumber));
+              },
+              error: () => {
+                this.updatingDiscrepancyIds =
+                  this.updatingDiscrepancyIds.filter(
+                    (id) => id !== params.discrepancyId
+                  );
+                this.snackBarService.openSnackBar(
+                  "An error occurred while showing the discrepancy. Please try again."
+                );
+
+                this.store.dispatch(new Get(this.gmcNumber));
+              }
+            });
+        }
+      });
   }
 
   updateConnection(formValue: any) {
@@ -119,22 +169,18 @@ export class ConnectionComponent implements OnInit, OnDestroy {
 
     this.componentSubscription = this.updateConnectionsService
       .updateConnection(payload, formValue.action)
-      .subscribe(
-        (response: IUpdateConnectionResponse) => {
+      .subscribe({
+        next: (response: IUpdateConnectionResponse) => {
           this.snackBarService.openSnackBar(response.message);
           this.store.dispatch(new Get(this.gmcNumber));
         },
-        (error) => {
+        error: (error) => {
           this.snackBarService.openSnackBar(error.message);
+          this.submitting = false;
         },
-        () => {
+        complete: () => {
           this.submitting = false;
         }
-      );
-  }
-
-  currentExpanded(element: any, event: Event) {
-    event.stopPropagation();
-    this.expandedElement = this.expandedElement === element ? null : element;
+      });
   }
 }

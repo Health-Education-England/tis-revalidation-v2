@@ -1,8 +1,9 @@
 import {
   IConnectionHistory,
   IConnectionResponse,
+  IHiddenDiscrepancy,
   IUserDBC
-} from "../connection.interfaces";
+} from "../../connection.interfaces";
 
 const connectionHistory: IConnectionHistory[] = [
   {
@@ -35,13 +36,34 @@ const connectionHistory: IConnectionHistory[] = [
   }
 ];
 
+const hiddenDiscrepancies: IHiddenDiscrepancy[] = [
+  {
+    id: "69cb99444dadd14f27a0d092",
+    gmcId: "123456",
+    hiddenForDesignatedBodyCode: "1-RSSQ05",
+    hiddenBy: "test",
+    reason:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eget mi ultrices, aliquam lectus et, faucibus magna.",
+    hiddenDateTime: "2026-03-31T09:52:04.703"
+  }
+];
+
 const designatedBodyCode: IUserDBC = {
-  designatedBodyCode: "1-AIIDSA"
+  designatedBodyCode: "1-1RUZV1D"
 };
 
 export const mockConnectionResponse: IConnectionResponse = {
   designatedBodyCode,
+  hiddenDiscrepancies,
   connection: {
     connectionHistory
   }
 };
+
+export const mockHiddenDiscrepanciesColumnsToDisplay: string[] = [
+  "id",
+  "hiddenForDesignatedBodyCode",
+  "hiddenBy",
+  "reason",
+  "hiddenDateTime"
+];

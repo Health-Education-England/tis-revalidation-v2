@@ -1,4 +1,4 @@
-import { TestBed, fakeAsync, waitForAsync } from "@angular/core/testing";
+import { TestBed, fakeAsync, tick, waitForAsync } from "@angular/core/testing";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { NgxsModule, Store } from "@ngxs/store";
 import {
@@ -8,11 +8,11 @@ import {
 import { MaterialModule } from "../../shared/material/material.module";
 import { ErrorHandler } from "@angular/core";
 
-import { ConnectionState } from "./connection.state";
-import { Get } from "./connection.actions";
+import { ConnectionState } from "../state/connection.state";
+import { Get } from "../state/connection.actions";
 import { ConnectionService } from "../services/connection.service";
 import { environment } from "@environment";
-import { mockConnectionResponse } from "../mock-data/conneciton-details-spec-data";
+import { mockConnectionResponse } from "./mock-data/connection-details-spec-data";
 
 describe("Connection actions", () => {
   let store: Store;
@@ -43,21 +43,18 @@ describe("Connection actions", () => {
   it("should create a get connection details action", fakeAsync(() => {
     const gmcNumber = 1234;
     store.dispatch(new Get(gmcNumber));
-
+    tick();
     const req = httpMock.expectOne(
       `${environment.appUrls.getConnections}/${gmcNumber}`
     );
     expect(req.request.method).toEqual("GET");
     req.flush(mockConnectionResponse);
-
     const connectionHistory = store.selectSnapshot(
       (state) => state.connection.connectionHistory
     );
-
     expect(connectionHistory).toEqual(
       mockConnectionResponse.connection.connectionHistory
     );
-
     httpMock.verify();
   }));
 

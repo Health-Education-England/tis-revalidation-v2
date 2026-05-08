@@ -1,5 +1,6 @@
 export interface IConnectionResponse {
   designatedBodyCode: IUserDBC;
+  hiddenDiscrepancies: IHiddenDiscrepancy[];
   connection: {
     connectionHistory: IConnectionHistory[];
   };
@@ -26,4 +27,18 @@ export interface IConnectionHistory {
 
 export interface IUserDBC {
   designatedBodyCode: string;
+}
+
+export interface IHiddenDiscrepancy {
+  id: string;
+  gmcId: string;
+  hiddenForDesignatedBodyCode: string;
+  hiddenBy: string;
+  reason: string;
+  hiddenDateTime: string;
+}
+
+export interface IShowDiscrepancyParameters {
+  discrepancyId: string;
+  hiddenForDesignatedBodyCode: string;
 }

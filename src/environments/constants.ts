@@ -20,6 +20,7 @@ export const APP_URLS_CONFIG: IAppUrls = {
   listAdmins: `api/admins`,
   listFiles: `api/storage/list`,
   saveRecommendation: `api/recommendation`,
+  showDiscrepancy: `api/connection/discrepancies/hidden`,
   submitToGMC: `api/recommendation`,
   upload: `api/storage/upload`
 };

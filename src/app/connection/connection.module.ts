@@ -12,9 +12,16 @@ import { ConnectionRoutingModule } from "./connection-routing.module";
 import { ConnectionResolver } from "./connection.resolver";
 import { ConnectionService } from "./services/connection.service";
 import { ConnectionState } from "./state/connection.state";
+import { ConnectionHistoryComponent } from "./connection-history/connection-history.component";
+import { ConnectionHiddenDiscrepanciesComponent } from "./connection-hidden-discrepancies/connection-hidden-discrepancies.component";
+import { FormatDesignatedBodyPipe } from "../shared/pipes/format-designated-body.pipe";
 
 @NgModule({
-  declarations: [ConnectionComponent],
+  declarations: [
+    ConnectionComponent,
+    ConnectionHistoryComponent,
+    ConnectionHiddenDiscrepanciesComponent
+  ],
   imports: [
     CommonModule,
     MaterialModule,
@@ -25,6 +32,6 @@ import { ConnectionState } from "./state/connection.state";
     NgxsModule.forFeature([ConnectionState]),
     UpdateConnectionsModule
   ],
-  providers: [ConnectionService, ConnectionResolver]
+  providers: [ConnectionService, ConnectionResolver, FormatDesignatedBodyPipe]
 })
 export class ConnectionModule {}

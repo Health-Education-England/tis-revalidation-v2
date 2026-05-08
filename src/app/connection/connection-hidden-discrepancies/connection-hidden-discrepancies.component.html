@@ -1,0 +1,86 @@
+<mat-card class="mb-20 alert-warning" appearance="outlined">
+  <mat-card-title>Hidden discrepancy</mat-card-title>
+  <mat-card-subtitle
+    >This discrepancy has been flagged as hidden and will appear in the
+    <strong>Hidden discrepancies</strong> list for admins assigned to the
+    designated bodies shown in the table below. When the
+    <strong>Show</strong> button is clicked, the discrepancy will reappear on
+    the Discrepancies list for the corresponding designated
+    body.</mat-card-subtitle
+  >
+  <table
+    mat-table
+    [dataSource]="hiddenDiscrepancies"
+    class="w-100"
+    data-cy="hidden-discrepancies-table"
+  >
+    <caption class="sr-only">
+      Hidden discrepancies
+    </caption>
+    <ng-container matColumnDef="hiddenForDesignatedBodyCode">
+      <th mat-header-cell scope="col" *matHeaderCellDef>Hidden for DBC</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.hiddenForDesignatedBodyCode | formatDesignatedBody: "abbr" }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="hiddenBy">
+      <th mat-header-cell scope="col" *matHeaderCellDef>Hidden by</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.hiddenBy }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="reason">
+      <th mat-header-cell scope="col" *matHeaderCellDef>Reason</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.reason }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="hiddenDateTime">
+      <th mat-header-cell scope="col" *matHeaderCellDef>Date hidden</th>
+      <td class="no-wrap" mat-cell *matCellDef="let element">
+        {{ element.hiddenDateTime | date: dateFormat }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="id">
+      <th
+        class="text-align-right"
+        mat-header-cell
+        scope="col"
+        *matHeaderCellDef
+      >
+        <span class="sr-only">Action</span>
+      </th>
+      <td class="text-align-right" mat-cell *matCellDef="let element">
+        <button
+          [disabled]="updatingDiscrepancyIds.includes(element.id)"
+          (click)="
+            onShowDiscrepancy(element.id, element.hiddenForDesignatedBodyCode)
+          "
+          mat-raised-button
+          color="primary"
+          data-testid="button-show-discrepancy"
+        >
+          {{
+            updatingDiscrepancyIds.includes(element.id) ? "Showing..." : "Show"
+          }}
+        </button>
+      </td>
+    </ng-container>
+
+    <tr
+      mat-header-row
+      *matHeaderRowDef="hiddenDiscrepanciesColumnsToDisplay"
+      class="element-row"
+    ></tr>
+    <tr
+      tabindex="0"
+      mat-row
+      *matRowDef="let element; columns: hiddenDiscrepanciesColumnsToDisplay"
+      class="element-row"
+    ></tr>
+  </table>
+</mat-card>

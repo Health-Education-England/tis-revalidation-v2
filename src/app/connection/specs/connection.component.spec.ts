@@ -1,37 +1,53 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { RouterTestingModule } from "@angular/router/testing";
-import { NgxsModule } from "@ngxs/store";
+import { NgxsModule, Store } from "@ngxs/store";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { of, Subscription, throwError } from "rxjs";
 
-import { MaterialModule } from "../shared/material/material.module";
-import { ConnectionState } from "../connection/state/connection.state";
-import { ConnectionComponent } from "./connection.component";
-import { SnackBarService } from "../shared/services/snack-bar/snack-bar.service";
-import { ActionType } from "../update-connections/update-connections.interfaces";
-import { UpdateConnectionsService } from "../update-connections/services/update-connections.service";
-import { IConnectionHistory } from "./connection.interfaces";
+import { MaterialModule } from "../../shared/material/material.module";
+import { ConnectionState } from "../state/connection.state";
+import { ConnectionComponent } from "../connection.component";
+import { SnackBarService } from "../../shared/services/snack-bar/snack-bar.service";
+import { ActionType } from "../../update-connections/update-connections.interfaces";
+import { UpdateConnectionsService } from "../../update-connections/services/update-connections.service";
+import { RouterModule } from "@angular/router";
+import { ConnectionHistoryComponent } from "../connection-history/connection-history.component";
+import { mockConnectionResponse } from "./mock-data/connection-details-spec-data";
+import { Pipe, PipeTransform } from "@angular/core";
+import { ConnectionHiddenDiscrepanciesComponent } from "../connection-hidden-discrepancies/connection-hidden-discrepancies.component";
+import { By } from "@angular/platform-browser";
+import { ConnectionService } from "../services/connection.service";
+import { MatDialog } from "@angular/material/dialog";
+import { ConfirmDialogComponent } from "src/app/shared/confirm-dialog/confirm-dialog.component";
+import { FormatDesignatedBodyPipe } from "src/app/shared/pipes/format-designated-body.pipe";
+
+@Pipe({ name: "formatDesignatedBody" })
+class MockFormatDesignatedBodyPipe implements PipeTransform {
+  transform(value: string): string {
+    return value;
+  }
+}
+
+@Pipe({ name: "AdminName" })
+class MockAdminNamePipe implements PipeTransform {
+  transform(value: string): string {
+    return value;
+  }
+}
+
+const matDialogMock = {
+  open: () => ({
+    afterClosed: () => of(true)
+  })
+};
 
 describe("ConnectionComponent", () => {
   let component: ConnectionComponent;
   let fixture: ComponentFixture<ConnectionComponent>;
   let updateConnectionService: UpdateConnectionsService;
   let snackBarService: SnackBarService;
-  const element: IConnectionHistory = {
-    connectionId: "123456",
-    gmcId: "123456",
-    gmcClientId: "client-id",
-    newDesignatedBodyCode: "1-ASDFG",
-    previousDesignatedBodyCode: "1-FGHJK",
-    reason: "Some reason",
-    reasonMessage: "Some reason",
-    requestType: "ADD",
-    requestTime: new Date(),
-    responseCode: "0",
-    responseMessage: "Sussess",
-    updatedBy: "bobfossil@hee.nhs.uk"
-  };
+  let connectionService: ConnectionService;
+  let store: Store;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -39,11 +55,23 @@ describe("ConnectionComponent", () => {
         NgxsModule.forRoot([ConnectionState]),
         HttpClientTestingModule,
         MaterialModule,
-        RouterTestingModule,
+        RouterModule.forRoot([]),
         ReactiveFormsModule,
         FormsModule
       ],
-      declarations: [ConnectionComponent]
+      declarations: [
+        ConnectionComponent,
+        ConnectionHistoryComponent,
+        ConnectionHiddenDiscrepanciesComponent,
+        MockFormatDesignatedBodyPipe,
+        MockAdminNamePipe,
+        ConfirmDialogComponent
+      ],
+      providers: [
+        FormatDesignatedBodyPipe,
+        ConnectionService,
+        { provide: MatDialog, useValue: matDialogMock }
+      ]
     }).compileComponents();
   });
 
@@ -51,15 +79,20 @@ describe("ConnectionComponent", () => {
     updateConnectionService = TestBed.inject(UpdateConnectionsService);
     snackBarService = TestBed.inject(SnackBarService);
     fixture = TestBed.createComponent(ConnectionComponent);
+    store = TestBed.inject(Store);
+    connectionService = TestBed.inject(ConnectionService);
+
+    store.reset({
+      connection: {
+        gmcNumber: null,
+        connectionHistory: mockConnectionResponse.connection.connectionHistory,
+        hiddenDiscrepancies: mockConnectionResponse.hiddenDiscrepancies,
+        doctorCurrentDbc: null
+      }
+    });
     component = fixture.componentInstance;
 
-    component.ngOnInit();
-    fixture.whenStable();
     fixture.detectChanges();
-  });
-
-  afterEach(() => {
-    fixture.destroy();
   });
 
   it("should create", () => {
@@ -112,7 +145,7 @@ describe("ConnectionComponent", () => {
     const message = "Request failed";
     spyOn(snackBarService, "openSnackBar");
     spyOn(updateConnectionService, "updateConnection").and.returnValue(
-      throwError({ message })
+      throwError(() => new Error(message))
     );
 
     const formValue = {
@@ -124,8 +157,6 @@ describe("ConnectionComponent", () => {
     component.doctorCurrentDbc = "1-ABCDE";
     component.gmcNumber = 123456;
     component.updateConnection(formValue);
-
-    expect(component.submitting).toBeTruthy();
     expect(snackBarService.openSnackBar).toHaveBeenCalledWith(message);
   });
 
@@ -178,22 +209,42 @@ describe("ConnectionComponent", () => {
       ActionType.REMOVE_CONNECTION
     );
   });
-
-  it("should set the expandedElement to null when element is already expanded", () => {
-    component.expandedElement = element;
-    const event = new MouseEvent("click");
-    spyOn(event, "preventDefault");
-
-    component.currentExpanded(element, event);
-    expect(component.expandedElement).toBeNull();
+  it("should display hidden discrepancies details component when available", () => {
+    expect(
+      fixture.debugElement.query(
+        By.css("[data-testid='component-hidden-discrepancies']")
+      )
+    ).toBeTruthy();
   });
 
-  it("should set the expandedElement when connection history row data is passed", () => {
-    component.expandedElement = null;
-    const event = new MouseEvent("click");
-    spyOn(event, "preventDefault");
+  it("should NOT display hidden discrepancies details component when NONE available", () => {
+    store.reset({
+      connection: {
+        gmcNumber: null,
+        connectionHistory: mockConnectionResponse.connection.connectionHistory,
+        hiddenDiscrepancies: [],
+        doctorCurrentDbc: null
+      }
+    });
+    fixture.detectChanges();
+    expect(
+      fixture.debugElement.query(
+        By.css("[data-testid='component-hidden-discrepancies']")
+      )
+    ).toBeFalsy();
+  });
 
-    component.currentExpanded(element, event);
-    expect(component.expandedElement).toBe(element);
+  it("should call 'showDiscrepancy' service method on 'show' event", () => {
+    const storeSpy = spyOn(store, "dispatch");
+    const serviceSpy = spyOn(
+      connectionService,
+      "showDiscrepancy"
+    ).and.returnValue(of(void 0));
+    component.showDiscrepancy({
+      discrepancyId: "69cb99444dadd14f27a0d092",
+      hiddenForDesignatedBodyCode: "1-1RUZV1D"
+    });
+    expect(serviceSpy).toHaveBeenCalledWith("69cb99444dadd14f27a0d092");
+    expect(storeSpy).toHaveBeenCalled();
   });
 });

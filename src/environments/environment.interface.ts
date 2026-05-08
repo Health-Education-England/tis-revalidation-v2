@@ -47,6 +47,7 @@ export interface IAppUrls {
   readonly listAdmins: string;
   readonly listFiles: string;
   readonly saveRecommendation: string;
+  readonly showDiscrepancy: string;
   readonly submitToGMC: string;
   readonly upload: string;
 }

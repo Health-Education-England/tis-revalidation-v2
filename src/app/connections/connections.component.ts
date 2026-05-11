@@ -51,23 +51,18 @@ export class ConnectionsComponent implements OnDestroy {
     this.filter$.subscribe((filter) => {
       let actions = CONNECTION_ACTIONS;
       switch (filter) {
-        case ConnectionsFilterType.ALL:
+        case ConnectionsFilterType.CURRENT_CONNECTIONS:
           actions = actions.filter(
-            (c) => c.action !== ActionType.UNHIDE_CONNECTION
+            (c) => c.action !== ActionType.HIDE_DISCREPANCY
           );
           break;
+
         case ConnectionsFilterType.HIDDEN_DISCREPANCIES:
           actions = actions.filter(
-            (c) => c.action !== ActionType.HIDE_CONNECTION
-          );
-          break;
-        case ConnectionsFilterType.HISTORIC_CONNECTIONS:
-          actions = actions.filter(
-            (c) => c.action !== ActionType.REMOVE_CONNECTION
+            (c) => c.action !== ActionType.HIDE_DISCREPANCY
           );
           break;
       }
-
       this.updateConnectionsService.actions$.next(actions);
     });
   }
@@ -82,15 +77,27 @@ export class ConnectionsComponent implements OnDestroy {
       }));
 
       const admin = this.authService.userName;
+      const adminDesignatedBodyCodes = this.authService.userDesignatedBodies;
+      let payload: {};
 
-      const payload = {
-        changeReason: formValue.reason,
-        designatedBodyCode:
-          formValue.action === ActionType.ADD_CONNECTION ? formValue.dbc : null,
-        doctors,
-        admin: admin
-      };
-
+      if (formValue.action === ActionType.HIDE_DISCREPANCY) {
+        payload = {
+          adminDesignatedBodyCodes,
+          doctors,
+          hiddenBy: admin,
+          reason: formValue.reason
+        };
+      } else {
+        payload = {
+          changeReason: formValue.reason,
+          designatedBodyCode:
+            formValue.action === ActionType.ADD_CONNECTION
+              ? formValue.dbc
+              : null,
+          doctors,
+          admin: admin
+        };
+      }
       this.componentSubscription = this.updateConnectionsService
         .updateConnection(payload, formValue.action)
         .subscribe(

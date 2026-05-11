@@ -28,6 +28,7 @@ import {
 } from "../shared/confirm-dialog/confirm-dialog.component";
 import { MatDialog } from "@angular/material/dialog";
 import { FormatDesignatedBodyPipe } from "../shared/pipes/format-designated-body.pipe";
+import { CONNECTION_ACTIONS } from "../update-connections/constants";
 
 @Component({
   selector: "app-connection",
@@ -86,6 +87,10 @@ export class ConnectionComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    let actions = CONNECTION_ACTIONS;
+    actions = actions.filter((c) => c.action !== ActionType.HIDE_DISCREPANCY);
+    this.updateConnectionsService.actions$.next(actions);
+
     this.traineeDetails$.subscribe((trainee) => {
       this.enableUpdateConnection =
         this.authService.isRevalAdmin &&
@@ -151,6 +156,7 @@ export class ConnectionComponent implements OnInit, OnDestroy {
 
   updateConnection(formValue: any) {
     const admin = this.authService.userName;
+    const adminDesignatedBodyCodes = this.authService.userDesignatedBodies;
     this.submitting = true;
     const doctors: IDoctor[] = [
       {
@@ -159,14 +165,23 @@ export class ConnectionComponent implements OnInit, OnDestroy {
       }
     ];
 
-    const payload = {
-      changeReason: formValue.reason,
-      designatedBodyCode:
-        formValue.action === ActionType.ADD_CONNECTION ? formValue.dbc : null,
-      doctors,
-      admin
-    };
-
+    let payload: {};
+    if (formValue.action === ActionType.HIDE_DISCREPANCY) {
+      payload = {
+        adminDesignatedBodyCodes,
+        doctors,
+        hiddenBy: admin,
+        reason: formValue.reason
+      };
+    } else {
+      payload = {
+        changeReason: formValue.reason,
+        designatedBodyCode:
+          formValue.action === ActionType.ADD_CONNECTION ? formValue.dbc : null,
+        doctors,
+        admin
+      };
+    }
     this.componentSubscription = this.updateConnectionsService
       .updateConnection(payload, formValue.action)
       .subscribe({

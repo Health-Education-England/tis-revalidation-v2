@@ -25,7 +25,10 @@ export class UpdateConnectionsService {
 
   public stateName = "updateConnections";
 
-  constructor(private http: HttpClient, private store: Store) {}
+  constructor(
+    private http: HttpClient,
+    private store: Store
+  ) {}
 
   public enableUpdateConnections(
     enableUpdateConnections: boolean
@@ -49,12 +52,8 @@ export class UpdateConnectionsService {
         action = "remove";
         break;
 
-      case ActionType.HIDE_CONNECTION:
-        action = "hide";
-        break;
-
-      case ActionType.UNHIDE_CONNECTION:
-        action = "unhide";
+      case ActionType.HIDE_DISCREPANCY:
+        action = "discrepancies/hidden";
         break;
     }
 
@@ -64,13 +63,9 @@ export class UpdateConnectionsService {
           `${environment.appUrls.getConnections}/${action}`,
           payload
         )
-        .pipe(catchError(this.errorCallback));
+        .pipe(catchError((err) => throwError(() => err)));
     } else {
-      return this.errorCallback("Action is not defined");
+      return throwError(() => new Error("Action is not defined"));
     }
-  }
-
-  private errorCallback(error: any) {
-    return throwError(error);
   }
 }

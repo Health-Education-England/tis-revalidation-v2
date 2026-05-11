@@ -114,30 +114,16 @@ describe("Connections state", () => {
     store.dispatch(new ResetConnectionsFilter());
     const filter = store.selectSnapshot((state) => state.connections.filter);
 
-    expect(filter).toBe(ConnectionsFilterType.ALL);
+    expect(filter).toBe(ConnectionsFilterType.CURRENT_CONNECTIONS);
   });
 
   it("should set the filter when FilterConnections is dispatched", () => {
-    store.dispatch(
-      new FilterConnections(ConnectionsFilterType.HISTORIC_CONNECTIONS)
-    );
+    store.dispatch(new FilterConnections(ConnectionsFilterType.DISCREPANCIES));
     const filter = store.selectSnapshot((state) => state.connections.filter);
 
     store.selectSnapshot((state) => state.connections.disableSearchAndSort);
 
-    expect(filter).toBe(ConnectionsFilterType.HISTORIC_CONNECTIONS);
-  });
-
-  it("should not disableSearchAndSort when FilterConnections is dispatched with ALL filter", () => {
-    store.dispatch(new FilterConnections(ConnectionsFilterType.ALL));
-    const filter = store.selectSnapshot((state) => state.connections.filter);
-
-    const disableSearchAndSort = store.selectSnapshot(
-      (state) => state.connections.disableSearchAndSort
-    );
-
-    expect(filter).toBe(ConnectionsFilterType.ALL);
-    expect(disableSearchAndSort).toBeFalsy();
+    expect(filter).toBe(ConnectionsFilterType.DISCREPANCIES);
   });
 
   it("should set searchQuery when ConnectionsSearch is dispatched", () => {

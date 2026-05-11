@@ -166,17 +166,18 @@ export class ConnectionsState extends RecordsState {
     return ctx.patchState({
       filter: action.filter,
       disableSearchAndSort:
-        action.filter !== ConnectionsFilterType.ALL &&
         action.filter !== ConnectionsFilterType.HIDDEN_DISCREPANCIES &&
         action.filter !== ConnectionsFilterType.CURRENT_CONNECTIONS &&
-        action.filter !== ConnectionsFilterType.HISTORIC_CONNECTIONS &&
         action.filter !== ConnectionsFilterType.DISCREPANCIES
     });
   }
 
   @Action(ResetConnectionsFilter)
   resetFilter(ctx: StateContext<ConnectionsStateModel>) {
-    return super.resetFilterHandler(ctx, ConnectionsFilterType.ALL);
+    return super.resetFilterHandler(
+      ctx,
+      ConnectionsFilterType.CURRENT_CONNECTIONS
+    );
   }
   @Action(SetConnectionsTableFilters)
   setRecommendationsTableFilters(

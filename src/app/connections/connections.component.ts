@@ -1,7 +1,10 @@
 import { Component, OnDestroy } from "@angular/core";
 import { Store } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
-import { IUpdateConnectionResponse } from "../connection/connection.interfaces";
+import {
+  IHideDiscrepancyResponse,
+  IUpdateConnectionResponse
+} from "../connection/connection.interfaces";
 import { RecordsService } from "../records/services/records.service";
 import { SnackBarService } from "../shared/services/snack-bar/snack-bar.service";
 import { CONNECTION_ACTIONS } from "../update-connections/constants";
@@ -87,6 +90,22 @@ export class ConnectionsComponent implements OnDestroy {
           hiddenBy: admin,
           reason: formValue.reason
         };
+
+        this.componentSubscription = this.updateConnectionsService
+          .hideDiscrepancy(payload)
+          .subscribe({
+            next: () => {
+              this.snackBarService.openSnackBar(
+                "Discrepancies hidden successfully"
+              );
+            },
+            error: (error) => {
+              this.snackBarService.openSnackBar(error.message);
+            },
+            complete: () => {
+              this.onCompleteUpdate();
+            }
+          });
       } else {
         payload = {
           changeReason: formValue.reason,
@@ -97,28 +116,33 @@ export class ConnectionsComponent implements OnDestroy {
           doctors,
           admin: admin
         };
+
+        this.componentSubscription = this.updateConnectionsService
+          .updateConnection(payload, formValue.action)
+          .subscribe({
+            next: (response: IUpdateConnectionResponse) => {
+              this.snackBarService.openSnackBar(response.message);
+            },
+            error: (error) => {
+              this.snackBarService.openSnackBar(error.message);
+            },
+            complete: () => {
+              this.onCompleteUpdate();
+            }
+          });
       }
-      this.componentSubscription = this.updateConnectionsService
-        .updateConnection(payload, formValue.action)
-        .subscribe(
-          (response: IUpdateConnectionResponse) => {
-            this.snackBarService.openSnackBar(response.message);
-          },
-          (error) => {
-            this.snackBarService.openSnackBar(error.message);
-          },
-          () => {
-            this.store.dispatch(new EnableUpdateConnections(false));
-            this.recordsService.enableAllocateAdmin(false);
-            this.recordsService.get();
-            this.loading = false;
-          }
-        );
     } else {
       this.snackBarService.openSnackBar(
         "Please select doctors to update connections"
       );
     }
+  }
+
+  onCompleteUpdate() {
+    this.store.dispatch(new EnableUpdateConnections(false));
+    this.recordsService.enableAllocateAdmin(false);
+    this.recordsService.get();
+    this.loading = false;
   }
 
   ngOnDestroy(): void {

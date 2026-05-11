@@ -110,7 +110,7 @@ describe("Connections state", () => {
     }));
   });
 
-  it("should reset filter to ALL when ResetConnectionsFilter is dispatched", () => {
+  it("should reset filter to CURRENT_CONNECTIONS when ResetConnectionsFilter is dispatched", () => {
     store.dispatch(new ResetConnectionsFilter());
     const filter = store.selectSnapshot((state) => state.connections.filter);
 

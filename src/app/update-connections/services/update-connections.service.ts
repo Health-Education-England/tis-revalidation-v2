@@ -4,7 +4,10 @@ import { environment } from "@environment";
 import { Store } from "@ngxs/store";
 import { BehaviorSubject, Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
-import { IUpdateConnectionResponse } from "src/app/connection/connection.interfaces";
+import {
+  IHideDiscrepancyResponse,
+  IUpdateConnectionResponse
+} from "src/app/connection/connection.interfaces";
 import { CONNECTION_ACTIONS } from "../constants";
 import { EnableUpdateConnections } from "../state/update-connections.actions";
 import { ActionType, IAction } from "../update-connections.interfaces";
@@ -38,6 +41,15 @@ export class UpdateConnectionsService {
     );
   }
 
+  hideDiscrepancy(payload: any): Observable<IHideDiscrepancyResponse> {
+    return this.http
+      .post<IHideDiscrepancyResponse>(
+        `${environment.appUrls.getConnections}/discrepancies/hidden`,
+        payload
+      )
+      .pipe(catchError((err) => throwError(() => err)));
+  }
+
   updateConnection(
     payload: any,
     actionType: ActionType
@@ -50,10 +62,6 @@ export class UpdateConnectionsService {
 
       case ActionType.REMOVE_CONNECTION:
         action = "remove";
-        break;
-
-      case ActionType.HIDE_DISCREPANCY:
-        action = "discrepancies/hidden";
         break;
     }
 

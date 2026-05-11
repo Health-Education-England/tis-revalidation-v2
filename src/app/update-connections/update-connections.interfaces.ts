@@ -1,8 +1,7 @@
 export enum ActionType {
   ADD_CONNECTION = "Add connection",
   REMOVE_CONNECTION = "Remove connection",
-  HIDE_DISCREPANCY = "Hide discrepancy",
-  SHOW_DISCREPANCY = "Show discrepancy"
+  HIDE_DISCREPANCY = "Hide discrepancy"
 }
 
 export interface IAction {

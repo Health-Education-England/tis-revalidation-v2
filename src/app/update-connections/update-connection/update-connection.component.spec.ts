@@ -106,8 +106,7 @@ describe("UpdateConnectionComponent", () => {
     expect(dbc).toBeDefined();
   });
 
-  xit("form should not have reasons when action is not add / remove", () => {
-    // NO HIDE CONNECTION YET
+  it("form should not have reasons when action is not add / remove", () => {
     component.updateConnectionForm.controls[actionText].setValue(
       ActionType.HIDE_DISCREPANCY
     );

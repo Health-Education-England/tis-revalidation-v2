@@ -3,9 +3,10 @@ import {
   ComponentFixture,
   TestBed,
   fakeAsync,
+  flush,
   tick
 } from "@angular/core/testing";
-import { NgxsModule } from "@ngxs/store";
+import { NgxsModule, Store } from "@ngxs/store";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { MaterialModule } from "../shared/material/material.module";
@@ -16,6 +17,8 @@ import { ActionType } from "../update-connections/update-connections.interfaces"
 import { mockConnectionsResponse } from "./mock-data/connections-spec-data";
 import { of, throwError } from "rxjs";
 import { RecordsService } from "../records/services/records.service";
+import { ConnectionsState } from "./state/connections.state";
+import { EnableUpdateConnections } from "../update-connections/state/update-connections.actions";
 
 describe("ConnectionsComponent", () => {
   let component: ConnectionsComponent;
@@ -23,16 +26,18 @@ describe("ConnectionsComponent", () => {
   let updateConnectionsService: UpdateConnectionsService;
   let snackBarService: SnackBarService;
   let recordsService: RecordsService;
+  let store: Store;
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
       imports: [
-        NgxsModule.forRoot(),
+        NgxsModule.forRoot([ConnectionsState]),
         HttpClientTestingModule,
         RouterTestingModule,
         MaterialModule
       ],
       declarations: [ConnectionsComponent],
+      providers: [UpdateConnectionsService, SnackBarService, RecordsService],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   });
@@ -41,8 +46,10 @@ describe("ConnectionsComponent", () => {
     updateConnectionsService = TestBed.inject(UpdateConnectionsService);
     snackBarService = TestBed.inject(SnackBarService);
     recordsService = TestBed.inject(RecordsService);
+    store = TestBed.inject(Store);
     fixture = TestBed.createComponent(ConnectionsComponent);
     component = fixture.componentInstance;
+    recordsService.setConnectionsActions();
     fixture.detectChanges();
   });
 
@@ -99,9 +106,10 @@ describe("ConnectionsComponent", () => {
     expect(component.loading).toBeTruthy();
   });
 
-  it("should display snackbar success message and set loading to false when bulk Add connection request succeeds", () => {
+  it("should display snackbar success message and set loading to false when bulk Add connection request succeeds", fakeAsync(() => {
     const message = "Connections updated!";
     spyOn(snackBarService, "openSnackBar");
+    spyOn(component, "onCompleteUpdate").and.callThrough();
     spyOn(updateConnectionsService, "updateConnection").and.returnValue(
       of({ message })
     );
@@ -116,10 +124,12 @@ describe("ConnectionsComponent", () => {
 
     component.selectedItems = mockConnectionsResponse.connections;
     component.updateConnections(formValue);
-
+    tick(500);
     expect(snackBarService.openSnackBar).toHaveBeenCalledWith(message);
+    expect(component.onCompleteUpdate).toHaveBeenCalled();
     expect(component.loading).toBeFalsy();
-  });
+    flush();
+  }));
 
   it("should display snackbar error message when bulk Add connection request fails", fakeAsync(() => {
     const message = "Request failed";
@@ -139,8 +149,52 @@ describe("ConnectionsComponent", () => {
     component.updateConnections(formValue);
     tick();
 
+    expect(component.onCompleteUpdate).toHaveBeenCalled();
     expect(component.loading).toBeTruthy();
     expect(snackBarService.openSnackBar).toHaveBeenCalledWith(message);
+    flush();
+  }));
+
+  it("should dispatch EnableUpdateConnections action as false after update connection completes", fakeAsync(() => {
+    spyOn(store, "dispatch");
+    spyOn(updateConnectionsService, "updateConnection").and.returnValue(
+      of({ message: "Connections updated!" })
+    );
+
+    const formValue = {
+      action: ActionType.ADD_CONNECTION,
+      reason: "Conflict of interest",
+      dbc: "1-FGHIJ"
+    };
+
+    component.selectedItems = mockConnectionsResponse.connections;
+    component.updateConnections(formValue);
+    tick();
+    expect(store.dispatch).toHaveBeenCalledWith(
+      new EnableUpdateConnections(false)
+    );
+    flush();
+  }));
+
+  it("should dispatch EnableUpdateConnections action as false after update connection errors", fakeAsync(() => {
+    spyOn(store, "dispatch");
+    spyOn(updateConnectionsService, "updateConnection").and.returnValue(
+      throwError(() => new Error("New error message"))
+    );
+
+    const formValue = {
+      action: ActionType.ADD_CONNECTION,
+      reason: "Conflict of interest",
+      dbc: "1-FGHIJ"
+    };
+
+    component.selectedItems = mockConnectionsResponse.connections;
+    component.updateConnections(formValue);
+    tick();
+    expect(store.dispatch).toHaveBeenCalledWith(
+      new EnableUpdateConnections(false)
+    );
+    flush();
   }));
 
   it("should display snackbar to prompt user to select doctors if no doctors selected", () => {

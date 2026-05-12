@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "@environment";
 import { Store } from "@ngxs/store";
@@ -71,7 +71,7 @@ export class UpdateConnectionsService {
           `${environment.appUrls.getConnections}/${action}`,
           payload
         )
-        .pipe(catchError((err: Error) => throwError(() => err)));
+        .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
     } else {
       return throwError(() => new Error("Action is not defined"));
     }

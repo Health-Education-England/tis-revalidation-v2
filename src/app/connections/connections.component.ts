@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from "@angular/core";
 import { Store } from "@ngxs/store";
-import { Observable, Subscription } from "rxjs";
+import { Observable, Subscription, finalize } from "rxjs";
 import { IUpdateConnectionResponse } from "../connection/connection.interfaces";
 import { RecordsService } from "../records/services/records.service";
 import { SnackBarService } from "../shared/services/snack-bar/snack-bar.service";
@@ -114,16 +114,13 @@ export class ConnectionsComponent implements OnDestroy {
 
         this.componentSubscription = this.updateConnectionsService
           .updateConnection(payload, formValue.action)
+          .pipe(finalize(() => this.onCompleteUpdate()))
           .subscribe({
             next: (response: IUpdateConnectionResponse) => {
               this.snackBarService.openSnackBar(response.message);
             },
             error: (error) => {
               this.snackBarService.openSnackBar(error.message);
-              this.onCompleteUpdate();
-            },
-            complete: () => {
-              this.onCompleteUpdate();
             }
           });
       }

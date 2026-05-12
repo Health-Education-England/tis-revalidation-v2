@@ -1,5 +1,10 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick
+} from "@angular/core/testing";
 import { NgxsModule } from "@ngxs/store";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { RouterTestingModule } from "@angular/router/testing";
@@ -116,11 +121,12 @@ describe("ConnectionsComponent", () => {
     expect(component.loading).toBeFalsy();
   });
 
-  it("should display snackbar error message when bulk Add connection request fails", () => {
+  it("should display snackbar error message when bulk Add connection request fails", fakeAsync(() => {
     const message = "Request failed";
     spyOn(snackBarService, "openSnackBar");
+    spyOn(component, "onCompleteUpdate");
     spyOn(updateConnectionsService, "updateConnection").and.returnValue(
-      throwError({ message })
+      throwError(() => new Error(message))
     );
 
     const formValue = {
@@ -131,10 +137,11 @@ describe("ConnectionsComponent", () => {
 
     component.selectedItems = mockConnectionsResponse.connections;
     component.updateConnections(formValue);
+    tick();
 
     expect(component.loading).toBeTruthy();
     expect(snackBarService.openSnackBar).toHaveBeenCalledWith(message);
-  });
+  }));
 
   it("should display snackbar to prompt user to select doctors if no doctors selected", () => {
     spyOn(updateConnectionsService, "updateConnection").and.callThrough();

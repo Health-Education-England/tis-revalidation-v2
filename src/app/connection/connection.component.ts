@@ -165,23 +165,13 @@ export class ConnectionComponent implements OnInit, OnDestroy {
       }
     ];
 
-    let payload: {};
-    if (formValue.action === ActionType.HIDE_DISCREPANCY) {
-      payload = {
-        adminDesignatedBodyCodes,
-        doctors,
-        hiddenBy: admin,
-        reason: formValue.reason
-      };
-    } else {
-      payload = {
-        changeReason: formValue.reason,
-        designatedBodyCode:
-          formValue.action === ActionType.ADD_CONNECTION ? formValue.dbc : null,
-        doctors,
-        admin
-      };
-    }
+    const payload = {
+      changeReason: formValue.reason,
+      designatedBodyCode:
+        formValue.action === ActionType.ADD_CONNECTION ? formValue.dbc : null,
+      doctors,
+      admin
+    };
     this.componentSubscription = this.updateConnectionsService
       .updateConnection(payload, formValue.action)
       .subscribe({

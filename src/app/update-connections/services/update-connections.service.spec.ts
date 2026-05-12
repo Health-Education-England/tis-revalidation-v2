@@ -62,7 +62,7 @@ describe("UpdateConnectionsService", () => {
     http.verify();
   });
 
-  it("should hide selected connection", () => {
+  it("should hide selected discrepancy", () => {
     const endPoint = `${environment.appUrls.getConnections}/discrepancies/hidden`;
 
     service.hideDiscrepancy({}).subscribe();

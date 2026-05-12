@@ -71,7 +71,7 @@ export class UpdateConnectionsService {
           `${environment.appUrls.getConnections}/${action}`,
           payload
         )
-        .pipe(catchError((err) => throwError(() => err)));
+        .pipe(catchError((err: Error) => throwError(() => err)));
     } else {
       return throwError(() => new Error("Action is not defined"));
     }

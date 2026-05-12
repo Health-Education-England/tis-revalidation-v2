@@ -1,5 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
+import {
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators
+} from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { Observable, Subscription } from "rxjs";
 import { AuthService } from "src/app/core/auth/auth.service";
@@ -127,9 +131,9 @@ export class UpdateConnectionComponent implements OnInit {
           }
 
           this.reasonControl.setValue("");
-          this.reasons = this.actions.find(
-            (arm) => arm.action === action
-          )?.reasons;
+          this.reasons =
+            this.actions.find((arm) => arm.action === action)?.reasons || [];
+
           this.reasonControl.updateValueAndValidity();
         }
       })

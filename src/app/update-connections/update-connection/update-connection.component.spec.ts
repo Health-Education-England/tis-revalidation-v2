@@ -1,5 +1,10 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick
+} from "@angular/core/testing";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -17,6 +22,7 @@ import { UpdateConnectionsState } from "../state/update-connections.state";
 import { UpdateConnectionsService } from "../services/update-connections.service";
 import { AuthService } from "src/app/core/auth/auth.service";
 import { ReferenceState } from "src/app/reference/state/reference.state";
+import { CONNECTION_ACTIONS, HIDE_DISCREPANCY_ACTION } from "../constants";
 
 describe("UpdateConnectionComponent", () => {
   let component: UpdateConnectionComponent;
@@ -106,11 +112,15 @@ describe("UpdateConnectionComponent", () => {
     expect(dbc).toBeDefined();
   });
 
-  it("form should not have reasons when action is not add / remove", () => {
+  it("form should include have reason as freetext when hiding discrepancies", () => {
+    updateConnectionsService.actions$.next([
+      ...CONNECTION_ACTIONS,
+      { ...HIDE_DISCREPANCY_ACTION }
+    ]);
+
     component.updateConnectionForm.controls[actionText].setValue(
       ActionType.HIDE_DISCREPANCY
     );
-
     const reason = component.updateConnectionForm.controls[reasonText];
     expect(reason).toBeDefined();
     expect(component.reasons.length).toBe(0);

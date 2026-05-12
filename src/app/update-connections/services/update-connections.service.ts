@@ -29,8 +29,8 @@ export class UpdateConnectionsService {
   public stateName = "updateConnections";
 
   constructor(
-    private http: HttpClient,
-    private store: Store
+    readonly http: HttpClient,
+    readonly store: Store
   ) {}
 
   public enableUpdateConnections(

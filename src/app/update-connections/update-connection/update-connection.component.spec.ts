@@ -1,10 +1,5 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import {
-  ComponentFixture,
-  TestBed,
-  fakeAsync,
-  tick
-} from "@angular/core/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";

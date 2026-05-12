@@ -156,7 +156,6 @@ export class ConnectionComponent implements OnInit, OnDestroy {
 
   updateConnection(formValue: any) {
     const admin = this.authService.userName;
-    const adminDesignatedBodyCodes = this.authService.userDesignatedBodies;
     this.submitting = true;
     const doctors: IDoctor[] = [
       {

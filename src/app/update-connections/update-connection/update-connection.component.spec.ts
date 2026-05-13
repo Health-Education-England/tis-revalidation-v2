@@ -17,6 +17,7 @@ import { UpdateConnectionsState } from "../state/update-connections.state";
 import { UpdateConnectionsService } from "../services/update-connections.service";
 import { AuthService } from "src/app/core/auth/auth.service";
 import { ReferenceState } from "src/app/reference/state/reference.state";
+import { CONNECTION_ACTIONS, HIDE_DISCREPANCY_ACTION } from "../constants";
 
 describe("UpdateConnectionComponent", () => {
   let component: UpdateConnectionComponent;
@@ -106,12 +107,15 @@ describe("UpdateConnectionComponent", () => {
     expect(dbc).toBeDefined();
   });
 
-  xit("form should not have reasons when action is not add / remove", () => {
-    // NO HIDE CONNECTION YET
-    component.updateConnectionForm.controls[actionText].setValue(
-      ActionType.HIDE_CONNECTION
-    );
+  it("form should include have reason as freetext when hiding discrepancies", () => {
+    updateConnectionsService.actions$.next([
+      ...CONNECTION_ACTIONS,
+      { ...HIDE_DISCREPANCY_ACTION }
+    ]);
 
+    component.updateConnectionForm.controls[actionText].setValue(
+      ActionType.HIDE_DISCREPANCY
+    );
     const reason = component.updateConnectionForm.controls[reasonText];
     expect(reason).toBeDefined();
     expect(component.reasons.length).toBe(0);

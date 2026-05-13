@@ -10,6 +10,15 @@ export interface IUpdateConnectionResponse {
   message: string;
 }
 
+export interface IHideDiscrepancyResponse {
+  results: IHideDiscrepancyResult[];
+}
+
+export interface IHideDiscrepancyResult {
+  gmcId: string;
+  successfulDbcCodes: string[];
+}
+
 export interface IConnectionHistory {
   connectionId: string;
   gmcId: string;

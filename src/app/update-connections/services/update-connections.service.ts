@@ -1,10 +1,13 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "@environment";
 import { Store } from "@ngxs/store";
 import { BehaviorSubject, Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
-import { IUpdateConnectionResponse } from "src/app/connection/connection.interfaces";
+import {
+  IHideDiscrepancyResponse,
+  IUpdateConnectionResponse
+} from "src/app/connection/connection.interfaces";
 import { CONNECTION_ACTIONS } from "../constants";
 import { EnableUpdateConnections } from "../state/update-connections.actions";
 import { ActionType, IAction } from "../update-connections.interfaces";
@@ -25,7 +28,10 @@ export class UpdateConnectionsService {
 
   public stateName = "updateConnections";
 
-  constructor(private http: HttpClient, private store: Store) {}
+  constructor(
+    readonly http: HttpClient,
+    readonly store: Store
+  ) {}
 
   public enableUpdateConnections(
     enableUpdateConnections: boolean
@@ -33,6 +39,15 @@ export class UpdateConnectionsService {
     return this.store.dispatch(
       new EnableUpdateConnections(enableUpdateConnections)
     );
+  }
+
+  hideDiscrepancy(payload: any): Observable<IHideDiscrepancyResponse> {
+    return this.http
+      .post<IHideDiscrepancyResponse>(
+        `${environment.appUrls.getConnections}/discrepancies/hidden`,
+        payload
+      )
+      .pipe(catchError((err) => throwError(() => err)));
   }
 
   updateConnection(
@@ -48,14 +63,6 @@ export class UpdateConnectionsService {
       case ActionType.REMOVE_CONNECTION:
         action = "remove";
         break;
-
-      case ActionType.HIDE_CONNECTION:
-        action = "hide";
-        break;
-
-      case ActionType.UNHIDE_CONNECTION:
-        action = "unhide";
-        break;
     }
 
     if (action) {
@@ -64,13 +71,9 @@ export class UpdateConnectionsService {
           `${environment.appUrls.getConnections}/${action}`,
           payload
         )
-        .pipe(catchError(this.errorCallback));
+        .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
     } else {
-      return this.errorCallback("Action is not defined");
+      return throwError(() => new Error("Action is not defined"));
     }
-  }
-
-  private errorCallback(error: any) {
-    return throwError(error);
   }
 }

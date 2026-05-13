@@ -28,6 +28,7 @@ import {
 } from "../shared/confirm-dialog/confirm-dialog.component";
 import { MatDialog } from "@angular/material/dialog";
 import { FormatDesignatedBodyPipe } from "../shared/pipes/format-designated-body.pipe";
+import { CONNECTION_ACTIONS } from "../update-connections/constants";
 
 @Component({
   selector: "app-connection",
@@ -86,6 +87,10 @@ export class ConnectionComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    let actions = CONNECTION_ACTIONS;
+    actions = actions.filter((c) => c.action !== ActionType.HIDE_DISCREPANCY);
+    this.updateConnectionsService.actions$.next(actions);
+
     this.traineeDetails$.subscribe((trainee) => {
       this.enableUpdateConnection =
         this.authService.isRevalAdmin &&
@@ -166,7 +171,6 @@ export class ConnectionComponent implements OnInit, OnDestroy {
       doctors,
       admin
     };
-
     this.componentSubscription = this.updateConnectionsService
       .updateConnection(payload, formValue.action)
       .subscribe({

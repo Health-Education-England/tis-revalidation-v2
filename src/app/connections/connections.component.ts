@@ -1,13 +1,19 @@
 import { Component, OnDestroy } from "@angular/core";
 import { Store } from "@ngxs/store";
-import { Observable, Subscription } from "rxjs";
+import { Observable, Subscription, finalize } from "rxjs";
 import { IUpdateConnectionResponse } from "../connection/connection.interfaces";
 import { RecordsService } from "../records/services/records.service";
 import { SnackBarService } from "../shared/services/snack-bar/snack-bar.service";
-import { CONNECTION_ACTIONS } from "../update-connections/constants";
+import {
+  CONNECTION_ACTIONS,
+  HIDE_DISCREPANCY_ACTION
+} from "../update-connections/constants";
 import { UpdateConnectionsService } from "../update-connections/services/update-connections.service";
 import { EnableUpdateConnections } from "../update-connections/state/update-connections.actions";
-import { ActionType } from "../update-connections/update-connections.interfaces";
+import {
+  ActionType,
+  IAction
+} from "../update-connections/update-connections.interfaces";
 import { ConnectionsFilterType } from "./connections.interfaces";
 import { AuthService } from "../core/auth/auth.service";
 
@@ -49,25 +55,12 @@ export class ConnectionsComponent implements OnDestroy {
     });
 
     this.filter$.subscribe((filter) => {
-      let actions = CONNECTION_ACTIONS;
-      switch (filter) {
-        case ConnectionsFilterType.ALL:
-          actions = actions.filter(
-            (c) => c.action !== ActionType.UNHIDE_CONNECTION
-          );
-          break;
-        case ConnectionsFilterType.HIDDEN_DISCREPANCIES:
-          actions = actions.filter(
-            (c) => c.action !== ActionType.HIDE_CONNECTION
-          );
-          break;
-        case ConnectionsFilterType.HISTORIC_CONNECTIONS:
-          actions = actions.filter(
-            (c) => c.action !== ActionType.REMOVE_CONNECTION
-          );
-          break;
+      let actions: IAction[];
+      if (filter === ConnectionsFilterType.DISCREPANCIES) {
+        actions = [...CONNECTION_ACTIONS, { ...HIDE_DISCREPANCY_ACTION }];
+      } else {
+        actions = [...CONNECTION_ACTIONS];
       }
-
       this.updateConnectionsService.actions$.next(actions);
     });
   }
@@ -82,36 +75,67 @@ export class ConnectionsComponent implements OnDestroy {
       }));
 
       const admin = this.authService.userName;
+      const adminDesignatedBodyCodes = this.authService.userDesignatedBodies;
+      let payload: {};
+      if (formValue.action === ActionType.HIDE_DISCREPANCY) {
+        payload = {
+          adminDesignatedBodyCodes,
+          doctors,
+          hiddenBy: admin,
+          reason: formValue.reason
+        };
 
-      const payload = {
-        changeReason: formValue.reason,
-        designatedBodyCode:
-          formValue.action === ActionType.ADD_CONNECTION ? formValue.dbc : null,
-        doctors,
-        admin: admin
-      };
+        this.componentSubscription = this.updateConnectionsService
+          .hideDiscrepancy(payload)
+          .subscribe({
+            next: () => {
+              this.snackBarService.openSnackBar(
+                "Discrepancies hidden successfully"
+              );
+            },
+            error: (error) => {
+              this.snackBarService.openSnackBar(error.message);
+              this.onCompleteUpdate();
+            },
+            complete: () => {
+              this.onCompleteUpdate();
+            }
+          });
+      } else {
+        payload = {
+          changeReason: formValue.reason,
+          designatedBodyCode:
+            formValue.action === ActionType.ADD_CONNECTION
+              ? formValue.dbc
+              : null,
+          doctors,
+          admin: admin
+        };
 
-      this.componentSubscription = this.updateConnectionsService
-        .updateConnection(payload, formValue.action)
-        .subscribe(
-          (response: IUpdateConnectionResponse) => {
-            this.snackBarService.openSnackBar(response.message);
-          },
-          (error) => {
-            this.snackBarService.openSnackBar(error.message);
-          },
-          () => {
-            this.store.dispatch(new EnableUpdateConnections(false));
-            this.recordsService.enableAllocateAdmin(false);
-            this.recordsService.get();
-            this.loading = false;
-          }
-        );
+        this.componentSubscription = this.updateConnectionsService
+          .updateConnection(payload, formValue.action)
+          .pipe(finalize(() => this.onCompleteUpdate()))
+          .subscribe({
+            next: (response: IUpdateConnectionResponse) => {
+              this.snackBarService.openSnackBar(response.message);
+            },
+            error: (error) => {
+              this.snackBarService.openSnackBar(error.message);
+            }
+          });
+      }
     } else {
       this.snackBarService.openSnackBar(
         "Please select doctors to update connections"
       );
     }
+  }
+
+  onCompleteUpdate() {
+    this.store.dispatch(new EnableUpdateConnections(false));
+    this.recordsService.enableAllocateAdmin(false);
+    this.recordsService.get();
+    this.loading = false;
   }
 
   ngOnDestroy(): void {

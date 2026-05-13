@@ -24,10 +24,8 @@ export interface IConnection {
 }
 
 export enum ConnectionsFilterType {
-  HISTORIC_CONNECTIONS = "historicConnections",
   CURRENT_CONNECTIONS = "currentConnections",
   DISCREPANCIES = "discrepancies",
-  ALL = "all",
   HIDDEN_DISCREPANCIES = "hiddenDiscrepancies",
   EXCEPTIONSLOG = "exceptionsLog"
 }

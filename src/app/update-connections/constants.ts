@@ -24,3 +24,8 @@ export const CONNECTION_ACTIONS: IAction[] = [
     ]
   }
 ];
+
+export const HIDE_DISCREPANCY_ACTION: IAction = {
+  action: ActionType.HIDE_DISCREPANCY,
+  reasons: []
+};

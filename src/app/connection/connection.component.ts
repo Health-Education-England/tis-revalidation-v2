@@ -70,7 +70,7 @@ export class ConnectionComponent implements OnInit, OnDestroy {
     "hiddenDateTime",
     "id"
   ];
-  componentSubscription: Subscription;
+  readonly subscriptions: Subscription = new Subscription();
   dbcs: IDesignatedBody[] = [];
   gmcNumber: number;
   doctorCurrentDbc: string;
@@ -90,37 +90,37 @@ export class ConnectionComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    combineLatest({
-      gmcNumber: this.gmcNumber$,
-      doctorCurrentDbc: this.doctorCurrentDbc$,
-      traineeDetails: this.traineeDetails$
-    }).subscribe(({ gmcNumber, doctorCurrentDbc, traineeDetails }) => {
-      this.gmcNumber = gmcNumber;
-      this.doctorCurrentDbc = doctorCurrentDbc;
-      this.enableUpdateConnection =
-        this.authService.isRevalAdmin &&
-        traineeDetails.programmeMembershipType !== "Military" &&
-        traineeDetails.currentGrade !== "Foundation Year 1";
+    this.subscriptions.add(
+      combineLatest({
+        gmcNumber: this.gmcNumber$,
+        doctorCurrentDbc: this.doctorCurrentDbc$,
+        traineeDetails: this.traineeDetails$
+      }).subscribe(({ gmcNumber, doctorCurrentDbc, traineeDetails }) => {
+        this.gmcNumber = gmcNumber;
+        this.doctorCurrentDbc = doctorCurrentDbc;
+        this.enableUpdateConnection =
+          this.authService.isRevalAdmin &&
+          traineeDetails.programmeMembershipType !== "Military" &&
+          traineeDetails.currentGrade !== "Foundation Year 1";
 
-      let actions = [...CONNECTION_ACTIONS];
-      const programmeOwner = traineeDetails?.programmeOwner;
-      if (
-        programmeOwner &&
-        doctorCurrentDbc &&
-        programmeOwner !== doctorCurrentDbc
-      ) {
-        actions = [...CONNECTION_ACTIONS, { ...HIDE_DISCREPANCY_ACTION }];
-      }
-      this.updateConnectionsService.actions$.next(actions);
-    });
+        let actions = [...CONNECTION_ACTIONS];
+        const programmeOwner = traineeDetails?.programmeOwner;
+        if (
+          programmeOwner &&
+          doctorCurrentDbc &&
+          programmeOwner !== doctorCurrentDbc
+        ) {
+          actions = [...CONNECTION_ACTIONS, { ...HIDE_DISCREPANCY_ACTION }];
+        }
+        this.updateConnectionsService.actions$.next(actions);
+      })
+    );
 
     this.updateConnectionsService.canSave$.next(true);
   }
 
   ngOnDestroy(): void {
-    if (this.componentSubscription) {
-      this.componentSubscription.unsubscribe();
-    }
+    this.subscriptions.unsubscribe();
   }
 
   showDiscrepancy(params: IShowDiscrepancyParameters) {
@@ -186,20 +186,22 @@ export class ConnectionComponent implements OnInit, OnDestroy {
       doctors,
       admin
     };
-    this.componentSubscription = this.updateConnectionsService
-      .updateConnection(payload, formValue.action)
-      .subscribe({
-        next: (response: IUpdateConnectionResponse) => {
-          this.snackBarService.openSnackBar(response.message);
-          this.store.dispatch(new Get(this.gmcNumber));
-        },
-        error: (error) => {
-          this.snackBarService.openSnackBar(error.message);
-          this.submitting = false;
-        },
-        complete: () => {
-          this.submitting = false;
-        }
-      });
+    this.subscriptions.add(
+      this.updateConnectionsService
+        .updateConnection(payload, formValue.action)
+        .subscribe({
+          next: (response: IUpdateConnectionResponse) => {
+            this.snackBarService.openSnackBar(response.message);
+            this.store.dispatch(new Get(this.gmcNumber));
+          },
+          error: (error) => {
+            this.snackBarService.openSnackBar(error.message);
+            this.submitting = false;
+          },
+          complete: () => {
+            this.submitting = false;
+          }
+        })
+    );
   }
 }

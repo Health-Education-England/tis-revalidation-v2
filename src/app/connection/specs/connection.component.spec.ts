@@ -120,14 +120,9 @@ describe("ConnectionComponent", () => {
   });
 
   it("should unsubscribe from subscriptions upon `ngOnDestroy()`", () => {
-    component.componentSubscription = new Subscription();
-    spyOn(component.componentSubscription, "unsubscribe");
-
+    spyOn(component.subscriptions, "unsubscribe");
     component.ngOnDestroy();
-
-    expect(component.componentSubscription.unsubscribe).toHaveBeenCalledTimes(
-      1
-    );
+    expect(component.subscriptions.unsubscribe).toHaveBeenCalledTimes(1);
   });
 
   it("should invoke updateConnection in UpdateConnectionService with add action and data", () => {

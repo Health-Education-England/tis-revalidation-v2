@@ -20,6 +20,11 @@ import { ConnectionService } from "../services/connection.service";
 import { MatDialog } from "@angular/material/dialog";
 import { ConfirmDialogComponent } from "src/app/shared/confirm-dialog/confirm-dialog.component";
 import { FormatDesignatedBodyPipe } from "src/app/shared/pipes/format-designated-body.pipe";
+import { DetailsSideNavState } from "src/app/details/details-side-nav/state/details-side-nav.state";
+import {
+  CONNECTION_ACTIONS,
+  HIDE_DISCREPANCY_ACTION
+} from "src/app/update-connections/constants";
 
 @Pipe({ name: "formatDesignatedBody" })
 class MockFormatDesignatedBodyPipe implements PipeTransform {
@@ -52,7 +57,7 @@ describe("ConnectionComponent", () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        NgxsModule.forRoot([ConnectionState]),
+        NgxsModule.forRoot([ConnectionState, DetailsSideNavState]),
         HttpClientTestingModule,
         MaterialModule,
         RouterModule.forRoot([]),
@@ -83,6 +88,21 @@ describe("ConnectionComponent", () => {
     connectionService = TestBed.inject(ConnectionService);
 
     store.reset({
+      traineeDetails: {
+        item: {
+          gmcNumber: null,
+          forenames: null,
+          surname: null,
+          curriculumEndDate: null,
+          programmeMembershipType: null,
+          programmeName: null,
+          programmeOwner: "1-ABCDE",
+          programmeEndDate: null,
+          currentGrade: null,
+          tisPersonId: null,
+          notes: []
+        }
+      },
       connection: {
         gmcNumber: null,
         connectionHistory: mockConnectionResponse.connection.connectionHistory,
@@ -246,5 +266,40 @@ describe("ConnectionComponent", () => {
     });
     expect(serviceSpy).toHaveBeenCalledWith("69cb99444dadd14f27a0d092");
     expect(storeSpy).toHaveBeenCalled();
+  });
+
+  it("should include 'Hide discrepancy' action when programmeOwner !== DBC", () => {
+    const actionsSpy = spyOn(updateConnectionService.actions$, "next");
+    store.reset({
+      traineeDetails: {
+        item: {
+          programmeOwner: "1-ABCDEF"
+        }
+      },
+      connection: {
+        doctorCurrentDbc: "1-UVWXYZ"
+      }
+    });
+    fixture.detectChanges();
+    expect(actionsSpy).toHaveBeenCalledWith([
+      ...CONNECTION_ACTIONS,
+      { ...HIDE_DISCREPANCY_ACTION }
+    ]);
+  });
+
+  it("should NOT include 'Hide discrepancy' action when programmeOwner === DBC", () => {
+    const actionsSpy = spyOn(updateConnectionService.actions$, "next");
+    store.reset({
+      traineeDetails: {
+        item: {
+          programmeOwner: "1-ABCDEF"
+        }
+      },
+      connection: {
+        doctorCurrentDbc: "1-ABCDEF"
+      }
+    });
+    fixture.detectChanges();
+    expect(actionsSpy).toHaveBeenCalledWith([...CONNECTION_ACTIONS]);
   });
 });

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Select, Store } from "@ngxs/store";
-import { Observable, Subscription } from "rxjs";
+import { Observable, Subscription, combineLatest } from "rxjs";
 
 import { environment } from "@environment";
 import {
@@ -28,7 +28,10 @@ import {
 } from "../shared/confirm-dialog/confirm-dialog.component";
 import { MatDialog } from "@angular/material/dialog";
 import { FormatDesignatedBodyPipe } from "../shared/pipes/format-designated-body.pipe";
-import { CONNECTION_ACTIONS } from "../update-connections/constants";
+import {
+  CONNECTION_ACTIONS,
+  HIDE_DISCREPANCY_ACTION
+} from "../update-connections/constants";
 
 @Component({
   selector: "app-connection",
@@ -87,18 +90,25 @@ export class ConnectionComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    let actions = CONNECTION_ACTIONS;
-    actions = actions.filter((c) => c.action !== ActionType.HIDE_DISCREPANCY);
-    this.updateConnectionsService.actions$.next(actions);
-
-    this.traineeDetails$.subscribe((trainee) => {
+    combineLatest({
+      gmcNumber: this.gmcNumber$,
+      doctorCurrentDbc: this.doctorCurrentDbc$,
+      traineeDetails: this.traineeDetails$
+    }).subscribe(({ gmcNumber, doctorCurrentDbc, traineeDetails }) => {
+      this.gmcNumber = gmcNumber;
+      this.doctorCurrentDbc = doctorCurrentDbc;
       this.enableUpdateConnection =
         this.authService.isRevalAdmin &&
-        trainee.programmeMembershipType !== "Military" &&
-        trainee.currentGrade !== "Foundation Year 1";
+        traineeDetails.programmeMembershipType !== "Military" &&
+        traineeDetails.currentGrade !== "Foundation Year 1";
+
+      let actions = [...CONNECTION_ACTIONS];
+      if (traineeDetails?.programmeOwner !== doctorCurrentDbc) {
+        actions = [...CONNECTION_ACTIONS, { ...HIDE_DISCREPANCY_ACTION }];
+      }
+      this.updateConnectionsService.actions$.next(actions);
     });
-    this.gmcNumber$.subscribe((res) => (this.gmcNumber = res));
-    this.doctorCurrentDbc$.subscribe((res) => (this.doctorCurrentDbc = res));
+
     this.updateConnectionsService.canSave$.next(true);
   }
 

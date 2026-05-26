@@ -10,4 +10,5 @@ export interface IDetailsSideNav {
   currentGrade: string;
   tisPersonId: number;
   notes?: INote[];
+  tcsDesignatedBody: string;
 }

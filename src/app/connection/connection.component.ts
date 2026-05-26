@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Select, Store } from "@ngxs/store";
-import { Observable, Subscription } from "rxjs";
+import { Observable, Subscription, combineLatest } from "rxjs";
 
 import { environment } from "@environment";
 import {
@@ -28,7 +28,10 @@ import {
 } from "../shared/confirm-dialog/confirm-dialog.component";
 import { MatDialog } from "@angular/material/dialog";
 import { FormatDesignatedBodyPipe } from "../shared/pipes/format-designated-body.pipe";
-import { CONNECTION_ACTIONS } from "../update-connections/constants";
+import {
+  CONNECTION_ACTIONS,
+  HIDE_DISCREPANCY_ACTION
+} from "../update-connections/constants";
 
 @Component({
   selector: "app-connection",
@@ -67,7 +70,7 @@ export class ConnectionComponent implements OnInit, OnDestroy {
     "hiddenDateTime",
     "id"
   ];
-  componentSubscription: Subscription;
+  readonly subscriptions: Subscription = new Subscription();
   dbcs: IDesignatedBody[] = [];
   gmcNumber: number;
   doctorCurrentDbc: string;
@@ -87,25 +90,33 @@ export class ConnectionComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    let actions = CONNECTION_ACTIONS;
-    actions = actions.filter((c) => c.action !== ActionType.HIDE_DISCREPANCY);
-    this.updateConnectionsService.actions$.next(actions);
+    this.subscriptions.add(
+      combineLatest({
+        gmcNumber: this.gmcNumber$,
+        doctorCurrentDbc: this.doctorCurrentDbc$,
+        traineeDetails: this.traineeDetails$
+      }).subscribe(({ gmcNumber, doctorCurrentDbc, traineeDetails }) => {
+        this.gmcNumber = gmcNumber;
+        this.doctorCurrentDbc = doctorCurrentDbc;
+        this.enableUpdateConnection =
+          this.authService.isRevalAdmin &&
+          traineeDetails.programmeMembershipType !== "Military" &&
+          traineeDetails.currentGrade !== "Foundation Year 1";
 
-    this.traineeDetails$.subscribe((trainee) => {
-      this.enableUpdateConnection =
-        this.authService.isRevalAdmin &&
-        trainee.programmeMembershipType !== "Military" &&
-        trainee.currentGrade !== "Foundation Year 1";
-    });
-    this.gmcNumber$.subscribe((res) => (this.gmcNumber = res));
-    this.doctorCurrentDbc$.subscribe((res) => (this.doctorCurrentDbc = res));
+        let actions = [...CONNECTION_ACTIONS];
+        const tcsDesignatedBody = traineeDetails?.tcsDesignatedBody;
+        if (tcsDesignatedBody !== doctorCurrentDbc) {
+          actions = [...CONNECTION_ACTIONS, { ...HIDE_DISCREPANCY_ACTION }];
+        }
+        this.updateConnectionsService.actions$.next(actions);
+      })
+    );
+
     this.updateConnectionsService.canSave$.next(true);
   }
 
   ngOnDestroy(): void {
-    if (this.componentSubscription) {
-      this.componentSubscription.unsubscribe();
-    }
+    this.subscriptions.unsubscribe();
   }
 
   showDiscrepancy(params: IShowDiscrepancyParameters) {
@@ -171,20 +182,22 @@ export class ConnectionComponent implements OnInit, OnDestroy {
       doctors,
       admin
     };
-    this.componentSubscription = this.updateConnectionsService
-      .updateConnection(payload, formValue.action)
-      .subscribe({
-        next: (response: IUpdateConnectionResponse) => {
-          this.snackBarService.openSnackBar(response.message);
-          this.store.dispatch(new Get(this.gmcNumber));
-        },
-        error: (error) => {
-          this.snackBarService.openSnackBar(error.message);
-          this.submitting = false;
-        },
-        complete: () => {
-          this.submitting = false;
-        }
-      });
+    this.subscriptions.add(
+      this.updateConnectionsService
+        .updateConnection(payload, formValue.action)
+        .subscribe({
+          next: (response: IUpdateConnectionResponse) => {
+            this.snackBarService.openSnackBar(response.message);
+            this.store.dispatch(new Get(this.gmcNumber));
+          },
+          error: (error) => {
+            this.snackBarService.openSnackBar(error.message);
+            this.submitting = false;
+          },
+          complete: () => {
+            this.submitting = false;
+          }
+        })
+    );
   }
 }

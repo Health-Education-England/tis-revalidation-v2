@@ -26,6 +26,7 @@ export class DetailsSideNavStateModel {
       programmeEndDate: null,
       currentGrade: null,
       tisPersonId: null,
+      tcsDesignatedBody: null,
       notes: []
     }
   }

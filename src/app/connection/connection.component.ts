@@ -104,12 +104,8 @@ export class ConnectionComponent implements OnInit, OnDestroy {
           traineeDetails.currentGrade !== "Foundation Year 1";
 
         let actions = [...CONNECTION_ACTIONS];
-        const programmeOwner = traineeDetails?.programmeOwner;
-        if (
-          programmeOwner &&
-          doctorCurrentDbc &&
-          programmeOwner !== doctorCurrentDbc
-        ) {
+        const tcsDesignatedBody = traineeDetails?.tcsDesignatedBody;
+        if (tcsDesignatedBody !== doctorCurrentDbc) {
           actions = [...CONNECTION_ACTIONS, { ...HIDE_DISCREPANCY_ACTION }];
         }
         this.updateConnectionsService.actions$.next(actions);

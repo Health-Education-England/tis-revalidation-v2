@@ -96,7 +96,7 @@ describe("ConnectionComponent", () => {
           curriculumEndDate: null,
           programmeMembershipType: null,
           programmeName: null,
-          programmeOwner: "1-ABCDE",
+          tcsDesignatedBody: "1-ABCDE",
           programmeEndDate: null,
           currentGrade: null,
           tisPersonId: null,
@@ -268,7 +268,7 @@ describe("ConnectionComponent", () => {
     store.reset({
       traineeDetails: {
         item: {
-          programmeOwner: "1-ABCDEF"
+          tcsDesignatedBody: "1-ABCDEF"
         }
       },
       connection: {
@@ -287,7 +287,7 @@ describe("ConnectionComponent", () => {
     store.reset({
       traineeDetails: {
         item: {
-          programmeOwner: "1-ABCDEF"
+          tcsDesignatedBody: "1-ABCDEF"
         }
       },
       connection: {

@@ -23,10 +23,10 @@ export class DetailsSideNavStateModel {
       curriculumEndDate: null,
       programmeMembershipType: null,
       programmeName: null,
-      programmeOwner: null,
       programmeEndDate: null,
       currentGrade: null,
       tisPersonId: null,
+      tcsDesignatedBody: null,
       notes: []
     }
   }

@@ -96,7 +96,7 @@ describe("ConnectionComponent", () => {
           curriculumEndDate: null,
           programmeMembershipType: null,
           programmeName: null,
-          tcsDesignatedBody: "1-ABCDE",
+          tcsDesignatedBody: "1-ABCDEF",
           programmeEndDate: null,
           currentGrade: null,
           tisPersonId: null,

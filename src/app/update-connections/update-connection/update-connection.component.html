@@ -65,6 +65,31 @@
           Please select a designated body
         </mat-error>
       </mat-form-field>
+
+      <mat-form-field
+        *ngIf="hideDiscrepancySelected"
+        data-cy="update-connection-hide-discrepancy"
+      >
+        <mat-label>Hide until</mat-label>
+
+        <input
+          matInput
+          formControlName="hideUntil"
+          [matDatepicker]="picker"
+          readonly
+        />
+        <button
+          matSuffix
+          mat-icon-button
+          aria-label="Clear date"
+          (click)="clearDate()"
+        >
+          <mat-icon>clear</mat-icon>
+        </button>
+
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker disabled="false"></mat-datepicker>
+      </mat-form-field>
     </div>
 
     <div class="d-grid grid-container-3-col">

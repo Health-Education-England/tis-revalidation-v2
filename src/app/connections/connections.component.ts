@@ -82,6 +82,7 @@ export class ConnectionsComponent implements OnDestroy {
           adminDesignatedBodyCodes,
           doctors,
           hiddenBy: admin,
+          hiddenUntilDate: formValue.hideUntil,
           reason: formValue.reason
         };
 

@@ -70,6 +70,7 @@ export class ConnectionComponent implements OnInit, OnDestroy {
     "hiddenBy",
     "reason",
     "hiddenDateTime",
+    "hiddenUntilDate",
     "id"
   ];
   readonly subscriptions: Subscription = new Subscription();

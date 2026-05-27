@@ -45,6 +45,13 @@
       </td>
     </ng-container>
 
+    <ng-container matColumnDef="hiddenUntilDate">
+      <th mat-header-cell scope="col" *matHeaderCellDef>Hidden until</th>
+      <td class="no-wrap" mat-cell *matCellDef="let element">
+        {{ element.hiddenUntilDate | date: dateFormat }}
+      </td>
+    </ng-container>
+
     <ng-container matColumnDef="id">
       <th
         class="text-align-right"

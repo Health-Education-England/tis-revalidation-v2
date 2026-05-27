@@ -4,7 +4,11 @@ describe("Update connections", () => {
     cy.visit("/connection/7920092");
   });
 
-  const updateActions = ["Add connection", "Remove connection"];
+  const updateActions = [
+    "Add connection",
+    "Remove connection",
+    "Hide discrepancy"
+  ];
   const addConnectionReason = [
     "The doctor has a connection with this designated body",
     "Conflict of interest"

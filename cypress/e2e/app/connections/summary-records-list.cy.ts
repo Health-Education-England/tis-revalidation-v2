@@ -37,6 +37,7 @@ describe("Connections Summary Records List", () => {
   const filters = [
     "DISCREPANCIES",
     "CURRENT CONNECTIONS",
+    "HIDDEN DISCREPANCIES",
     "FAILED GMC UPDATES"
   ];
 

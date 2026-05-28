@@ -18,6 +18,7 @@ import { UpdateConnectionsService } from "../services/update-connections.service
 import { AuthService } from "src/app/core/auth/auth.service";
 import { ReferenceState } from "src/app/reference/state/reference.state";
 import { CONNECTION_ACTIONS, HIDE_DISCREPANCY_ACTION } from "../constants";
+import { By } from "@angular/platform-browser";
 
 describe("UpdateConnectionComponent", () => {
   let component: UpdateConnectionComponent;
@@ -71,100 +72,147 @@ describe("UpdateConnectionComponent", () => {
         dbcs: mockDbcs
       }
     });
+    updateConnectionsService.actions$.next([
+      ...CONNECTION_ACTIONS,
+      { ...HIDE_DISCREPANCY_ACTION }
+    ]);
   });
 
   it("should create", () => {
     expect(component).toBeTruthy();
   });
 
-  it("form invalid when empty", () => {
-    expect(component.updateConnectionForm.valid).toBeFalsy();
-
-    const action = component.updateConnectionForm.controls[actionText];
-    expect(action.valid).toBeFalsy();
-  });
-
-  it("dbcs and userDbcs should be empty when dbcs$ is null", () => {
-    store.reset({
-      updateConnections: {
-        enableUpdateConnections: true,
-        dbcs: null
-      }
+  describe("Hide discrepancies", () => {
+    it("should include 'Hide discrepancy' as an option in the dropdown", () => {
+      fixture.debugElement.query(By.css("mat-select")).nativeElement.click();
+      fixture.detectChanges();
+      expect(
+        fixture.debugElement
+          .queryAll(By.css("mat-option"))
+          .some(
+            (option) =>
+              option.nativeElement.textContent.trim() === "Hide discrepancy"
+          )
+      ).toBe(true);
     });
 
-    expect(component.dbcs.length).toBe(0);
-    expect(component.userDbcs.length).toBe(0);
+    it("should show 'Hide until' field when 'Hide discrepancy' is selected as an option in the dropdown", () => {
+      fixture.debugElement.query(By.css("mat-select")).nativeElement.click();
+      fixture.detectChanges();
+      fixture.debugElement
+        .queryAll(By.css("mat-option"))
+        .find(
+          (option) =>
+            option.nativeElement.textContent.trim() === "Hide discrepancy"
+        )
+        .nativeElement.click();
+      fixture.detectChanges();
+      expect(
+        fixture.debugElement.query(
+          By.css("[data-cy='update-connection-hide-until']")
+        ).nativeElement
+      ).toBeTruthy();
+    });
+
+    it("should show clear date button when hide until date selected", () => {
+      component.updateConnectionForm.controls[actionText].setValue(
+        ActionType.HIDE_DISCREPANCY
+      );
+      component.updateConnectionForm.controls["hideUntil"].setValue(new Date());
+      fixture.detectChanges();
+      expect(
+        fixture.debugElement.query(
+          By.css("[data-cy='update-connection-clear-date']")
+        )
+      ).toBeTruthy();
+    });
+
+    it("form should include reason as freetext when hiding discrepancies", () => {
+      component.updateConnectionForm.controls[actionText].setValue(
+        ActionType.HIDE_DISCREPANCY
+      );
+      const reason = component.updateConnectionForm.controls[reasonText];
+      expect(reason).toBeDefined();
+      expect(component.reasons.length).toBe(0);
+    });
   });
 
-  it("form should add dbc control with user dbcs excluding doctor current dbc when add connection selected", () => {
-    component.updateConnectionForm.controls[actionText].setValue(
-      ActionType.ADD_CONNECTION
-    );
+  describe("DBCs", () => {
+    it("dbcs and userDbcs should be empty when dbcs$ is null", () => {
+      store.reset({
+        updateConnections: {
+          enableUpdateConnections: true,
+          dbcs: null
+        }
+      });
 
-    expect(component.userDbcs.length).toBe(2);
+      expect(component.dbcs.length).toBe(0);
+      expect(component.userDbcs.length).toBe(0);
+    });
 
-    const dbc = component.updateConnectionForm.controls[dbcText];
-    expect(dbc).toBeDefined();
+    it("form should add dbc control with user dbcs excluding doctor current dbc when add connection selected", () => {
+      component.updateConnectionForm.controls[actionText].setValue(
+        ActionType.ADD_CONNECTION
+      );
+
+      expect(component.userDbcs.length).toBe(2);
+
+      const dbc = component.updateConnectionForm.controls[dbcText];
+      expect(dbc).toBeDefined();
+    });
+
+    it("form should not have dbc control when add connection is not selected", () => {
+      component.updateConnectionForm.controls[actionText].setValue(
+        ActionType.REMOVE_CONNECTION
+      );
+
+      const dbc = component.updateConnectionForm.controls[dbcText];
+      expect(dbc).toBeUndefined();
+    });
   });
+  describe("Form events", () => {
+    it("form invalid when empty", () => {
+      expect(component.updateConnectionForm.valid).toBeFalsy();
 
-  it("form should include have reason as freetext when hiding discrepancies", () => {
-    updateConnectionsService.actions$.next([
-      ...CONNECTION_ACTIONS,
-      { ...HIDE_DISCREPANCY_ACTION }
-    ]);
+      const action = component.updateConnectionForm.controls[actionText];
+      expect(action.valid).toBeFalsy();
+    });
+    it("form should get reset when resetForm() invoked", () => {
+      expect(component.updateConnectionForm.valid).toBeFalsy();
+      fillForm(ActionType.ADD_CONNECTION);
 
-    component.updateConnectionForm.controls[actionText].setValue(
-      ActionType.HIDE_DISCREPANCY
-    );
-    const reason = component.updateConnectionForm.controls[reasonText];
-    expect(reason).toBeDefined();
-    expect(component.reasons.length).toBe(0);
-  });
+      expect(component.updateConnectionForm.valid).toBeTruthy();
 
-  it("form should not have dbc control when add connection is not selected", () => {
-    component.updateConnectionForm.controls[actionText].setValue(
-      ActionType.REMOVE_CONNECTION
-    );
+      component.resetForm();
+      expect(component.updateConnectionForm.valid).toBeFalsy();
+    });
 
-    const dbc = component.updateConnectionForm.controls[dbcText];
-    expect(dbc).toBeUndefined();
-  });
+    it("form should emit submittFormEvent when form is submitted", () => {
+      spyOn(component.submittFormEvent, "emit");
 
-  it("form should get reset when resetForm() invoked", () => {
-    expect(component.updateConnectionForm.valid).toBeFalsy();
-    fillForm(ActionType.ADD_CONNECTION);
+      expect(component.updateConnectionForm.valid).toBeFalsy();
+      fillForm(ActionType.ADD_CONNECTION);
+      expect(component.updateConnectionForm.valid).toBeTruthy();
+      component.onSubmit();
 
-    expect(component.updateConnectionForm.valid).toBeTruthy();
+      expect(component.submittFormEvent.emit).toHaveBeenCalled();
+    });
 
-    component.resetForm();
-    expect(component.updateConnectionForm.valid).toBeFalsy();
-  });
+    it("form should not emit submittFormEvent when invalid form is submitted", () => {
+      spyOn(component.submittFormEvent, "emit");
+      component.onSubmit();
 
-  it("form should emit submittFormEvent when form is submitted", () => {
-    spyOn(component.submittFormEvent, "emit");
+      expect(component.submittFormEvent.emit).not.toHaveBeenCalled();
+    });
 
-    expect(component.updateConnectionForm.valid).toBeFalsy();
-    fillForm(ActionType.ADD_CONNECTION);
-    expect(component.updateConnectionForm.valid).toBeTruthy();
-    component.onSubmit();
+    it("should invoke enableUpdateConnections when cancel is invoked", () => {
+      spyOn(updateConnectionsService, "enableUpdateConnections");
+      component.cancel();
 
-    expect(component.submittFormEvent.emit).toHaveBeenCalled();
-  });
-
-  it("form should not emit submittFormEvent when invalid form is submitted", () => {
-    spyOn(component.submittFormEvent, "emit");
-    component.onSubmit();
-
-    expect(component.submittFormEvent.emit).not.toHaveBeenCalled();
-  });
-
-  it("should invoke enableUpdateConnections when cancel is invoked", () => {
-    spyOn(updateConnectionsService, "enableUpdateConnections");
-    component.cancel();
-
-    expect(
-      updateConnectionsService.enableUpdateConnections
-    ).toHaveBeenCalledWith(false);
+      expect(
+        updateConnectionsService.enableUpdateConnections
+      ).toHaveBeenCalledWith(false);
+    });
   });
 
   function fillForm(action: ActionType) {

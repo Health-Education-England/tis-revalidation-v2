@@ -74,7 +74,7 @@
       }
 
       @if (hideDiscrepancySelected) {
-        <mat-form-field data-cy="update-connection-hide-discrepancy">
+        <mat-form-field data-cy="update-connection-hide-until">
           <mat-label>Hide until</mat-label>
 
           <input
@@ -88,6 +88,7 @@
               matSuffix
               mat-icon-button
               aria-label="Clear date"
+              data-cy="update-connection-clear-date"
               (click)="clearDate()"
             >
               <mat-icon>clear</mat-icon>

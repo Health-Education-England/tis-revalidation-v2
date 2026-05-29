@@ -297,4 +297,30 @@ describe("ConnectionComponent", () => {
     fixture.detectChanges();
     expect(actionsSpy).toHaveBeenCalledWith([...CONNECTION_ACTIONS]);
   });
+
+  it("should invoke hideDiscrepancy in UpdateConnectionService with correct data", () => {
+    spyOn(updateConnectionService, "hideDiscrepancy").and.callThrough();
+
+    const formValue = {
+      action: ActionType.HIDE_DISCREPANCY,
+      reason: "Test reason for hiding discrepancy"
+    };
+
+    component.doctorCurrentDbc = "1-ABCDE";
+    component.gmcNumber = 123456;
+    component.updateConnection(formValue);
+
+    expect(component.submitting).toBeTruthy();
+    expect(updateConnectionService.hideDiscrepancy).toHaveBeenCalledWith({
+      adminDesignatedBodyCodes: [],
+      hiddenBy: "",
+      reason: "Test reason for hiding discrepancy",
+      doctors: [
+        {
+          gmcId: 123456,
+          currentDesignatedBodyCode: "1-ABCDE"
+        }
+      ]
+    });
+  });
 });

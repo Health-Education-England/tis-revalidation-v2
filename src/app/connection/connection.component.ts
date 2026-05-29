@@ -32,6 +32,7 @@ import {
   CONNECTION_ACTIONS,
   HIDE_DISCREPANCY_ACTION
 } from "../update-connections/constants";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-connection",
@@ -86,7 +87,8 @@ export class ConnectionComponent implements OnInit, OnDestroy {
     readonly updateConnectionsService: UpdateConnectionsService,
     readonly connectionService: ConnectionService,
     public dialog: MatDialog,
-    readonly formatDesignatedBodyPipe: FormatDesignatedBodyPipe
+    readonly formatDesignatedBodyPipe: FormatDesignatedBodyPipe,
+    readonly router: Router
   ) {}
 
   ngOnInit(): void {
@@ -167,6 +169,7 @@ export class ConnectionComponent implements OnInit, OnDestroy {
 
   updateConnection(formValue: any) {
     const admin = this.authService.userName;
+    const adminDesignatedBodyCodes = this.authService.userDesignatedBodies;
     this.submitting = true;
     const doctors: IDoctor[] = [
       {
@@ -174,21 +177,21 @@ export class ConnectionComponent implements OnInit, OnDestroy {
         currentDesignatedBodyCode: this.doctorCurrentDbc
       }
     ];
+    let payload: {};
+    if (formValue.action === ActionType.HIDE_DISCREPANCY) {
+      payload = {
+        adminDesignatedBodyCodes,
+        doctors,
+        hiddenBy: admin,
+        reason: formValue.reason
+      };
 
-    const payload = {
-      changeReason: formValue.reason,
-      designatedBodyCode:
-        formValue.action === ActionType.ADD_CONNECTION ? formValue.dbc : null,
-      doctors,
-      admin
-    };
-    this.subscriptions.add(
-      this.updateConnectionsService
-        .updateConnection(payload, formValue.action)
-        .subscribe({
-          next: (response: IUpdateConnectionResponse) => {
-            this.snackBarService.openSnackBar(response.message);
-            this.store.dispatch(new Get(this.gmcNumber));
+      this.subscriptions.add(
+        this.updateConnectionsService.hideDiscrepancy(payload).subscribe({
+          next: () => {
+            this.snackBarService.openSnackBar(
+              "Discrepancies hidden successfully"
+            );
           },
           error: (error) => {
             this.snackBarService.openSnackBar(error.message);
@@ -196,8 +199,36 @@ export class ConnectionComponent implements OnInit, OnDestroy {
           },
           complete: () => {
             this.submitting = false;
+            this.router.navigate([this.router.url]);
           }
         })
-    );
+      );
+    } else {
+      payload = {
+        changeReason: formValue.reason,
+        designatedBodyCode:
+          formValue.action === ActionType.ADD_CONNECTION ? formValue.dbc : null,
+        doctors,
+        admin
+      };
+      this.subscriptions.add(
+        this.updateConnectionsService
+          .updateConnection(payload, formValue.action)
+          .subscribe({
+            next: (response: IUpdateConnectionResponse) => {
+              this.snackBarService.openSnackBar(response.message);
+              this.store.dispatch(new Get(this.gmcNumber));
+            },
+            error: (error) => {
+              this.snackBarService.openSnackBar(error.message);
+              this.submitting = false;
+            },
+            complete: () => {
+              this.submitting = false;
+              this.router.navigate([this.router.url]);
+            }
+          })
+      );
+    }
   }
 }

@@ -6,7 +6,7 @@
   </div>
 } @else {
   @if (connectionHistory$ | async; as connectionHistory) {
-    @if (hiddenDiscrepancies$ | async; as hiddenDiscrepancies) {
+    @if (hiddenDiscrepanciesForUser$ | async; as hiddenDiscrepancies) {
       <mat-card class="mb-20" appearance="outlined">
         <mat-card-title>Current designated body</mat-card-title>
         <ng-container *ngIf="doctorCurrentDbc$ | async; else NoDBC">

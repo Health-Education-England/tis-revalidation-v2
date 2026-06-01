@@ -52,7 +52,7 @@ describe("ConnectionHiddenDiscrepanciesComponent", () => {
     fixture.detectChanges();
     expect(eventEmitterSpy).toHaveBeenCalledWith({
       discrepancyId: "69cb99444dadd14f27a0d092",
-      hiddenForDesignatedBodyCode: "1-RSSQ05"
+      hiddenForDesignatedBodyCode: "1-1RUZV1D"
     });
   });
 });

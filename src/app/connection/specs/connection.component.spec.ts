@@ -25,6 +25,7 @@ import {
   CONNECTION_ACTIONS,
   HIDE_DISCREPANCY_ACTION
 } from "src/app/update-connections/constants";
+import { AuthService } from "src/app/core/auth/auth.service";
 
 @Pipe({ name: "formatDesignatedBody" })
 class MockFormatDesignatedBodyPipe implements PipeTransform {
@@ -53,6 +54,7 @@ describe("ConnectionComponent", () => {
   let snackBarService: SnackBarService;
   let connectionService: ConnectionService;
   let store: Store;
+  let authService: AuthService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -75,6 +77,7 @@ describe("ConnectionComponent", () => {
       providers: [
         FormatDesignatedBodyPipe,
         ConnectionService,
+        AuthService,
         { provide: MatDialog, useValue: matDialogMock }
       ]
     }).compileComponents();
@@ -86,7 +89,7 @@ describe("ConnectionComponent", () => {
     fixture = TestBed.createComponent(ConnectionComponent);
     store = TestBed.inject(Store);
     connectionService = TestBed.inject(ConnectionService);
-
+    authService = TestBed.inject(AuthService);
     store.reset({
       traineeDetails: {
         item: {
@@ -111,7 +114,7 @@ describe("ConnectionComponent", () => {
       }
     });
     component = fixture.componentInstance;
-
+    authService.userDesignatedBodies = ["1-1RUZV1D"];
     fixture.detectChanges();
   });
 
@@ -226,12 +229,24 @@ describe("ConnectionComponent", () => {
       ActionType.REMOVE_CONNECTION
     );
   });
+
   it("should display hidden discrepancies details component when available", () => {
     expect(
       fixture.debugElement.query(
         By.css("[data-testid='component-hidden-discrepancies']")
       )
     ).toBeTruthy();
+  });
+
+  it("should NOT display hidden discrepancies details component when user DBC does not match", () => {
+    authService.userDesignatedBodies = [];
+    component.ngOnInit();
+    fixture.detectChanges();
+    expect(
+      fixture.debugElement.query(
+        By.css("[data-testid='component-hidden-discrepancies']")
+      )
+    ).toBeFalsy();
   });
 
   it("should NOT display hidden discrepancies details component when NONE available", () => {
@@ -314,7 +329,7 @@ describe("ConnectionComponent", () => {
 
     expect(component.submitting).toBeTruthy();
     expect(updateConnectionService.hideDiscrepancy).toHaveBeenCalledWith({
-      adminDesignatedBodyCodes: [],
+      adminDesignatedBodyCodes: ["1-1RUZV1D"],
       hiddenBy: "",
       reason: "Test reason for hiding discrepancy",
       doctors: [

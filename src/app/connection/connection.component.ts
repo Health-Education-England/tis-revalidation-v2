@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Select, Store } from "@ngxs/store";
-import { Observable, Subscription, combineLatest } from "rxjs";
+import { Observable, Subscription, combineLatest, map } from "rxjs";
 
 import { environment } from "@environment";
 import {
@@ -54,6 +54,7 @@ export class ConnectionComponent implements OnInit, OnDestroy {
   @Select(DetailsSideNavState.traineeDetails)
   traineeDetails$: Observable<IDetailsSideNav>;
 
+  hiddenDiscrepanciesForUser$: Observable<IHiddenDiscrepancy[]>;
   dateFormat = environment.dateFormat;
   connectionsColumnsToDisplay = [
     "newDesignatedBodyCode",
@@ -80,6 +81,7 @@ export class ConnectionComponent implements OnInit, OnDestroy {
   submitting = false;
   programmeOwnerDBC: string;
   updatingDiscrepancyIds: string[] = [];
+  userDesignatedBodies: string[] = [];
   constructor(
     private store: Store,
     private authService: AuthService,
@@ -92,6 +94,17 @@ export class ConnectionComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.userDesignatedBodies = this.authService.userDesignatedBodies;
+    this.hiddenDiscrepanciesForUser$ = this.hiddenDiscrepancies$.pipe(
+      map((discrepancies) =>
+        discrepancies?.filter((discrepancy) =>
+          this.userDesignatedBodies.includes(
+            discrepancy.hiddenForDesignatedBodyCode
+          )
+        )
+      )
+    );
+
     this.subscriptions.add(
       combineLatest({
         gmcNumber: this.gmcNumber$,

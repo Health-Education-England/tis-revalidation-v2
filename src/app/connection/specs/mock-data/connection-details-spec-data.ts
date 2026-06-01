@@ -40,7 +40,7 @@ const hiddenDiscrepancies: IHiddenDiscrepancy[] = [
   {
     id: "69cb99444dadd14f27a0d092",
     gmcId: "123456",
-    hiddenForDesignatedBodyCode: "1-RSSQ05",
+    hiddenForDesignatedBodyCode: "1-1RUZV1D",
     hiddenBy: "test",
     reason:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eget mi ultrices, aliquam lectus et, faucibus magna.",

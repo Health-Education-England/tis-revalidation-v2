@@ -100,6 +100,7 @@ export class ConnectionComponent implements OnInit, OnDestroy {
       }).subscribe(({ gmcNumber, doctorCurrentDbc, traineeDetails }) => {
         this.gmcNumber = gmcNumber;
         this.doctorCurrentDbc = doctorCurrentDbc;
+        this.programmeOwnerDBC = traineeDetails?.tcsDesignatedBody;
         this.enableUpdateConnection =
           this.authService.isRevalAdmin &&
           traineeDetails.programmeMembershipType !== "Military" &&
@@ -174,7 +175,8 @@ export class ConnectionComponent implements OnInit, OnDestroy {
     const doctors: IDoctor[] = [
       {
         gmcId: this.gmcNumber,
-        currentDesignatedBodyCode: this.doctorCurrentDbc
+        currentDesignatedBodyCode: this.doctorCurrentDbc,
+        programmeOwnerDesignatedBodyCode: this.programmeOwnerDBC
       }
     ];
     let payload: {};

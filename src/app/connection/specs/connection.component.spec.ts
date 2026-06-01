@@ -147,7 +147,8 @@ describe("ConnectionComponent", () => {
         doctors: [
           {
             gmcId: 123456,
-            currentDesignatedBodyCode: "1-ABCDE"
+            currentDesignatedBodyCode: "1-ABCDE",
+            programmeOwnerDesignatedBodyCode: "1-ABCDEF"
           }
         ],
         admin: ""
@@ -216,7 +217,8 @@ describe("ConnectionComponent", () => {
         doctors: [
           {
             gmcId: 123456,
-            currentDesignatedBodyCode: "1-ABCDE"
+            currentDesignatedBodyCode: "1-ABCDE",
+            programmeOwnerDesignatedBodyCode: "1-ABCDEF"
           }
         ],
         admin: ""
@@ -318,7 +320,8 @@ describe("ConnectionComponent", () => {
       doctors: [
         {
           gmcId: 123456,
-          currentDesignatedBodyCode: "1-ABCDE"
+          currentDesignatedBodyCode: "1-ABCDE",
+          programmeOwnerDesignatedBodyCode: "1-ABCDEF"
         }
       ]
     });

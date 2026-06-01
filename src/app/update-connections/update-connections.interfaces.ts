@@ -23,4 +23,5 @@ export interface IUpdateConnection {
 export interface IDoctor {
   gmcId: number;
   currentDesignatedBodyCode: string;
+  programmeOwnerDesignatedBodyCode?: string;
 }

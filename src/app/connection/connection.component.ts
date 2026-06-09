@@ -199,6 +199,7 @@ export class ConnectionComponent implements OnInit, OnDestroy {
         adminDesignatedBodyCodes,
         doctors,
         hiddenBy: admin,
+        hiddenUntilDate: formValue.hideUntil.format("YYYY-MM-DD"),
         reason: formValue.reason
       };
 

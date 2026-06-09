@@ -26,7 +26,7 @@ import {
   HIDE_DISCREPANCY_ACTION
 } from "src/app/update-connections/constants";
 import { AuthService } from "src/app/core/auth/auth.service";
-
+import * as moment from "moment";
 @Pipe({ name: "formatDesignatedBody" })
 class MockFormatDesignatedBodyPipe implements PipeTransform {
   transform(value: string): string {
@@ -320,7 +320,8 @@ describe("ConnectionComponent", () => {
 
     const formValue = {
       action: ActionType.HIDE_DISCREPANCY,
-      reason: "Test reason for hiding discrepancy"
+      reason: "Test reason for hiding discrepancy",
+      hideUntil: moment()
     };
 
     component.doctorCurrentDbc = "1-ABCDE";
@@ -332,6 +333,7 @@ describe("ConnectionComponent", () => {
       adminDesignatedBodyCodes: ["1-1RUZV1D"],
       hiddenBy: "",
       reason: "Test reason for hiding discrepancy",
+      hiddenUntilDate: moment(formValue.hideUntil).format("YYYY-MM-DD"),
       doctors: [
         {
           gmcId: 123456,

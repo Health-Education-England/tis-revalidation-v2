@@ -82,7 +82,7 @@ export class ConnectionsComponent implements OnDestroy {
           adminDesignatedBodyCodes,
           doctors,
           hiddenBy: admin,
-          hiddenUntilDate: formValue.hideUntil.format("YYYY-MM-DD"),
+          hiddenUntilDate: formValue.hideUntil?.format("YYYY-MM-DD"),
           reason: formValue.reason
         };
 

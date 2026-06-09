@@ -81,6 +81,7 @@
             matInput
             formControlName="hideUntil"
             [matDatepicker]="picker"
+            [min]="today"
             readonly
           />
           @if (hideUntilControl.value) {
@@ -89,6 +90,7 @@
               mat-icon-button
               aria-label="Clear date"
               data-cy="update-connection-clear-date"
+              type="button"
               (click)="clearDate()"
             >
               <mat-icon>clear</mat-icon>

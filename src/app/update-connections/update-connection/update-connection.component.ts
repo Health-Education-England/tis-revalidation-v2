@@ -43,6 +43,7 @@ export class UpdateConnectionComponent implements OnInit {
   addConnectionSelected = false;
   hideDiscrepancySelected = false;
 
+  today = new Date();
   constructor(
     private store: Store,
     private router: Router,
@@ -125,10 +126,14 @@ export class UpdateConnectionComponent implements OnInit {
           this.hideDiscrepancySelected = action === ActionType.HIDE_DISCREPANCY;
 
           if (this.addConnectionSelected) {
+            this.updateConnectionForm.removeControl("hideUntil");
+            this.hideUntilControl.clearValidators();
             this.dbcControl.setValidators(Validators.required);
             this.updateConnectionForm.addControl("dbc", this.dbcControl);
             this.dbcControl.updateValueAndValidity();
           } else if (this.hideDiscrepancySelected) {
+            this.updateConnectionForm.removeControl("dbc");
+            this.dbcControl.clearValidators();
             this.updateConnectionForm.addControl(
               "hideUntil",
               this.hideUntilControl

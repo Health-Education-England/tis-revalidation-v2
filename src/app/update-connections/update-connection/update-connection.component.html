@@ -1,5 +1,11 @@
 <mat-card appearance="outlined">
   <mat-card-title>Update connection</mat-card-title>
+  @if (hideDiscrepancySelected) {
+    <mat-card-subtitle
+      >Leave the Hide until date field blank to permanently hide the
+      discrepancy.</mat-card-subtitle
+    >
+  }
   <form [formGroup]="updateConnectionForm">
     <div class="d-grid grid-container-3-col">
       <mat-form-field data-cy="update-connection-action">
@@ -106,7 +112,7 @@
       }
     </div>
 
-    <div class="d-grid grid-container-3-col">
+    <div class="d-grid grid-container-3-col mt-20">
       <div class="d-grid grid-container-3-col">
         @if (canCancel) {
           <button

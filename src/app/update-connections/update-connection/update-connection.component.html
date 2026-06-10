@@ -5,87 +5,127 @@
       <mat-form-field data-cy="update-connection-action">
         <mat-label>Action</mat-label>
         <mat-select formControlName="action">
-          <mat-option
-            data-cy="update-connection-action-option"
-            *ngFor="let action of actions"
-            [value]="action.action"
-          >
-            {{ action.action }}
-          </mat-option>
+          @for (action of actions; track action) {
+            <mat-option
+              data-cy="update-connection-action-option"
+              [value]="action.action"
+            >
+              {{ action.action }}
+            </mat-option>
+          }
         </mat-select>
-        <mat-error *ngIf="actionControl?.hasError('required')">
-          Please select an action
-        </mat-error>
+        @if (actionControl?.hasError("required")) {
+          <mat-error data-cy="update-connection-action-error">
+            Please select an action
+          </mat-error>
+        }
       </mat-form-field>
 
-      <mat-form-field
-        *ngIf="reasons.length > 0; else reasonText"
-        data-cy="update-connection-reason"
-      >
-        <mat-label>Reason</mat-label>
-        <mat-select formControlName="reason">
-          <mat-option
-            data-cy="update-connection-reason-option"
-            *ngFor="let reason of reasons"
-            [value]="reason.code"
-          >
-            {{ reason.reason }}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="reasonControl?.hasError('required')">
-          Please select a reason
-        </mat-error>
-      </mat-form-field>
-
-      <ng-template #reasonText>
+      @if (reasons.length > 0) {
+        <mat-form-field data-cy="update-connection-reason">
+          <mat-label>Reason</mat-label>
+          <mat-select formControlName="reason">
+            @for (reason of reasons; track reason) {
+              <mat-option
+                data-cy="update-connection-reason-option"
+                [value]="reason.code"
+              >
+                {{ reason.reason }}
+              </mat-option>
+            }
+          </mat-select>
+          @if (reasonControl?.hasError("required")) {
+            <mat-error data-cy="update-connection-reason-error">
+              Please select a reason
+            </mat-error>
+          }
+        </mat-form-field>
+      } @else {
         <mat-form-field data-cy="update-connection-reason-text">
           <mat-label>Reason</mat-label>
           <input matInput type="text" formControlName="reason" />
-          <mat-error *ngIf="reasonControl?.hasError('required')">
-            Please input reason
-          </mat-error>
+          @if (reasonControl?.hasError("required")) {
+            <mat-error data-cy="update-connection-reason-error">
+              Please input reason
+            </mat-error>
+          }
         </mat-form-field>
-      </ng-template>
+      }
 
-      <mat-form-field
-        *ngIf="addConnectionSelected"
-        data-cy="update-connection-dbc"
-      >
-        <mat-label>Dbc</mat-label>
-        <mat-select formControlName="dbc">
-          <mat-option
-            data-cy="update-connection-dbc-option"
-            *ngFor="let dbc of userDbcs"
-            [value]="dbc.dbc"
-          >
-            {{ dbc.abbr }}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="dbcControl?.hasError('required')">
-          Please select a designated body
-        </mat-error>
-      </mat-form-field>
+      @if (addConnectionSelected) {
+        <mat-form-field data-cy="update-connection-dbc">
+          <mat-label>Dbc</mat-label>
+          <mat-select formControlName="dbc">
+            @for (dbc of userDbcs; track dbc) {
+              <mat-option
+                data-cy="update-connection-dbc-option"
+                [value]="dbc.dbc"
+              >
+                {{ dbc.abbr }}
+              </mat-option>
+            }
+          </mat-select>
+          @if (dbcControl?.hasError("required")) {
+            <mat-error data-cy="update-connection-dbc-error">
+              Please select a designated body
+            </mat-error>
+          }
+        </mat-form-field>
+      }
+
+      @if (hideDiscrepancySelected) {
+        <mat-form-field data-cy="update-connection-hide-until">
+          <mat-label>Hide until</mat-label>
+
+          <input
+            matInput
+            formControlName="hideUntil"
+            [matDatepicker]="picker"
+            [min]="today"
+            readonly
+          />
+          @if (hideUntilControl.value) {
+            <button
+              matSuffix
+              mat-icon-button
+              aria-label="Clear date"
+              data-cy="update-connection-clear-date"
+              type="button"
+              (click)="clearDate()"
+            >
+              <mat-icon>clear</mat-icon>
+            </button>
+          }
+
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker disabled="false"></mat-datepicker>
+        </mat-form-field>
+      }
     </div>
 
     <div class="d-grid grid-container-3-col">
       <div class="d-grid grid-container-3-col">
-        <button
-          data-cy="update-connection-cancel"
-          mat-button
-          type=" button"
-          aria-label="Cancel update connections"
-          (click)="cancel()"
-          mat-raised-button
-          *ngIf="canCancel"
-          color="primary"
-        >
-          Cancel
-        </button>
+        @if (canCancel) {
+          <button
+            data-cy="update-connection-cancel"
+            mat-button
+            type="button"
+            aria-label="Cancel update connections"
+            (click)="cancel()"
+            mat-raised-button
+            color="primary"
+          >
+            Cancel
+          </button>
+        }
 
         <button
           data-cy="update-connection-reset"
           mat-button
-          type=" button"
+          type="button"
           aria-label="Reset changes"
           (click)="resetForm()"
           mat-raised-button

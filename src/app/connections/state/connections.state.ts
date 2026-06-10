@@ -116,6 +116,16 @@ export class ConnectionsState extends RecordsState {
       ConnectionsFilterType.HIDDEN_DISCREPANCIES
     ) {
       itemsKey = ConnectionsFilterType.HIDDEN_DISCREPANCIES;
+      const items = action.response[itemsKey].map((item) => {
+        const isTemporaryHidden = item.hiddenDiscrepancies.some(
+          (discrepancy) => discrepancy.hiddenUntilDate != null
+        );
+        return {
+          ...item,
+          isTemporaryHidden
+        };
+      });
+      action.response[itemsKey] = items;
     }
     return super.getSuccessHandler(ctx, action, itemsKey);
   }

@@ -92,6 +92,13 @@ export const HIDDEN_DISCREPANCIES_COLUMN_DATA: IRecordDataCell[] = [
     label: "Programme name",
     name: "programmeName",
     enableSort: false
+  },
+
+  {
+    label: "Temporarily hidden",
+    name: "isTemporaryHidden",
+    enableSort: false,
+    displayType: "boolean"
   }
 ];
 

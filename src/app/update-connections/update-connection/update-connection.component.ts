@@ -1,9 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import {
-  UntypedFormControl,
-  UntypedFormGroup,
-  Validators
-} from "@angular/forms";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { Observable, Subscription } from "rxjs";
 import { AuthService } from "src/app/core/auth/auth.service";
@@ -31,10 +27,11 @@ export class UpdateConnectionComponent implements OnInit {
   public dbcs$: Observable<IDesignatedBody[]>;
 
   componentSubscriptions: Subscription[] = [];
-  updateConnectionForm: UntypedFormGroup;
-  actionControl: UntypedFormControl;
-  reasonControl: UntypedFormControl;
-  dbcControl: UntypedFormControl;
+  updateConnectionForm: FormGroup;
+  actionControl: FormControl;
+  reasonControl: FormControl;
+  dbcControl: FormControl;
+  hideUntilControl: FormControl;
 
   dbcs: IDesignatedBody[] = [];
   userDbcs: IDesignatedBody[] = [];
@@ -44,7 +41,9 @@ export class UpdateConnectionComponent implements OnInit {
   canCancel = false;
 
   addConnectionSelected = false;
+  hideDiscrepancySelected = false;
 
+  today = new Date();
   constructor(
     private store: Store,
     private router: Router,
@@ -98,6 +97,7 @@ export class UpdateConnectionComponent implements OnInit {
   resetForm() {
     this.updateConnectionForm.reset();
     this.addConnectionSelected = false;
+    this.hideDiscrepancySelected = false;
     this.reasons = [];
   }
 
@@ -106,28 +106,44 @@ export class UpdateConnectionComponent implements OnInit {
   }
 
   private bindFormControl() {
-    this.updateConnectionForm = new UntypedFormGroup({});
+    this.updateConnectionForm = new FormGroup({});
 
-    this.actionControl = new UntypedFormControl(null, Validators.required);
-    this.reasonControl = new UntypedFormControl(null, Validators.required);
-    this.dbcControl = new UntypedFormControl(null, Validators.required);
-
+    this.actionControl = new FormControl(null, Validators.required);
+    this.reasonControl = new FormControl(null, Validators.required);
+    this.dbcControl = new FormControl(null, Validators.required);
+    this.hideUntilControl = new FormControl(null);
     this.subscribeToActions();
   }
 
+  clearDate() {
+    this.hideUntilControl.setValue(null);
+  }
   private subscribeToActions() {
     this.componentSubscriptions.push(
       this.actionControl.valueChanges.subscribe((action) => {
         if (action) {
           this.addConnectionSelected = action === ActionType.ADD_CONNECTION;
+          this.hideDiscrepancySelected = action === ActionType.HIDE_DISCREPANCY;
 
           if (this.addConnectionSelected) {
+            this.updateConnectionForm.removeControl("hideUntil");
+            this.hideUntilControl.clearValidators();
             this.dbcControl.setValidators(Validators.required);
             this.updateConnectionForm.addControl("dbc", this.dbcControl);
             this.dbcControl.updateValueAndValidity();
+          } else if (this.hideDiscrepancySelected) {
+            this.updateConnectionForm.removeControl("dbc");
+            this.dbcControl.clearValidators();
+            this.updateConnectionForm.addControl(
+              "hideUntil",
+              this.hideUntilControl
+            );
+            this.hideUntilControl.updateValueAndValidity();
           } else {
             this.updateConnectionForm.removeControl("dbc");
             this.dbcControl.clearValidators();
+            this.updateConnectionForm.removeControl("hideUntil");
+            this.hideUntilControl.clearValidators();
           }
 
           this.reasonControl.setValue("");

@@ -45,6 +45,7 @@ export interface IHiddenDiscrepancy {
   hiddenBy: string;
   reason: string;
   hiddenDateTime: string;
+  hiddenUntilDate?: string;
 }
 
 export interface IShowDiscrepancyParameters {

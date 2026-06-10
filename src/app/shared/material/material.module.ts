@@ -27,7 +27,8 @@ import {
   MatNativeDateModule,
   MAT_DATE_LOCALE,
   DateAdapter,
-  MAT_DATE_FORMATS
+  MAT_DATE_FORMATS,
+  ErrorStateMatcher
 } from "@angular/material/core";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatStepperModule } from "@angular/material/stepper";
@@ -38,6 +39,7 @@ import {
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
   MomentDateAdapter
 } from "@angular/material-moment-adapter";
+import { ShowOnInvalidErrorStateMatcher } from "./errorStateMatcher";
 
 export const CUSTOM_DATE_FORMAT = {
   parse: {
@@ -97,7 +99,8 @@ const materialModules = [
     },
     { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMAT },
     { provide: MAT_DATE_LOCALE, useValue: "en-GB" },
-    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
+    { provide: ErrorStateMatcher, useClass: ShowOnInvalidErrorStateMatcher }
   ]
 })
 export class MaterialModule {}

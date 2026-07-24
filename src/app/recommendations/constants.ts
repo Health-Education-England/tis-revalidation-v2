@@ -68,7 +68,7 @@ export const COLUMN_DATA: IRecordDataCell[] = [
   {
     label: "Curriculum end date",
     name: "curriculumEndDate",
-    enableSort: false,
+    enableSort: true,
     displayType: "date"
   },
   {
@@ -76,13 +76,6 @@ export const COLUMN_DATA: IRecordDataCell[] = [
     name: "admin",
     enableSort: false,
     displayType: "admin"
-  },
-
-  {
-    label: "Last updated",
-    name: "lastUpdatedDate",
-    enableSort: false,
-    displayType: "date"
   }
 ];
 

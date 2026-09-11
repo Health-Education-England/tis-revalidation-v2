@@ -2,10 +2,14 @@ import { TestBed } from "@angular/core/testing";
 
 import { UtilitiesService } from "./utilities.service";
 import { AuthService } from "src/app/core/auth/auth.service";
-import { IMenuItem } from "../../main-navigation/mat-main-nav/menu-item.interface";
+import {
+  IMenuItem,
+  MenuType
+} from "../../main-navigation/mat-main-nav/menu-item.interface";
 
 class AuthServiceStub {
   public isRevalBeta = false;
+  public roles: string[] = [];
 }
 describe("UtilitiesService", () => {
   let service: UtilitiesService;
@@ -50,7 +54,7 @@ describe("UtilitiesService", () => {
 
   it("should return true when no environment or beta restrictions", () => {
     const menuItem: IMenuItem = {
-      type: 0,
+      type: MenuType.INTERNAL,
       route: "/connections",
       name: "Connections"
     };
@@ -59,7 +63,7 @@ describe("UtilitiesService", () => {
 
   it("should return false when link is in 'beta' but admin does not have 'RevalBeta' permissions", () => {
     const menuItem: IMenuItem = {
-      type: 0,
+      type: MenuType.INTERNAL,
       route: "/connections",
       name: "Connections",
       beta: true
@@ -70,12 +74,88 @@ describe("UtilitiesService", () => {
 
   it("should return true when link is in 'beta' and admin does have 'RevalBeta' permissions", () => {
     const menuItem: IMenuItem = {
-      type: 0,
+      type: MenuType.INTERNAL,
       route: "/connections",
       name: "Connections",
       beta: true
     };
     authService.isRevalBeta = true;
     expect(service.showNavigationLink(menuItem)).toBeTrue();
+  });
+
+  it("should return false when link has roles and admin does not have a matching role", () => {
+    const menuItem: IMenuItem = {
+      type: MenuType.EXTERNAL,
+      route: "admin/reference",
+      name: "Admin",
+      roles: ["Reference Site Admin"]
+    };
+    authService.roles = ["Some Other Role"];
+    expect(service.showNavigationLink(menuItem)).toBeFalse();
+  });
+
+  it("should return true when link has roles and admin has a matching role", () => {
+    const menuItem: IMenuItem = {
+      type: MenuType.EXTERNAL,
+      route: "admin/reference",
+      name: "Admin",
+      roles: ["Reference Site Admin"]
+    };
+    authService.roles = ["Reference Site Admin"];
+    expect(service.showNavigationLink(menuItem)).toBeTrue();
+  });
+
+  describe("filterMenuItems", () => {
+    it("should remove top-level items the admin does not have a role for", () => {
+      const items: IMenuItem[] = [
+        {
+          type: MenuType.EXTERNAL,
+          route: "admin/reference",
+          name: "Admin",
+          roles: ["Reference Site Admin"]
+        },
+        {
+          type: MenuType.INTERNAL,
+          route: "/connections",
+          name: "Connections"
+        }
+      ];
+      authService.roles = [];
+
+      const result = service.filterMenuItems(items);
+
+      expect(result.length).toBe(1);
+      expect(result[0].name).toBe("Connections");
+    });
+
+    it("should recursively filter nested menuItems", () => {
+      const items: IMenuItem[] = [
+        {
+          type: MenuType.EXTERNAL,
+          route: "admin/reference",
+          name: "Admin",
+          menuItems: [
+            {
+              type: MenuType.EXTERNAL,
+              route: "admin/reference/college",
+              name: "College",
+              roles: ["Reference Site Admin"]
+            },
+            {
+              type: MenuType.EXTERNAL,
+              route: "admin/reference/country",
+              name: "Country"
+            }
+          ]
+        }
+      ];
+      authService.roles = [];
+
+      const result = service.filterMenuItems(items);
+
+      expect(result.length).toBe(1);
+      expect(result[0].menuItems?.length).toBe(1);
+      expect(result[0].menuItems?.[0].name).toBe("Country");
+    });
   });
 });

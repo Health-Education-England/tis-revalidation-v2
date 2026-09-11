@@ -1,25 +1,23 @@
-<mat-accordion displayMode="flat" *ngFor="let menuItem of menuItems$">
+<mat-accordion displayMode="flat" *ngFor="let menuItem of menuItems">
   <mat-expansion-panel *ngIf="menuItem.menuItems">
     <mat-expansion-panel-header collapsedHeight="48px" expandedHeight="48px">
       {{ menuItem.name }}
     </mat-expansion-panel-header>
     <mat-nav-list *ngFor="let item of menuItem.menuItems">
-      <ng-container *ngIf="showLink(item)">
-        <a
-          mat-list-item
-          (click)="onMenuClick()"
-          *ngIf="item.type === 0"
-          routerLinkActive="active-list-item"
-          routerLink="{{ item.route }}"
-          >{{ item.name }}</a
-        >
-        <a
-          mat-list-item
-          *ngIf="item.type === 1"
-          [href]="hostURI + item.route"
-          >{{ item.name }}</a
-        >
-      </ng-container>
+      <a
+        mat-list-item
+        (click)="onMenuClick()"
+        *ngIf="item.type === menuType.INTERNAL"
+        routerLinkActive="active-list-item"
+        [routerLink]="item.route"
+        >{{ item.name }}</a
+      >
+      <a
+        mat-list-item
+        *ngIf="item.type === menuType.EXTERNAL"
+        [href]="hostURI + item.route"
+        >{{ item.name }}</a
+      >
     </mat-nav-list>
   </mat-expansion-panel>
 
@@ -32,15 +30,15 @@
       <mat-panel-title>
         <a
           class="no-decoration-link d-block w-100"
-          *ngIf="menuItem.type === 0"
+          *ngIf="menuItem.type === menuType.INTERNAL"
           (click)="onMenuClick()"
           routerLinkActive="active-list-item"
-          routerLink="{{ menuItem.route }}"
+          [routerLink]="menuItem.route"
           >{{ menuItem.name }}</a
         >
         <a
           class="no-decoration-link d-block w-100"
-          *ngIf="menuItem.type === 1"
+          *ngIf="menuItem.type === menuType.EXTERNAL"
           [href]="hostURI + menuItem.route"
           >{{ menuItem.name }}</a
         >

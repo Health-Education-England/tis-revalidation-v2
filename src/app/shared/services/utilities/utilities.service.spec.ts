@@ -124,7 +124,7 @@ describe("UtilitiesService", () => {
 
       const result = service.filterMenuItems(items);
 
-      expect(result.length).toBe(1);
+      expect(result).toHaveSize(1);
       expect(result[0].name).toBe("Connections");
     });
 
@@ -153,8 +153,8 @@ describe("UtilitiesService", () => {
 
       const result = service.filterMenuItems(items);
 
-      expect(result.length).toBe(1);
-      expect(result[0].menuItems?.length).toBe(1);
+      expect(result).toHaveSize(1);
+      expect(result[0].menuItems).toHaveSize(1);
       expect(result[0].menuItems?.[0].name).toBe("Country");
     });
   });

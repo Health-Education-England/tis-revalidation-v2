@@ -8,7 +8,7 @@ import { environment } from "@environment";
   providedIn: "root"
 })
 export class UtilitiesService {
-  constructor(private authService: AuthService) {}
+  constructor(private readonly authService: AuthService) {}
   private convertToDays(millisecs: number) {
     return Math.round(millisecs / 1000 / 60 / 60 / 24);
   }

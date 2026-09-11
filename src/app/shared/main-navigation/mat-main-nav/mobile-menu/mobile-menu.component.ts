@@ -16,7 +16,7 @@ export class MobileMenuComponent {
   menuType = MenuType;
 
   @Output() closeMenu = new EventEmitter();
-  constructor(private utils: UtilitiesService) {
+  constructor(private readonly utils: UtilitiesService) {
     this.menuItems = this.utils.filterMenuItems(menuItems);
   }
 

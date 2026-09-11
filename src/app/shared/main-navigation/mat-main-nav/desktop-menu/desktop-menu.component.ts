@@ -16,7 +16,7 @@ export class DesktopMenuComponent {
   env: string = environment.name;
   menuType = MenuType;
 
-  constructor(private utils: UtilitiesService) {
+  constructor(private readonly utils: UtilitiesService) {
     this.menuItems = this.utils.filterMenuItems(menuItems);
   }
 

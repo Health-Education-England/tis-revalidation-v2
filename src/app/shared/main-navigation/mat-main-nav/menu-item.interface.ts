@@ -6,9 +6,10 @@ export interface IMenuItem {
   description?: string;
   env?: string[];
   beta?: boolean;
+  roles?: string[];
 }
 
 export enum MenuType {
-  internal, // uses routerLink
-  external // uses href appended to environments host
+  INTERNAL = "INTERNAL", // uses routerLink
+  EXTERNAL = "EXTERNAL" // uses href appended to environments host
 }

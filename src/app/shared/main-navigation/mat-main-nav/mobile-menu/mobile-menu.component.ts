@@ -1,6 +1,6 @@
-import { Component, OnInit, Output, EventEmitter } from "@angular/core";
+import { Component, Output, EventEmitter } from "@angular/core";
 import { menuItems } from "../menu-items.const";
-import { IMenuItem } from "../menu-item.interface";
+import { IMenuItem, MenuType } from "../menu-item.interface";
 import { environment } from "@environment";
 import { UtilitiesService } from "src/app/shared/services/utilities/utilities.service";
 
@@ -10,18 +10,17 @@ import { UtilitiesService } from "src/app/shared/services/utilities/utilities.se
   styleUrls: ["./mobile-menu.component.scss"]
 })
 export class MobileMenuComponent {
-  menuItems$: IMenuItem[] = menuItems;
+  menuItems: IMenuItem[];
   hostURI: string = environment.adminsUIHostUri;
   env: string = environment.name;
+  menuType = MenuType;
 
   @Output() closeMenu = new EventEmitter();
-  constructor(private utils: UtilitiesService) {}
+  constructor(private readonly utils: UtilitiesService) {
+    this.menuItems = this.utils.filterMenuItems(menuItems);
+  }
 
   onMenuClick(): void {
     this.closeMenu.emit();
-  }
-
-  showLink(item: IMenuItem): boolean {
-    return this.utils.showNavigationLink(item);
   }
 }

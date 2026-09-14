@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { menuItems } from "../menu-items.const";
-import { IMenuItem } from "../menu-item.interface";
+import { IMenuItem, MenuType } from "../menu-item.interface";
 import { environment } from "@environment";
 import { UtilitiesService } from "src/app/shared/services/utilities/utilities.service";
 
@@ -10,17 +10,17 @@ import { UtilitiesService } from "src/app/shared/services/utilities/utilities.se
   styleUrls: ["./desktop-menu.component.scss"]
 })
 export class DesktopMenuComponent {
-  menuItems$: IMenuItem[] = menuItems;
+  menuItems: IMenuItem[];
   hostURI: string = environment.adminsUIHostUri;
   activeItem = "Revalidation";
   env: string = environment.name;
+  menuType = MenuType;
 
-  constructor(private utils: UtilitiesService) {}
+  constructor(private readonly utils: UtilitiesService) {
+    this.menuItems = this.utils.filterMenuItems(menuItems);
+  }
 
   setActiveItem(selectedItem: string) {
     this.activeItem = selectedItem;
-  }
-  showLink(item: IMenuItem): boolean {
-    return this.utils.showNavigationLink(item);
   }
 }

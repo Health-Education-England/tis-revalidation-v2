@@ -8,9 +8,9 @@ import { environment } from "@environment";
   providedIn: "root"
 })
 export class UtilitiesService {
-  constructor(private authService: AuthService) {}
-  private convertToDays(milisecs: number) {
-    return Math.round(milisecs / 1000 / 60 / 60 / 24);
+  constructor(private readonly authService: AuthService) {}
+  private convertToDays(millisecs: number) {
+    return Math.round(millisecs / 1000 / 60 / 60 / 24);
   }
 
   getDueDateStatus(
@@ -30,10 +30,27 @@ export class UtilitiesService {
   }
 
   showNavigationLink(item: IMenuItem): boolean {
+    const hasMatchingRole =
+      !item.roles ||
+      item.roles.length === 0 ||
+      item.roles.some((role) => this.authService.roles?.includes(role));
+
     return (
+      hasMatchingRole &&
       (!item.beta || (item.beta && this.authService.isRevalBeta)) &&
       (!item.env || item.env?.includes(environment.name))
     );
+  }
+
+  filterMenuItems(items: IMenuItem[]): IMenuItem[] {
+    return items
+      .filter((item) => this.showNavigationLink(item))
+      .map((item) => ({
+        ...item,
+        menuItems: item.menuItems
+          ? this.filterMenuItems(item.menuItems)
+          : item.menuItems
+      }));
   }
 
   flattenObject(

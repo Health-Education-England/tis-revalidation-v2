@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import {
   ComponentFixture,
   TestBed,
@@ -27,6 +27,7 @@ import { RecordListComponent } from "./record-list.component";
 import { RecordListState } from "./state/record-list.state";
 import { IRecordDataCell } from "../records.interfaces";
 import { FormatDesignatedBodyPipe } from "src/app/shared/pipes/format-designated-body.pipe";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 const MOCK_COLUMN_DATA: IRecordDataCell[] = [
   {
@@ -60,16 +61,14 @@ describe("RecordListComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [RecordListComponent, FormatDesignatedBodyPipe],
-      imports: [
-        MaterialModule,
+    declarations: [RecordListComponent, FormatDesignatedBodyPipe],
+    imports: [MaterialModule,
         NoopAnimationsModule,
-        HttpClientTestingModule,
         RouterModule.forRoot([]),
         AdminsModule,
-        NgxsModule.forRoot([RecommendationsState, AdminsState, RecordListState])
-      ]
-    }).compileComponents();
+        NgxsModule.forRoot([RecommendationsState, AdminsState, RecordListState])],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+}).compileComponents();
     store = TestBed.inject(Store);
     router = TestBed.inject(Router);
     recordsService = TestBed.inject(RecordsService);

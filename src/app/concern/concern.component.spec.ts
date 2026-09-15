@@ -4,12 +4,13 @@ import { ConcernComponent } from "./concern.component";
 import { NgxsModule } from "@ngxs/store";
 import { ConcernState } from "./state/concern.state";
 import { ConcernService } from "./services/concern/concern.service";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { MaterialModule } from "../shared/material/material.module";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
 import { AuthService } from "../core/auth/auth.service";
 import { ConcernStatus, IConcernSummary } from "./concern.interfaces";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("ConcernComponent", () => {
   let component: ConcernComponent;
@@ -34,16 +35,13 @@ describe("ConcernComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        NgxsModule.forRoot([ConcernState]),
-        HttpClientTestingModule,
+    declarations: [ConcernComponent],
+    imports: [NgxsModule.forRoot([ConcernState]),
         MaterialModule,
         NoopAnimationsModule,
-        RouterTestingModule
-      ],
-      providers: [AuthService, ConcernService],
-      declarations: [ConcernComponent]
-    }).compileComponents();
+        RouterTestingModule],
+    providers: [AuthService, ConcernService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+}).compileComponents();
   }));
 
   beforeEach(() => {

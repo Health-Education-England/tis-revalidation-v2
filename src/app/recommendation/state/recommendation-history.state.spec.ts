@@ -2,16 +2,14 @@ import { TestBed, fakeAsync, waitForAsync } from "@angular/core/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { RecommendationHistoryState } from "./recommendation-history.state";
 import { Get as RecommendationHistoryAction } from "./recommendation-history.actions";
-import {
-  HttpClientTestingModule,
-  HttpTestingController
-} from "@angular/common/http/testing";
+import { HttpTestingController, provideHttpClientTesting } from "@angular/common/http/testing";
 import { RecommendationHistoryRespone2 } from "../mock-data/recommendation-spec-data";
 import { ErrorHandler } from "@angular/core";
 import { IRecommendationHistory } from "../recommendation-history.interface";
 import { environment } from "@environment";
 import { MaterialModule } from "src/app/shared/material/material.module";
 import { RouterTestingModule } from "@angular/router/testing";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("RecommendationHistory actions", () => {
   let store: Store;
@@ -23,14 +21,11 @@ describe("RecommendationHistory actions", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        MaterialModule,
+    imports: [MaterialModule,
         NgxsModule.forRoot([RecommendationHistoryState]),
-        HttpClientTestingModule,
-        RouterTestingModule
-      ],
-      providers: [{ provide: ErrorHandler, useFactory: errorHandlerSpy }]
-    }).compileComponents();
+        RouterTestingModule],
+    providers: [{ provide: ErrorHandler, useFactory: errorHandlerSpy }, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+}).compileComponents();
     store = TestBed.inject(Store);
     httpMock = TestBed.inject(HttpTestingController);
   }));

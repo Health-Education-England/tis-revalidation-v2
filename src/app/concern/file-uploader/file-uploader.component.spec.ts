@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
@@ -11,6 +11,7 @@ import { ConcernState } from "../state/concern.state";
 import { FileUploaderComponent } from "./file-uploader.component";
 import { defaultConcern } from "../constants";
 import { FileBytesPipe } from "src/app/shared/file-bytes.pipe";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("FileUploaderComponent", () => {
   let store: Store;
@@ -53,16 +54,14 @@ describe("FileUploaderComponent", () => {
   };
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [FileUploaderComponent, FileBytesPipe],
-      imports: [
-        ReactiveFormsModule,
+    declarations: [FileUploaderComponent, FileBytesPipe],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [ReactiveFormsModule,
         MaterialModule,
-        HttpClientTestingModule,
         NoopAnimationsModule,
-        NgxsModule.forRoot([ConcernState])
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    }).compileComponents();
+        NgxsModule.forRoot([ConcernState])],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+}).compileComponents();
     store = TestBed.inject(Store);
     snackBarService = TestBed.inject(SnackBarService);
     setDefaultSelectedConcern();

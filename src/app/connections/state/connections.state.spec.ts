@@ -1,8 +1,4 @@
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-  TestRequest
-} from "@angular/common/http/testing";
+import { HttpTestingController, TestRequest, provideHttpClientTesting } from "@angular/common/http/testing";
 import { TestBed, fakeAsync, waitForAsync } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { environment } from "@environment";
@@ -23,7 +19,7 @@ import {
 import { ConnectionsState } from "./connections.state";
 import { mockConnectionsResponse } from "../mock-data/connections-spec-data";
 import { ConnectionsService } from "../services/connections.service";
-import { HttpParams } from "@angular/common/http";
+import { HttpParams, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { ConnectionsFilterType, IConnection } from "../connections.interfaces";
 import { DEFAULT_SORT } from "src/app/records/constants";
 
@@ -34,12 +30,10 @@ describe("Connections state", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        HttpClientTestingModule,
-        NgxsModule.forRoot([ConnectionsState])
-      ]
-    }).compileComponents();
+    imports: [RouterTestingModule,
+        NgxsModule.forRoot([ConnectionsState])],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+}).compileComponents();
     store = TestBed.inject(Store);
     connectionsService = TestBed.inject(ConnectionsService);
     httpMock = TestBed.inject(HttpTestingController);

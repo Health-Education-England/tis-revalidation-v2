@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
@@ -12,6 +12,7 @@ import { HarnessLoader } from "@angular/cdk/testing";
 import { TestbedHarnessEnvironment } from "@angular/cdk/testing/testbed";
 import { MatButtonHarness } from "@angular/material/button/testing";
 import { MatSlideToggleHarness } from "@angular/material/slide-toggle/testing";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 describe("ConfirmRecommendationComponent", () => {
   let store: Store;
   let recommendationHistoryService: RecommendationHistoryService;
@@ -22,16 +23,14 @@ describe("ConfirmRecommendationComponent", () => {
   const submitButtonSelector = { selector: "[data-jasmine='buttonSubmit']" };
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ConfirmRecommendationComponent],
-      imports: [
-        MaterialModule,
+    declarations: [ConfirmRecommendationComponent],
+    imports: [MaterialModule,
         RouterTestingModule,
         ReactiveFormsModule,
-        HttpClientTestingModule,
         NoopAnimationsModule,
-        NgxsModule.forRoot([RecommendationHistoryState])
-      ]
-    }).compileComponents();
+        NgxsModule.forRoot([RecommendationHistoryState])],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+}).compileComponents();
     store = TestBed.inject(Store);
     recommendationHistoryService = TestBed.inject(RecommendationHistoryService);
   }));

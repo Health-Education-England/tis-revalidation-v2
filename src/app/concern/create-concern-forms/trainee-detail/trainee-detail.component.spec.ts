@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
@@ -12,6 +12,7 @@ import { IConcernSummary } from "../../concern.interfaces";
 import { ConcernState } from "../../state/concern.state";
 
 import { TraineeDetailComponent } from "./trainee-detail.component";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("TraineeDetailComponent", () => {
   let component: TraineeDetailComponent;
@@ -20,16 +21,14 @@ describe("TraineeDetailComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [TraineeDetailComponent],
-      imports: [
-        ReactiveFormsModule,
+    declarations: [TraineeDetailComponent],
+    imports: [ReactiveFormsModule,
         MaterialModule,
         NoopAnimationsModule,
-        HttpClientTestingModule,
         AdminsModule,
-        NgxsModule.forRoot([ConcernState, AdminsState])
-      ]
-    }).compileComponents();
+        NgxsModule.forRoot([ConcernState, AdminsState])],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+}).compileComponents();
     store = TestBed.inject(Store);
   }));
 

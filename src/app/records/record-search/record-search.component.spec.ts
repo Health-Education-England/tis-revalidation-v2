@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
@@ -11,6 +11,7 @@ import { MaterialModule } from "../../shared/material/material.module";
 import { RecordsService } from "../services/records.service";
 import { defaultRecordsState } from "../state/records.state";
 import { RecordSearchComponent } from "./record-search.component";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("RecordSearchComponent", () => {
   let store: Store;
@@ -35,17 +36,15 @@ describe("RecordSearchComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [RecordSearchComponent],
-      imports: [
-        MaterialModule,
+    declarations: [RecordSearchComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [MaterialModule,
         NgxsModule.forRoot([RecommendationsState, UpdateConnectionsState]),
         RouterTestingModule,
-        HttpClientTestingModule,
         ReactiveFormsModule,
-        NoopAnimationsModule
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    }).compileComponents();
+        NoopAnimationsModule],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+}).compileComponents();
     store = TestBed.inject(Store);
     recordsService = TestBed.inject(RecordsService);
   }));

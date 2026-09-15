@@ -1,18 +1,17 @@
 import { TestBed } from "@angular/core/testing";
-import {
-  HttpClientTestingModule,
-  HttpTestingController
-} from "@angular/common/http/testing";
+import { HttpTestingController, provideHttpClientTesting } from "@angular/common/http/testing";
 import { ExceptionsLogService } from "./exceptions-log.service";
 import { mockExceptions } from "../mock-data/exceptions-log-spec-data";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("ExceptionsLogService", () => {
   let service: ExceptionsLogService;
   let httpMock: HttpTestingController;
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule]
-    });
+    imports: [],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
     service = TestBed.inject(ExceptionsLogService);
     httpMock = TestBed.inject(HttpTestingController);
   });

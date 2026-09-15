@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -27,6 +27,7 @@ import {
 } from "src/app/update-connections/constants";
 import { AuthService } from "src/app/core/auth/auth.service";
 import * as moment from "moment";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 @Pipe({ name: "formatDesignatedBody" })
 class MockFormatDesignatedBodyPipe implements PipeTransform {
   transform(value: string): string {
@@ -58,29 +59,28 @@ describe("ConnectionComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        NgxsModule.forRoot([ConnectionState, DetailsSideNavState]),
-        HttpClientTestingModule,
-        MaterialModule,
-        RouterModule.forRoot([]),
-        ReactiveFormsModule,
-        FormsModule
-      ],
-      declarations: [
+    declarations: [
         ConnectionComponent,
         ConnectionHistoryComponent,
         ConnectionHiddenDiscrepanciesComponent,
         MockFormatDesignatedBodyPipe,
         MockAdminNamePipe,
         ConfirmDialogComponent
-      ],
-      providers: [
+    ],
+    imports: [NgxsModule.forRoot([ConnectionState, DetailsSideNavState]),
+        MaterialModule,
+        RouterModule.forRoot([]),
+        ReactiveFormsModule,
+        FormsModule],
+    providers: [
         FormatDesignatedBodyPipe,
         ConnectionService,
         AuthService,
-        { provide: MatDialog, useValue: matDialogMock }
-      ]
-    }).compileComponents();
+        { provide: MatDialog, useValue: matDialogMock },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+}).compileComponents();
   });
 
   beforeEach(() => {

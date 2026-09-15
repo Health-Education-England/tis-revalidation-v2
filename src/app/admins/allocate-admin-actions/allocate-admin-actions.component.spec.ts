@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
@@ -21,6 +21,7 @@ import {
 } from "src/app/recommendation/recommendation-history.interface";
 import { IRecommendation } from "src/app/recommendations/recommendations.interfaces";
 import { IAllocateAdmin } from "../admins.interfaces";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("AllocateAdminActionsComponent", () => {
   let component: AllocateAdminActionsComponent;
@@ -91,21 +92,18 @@ describe("AllocateAdminActionsComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [
+    declarations: [
         AllocateAdminActionsComponent,
         AllocateAdminAutocompleteComponent
-      ],
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule,
+    ],
+    imports: [RouterTestingModule,
         NgxsModule.forRoot([RecommendationsState, AdminsState]),
         MaterialModule,
         BrowserAnimationsModule,
         ReactiveFormsModule,
-        FormsModule
-      ],
-      providers: [RecordsService]
-    }).compileComponents();
+        FormsModule],
+    providers: [RecordsService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+}).compileComponents();
 
     store = TestBed.inject(Store);
     snackBarService = TestBed.inject(SnackBarService);

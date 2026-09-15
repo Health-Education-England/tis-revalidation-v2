@@ -1,4 +1,4 @@
-import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { NgModule, APP_INITIALIZER, ErrorHandler } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -31,40 +31,33 @@ import { ReferenceState } from "./reference/state/reference.state";
 import { GoogleTagManagerModule } from 'angular-google-tag-manager';
 import { environment } from "@environment";
 
-@NgModule({
-  declarations: [AppComponent],
-  imports: [
-    ReferenceModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    MaterialModule,
-    SharedModule,
-    AppRoutingModule,
-    ServiceWorkerModule.register("ngsw-worker.js"),
-    NgxsModule.forRoot([ReferenceState]),
-    NgxsReduxDevtoolsPluginModule.forRoot(),
-    MainNavigationModule,
-    GoogleTagManagerModule.forRoot({
-      id: environment.gtmID
-    })
-  ],
-  providers: [
-    AuthService,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeApplication,
-      multi: true,
-      deps: [AuthService, Router]
-    },
-    { provide: ErrorHandler, useFactory: errorHandlerFactory },
-
-    { provide: SwRegistrationOptions, useFactory: swRegistrationOptionsFactory }
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [AppComponent],
+    bootstrap: [AppComponent], imports: [ReferenceModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        MaterialModule,
+        SharedModule,
+        AppRoutingModule,
+        ServiceWorkerModule.register("ngsw-worker.js"),
+        NgxsModule.forRoot([ReferenceState]),
+        NgxsReduxDevtoolsPluginModule.forRoot(),
+        MainNavigationModule,
+        GoogleTagManagerModule.forRoot({
+            id: environment.gtmID
+        })], providers: [
+        AuthService,
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: initializeApplication,
+            multi: true,
+            deps: [AuthService, Router]
+        },
+        { provide: ErrorHandler, useFactory: errorHandlerFactory },
+        { provide: SwRegistrationOptions, useFactory: swRegistrationOptionsFactory },
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule {
   constructor(private store: Store) {
     this.store.dispatch(new GetDesignatedBodies());

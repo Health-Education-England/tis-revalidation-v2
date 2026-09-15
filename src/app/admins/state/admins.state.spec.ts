@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { TestBed, waitForAsync } from "@angular/core/testing";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
@@ -10,6 +10,7 @@ import { mockAdminsResponse } from "../services/admins.service.spec";
 import { Get, GetError, GetSuccess } from "./admins.actions";
 import { AdminsState } from "./admins.state";
 import { of } from "rxjs";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("Admins state", () => {
   let store: Store;
@@ -17,16 +18,13 @@ describe("Admins state", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        MaterialModule,
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [MaterialModule,
         RouterTestingModule,
         NoopAnimationsModule,
-        NgxsModule.forRoot([AdminsState]),
-        HttpClientTestingModule
-      ],
-      providers: [AdminsService],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    }).compileComponents();
+        NgxsModule.forRoot([AdminsState])],
+    providers: [AdminsService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+}).compileComponents();
     store = TestBed.inject(Store);
     adminsService = TestBed.inject(AdminsService);
   }));

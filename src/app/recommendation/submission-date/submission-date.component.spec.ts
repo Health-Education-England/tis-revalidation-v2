@@ -3,11 +3,12 @@ import { UtilitiesService } from "src/app/shared/services/utilities/utilities.se
 import { RecommendationHistoryState } from "../state/recommendation-history.state";
 import { SubmissionDateComponent } from "./submission-date.component";
 import { NgxsModule, Store } from "@ngxs/store";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { MaterialModule } from "../../shared/material/material.module";
 import { IRecommendationHistory } from "../recommendation-history.interface";
 import { By } from "@angular/platform-browser";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("SubmissionDateComponent", () => {
   let component: SubmissionDateComponent;
@@ -30,15 +31,12 @@ describe("SubmissionDateComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SubmissionDateComponent],
-      imports: [
-        NgxsModule.forRoot([RecommendationHistoryState]),
-        HttpClientTestingModule,
+    declarations: [SubmissionDateComponent],
+    imports: [NgxsModule.forRoot([RecommendationHistoryState]),
         RouterTestingModule,
-        MaterialModule
-      ],
-      providers: [UtilitiesService]
-    }).compileComponents();
+        MaterialModule],
+    providers: [UtilitiesService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+}).compileComponents();
     store = TestBed.inject(Store);
   });
 

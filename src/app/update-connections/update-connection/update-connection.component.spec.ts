@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
@@ -19,6 +19,7 @@ import { AuthService } from "src/app/core/auth/auth.service";
 import { ReferenceState } from "src/app/reference/state/reference.state";
 import { CONNECTION_ACTIONS, HIDE_DISCREPANCY_ACTION } from "../constants";
 import { By } from "@angular/platform-browser";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("UpdateConnectionComponent", () => {
   let component: UpdateConnectionComponent;
@@ -32,26 +33,25 @@ describe("UpdateConnectionComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        MaterialModule,
+    declarations: [UpdateConnectionComponent],
+    imports: [MaterialModule,
         RouterTestingModule,
         ReactiveFormsModule,
         FormsModule,
         BrowserAnimationsModule,
         SharedModule,
-        NgxsModule.forRoot([UpdateConnectionsState, ReferenceState])
-      ],
-      declarations: [UpdateConnectionComponent],
-      providers: [
+        NgxsModule.forRoot([UpdateConnectionsState, ReferenceState])],
+    providers: [
         AuthService,
         UpdateConnectionsService,
         {
-          provide: MatDialog,
-          useClass: MdDialogMock
-        }
-      ]
-    }).compileComponents();
+            provide: MatDialog,
+            useClass: MdDialogMock
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+}).compileComponents();
   });
 
   beforeEach(() => {

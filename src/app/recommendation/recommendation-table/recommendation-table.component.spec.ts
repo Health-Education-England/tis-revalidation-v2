@@ -5,9 +5,10 @@ import { MaterialModule } from "../../shared/material/material.module";
 import { RecommendationTableComponent } from "./recommendation-table.component";
 import { NgxsModule } from "@ngxs/store";
 import { RecommendationHistoryState } from "../state/recommendation-history.state";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { AdminsModule } from "src/app/admins/admins.module";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("RecommendationTableComponent", () => {
   let component: RecommendationTableComponent;
@@ -15,16 +16,14 @@ describe("RecommendationTableComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [RecommendationTableComponent],
-      imports: [
-        MaterialModule,
+    declarations: [RecommendationTableComponent],
+    imports: [MaterialModule,
         NoopAnimationsModule,
-        HttpClientTestingModule,
         RouterTestingModule,
         AdminsModule,
-        NgxsModule.forRoot([RecommendationHistoryState])
-      ]
-    }).compileComponents();
+        NgxsModule.forRoot([RecommendationHistoryState])],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+}).compileComponents();
   }));
 
   beforeEach(() => {

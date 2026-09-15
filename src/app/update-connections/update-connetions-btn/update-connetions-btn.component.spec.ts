@@ -1,8 +1,9 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { NgxsModule } from "@ngxs/store";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { UpdateConnetionsBtnComponent } from "./update-connetions-btn.component";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("UpdateConnetionsBtnComponent", () => {
   let component: UpdateConnetionsBtnComponent;
@@ -10,13 +11,11 @@ describe("UpdateConnetionsBtnComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        NgxsModule.forRoot(),
-        HttpClientTestingModule,
-        RouterTestingModule
-      ],
-      declarations: [UpdateConnetionsBtnComponent]
-    }).compileComponents();
+    declarations: [UpdateConnetionsBtnComponent],
+    imports: [NgxsModule.forRoot(),
+        RouterTestingModule],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+}).compileComponents();
   });
 
   beforeEach(() => {

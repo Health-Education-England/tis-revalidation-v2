@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { TestBed } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
@@ -8,6 +8,7 @@ import { ConnectionsFilterType } from "../connections.interfaces";
 import { ConnectionsState } from "../state/connections.state";
 import { ConnectionsService } from "./connections.service";
 import { AuthService } from "../../core/auth/auth.service";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("ConnectionsService", () => {
   let connectionsService: ConnectionsService;
@@ -29,12 +30,10 @@ describe("ConnectionsService", () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule,
-        NgxsModule.forRoot([ConnectionsState])
-      ]
-    });
+    imports: [RouterTestingModule,
+        NgxsModule.forRoot([ConnectionsState])],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
     authService = TestBed.inject(AuthService);
     connectionsService = TestBed.inject(ConnectionsService);
     recordsService = TestBed.inject(RecordsService);

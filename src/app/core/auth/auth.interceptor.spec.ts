@@ -1,14 +1,10 @@
 import { TestBed } from "@angular/core/testing";
 import { MaterialModule } from "../../shared/material/material.module";
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-  TestRequest
-} from "@angular/common/http/testing";
+import { HttpTestingController, TestRequest, provideHttpClientTesting } from "@angular/common/http/testing";
 import { AuthService } from "./auth.service";
 import { AuthInterceptor } from "./auth.interceptor";
 import { of } from "rxjs";
-import { HTTP_INTERCEPTORS } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { ConnectionService } from "src/app/connection/services/connection.service";
 import { environment } from "@environment";
 import { AuthSession } from "aws-amplify/auth";
@@ -29,13 +25,15 @@ describe("AuthInterceptor", () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
+    imports: [MaterialModule],
+    providers: [
         AuthService,
         ConnectionService,
-        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
-      ],
-      imports: [MaterialModule, HttpClientTestingModule]
-    });
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
     connectionService = TestBed.inject(ConnectionService);
     authService = TestBed.inject(AuthService);
     httpMock = TestBed.inject(HttpTestingController);

@@ -2,13 +2,14 @@ import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { ExceptionsLogService } from "./services/exceptions-log.service";
 import { ExceptionsLogComponent } from "./exceptions-log.component";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { of } from "rxjs";
 import { MaterialModule } from "src/app/shared/material/material.module";
 import { NgxsModule } from "@ngxs/store";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { By } from "@angular/platform-browser";
 import { mockExceptions } from "./mock-data/exceptions-log-spec-data";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("ExceptionsLogComponent", () => {
   let component: ExceptionsLogComponent;
@@ -18,21 +19,20 @@ describe("ExceptionsLogComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        MaterialModule,
+    declarations: [ExceptionsLogComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [MaterialModule,
         NgxsModule.forRoot(),
-        BrowserAnimationsModule
-      ],
-      providers: [
+        BrowserAnimationsModule],
+    providers: [
         {
-          provide: ExceptionsLogService,
-          useValue: { getExceptions: () => of(mockExceptions) }
-        }
-      ],
-      declarations: [ExceptionsLogComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    }).compileComponents();
+            provide: ExceptionsLogService,
+            useValue: { getExceptions: () => of(mockExceptions) }
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+}).compileComponents();
   });
   beforeEach(() => {
     fixture = TestBed.createComponent(ExceptionsLogComponent);

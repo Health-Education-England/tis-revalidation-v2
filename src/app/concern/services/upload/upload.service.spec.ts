@@ -1,8 +1,5 @@
-import { HttpParams } from "@angular/common/http";
-import {
-  HttpClientTestingModule,
-  HttpTestingController
-} from "@angular/common/http/testing";
+import { HttpParams, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import { HttpTestingController, provideHttpClientTesting } from "@angular/common/http/testing";
 import { TestBed } from "@angular/core/testing";
 import { environment } from "@environment";
 import { UploadService } from "./upload.service";
@@ -17,8 +14,9 @@ describe("UploadService", () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule]
-    });
+    imports: [],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
     service = TestBed.inject(UploadService);
     http = TestBed.inject(HttpTestingController);
     params = service.createRequestParams(mockKey);

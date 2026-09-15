@@ -1,5 +1,5 @@
-import { HttpParams } from "@angular/common/http";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { HttpParams, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { TestBed } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
@@ -83,13 +83,10 @@ describe("RecommendationsService", () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule,
-        NgxsModule.forRoot([RecommendationsState])
-      ],
-      providers: [RecommendationsService]
-    });
+    imports: [RouterTestingModule,
+        NgxsModule.forRoot([RecommendationsState])],
+    providers: [RecommendationsService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
     recommendationsService = TestBed.inject(RecommendationsService);
     store = TestBed.inject(Store);
   });

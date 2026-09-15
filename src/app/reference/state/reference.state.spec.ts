@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { TestBed, waitForAsync } from "@angular/core/testing";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
@@ -10,6 +10,7 @@ import { GetDesignatedBodies, GetError, GetSuccess } from "./reference.actions";
 import { ReferenceState } from "./reference.state";
 import { of } from "rxjs";
 import { mockDbcs } from "../mock-data/reference-spec.data";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("Reference state", () => {
   let store: Store;
@@ -17,16 +18,13 @@ describe("Reference state", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        MaterialModule,
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [MaterialModule,
         RouterTestingModule,
         NoopAnimationsModule,
-        NgxsModule.forRoot([ReferenceState]),
-        HttpClientTestingModule
-      ],
-      providers: [ReferenceService],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    }).compileComponents();
+        NgxsModule.forRoot([ReferenceState])],
+    providers: [ReferenceService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+}).compileComponents();
     store = TestBed.inject(Store);
     referenceService = TestBed.inject(ReferenceService);
   }));

@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule } from "@ngxs/store";
@@ -7,6 +7,7 @@ import { MaterialModule } from "../../shared/material/material.module";
 import { RecordsService } from "../services/records.service";
 
 import { RefreshDataBtnComponent } from "./refresh-data-btn.component";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("RefreshDataBtnComponent", () => {
   let component: RefreshDataBtnComponent;
@@ -15,14 +16,12 @@ describe("RefreshDataBtnComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [RefreshDataBtnComponent],
-      imports: [
-        HttpClientTestingModule,
-        MaterialModule,
+    declarations: [RefreshDataBtnComponent],
+    imports: [MaterialModule,
         RouterTestingModule,
-        NgxsModule.forRoot([RecommendationsState])
-      ]
-    }).compileComponents();
+        NgxsModule.forRoot([RecommendationsState])],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+}).compileComponents();
     recordsService = TestBed.inject(RecordsService);
   }));
 

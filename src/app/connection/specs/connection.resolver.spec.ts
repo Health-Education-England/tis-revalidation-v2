@@ -3,13 +3,14 @@ import { NgxsModule, Store } from "@ngxs/store";
 import { RouterTestingModule } from "@angular/router/testing";
 import { ActivatedRouteSnapshot, Router } from "@angular/router";
 import { Component } from "@angular/core";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 
 import { ConnectionResolver } from "../connection.resolver";
 import { MaterialModule } from "../../shared/material/material.module";
 import { ConnectionState } from "../state/connection.state";
 import { Get } from "../state/connection.actions";
 import { RecordsService } from "../../records/services/records.service";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 @Component({
   template: `blank`
@@ -24,15 +25,13 @@ describe("ConnectionResolver", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        MaterialModule,
+    imports: [MaterialModule,
         NgxsModule.forRoot([ConnectionState]),
-        HttpClientTestingModule,
         RouterTestingModule.withRoutes([
-          { path: "", component: BlankComponent }
-        ])
-      ]
-    }).compileComponents();
+            { path: "", component: BlankComponent }
+        ])],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+}).compileComponents();
 
     store = TestBed.inject(Store);
     service = TestBed.inject(RecordsService);

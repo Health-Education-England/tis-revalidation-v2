@@ -1,10 +1,7 @@
 import { TestBed, fakeAsync, tick, waitForAsync } from "@angular/core/testing";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { NgxsModule, Store } from "@ngxs/store";
-import {
-  HttpClientTestingModule,
-  HttpTestingController
-} from "@angular/common/http/testing";
+import { HttpTestingController, provideHttpClientTesting } from "@angular/common/http/testing";
 import { MaterialModule } from "../../shared/material/material.module";
 import { ErrorHandler } from "@angular/core";
 
@@ -13,6 +10,7 @@ import { Get } from "../state/connection.actions";
 import { ConnectionService } from "../services/connection.service";
 import { environment } from "@environment";
 import { mockConnectionResponse } from "./mock-data/connection-details-spec-data";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("Connection actions", () => {
   let store: Store;
@@ -25,17 +23,16 @@ describe("Connection actions", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        NgxsModule.forRoot([ConnectionState]),
+    imports: [NgxsModule.forRoot([ConnectionState]),
         MaterialModule,
-        NoopAnimationsModule,
-        HttpClientTestingModule
-      ],
-      providers: [
+        NoopAnimationsModule],
+    providers: [
         ConnectionService,
-        { provide: ErrorHandler, useFactory: errorHandlerSpy }
-      ]
-    }).compileComponents();
+        { provide: ErrorHandler, useFactory: errorHandlerSpy },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+}).compileComponents();
     store = TestBed.inject(Store);
     httpMock = TestBed.inject(HttpTestingController);
   }));

@@ -5,7 +5,7 @@ import { DetailsSideNavComponent } from "./details-side-nav.component";
 import { NgxsModule } from "@ngxs/store";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { MaterialModule } from "src/app/shared/material/material.module";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { DetailsSideNavState } from "./state/details-side-nav.state";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { RecommendationHistoryRespone2 } from "src/app/recommendation/mock-data/recommendation-spec-data";
@@ -13,6 +13,7 @@ import { DetailsSideNavService } from "./service/details-side-nav.service";
 import { of } from "rxjs";
 import { CommonModule } from "@angular/common";
 import { ActivatedRoute } from "@angular/router";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("DetailsSideNavComponent", () => {
   let component: DetailsSideNavComponent;
@@ -27,24 +28,23 @@ describe("DetailsSideNavComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        NoopAnimationsModule,
+    declarations: [DetailsSideNavComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [NoopAnimationsModule,
         MaterialModule,
         NgxsModule.forRoot([DetailsSideNavState]),
-        HttpClientTestingModule,
         RouterTestingModule,
-        CommonModule
-      ],
-      declarations: [DetailsSideNavComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      providers: [
+        CommonModule],
+    providers: [
         DetailsSideNavService,
         {
-          provide: ActivatedRoute,
-          useValue: activatedRoute
-        }
-      ]
-    }).compileComponents();
+            provide: ActivatedRoute,
+            useValue: activatedRoute
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+}).compileComponents();
     // TODO: uncomment to add data to tests rendering component when service is split
     // store = TestBed.inject(Store);
     // httpClient = TestBed.inject(HttpClient);

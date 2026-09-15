@@ -26,7 +26,7 @@ import {
   HIDE_DISCREPANCY_ACTION
 } from "src/app/update-connections/constants";
 import { AuthService } from "src/app/core/auth/auth.service";
-import * as moment from "moment";
+import moment from "moment";
 import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 @Pipe({ name: "formatDesignatedBody" })
 class MockFormatDesignatedBodyPipe implements PipeTransform {

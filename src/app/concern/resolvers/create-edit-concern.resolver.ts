@@ -21,8 +21,7 @@ export class CreateEditConcernResolver  {
     };
     if (concernId) {
       const selectedConcern = this.store
-        .selectSnapshot(ConcernState)
-        .history.find(
+        .selectSnapshot(ConcernState.history).find(
           (concern: IConcernSummary) => concern.concernId === concernId
         );
       if (selectedConcern) {

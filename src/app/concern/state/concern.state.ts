@@ -386,7 +386,10 @@ export class ConcernState {
   }
 
   @Action(DeleteFileSuccess)
-  deleteFileSuccess(action: DeleteFileSuccess) {
+  deleteFileSuccess(
+    _ctx: StateContext<ConcernStateModel>,
+    action: DeleteFileSuccess
+  ) {
     this.snackBarService.openSnackBar(`${action.fileName} has been deleted`);
   }
 }

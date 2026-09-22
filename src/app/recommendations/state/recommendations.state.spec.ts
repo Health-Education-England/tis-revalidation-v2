@@ -20,7 +20,10 @@ import {
   SortRecommendations
 } from "./recommendations.actions";
 import { RecommendationsState } from "./recommendations.state";
-import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from "@angular/common/http";
 
 describe("Recommendations state", () => {
   let store: Store;
@@ -28,18 +31,24 @@ describe("Recommendations state", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [NgxsModule.forRoot([RecommendationsState]),
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [
+        NgxsModule.forRoot([RecommendationsState]),
         RouterTestingModule,
-        MaterialModule],
-    providers: [RecordsService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-}).compileComponents();
+        MaterialModule
+      ],
+      providers: [
+        RecordsService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+      ]
+    }).compileComponents();
     store = TestBed.inject(Store);
     recordsService = TestBed.inject(RecordsService);
   }));
 
   it("should select 'RecommendationsState'", () => {
-    const state = store.selectSnapshot(RecommendationsState);
+    const state = store.selectSnapshot(RecommendationsState.items);
     expect(state).toBeTruthy();
   });
 
@@ -68,8 +77,8 @@ describe("Recommendations state", () => {
     );
 
     store.dispatch(new GetRecommendations()).subscribe(() => {
-      const allDoctors = store.snapshot().recommendations.totalCounts
-        .allDoctors;
+      const allDoctors =
+        store.snapshot().recommendations.totalCounts.allDoctors;
       expect(allDoctors).toEqual(21312);
     });
   });

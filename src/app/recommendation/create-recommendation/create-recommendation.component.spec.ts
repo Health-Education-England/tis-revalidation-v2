@@ -13,7 +13,10 @@ import { AuthService } from "../../core/auth/auth.service";
 import { DetailsModule } from "../../details/details.module";
 import { By } from "@angular/platform-browser";
 import { IRecommendationHistory } from "../recommendation-history.interface";
-import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from "@angular/common/http";
 
 describe("CreateRecommendationComponent", () => {
   let component: CreateRecommendationComponent;
@@ -38,24 +41,26 @@ describe("CreateRecommendationComponent", () => {
   };
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    declarations: [CreateRecommendationComponent],
-    imports: [MaterialModule,
+      declarations: [CreateRecommendationComponent],
+      imports: [
+        MaterialModule,
         RouterTestingModule,
         NoopAnimationsModule,
         ReactiveFormsModule,
         DetailsModule,
         RecommendationModule,
-        NgxsModule.forRoot([RecommendationHistoryState])],
-    providers: [
+        NgxsModule.forRoot([RecommendationHistoryState])
+      ],
+      providers: [
         AuthService,
         {
-            provide: ActivatedRoute,
-            useValue: activatedRoute
+          provide: ActivatedRoute,
+          useValue: activatedRoute
         },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
-    ]
-}).compileComponents();
+      ]
+    }).compileComponents();
     store = TestBed.inject(Store);
     auth = TestBed.inject(AuthService);
   }));
@@ -78,6 +83,7 @@ describe("CreateRecommendationComponent", () => {
     const d = new Date();
     d.setDate(d.getDate() + 121);
     store.reset({
+      ...store.snapshot(),
       recommendationHistory: {
         item: {
           ...mockRecommendation,
@@ -96,6 +102,7 @@ describe("CreateRecommendationComponent", () => {
     const d = new Date();
     d.setDate(d.getDate() + 120);
     store.reset({
+      ...store.snapshot(),
       recommendationHistory: {
         item: {
           ...mockRecommendation,

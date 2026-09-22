@@ -18,7 +18,7 @@ describe("Concerns state", () => {
   }));
 
   it("should select 'ConcernsState'", () => {
-    const concernsState = store.selectSnapshot(ConcernsState);
+    const concernsState = store.selectSnapshot(ConcernsState.items);
     expect(concernsState).toBeTruthy();
   });
 });

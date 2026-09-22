@@ -8,7 +8,10 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { MaterialModule } from "../../shared/material/material.module";
 import { IRecommendationHistory } from "../recommendation-history.interface";
 import { By } from "@angular/platform-browser";
-import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from "@angular/common/http";
 
 describe("SubmissionDateComponent", () => {
   let component: SubmissionDateComponent;
@@ -31,12 +34,18 @@ describe("SubmissionDateComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [SubmissionDateComponent],
-    imports: [NgxsModule.forRoot([RecommendationHistoryState]),
+      declarations: [SubmissionDateComponent],
+      imports: [
+        NgxsModule.forRoot([RecommendationHistoryState]),
         RouterTestingModule,
-        MaterialModule],
-    providers: [UtilitiesService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-}).compileComponents();
+        MaterialModule
+      ],
+      providers: [
+        UtilitiesService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+      ]
+    }).compileComponents();
     store = TestBed.inject(Store);
   });
 
@@ -44,6 +53,7 @@ describe("SubmissionDateComponent", () => {
     fixture = TestBed.createComponent(SubmissionDateComponent);
     component = fixture.componentInstance;
     store.reset({
+      ...store.snapshot(),
       recommendationHistory: { item: mockRecommendation }
     });
     fixture.detectChanges();
@@ -63,6 +73,7 @@ describe("SubmissionDateComponent", () => {
 
   it("should be assigned a class 'alert-past' when submission due date is in the past", () => {
     store.reset({
+      ...store.snapshot(),
       recommendationHistory: {
         item: {
           ...mockRecommendation,
@@ -82,6 +93,7 @@ describe("SubmissionDateComponent", () => {
     const today = new Date();
     const tomorrow = today.setDate(today.getDate() + 1);
     store.reset({
+      ...store.snapshot(),
       recommendationHistory: {
         item: {
           ...mockRecommendation,
@@ -98,6 +110,7 @@ describe("SubmissionDateComponent", () => {
 
   it("should not display submission due date when data set to null", () => {
     store.reset({
+      ...store.snapshot(),
       recommendationHistory: {
         item: {
           ...mockRecommendation,

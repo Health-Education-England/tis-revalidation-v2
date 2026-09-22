@@ -9,7 +9,10 @@ import { RecommendationsState } from "../../recommendations/state/recommendation
 import { DEFAULT_SORT } from "../constants";
 import { RecordsService } from "../services/records.service";
 import { RecordListPaginatorComponent } from "./record-list-paginator.component";
-import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from "@angular/common/http";
 
 describe("RecordListPaginatorComponent", () => {
   let store: Store;
@@ -25,19 +28,27 @@ describe("RecordListPaginatorComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    declarations: [RecordListPaginatorComponent],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [RouterTestingModule,
+      declarations: [RecordListPaginatorComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [
+        RouterTestingModule,
         MatPaginatorModule,
         NoopAnimationsModule,
-        NgxsModule.forRoot([RecommendationsState])],
-    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-}).compileComponents();
+        NgxsModule.forRoot([RecommendationsState])
+      ],
+      providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+      ]
+    }).compileComponents();
     store = TestBed.inject(Store);
     recordsService = TestBed.inject(RecordsService);
     recordsService.stateName = "recommendations";
     recordsService.setRecommendationsActions();
-    store.reset({ recommendations: { sort: DEFAULT_SORT } });
+    store.reset({
+      ...store.snapshot(),
+      recommendations: { sort: DEFAULT_SORT }
+    });
   }));
 
   beforeEach(() => {

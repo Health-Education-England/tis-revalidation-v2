@@ -19,7 +19,10 @@ import { of, throwError } from "rxjs";
 import { RecordsService } from "../records/services/records.service";
 import { ConnectionsState } from "./state/connections.state";
 import { EnableUpdateConnections } from "../update-connections/state/update-connections.actions";
-import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from "@angular/common/http";
 
 describe("ConnectionsComponent", () => {
   let component: ConnectionsComponent;
@@ -31,13 +34,21 @@ describe("ConnectionsComponent", () => {
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
-    declarations: [ConnectionsComponent],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [NgxsModule.forRoot([ConnectionsState]),
+      declarations: [ConnectionsComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [
+        NgxsModule.forRoot([ConnectionsState]),
         RouterTestingModule,
-        MaterialModule],
-    providers: [UpdateConnectionsService, SnackBarService, RecordsService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-}).compileComponents();
+        MaterialModule
+      ],
+      providers: [
+        UpdateConnectionsService,
+        SnackBarService,
+        RecordsService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+      ]
+    }).compileComponents();
   });
 
   beforeEach(() => {

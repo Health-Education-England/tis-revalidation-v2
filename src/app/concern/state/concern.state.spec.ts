@@ -82,7 +82,7 @@ describe("Concern actions", () => {
   it("on 'Upload' event `uploadFileInProgress` should be truthy", () => {
     store.dispatch(new Upload(12132312, "xxxxxx-yyyyy-zzzzz", [mockFile]));
     const uploadFileInProgress =
-      store.selectSnapshot(ConcernState).uploadFileInProgress;
+      store.selectSnapshot(ConcernState.uploadFileInProgress);
     expect(uploadFileInProgress).toBeTrue();
   });
 

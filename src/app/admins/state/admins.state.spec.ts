@@ -8,9 +8,12 @@ import { MaterialModule } from "../../shared/material/material.module";
 import { AdminsService } from "../services/admins.service";
 import { mockAdminsResponse } from "../services/admins.service.spec";
 import { Get, GetError, GetSuccess } from "./admins.actions";
-import { AdminsState } from "./admins.state";
+import { AdminsState, AdminsStateModel } from "./admins.state";
 import { of } from "rxjs";
-import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from "@angular/common/http";
 
 describe("Admins state", () => {
   let store: Store;
@@ -18,19 +21,27 @@ describe("Admins state", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [MaterialModule,
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [
+        MaterialModule,
         RouterTestingModule,
         NoopAnimationsModule,
-        NgxsModule.forRoot([AdminsState])],
-    providers: [AdminsService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-}).compileComponents();
+        NgxsModule.forRoot([AdminsState])
+      ],
+      providers: [
+        AdminsService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+      ]
+    }).compileComponents();
     store = TestBed.inject(Store);
     adminsService = TestBed.inject(AdminsService);
   }));
 
   it("should select 'AdminsState'", () => {
-    const state = store.selectSnapshot(AdminsState);
+    const state = store.selectSnapshot(
+      (rootState: { admins: AdminsStateModel }) => rootState.admins
+    );
     expect(state).toBeTruthy();
   });
 

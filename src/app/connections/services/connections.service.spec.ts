@@ -8,7 +8,10 @@ import { ConnectionsFilterType } from "../connections.interfaces";
 import { ConnectionsState } from "../state/connections.state";
 import { ConnectionsService } from "./connections.service";
 import { AuthService } from "../../core/auth/auth.service";
-import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from "@angular/common/http";
 
 describe("ConnectionsService", () => {
   let connectionsService: ConnectionsService;
@@ -30,10 +33,12 @@ describe("ConnectionsService", () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [RouterTestingModule,
-        NgxsModule.forRoot([ConnectionsState])],
-    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-});
+      imports: [RouterTestingModule, NgxsModule.forRoot([ConnectionsState])],
+      providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+      ]
+    });
     authService = TestBed.inject(AuthService);
     connectionsService = TestBed.inject(ConnectionsService);
     recordsService = TestBed.inject(RecordsService);
@@ -41,9 +46,7 @@ describe("ConnectionsService", () => {
 
     authService.userDesignatedBodies = userLocalOffice;
 
-    store.reset({
-      connections: connectionsState
-    });
+    store.reset({ ...store.snapshot(), connections: connectionsState });
   });
 
   it("should be created", () => {

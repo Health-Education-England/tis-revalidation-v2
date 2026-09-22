@@ -48,7 +48,11 @@ module.exports = function (config) {
     mochaReporter: {
       autowatch: true,
       ignoreSkipped: true,
-      maxLogLines: -1
+      maxLogLines: 10
+    },
+    jasmineHtmlReporter: {
+      suppressAll: true, // Suppress all messages (overrides other suppress settings)
+      suppressFailed: true // Suppress failed messages
     },
     specReporter: {
       suppressSkipped: true

@@ -18,7 +18,10 @@ import { RecordsModule } from "src/app/records/records.module";
 import { By } from "@angular/platform-browser";
 import { of } from "rxjs";
 import { RecordsComponent } from "src/app/records/records.component";
-import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from "@angular/common/http";
 
 describe("NavBarComponent", () => {
   let store: Store;
@@ -32,22 +35,24 @@ describe("NavBarComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    declarations: [NavBarComponent],
-    imports: [RecordsModule,
+      declarations: [NavBarComponent],
+      imports: [
+        RecordsModule,
         RouterTestingModule.withRoutes(routes),
         MaterialModule,
-        NgxsModule.forRoot([RecommendationsState])],
-    providers: [
+        NgxsModule.forRoot([RecommendationsState])
+      ],
+      providers: [
         {
-            provide: ActivatedRoute,
-            useValue: {
-                snapshot: { params: { gmcNumver: "1234567" } }
-            }
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: { params: { gmcNumver: "1234567" } }
+          }
         },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
-    ]
-}).compileComponents();
+      ]
+    }).compileComponents();
     router = TestBed.inject(Router);
     service = TestBed.inject(RecordsService);
     store = TestBed.inject(Store);
@@ -57,6 +62,7 @@ describe("NavBarComponent", () => {
     service.stateName = "recommendations";
     service.setRecommendationsActions();
     store.reset({
+      ...store.snapshot(),
       queryParams: {
         active: "submissionDate",
         direction: "asc",

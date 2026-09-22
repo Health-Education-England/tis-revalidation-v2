@@ -25,7 +25,10 @@ import {
 } from "src/app/shared/form-controls/form-contol-base.model";
 import { Router } from "@angular/router";
 import { of } from "rxjs";
-import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from "@angular/common/http";
 
 describe("Record List Table FIlters", () => {
   let store: Store;
@@ -92,14 +95,19 @@ describe("Record List Table FIlters", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    declarations: [RecordListTableFiltersComponent],
-    imports: [RecordsModule,
+      declarations: [RecordListTableFiltersComponent],
+      imports: [
+        RecordsModule,
         NoopAnimationsModule,
         MaterialModule,
         RouterTestingModule,
-        NgxsModule.forRoot([RecommendationsState])],
-    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-}).compileComponents();
+        NgxsModule.forRoot([RecommendationsState])
+      ],
+      providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+      ]
+    }).compileComponents();
     store = TestBed.inject(Store);
     recordsService = TestBed.inject(RecordsService);
     router = TestBed.inject(Router);
@@ -111,6 +119,7 @@ describe("Record List Table FIlters", () => {
     recordsService.stateName = "recommendations";
     recordsService.setRecommendationsActions();
     store.reset({
+      ...store.snapshot(),
       recommendations: {
         filter: "underNotice",
         sort: {

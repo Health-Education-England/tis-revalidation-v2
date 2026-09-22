@@ -1,32 +1,41 @@
 import { FormatDesignatedBodyPipe } from "./format-designated-body.pipe";
 import { Store, NgxsModule } from "@ngxs/store";
 import { TestBed, waitForAsync } from "@angular/core/testing";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from "@angular/common/http";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { mockDbcs } from "src/app/reference/mock-data/reference-spec.data";
 import { IDesignatedBody } from "src/app/reference/reference.interfaces";
+import { ReferenceState } from "src/app/reference/state/reference.state";
 
-describe("DbcMapperPipe", () => {
+describe("FormatDesignatedBodyPipe", () => {
   let store: Store;
   let pipe: FormatDesignatedBodyPipe;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [NgxsModule.forRoot([])]
+      imports: [NgxsModule.forRoot([ReferenceState])],
+      providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+      ]
     });
     store = TestBed.inject(Store);
+    store.reset({
+      ...store.snapshot(),
+      reference: { ...store.snapshot().reference, dbcs: mockDbcs }
+    });
   }));
 
-  const createSpy = (designatedBodies: IDesignatedBody[] = mockDbcs) => {
-    spyOn(store, "selectSnapshot").and.returnValue({ dbcs: designatedBodies });
-    pipe = new FormatDesignatedBodyPipe(store);
-  };
-
   it("create an instance", () => {
-    createSpy();
+    pipe = new FormatDesignatedBodyPipe(store);
     expect(pipe).toBeTruthy();
   });
 
   it("should map dbc value to expected output ", () => {
-    createSpy();
+    pipe = new FormatDesignatedBodyPipe(store);
     const db: IDesignatedBody = {
       id: 1,
       dbc: "1-AIIDMQ",
@@ -59,7 +68,11 @@ describe("DbcMapperPipe", () => {
         status: "internal"
       }
     ];
-    createSpy(mockDbcsWithDuplicates);
+    store.reset({
+      ...store.snapshot(),
+      reference: { ...store.snapshot().reference, dbcs: mockDbcsWithDuplicates }
+    });
+    pipe = new FormatDesignatedBodyPipe(store);
 
     const db: IDesignatedBody = {
       id: 1,

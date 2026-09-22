@@ -10,7 +10,10 @@ import { GetDesignatedBodies, GetError, GetSuccess } from "./reference.actions";
 import { ReferenceState } from "./reference.state";
 import { of } from "rxjs";
 import { mockDbcs } from "../mock-data/reference-spec.data";
-import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from "@angular/common/http";
 
 describe("Reference state", () => {
   let store: Store;
@@ -18,19 +21,25 @@ describe("Reference state", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [MaterialModule,
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [
+        MaterialModule,
         RouterTestingModule,
         NoopAnimationsModule,
-        NgxsModule.forRoot([ReferenceState])],
-    providers: [ReferenceService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-}).compileComponents();
+        NgxsModule.forRoot([ReferenceState])
+      ],
+      providers: [
+        ReferenceService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+      ]
+    }).compileComponents();
     store = TestBed.inject(Store);
     referenceService = TestBed.inject(ReferenceService);
   }));
 
   it("should select 'ReferenceState'", () => {
-    const state = store.selectSnapshot(ReferenceState);
+    const state = store.selectSnapshot(ReferenceState.Dbcs);
     expect(state).toBeTruthy();
   });
 

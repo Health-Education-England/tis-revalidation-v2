@@ -7,7 +7,10 @@ import { defaultRecordsState } from "../../records/state/records.state";
 import { ConcernsState } from "../state/concerns.state";
 
 import { ConcernsService } from "./concerns.service";
-import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from "@angular/common/http";
 
 describe("ConcernsService", () => {
   let concernsService: ConcernsService;
@@ -16,10 +19,12 @@ describe("ConcernsService", () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [RouterTestingModule,
-        NgxsModule.forRoot([ConcernsState])],
-    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-});
+      imports: [RouterTestingModule, NgxsModule.forRoot([ConcernsState])],
+      providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+      ]
+    });
     concernsService = TestBed.inject(ConcernsService);
     recordsService = TestBed.inject(RecordsService);
     store = TestBed.inject(Store);
@@ -42,9 +47,7 @@ describe("ConcernsService", () => {
       }
     };
 
-    store.reset({
-      concerns: concernsState
-    });
+    store.reset({ ...store.snapshot(), concerns: concernsState });
 
     const httpParams = concernsService.generateParams();
 

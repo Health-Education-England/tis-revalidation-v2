@@ -1,6 +1,12 @@
 import { AdminsPipe } from "./admins.pipe";
 import { Store, NgxsModule } from "@ngxs/store";
 import { TestBed, waitForAsync } from "@angular/core/testing";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from "@angular/common/http";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
+import { AdminsState } from "./state/admins.state";
 
 describe("AdminsPipe", () => {
   let store: Store;
@@ -25,14 +31,21 @@ describe("AdminsPipe", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [NgxsModule.forRoot()]
+      imports: [NgxsModule.forRoot([AdminsState])],
+      providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+      ]
     });
     store = TestBed.inject(Store);
+    store.reset({
+      ...store.snapshot(),
+      admins: adminsList
+    });
   }));
 
   describe("when admin store has a list of admins", () => {
     beforeEach(() => {
-      spyOn(store, "selectSnapshot").and.returnValue(adminsList);
       pipe = new AdminsPipe(store);
     });
 
@@ -58,7 +71,7 @@ describe("AdminsPipe", () => {
 
   describe("when admin store has an empty list of admins", () => {
     beforeEach(() => {
-      spyOn(store, "selectSnapshot").and.returnValue(emptyList);
+      spyOn(store, "selectSnapshot").and.returnValue(emptyList.items);
       pipe = new AdminsPipe(store);
     });
 
@@ -80,7 +93,7 @@ describe("AdminsPipe", () => {
 
   describe("when admin store list is null", () => {
     beforeEach(() => {
-      spyOn(store, "selectSnapshot").and.returnValue(nullList);
+      spyOn(store, "selectSnapshot").and.returnValue(nullList.items);
       pipe = new AdminsPipe(store);
     });
 
@@ -94,7 +107,7 @@ describe("AdminsPipe", () => {
       expect(pipe.transform(undefined)).toEqual("");
     });
 
-    it("should return full name of users", () => {
+    it("should return same string passed if store list is null", () => {
       expect(pipe.transform(user1.username)).toEqual(user1.username);
       expect(pipe.transform(user2.username)).toEqual(user2.username);
     });

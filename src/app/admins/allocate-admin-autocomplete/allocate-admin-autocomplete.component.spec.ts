@@ -11,7 +11,10 @@ import { AllocateAdminAutocompleteComponent } from "./allocate-admin-autocomplet
 import { AdminsService } from "../services/admins.service";
 import { IAdmin } from "../admins.interfaces";
 import { AddToAllocateList } from "../state/admins.actions";
-import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from "@angular/common/http";
 
 describe("AllocateAdminAutocompleteComponent", () => {
   let component: AllocateAdminAutocompleteComponent;
@@ -27,14 +30,19 @@ describe("AllocateAdminAutocompleteComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    declarations: [AllocateAdminAutocompleteComponent],
-    imports: [ReactiveFormsModule,
+      declarations: [AllocateAdminAutocompleteComponent],
+      imports: [
+        ReactiveFormsModule,
         NoopAnimationsModule,
         RouterTestingModule,
         MaterialModule,
-        NgxsModule.forRoot([AdminsState])],
-    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-}).compileComponents();
+        NgxsModule.forRoot([AdminsState])
+      ],
+      providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+      ]
+    }).compileComponents();
     store = TestBed.inject(Store);
   }));
 
@@ -44,6 +52,7 @@ describe("AllocateAdminAutocompleteComponent", () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     store.reset({
+      ...store.snapshot(),
       admins: {
         items: [
           admin,

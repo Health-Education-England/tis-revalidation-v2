@@ -25,9 +25,14 @@ import { DEFAULT_SORT } from "../constants";
 import { RecordsService } from "../services/records.service";
 import { RecordListComponent } from "./record-list.component";
 import { RecordListState } from "./state/record-list.state";
+import { UpdateConnectionsState } from "../../update-connections/state/update-connections.state";
 import { IRecordDataCell } from "../records.interfaces";
 import { FormatDesignatedBodyPipe } from "src/app/shared/pipes/format-designated-body.pipe";
-import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import { ReferenceState } from "src/app/reference/state/reference.state";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from "@angular/common/http";
 
 const MOCK_COLUMN_DATA: IRecordDataCell[] = [
   {
@@ -61,14 +66,25 @@ describe("RecordListComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    declarations: [RecordListComponent, FormatDesignatedBodyPipe],
-    imports: [MaterialModule,
+      declarations: [RecordListComponent, FormatDesignatedBodyPipe],
+      imports: [
+        MaterialModule,
         NoopAnimationsModule,
         RouterModule.forRoot([]),
         AdminsModule,
-        NgxsModule.forRoot([RecommendationsState, AdminsState, RecordListState])],
-    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-}).compileComponents();
+        NgxsModule.forRoot([
+          RecommendationsState,
+          AdminsState,
+          RecordListState,
+          UpdateConnectionsState,
+          ReferenceState
+        ])
+      ],
+      providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+      ]
+    }).compileComponents();
     store = TestBed.inject(Store);
     router = TestBed.inject(Router);
     recordsService = TestBed.inject(RecordsService);
@@ -80,6 +96,7 @@ describe("RecordListComponent", () => {
     recordsService.stateName = "recommendations";
     recordsService.setRecommendationsActions();
     store.reset({
+      ...store.snapshot(),
       recommendations: {
         items: mockRecommendationsResponse.recommendationInfo,
         totalResults: 2,
@@ -91,7 +108,10 @@ describe("RecordListComponent", () => {
         someChecked: false,
         columnData: [...MOCK_COLUMN_DATA]
       },
-      recordList: { fixedColumns: true }
+      recordList: { fixedColumns: true },
+      updateConnections: { enableUpdateConnections: false },
+      admins: { items: [] },
+      reference: { dbcs: [], error: null }
     });
 
     fixture.detectChanges();
@@ -109,6 +129,7 @@ describe("RecordListComponent", () => {
 
   it("Should display message when no records returned", () => {
     store.reset({
+      ...store.snapshot(),
       recommendations: { totalResults: 0 }
     });
     fixture.detectChanges();
@@ -125,6 +146,7 @@ describe("RecordListComponent", () => {
 
   it("Should not apply fixed class to table columns when display in fluid width mode", () => {
     store.reset({
+      ...store.snapshot(),
       recordList: { fixedColumns: false }
     });
     fixture.detectChanges();
@@ -135,6 +157,7 @@ describe("RecordListComponent", () => {
 
   it("should select 'items$' from state", () => {
     store.reset({
+      ...store.snapshot(),
       recommendations: { items: mockRecommendationsResponse.recommendationInfo }
     });
 
@@ -145,7 +168,10 @@ describe("RecordListComponent", () => {
   });
 
   it("should select 'sort$' from state", () => {
-    store.reset({ recommendations: { sort: DEFAULT_SORT } });
+    store.reset({
+      ...store.snapshot(),
+      recommendations: { sort: DEFAULT_SORT }
+    });
 
     component.sort$.subscribe((value) => {
       expect(value).toBeInstanceOf(Object);
@@ -156,6 +182,7 @@ describe("RecordListComponent", () => {
 
   it("columnNames should return an array of strings", fakeAsync(() => {
     store.reset({
+      ...store.snapshot(),
       recommendations: {
         columnData: [
           {

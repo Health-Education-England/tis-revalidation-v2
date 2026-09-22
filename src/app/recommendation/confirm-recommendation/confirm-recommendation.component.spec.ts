@@ -12,7 +12,11 @@ import { HarnessLoader } from "@angular/cdk/testing";
 import { TestbedHarnessEnvironment } from "@angular/cdk/testing/testbed";
 import { MatButtonHarness } from "@angular/material/button/testing";
 import { MatSlideToggleHarness } from "@angular/material/slide-toggle/testing";
-import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from "@angular/common/http";
+import { Subject, delay, of } from "rxjs";
 describe("ConfirmRecommendationComponent", () => {
   let store: Store;
   let recommendationHistoryService: RecommendationHistoryService;
@@ -23,14 +27,19 @@ describe("ConfirmRecommendationComponent", () => {
   const submitButtonSelector = { selector: "[data-jasmine='buttonSubmit']" };
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    declarations: [ConfirmRecommendationComponent],
-    imports: [MaterialModule,
+      declarations: [ConfirmRecommendationComponent],
+      imports: [
+        MaterialModule,
         RouterTestingModule,
         ReactiveFormsModule,
         NoopAnimationsModule,
-        NgxsModule.forRoot([RecommendationHistoryState])],
-    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-}).compileComponents();
+        NgxsModule.forRoot([RecommendationHistoryState])
+      ],
+      providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+      ]
+    }).compileComponents();
     store = TestBed.inject(Store);
     recommendationHistoryService = TestBed.inject(RecommendationHistoryService);
   }));
@@ -41,6 +50,7 @@ describe("ConfirmRecommendationComponent", () => {
     component = fixture.componentInstance;
 
     store.reset({
+      ...store.snapshot(),
       recommendationHistory: {
         item: {
           revalidations: [
@@ -92,8 +102,14 @@ describe("ConfirmRecommendationComponent", () => {
     await toggleConfirmElement.uncheck();
     expect(await buttonSubmitElement.isDisabled()).toBe(true);
   });
+
   it("should disable form when submit button clicked", async () => {
-    spyOn(recommendationHistoryService, "submitRecommendationToGMC");
+    const responseSubject = new Subject<any>();
+    spyOn(
+      recommendationHistoryService,
+      "submitRecommendationToGMC"
+    ).and.returnValue(responseSubject.asObservable());
+
     const toggleConfirmElement = await loader.getHarness(
       MatSlideToggleHarness.with(toggleConfirmSelector)
     );
@@ -103,9 +119,16 @@ describe("ConfirmRecommendationComponent", () => {
 
     await toggleConfirmElement.check();
     await buttonSubmitElement.click();
-
     fixture.detectChanges();
+
     expect(await buttonSubmitElement.isDisabled()).toBe(true);
     expect(await buttonSubmitElement.getText()).toBe("Submitting...");
+
+    responseSubject.next(true);
+    responseSubject.complete();
+    fixture.detectChanges();
+
+    expect(await buttonSubmitElement.isDisabled()).toBe(false);
+    expect(await buttonSubmitElement.getText()).toBe("Submit to GMC");
   });
 });

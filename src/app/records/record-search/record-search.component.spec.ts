@@ -11,7 +11,10 @@ import { MaterialModule } from "../../shared/material/material.module";
 import { RecordsService } from "../services/records.service";
 import { defaultRecordsState } from "../state/records.state";
 import { RecordSearchComponent } from "./record-search.component";
-import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from "@angular/common/http";
 
 describe("RecordSearchComponent", () => {
   let store: Store;
@@ -36,15 +39,20 @@ describe("RecordSearchComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    declarations: [RecordSearchComponent],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [MaterialModule,
+      declarations: [RecordSearchComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [
+        MaterialModule,
         NgxsModule.forRoot([RecommendationsState, UpdateConnectionsState]),
         RouterTestingModule,
         ReactiveFormsModule,
-        NoopAnimationsModule],
-    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-}).compileComponents();
+        NoopAnimationsModule
+      ],
+      providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+      ]
+    }).compileComponents();
     store = TestBed.inject(Store);
     recordsService = TestBed.inject(RecordsService);
   }));
@@ -56,6 +64,7 @@ describe("RecordSearchComponent", () => {
     recordsService.setRecommendationsActions();
 
     store.reset({
+      ...store.snapshot(),
       recommendations: recommendationsState,
       updateConnections: updateConnectionsState
     });
@@ -122,6 +131,7 @@ describe("RecordSearchComponent", () => {
 
   it("should disable the form if EnableAllocateAdmin is false", () => {
     store.reset({
+      ...store.snapshot(),
       recommendations: {
         ...recommendationsState,
         enableAllocateAdmin: false
@@ -140,6 +150,7 @@ describe("RecordSearchComponent", () => {
 
   it("should disable the form if DisableSearchAndSort is true", () => {
     store.reset({
+      ...store.snapshot(),
       recommendations: {
         ...recommendationsState,
         disableSearchAndSort: true
@@ -158,6 +169,7 @@ describe("RecordSearchComponent", () => {
 
   it("should enable the form if enableUpdateConnections is false", () => {
     store.reset({
+      ...store.snapshot(),
       recommendations: recommendationsState,
       updateConnections: {
         enableUpdateConnections: false

@@ -20,7 +20,10 @@ import { RemoveWhitespacePipe } from "../pipes/remove-whitespace.pipe";
 import { NgxsModule, Store } from "@ngxs/store";
 import { RecordsService } from "src/app/records/services/records.service";
 import { ConnectionsFilterType } from "src/app/connections/connections.interfaces";
-import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from "@angular/common/http";
 describe("FormControllerComponent", () => {
   let component: FormControllerComponent;
   let fixture: ComponentFixture<FormControllerComponent>;
@@ -60,25 +63,33 @@ describe("FormControllerComponent", () => {
   ];
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [
+      declarations: [
         FormControllerComponent,
         MaterialAutocompleteComponent,
         MaterialSelectionListComponent,
         RemoveWhitespacePipe
-    ],
-    imports: [MaterialModule,
+      ],
+      imports: [
+        MaterialModule,
         NoopAnimationsModule,
         FormsModule,
         ReactiveFormsModule,
-        NgxsModule.forRoot()],
-    providers: [Store, RecordsService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-}).compileComponents();
+        NgxsModule.forRoot()
+      ],
+      providers: [
+        Store,
+        RecordsService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+      ]
+    }).compileComponents();
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(FormControllerComponent);
     store = TestBed.inject(Store);
     store.reset({
+      ...store.snapshot(),
       connections: {
         filter: ConnectionsFilterType.CURRENT_CONNECTIONS,
         sort: {

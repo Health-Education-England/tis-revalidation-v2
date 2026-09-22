@@ -18,10 +18,7 @@
           "builder": "@angular-devkit/build-angular:application",
           "options": {
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "./node_modules",
-                "."
-              ]
+              "includePaths": ["./node_modules", "."]
             },
             "allowedCommonJsDependencies": [
               "@aws-amplify/auth",
@@ -91,9 +88,7 @@
               "base": "dist/revalidation"
             },
             "index": "src/index.html",
-            "polyfills": [
-              "src/polyfills.ts"
-            ],
+            "polyfills": ["src/polyfills.ts"],
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/assets",
@@ -273,6 +268,6 @@
   },
   "cli": {
     "analytics": "c8073553-0f3f-427d-b173-63b07df298c0",
-    "schematicCollections": ["@angular-eslint/schematics"]
+    "schematicCollections": ["@angular-eslint"]
   }
 }

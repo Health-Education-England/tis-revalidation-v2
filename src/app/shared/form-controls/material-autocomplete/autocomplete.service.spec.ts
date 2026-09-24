@@ -1,12 +1,16 @@
 import { TestBed } from "@angular/core/testing";
 import {
-  HttpClientTestingModule,
-  HttpTestingController
+  HttpTestingController,
+  provideHttpClientTesting
 } from "@angular/common/http/testing";
 import { AutocompleteService } from "./autocomplete.service";
 import { NgxsModule, Store } from "@ngxs/store";
 import { AdminsState } from "src/app/admins/state/admins.state";
 import { MaterialModule } from "../../material/material.module";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from "@angular/common/http";
 
 describe("AutocompleteService", () => {
   let service: AutocompleteService;
@@ -15,11 +19,11 @@ describe("AutocompleteService", () => {
   const options: string[] = ["apple", "banana", "cherry"];
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AutocompleteService],
-      imports: [
-        HttpClientTestingModule,
-        NgxsModule.forRoot([AdminsState]),
-        MaterialModule
+      imports: [NgxsModule.forRoot([AdminsState]), MaterialModule],
+      providers: [
+        AutocompleteService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
       ]
     });
     store = TestBed.inject(Store);
@@ -45,6 +49,7 @@ describe("AutocompleteService", () => {
 
   it("should return expected data when calling getAdmins()", () => {
     store.reset({
+      ...store.snapshot(),
       admins: {
         items: [
           {

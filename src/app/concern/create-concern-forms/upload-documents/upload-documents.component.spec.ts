@@ -9,12 +9,13 @@ import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MaterialModule } from "src/app/shared/material/material.module";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { CommentsService } from "src/app/details/comments/comments.service";
 import { DetailsModule } from "src/app/details/details.module";
 import { SetSelectedConcern } from "../../state/concern.actions";
 import { defaultConcern } from "../../constants";
 import { SnackBarService } from "src/app/shared/services/snack-bar/snack-bar.service";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("UploadDocumentsComponent", () => {
   let component: UploadDocumentsComponent;
@@ -35,31 +36,30 @@ describe("UploadDocumentsComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [UploadDocumentsComponent],
-      imports: [
-        ReactiveFormsModule,
+    declarations: [UploadDocumentsComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [ReactiveFormsModule,
         MaterialModule,
         NoopAnimationsModule,
-        HttpClientTestingModule,
         RouterTestingModule.withRoutes([]),
         DetailsModule,
-        NgxsModule.forRoot([ConcernState])
-      ],
-      providers: [
+        NgxsModule.forRoot([ConcernState])],
+    providers: [
         CommentsService,
         {
-          provide: ActivatedRoute,
-          useValue: {
-            snapshot: {
-              params: {
-                concernId: "xxx-111-yyy"
-              }
+            provide: ActivatedRoute,
+            useValue: {
+                snapshot: {
+                    params: {
+                        concernId: "xxx-111-yyy"
+                    }
+                }
             }
-          }
-        }
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    }).compileComponents();
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+}).compileComponents();
     store = TestBed.inject(Store);
     snackBarService = TestBed.inject(SnackBarService);
     commentsService = TestBed.inject(CommentsService);

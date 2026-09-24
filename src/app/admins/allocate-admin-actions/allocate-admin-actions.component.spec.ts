@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
@@ -21,6 +21,10 @@ import {
 } from "src/app/recommendation/recommendation-history.interface";
 import { IRecommendation } from "src/app/recommendations/recommendations.interfaces";
 import { IAllocateAdmin } from "../admins.interfaces";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from "@angular/common/http";
 
 describe("AllocateAdminActionsComponent", () => {
   let component: AllocateAdminActionsComponent;
@@ -96,7 +100,6 @@ describe("AllocateAdminActionsComponent", () => {
         AllocateAdminAutocompleteComponent
       ],
       imports: [
-        HttpClientTestingModule,
         RouterTestingModule,
         NgxsModule.forRoot([RecommendationsState, AdminsState]),
         MaterialModule,
@@ -104,7 +107,11 @@ describe("AllocateAdminActionsComponent", () => {
         ReactiveFormsModule,
         FormsModule
       ],
-      providers: [RecordsService]
+      providers: [
+        RecordsService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+      ]
     }).compileComponents();
 
     store = TestBed.inject(Store);
@@ -122,6 +129,7 @@ describe("AllocateAdminActionsComponent", () => {
 
   beforeEach(() => {
     store.reset({
+      ...store.snapshot(),
       recommendations: { items: mockRecommendations, enableAllocateAdmin: true }
     });
 

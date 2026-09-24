@@ -4,11 +4,12 @@ import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { CreateConcernComponent } from "./create-concern.component";
 import { NgxsModule } from "@ngxs/store";
 import { ConcernState } from "../state/concern.state";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { MaterialModule } from "src/app/shared/material/material.module";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
 import { ReactiveFormsModule } from "@angular/forms";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("CreateConcernComponent", () => {
   let component: CreateConcernComponent;
@@ -16,17 +17,15 @@ describe("CreateConcernComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [CreateConcernComponent],
-      imports: [
-        NgxsModule.forRoot([ConcernState]),
-        HttpClientTestingModule,
+    declarations: [CreateConcernComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [NgxsModule.forRoot([ConcernState]),
         MaterialModule,
         NoopAnimationsModule,
         ReactiveFormsModule,
-        RouterTestingModule
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    }).compileComponents();
+        RouterTestingModule],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+}).compileComponents();
   }));
 
   beforeEach(() => {

@@ -5,12 +5,13 @@ import { NotesDrawerComponent } from "./notes-drawer.component";
 import { NgxsModule } from "@ngxs/store";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { MaterialModule } from "src/app/shared/material/material.module";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { NotesDrawerState } from "./state/notes-drawer.state";
 import { DetailsSideNavState } from "../details-side-nav/state/details-side-nav.state";
 import { CommonModule } from "@angular/common";
 import { ActivatedRoute } from "@angular/router";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("NoteCardComponent", () => {
   let component: NotesDrawerComponent;
@@ -21,23 +22,22 @@ describe("NoteCardComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        NoopAnimationsModule,
+    declarations: [NotesDrawerComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [NoopAnimationsModule,
         MaterialModule,
         NgxsModule.forRoot([NotesDrawerState, DetailsSideNavState]),
-        HttpClientTestingModule,
         RouterTestingModule,
-        CommonModule
-      ],
-      declarations: [NotesDrawerComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      providers: [
+        CommonModule],
+    providers: [
         {
-          provide: ActivatedRoute,
-          useValue: activatedRoute
-        }
-      ]
-    }).compileComponents();
+            provide: ActivatedRoute,
+            useValue: activatedRoute
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+}).compileComponents();
   });
 
   beforeEach(() => {

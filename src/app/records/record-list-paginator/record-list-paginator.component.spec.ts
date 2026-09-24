@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { CUSTOM_ELEMENTS_SCHEMA, NgZone } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { MatPaginatorModule, PageEvent } from "@angular/material/paginator";
@@ -9,6 +9,10 @@ import { RecommendationsState } from "../../recommendations/state/recommendation
 import { DEFAULT_SORT } from "../constants";
 import { RecordsService } from "../services/records.service";
 import { RecordListPaginatorComponent } from "./record-list-paginator.component";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from "@angular/common/http";
 
 describe("RecordListPaginatorComponent", () => {
   let store: Store;
@@ -24,21 +28,27 @@ describe("RecordListPaginatorComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
+      declarations: [RecordListPaginatorComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [
         RouterTestingModule,
         MatPaginatorModule,
         NoopAnimationsModule,
-        NgxsModule.forRoot([RecommendationsState]),
-        HttpClientTestingModule
+        NgxsModule.forRoot([RecommendationsState])
       ],
-      declarations: [RecordListPaginatorComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+      ]
     }).compileComponents();
     store = TestBed.inject(Store);
     recordsService = TestBed.inject(RecordsService);
     recordsService.stateName = "recommendations";
     recordsService.setRecommendationsActions();
-    store.reset({ recommendations: { sort: DEFAULT_SORT } });
+    store.reset({
+      ...store.snapshot(),
+      recommendations: { sort: DEFAULT_SORT }
+    });
   }));
 
   beforeEach(() => {

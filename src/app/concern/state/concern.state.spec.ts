@@ -8,15 +8,13 @@ import { UploadService } from "../services/upload/upload.service";
 import { ConcernState } from "./concern.state";
 import { Get, Upload, UploadSuccess } from "./concern.actions";
 import { ConcernService } from "../services/concern/concern.service";
-import {
-  HttpClientTestingModule,
-  HttpTestingController
-} from "@angular/common/http/testing";
+import { HttpTestingController, provideHttpClientTesting } from "@angular/common/http/testing";
 import { environment } from "@environment";
 import { ConcernHistoryResponse2 } from "src/app/recommendation/mock-data/recommendation-spec-data";
 
 import { ErrorHandler } from "@angular/core";
 import { SnackBarService } from "src/app/shared/services/snack-bar/snack-bar.service";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("Concern actions", () => {
   let store: Store;
@@ -33,17 +31,16 @@ describe("Concern actions", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        NgxsModule.forRoot([ConcernState]),
+    imports: [NgxsModule.forRoot([ConcernState]),
         MaterialModule,
-        NoopAnimationsModule,
-        HttpClientTestingModule
-      ],
-      providers: [
+        NoopAnimationsModule],
+    providers: [
         ConcernService,
-        { provide: ErrorHandler, useFactory: errorHandlerSpy }
-      ]
-    }).compileComponents();
+        { provide: ErrorHandler, useFactory: errorHandlerSpy },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+}).compileComponents();
     store = TestBed.inject(Store);
     uploadService = TestBed.inject(UploadService);
     httpMock = TestBed.inject(HttpTestingController);
@@ -85,7 +82,7 @@ describe("Concern actions", () => {
   it("on 'Upload' event `uploadFileInProgress` should be truthy", () => {
     store.dispatch(new Upload(12132312, "xxxxxx-yyyyy-zzzzz", [mockFile]));
     const uploadFileInProgress =
-      store.selectSnapshot(ConcernState).uploadFileInProgress;
+      store.selectSnapshot(ConcernState.uploadFileInProgress);
     expect(uploadFileInProgress).toBeTrue();
   });
 

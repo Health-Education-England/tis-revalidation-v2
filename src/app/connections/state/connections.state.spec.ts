@@ -1,7 +1,7 @@
 import {
-  HttpClientTestingModule,
   HttpTestingController,
-  TestRequest
+  TestRequest,
+  provideHttpClientTesting
 } from "@angular/common/http/testing";
 import { TestBed, fakeAsync, waitForAsync } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
@@ -23,7 +23,11 @@ import {
 import { ConnectionsState } from "./connections.state";
 import { mockConnectionsResponse } from "../mock-data/connections-spec-data";
 import { ConnectionsService } from "../services/connections.service";
-import { HttpParams } from "@angular/common/http";
+import {
+  HttpParams,
+  provideHttpClient,
+  withInterceptorsFromDi
+} from "@angular/common/http";
 import { ConnectionsFilterType, IConnection } from "../connections.interfaces";
 import { DEFAULT_SORT } from "src/app/records/constants";
 
@@ -34,10 +38,10 @@ describe("Connections state", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        HttpClientTestingModule,
-        NgxsModule.forRoot([ConnectionsState])
+      imports: [RouterTestingModule, NgxsModule.forRoot([ConnectionsState])],
+      providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
       ]
     }).compileComponents();
     store = TestBed.inject(Store);
@@ -46,7 +50,7 @@ describe("Connections state", () => {
   }));
 
   it("should select 'ConnectionsState'", () => {
-    const connectionsState = store.selectSnapshot(ConnectionsState);
+    const connectionsState = store.selectSnapshot(ConnectionsState.items);
     expect(connectionsState).toBeTruthy();
   });
 
@@ -199,6 +203,7 @@ describe("Connections state", () => {
   it("should toggle checkbox when ToggleConnectionsCheckbox is dispatched", () => {
     const gmcReferenceNumber = "9856987";
     store.reset({
+      ...store.snapshot(),
       connections: {
         items: mockConnectionsResponse.connections
       }
@@ -216,6 +221,7 @@ describe("Connections state", () => {
 
   it("should toggle all checkboxes when ToggleAllConnectionsCheckboxes is dispatched", () => {
     store.reset({
+      ...store.snapshot(),
       connections: {
         items: mockConnectionsResponse.connections,
         allChecked: false

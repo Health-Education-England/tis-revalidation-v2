@@ -5,10 +5,11 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { Router } from "@angular/router";
 import { Component } from "@angular/core";
 import { RecommendationHistoryState } from "./state/recommendation-history.state";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { RecommendationNotesState } from "./state/recommendation-notes.state";
 import { MaterialModule } from "../shared/material/material.module";
 import { RecordsService } from "../records/services/records.service";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 @Component({
   template: `blank`
@@ -22,16 +23,14 @@ describe("RecommendationResolver", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        MaterialModule,
+    imports: [MaterialModule,
         NgxsModule.forRoot([RecommendationHistoryState]),
         NgxsModule.forRoot([RecommendationNotesState]),
-        HttpClientTestingModule,
         RouterTestingModule.withRoutes([
-          { path: "", component: BlankComponent }
-        ])
-      ]
-    }).compileComponents();
+            { path: "", component: BlankComponent }
+        ])],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+}).compileComponents();
     service = TestBed.inject(RecordsService);
     store = TestBed.inject(Store);
     router = TestBed.inject(Router);

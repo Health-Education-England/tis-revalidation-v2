@@ -8,7 +8,7 @@ import {
 import { RouterTestingModule } from "@angular/router/testing";
 import { MaterialModule } from "../../shared/material/material.module";
 import { INavLink } from "../details.interfaces";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { NavBarComponent } from "./nav-bar.component";
 import { RecordsService } from "src/app/records/services/records.service";
 import { NgxsModule, Store } from "@ngxs/store";
@@ -18,6 +18,10 @@ import { RecordsModule } from "src/app/records/records.module";
 import { By } from "@angular/platform-browser";
 import { of } from "rxjs";
 import { RecordsComponent } from "src/app/records/records.component";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from "@angular/common/http";
 
 describe("NavBarComponent", () => {
   let store: Store;
@@ -32,13 +36,10 @@ describe("NavBarComponent", () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [NavBarComponent],
-
       imports: [
         RecordsModule,
         RouterTestingModule.withRoutes(routes),
-
         MaterialModule,
-        HttpClientTestingModule,
         NgxsModule.forRoot([RecommendationsState])
       ],
       providers: [
@@ -47,7 +48,9 @@ describe("NavBarComponent", () => {
           useValue: {
             snapshot: { params: { gmcNumver: "1234567" } }
           }
-        }
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
       ]
     }).compileComponents();
     router = TestBed.inject(Router);
@@ -59,6 +62,7 @@ describe("NavBarComponent", () => {
     service.stateName = "recommendations";
     service.setRecommendationsActions();
     store.reset({
+      ...store.snapshot(),
       queryParams: {
         active: "submissionDate",
         direction: "asc",

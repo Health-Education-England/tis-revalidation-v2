@@ -1,0 +1,688 @@
+# npm audit report
+
+@angular/common  <=19.2.25
+Severity: high
+Depends on vulnerable versions of @angular/core
+Angular is Vulnerable to XSRF Token Leakage via Protocol-Relative URLs in Angular HTTP Client - https://github.com/advisories/GHSA-58c5-g7wp-6w37
+@angular/common: Denial of Service (DoS) via OOM in Date Formatting (formatDate) - https://github.com/advisories/GHSA-48r7-hpm6-gfxm
+@angular/common: Weak 32-Bit Cache Key Hashing in `HttpTransferCache` Leading to Cross-Request Data Leakage and State Poisoning - https://github.com/advisories/GHSA-39pv-4j6c-2g6v
+@angular/common: Denial of Service (DoS) via OOM in Number Formatting (digitsInfo) - https://github.com/advisories/GHSA-p3vc-36g9-x9gr
+@angular/common: Information Leak via Default Caching of Credentialed Requests in HttpTransferCache - https://github.com/advisories/GHSA-q6f4-qqrg-jv6x
+Angular: Cache-Key Ambiguity in HttpTransferCache Leading to Cross-Request Response Reuse and State Poisoning - https://github.com/advisories/GHSA-jhpw-976m-542j
+Angular: Information Leak via `HttpTransferCache` Bypass When Using `withRequestsMadeViaParent` - https://github.com/advisories/GHSA-p297-fm68-3q8c
+fix available via `npm audit fix --force`
+Will install @angular/common@21.2.23, which is a breaking change
+node_modules/@angular/common
+  @angular/cdk  <=6.4.7 || 8.0.0-beta.0 - 18.2.14
+  Depends on vulnerable versions of @angular/common
+  Depends on vulnerable versions of @angular/core
+  node_modules/@angular/cdk
+  @angular/forms  <=19.2.25
+  Depends on vulnerable versions of @angular/common
+  Depends on vulnerable versions of @angular/core
+  Depends on vulnerable versions of @angular/platform-browser
+  node_modules/@angular/forms
+    @angular/material  <=6.4.7 || 8.0.0-beta.0 - 18.2.14
+    Depends on vulnerable versions of @angular/animations
+    Depends on vulnerable versions of @angular/cdk
+    Depends on vulnerable versions of @angular/common
+    Depends on vulnerable versions of @angular/core
+    Depends on vulnerable versions of @angular/forms
+    Depends on vulnerable versions of @angular/platform-browser
+    node_modules/@angular/material
+  @angular/platform-browser  <=19.2.25
+  Depends on vulnerable versions of @angular/animations
+  Depends on vulnerable versions of @angular/common
+  Depends on vulnerable versions of @angular/core
+  node_modules/@angular/platform-browser
+  @angular/platform-browser-dynamic  <=19.2.25
+  Depends on vulnerable versions of @angular/common
+  Depends on vulnerable versions of @angular/compiler
+  Depends on vulnerable versions of @angular/core
+  Depends on vulnerable versions of @angular/platform-browser
+  node_modules/@angular/platform-browser-dynamic
+  @angular/router  <=0.0.0-ROUTERPLACEHOLDER || 2.0.0-rc.0 - 19.2.25
+  Depends on vulnerable versions of @angular/common
+  Depends on vulnerable versions of @angular/core
+  Depends on vulnerable versions of @angular/platform-browser
+  node_modules/@angular/router
+  @angular/service-worker  <=19.2.25
+  Depends on vulnerable versions of @angular/common
+  Depends on vulnerable versions of @angular/core
+  node_modules/@angular/service-worker
+    @angular-devkit/build-angular  <=20.3.35 || 21.0.0-next.0 - 21.2.22 || 22.0.0-next.0 - 22.1.6
+    Depends on vulnerable versions of @angular-devkit/architect
+    Depends on vulnerable versions of @angular-devkit/build-webpack
+    Depends on vulnerable versions of @angular-devkit/core
+    Depends on vulnerable versions of @angular/build
+    Depends on vulnerable versions of @angular/compiler-cli
+    Depends on vulnerable versions of @angular/service-worker
+    Depends on vulnerable versions of @babel/core
+    Depends on vulnerable versions of @ngtools/webpack
+    Depends on vulnerable versions of copy-webpack-plugin
+    Depends on vulnerable versions of esbuild
+    Depends on vulnerable versions of http-proxy-middleware
+    Depends on vulnerable versions of less
+    Depends on vulnerable versions of ng-packagr
+    Depends on vulnerable versions of picomatch
+    Depends on vulnerable versions of piscina
+    Depends on vulnerable versions of postcss
+    Depends on vulnerable versions of webpack
+    Depends on vulnerable versions of webpack-dev-server
+    node_modules/@angular-devkit/build-angular
+    @angular/build  <=20.3.29 || 21.0.0-next.0 - 21.2.16 || 22.0.0-next.0 - 22.0.6
+    Depends on vulnerable versions of @angular-devkit/architect
+    Depends on vulnerable versions of @angular/compiler-cli
+    Depends on vulnerable versions of @angular/service-worker
+    Depends on vulnerable versions of @babel/core
+    Depends on vulnerable versions of @vitejs/plugin-basic-ssl
+    Depends on vulnerable versions of esbuild
+    Depends on vulnerable versions of picomatch
+    Depends on vulnerable versions of piscina
+    Depends on vulnerable versions of rollup
+    Depends on vulnerable versions of vite
+    node_modules/@angular/build
+  angular-google-tag-manager  <=1.11.0
+  Depends on vulnerable versions of @angular/common
+  Depends on vulnerable versions of @angular/compiler
+  node_modules/angular-google-tag-manager
+
+@angular/compiler  <=19.2.25
+Severity: high
+Depends on vulnerable versions of @angular/core
+Angular vulnerable to XSS in i18n attribute bindings - https://github.com/advisories/GHSA-g93w-mfhg-p222
+Angular has XSS Vulnerability via Unsanitized SVG Script Attributes - https://github.com/advisories/GHSA-jrmj-c5cx-3cw6
+Angular Stored XSS Vulnerability via SVG Animation, SVG URL and MathML Attributes - https://github.com/advisories/GHSA-v4hv-rgfq-gp49
+@angular/compiler: Two-Way Property Binding Sanitization Bypass (XSS) - https://github.com/advisories/GHSA-58w9-8g37-x9v5
+Angular: Template and Attribute Namespace Sanitization Bypass (XSS) - https://github.com/advisories/GHSA-f3m7-gqxr-g87x
+Angular i18n: Cross-Site Scripting (XSS) via event-handler attributes - https://github.com/advisories/GHSA-jj27-h5hq-8x99
+Angular: Sanitization bypass via directive host bindings on concrete host elements in @angular/core and @angular/compiler - https://github.com/advisories/GHSA-hh8m-fm6v-7cvg
+fix available via `npm audit fix --force`
+Will install @angular/compiler@21.2.23, which is a breaking change
+node_modules/@angular/compiler
+  @angular/compiler-cli  <=20.3.25 || 21.0.0-next.0 - 21.2.17 || 22.0.0-next.0 - 22.0.2
+  Depends on vulnerable versions of @angular/compiler
+  Depends on vulnerable versions of @babel/core
+  node_modules/@angular/compiler-cli
+    @ngtools/webpack  16.0.0-next.0 - 19.2.27
+    Depends on vulnerable versions of @angular/compiler-cli
+    node_modules/@ngtools/webpack
+    ng-packagr  12.0.0-next.0 - 20.0.0-rc.2
+    Depends on vulnerable versions of @angular/compiler-cli
+    Depends on vulnerable versions of cacache
+    Depends on vulnerable versions of esbuild
+    node_modules/ng-packagr
+
+@angular/core  <=19.2.25
+Severity: high
+Angular i18n vulnerable to Cross-Site Scripting - https://github.com/advisories/GHSA-prjf-86w9-mfqv
+Angular vulnerable to XSS in i18n attribute bindings - https://github.com/advisories/GHSA-g93w-mfhg-p222
+Angular has XSS Vulnerability via Unsanitized SVG Script Attributes - https://github.com/advisories/GHSA-jrmj-c5cx-3cw6
+Angular: Template and Attribute Namespace Sanitization Bypass (XSS) - https://github.com/advisories/GHSA-f3m7-gqxr-g87x
+@angular/core: Angular Template and Dynamic Component Namespace Bypass leading to Cross-Site Scripting (XSS) - https://github.com/advisories/GHSA-692r-grfm-v8x7
+Angular Client Hydration DOM Clobbering & Response-Cache Poisoning - https://github.com/advisories/GHSA-rgjc-h3x7-9mwg
+Angular i18n: Cross-Site Scripting (XSS) via event-handler attributes - https://github.com/advisories/GHSA-jj27-h5hq-8x99
+Angular: Sanitization bypass via directive host bindings on concrete host elements in @angular/core and @angular/compiler - https://github.com/advisories/GHSA-hh8m-fm6v-7cvg
+fix available via `npm audit fix --force`
+Will install @angular/core@21.2.23, which is a breaking change
+node_modules/@angular/core
+  @angular/animations  <=19.2.25
+  Depends on vulnerable versions of @angular/core
+  node_modules/@angular/animations
+  @angular/material-moment-adapter  <=6.4.7 || 8.0.0-beta.0 - 18.2.14
+  Depends on vulnerable versions of @angular/core
+  Depends on vulnerable versions of @angular/material
+  node_modules/@angular/material-moment-adapter
+  @ngxs/devtools-plugin  <=19.0.0
+  Depends on vulnerable versions of @angular/core
+  Depends on vulnerable versions of @ngxs/store
+  node_modules/@ngxs/devtools-plugin
+  @ngxs/logger-plugin  <=19.0.0
+  Depends on vulnerable versions of @angular/core
+  Depends on vulnerable versions of @ngxs/store
+  node_modules/@ngxs/logger-plugin
+  @ngxs/store  <=19.0.0
+  Depends on vulnerable versions of @angular/core
+  node_modules/@ngxs/store
+
+
+@babel/core  <=7.29.0
+@babel/core: Arbitrary File Read via sourceMappingURL Comment - https://github.com/advisories/GHSA-4x5r-pxfx-6jf8
+fix available via `npm audit fix --force`
+Will install @angular/compiler-cli@21.2.23, which is a breaking change
+node_modules/@angular-devkit/build-angular/node_modules/@babel/core
+node_modules/@babel/core
+
+@babel/plugin-transform-modules-systemjs  7.12.0 - 7.29.0
+Severity: high
+@babel/plugin-transform-modules-systemjs generates arbitrary code when compiling malicious input - https://github.com/advisories/GHSA-fv7c-fp4j-7gwp
+fix available via `npm audit fix`
+node_modules/@babel/plugin-transform-modules-systemjs
+
+@sigstore/core  <=3.2.0
+Severity: moderate
+@sigstore/core has DSSE payloadType type-binding failure - https://github.com/advisories/GHSA-jfc7-64v2-mr8c
+fix available via `npm audit fix --force`
+Will install @angular/cli@21.2.24, which is a breaking change
+node_modules/@sigstore/core
+  @sigstore/sign  <=3.1.0
+  Depends on vulnerable versions of @sigstore/core
+  Depends on vulnerable versions of make-fetch-happen
+  node_modules/@sigstore/sign
+  @sigstore/verify  <=2.1.1
+  Depends on vulnerable versions of @sigstore/core
+  node_modules/@sigstore/verify
+  sigstore  <=4.1.0
+  Depends on vulnerable versions of @sigstore/core
+  Depends on vulnerable versions of @sigstore/sign
+  Depends on vulnerable versions of @sigstore/tuf
+  Depends on vulnerable versions of @sigstore/verify
+  node_modules/sigstore
+    pacote  5.0.0 - 21.5.0
+    Depends on vulnerable versions of @npmcli/run-script
+    Depends on vulnerable versions of cacache
+    Depends on vulnerable versions of npm-registry-fetch
+    Depends on vulnerable versions of sigstore
+    Depends on vulnerable versions of tar
+    node_modules/pacote
+      @angular/cli  10.0.0-next.0 - 10.0.0-rc.1 || 12.0.0-next.0 - 20.3.28 || 21.0.0-next.0 - 21.2.15 || 22.0.0-next.0 - 22.0.1 || 22.1.0-next.0 - 22.1.0-rc.0
+      Depends on vulnerable versions of @angular-devkit/architect
+      Depends on vulnerable versions of @angular-devkit/core
+      Depends on vulnerable versions of @angular-devkit/schematics
+      Depends on vulnerable versions of @inquirer/prompts
+      Depends on vulnerable versions of @listr2/prompt-adapter-inquirer
+      Depends on vulnerable versions of @schematics/angular
+      Depends on vulnerable versions of pacote
+      node_modules/@angular/cli
+
+ajv  <6.14.0 || >=7.0.0-alpha.0 <8.18.0
+Severity: moderate
+ajv has ReDoS when using `$data` option - https://github.com/advisories/GHSA-2g4f-4pwh-qvx6
+ajv has ReDoS when using `$data` option - https://github.com/advisories/GHSA-2g4f-4pwh-qvx6
+fix available via `npm audit fix --force`
+Will install @angular-devkit/core@21.2.24, which is a breaking change
+node_modules/@eslint/eslintrc/node_modules/ajv
+node_modules/ajv
+node_modules/eslint/node_modules/ajv
+node_modules/terser-webpack-plugin/node_modules/ajv
+node_modules/webpack/node_modules/ajv
+  @angular-devkit/core  12.0.0-next.0 - 19.2.22 || 20.0.0-next.0 - 20.3.21 || 21.0.0-next.0 - 21.2.4 || 22.0.0-next.0 - 22.0.0-rc.3
+  Depends on vulnerable versions of ajv
+  Depends on vulnerable versions of picomatch
+  node_modules/@angular-devkit/core
+    @angular-devkit/architect  0.1000.0-next.0 - 0.1000.0-rc.1 || 0.1702.0-next.0 - 0.1902.22 || 0.2000.0-next.0 - 0.2003.21 || 0.2100.0-next.0 - 0.2102.4 || 0.2200.0-next.0 - 0.2200.0-rc.3
+    Depends on vulnerable versions of @angular-devkit/core
+    node_modules/@angular-devkit/architect
+      @angular-devkit/build-webpack  0.1702.0-next.0 - 0.1902.22 || 0.2000.0-next.0 - 0.2003.21 || 0.2100.0-next.0 - 0.2102.4 || 0.2200.0-next.0 - 0.2200.0-rc.3
+      Depends on vulnerable versions of @angular-devkit/architect
+      node_modules/@angular-devkit/build-webpack
+    @angular-devkit/schematics  17.2.0-next.0 - 19.2.22 || 20.0.0-next.0 - 20.3.21 || 21.0.0-next.0 - 21.2.4 || 22.0.0-next.0 - 22.0.0-rc.3
+    Depends on vulnerable versions of @angular-devkit/core
+    node_modules/@angular-devkit/schematics
+    @angular-eslint/schematics  17.5.3-alpha.0 - 17.5.3-alpha.1 || 18.0.0-alpha.0 - 19.0.0-alpha.6 || 20.0.0-alpha.0 - 20.0.0-beta.1
+    Depends on vulnerable versions of @angular-devkit/core
+    Depends on vulnerable versions of @angular-devkit/schematics
+    node_modules/@angular-eslint/schematics
+    @schematics/angular  17.2.0-next.0 - 19.2.22 || 20.0.0-next.0 - 20.3.21 || 21.0.0-next.0 - 21.2.4 || 22.0.0-next.0 - 22.0.0-rc.3
+    Depends on vulnerable versions of @angular-devkit/core
+    Depends on vulnerable versions of @angular-devkit/schematics
+    node_modules/@schematics/angular
+
+axios  1.0.0 - 1.17.0
+Severity: high
+Axios: Authentication Bypass via Prototype Pollution Gadget in `validateStatus` Merge Strategy - https://github.com/advisories/GHSA-w9j2-pvgh-6h63
+Axios: Incomplete Fix for CVE-2025-62718 — NO_PROXY Protection Bypassed via RFC 1122 Loopback Subnet (127.0.0.0/8) in Axios 1.15.0 - https://github.com/advisories/GHSA-pmwg-cvhr-8vh7
+Axios: Invisible JSON Response Tampering via Prototype Pollution Gadget in `parseReviver` - https://github.com/advisories/GHSA-3w6x-2g7m-8v23
+Axios: Null Byte Injection via Reverse-Encoding in AxiosURLSearchParams - https://github.com/advisories/GHSA-xhjh-pmcv-23jw
+Axios: CRLF Injection in multipart/form-data body via unsanitized blob.type in formDataToStream - https://github.com/advisories/GHSA-445q-vr5w-6q77
+Axios: no_proxy bypass via IP alias allows SSRF - https://github.com/advisories/GHSA-m7pr-hjqh-92cm
+Axios' HTTP adapter-streamed uploads bypass maxBodyLength when maxRedirects: 0 - https://github.com/advisories/GHSA-5c9x-8gcm-mpgx
+Axios: HTTP adapter streamed responses bypass maxContentLength - https://github.com/advisories/GHSA-vf2m-468p-8v99
+Axios: Prototype Pollution Gadgets - Response Tampering, Data Exfiltration, and Request Hijacking - https://github.com/advisories/GHSA-pf86-5x62-jrwf
+Axios: Header Injection via Prototype Pollution - https://github.com/advisories/GHSA-6chq-wfr3-2hj9
+Axios: XSRF Token Cross-Origin Leakage via Prototype Pollution Gadget in `withXSRFToken` Boolean Coercion - https://github.com/advisories/GHSA-xx6v-rp6x-q39c
+Axios has prototype pollution read-side gadgets in HTTP adapter that allow credential injection and request hijacking - https://github.com/advisories/GHSA-q8qp-cvcw-x6jj
+Axios: unbounded recursion in toFormData causes DoS via deeply nested request data - https://github.com/advisories/GHSA-62hf-57xw-28j9
+Axios: Regular Expression Denial of Service (ReDoS) via Cookie Name Injection - https://github.com/advisories/GHSA-hfxv-24rg-xrqf
+Allocation of Resources Without Limits or Throttling in Axios - https://github.com/advisories/GHSA-777c-7fjr-54vf
+Axios: Proxy-Authorization Credential Leak to Origin Server Across HTTP-to-HTTPS Redirect in Axios Node.js HTTP Adapter - https://github.com/advisories/GHSA-p92q-9vqr-4j8v
+Axios: Proxy-Authorization header leaks to redirect target when proxy is re-evaluated to direct connection - https://github.com/advisories/GHSA-j5f8-grm9-p9fc
+axios Vulnerable to Credential Theft and Response Hijacking via Prototype Pollution Gadget in Config Merge - https://github.com/advisories/GHSA-3g43-6gmg-66jw
+axios Vulnerable to Full Man-in-the-Middle via Prototype Pollution Gadget in `config.proxy` - https://github.com/advisories/GHSA-35jp-ww65-95wh
+axios has DoS & Header Injection via Prototype Pollution Read-Side Gadgets in axios merge functions - https://github.com/advisories/GHSA-898c-q2cr-xwhg
+axios's shouldBypassProxy does not recognize IPv4-mapped IPv6 addresses, allowing NO_PROXY bypass (incomplete fix for CVE-2025-62718) - https://github.com/advisories/GHSA-pjwm-pj3p-43mv
+Axios: Prototype pollution gadgets can alter axios request construction - https://github.com/advisories/GHSA-mmx7-hfxf-jppx
+Axios: Deep formToJSON Key Recursion Can Cause Denial of Service - https://github.com/advisories/GHSA-pmv8-rq9r-6j72
+Axios: HTTP/2 streamed uploads bypass `maxBodyLength` - https://github.com/advisories/GHSA-mwf2-3pr3-8698
+Axios: Nested axios option objects can consume polluted prototype values - https://github.com/advisories/GHSA-7q8q-rj6j-mhjq
+Axios: Fetch adapter `ReadableStream` uploads bypass `maxBodyLength` - https://github.com/advisories/GHSA-jqh4-m9w3-8hp9
+Axios: NO_PROXY bypass for 0.0.0.0 local addresses in axios - https://github.com/advisories/GHSA-f4gw-2p7v-4548
+Axios: Excessive recursion in formDataToJSON can cause denial of service - https://github.com/advisories/GHSA-42h9-826w-cgv3
+fix available via `npm audit fix`
+node_modules/axios
+
+baseline-browser-mapping  >=2.0.0 <2.11.0
+Severity: moderate
+baseline-browser-mapping process termination on invalid input causes denial of service - https://github.com/advisories/GHSA-w5vr-8v7q-w6rv
+fix available via `npm audit fix`
+node_modules/baseline-browser-mapping
+
+brace-expansion  <=1.1.17 || 2.0.0 - 2.1.3
+Severity: high
+brace-expansion Regular Expression Denial of Service vulnerability - https://github.com/advisories/GHSA-v6h2-p8h4-qcjw
+brace-expansion: Zero-step sequence causes process hang and memory exhaustion - https://github.com/advisories/GHSA-f886-m6hf-6m8v
+brace-expansion: DoS via exponential-time expansion of consecutive non-expanding {} groups - https://github.com/advisories/GHSA-3jxr-9vmj-r5cp
+brace-expansion: DoS via exponential-time expansion of consecutive non-expanding {} groups - https://github.com/advisories/GHSA-3jxr-9vmj-r5cp
+brace-expansion: DoS via unbounded expansion length causing an out-of-memory process crash - https://github.com/advisories/GHSA-mh99-v99m-4gvg
+brace-expansion: DoS via unbounded expansion length causing an out-of-memory process crash - https://github.com/advisories/GHSA-mh99-v99m-4gvg
+brace-expansion: DoS via unbounded intermediate arrays, bypassing the CVE-2026-14257 mitigation - https://github.com/advisories/GHSA-rgw5-rvv9-x895
+brace-expansion: DoS via unbounded intermediate arrays, bypassing the CVE-2026-14257 mitigation - https://github.com/advisories/GHSA-rgw5-rvv9-x895
+fix available via `npm audit fix`
+node_modules/@typescript-eslint/type-utils/node_modules/brace-expansion
+node_modules/@typescript-eslint/typescript-estree/node_modules/brace-expansion
+node_modules/@typescript-eslint/utils/node_modules/brace-expansion
+node_modules/brace-expansion
+node_modules/filelist/node_modules/brace-expansion
+node_modules/nx/node_modules/brace-expansion
+
+browserslist  <=4.28.6
+Severity: high
+Browserslist: Unbounded memory growth (no cache eviction) via distinct query results, leading to eventual OOM - https://github.com/advisories/GHSA-c83g-rgw3-j3cx
+Browserslist: Uncaught crash / prototype write via untrusted browserslist-stats.json custom stats (normalizeStats) - https://github.com/advisories/GHSA-73wf-gq98-2v4g
+fix available via `npm audit fix`
+node_modules/browserslist
+
+colord  <2.9.4
+Severity: moderate
+Colord: Slow rejection of oversized malformed color strings - https://github.com/advisories/GHSA-2wm5-q62r-hmrv
+fix available via `npm audit fix`
+node_modules/colord
+
+cookie  <0.7.0
+cookie accepts cookie name, path, and domain with out of bounds characters - https://github.com/advisories/GHSA-pxg6-pf52-xh8x
+fix available via `npm audit fix`
+node_modules/cookie
+  engine.io  0.7.8 - 0.7.9 || 1.8.0 - 6.6.6
+  Depends on vulnerable versions of cookie
+  Depends on vulnerable versions of ws
+  node_modules/engine.io
+    socket.io  3.1.0 - 4.7.5
+    Depends on vulnerable versions of engine.io
+    node_modules/socket.io
+
+diff  4.0.0 - 4.0.3
+jsdiff has a Denial of Service vulnerability in parsePatch and applyPatch - https://github.com/advisories/GHSA-73rr-hh4g-fpgx
+fix available via `npm audit fix`
+node_modules/diff
+
+
+esbuild  <=0.24.2
+Severity: moderate
+esbuild enables any website to send any requests to the development server and read the response - https://github.com/advisories/GHSA-67mh-4wv8-2f99
+fix available via `npm audit fix --force`
+Will install ng-packagr@21.2.7, which is a breaking change
+node_modules/esbuild
+node_modules/vite/node_modules/esbuild
+  vite  <=6.4.2
+  Depends on vulnerable versions of esbuild
+  node_modules/vite
+    @vitejs/plugin-basic-ssl  <=1.1.0
+    Depends on vulnerable versions of vite
+    node_modules/@vitejs/plugin-basic-ssl
+
+extract-zip  *
+Severity: high
+extract-zip unvalidated symlink path traversal - https://github.com/advisories/GHSA-jmr9-qjv8-65gv
+extract-zip allows arbitrary file writes through symlink archive entries - https://github.com/advisories/GHSA-7pqw-9j4j-h8q3
+fix available via `npm audit fix`
+node_modules/extract-zip
+  cypress  0.9.1 - 15.15.0
+  Depends on vulnerable versions of @cypress/request
+  Depends on vulnerable versions of extract-zip
+  Depends on vulnerable versions of systeminformation
+  node_modules/cypress
+
+fast-xml-builder  <=1.1.6
+Severity: high
+fast-xml-builder allows attribute values with unwanted quotes to bypass malicious or unwanted attributes - https://github.com/advisories/GHSA-5wm8-gmm8-39j9
+fix available via `npm audit fix`
+node_modules/fast-xml-builder
+
+fast-xml-parser  <5.7.0
+Severity: moderate
+fast-xml-parser XMLBuilder: XML Comment and CDATA Injection via Unescaped Delimiters - https://github.com/advisories/GHSA-gh4j-gqv2-49f6
+fix available via `npm audit fix`
+node_modules/@aws-sdk/xml-builder/node_modules/fast-xml-parser
+node_modules/fast-xml-parser
+  @aws-sdk/xml-builder  3.894.0 - 3.972.18
+  Depends on vulnerable versions of fast-xml-parser
+  node_modules/@aws-sdk/xml-builder
+
+flatted  <=3.4.1
+Severity: high
+flatted vulnerable to unbounded recursion DoS in parse() revive phase - https://github.com/advisories/GHSA-25h7-pfq9-p65f
+Prototype Pollution via parse() in NodeJS flatted - https://github.com/advisories/GHSA-rf6f-7fwh-wjgh
+fix available via `npm audit fix`
+node_modules/flatted
+
+follow-redirects  <=1.15.11
+Severity: moderate
+follow-redirects leaks Custom Authentication Headers to Cross-Domain Redirect Targets - https://github.com/advisories/GHSA-r4q5-vmmm-2653
+fix available via `npm audit fix`
+node_modules/follow-redirects
+
+form-data  4.0.0 - 4.0.5
+Severity: high
+form-data: CRLF injection in form-data via unescaped multipart field names and filenames - https://github.com/advisories/GHSA-hmw2-7cc7-3qxx
+fix available via `npm audit fix`
+node_modules/form-data
+
+http-proxy-middleware  3.0.0 - 3.0.6
+Severity: high
+http-proxy-middleware: multipart/form-data field injection via unescaped CRLF in `fixRequestBody` - https://github.com/advisories/GHSA-gcq2-9pq2-cxqm
+http-proxy-middleware `router` host+path substring matching allows Host-header-driven backend routing bypass - https://github.com/advisories/GHSA-64mm-vxmg-q3vj
+fix available via `npm audit fix --force`
+Will install @angular-devkit/build-angular@21.2.24, which is a breaking change
+node_modules/http-proxy-middleware
+
+image-size  <=2.0.2
+Severity: high
+image-size: ICNS parser allows denial of service through an infinite loop - https://github.com/advisories/GHSA-w3rx-r6r6-pgpr
+image-size: JXL and HEIF parsers allow denial of service through infinite loops - https://github.com/advisories/GHSA-5p2g-fcmc-qvqq
+fix available via `npm audit fix --force`
+Will install @angular-devkit/build-angular@21.2.24, which is a breaking change
+node_modules/image-size
+  less  2.2.0 - 4.6.7
+  Depends on vulnerable versions of image-size
+  node_modules/less
+
+js-cookie  <=3.0.5
+Severity: high
+JavaScript Cookie: Per-instance prototype hijack in assign() enables cookie-attribute injection - https://github.com/advisories/GHSA-qjx8-664m-686j
+fix available via `npm audit fix`
+node_modules/js-cookie
+
+js-yaml  <=3.15.1 || 4.0.0 - 4.3.1
+Severity: high
+js-yaml has prototype pollution in merge (<<) - https://github.com/advisories/GHSA-mh29-5h37-fv8m
+js-yaml has prototype pollution in merge (<<) - https://github.com/advisories/GHSA-mh29-5h37-fv8m
+JS-YAML: Quadratic-complexity DoS in merge key handling via repeated aliases - https://github.com/advisories/GHSA-h67p-54hq-rp68
+JS-YAML: Quadratic-complexity DoS in merge key handling via repeated aliases - https://github.com/advisories/GHSA-h67p-54hq-rp68
+js-yaml: YAML merge-key chains can force quadratic CPU consumption - https://github.com/advisories/GHSA-52cp-r559-cp3m
+js-yaml: YAML merge-key chains can force quadratic CPU consumption - https://github.com/advisories/GHSA-52cp-r559-cp3m
+JS-YAML: Quadratic CPU consumption in !!omap resolution (3.x and 4.x) — CVE-2026-59870 fix not backported - https://github.com/advisories/GHSA-5p4m-2wfm-xmqj
+JS-YAML: Quadratic CPU consumption in !!omap resolution (3.x and 4.x) — CVE-2026-59870 fix not backported - https://github.com/advisories/GHSA-5p4m-2wfm-xmqj
+js-yaml: maxTotalMergeKeys does not limit CPU use for empty merge sources - https://github.com/advisories/GHSA-2883-xcg3-v3hh
+js-yaml: maxTotalMergeKeys does not limit CPU use for empty merge sources - https://github.com/advisories/GHSA-2883-xcg3-v3hh
+fix available via `npm audit fix`
+node_modules/@eslint/eslintrc/node_modules/js-yaml
+node_modules/cosmiconfig/node_modules/js-yaml
+node_modules/eslint/node_modules/js-yaml
+node_modules/js-yaml
+node_modules/nx/node_modules/js-yaml
+node_modules/postcss-loader/node_modules/js-yaml
+  nx  <=0.0.0-pr-34253-d811c6c || 14.3.3 - 22.7.1
+  Depends on vulnerable versions of @nrwl/tao
+  Depends on vulnerable versions of js-yaml
+  Depends on vulnerable versions of minimatch
+  node_modules/nx
+    @angular-eslint/builder  17.0.2-alpha.0 - 17.5.3-alpha.1 || 18.0.0-alpha.0 - 18.2.1-alpha.6
+    Depends on vulnerable versions of nx
+    node_modules/@angular-eslint/builder
+    @nrwl/tao  17.0.4 - 20.0.0-canary.20240926-529ab94
+    Depends on vulnerable versions of nx
+    node_modules/@nrwl/tao
+
+lodash  <=4.17.23
+Severity: high
+lodash vulnerable to Code Injection via `_.template` imports key names - https://github.com/advisories/GHSA-r5fr-rjxr-66jc
+lodash vulnerable to Prototype Pollution via array path bypass in `_.unset` and `_.omit` - https://github.com/advisories/GHSA-f23m-r3pf-42rh
+Lodash has Prototype Pollution Vulnerability in `_.unset` and `_.omit` functions - https://github.com/advisories/GHSA-xxjr-mmjv-4gpg
+fix available via `npm audit fix`
+node_modules/lodash
+
+minimatch  <=3.1.3 || 9.0.0 - 9.0.6
+Severity: high
+minimatch has a ReDoS via repeated wildcards with non-matching literal in pattern - https://github.com/advisories/GHSA-3ppc-4f35-3m26
+minimatch has a ReDoS via repeated wildcards with non-matching literal in pattern - https://github.com/advisories/GHSA-3ppc-4f35-3m26
+minimatch has ReDoS: matchOne() combinatorial backtracking via multiple non-adjacent GLOBSTAR segments - https://github.com/advisories/GHSA-7r86-cg39-jmmj
+minimatch has ReDoS: matchOne() combinatorial backtracking via multiple non-adjacent GLOBSTAR segments - https://github.com/advisories/GHSA-7r86-cg39-jmmj
+minimatch ReDoS: nested *() extglobs generate catastrophically backtracking regular expressions - https://github.com/advisories/GHSA-23c5-xmqv-rm74
+minimatch ReDoS: nested *() extglobs generate catastrophically backtracking regular expressions - https://github.com/advisories/GHSA-23c5-xmqv-rm74
+fix available via `npm audit fix`
+node_modules/@typescript-eslint/type-utils/node_modules/minimatch
+node_modules/@typescript-eslint/utils/node_modules/minimatch
+node_modules/minimatch
+node_modules/nx/node_modules/minimatch
+  @typescript-eslint/typescript-estree  6.16.0 - 7.5.0
+  Depends on vulnerable versions of minimatch
+  node_modules/@typescript-eslint/type-utils/node_modules/@typescript-eslint/typescript-estree
+  node_modules/@typescript-eslint/utils/node_modules/@typescript-eslint/typescript-estree
+    @typescript-eslint/type-utils  6.16.0 - 7.5.0
+    Depends on vulnerable versions of @typescript-eslint/typescript-estree
+    Depends on vulnerable versions of @typescript-eslint/utils
+    node_modules/@typescript-eslint/type-utils
+      @angular-eslint/eslint-plugin-template  17.1.2-alpha.0 - 17.3.0
+      Depends on vulnerable versions of @angular-eslint/utils
+      Depends on vulnerable versions of @typescript-eslint/type-utils
+      Depends on vulnerable versions of @typescript-eslint/utils
+      node_modules/@angular-eslint/eslint-plugin-template
+    @typescript-eslint/utils  6.16.0 - 7.5.0
+    Depends on vulnerable versions of @typescript-eslint/typescript-estree
+    node_modules/@typescript-eslint/utils
+      @angular-eslint/eslint-plugin  17.1.2-alpha.0 - 17.3.0
+      Depends on vulnerable versions of @angular-eslint/utils
+      Depends on vulnerable versions of @typescript-eslint/utils
+      node_modules/@angular-eslint/eslint-plugin
+      @angular-eslint/utils  17.1.2-alpha.0 - 17.3.0
+      Depends on vulnerable versions of @typescript-eslint/utils
+      node_modules/@angular-eslint/utils
+
+nanoid  <=3.3.17
+Severity: high
+nanoid: non-secure generators can loop indefinitely with negative size - https://github.com/advisories/GHSA-28wg-ghj8-5hjv
+nanoid: custom generators can loop indefinitely when size is zero - https://github.com/advisories/GHSA-2v37-7h3g-55p8
+nanoid: Integer Overflow or Wraparound - https://github.com/advisories/GHSA-xwg4-73v4-xw9w
+fix available via `npm audit fix`
+node_modules/nanoid
+
+
+
+picomatch  <=2.3.1 || 4.0.0 - 4.0.3
+Severity: high
+Picomatch: Method Injection in POSIX Character Classes causes incorrect Glob Matching - https://github.com/advisories/GHSA-3v7f-55p6-f55p
+Picomatch: Method Injection in POSIX Character Classes causes incorrect Glob Matching - https://github.com/advisories/GHSA-3v7f-55p6-f55p
+Picomatch has a ReDoS vulnerability via extglob quantifiers - https://github.com/advisories/GHSA-c2c7-rcm5-vvqj
+Picomatch has a ReDoS vulnerability via extglob quantifiers - https://github.com/advisories/GHSA-c2c7-rcm5-vvqj
+fix available via `npm audit fix --force`
+Will install @angular-devkit/build-angular@21.2.24, which is a breaking change
+node_modules/@angular-devkit/build-angular/node_modules/picomatch
+node_modules/@angular-devkit/core/node_modules/picomatch
+node_modules/@angular/build/node_modules/picomatch
+node_modules/picomatch
+
+piscina  <=4.9.2
+Severity: high
+piscina: Prototype Pollution Gadget → RCE via inherited options.filename - https://github.com/advisories/GHSA-x9g3-xrwr-cwfg
+fix available via `npm audit fix --force`
+Will install @angular-devkit/build-angular@21.2.24, which is a breaking change
+node_modules/piscina
+
+postcss  <=8.5.22
+Severity: high
+PostCSS has XSS via Unescaped </style> in its CSS Stringify Output - https://github.com/advisories/GHSA-qx2v-qp2m-jg93
+PostCSS: Arbitrary file read and information disclosure via attacker-controlled sourceMappingURL in CSS comments - https://github.com/advisories/GHSA-6g55-p6wh-862q
+PostCSS: incomplete fix of GHSA-6g55-p6wh-862q — attacker-controlled sourceMappingURL reads arbitrary .map files when `from` is unset - https://github.com/advisories/GHSA-fxqj-rqcc-2cmp
+PostCSS: Path Traversal in Previous Source Map Auto-Loading (sourceMappingURL) leads to Arbitrary .map File Disclosure - https://github.com/advisories/GHSA-r28c-9q8g-f849
+fix available via `npm audit fix --force`
+Will install @angular-devkit/build-angular@21.2.24, which is a breaking change
+node_modules/@angular-devkit/build-angular/node_modules/postcss
+node_modules/postcss
+
+qs  <=6.15.3
+Severity: moderate
+qs's arrayLimit bypass in comma parsing allows denial of service - https://github.com/advisories/GHSA-w7fw-mjwx-w883
+qs's arrayLimit bypass in its bracket notation allows DoS via memory exhaustion - https://github.com/advisories/GHSA-6rw7-vpxm-498p
+qs has a remotely triggerable DoS: qs.stringify crashes with TypeError on null/undefined entries in comma-format arrays when encodeValuesOnly is set - https://github.com/advisories/GHSA-q8mj-m7cp-5q26
+qs: Denial of Service via Attacker Controlled isBuffer - https://github.com/advisories/GHSA-4mjr-xmp4-gh2g
+fix available via `npm audit fix`
+node_modules/qs
+  @cypress/request  <=4.0.0
+  Depends on vulnerable versions of qs
+  Depends on vulnerable versions of uuid
+  node_modules/@cypress/request
+
+rollup  3.0.0 - 3.29.5 || 4.0.0 - 4.58.0
+Severity: high
+Rollup 4 has Arbitrary File Write via Path Traversal - https://github.com/advisories/GHSA-mw96-cpmx-2vgc
+Rollup 4 has Arbitrary File Write via Path Traversal - https://github.com/advisories/GHSA-mw96-cpmx-2vgc
+fix available via `npm audit fix --force`
+Will install @angular-devkit/build-angular@21.2.24, which is a breaking change
+node_modules/@angular/build/node_modules/rollup
+node_modules/rollup
+
+serialize-javascript  <=7.0.4
+Severity: high
+Serialize JavaScript is Vulnerable to RCE via RegExp.flags and Date.prototype.toISOString() - https://github.com/advisories/GHSA-5c6j-r48x-rmvq
+Serialize JavaScript has CPU Exhaustion Denial of Service via crafted array-like objects - https://github.com/advisories/GHSA-qj8w-gfj5-8c6v
+fix available via `npm audit fix --force`
+Will install @angular-devkit/build-angular@21.2.24, which is a breaking change
+node_modules/serialize-javascript
+  copy-webpack-plugin  6.1.1 - 13.0.1
+  Depends on vulnerable versions of serialize-javascript
+  node_modules/copy-webpack-plugin
+  terser-webpack-plugin  4.2.1 - 5.3.16
+  Depends on vulnerable versions of serialize-javascript
+  node_modules/terser-webpack-plugin
+
+
+socket.io-parser  4.0.0 - 4.2.6
+Severity: high
+socket.io allows an unbounded number of binary attachments - https://github.com/advisories/GHSA-677m-j7p3-52f9
+Socket.IO: Zero-attachment Memory Exhaustion - https://github.com/advisories/GHSA-2m8v-j782-fhvr
+fix available via `npm audit fix`
+node_modules/socket.io-parser
+
+systeminformation  <=5.31.6
+Severity: high
+systeminformation has a Command Injection vulnerability in fsSize() function on Windows - https://github.com/advisories/GHSA-wphj-fx3q-84ch
+Command Injection via Unsanitized `locate` Output in `versions()` — systeminformation - https://github.com/advisories/GHSA-5vv4-hvf7-2h46
+Systeminformation has a Command Injection via unsanitized interface parameter in wifi.js retry path - https://github.com/advisories/GHSA-9c88-49p5-5ggf
+Systeminformation vulnerable to Linux command injection in networkInterfaces() via unsanitized NetworkManager connection profile name - https://github.com/advisories/GHSA-hvx9-hwr7-wjj9
+systeminformation: OS command injection in networkInterfaces() via interfaces(5) source-directive path on Linux - https://github.com/advisories/GHSA-5xpp-75jx-m839
+fix available via `npm audit fix`
+node_modules/systeminformation
+
+tar  <=7.5.20
+Severity: critical
+node-tar Vulnerable to Arbitrary File Creation/Overwrite via Hardlink Path Traversal - https://github.com/advisories/GHSA-34x7-hfp2-rc4v
+node-tar is Vulnerable to Arbitrary File Overwrite and Symlink Poisoning via Insufficient Path Sanitization - https://github.com/advisories/GHSA-8qq5-rm4j-mr97
+Arbitrary File Read/Write via Hardlink Target Escape Through Symlink Chain in node-tar Extraction - https://github.com/advisories/GHSA-83g3-92jg-28cx
+tar has Hardlink Path Traversal via Drive-Relative Linkpath - https://github.com/advisories/GHSA-qffp-2rhf-9h96
+node-tar Symlink Path Traversal via Drive-Relative Linkpath - https://github.com/advisories/GHSA-9ppj-qmqm-q256
+Race Condition in node-tar Path Reservations via Unicode Ligature Collisions on macOS APFS - https://github.com/advisories/GHSA-r6q2-hw4h-h46w
+node-tar applies PAX size override to intermediary GNU long-name/long-link headers, causing tar parser interpretation differential (file smuggling) - https://github.com/advisories/GHSA-vmf3-w455-68vh
+node-tar: Process crash via PAX numeric path type confusion - https://github.com/advisories/GHSA-w8wr-v893-vjvp
+node-tar: Decompression/parse DoS via unlimited input - https://github.com/advisories/GHSA-23hp-3jrh-7fpw
+node-tar: Negative tar entry size causes infinite loop in archive replace - https://github.com/advisories/GHSA-8x88-c5mf-7j5w
+node-tar: Uncaught Exception DoS via NUL byte in PAX path/linkpath records - https://github.com/advisories/GHSA-gvwx-54wh-qm9j
+node-tar: Uncontrolled recursion in mapHas/filesFilter allows uncatchable stack-overflow DoS via crafted long-path tar with member selection - https://github.com/advisories/GHSA-r292-9mhp-454m
+fix available via `npm audit fix --force`
+Will install @angular/cli@21.2.24, which is a breaking change
+node_modules/tar
+  cacache  14.0.0 - 18.0.4
+  Depends on vulnerable versions of tar
+  node_modules/cacache
+    make-fetch-happen  7.1.1 - 14.0.0
+    Depends on vulnerable versions of cacache
+    node_modules/make-fetch-happen
+      node-gyp  <=10.3.1
+      Depends on vulnerable versions of make-fetch-happen
+      Depends on vulnerable versions of tar
+      node_modules/node-gyp
+        @npmcli/run-script  1.1.1 - 9.0.1
+        Depends on vulnerable versions of node-gyp
+        node_modules/@npmcli/run-script
+      npm-registry-fetch  7.0.0 - 18.0.0
+      Depends on vulnerable versions of make-fetch-happen
+      node_modules/npm-registry-fetch
+      tuf-js  <=2.2.1
+      Depends on vulnerable versions of make-fetch-happen
+      node_modules/tuf-js
+        @sigstore/tuf  <=2.3.4
+        Depends on vulnerable versions of tuf-js
+        node_modules/@sigstore/tuf
+
+tmp  <=0.2.5
+Severity: high
+tmp allows arbitrary temporary file / directory write via symbolic link `dir` parameter - https://github.com/advisories/GHSA-52f5-9888-hmc6
+tmp has Path Traversal via unsanitized prefix/postfix that enables directory escape - https://github.com/advisories/GHSA-ph9p-34f9-6g65
+fix available via `npm audit fix --force`
+Will install browserslist-useragent-regexp@4.1.4, which is a breaking change
+node_modules/cypress/node_modules/tmp
+node_modules/external-editor/node_modules/tmp
+node_modules/tmp
+node_modules/useragent/node_modules/tmp
+  external-editor  >=1.1.1
+  Depends on vulnerable versions of tmp
+  node_modules/external-editor
+    @inquirer/editor  <=4.2.15
+    Depends on vulnerable versions of external-editor
+    node_modules/@inquirer/editor
+      @inquirer/prompts  <=6.0.1
+      Depends on vulnerable versions of @inquirer/editor
+      node_modules/@inquirer/prompts
+        @listr2/prompt-adapter-inquirer  <=2.0.17
+        Depends on vulnerable versions of @inquirer/prompts
+        node_modules/@listr2/prompt-adapter-inquirer
+  useragent  *
+  Depends on vulnerable versions of tmp
+  node_modules/useragent
+    browserslist-useragent-regexp  <=3.0.2
+    Depends on vulnerable versions of useragent
+    node_modules/browserslist-useragent-regexp
+
+
+uuid  <11.1.1
+Severity: moderate
+uuid: Missing buffer bounds check in v3/v5/v6 when buf is provided - https://github.com/advisories/GHSA-w5hq-g745-h8pq
+fix available via `npm audit fix --force`
+Will install @angular-devkit/build-angular@21.2.24, which is a breaking change
+node_modules/@cypress/request/node_modules/uuid
+node_modules/sockjs/node_modules/uuid
+node_modules/uuid
+  sockjs  >=0.3.17
+  Depends on vulnerable versions of uuid
+  node_modules/sockjs
+    webpack-dev-server  <=5.2.6
+    Depends on vulnerable versions of sockjs
+    node_modules/webpack-dev-server
+
+
+webpack  5.49.0 - 5.104.0
+webpack buildHttp: allowedUris allow-list bypass via URL userinfo (@) leading to build-time SSRF behavior - https://github.com/advisories/GHSA-8fgc-7cc6-rx7x
+webpack buildHttp HttpUriPlugin allowedUris bypass via HTTP redirects → SSRF + cache persistence - https://github.com/advisories/GHSA-38r7-794h-5758
+fix available via `npm audit fix --force`
+Will install @angular-devkit/build-angular@21.2.24, which is a breaking change
+node_modules/webpack
+
+
+ws  8.0.0 - 8.20.1
+Severity: high
+ws affected by a DoS when handling a request with many HTTP headers - https://github.com/advisories/GHSA-3h5v-q93c-6h6q
+ws: Uninitialized memory disclosure - https://github.com/advisories/GHSA-58qx-3vcg-4xpx
+ws: Memory exhaustion DoS from tiny fragments and data chunks - https://github.com/advisories/GHSA-96hv-2xvq-fx4p
+fix available via `npm audit fix`
+node_modules/engine.io/node_modules/ws
+node_modules/socket.io-adapter/node_modules/ws
+  socket.io-adapter  2.5.2 - 2.5.4
+  Depends on vulnerable versions of ws
+  node_modules/socket.io-adapter
+
+105 vulnerabilities (9 low, 40 moderate, 55 high, 1 critical)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force

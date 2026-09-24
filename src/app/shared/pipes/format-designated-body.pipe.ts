@@ -12,7 +12,7 @@ export class FormatDesignatedBodyPipe implements PipeTransform {
   constructor(private store: Store) {}
 
   private dbcs: IDesignatedBody[] =
-    this.store.selectSnapshot(ReferenceState)?.dbcs;
+    this.store.selectSnapshot(ReferenceState.Dbcs);
 
   transform(value: string, format: dbcFormat = "dbc"): SafeHtml {
     if (value && this.dbcs) {

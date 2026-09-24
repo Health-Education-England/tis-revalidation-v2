@@ -1,7 +1,4 @@
-import {
-  HttpClientTestingModule,
-  HttpTestingController
-} from "@angular/common/http/testing";
+import { HttpTestingController, provideHttpClientTesting } from "@angular/common/http/testing";
 import { TestBed, waitForAsync } from "@angular/core/testing";
 import {
   ActivatedRouteSnapshot,
@@ -17,6 +14,7 @@ import {
 } from "../recommendation-history.interface";
 
 import { RecommendationHistoryService } from "./recommendation-history.service";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("RecommendationHistoryService", () => {
   let service: RecommendationHistoryService;
@@ -41,8 +39,9 @@ describe("RecommendationHistoryService", () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, RouterTestingModule]
-    });
+    imports: [RouterTestingModule],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
     service = TestBed.inject(RecommendationHistoryService);
     http = TestBed.inject(HttpTestingController);
     router = TestBed.inject(Router);

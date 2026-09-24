@@ -16,7 +16,7 @@ import {
 import { MaterialModule } from "src/app/shared/material/material.module";
 import { RecordsService } from "../services/records.service";
 import { RecordListTableFiltersComponent } from "./record-list-table-filters.component";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { By } from "@angular/platform-browser";
 import {
@@ -25,6 +25,10 @@ import {
 } from "src/app/shared/form-controls/form-contol-base.model";
 import { Router } from "@angular/router";
 import { of } from "rxjs";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from "@angular/common/http";
 
 describe("Record List Table FIlters", () => {
   let store: Store;
@@ -91,15 +95,18 @@ describe("Record List Table FIlters", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
+      declarations: [RecordListTableFiltersComponent],
       imports: [
         RecordsModule,
         NoopAnimationsModule,
         MaterialModule,
         RouterTestingModule,
-        HttpClientTestingModule,
         NgxsModule.forRoot([RecommendationsState])
       ],
-      declarations: [RecordListTableFiltersComponent]
+      providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+      ]
     }).compileComponents();
     store = TestBed.inject(Store);
     recordsService = TestBed.inject(RecordsService);
@@ -112,6 +119,7 @@ describe("Record List Table FIlters", () => {
     recordsService.stateName = "recommendations";
     recordsService.setRecommendationsActions();
     store.reset({
+      ...store.snapshot(),
       recommendations: {
         filter: "underNotice",
         sort: {

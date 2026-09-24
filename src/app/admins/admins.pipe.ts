@@ -7,7 +7,7 @@ import { AdminsState } from "./state/admins.state";
   name: "AdminName"
 })
 export class AdminsPipe implements PipeTransform {
-  private admins: IAdmin[] = this.store.selectSnapshot(AdminsState).items;
+  private admins: IAdmin[] = this.store.selectSnapshot(AdminsState.items);
 
   constructor(private store: Store) {}
 

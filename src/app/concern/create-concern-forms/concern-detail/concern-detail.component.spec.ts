@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
@@ -10,6 +10,10 @@ import { ConcernStatus, IConcernSummary } from "../../concern.interfaces";
 import { ConcernState } from "../../state/concern.state";
 
 import { ConcernDetailComponent } from "./concern-detail.component";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from "@angular/common/http";
 
 describe("ConcernDetailComponent", () => {
   let component: ConcernDetailComponent;
@@ -21,11 +25,14 @@ describe("ConcernDetailComponent", () => {
       declarations: [ConcernDetailComponent],
       imports: [
         NgxsModule.forRoot([ConcernState]),
-        HttpClientTestingModule,
         MaterialModule,
         NoopAnimationsModule,
         ReactiveFormsModule,
         RouterTestingModule
+      ],
+      providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
       ]
     }).compileComponents();
     store = TestBed.inject(Store);
@@ -69,7 +76,7 @@ describe("ConcernDetailComponent", () => {
 
   it("should reflect form values in edit mode", async () => {
     const mockConcern: IConcernSummary = ConcernHistoryResponse2.concerns[0];
-    store.reset({ concern: { selected: mockConcern } });
+    store.reset({ ...store.snapshot(), concern: { selected: mockConcern } });
 
     expect(component.form.dateOfIncident.value).toEqual(
       mockConcern.dateOfIncident

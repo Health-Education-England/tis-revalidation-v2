@@ -2,13 +2,11 @@ import { TestBed, waitForAsync } from "@angular/core/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { RecommendationNotesState } from "./recommendation-notes.state";
 import { GetRecommendationNotes } from "./recommendation-notes.actions";
-import {
-  HttpClientTestingModule,
-  HttpTestingController
-} from "@angular/common/http/testing";
+import { HttpTestingController, provideHttpClientTesting } from "@angular/common/http/testing";
 import { INote } from "../recommendation-history.interface";
 import { notesResponse1 } from "../mock-data/recommendation-spec-data";
 import { environment } from "@environment";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("RecommendationNotes actions", () => {
   let store: Store;
@@ -16,11 +14,9 @@ describe("RecommendationNotes actions", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        NgxsModule.forRoot([RecommendationNotesState]),
-        HttpClientTestingModule
-      ]
-    }).compileComponents();
+    imports: [NgxsModule.forRoot([RecommendationNotesState])],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+}).compileComponents();
     store = TestBed.inject(Store);
     httpMock = TestBed.inject(HttpTestingController);
   }));

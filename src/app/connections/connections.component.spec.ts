@@ -7,7 +7,7 @@ import {
   tick
 } from "@angular/core/testing";
 import { NgxsModule, Store } from "@ngxs/store";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { MaterialModule } from "../shared/material/material.module";
 import { ConnectionsComponent } from "./connections.component";
@@ -19,6 +19,10 @@ import { of, throwError } from "rxjs";
 import { RecordsService } from "../records/services/records.service";
 import { ConnectionsState } from "./state/connections.state";
 import { EnableUpdateConnections } from "../update-connections/state/update-connections.actions";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from "@angular/common/http";
 
 describe("ConnectionsComponent", () => {
   let component: ConnectionsComponent;
@@ -30,15 +34,20 @@ describe("ConnectionsComponent", () => {
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
+      declarations: [ConnectionsComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [
         NgxsModule.forRoot([ConnectionsState]),
-        HttpClientTestingModule,
         RouterTestingModule,
         MaterialModule
       ],
-      declarations: [ConnectionsComponent],
-      providers: [UpdateConnectionsService, SnackBarService, RecordsService],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      providers: [
+        UpdateConnectionsService,
+        SnackBarService,
+        RecordsService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+      ]
     }).compileComponents();
   });
 

@@ -14,10 +14,11 @@ import {
 import { MaterialModule } from "src/app/shared/material/material.module";
 
 import { By } from "@angular/platform-browser";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { MaterialAutocompleteComponent } from "./material-autocomplete.component";
 import { AutocompleteService } from "./autocomplete.service";
 import { of } from "rxjs";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("MaterialAutocompleteComponent", () => {
   let component: MaterialAutocompleteComponent;
@@ -39,18 +40,17 @@ describe("MaterialAutocompleteComponent", () => {
   };
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        MaterialModule,
+    declarations: [MaterialAutocompleteComponent],
+    imports: [MaterialModule,
         FormsModule,
         ReactiveFormsModule,
-        HttpClientTestingModule,
-        BrowserAnimationsModule
-      ],
-      providers: [
-        { provide: AutocompleteService, useValue: mockAutocompleteService }
-      ],
-      declarations: [MaterialAutocompleteComponent]
-    }).compileComponents();
+        BrowserAnimationsModule],
+    providers: [
+        { provide: AutocompleteService, useValue: mockAutocompleteService },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {

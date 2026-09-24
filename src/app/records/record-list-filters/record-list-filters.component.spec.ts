@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
@@ -8,6 +8,7 @@ import { RecordsService } from "../services/records.service";
 import { RecommendationsFilterType } from "../../recommendations/recommendations.interfaces";
 import { RecommendationsState } from "../../recommendations/state/recommendations.state";
 import { RecordListFiltersComponent } from "./record-list-filters.component";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("RecordListFiltersComponent", () => {
   let store: Store;
@@ -17,17 +18,15 @@ describe("RecordListFiltersComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        MaterialModule,
+    declarations: [RecordListFiltersComponent],
+    imports: [MaterialModule,
         NoopAnimationsModule,
         RouterTestingModule.withRoutes([
-          { path: "", component: RecordListFiltersComponent }
+            { path: "", component: RecordListFiltersComponent }
         ]),
-        NgxsModule.forRoot([RecommendationsState]),
-        HttpClientTestingModule
-      ],
-      declarations: [RecordListFiltersComponent]
-    }).compileComponents();
+        NgxsModule.forRoot([RecommendationsState])],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+}).compileComponents();
     store = TestBed.inject(Store);
     recordsService = TestBed.inject(RecordsService);
   }));

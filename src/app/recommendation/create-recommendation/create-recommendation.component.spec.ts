@@ -5,7 +5,7 @@ import { MaterialModule } from "../../shared/material/material.module";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { RecommendationHistoryState } from "../state/recommendation-history.state";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { ActivatedRoute } from "@angular/router";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { ReactiveFormsModule } from "@angular/forms";
@@ -13,6 +13,10 @@ import { AuthService } from "../../core/auth/auth.service";
 import { DetailsModule } from "../../details/details.module";
 import { By } from "@angular/platform-browser";
 import { IRecommendationHistory } from "../recommendation-history.interface";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from "@angular/common/http";
 
 describe("CreateRecommendationComponent", () => {
   let component: CreateRecommendationComponent;
@@ -37,10 +41,10 @@ describe("CreateRecommendationComponent", () => {
   };
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
+      declarations: [CreateRecommendationComponent],
       imports: [
         MaterialModule,
         RouterTestingModule,
-        HttpClientTestingModule,
         NoopAnimationsModule,
         ReactiveFormsModule,
         DetailsModule,
@@ -52,9 +56,10 @@ describe("CreateRecommendationComponent", () => {
         {
           provide: ActivatedRoute,
           useValue: activatedRoute
-        }
-      ],
-      declarations: [CreateRecommendationComponent]
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+      ]
     }).compileComponents();
     store = TestBed.inject(Store);
     auth = TestBed.inject(AuthService);
@@ -78,6 +83,7 @@ describe("CreateRecommendationComponent", () => {
     const d = new Date();
     d.setDate(d.getDate() + 121);
     store.reset({
+      ...store.snapshot(),
       recommendationHistory: {
         item: {
           ...mockRecommendation,
@@ -96,6 +102,7 @@ describe("CreateRecommendationComponent", () => {
     const d = new Date();
     d.setDate(d.getDate() + 120);
     store.reset({
+      ...store.snapshot(),
       recommendationHistory: {
         item: {
           ...mockRecommendation,

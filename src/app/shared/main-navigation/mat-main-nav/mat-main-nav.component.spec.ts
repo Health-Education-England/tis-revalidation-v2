@@ -1,6 +1,6 @@
 import { LayoutModule } from "@angular/cdk/layout";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { HttpClientModule } from "@angular/common/http";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { MatMainNavComponent } from "./mat-main-nav.component";
 import { RouterTestingModule } from "@angular/router/testing";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
@@ -13,16 +13,14 @@ describe("MatMainNavComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [MatMainNavComponent],
-      imports: [
-        RouterTestingModule,
+    declarations: [MatMainNavComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [RouterTestingModule,
         LayoutModule,
-        HttpClientModule,
         NoopAnimationsModule,
-        MaterialModule
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    }).compileComponents();
+        MaterialModule],
+    providers: [provideHttpClient(withInterceptorsFromDi())]
+}).compileComponents();
   }));
 
   beforeEach(() => {

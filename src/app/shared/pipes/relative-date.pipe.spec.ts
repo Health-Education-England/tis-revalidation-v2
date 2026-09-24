@@ -1,5 +1,5 @@
 import { RelativeDatePipe } from "./relative-date.pipe";
-import * as moment from "moment";
+import moment from "moment";
 
 describe("RelativeDatePipe", () => {
   it("create an instance", () => {

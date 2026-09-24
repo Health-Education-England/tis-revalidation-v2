@@ -77,18 +77,19 @@ export class RecommendationHistoryState {
   ): IRecommendationSummary {
     return state.item.revalidations.find((item: IRecommendationSummary) => {
       return (
-        RecommendationStatus[item.recommendationStatus] !== RecommendationStatus.SUBMITTED_TO_GMC &&
-        RecommendationStatus[item.recommendationStatus] !== RecommendationStatus.COMPLETED
+        RecommendationStatus[item.recommendationStatus] !==
+          RecommendationStatus.SUBMITTED_TO_GMC &&
+        RecommendationStatus[item.recommendationStatus] !==
+          RecommendationStatus.COMPLETED
       );
     });
   }
 
   @Selector([RecommendationHistoryState.currentRecommendation])
   public static currentRecommendationType(
-    state: RecommendationHistoryState,
-    currentRecommendation: IRecommendationSummary
-  ): string {
-    return currentRecommendation.recommendationType;
+    currentRecommendation: IRecommendationSummary | undefined
+  ): string | undefined {
+    return currentRecommendation?.recommendationType ?? undefined;
   }
 
   @Selector()

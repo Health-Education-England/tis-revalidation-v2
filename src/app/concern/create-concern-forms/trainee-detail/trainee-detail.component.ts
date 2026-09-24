@@ -135,8 +135,7 @@ export class TraineeDetailComponent implements OnDestroy, AfterViewInit {
   }
 
   private updateState(): Observable<any> | false {
-    const admins: IAllocateAdmin[] = this.store.selectSnapshot(AdminsState)
-      .allocateList;
+    const admins: IAllocateAdmin[] = this.store.selectSnapshot(AdminsState.allocateList)
     const admin = { admin: admins.length > 0 ? admins[0].admin : null };
     const newConcern = {
       ...this.concern,

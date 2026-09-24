@@ -1,7 +1,4 @@
-import {
-  HttpClientTestingModule,
-  HttpTestingController
-} from "@angular/common/http/testing";
+import { HttpTestingController, provideHttpClientTesting } from "@angular/common/http/testing";
 import { TestBed } from "@angular/core/testing";
 import { Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
@@ -13,6 +10,7 @@ import {
 } from "../../recommendations/state/recommendations.state";
 
 import { RecordsService } from "./records.service";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("RecordsService", () => {
   let service: RecordsService;
@@ -22,12 +20,10 @@ describe("RecordsService", () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        HttpClientTestingModule,
-        NgxsModule.forRoot([RecommendationsState])
-      ]
-    });
+    imports: [RouterTestingModule,
+        NgxsModule.forRoot([RecommendationsState])],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
     service = TestBed.inject(RecordsService);
     http = TestBed.inject(HttpTestingController);
     router = TestBed.inject(Router);

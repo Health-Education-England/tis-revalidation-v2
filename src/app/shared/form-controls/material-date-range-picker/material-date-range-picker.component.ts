@@ -1,5 +1,5 @@
 import { Component, HostListener, Input, OnInit } from "@angular/core";
-import * as day from "dayjs";
+import day from "dayjs";
 import {
   DateRangeControl,
   OnChangeFn,

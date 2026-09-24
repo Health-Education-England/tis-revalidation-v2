@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { TestBed } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxsModule } from "@ngxs/store";
@@ -6,6 +6,7 @@ import { MaterialModule } from "../../shared/material/material.module";
 import { IAdminDto } from "../admins.interfaces";
 import { AdminsState } from "../state/admins.state";
 import { AdminsService } from "./admins.service";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 export const mockAdminsResponse: IAdminDto[] = [
   {
@@ -27,13 +28,11 @@ describe("AdminsService", () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        MaterialModule,
-        HttpClientTestingModule,
+    imports: [MaterialModule,
         RouterTestingModule,
-        NgxsModule.forRoot([AdminsState])
-      ]
-    });
+        NgxsModule.forRoot([AdminsState])],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
     service = TestBed.inject(AdminsService);
   });
 

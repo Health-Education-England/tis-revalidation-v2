@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { TestBed, waitForAsync } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
@@ -20,6 +20,10 @@ import {
   SortRecommendations
 } from "./recommendations.actions";
 import { RecommendationsState } from "./recommendations.state";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from "@angular/common/http";
 
 describe("Recommendations state", () => {
   let store: Store;
@@ -27,21 +31,24 @@ describe("Recommendations state", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [
         NgxsModule.forRoot([RecommendationsState]),
-        HttpClientTestingModule,
         RouterTestingModule,
         MaterialModule
       ],
-      providers: [RecordsService],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      providers: [
+        RecordsService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+      ]
     }).compileComponents();
     store = TestBed.inject(Store);
     recordsService = TestBed.inject(RecordsService);
   }));
 
   it("should select 'RecommendationsState'", () => {
-    const state = store.selectSnapshot(RecommendationsState);
+    const state = store.selectSnapshot(RecommendationsState.items);
     expect(state).toBeTruthy();
   });
 
@@ -70,8 +77,8 @@ describe("Recommendations state", () => {
     );
 
     store.dispatch(new GetRecommendations()).subscribe(() => {
-      const allDoctors = store.snapshot().recommendations.totalCounts
-        .allDoctors;
+      const allDoctors =
+        store.snapshot().recommendations.totalCounts.allDoctors;
       expect(allDoctors).toEqual(21312);
     });
   });

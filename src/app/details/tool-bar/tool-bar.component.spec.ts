@@ -8,7 +8,11 @@ import { CommonModule } from "@angular/common";
 import { NotesDrawerState } from "../notes-drawer/state/notes-drawer.state";
 import { DetailsSideNavState } from "../details-side-nav/state/details-side-nav.state";
 
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from "@angular/common/http";
 
 describe("NoteCardComponent", () => {
   let component: ToolBarComponent;
@@ -16,18 +20,22 @@ describe("NoteCardComponent", () => {
   let store: Store;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      declarations: [ToolBarComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [
         NoopAnimationsModule,
         MaterialModule,
-        HttpClientTestingModule,
         NgxsModule.forRoot([NotesDrawerState, DetailsSideNavState]),
         CommonModule
       ],
-      declarations: [ToolBarComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+      ]
     }).compileComponents();
     store = TestBed.inject(Store);
     store.reset({
+      ...store.snapshot(),
       traineeDetails: {
         item: {
           gmcNumber: 123456,

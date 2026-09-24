@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { NgxsModule, Store } from "@ngxs/store";
@@ -13,6 +13,10 @@ import { ConcernState } from "../state/concern.state";
 
 import { UploadedFilesListComponent } from "./uploaded-files-list.component";
 import { defaultConcern } from "../constants";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from "@angular/common/http";
 
 describe("UploadedFilesListComponent", () => {
   let store: Store;
@@ -26,21 +30,24 @@ describe("UploadedFilesListComponent", () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [UploadedFilesListComponent],
-      imports: [
-        MaterialModule,
-        HttpClientTestingModule,
-        NgxsModule.forRoot([ConcernState])
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [MaterialModule, NgxsModule.forRoot([ConcernState])],
+      providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+      ]
     }).compileComponents();
     store = TestBed.inject(Store);
-    store.reset({ concern: { gmcNumber: _gmcNumber } });
     store.dispatch(
       new SetSelectedConcern({
         ...defaultConcern,
         ...{ concernId: _concernId }
       })
     );
+    store.reset({
+      ...store.snapshot(),
+      concern: { ...store.snapshot().concern, gmcNumber: _gmcNumber }
+    });
   }));
 
   beforeEach(() => {
@@ -75,7 +82,7 @@ describe("UploadedFilesListComponent", () => {
     );
   });
 
-  it("deleteFile() should dispatch event", () => {
+  it("listFiles() should dispatch event", () => {
     spyOn(store, "dispatch");
     component.listFiles();
     expect(store.dispatch).toHaveBeenCalledWith(

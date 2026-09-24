@@ -4,11 +4,7 @@ import { Store, NgxsModule } from "@ngxs/store";
 import { TestBed, waitForAsync } from "@angular/core/testing";
 import { MaterialModule } from "src/app/shared/material/material.module";
 import { ConcernState } from "../state/concern.state";
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-  TestRequest
-} from "@angular/common/http/testing";
+import { HttpTestingController, TestRequest, provideHttpClientTesting } from "@angular/common/http/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { BlankComponent } from "./concern.resolver.spec";
 import { environment } from "@environment";
@@ -18,6 +14,7 @@ import {
   ConcernHistoryResponse2
 } from "src/app/recommendation/mock-data/recommendation-spec-data";
 import { NgZone } from "@angular/core";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("CreateEditConcernResolver", () => {
   let router: Router;
@@ -28,40 +25,37 @@ describe("CreateEditConcernResolver", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        MaterialModule,
+    imports: [MaterialModule,
         NgxsModule.forRoot([ConcernState]),
-        HttpClientTestingModule,
         RouterTestingModule.withRoutes([
-          {
-            path: ":gmcNumber",
-            component: BlankComponent,
-            runGuardsAndResolvers: "always",
-            children: [
-              {
-                path: "create",
+            {
+                path: ":gmcNumber",
                 component: BlankComponent,
-                resolve: { test: CreateEditConcernResolver }
-              },
-              {
-                path: "edit/:concernId",
-                component: BlankComponent,
-                resolve: { test: CreateEditConcernResolver }
-              }
-            ]
-          },
-          {
-            path: "404",
-            component: BlankComponent
-          },
-          {
-            path: "**",
-            redirectTo: "404"
-          }
-        ])
-      ],
-      providers: [CreateEditConcernResolver]
-    }).compileComponents();
+                runGuardsAndResolvers: "always",
+                children: [
+                    {
+                        path: "create",
+                        component: BlankComponent,
+                        resolve: { test: CreateEditConcernResolver }
+                    },
+                    {
+                        path: "edit/:concernId",
+                        component: BlankComponent,
+                        resolve: { test: CreateEditConcernResolver }
+                    }
+                ]
+            },
+            {
+                path: "404",
+                component: BlankComponent
+            },
+            {
+                path: "**",
+                redirectTo: "404"
+            }
+        ])],
+    providers: [CreateEditConcernResolver, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+}).compileComponents();
     store = TestBed.inject(Store);
     router = TestBed.inject(Router);
     httpMock = TestBed.inject(HttpTestingController);

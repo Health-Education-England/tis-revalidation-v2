@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { NgxsModule, Store } from "@ngxs/store";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -26,7 +26,12 @@ import {
   HIDE_DISCREPANCY_ACTION
 } from "src/app/update-connections/constants";
 import { AuthService } from "src/app/core/auth/auth.service";
-import * as moment from "moment";
+import moment from "moment";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from "@angular/common/http";
+import { ReferenceState } from "src/app/reference/state/reference.state";
 @Pipe({ name: "formatDesignatedBody" })
 class MockFormatDesignatedBodyPipe implements PipeTransform {
   transform(value: string): string {
@@ -58,14 +63,6 @@ describe("ConnectionComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        NgxsModule.forRoot([ConnectionState, DetailsSideNavState]),
-        HttpClientTestingModule,
-        MaterialModule,
-        RouterModule.forRoot([]),
-        ReactiveFormsModule,
-        FormsModule
-      ],
       declarations: [
         ConnectionComponent,
         ConnectionHistoryComponent,
@@ -74,11 +71,24 @@ describe("ConnectionComponent", () => {
         MockAdminNamePipe,
         ConfirmDialogComponent
       ],
+      imports: [
+        NgxsModule.forRoot([
+          ConnectionState,
+          DetailsSideNavState,
+          ReferenceState
+        ]),
+        MaterialModule,
+        RouterModule.forRoot([]),
+        ReactiveFormsModule,
+        FormsModule
+      ],
       providers: [
         FormatDesignatedBodyPipe,
         ConnectionService,
         AuthService,
-        { provide: MatDialog, useValue: matDialogMock }
+        { provide: MatDialog, useValue: matDialogMock },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
       ]
     }).compileComponents();
   });
@@ -91,6 +101,7 @@ describe("ConnectionComponent", () => {
     connectionService = TestBed.inject(ConnectionService);
     authService = TestBed.inject(AuthService);
     store.reset({
+      ...store.snapshot(),
       traineeDetails: {
         item: {
           gmcNumber: null,
@@ -111,6 +122,9 @@ describe("ConnectionComponent", () => {
         connectionHistory: mockConnectionResponse.connection.connectionHistory,
         hiddenDiscrepancies: mockConnectionResponse.hiddenDiscrepancies,
         doctorCurrentDbc: null
+      },
+      reference: {
+        dbcs: []
       }
     });
     component = fixture.componentInstance;
@@ -251,6 +265,7 @@ describe("ConnectionComponent", () => {
 
   it("should NOT display hidden discrepancies details component when NONE available", () => {
     store.reset({
+      ...store.snapshot(),
       connection: {
         gmcNumber: null,
         connectionHistory: mockConnectionResponse.connection.connectionHistory,
@@ -283,6 +298,7 @@ describe("ConnectionComponent", () => {
   it("should include 'Hide discrepancy' action when programmeOwner !== DBC", () => {
     const actionsSpy = spyOn(updateConnectionService.actions$, "next");
     store.reset({
+      ...store.snapshot(),
       traineeDetails: {
         item: {
           tcsDesignatedBody: "1-ABCDEF"
@@ -302,6 +318,7 @@ describe("ConnectionComponent", () => {
   it("should NOT include 'Hide discrepancy' action when programmeOwner === DBC", () => {
     const actionsSpy = spyOn(updateConnectionService.actions$, "next");
     store.reset({
+      ...store.snapshot(),
       traineeDetails: {
         item: {
           tcsDesignatedBody: "1-ABCDEF"

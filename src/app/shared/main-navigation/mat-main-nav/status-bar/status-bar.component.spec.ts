@@ -5,7 +5,8 @@ import { MaterialModule } from "src/app/shared/material/material.module";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { RouterTestingModule } from "@angular/router/testing";
 import { AuthService } from "src/app/core/auth/auth.service";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("StatusBarComponent", () => {
   let component: StatusBarComponent;
@@ -13,16 +14,13 @@ describe("StatusBarComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [StatusBarComponent],
-      imports: [
-        MaterialModule,
+    declarations: [StatusBarComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [MaterialModule,
         NoopAnimationsModule,
-        RouterTestingModule,
-        HttpClientTestingModule
-      ],
-      providers: [AuthService],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    }).compileComponents();
+        RouterTestingModule],
+    providers: [AuthService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+}).compileComponents();
   }));
 
   beforeEach(() => {

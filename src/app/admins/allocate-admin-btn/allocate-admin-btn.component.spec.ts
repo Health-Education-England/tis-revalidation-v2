@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { MaterialModule } from "../../shared/material/material.module";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
@@ -7,6 +7,7 @@ import { RecommendationsState } from "../../recommendations/state/recommendation
 import { RecordsService } from "../../records/services/records.service";
 
 import { AllocateAdminBtnComponent } from "./allocate-admin-btn.component";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("AllocateAdminBtnComponent", () => {
   let store: Store;
@@ -16,14 +17,12 @@ describe("AllocateAdminBtnComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [AllocateAdminBtnComponent],
-      imports: [
-        HttpClientTestingModule,
-        MaterialModule,
+    declarations: [AllocateAdminBtnComponent],
+    imports: [MaterialModule,
         RouterTestingModule,
-        NgxsModule.forRoot([RecommendationsState])
-      ]
-    }).compileComponents();
+        NgxsModule.forRoot([RecommendationsState])],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+}).compileComponents();
     store = TestBed.inject(Store);
     recordsService = TestBed.inject(RecordsService);
 

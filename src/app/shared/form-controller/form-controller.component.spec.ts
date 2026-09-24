@@ -6,7 +6,7 @@ import {
 } from "../form-controls/form-contol-base.model";
 import { MaterialAutocompleteComponent } from "../form-controls/material-autocomplete/material-autocomplete.component";
 import { MaterialModule } from "../material/material.module";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { FormControllerComponent } from "./form-controller.component";
 import {
   UntypedFormControl,
@@ -20,6 +20,10 @@ import { RemoveWhitespacePipe } from "../pipes/remove-whitespace.pipe";
 import { NgxsModule, Store } from "@ngxs/store";
 import { RecordsService } from "src/app/records/services/records.service";
 import { ConnectionsFilterType } from "src/app/connections/connections.interfaces";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from "@angular/common/http";
 describe("FormControllerComponent", () => {
   let component: FormControllerComponent;
   let fixture: ComponentFixture<FormControllerComponent>;
@@ -59,21 +63,25 @@ describe("FormControllerComponent", () => {
   ];
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        MaterialModule,
-        HttpClientTestingModule,
-        NoopAnimationsModule,
-        FormsModule,
-        ReactiveFormsModule,
-        NgxsModule.forRoot()
-      ],
       declarations: [
         FormControllerComponent,
         MaterialAutocompleteComponent,
         MaterialSelectionListComponent,
         RemoveWhitespacePipe
       ],
-      providers: [Store, RecordsService]
+      imports: [
+        MaterialModule,
+        NoopAnimationsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NgxsModule.forRoot()
+      ],
+      providers: [
+        Store,
+        RecordsService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+      ]
     }).compileComponents();
   });
 
@@ -81,6 +89,7 @@ describe("FormControllerComponent", () => {
     fixture = TestBed.createComponent(FormControllerComponent);
     store = TestBed.inject(Store);
     store.reset({
+      ...store.snapshot(),
       connections: {
         filter: ConnectionsFilterType.CURRENT_CONNECTIONS,
         sort: {

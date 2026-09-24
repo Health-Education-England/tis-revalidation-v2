@@ -1,5 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators
+} from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Select, Store } from "@ngxs/store";
 import { Observable, of } from "rxjs";
@@ -25,8 +29,12 @@ export class ConfirmRecommendationComponent implements OnInit {
   public recommendationType = RecommendationType;
   public designatedBody: string;
   isFormSubmitting: boolean;
+
   @Select(RecommendationHistoryState.currentRecommendationType)
   public currentRecommendationType$: Observable<string>;
+
+  // currentRecommendationType$: Observable<string> = inject(Store)
+  //   .select(RecommendationHistoryState.currentRecommendationType);
 
   @Select(RecommendationHistoryState.editRecommendation)
   public editRecommendation$: Observable<boolean>;
@@ -54,7 +62,7 @@ export class ConfirmRecommendationComponent implements OnInit {
 
   public setupForm(): void {
     this.form = this.formBuilder.group({
-      confirm: [false, Validators.requiredTrue]
+      confirm: [false, [Validators.requiredTrue]]
     });
   }
 

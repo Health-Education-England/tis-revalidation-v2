@@ -1,7 +1,4 @@
-import {
-  HttpClientTestingModule,
-  HttpTestingController
-} from "@angular/common/http/testing";
+import { HttpTestingController, provideHttpClientTesting } from "@angular/common/http/testing";
 import { TestBed, fakeAsync, flush } from "@angular/core/testing";
 import { environment } from "@environment";
 import { NgxsModule, Store } from "@ngxs/store";
@@ -9,6 +6,7 @@ import { EnableUpdateConnections } from "../state/update-connections.actions";
 import { UpdateConnectionsState } from "../state/update-connections.state";
 import { ActionType } from "../update-connections.interfaces";
 import { UpdateConnectionsService } from "./update-connections.service";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("UpdateConnectionsService", () => {
   let service: UpdateConnectionsService;
@@ -17,11 +15,9 @@ describe("UpdateConnectionsService", () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        NgxsModule.forRoot([UpdateConnectionsState])
-      ]
-    });
+    imports: [NgxsModule.forRoot([UpdateConnectionsState])],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
     service = TestBed.inject(UpdateConnectionsService);
     http = TestBed.inject(HttpTestingController);
     store = TestBed.inject(Store);

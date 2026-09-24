@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
@@ -19,6 +19,10 @@ import { AuthService } from "src/app/core/auth/auth.service";
 import { ReferenceState } from "src/app/reference/state/reference.state";
 import { CONNECTION_ACTIONS, HIDE_DISCREPANCY_ACTION } from "../constants";
 import { By } from "@angular/platform-browser";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from "@angular/common/http";
 
 describe("UpdateConnectionComponent", () => {
   let component: UpdateConnectionComponent;
@@ -32,8 +36,8 @@ describe("UpdateConnectionComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      declarations: [UpdateConnectionComponent],
       imports: [
-        HttpClientTestingModule,
         MaterialModule,
         RouterTestingModule,
         ReactiveFormsModule,
@@ -42,14 +46,15 @@ describe("UpdateConnectionComponent", () => {
         SharedModule,
         NgxsModule.forRoot([UpdateConnectionsState, ReferenceState])
       ],
-      declarations: [UpdateConnectionComponent],
       providers: [
         AuthService,
         UpdateConnectionsService,
         {
           provide: MatDialog,
           useClass: MdDialogMock
-        }
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
       ]
     }).compileComponents();
   });
@@ -65,6 +70,7 @@ describe("UpdateConnectionComponent", () => {
     authService.userDesignatedBodies = ["1-AIIDWT", "1-AIIDSA", "1-AIIDVS"];
     component.currentDoctorDbcCode = "1-AIIDWT";
     store.reset({
+      ...store.snapshot(),
       updateConnections: {
         enableUpdateConnections: true
       },
@@ -138,14 +144,14 @@ describe("UpdateConnectionComponent", () => {
   });
 
   describe("DBCs", () => {
-    it("dbcs and userDbcs should be empty when dbcs$ is null", () => {
+    it("dbcs and userDbcs should be empty when dbcs$ is empty", () => {
       store.reset({
-        updateConnections: {
-          enableUpdateConnections: true,
-          dbcs: null
+        ...store.snapshot(),
+        reference: {
+          dbcs: []
         }
       });
-
+      fixture.detectChanges();
       expect(component.dbcs.length).toBe(0);
       expect(component.userDbcs.length).toBe(0);
     });

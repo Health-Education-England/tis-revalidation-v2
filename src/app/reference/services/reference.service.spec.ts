@@ -1,10 +1,8 @@
-import {
-  HttpClientTestingModule,
-  HttpTestingController
-} from "@angular/common/http/testing";
+import { HttpTestingController, provideHttpClientTesting } from "@angular/common/http/testing";
 import { TestBed } from "@angular/core/testing";
 import { environment } from "@environment";
 import { ReferenceService } from "./reference.service";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("ReferenceService", () => {
   let service: ReferenceService;
@@ -12,8 +10,9 @@ describe("ReferenceService", () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule]
-    });
+    imports: [],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
     service = TestBed.inject(ReferenceService);
     http = TestBed.inject(HttpTestingController);
   });

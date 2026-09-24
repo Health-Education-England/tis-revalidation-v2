@@ -38,12 +38,7 @@ import {
   UploadSuccess
 } from "./concern.actions";
 import { Observable, forkJoin } from "rxjs";
-import {
-  HttpEvent,
-  HttpProgressEvent,
-  HttpEventType,
-  HttpResponse
-} from "@angular/common/http";
+import { HttpEvent, HttpProgressEvent, HttpEventType, HttpResponse } from "@angular/common/http";
 
 export class ConcernStateModel {
   public employers?: IEntity[];
@@ -391,7 +386,10 @@ export class ConcernState {
   }
 
   @Action(DeleteFileSuccess)
-  deleteFileSuccess(action: DeleteFileSuccess) {
+  deleteFileSuccess(
+    _ctx: StateContext<ConcernStateModel>,
+    action: DeleteFileSuccess
+  ) {
     this.snackBarService.openSnackBar(`${action.fileName} has been deleted`);
   }
 }

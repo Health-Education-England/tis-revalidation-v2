@@ -10,10 +10,8 @@ import {
 } from "./details-side-nav.actions";
 import { environment } from "@environment";
 import { detailsSideNavResponse } from "src/app/recommendation/mock-data/recommendation-spec-data";
-import {
-  HttpTestingController,
-  HttpClientTestingModule
-} from "@angular/common/http/testing";
+import { HttpTestingController, provideHttpClientTesting } from "@angular/common/http/testing";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("DetailsSideNav actions", () => {
   let store: Store;
@@ -21,11 +19,9 @@ describe("DetailsSideNav actions", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        NgxsModule.forRoot([DetailsSideNavState])
-      ]
-    }).compileComponents();
+    imports: [NgxsModule.forRoot([DetailsSideNavState])],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+}).compileComponents();
     store = TestBed.inject(Store);
     httpMock = TestBed.inject(HttpTestingController);
   }));

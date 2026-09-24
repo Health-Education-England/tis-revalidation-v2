@@ -15,7 +15,7 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:application",
+          "builder": "@angular/build:application",
           "options": {
             "stylePreprocessorOptions": {
               "includePaths": ["./node_modules", "."]
@@ -85,7 +85,8 @@
               "cookie"
             ],
             "outputPath": {
-              "base": "dist/revalidation"
+              "base": "dist/revalidation",
+              "browser": ""
             },
             "index": "src/index.html",
             "polyfills": ["src/polyfills.ts"],

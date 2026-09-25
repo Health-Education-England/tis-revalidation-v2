@@ -16,7 +16,7 @@ export class NavBarComponent implements OnInit {
   ) {}
 
   public queryParams$: Observable<Params> = this.store.select(
-    (state) => state[this.recordsService.stateName].queryParams
+    (state) => state[this.recordsService.stateName]?.queryParams
   );
   navLinks: INavLink[] = [];
   summaryRoute: string;

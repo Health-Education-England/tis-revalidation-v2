@@ -1,5 +1,5 @@
-@import "nhsuk-frontend/packages/core/settings/colours";
-@import "../../../../../scss/material/variables";
+@use "nhsuk-frontend/packages/core/settings/colours" as *;
+@use "../../../../../scss/material/variables" as *;
 
 // remove ng-deep if encapsulation is set to none
 ::ng-deep {

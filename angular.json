@@ -18,7 +18,10 @@
           "builder": "@angular/build:application",
           "options": {
             "stylePreprocessorOptions": {
-              "includePaths": ["./node_modules", "."]
+              "includePaths": ["./node_modules", "."],
+              "sass": {
+                "silenceDeprecations": ["global-builtin"]
+              }
             },
             "allowedCommonJsDependencies": [
               "@aws-amplify/auth",

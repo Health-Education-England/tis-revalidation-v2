@@ -1,6 +1,6 @@
-@import "nhsuk-frontend/packages/core/settings/globals";
-@import "nhsuk-frontend/packages/core/settings/colours";
-@import "../../../../scss/material/variables";
+@use "nhsuk-frontend/packages/core/settings/globals" as *;
+@use "nhsuk-frontend/packages/core/settings/colours" as *;
+@use "../../../../scss/material/variables" as *;
 
 .mat-toolbar-row,
 .mat-toolbar-single-row {

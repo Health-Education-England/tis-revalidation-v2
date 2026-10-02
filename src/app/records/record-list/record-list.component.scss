@@ -1,5 +1,6 @@
-@import "../../../../node_modules/nhsuk-frontend/packages/core/settings/colours";
-@import "../../../scss/utilities/spacing-helpers";
+@use "../../../../node_modules/nhsuk-frontend/packages/core/settings/colours"
+  as *;
+@use "../../../scss/utilities/spacing-helpers" as *;
 
 .is-under-notice td:first-child {
   padding-left: 20px;

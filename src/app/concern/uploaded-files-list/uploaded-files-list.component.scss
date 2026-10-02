@@ -1,4 +1,4 @@
-@import "src/scss/utilities/mixins";
+@use "src/scss/utilities/mixins" as *;
 
 .mat-mdc-list-item-icon {
   @include subtle-color-and-hover();

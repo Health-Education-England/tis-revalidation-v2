@@ -16,8 +16,9 @@ import { AddToAllocateList } from "../state/admins.actions";
 import { AdminsState } from "../state/admins.state";
 
 @Component({
-  selector: "app-allocate-admin-autocomplete",
-  templateUrl: "./allocate-admin-autocomplete.component.html"
+    selector: "app-allocate-admin-autocomplete",
+    templateUrl: "./allocate-admin-autocomplete.component.html",
+    standalone: false
 })
 export class AllocateAdminAutocompleteComponent implements OnInit {
   @Input() public gmcNumber: number;

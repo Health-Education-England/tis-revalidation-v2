@@ -10,8 +10,9 @@ import { RecordsService } from "src/app/records/services/records.service";
 import { Router } from "@angular/router";
 import { EXCEPTIONSLOG_COLUMN_DATA } from "../constants";
 @Component({
-  selector: "app-exceptions-log",
-  templateUrl: "./exceptions-log.component.html"
+    selector: "app-exceptions-log",
+    templateUrl: "./exceptions-log.component.html",
+    standalone: false
 })
 export class ExceptionsLogComponent implements OnInit {
   constructor(

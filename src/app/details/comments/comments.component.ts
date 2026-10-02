@@ -5,9 +5,10 @@ import { MatCheckboxChange } from "@angular/material/checkbox";
 import { MatDialogRef, MatDialog } from "@angular/material/dialog";
 
 @Component({
-  selector: "app-comments",
-  templateUrl: "./comments.component.html",
-  styleUrls: ["./comments.component.scss"]
+    selector: "app-comments",
+    templateUrl: "./comments.component.html",
+    styleUrls: ["./comments.component.scss"],
+    standalone: false
 })
 export class CommentsComponent implements OnInit {
   public form: UntypedFormGroup;
@@ -75,15 +76,16 @@ export class CommentsComponent implements OnInit {
   }
 }
 @Component({
-  selector: "app-delete-comments-dialog",
-  template: `<h1 mat-dialog-title>Delete comments</h1>
+    selector: "app-delete-comments-dialog",
+    template: `<h1 mat-dialog-title>Delete comments</h1>
     <div mat-dialog-content>
       <p>Please confirm you would like to delete comment(s)?</p>
     </div>
     <div mat-dialog-actions>
       <button mat-button mat-dialog-close>Cancel</button>
       <button mat-button mat-dialog-close="true" cdkFocusInitial>Yes</button>
-    </div>`
+    </div>`,
+    standalone: false
 })
 export class DeleteCommentDialogueComponent {
   constructor(public dialogRef: MatDialogRef<DeleteCommentDialogueComponent>) {}

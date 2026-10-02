@@ -1,4 +1,4 @@
-@import "../../../scss/material/variables";
+@use "../../../scss/material/variables" as *;
 
 $main-navbar-height: 64px;
 $child-navbar-height: 48px;

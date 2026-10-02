@@ -8,9 +8,10 @@ import { SnackBarService } from "src/app/shared/services/snack-bar/snack-bar.ser
 import { IAllocateAdmin } from "../admins.interfaces";
 
 @Component({
-  selector: "app-allocate-admin-actions",
-  templateUrl: "./allocate-admin-actions.component.html",
-  styleUrls: ["./allocate-admin-actions.component.scss"]
+    selector: "app-allocate-admin-actions",
+    templateUrl: "./allocate-admin-actions.component.html",
+    styleUrls: ["./allocate-admin-actions.component.scss"],
+    standalone: false
 })
 export class AllocateAdminActionsComponent {
   public enableAllocateAdmin$: Observable<boolean> = this.store.select(

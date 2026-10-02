@@ -16,9 +16,10 @@ import { Upload } from "../state/concern.actions";
 import { take, filter } from "rxjs/operators";
 
 @Component({
-  selector: "app-file-uploader",
-  templateUrl: "./file-uploader.component.html",
-  styleUrls: ["./file-uploader.component.scss"]
+    selector: "app-file-uploader",
+    templateUrl: "./file-uploader.component.html",
+    styleUrls: ["./file-uploader.component.scss"],
+    standalone: false
 })
 export class FileUploaderComponent implements OnInit, OnDestroy {
   public acceptedFileTypes: string[] = [

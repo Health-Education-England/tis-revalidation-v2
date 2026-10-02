@@ -1,5 +1,5 @@
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
-import { NgModule, APP_INITIALIZER, ErrorHandler } from "@angular/core";
+import { NgModule, ErrorHandler, inject, provideAppInitializer } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import {
@@ -48,12 +48,10 @@ import { environment } from "@environment";
         AuthService,
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
-        {
-            provide: APP_INITIALIZER,
-            useFactory: initializeApplication,
-            multi: true,
-            deps: [AuthService, Router]
-        },
+        provideAppInitializer(() => {
+        const initializerFn = (initializeApplication)(inject(AuthService), inject(Router));
+        return initializerFn();
+      }),
         { provide: ErrorHandler, useFactory: errorHandlerFactory },
         { provide: SwRegistrationOptions, useFactory: swRegistrationOptionsFactory },
         provideHttpClient(withInterceptorsFromDi())

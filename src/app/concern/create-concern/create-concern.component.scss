@@ -1,4 +1,4 @@
-@import "../../../scss/material/variables";
+@use "../../../scss/material/variables" as *;
 
 .concern-stepper {
   .mat-horizontal-content-container {

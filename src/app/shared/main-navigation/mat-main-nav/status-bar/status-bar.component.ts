@@ -3,9 +3,10 @@ import { environment } from "@environment";
 import { AuthService } from "src/app/core/auth/auth.service";
 
 @Component({
-  selector: "app-status-bar",
-  templateUrl: "./status-bar.component.html",
-  styleUrls: ["./status-bar.component.scss"]
+    selector: "app-status-bar",
+    templateUrl: "./status-bar.component.html",
+    styleUrls: ["./status-bar.component.scss"],
+    standalone: false
 })
 export class StatusBarComponent implements OnInit {
   serviceSeverity: Severity;

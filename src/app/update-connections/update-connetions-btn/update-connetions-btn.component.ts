@@ -4,9 +4,10 @@ import { Observable } from "rxjs";
 import { UpdateConnectionsService } from "../services/update-connections.service";
 
 @Component({
-  selector: "app-update-connetions-btn",
-  templateUrl: "./update-connetions-btn.component.html",
-  styleUrls: ["./update-connections-btn.component.scss"]
+    selector: "app-update-connetions-btn",
+    templateUrl: "./update-connetions-btn.component.html",
+    styleUrls: ["./update-connections-btn.component.scss"],
+    standalone: false
 })
 export class UpdateConnetionsBtnComponent {
   public enableUpdateConnections$: Observable<boolean> = this.store.select(

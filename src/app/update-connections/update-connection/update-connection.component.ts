@@ -15,9 +15,10 @@ import { Router } from "@angular/router";
 import { ReferenceState } from "src/app/reference/state/reference.state";
 
 @Component({
-  selector: "app-update-connection",
-  templateUrl: "./update-connection.component.html",
-  styleUrls: ["./update-connection.component.scss"]
+    selector: "app-update-connection",
+    templateUrl: "./update-connection.component.html",
+    styleUrls: ["./update-connection.component.scss"],
+    standalone: false
 })
 export class UpdateConnectionComponent implements OnInit {
   @Input() public currentDoctorDbcCode: string;

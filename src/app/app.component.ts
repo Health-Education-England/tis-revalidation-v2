@@ -6,8 +6,9 @@ import { zip, of } from "rxjs";
 import { filter, mergeMap } from "rxjs/operators";
 import { environment } from "@environment";
 @Component({
-  selector: "app-root",
-  templateUrl: "./app.component.html"
+    selector: "app-root",
+    templateUrl: "./app.component.html",
+    standalone: false
 })
 export class AppComponent implements OnInit {
   @HostBinding("attr.app-version") appVersionAttr = environment.appVersion;

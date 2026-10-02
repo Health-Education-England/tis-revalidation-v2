@@ -19,8 +19,9 @@ import { StepperSelectionEvent } from "@angular/cdk/stepper";
 import { Router, ActivatedRoute } from "@angular/router";
 
 @Component({
-  selector: "app-upload-documents",
-  templateUrl: "./upload-documents.component.html"
+    selector: "app-upload-documents",
+    templateUrl: "./upload-documents.component.html",
+    standalone: false
 })
 export class UploadDocumentsComponent implements OnDestroy, AfterViewInit {
   @Input() stepper: MatStepper;

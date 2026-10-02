@@ -1,5 +1,4 @@
 // Settings
-@import "colours";
-@import "globals";
-@import "fonts";
-
+@forward "colours";
+@forward "globals";
+@forward "fonts";

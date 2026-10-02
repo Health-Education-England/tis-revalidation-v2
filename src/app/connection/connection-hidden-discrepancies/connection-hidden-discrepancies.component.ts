@@ -6,8 +6,9 @@ import {
 import { environment } from "@environment";
 
 @Component({
-  selector: "app-connection-hidden-discrepancies",
-  templateUrl: "./connection-hidden-discrepancies.component.html"
+    selector: "app-connection-hidden-discrepancies",
+    templateUrl: "./connection-hidden-discrepancies.component.html",
+    standalone: false
 })
 export class ConnectionHiddenDiscrepanciesComponent {
   @Input() hiddenDiscrepancies: IHiddenDiscrepancy[];

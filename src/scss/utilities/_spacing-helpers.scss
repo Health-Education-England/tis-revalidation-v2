@@ -1,3 +1,5 @@
+@use "sass:map";
+
 // margin and padding values array
 $space-values: (0, 3, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50) !default;
 
@@ -30,15 +32,15 @@ $space-prefixes: (
 @mixin mat-table-columns($columns) {
   .mat-column- {
     @each $colName, $props in $columns {
-      $width: map-get($props, "width");
+      $width: map.get($props, "width");
 
       &#{$colName} {
         &.fixed {
           flex: 0 0 $width;
           min-width: $width;
         }
-        @if map-has-key($props, "color") {
-          color: map-get($props, "color");
+        @if map.has-key($props, "color") {
+          color: map.get($props, "color");
         }
       }
     }

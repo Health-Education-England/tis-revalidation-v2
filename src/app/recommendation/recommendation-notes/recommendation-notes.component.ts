@@ -6,9 +6,10 @@ import { RecommendationNotesState } from "../state/recommendation-notes.state";
 import { Observable } from "rxjs";
 
 @Component({
-  selector: "app-recommendation-notes",
-  templateUrl: "./recommendation-notes.component.html",
-  styleUrls: ["./recommendation-notes.component.scss"]
+    selector: "app-recommendation-notes",
+    templateUrl: "./recommendation-notes.component.html",
+    styleUrls: ["./recommendation-notes.component.scss"],
+    standalone: false
 })
 export class RecommendationNotesComponent implements OnInit {
   @Select(RecommendationNotesState.recommendationNotes)

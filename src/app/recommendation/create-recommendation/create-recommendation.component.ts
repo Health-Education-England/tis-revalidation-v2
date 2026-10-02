@@ -25,9 +25,10 @@ import {
 } from "src/app/recommendations/constants";
 
 @Component({
-  selector: "app-create-recommendation",
-  templateUrl: "./create-recommendation.component.html",
-  styleUrls: ["./create-recommendation.component.scss"]
+    selector: "app-create-recommendation",
+    templateUrl: "./create-recommendation.component.html",
+    styleUrls: ["./create-recommendation.component.scss"],
+    standalone: false
 })
 export class CreateRecommendationComponent implements OnInit, OnDestroy {
   @Select(RecommendationHistoryState.deferralReasons)

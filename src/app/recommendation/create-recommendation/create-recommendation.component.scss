@@ -1,4 +1,4 @@
-@import "../../../scss/material/variables";
+@use "../../../scss/material/variables" as *;
 
 :host {
   display: block;

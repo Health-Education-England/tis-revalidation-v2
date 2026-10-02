@@ -1,4 +1,4 @@
-@import "../../../node_modules/nhsuk-frontend/packages/core/settings/colours";
+@use "../../../node_modules/nhsuk-frontend/packages/core/settings/colours" as *;
 
 tr.detail-row.mat-mdc-row {
   height: 0;

@@ -1,4 +1,4 @@
-@import "../../scss/utilities/spacing-helpers";
+@use "../../scss/utilities/spacing-helpers" as *;
 
 @include mat-table-columns(
   (

@@ -4,8 +4,9 @@ import { Observable } from "rxjs";
 import { RecordsService } from "../../records/services/records.service";
 
 @Component({
-  selector: "app-allocate-admin-btn",
-  templateUrl: "./allocate-admin-btn.component.html"
+    selector: "app-allocate-admin-btn",
+    templateUrl: "./allocate-admin-btn.component.html",
+    standalone: false
 })
 export class AllocateAdminBtnComponent {
   public enableAllocateAdmin$: Observable<boolean> = this.store.select(

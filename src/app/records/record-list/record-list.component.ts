@@ -12,9 +12,10 @@ import { RecordsService } from "../services/records.service";
 import { IAdmin } from "src/app/admins/admins.interfaces";
 
 @Component({
-  selector: "app-record-list",
-  templateUrl: "./record-list.component.html",
-  styleUrls: ["./record-list.component.scss"]
+    selector: "app-record-list",
+    templateUrl: "./record-list.component.html",
+    styleUrls: ["./record-list.component.scss"],
+    standalone: false
 })
 export class RecordListComponent implements OnInit, OnDestroy {
   public dateColumns: string[] = this.recordsService.dateColumns;

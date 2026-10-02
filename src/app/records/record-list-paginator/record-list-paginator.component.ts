@@ -7,8 +7,9 @@ import { UpdateConnectionsService } from "src/app/update-connections/services/up
 import { RecordsService } from "../services/records.service";
 
 @Component({
-  selector: "app-record-list-paginator",
-  templateUrl: "./record-list-paginator.component.html"
+    selector: "app-record-list-paginator",
+    templateUrl: "./record-list-paginator.component.html",
+    standalone: false
 })
 export class RecordListPaginatorComponent {
   public totalResults$: Observable<number> = this.store.select(

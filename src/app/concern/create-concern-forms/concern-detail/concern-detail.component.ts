@@ -17,8 +17,9 @@ import { StepperSelectionEvent } from "@angular/cdk/stepper";
 import { ActivatedRoute } from "@angular/router";
 
 @Component({
-  selector: "app-concern-detail",
-  templateUrl: "./concern-detail.component.html"
+    selector: "app-concern-detail",
+    templateUrl: "./concern-detail.component.html",
+    standalone: false
 })
 export class ConcernDetailComponent implements OnDestroy, AfterViewInit {
   formGroup: UntypedFormGroup;

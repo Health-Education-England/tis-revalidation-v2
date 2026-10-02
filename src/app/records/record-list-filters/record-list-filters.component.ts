@@ -7,8 +7,9 @@ import { IFilter, ITotalCounts } from "../records.interfaces";
 import { RecordsService } from "../services/records.service";
 
 @Component({
-  selector: "app-record-list-filters",
-  templateUrl: "./record-list-filters.component.html"
+    selector: "app-record-list-filters",
+    templateUrl: "./record-list-filters.component.html",
+    standalone: false
 })
 export class RecordListFiltersComponent {
   public totalCounts$: Observable<ITotalCounts> = this.store.select(

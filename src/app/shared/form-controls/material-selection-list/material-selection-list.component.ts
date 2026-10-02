@@ -12,15 +12,16 @@ import {
 import { MatSelectionListChange } from "@angular/material/list";
 
 @Component({
-  selector: "app-material-selection-list",
-  templateUrl: "./material-selection-list.component.html",
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      multi: true,
-      useExisting: MaterialSelectionListComponent
-    }
-  ]
+    selector: "app-material-selection-list",
+    templateUrl: "./material-selection-list.component.html",
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            multi: true,
+            useExisting: MaterialSelectionListComponent
+        }
+    ],
+    standalone: false
 })
 export class MaterialSelectionListComponent implements ControlValueAccessor {
   constructor(readonly formBuilder: FormBuilder) {}

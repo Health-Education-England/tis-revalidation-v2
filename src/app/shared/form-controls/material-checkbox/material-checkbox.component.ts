@@ -8,15 +8,16 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { MatCheckboxChange } from "@angular/material/checkbox";
 
 @Component({
-  selector: "app-material-checkbox",
-  templateUrl: "./material-checkbox.component.html",
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      multi: true,
-      useExisting: MaterialCheckboxComponent
-    }
-  ]
+    selector: "app-material-checkbox",
+    templateUrl: "./material-checkbox.component.html",
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            multi: true,
+            useExisting: MaterialCheckboxComponent
+        }
+    ],
+    standalone: false
 })
 export class MaterialCheckboxComponent implements ControlValueAccessor {
   @Input() controlProperties!: FormControlBase;

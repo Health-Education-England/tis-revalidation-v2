@@ -7,9 +7,10 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { Router, NavigationEnd } from "@angular/router";
 
 @Component({
-  selector: "app-mat-main-nav",
-  templateUrl: "./mat-main-nav.component.html",
-  styleUrls: ["./mat-main-nav.component.scss"]
+    selector: "app-mat-main-nav",
+    templateUrl: "./mat-main-nav.component.html",
+    styleUrls: ["./mat-main-nav.component.scss"],
+    standalone: false
 })
 export class MatMainNavComponent implements OnInit, OnDestroy {
   private subscription: Subscription;

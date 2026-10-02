@@ -11,7 +11,10 @@ import { MatCardModule } from "@angular/material/card";
 import { Pipe, PipeTransform } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 
-@Pipe({ name: "formatDesignatedBody" })
+@Pipe({
+    name: "formatDesignatedBody",
+    standalone: false
+})
 class MockFormatDesignatedBodyPipe implements PipeTransform {
   transform(value: string): string {
     return value;

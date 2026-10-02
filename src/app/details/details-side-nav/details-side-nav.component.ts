@@ -9,9 +9,10 @@ import { IDetailsSideNav } from "./details-side-nav.interfaces";
 import { DetailsSideNavState } from "./state/details-side-nav.state";
 
 @Component({
-  selector: "app-details-side-nav",
-  templateUrl: "./details-side-nav.component.html",
-  styleUrls: ["./details-side-nav.component.scss"]
+    selector: "app-details-side-nav",
+    templateUrl: "./details-side-nav.component.html",
+    styleUrls: ["./details-side-nav.component.scss"],
+    standalone: false
 })
 export class DetailsSideNavComponent {
   @Select(DetailsSideNavState.traineeDetails)

@@ -7,8 +7,9 @@ import { MatBottomSheet } from "@angular/material/bottom-sheet";
 import { RecommendationNotesComponent } from "src/app/recommendation/recommendation-notes/recommendation-notes.component";
 
 @Component({
-  selector: "app-notes-tool-bar",
-  templateUrl: "./notes-tool-bar.component.html"
+    selector: "app-notes-tool-bar",
+    templateUrl: "./notes-tool-bar.component.html",
+    standalone: false
 })
 export class NotesToolBarComponent {
   @Select(RecommendationNotesState.recommendationNotes)

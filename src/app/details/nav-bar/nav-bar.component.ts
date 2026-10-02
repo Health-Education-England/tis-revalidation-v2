@@ -5,8 +5,9 @@ import { RecordsService } from "src/app/records/services/records.service";
 import { Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 @Component({
-  selector: "app-nav-bar",
-  templateUrl: "./nav-bar.component.html"
+    selector: "app-nav-bar",
+    templateUrl: "./nav-bar.component.html",
+    standalone: false
 })
 export class NavBarComponent implements OnInit {
   constructor(

@@ -10,9 +10,10 @@ import { stateName } from "../records.interfaces";
 import { RecordsService } from "../services/records.service";
 
 @Component({
-  selector: "app-record-search",
-  templateUrl: "./record-search.component.html",
-  styleUrls: ["./record-search.component.scss"]
+    selector: "app-record-search",
+    templateUrl: "./record-search.component.html",
+    styleUrls: ["./record-search.component.scss"],
+    standalone: false
 })
 export class RecordSearchComponent implements OnInit, OnDestroy {
   public searchQuery$: Observable<string> = this.store.select(

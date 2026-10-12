@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from "@angular/core";
 
 @Pipe({
-  name: "removeWhitespace"
+    name: "removeWhitespace",
+    standalone: false
 })
 export class RemoveWhitespacePipe implements PipeTransform {
   transform(value: string, ...args: any): string {

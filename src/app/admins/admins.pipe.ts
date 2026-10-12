@@ -4,7 +4,8 @@ import { IAdmin } from "./admins.interfaces";
 import { AdminsState } from "./state/admins.state";
 
 @Pipe({
-  name: "AdminName"
+    name: "AdminName",
+    standalone: false
 })
 export class AdminsPipe implements PipeTransform {
   private admins: IAdmin[] = this.store.selectSnapshot(AdminsState.items);

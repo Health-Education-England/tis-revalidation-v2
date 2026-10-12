@@ -1,5 +1,5 @@
-@import "../../../scss/utilities/spacing-helpers";
-@import "../../../scss/material/variables";
+@use "../../../scss/utilities/spacing-helpers" as *;
+@use "../../../scss/material/variables" as *;
 
 :host {
   display: block;

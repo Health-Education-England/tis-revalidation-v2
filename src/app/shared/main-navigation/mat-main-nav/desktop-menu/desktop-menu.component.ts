@@ -5,9 +5,10 @@ import { environment } from "@environment";
 import { UtilitiesService } from "src/app/shared/services/utilities/utilities.service";
 
 @Component({
-  selector: "app-desktop-menu",
-  templateUrl: "./desktop-menu.component.html",
-  styleUrls: ["./desktop-menu.component.scss"]
+    selector: "app-desktop-menu",
+    templateUrl: "./desktop-menu.component.html",
+    styleUrls: ["./desktop-menu.component.scss"],
+    standalone: false
 })
 export class DesktopMenuComponent {
   menuItems: IMenuItem[];

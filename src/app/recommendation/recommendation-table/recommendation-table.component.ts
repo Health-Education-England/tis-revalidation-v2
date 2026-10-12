@@ -19,22 +19,20 @@ import { Observable } from "rxjs";
 import { AuthService } from "src/app/core/auth/auth.service";
 
 @Component({
-  selector: "app-recommendation-table",
-  templateUrl: "./recommendation-table.component.html",
-  styleUrls: [
-    "./recommendation-table.component.scss",
-    "../../details/details.table.scss"
-  ],
-  animations: [
-    trigger("detailExpand", [
-      state("collapsed", style({ height: "0px", minHeight: "0" })),
-      state("expanded", style({ height: "*" })),
-      transition(
-        "expanded <=> collapsed",
-        animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)")
-      )
-    ])
-  ]
+    selector: "app-recommendation-table",
+    templateUrl: "./recommendation-table.component.html",
+    styleUrls: [
+        "./recommendation-table.component.scss",
+        "../../details/details.table.scss"
+    ],
+    animations: [
+        trigger("detailExpand", [
+            state("collapsed", style({ height: "0px", minHeight: "0" })),
+            state("expanded", style({ height: "*" })),
+            transition("expanded <=> collapsed", animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)"))
+        ])
+    ],
+    standalone: false
 })
 export class RecommendationTableComponent {
   columnsToDisplay = [

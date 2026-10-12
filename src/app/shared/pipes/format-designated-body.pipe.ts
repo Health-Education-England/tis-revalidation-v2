@@ -6,7 +6,8 @@ import { ReferenceState } from "src/app/reference/state/reference.state";
 
 export type dbcFormat = "dbc" | "abbr" | "name";
 @Pipe({
-  name: "formatDesignatedBody"
+    name: "formatDesignatedBody",
+    standalone: false
 })
 export class FormatDesignatedBodyPipe implements PipeTransform {
   constructor(private store: Store) {}

@@ -6,10 +6,11 @@ import { Select } from "@ngxs/store";
 import { NotesDrawerState } from "../notes-drawer/state/notes-drawer.state";
 
 @Component({
-  selector: "app-record-details",
-  templateUrl: "./record-details.component.html",
-  styleUrls: ["./record-details.component.scss"],
-  encapsulation: ViewEncapsulation.None
+    selector: "app-record-details",
+    templateUrl: "./record-details.component.html",
+    styleUrls: ["./record-details.component.scss"],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class RecordDetailsComponent {
   @Select(NotesDrawerState.drawerStatus) isOpen$: Observable<boolean>;

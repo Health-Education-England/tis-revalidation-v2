@@ -10,7 +10,8 @@ import { MaterialModule } from "../../shared/material/material.module";
 import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 @Component({
-  template: `blank`
+    template: `blank`,
+    standalone: false
 })
 export class BlankComponent {}
 

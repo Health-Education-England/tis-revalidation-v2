@@ -19,8 +19,9 @@ import { Get } from "../state/recommendation-history.actions";
 import { RecommendationHistoryState } from "../state/recommendation-history.state";
 
 @Component({
-  selector: "app-confirm-recommendation",
-  templateUrl: "./confirm-recommendation.component.html"
+    selector: "app-confirm-recommendation",
+    templateUrl: "./confirm-recommendation.component.html",
+    standalone: false
 })
 export class ConfirmRecommendationComponent implements OnInit {
   public form: UntypedFormGroup;

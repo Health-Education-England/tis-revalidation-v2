@@ -12,9 +12,10 @@ import { AddNote } from "../details-side-nav/state/details-side-nav.actions";
 import { ActivatedRoute } from "@angular/router";
 
 @Component({
-  selector: "app-notes-drawer",
-  templateUrl: "./notes-drawer.component.html",
-  styleUrls: ["./notes-drawer.component.scss"]
+    selector: "app-notes-drawer",
+    templateUrl: "./notes-drawer.component.html",
+    styleUrls: ["./notes-drawer.component.scss"],
+    standalone: false
 })
 export class NotesDrawerComponent implements OnInit {
   showAddNote: boolean;

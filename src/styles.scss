@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import "./scss/nhsuk";
-@import "./scss/material";
-@import "./scss/utilities";
-@import "./scss/material/overrides";
+@use "./scss/nhsuk" as *;
+@use "./scss/material" as *;
+@use "./scss/utilities" as *;
+@use "./scss/material/overrides" as *;

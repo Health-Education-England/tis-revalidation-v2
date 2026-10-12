@@ -18,9 +18,9 @@ import { ConnectionsFilterType } from "./connections.interfaces";
 import { AuthService } from "../core/auth/auth.service";
 
 @Component({
-  selector: "app-connections",
-  template:
-    "<app-records (updateConnections)='updateConnections($event)' [loading]='loading'> </app-records>"
+    selector: "app-connections",
+    template: "<app-records (updateConnections)='updateConnections($event)' [loading]='loading'> </app-records>",
+    standalone: false
 })
 export class ConnectionsComponent implements OnDestroy {
   componentSubscription: Subscription;

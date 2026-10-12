@@ -13,15 +13,16 @@ import {
 } from "@angular/forms";
 
 @Component({
-  selector: "app-material-date-range-picker",
-  templateUrl: "./material-date-range-picker.component.html",
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      multi: true,
-      useExisting: MaterialDateRangePickerComponent
-    }
-  ]
+    selector: "app-material-date-range-picker",
+    templateUrl: "./material-date-range-picker.component.html",
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            multi: true,
+            useExisting: MaterialDateRangePickerComponent
+        }
+    ],
+    standalone: false
 })
 export class MaterialDateRangePickerComponent
   implements OnInit, ControlValueAccessor

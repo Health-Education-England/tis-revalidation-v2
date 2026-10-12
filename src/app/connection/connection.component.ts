@@ -35,8 +35,9 @@ import {
 import { Router } from "@angular/router";
 
 @Component({
-  selector: "app-connection",
-  templateUrl: "./connection.component.html"
+    selector: "app-connection",
+    templateUrl: "./connection.component.html",
+    standalone: false
 })
 export class ConnectionComponent implements OnInit, OnDestroy {
   @Select(ConnectionState.connectionHistory)

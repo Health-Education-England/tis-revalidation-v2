@@ -11,9 +11,10 @@ import { Store } from "@ngxs/store";
 import { EditNote } from "../../details-side-nav/state/details-side-nav.actions";
 
 @Component({
-  selector: "app-note-card",
-  templateUrl: "./note-card.component.html",
-  styleUrls: ["./note-card.component.scss"]
+    selector: "app-note-card",
+    templateUrl: "./note-card.component.html",
+    styleUrls: ["./note-card.component.scss"],
+    standalone: false
 })
 export class NoteCardComponent {
   @Input() note: INote;

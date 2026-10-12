@@ -9,8 +9,9 @@ import { IDetailsSideNav } from "../details-side-nav/details-side-nav.interfaces
 import { NotesDrawerState } from "../notes-drawer/state/notes-drawer.state";
 
 @Component({
-  selector: "app-tool-bar",
-  templateUrl: "./tool-bar.component.html"
+    selector: "app-tool-bar",
+    templateUrl: "./tool-bar.component.html",
+    standalone: false
 })
 export class ToolBarComponent implements OnInit {
   @Select(NotesDrawerState.drawerStatus) isOpen$: Observable<boolean>;

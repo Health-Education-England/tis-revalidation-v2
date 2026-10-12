@@ -15,19 +15,17 @@ import { ConcernStatus, IConcernSummary } from "./concern.interfaces";
 import { ConcernState } from "./state/concern.state";
 
 @Component({
-  selector: "app-concern",
-  templateUrl: "./concern.component.html",
-  styleUrls: ["./concern.component.scss", "../details/details.table.scss"],
-  animations: [
-    trigger("detailExpand", [
-      state("collapsed", style({ height: "0px", minHeight: "0" })),
-      state("expanded", style({ height: "*" })),
-      transition(
-        "expanded <=> collapsed",
-        animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)")
-      )
-    ])
-  ]
+    selector: "app-concern",
+    templateUrl: "./concern.component.html",
+    styleUrls: ["./concern.component.scss", "../details/details.table.scss"],
+    animations: [
+        trigger("detailExpand", [
+            state("collapsed", style({ height: "0px", minHeight: "0" })),
+            state("expanded", style({ height: "*" })),
+            transition("expanded <=> collapsed", animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)"))
+        ])
+    ],
+    standalone: false
 })
 export class ConcernComponent {
   columnsToDisplay = [

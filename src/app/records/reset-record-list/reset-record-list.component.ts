@@ -6,8 +6,9 @@ import { UpdateConnectionsService } from "src/app/update-connections/services/up
 import { RecordsService } from "../services/records.service";
 
 @Component({
-  selector: "app-reset-record-list",
-  templateUrl: "./reset-record-list.component.html"
+    selector: "app-reset-record-list",
+    templateUrl: "./reset-record-list.component.html",
+    standalone: false
 })
 export class ResetRecordListComponent {
   public enableAllocateAdmin$: Observable<boolean> = this.store.select(

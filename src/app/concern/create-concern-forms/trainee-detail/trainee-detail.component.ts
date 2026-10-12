@@ -23,16 +23,17 @@ import { SetSelectedConcern } from "../../state/concern.actions";
 import { ConcernState } from "../../state/concern.state";
 
 @Component({
-  selector: "app-trainee-detail",
-  templateUrl: "./trainee-detail.component.html",
-  styleUrls: ["./trainee-detail.component.scss"],
-  providers: [
-    {
-      provide: STEPPER_GLOBAL_OPTIONS,
-      useValue: { showError: true }
-    }
-  ],
-  encapsulation: ViewEncapsulation.None
+    selector: "app-trainee-detail",
+    templateUrl: "./trainee-detail.component.html",
+    styleUrls: ["./trainee-detail.component.scss"],
+    providers: [
+        {
+            provide: STEPPER_GLOBAL_OPTIONS,
+            useValue: { showError: true }
+        }
+    ],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class TraineeDetailComponent implements OnDestroy, AfterViewInit {
   public formGroup: UntypedFormGroup;

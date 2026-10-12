@@ -9,9 +9,10 @@ import { IConcernSummary } from "../concern.interfaces";
 import { filter, take } from "rxjs/operators";
 
 @Component({
-  selector: "app-uploaded-files-list",
-  templateUrl: "./uploaded-files-list.component.html",
-  styleUrls: ["./uploaded-files-list.component.scss"]
+    selector: "app-uploaded-files-list",
+    templateUrl: "./uploaded-files-list.component.html",
+    styleUrls: ["./uploaded-files-list.component.scss"],
+    standalone: false
 })
 export class UploadedFilesListComponent implements OnInit {
   public dateFormat = environment.dateFormat;

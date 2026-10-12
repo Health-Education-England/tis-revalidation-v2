@@ -12,7 +12,8 @@ import { RecordsService } from "../records/services/records.service";
 import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 @Component({
-  template: `blank`
+    template: `blank`,
+    standalone: false
 })
 export class BlankComponent {}
 

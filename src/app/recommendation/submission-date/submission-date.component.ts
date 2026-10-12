@@ -5,9 +5,10 @@ import { Observable } from "rxjs";
 import { IRecommendationHistory } from "../recommendation-history.interface";
 import { UtilitiesService } from "../../shared/services/utilities/utilities.service";
 @Component({
-  selector: "app-submission-date",
-  templateUrl: "./submission-date.component.html",
-  styleUrls: ["./submission-date.component.scss"]
+    selector: "app-submission-date",
+    templateUrl: "./submission-date.component.html",
+    styleUrls: ["./submission-date.component.scss"],
+    standalone: false
 })
 export class SubmissionDateComponent implements OnInit {
   constructor(private utilsService: UtilitiesService) {}

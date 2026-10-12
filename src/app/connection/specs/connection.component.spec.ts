@@ -32,14 +32,20 @@ import {
   withInterceptorsFromDi
 } from "@angular/common/http";
 import { ReferenceState } from "src/app/reference/state/reference.state";
-@Pipe({ name: "formatDesignatedBody" })
+@Pipe({
+    name: "formatDesignatedBody",
+    standalone: false
+})
 class MockFormatDesignatedBodyPipe implements PipeTransform {
   transform(value: string): string {
     return value;
   }
 }
 
-@Pipe({ name: "AdminName" })
+@Pipe({
+    name: "AdminName",
+    standalone: false
+})
 class MockAdminNamePipe implements PipeTransform {
   transform(value: string): string {
     return value;

@@ -1,4 +1,4 @@
-@import "nhsuk-frontend/packages/core/settings/colours";
+@use "nhsuk-frontend/packages/core/settings/colours" as *;
 
 .mat-icon {
   &.severity-low {

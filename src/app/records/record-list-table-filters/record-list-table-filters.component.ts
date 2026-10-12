@@ -11,9 +11,10 @@ import { RecordsService } from "../services/records.service";
 import { UtilitiesService } from "src/app/shared/services/utilities/utilities.service";
 
 @Component({
-  selector: "app-record-list-table-filters",
-  templateUrl: "./record-list-table-filters.component.html",
-  styleUrls: ["./record-list-table-filters.component.scss"]
+    selector: "app-record-list-table-filters",
+    templateUrl: "./record-list-table-filters.component.html",
+    styleUrls: ["./record-list-table-filters.component.scss"],
+    standalone: false
 })
 export class RecordListTableFiltersComponent implements OnInit, OnDestroy {
   activeTableFilters: ITableFilters;

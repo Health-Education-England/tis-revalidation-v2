@@ -19,16 +19,17 @@ import {
 } from "../form-contol-base.model";
 import { AutocompleteService } from "./autocomplete.service";
 @Component({
-  selector: "app-material-autocomplete",
-  templateUrl: "./material-autocomplete.component.html",
-  styleUrls: ["./material-autocomplete.component.scss"],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      multi: true,
-      useExisting: MaterialAutocompleteComponent
-    }
-  ]
+    selector: "app-material-autocomplete",
+    templateUrl: "./material-autocomplete.component.html",
+    styleUrls: ["./material-autocomplete.component.scss"],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            multi: true,
+            useExisting: MaterialAutocompleteComponent
+        }
+    ],
+    standalone: false
 })
 export class MaterialAutocompleteComponent
   implements OnInit, ControlValueAccessor

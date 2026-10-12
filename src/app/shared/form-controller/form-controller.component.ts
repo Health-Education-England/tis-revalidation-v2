@@ -11,8 +11,9 @@ import { Store } from "@ngxs/store";
 import { RecordsService } from "src/app/records/services/records.service";
 
 @Component({
-  selector: "app-form-controller",
-  templateUrl: "./form-controller.component.html"
+    selector: "app-form-controller",
+    templateUrl: "./form-controller.component.html",
+    standalone: false
 })
 export class FormControllerComponent implements OnInit {
   constructor(

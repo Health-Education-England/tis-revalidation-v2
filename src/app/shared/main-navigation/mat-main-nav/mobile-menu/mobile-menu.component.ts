@@ -5,9 +5,10 @@ import { environment } from "@environment";
 import { UtilitiesService } from "src/app/shared/services/utilities/utilities.service";
 
 @Component({
-  selector: "app-mobile-menu",
-  templateUrl: "./mobile-menu.component.html",
-  styleUrls: ["./mobile-menu.component.scss"]
+    selector: "app-mobile-menu",
+    templateUrl: "./mobile-menu.component.html",
+    styleUrls: ["./mobile-menu.component.scss"],
+    standalone: false
 })
 export class MobileMenuComponent {
   menuItems: IMenuItem[];

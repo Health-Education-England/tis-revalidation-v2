@@ -4,8 +4,9 @@ import { Observable } from "rxjs";
 import { RecordsService } from "../services/records.service";
 
 @Component({
-  selector: "app-refresh-data-btn",
-  templateUrl: "./refresh-data-btn.component.html"
+    selector: "app-refresh-data-btn",
+    templateUrl: "./refresh-data-btn.component.html",
+    standalone: false
 })
 export class RefreshDataBtnComponent {
   public enableAllocateAdmin$: Observable<boolean> = this.store.select(

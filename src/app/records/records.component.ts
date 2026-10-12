@@ -13,9 +13,10 @@ import { RecordsService } from "./services/records.service";
 import { ConnectionsFilterType } from "../connections/connections.interfaces";
 
 @Component({
-  selector: "app-records",
-  templateUrl: "./records.component.html",
-  styleUrls: ["./records.component.scss"]
+    selector: "app-records",
+    templateUrl: "./records.component.html",
+    styleUrls: ["./records.component.scss"],
+    standalone: false
 })
 export class RecordsComponent implements OnInit, OnDestroy {
   @Output() updateConnections = new EventEmitter<any>();

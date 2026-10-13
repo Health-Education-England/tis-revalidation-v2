@@ -62,7 +62,7 @@ describe("Recommendations", () => {
 
         cy.get("[data-cy='selectionOption1-1RUZV1D']").should("exist");
         cy.get("[data-cy='selectionOption1-1RUZV1D']").click();
-        FilterRecords.submitForm();
+        FilterRecords.verifyFormSubmission();
         cy.get("td.cdk-column-designatedBody").each(($el) => {
           expect($el.text().trim()).to.equal("KSS");
         });
@@ -78,7 +78,7 @@ describe("Recommendations", () => {
           $el.click();
         });
 
-        FilterRecords.submitForm();
+        FilterRecords.verifyFormSubmission();
 
         cy.get("td.cdk-column-designatedBody").each(($el) => {
           expect($el.text().trim()).to.be.oneOf(
@@ -91,9 +91,12 @@ describe("Recommendations", () => {
         FilterRecords.initFilterPanel();
         FilterRecords.openDropdown(
           "[data-cy='formfield_programmeName']",
-          "Neurology KSS"
+          "Neurology KSS",
+          1
         );
         cy.get("[data-cy='selectionOption1-1RUZV1D']").click();
+        cy.wait(1000);
+
         cy.get("td.cdk-column-programmeName").each(($el) => {
           expect($el.text().trim()).to.equal("Neurology KSS");
         });
@@ -110,13 +113,13 @@ describe("Recommendations", () => {
         cy.get(".mat-mdc-paginator-range-label")
           .invoke("text")
           .then((paginatorText) => {
-            FilterRecords.submitForm();
+            FilterRecords.verifyFormSubmission();
             cy.get(".mat-mdc-paginator-range-label").should(
               "not.contain",
               paginatorText
             );
             cy.get("[data-cy='selectionOption1-1RUZV1D']").click();
-            FilterRecords.submitForm();
+            FilterRecords.verifyFormSubmission();
             cy.get(".mat-mdc-paginator-range-label").should(
               "contain",
               paginatorText
@@ -165,7 +168,7 @@ describe("Recommendations", () => {
         cy.get("[data-cy='selectionOptionApproved']").should("exist");
         cy.get("[data-cy='selectionOptionApproved']").click();
 
-        FilterRecords.submitForm();
+        FilterRecords.verifyFormSubmission();
         cy.get("td.cdk-column-gmcOutcome").each(($el) => {
           expect($el.text().trim()).to.equal("Approved");
         });
@@ -185,7 +188,7 @@ describe("Recommendations", () => {
           $el.click();
         });
 
-        FilterRecords.submitForm();
+        FilterRecords.verifyFormSubmission();
         cy.get("td.cdk-column-gmcOutcome").each(($el) => {
           expect($el.text().trim()).to.be.oneOf(selectedGmcStatus);
         });
@@ -220,7 +223,7 @@ describe("Recommendations", () => {
         cy.get("[data-cy='selectionOptionDRAFT']").should("exist");
         cy.get("[data-cy='selectionOptionDRAFT']").click();
 
-        FilterRecords.submitForm();
+        FilterRecords.verifyFormSubmission();
 
         cy.get("td.cdk-column-doctorStatus").each(($el) => {
           expect($el.text().trim()).to.equal("Draft");
@@ -239,7 +242,7 @@ describe("Recommendations", () => {
           $el.click();
         });
 
-        FilterRecords.submitForm();
+        FilterRecords.verifyFormSubmission();
         cy.get("td.cdk-column-doctorStatus").each(($el) => {
           expect($el.text().trim()).to.be.oneOf(
             selectedTisStatus.map((item) => item.label)
@@ -287,7 +290,8 @@ describe("Recommendations", () => {
         FilterRecords.initFilterPanel();
         FilterRecords.openDropdown(
           "[data-cy='formfield_programmeName']",
-          "General Practice - Bromley LDN"
+          "General Practice - Bromley LDN",
+          1
         );
         cy.get("td.cdk-column-programmeName").each(($el) => {
           expect($el.text().trim()).to.equal("General Practice - Bromley LDN");
@@ -295,11 +299,16 @@ describe("Recommendations", () => {
       });
       it("should reset summary table results when 'Clear fliters' button is clicked", () => {
         FilterRecords.initFilterPanel();
-        FilterRecords.openDropdown(
-          "[data-cy='formfield_programmeName']",
-          "General Practice - Bromley LDN"
-        );
-        FilterRecords.resetForm();
+        cy.get(".mat-mdc-paginator-range-label")
+          .invoke("text")
+          .then((paginatorText) => {
+            FilterRecords.openDropdown(
+              "[data-cy='formfield_programmeName']",
+              "General Practice - Bromley LDN",
+              0
+            );
+            FilterRecords.resetForm(paginatorText);
+          });
       });
     });
 
@@ -311,7 +320,7 @@ describe("Recommendations", () => {
 
       it("should display list containing matching options when the text 'Reval' is entered in 'TIS admin' field", () => {
         FilterRecords.initFilterPanel();
-        FilterRecords.openDropdown("[data-cy='formfield_admin']", "Reval", 0);
+        FilterRecords.openDropdown("[data-cy='formfield_admin']", "Reval");
         cy.get("mat-option").should("have.length.above", 0);
       });
 
@@ -328,7 +337,7 @@ describe("Recommendations", () => {
       it("should update summary table displaying trainees with matching TIS admin name only", () => {
         FilterRecords.initFilterPanel();
         FilterRecords.openDropdown("[data-cy='formfield_admin']", "Reval", 0);
-        FilterRecords.submitForm();
+        FilterRecords.verifyFormSubmission();
 
         cy.get("td.cdk-column-admin").each(($el) => {
           expect($el.text().trim()).to.equal("Reval EndToEndTester");
@@ -341,13 +350,14 @@ describe("Recommendations", () => {
         FilterRecords.initFilterPanel();
         FilterRecords.openDropdown(
           "[data-cy='formfield_programmeName']",
-          "General Practice - Bromley LDN"
+          "General Practice - Bromley LDN",
+          1
         );
-        FilterRecords.submitForm();
+        FilterRecords.verifyFormSubmission();
         cy.get(".mat-mdc-table tr:nth-child(2)").click();
         cy.get("app-nav-bar").should("exist");
         cy.get("#navLinkToList").should("exist").click();
-        FilterRecords.submitForm();
+        FilterRecords.verifyFormSubmission();
         cy.get("[data-cy='formfield_programmeName'] input").then(($el) => {
           expect($el.val()).to.contain("General");
         });

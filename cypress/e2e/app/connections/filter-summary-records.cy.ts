@@ -103,7 +103,8 @@ describe("Connections", () => {
         FilterRecords.initFilterPanel(path);
         FilterRecords.openDropdown(
           "[data-cy='formfield_programmeName']",
-          "General Practice - Bromley LDN"
+          "General Practice - Bromley LDN",
+          undefined
         );
         cy.get("mat-option")
           .first()
@@ -114,7 +115,8 @@ describe("Connections", () => {
         FilterRecords.initFilterPanel(path);
         FilterRecords.openDropdown(
           "[data-cy='formfield_programmeName']",
-          "General Practice - Bromley LDN"
+          "General Practice - Bromley LDN",
+          0
         );
         cy.get("td.cdk-column-programmeName").each(($el) => {
           expect($el.text().trim()).to.equal("General Practice - Bromley LDN");
@@ -123,11 +125,16 @@ describe("Connections", () => {
 
       it("should reset summary table results when 'Clear fliters' button is clicked", () => {
         FilterRecords.initFilterPanel(path);
-        FilterRecords.openDropdown(
-          "[data-cy='formfield_programmeName']",
-          "General Practice - Bromley LDN"
-        );
-        FilterRecords.resetForm();
+        cy.get(".mat-mdc-paginator-range-label")
+          .invoke("text")
+          .then((paginatorText) => {
+            FilterRecords.openDropdown(
+              "[data-cy='formfield_programmeName']",
+              "General Practice - Bromley LDN",
+              0
+            );
+            FilterRecords.resetForm(paginatorText);
+          });
       });
     });
 
@@ -139,21 +146,13 @@ describe("Connections", () => {
 
       it("should display list containing matching options when the text is entered in 'Updated by' field", () => {
         FilterRecords.initFilterPanel(path);
-        FilterRecords.openDropdown(
-          "[data-cy='formfield_updatedBy']",
-          "Reval",
-          0
-        );
+        FilterRecords.openDropdown("[data-cy='formfield_updatedBy']", "Reval");
         cy.get("mat-option").should("have.length", 1);
       });
 
       it("should display list where first item matches input text", () => {
         FilterRecords.initFilterPanel(path);
-        FilterRecords.openDropdown(
-          "[data-cy='formfield_updatedBy']",
-          "Reval",
-          0
-        );
+        FilterRecords.openDropdown("[data-cy='formfield_updatedBy']", "Reval");
         cy.get("mat-option").first().should("contain", "Reval");
       });
 

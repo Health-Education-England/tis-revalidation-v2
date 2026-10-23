@@ -1,5 +1,6 @@
+import { DOCUMENT } from '@angular/core';
 import { StripHtmlPipe } from "./strip-html.pipe";
-import { DOCUMENT } from "@angular/common";
+
 import { TestBed } from "@angular/core/testing";
 
 describe("StripHtmlPipe", () => {

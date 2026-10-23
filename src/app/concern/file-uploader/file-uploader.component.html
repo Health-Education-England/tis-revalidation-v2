@@ -1,45 +1,49 @@
 <!-- spinner  -->
-<div *ngIf="uploadFileInProgress$ | async; else notLoading">
-  <div class="d-grid grid-container-2-col p-5 mb-20">
-    <mat-card
-      appearance="outlined"
-      *ngFor="let fileInProgress of filesInUploadProgress$ | async"
-      class="file upload highlight"
-    >
-      <mat-card-title>
-        {{ fileInProgress.file.name }}
-      </mat-card-title>
-      <mat-card-subtitle>
-        <div class="d-flex justify-content-between align-items-center">
-          <div>{{ fileInProgress.file.size | fileBytes }}</div>
-          <div class="d-flex justify-content-between align-items-center">
-            <span>
-              {{ fileInProgress.progress / 100 | percent }}
-            </span>
-            <mat-icon
-              *ngIf="!concernId"
-              mat-list-icon
-              (click)="removeProgressFile(fileInProgress.file)"
-              class="cursor-pointer justify-self-end"
-            >
-              delete
-            </mat-icon>
-          </div>
-        </div>
-      </mat-card-subtitle>
-      <mat-card-content>
-        <mat-progress-bar [value]="fileInProgress.progress"></mat-progress-bar>
-      </mat-card-content>
-    </mat-card>
+@if (uploadFileInProgress$ | async) {
+  <div>
+    <div class="d-grid grid-container-2-col p-5 mb-20">
+      @for (fileInProgress of filesInUploadProgress$ | async; track fileInProgress) {
+        <mat-card
+          appearance="outlined"
+          class="file upload highlight"
+          >
+          <mat-card-title>
+            {{ fileInProgress.file.name }}
+          </mat-card-title>
+          <mat-card-subtitle>
+            <div class="d-flex justify-content-between align-items-center">
+              <div>{{ fileInProgress.file.size | fileBytes }}</div>
+              <div class="d-flex justify-content-between align-items-center">
+                <span>
+                  {{ fileInProgress.progress / 100 | percent }}
+                </span>
+                @if (!concernId) {
+                  <mat-icon
+                    mat-list-icon
+                    (click)="removeProgressFile(fileInProgress.file)"
+                    class="cursor-pointer justify-self-end"
+                    >
+                    delete
+                  </mat-icon>
+                }
+              </div>
+            </div>
+          </mat-card-subtitle>
+          <mat-card-content>
+            <mat-progress-bar [value]="fileInProgress.progress"></mat-progress-bar>
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+    @if (!concernId) {
+      <div>
+        <p class="mat-caption centered">
+          <em>*Uploads will resume when concern is saved.</em>
+        </p>
+      </div>
+    }
   </div>
-  <div *ngIf="!concernId">
-    <p class="mat-caption centered">
-      <em>*Uploads will resume when concern is saved.</em>
-    </p>
-  </div>
-</div>
-
-<ng-template #notLoading>
+} @else {
   <form [formGroup]="form">
     <div
       class="p-5 mb-20"
@@ -48,7 +52,7 @@
       (dragover)="preventDefaults($event); highlight()"
       (dragleave)="preventDefaults($event); unHighlight()"
       (drop)="preventDefaults($event); unHighlight(); handleDrop($event)"
-    >
+      >
       <mat-card appearance="outlined" class="file centered upload">
         <mat-card-title>
           Drag and drop supporting documents, or click attach icon to upload:
@@ -65,16 +69,17 @@
             [formControlName]="'fileUploader'"
             [accept]="acceptedFileTypes"
             (change)="onFilesSelection($event)"
-          />
-        </mat-card-actions>
-        <mat-card-footer>
-          <p class="mat-caption">
-            Supported files include: Images (.png. jpg), PDF, Word (.doc .docx)
-            and excel (.xlxs .xls). Max file size
-            <strong>{{ acceptedFileSize | fileBytes }}</strong>
-          </p>
-        </mat-card-footer>
-      </mat-card>
-    </div>
-  </form>
-</ng-template>
+            />
+          </mat-card-actions>
+          <mat-card-footer>
+            <p class="mat-caption">
+              Supported files include: Images (.png. jpg), PDF, Word (.doc .docx)
+              and excel (.xlxs .xls). Max file size
+              <strong>{{ acceptedFileSize | fileBytes }}</strong>
+            </p>
+          </mat-card-footer>
+        </mat-card>
+      </div>
+    </form>
+  }
+

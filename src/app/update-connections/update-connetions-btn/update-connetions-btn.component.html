@@ -1,4 +1,4 @@
-<ng-container *ngIf="enableUpdateConnections$ | async; else isDisabled">
+@if (enableUpdateConnections$ | async) {
   <button
     data-cy="disable-update-connections"
     color="primary"
@@ -8,31 +8,30 @@
     matTooltipShowDelay="500"
     aria-label="Close bulk update connections"
     (click)="disableUpdateConnection()"
-  >
+    >
     <mat-icon class="material-icons-outlined layered-icon base-icon"
       >library_add_check</mat-icon
-    >
-    <img
-      alt=""
-      src="assets/icons/diagonal_icon_overlay.svg"
-      class="layered-icon base-icon overlay-img"
-    />
-  </button>
-</ng-container>
+      >
+      <img
+        alt=""
+        src="assets/icons/diagonal_icon_overlay.svg"
+        class="layered-icon base-icon overlay-img"
+        />
+      </button>
+    } @else {
+      <button
+        data-cy="enable-update-connections"
+        color="primary"
+        mat-icon-button
+        matTooltip="Bulk update connections"
+        matTooltipPosition="below"
+        matTooltipShowDelay="500"
+        aria-label="Bulk update connections"
+        (click)="enableUpdateConnection()"
+        >
+        <mat-icon class="material-icons-outlined layered-icon base-icon"
+          >library_add_check</mat-icon
+          >
+        </button>
+      }
 
-<ng-template #isDisabled>
-  <button
-    data-cy="enable-update-connections"
-    color="primary"
-    mat-icon-button
-    matTooltip="Bulk update connections"
-    matTooltipPosition="below"
-    matTooltipShowDelay="500"
-    aria-label="Bulk update connections"
-    (click)="enableUpdateConnection()"
-  >
-    <mat-icon class="material-icons-outlined layered-icon base-icon"
-      >library_add_check</mat-icon
-    >
-  </button>
-</ng-template>

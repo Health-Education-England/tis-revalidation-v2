@@ -1,31 +1,30 @@
-<ng-container
-  *ngIf="{
-    totalCounts: totalCounts$ | async,
-    filter: filter$ | async,
-    enableAllocateAdmin: enableAllocateAdmin$ | async,
-    enableUpdateConnections: enableUpdateConnections$ | async
-  } as data"
->
+@if ({
+  totalCounts: totalCounts$ | async,
+  filter: filter$ | async,
+  enableAllocateAdmin: enableAllocateAdmin$ | async,
+  enableUpdateConnections: enableUpdateConnections$ | async
+  }; as data) {
   <nav
     mat-tab-nav-bar
     mat-stretch-tabs="false"
     mat-align-tabs="start"
     [tabPanel]="tabPanel"
-  >
-    <a
-      *ngFor="let i of filters"
-      mat-tab-link
-      [active]="data.filter === i.name"
-      [attr.aria-label]="'Filter ' + i.label.toLowerCase() + 'records'"
-      (click)="filterRecords(i.name)"
-      [disabled]="data.enableAllocateAdmin || data.enableUpdateConnections"
-      [attr.data-cy]="'filter-records-button_' + i.label | removeWhitespace"
     >
-      {{ i.label }}
-      <ng-container *ngIf="data.totalCounts?.hasOwnProperty(i.name)">
-        - {{ data.totalCounts[i.name] }}
-      </ng-container>
-    </a>
+    @for (i of filters; track i) {
+      <a
+        mat-tab-link
+        [active]="data.filter === i.name"
+        [attr.aria-label]="'Filter ' + i.label.toLowerCase() + 'records'"
+        (click)="filterRecords(i.name)"
+        [disabled]="data.enableAllocateAdmin || data.enableUpdateConnections"
+        [attr.data-cy]="'filter-records-button_' + i.label | removeWhitespace"
+        >
+        {{ i.label }}
+        @if (data.totalCounts?.hasOwnProperty(i.name)) {
+          - {{ data.totalCounts[i.name] }}
+        }
+      </a>
+    }
   </nav>
   <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
-</ng-container>
+}

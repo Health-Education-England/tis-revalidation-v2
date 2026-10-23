@@ -1,17 +1,18 @@
 <div class="notes-wrapper">
   <div class="d-flex justify-content-between" style="margin-bottom: 20px">
     <h2>Trainee Notes</h2>
-    <button
-      *ngIf="isAdmin && !showAddNote"
-      color="primary"
-      mat-button
-      aria-label="Add new note"
-      (click)="showAddNote = !showAddNote"
-    >
-      Add note
-    </button>
+    @if (isAdmin && !showAddNote) {
+      <button
+        color="primary"
+        mat-button
+        aria-label="Add new note"
+        (click)="showAddNote = !showAddNote"
+        >
+        Add note
+      </button>
+    }
   </div>
-  <ng-container *ngIf="showAddNote">
+  @if (showAddNote) {
     <form [formGroup]="newNoteForm" (ngSubmit)="onSubmit()">
       <mat-form-field style="width: 100%" appearance="fill">
         <textarea
@@ -25,12 +26,15 @@
           formControlName="noteText"
         ></textarea>
       </mat-form-field>
-
-      <div *ngIf="noteText?.invalid && (noteText?.dirty || noteText?.touched)">
-        <mat-error *ngIf="noteText?.errors?.required">
-          Please enter the note text.
-        </mat-error>
-      </div>
+      @if (noteText?.invalid && (noteText?.dirty || noteText?.touched)) {
+        <div>
+          @if (noteText?.errors?.required) {
+            <mat-error>
+              Please enter the note text.
+            </mat-error>
+          }
+        </div>
+      }
       <div class="d-flex justify-content-end">
         <button
           class="mr-10"
@@ -38,32 +42,34 @@
           [disabled]="!newNoteForm.valid"
           mat-raised-button
           color="primary"
-        >
+          >
           Save
         </button>
-
         <button
           (click)="onCancel()"
           type="button"
           mat-raised-button
           mat-button-raised
-        >
+          >
           Cancel
         </button>
       </div>
     </form>
     <mat-divider style="margin: 20px 0"></mat-divider>
-  </ng-container>
+  }
 
-  <ng-container *ngIf="traineeDetails$ | async as traineeDetails">
-    <span *ngIf="traineeDetails.notes.length === 0">
-      No notes for this doctor.
-    </span>
-    <app-note-card
-      *ngFor="let note of traineeDetails.notes; let index = index"
-      [note]="note"
-      [index]="index"
-      [isAdmin]="isAdmin"
-    ></app-note-card>
-  </ng-container>
+  @if (traineeDetails$ | async; as traineeDetails) {
+    @if (traineeDetails.notes.length === 0) {
+      <span>
+        No notes for this doctor.
+      </span>
+    }
+    @for (note of traineeDetails.notes; track note; let index = $index) {
+      <app-note-card
+        [note]="note"
+        [index]="index"
+        [isAdmin]="isAdmin"
+      ></app-note-card>
+    }
+  }
 </div>

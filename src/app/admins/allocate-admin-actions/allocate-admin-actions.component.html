@@ -2,30 +2,31 @@
   <mat-card-title>Allocate admin</mat-card-title>
   <app-allocate-admin-autocomplete></app-allocate-admin-autocomplete>
   <div class="d-grid grid-container-3-col">
-    <div
-      class="d-grid grid-container-3-col"
-      *ngIf="enableAllocateAdmin$ | async"
-    >
-      <button mat-button mat-raised-button color="primary" (click)="cancel()">
-        Cancel
-      </button>
-      <button
-        mat-button
-        (click)="reset()"
-        mat-raised-button
-        [disabled]="admin === null"
-      >
-        Reset
-      </button>
-      <button
-        mat-button
-        mat-raised-button
-        color="accent"
-        (click)="save()"
-        [disabled]="!canSave || admin === null"
-      >
-        Save
-      </button>
-    </div>
+    @if (enableAllocateAdmin$ | async) {
+      <div
+        class="d-grid grid-container-3-col"
+        >
+        <button mat-button mat-raised-button color="primary" (click)="cancel()">
+          Cancel
+        </button>
+        <button
+          mat-button
+          (click)="reset()"
+          mat-raised-button
+          [disabled]="admin === null"
+          >
+          Reset
+        </button>
+        <button
+          mat-button
+          mat-raised-button
+          color="accent"
+          (click)="save()"
+          [disabled]="!canSave || admin === null"
+          >
+          Save
+        </button>
+      </div>
+    }
   </div>
 </mat-card>

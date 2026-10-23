@@ -10,33 +10,34 @@
         placeholder="Start date"
         (keyup.enter)="inputTo.focus()"
         (keydown.enter)="$event.preventDefault()"
-      />
-      <input
+        />
+        <input
         (dateChange)="
           onDateChange($event, this.controlProperties.endRangeControl)
         "
-        #inputTo
-        matEndDate
-        [formControlName]="this.controlProperties.endRangeControl"
-        placeholder="End date"
-        (keyup.enter)="inputTo.blur()"
-        (keydown.enter)="$event.preventDefault()"
-      />
-    </mat-date-range-input>
-    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-date-range-picker #picker></mat-date-range-picker>
-    <!-- Error messages -->
-    <mat-error
-      *ngIf="
-        dateRangeForm.controls[
+          #inputTo
+          matEndDate
+          [formControlName]="this.controlProperties.endRangeControl"
+          placeholder="End date"
+          (keyup.enter)="inputTo.blur()"
+          (keydown.enter)="$event.preventDefault()"
+          />
+        </mat-date-range-input>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+        <!-- Error messages -->
+        @if (
+          dateRangeForm.controls[
           this.controlProperties.startRangeControl
-        ].hasError('matStartDateInvalid') &&
-        dateRangeForm.controls[this.controlProperties.endRangeControl].hasError(
+          ].hasError('matStartDateInvalid') &&
+          dateRangeForm.controls[this.controlProperties.endRangeControl].hasError(
           'matEndDateInvalid'
-        )
-      "
-    >
-      Invalid date range
-    </mat-error>
-  </mat-form-field>
-</div>
+          )
+          ) {
+          <mat-error
+            >
+            Invalid date range
+          </mat-error>
+        }
+      </mat-form-field>
+    </div>

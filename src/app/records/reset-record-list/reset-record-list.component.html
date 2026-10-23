@@ -1,19 +1,20 @@
-<button
-  type="button"
-  color="primary"
-  matTooltip="Clear search and results"
-  matTooltipPosition="below"
-  matTooltipShowDelay="500"
-  mat-icon-button
-  *ngIf="{
-    enableAllocateAdmin: enableAllocateAdmin$ | async,
-    enableUpdateConnections: enableUpdateConnections$ | async
-  } as data"
-  (click)="resetRecordList()"
-  aria-label="Clear search and results"
-  [disabled]="data.nableAllocateAdmin || data.enableUpdateConnections"
->
-  <mat-icon class="material-icons-outlined layered-icon base-icon"
-    >close</mat-icon
-  >
-</button>
+@if ({
+  enableAllocateAdmin: enableAllocateAdmin$ | async,
+  enableUpdateConnections: enableUpdateConnections$ | async
+  }; as data) {
+  <button
+    type="button"
+    color="primary"
+    matTooltip="Clear search and results"
+    matTooltipPosition="below"
+    matTooltipShowDelay="500"
+    mat-icon-button
+    (click)="resetRecordList()"
+    aria-label="Clear search and results"
+    [disabled]="data.nableAllocateAdmin || data.enableUpdateConnections"
+    >
+    <mat-icon class="material-icons-outlined layered-icon base-icon"
+      >close</mat-icon
+      >
+    </button>
+  }

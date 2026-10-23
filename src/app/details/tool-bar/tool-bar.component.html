@@ -1,42 +1,43 @@
-<mat-toolbar
-  class="sticky-toolbar"
-  *ngIf="{ isHandset: isHandset$ | async }; let device"
->
-  <ng-container *ngIf="device.isHandset">
-    <mat-menu #recommendationMenu="matMenu">
-      <app-details-side-nav></app-details-side-nav>
-    </mat-menu>
-
-    <button
-      mat-icon-button
-      aria-label="Recommendation details"
-      [matMenuTriggerFor]="recommendationMenu"
+@if ({ isHandset: isHandset$ | async }; as device) {
+  <mat-toolbar
+    class="sticky-toolbar"
     >
-      <mat-icon aria-label="Recommendation details">account_box</mat-icon>
-    </button>
-  </ng-container>
-
-  <span class="spacer"></span>
-
-  <ng-container>
-    <button
-      (click)="toggleNotesDrawer()"
-      color="secondary"
-      mat-raised-button
-      aria-label="Toggle notes"
-      class="toggle-drawer"
-      [matBadge]="matBadge"
-      data-testid="button-toggle-notes"
-    >
-      <ng-container *ngIf="{ value: isOpen$ | async } as isOpen">
-        <span *ngIf="!isOpen.value" data-testid="button-show-notes"
-          >Show notes</span
+    @if (device.isHandset) {
+      <mat-menu #recommendationMenu="matMenu">
+        <app-details-side-nav></app-details-side-nav>
+      </mat-menu>
+      <button
+        mat-icon-button
+        aria-label="Recommendation details"
+        [matMenuTriggerFor]="recommendationMenu"
         >
-
-        <span *ngIf="isOpen.value" data-testid="button-hide-notes"
-          >Hide notes</span
+        <mat-icon aria-label="Recommendation details">account_box</mat-icon>
+      </button>
+    }
+    <span class="spacer"></span>
+    <ng-container>
+      <button
+        (click)="toggleNotesDrawer()"
+        color="secondary"
+        mat-raised-button
+        aria-label="Toggle notes"
+        class="toggle-drawer"
+        [matBadge]="matBadge"
+        data-testid="button-toggle-notes"
         >
-      </ng-container>
-    </button>
-  </ng-container>
-</mat-toolbar>
+        @if ({ value: isOpen$ | async }; as isOpen) {
+          @if (!isOpen.value) {
+            <span data-testid="button-show-notes"
+              >Show notes</span
+              >
+            }
+            @if (isOpen.value) {
+              <span data-testid="button-hide-notes"
+                >Hide notes</span
+                >
+              }
+            }
+          </button>
+        </ng-container>
+      </mat-toolbar>
+    }

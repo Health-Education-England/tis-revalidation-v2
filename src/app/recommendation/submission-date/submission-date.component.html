@@ -1,11 +1,12 @@
-<mat-card
-  appearance="outlined"
-  *ngIf="gmcSubmissionDate"
-  class="mb-30"
-  [ngClass]="submissionDueStatusStyle"
->
-  <mat-card-title>GMC submission due date</mat-card-title>
-  <mat-card-content>
-    {{ gmcSubmissionDate | date: "fullDate" }}
-  </mat-card-content>
-</mat-card>
+@if (gmcSubmissionDate) {
+  <mat-card
+    appearance="outlined"
+    class="mb-30"
+    [ngClass]="submissionDueStatusStyle"
+    >
+    <mat-card-title>GMC submission due date</mat-card-title>
+    <mat-card-content>
+      {{ gmcSubmissionDate | date: "fullDate" }}
+    </mat-card-content>
+  </mat-card>
+}

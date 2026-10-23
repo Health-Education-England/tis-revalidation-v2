@@ -1,21 +1,25 @@
-<form [formGroup]="form" *ngIf="items$ | async">
-  <mat-form-field class="app-allocate-admin-autocomplete">
-    <input
-      type="text"
-      placeholder="Select admin"
-      aria-label="Select admin"
-      matInput
-      [formControlName]="'autocomplete'"
-      [matAutocomplete]="auto"
-    />
-    <mat-autocomplete
-      #auto="matAutocomplete"
-      [displayWith]="displayWith"
-      (optionSelected)="onOptionSelected($event.option.value)"
-    >
-      <mat-option *ngFor="let i of filteredItems$ | async" [value]="i">
-        {{ i.fullName }}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-</form>
+@if (items$ | async) {
+  <form [formGroup]="form">
+    <mat-form-field class="app-allocate-admin-autocomplete">
+      <input
+        type="text"
+        placeholder="Select admin"
+        aria-label="Select admin"
+        matInput
+        [formControlName]="'autocomplete'"
+        [matAutocomplete]="auto"
+        />
+        <mat-autocomplete
+          #auto="matAutocomplete"
+          [displayWith]="displayWith"
+          (optionSelected)="onOptionSelected($event.option.value)"
+          >
+          @for (i of filteredItems$ | async; track i) {
+            <mat-option [value]="i">
+              {{ i.fullName }}
+            </mat-option>
+          }
+        </mat-autocomplete>
+      </mat-form-field>
+    </form>
+  }

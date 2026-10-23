@@ -2,49 +2,52 @@
   data-jasmine="formControl"
   data-cy="formFieldWrapper"
   [formGroup]="autocompleteForm"
->
-  <mat-form-field
-    attr.data-cy="formfield_{{ controlProperties.key }}"
-    *ngIf="controlProperties"
-    style="width: 100%"
-    appearance="fill"
   >
-    <mat-label>{{ controlProperties.label }}</mat-label>
-    <input
-      matInput
-      #trigger="matAutocompleteTrigger"
-      (keydown.enter)="$event.target.blur(); trigger.closePanel()"
-      [matAutocomplete]="auto"
-      [placeholder]="controlProperties.placeholder"
-      formControlName="autocompleteInput"
-    />
-
-    <button
-      *ngIf="showClearButton"
-      matSuffix
-      mat-icon-button
-      aria-label="Clear"
-      data-jasmine="clearInputButton"
-      (click)="clearSelection()"
-    >
-      <mat-icon>close</mat-icon>
-    </button>
-
-    <mat-autocomplete
-      [panelWidth]="400"
-      #auto="matAutocomplete"
-      (optionSelected)="onSelected()"
-    >
-      <mat-option *ngIf="isLoading" class="is-loading">Loading...</mat-option>
-      <ng-container *ngIf="!isLoading">
-        <mat-option
-          *ngFor="let item of filteredItems"
-          [value]="item"
-          data-cy="autocomplete-option"
-        >
-          <span>{{ item }}</span>
-        </mat-option>
-      </ng-container>
-    </mat-autocomplete>
-  </mat-form-field>
-</div>
+  @if (controlProperties) {
+    <mat-form-field
+      attr.data-cy="formfield_{{ controlProperties.key }}"
+      style="width: 100%"
+      appearance="fill"
+      >
+      <mat-label>{{ controlProperties.label }}</mat-label>
+      <input
+        matInput
+        #trigger="matAutocompleteTrigger"
+        (keydown.enter)="$event.target.blur(); trigger.closePanel()"
+        [matAutocomplete]="auto"
+        [placeholder]="controlProperties.placeholder"
+        formControlName="autocompleteInput"
+        />
+        @if (showClearButton) {
+          <button
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            data-jasmine="clearInputButton"
+            (click)="clearSelection()"
+            >
+            <mat-icon>close</mat-icon>
+          </button>
+        }
+        <mat-autocomplete
+          [panelWidth]="400"
+          #auto="matAutocomplete"
+          (optionSelected)="onSelected()"
+          >
+          @if (isLoading) {
+            <mat-option class="is-loading">Loading...</mat-option>
+          }
+          @if (!isLoading) {
+            @for (item of filteredItems; track item) {
+              <mat-option
+                [value]="item"
+                data-cy="autocomplete-option"
+                >
+                <span>{{ item }}</span>
+              </mat-option>
+            }
+          }
+        </mat-autocomplete>
+      </mat-form-field>
+    }
+  </div>

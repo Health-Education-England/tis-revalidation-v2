@@ -1,50 +1,59 @@
-<div class="p-5 mb-20" *ngIf="uploadedFiles$ | async as uploadedFiles">
-  <mat-card appearance="outlined">
-    <mat-card-title class="centered">
-      Uploaded documents
-    </mat-card-title>
-    <mat-card-content [ngClass]="{ 'pt-10': uploadedFiles.length > 0 }">
-      <div class="d-grid grid-container-2-col">
-        <ng-container *ngFor="let file of uploadedFiles">
-          <div
-            *ngIf="{
+@if (uploadedFiles$ | async; as uploadedFiles) {
+  <div class="p-5 mb-20">
+    <mat-card appearance="outlined">
+      <mat-card-title class="centered">
+        Uploaded documents
+      </mat-card-title>
+      <mat-card-content [ngClass]="{ 'pt-10': uploadedFiles.length > 0 }">
+        <div class="d-grid grid-container-2-col">
+          @for (file of uploadedFiles; track file) {
+            @if ({
               isPdf: file.fileType === 'pdf',
               isImage: acceptedImageExtensions.includes(file.fileType)
-            } as data"
-            class="d-grid align-items-center uploaded-file"
-          >
-            <!-- generic doc icon -->
-            <mat-icon mat-list-icon *ngIf="!data.isImage && !data.isPdf">
-              note
-            </mat-icon>
-            <!-- pdf icon -->
-            <mat-icon mat-list-icon *ngIf="data.isPdf">picture_as_pdf</mat-icon>
-            <!-- image icon -->
-            <mat-icon mat-list-icon *ngIf="data.isImage">photo</mat-icon>
-
-            <div>{{ file.fileName }}</div>
-            <mat-icon
-              mat-list-icon
-              (click)="downloadFile(file.fileName, file.key)"
-              class="cursor-pointer justify-self-end"
-            >
-              cloud_download
-            </mat-icon>
-            <mat-icon
-              mat-list-icon
-              (click)="deleteFile(file.fileName, file.key)"
-              class="cursor-pointer justify-self-end"
-              >delete</mat-icon
-            >
+              }; as data) {
+              <div
+                class="d-grid align-items-center uploaded-file"
+                >
+                <!-- generic doc icon -->
+                @if (!data.isImage && !data.isPdf) {
+                  <mat-icon mat-list-icon>
+                    note
+                  </mat-icon>
+                }
+                <!-- pdf icon -->
+                @if (data.isPdf) {
+                  <mat-icon mat-list-icon>picture_as_pdf</mat-icon>
+                }
+                <!-- image icon -->
+                @if (data.isImage) {
+                  <mat-icon mat-list-icon>photo</mat-icon>
+                }
+                <div>{{ file.fileName }}</div>
+                <mat-icon
+                  mat-list-icon
+                  (click)="downloadFile(file.fileName, file.key)"
+                  class="cursor-pointer justify-self-end"
+                  >
+                  cloud_download
+                </mat-icon>
+                <mat-icon
+                  mat-list-icon
+                  (click)="deleteFile(file.fileName, file.key)"
+                  class="cursor-pointer justify-self-end"
+                  >delete</mat-icon
+                  >
+                </div>
+              }
+            }
           </div>
-        </ng-container>
-      </div>
-    </mat-card-content>
-
-    <mat-card-footer *ngIf="!uploadedFiles.length">
-      <p class="mat-caption centered">
-        <em>*No documents available.</em>
-      </p>
-    </mat-card-footer>
-  </mat-card>
-</div>
+        </mat-card-content>
+        @if (!uploadedFiles.length) {
+          <mat-card-footer>
+            <p class="mat-caption centered">
+              <em>*No documents available.</em>
+            </p>
+          </mat-card-footer>
+        }
+      </mat-card>
+    </div>
+  }

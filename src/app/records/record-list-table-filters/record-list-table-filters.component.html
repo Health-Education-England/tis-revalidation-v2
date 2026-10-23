@@ -1,31 +1,35 @@
 <div class="filters-wrapper">
-  <form
-    data-cy="tableFiltersForm"
-    (ngSubmit)="onSubmit()"
-    *ngIf="form"
-    [formGroup]="form"
-  >
-    <div class="filter-form-header">
-      <div class="d-flex justify-content-between">
-        <h2 class="mb-0">Filters</h2>
-        <button
-          color="primary"
-          *ngIf="tableFilters$ | async as tableFilters"
-          data-jasmine="clearFiltersButton"
-          mat-button
-          (click)="clearFilters()"
-        >
-          Clear all
-        </button>
+  @if (form) {
+    <form
+      data-cy="tableFiltersForm"
+      (ngSubmit)="onSubmit()"
+      [formGroup]="form"
+      >
+      <div class="filter-form-header">
+        <div class="d-flex justify-content-between">
+          <h2 class="mb-0">Filters</h2>
+          @if (tableFilters$ | async; as tableFilters) {
+            <button
+              color="primary"
+              data-jasmine="clearFiltersButton"
+              mat-button
+              (click)="clearFilters()"
+              >
+              Clear all
+            </button>
+          }
+        </div>
       </div>
-    </div>
-    <div class="p-10 mb-20">
-      <div *ngFor="let control of formControls" class="form-row">
-        <app-form-controller
-          [control]="control"
-          [form]="form"
-        ></app-form-controller>
+      <div class="p-10 mb-20">
+        @for (control of formControls; track control) {
+          <div class="form-row">
+            <app-form-controller
+              [control]="control"
+              [form]="form"
+            ></app-form-controller>
+          </div>
+        }
       </div>
-    </div>
-  </form>
+    </form>
+  }
 </div>

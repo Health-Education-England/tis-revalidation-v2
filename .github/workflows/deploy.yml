@@ -22,7 +22,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: 20.x
+          node-version: 24.x
           cache: npm
 
       - name: Configure AWS credentials
@@ -53,7 +53,7 @@ jobs:
     needs: deploy-pre-prod
     name: Run Cypress E2E tests
     runs-on: ubuntu-latest
-    container: cypress/browsers:node-20.11.0-chrome-121.0.6167.85-1-ff-120.0-edge-121.0.2277.83-1
+    container: cypress/browsers:node-24.22.1-chrome-156.0.8078.47-1-ff-158.0.1-edge-155.0.4283.62-1
 
     steps:
       - uses: actions/checkout@v5
@@ -116,7 +116,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: 20.x
+          node-version: 24.x
           cache: npm
 
       - name: Configure AWS credentials

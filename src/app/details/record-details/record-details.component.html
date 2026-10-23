@@ -1,37 +1,39 @@
 <app-nav-bar></app-nav-bar>
 <ng-container>
-  <ng-container *ngIf="{ isHandset: isHandset$ | async }; let device">
+  @if ({ isHandset: isHandset$ | async }; as device) {
     <div class="record-details" [ngClass]="{ 'd-flex': !device.isHandset }">
-      <div class="left-nav" *ngIf="!device.isHandset">
-        <app-details-side-nav></app-details-side-nav>
-      </div>
-
-      <mat-divider *ngIf="!device.isHandset" [vertical]="true"></mat-divider>
-
-      <div
-        class="main-col d-grid align-content-start bg-white"
-        *ngIf="{
-          ishandset: device.isHandset
-        } as toolbarSettings"
-      >
-        <app-tool-bar></app-tool-bar>
-
-        <mat-drawer-container class="notes-drawer-container">
-          <mat-drawer
-            #notesDrawer
-            [mode]="toolbarSettings.ishandset ? 'over' : 'side'"
-            position="end"
-            [opened]="isOpen$ | async"
+      @if (!device.isHandset) {
+        <div class="left-nav">
+          <app-details-side-nav></app-details-side-nav>
+        </div>
+      }
+      @if (!device.isHandset) {
+        <mat-divider [vertical]="true"></mat-divider>
+      }
+      @if ({
+        ishandset: device.isHandset
+        }; as toolbarSettings) {
+        <div
+          class="main-col d-grid align-content-start bg-white"
           >
-            <app-notes-drawer></app-notes-drawer>
-          </mat-drawer>
-          <mat-drawer-content>
-            <div class="record-content-container">
-              <router-outlet></router-outlet>
-            </div>
-          </mat-drawer-content>
-        </mat-drawer-container>
-      </div>
+          <app-tool-bar></app-tool-bar>
+          <mat-drawer-container class="notes-drawer-container">
+            <mat-drawer
+              #notesDrawer
+              [mode]="toolbarSettings.ishandset ? 'over' : 'side'"
+              position="end"
+              [opened]="isOpen$ | async"
+              >
+              <app-notes-drawer></app-notes-drawer>
+            </mat-drawer>
+            <mat-drawer-content>
+              <div class="record-content-container">
+                <router-outlet></router-outlet>
+              </div>
+            </mat-drawer-content>
+          </mat-drawer-container>
+        </div>
+      }
     </div>
-  </ng-container>
+  }
 </ng-container>

@@ -1,49 +1,56 @@
-<mat-card appearance="outlined" class="note-card" *ngIf="note">
-  <mat-card-subtitle>{{
-    note.updatedDate | date: dateFormat
-  }}</mat-card-subtitle>
-  <mat-card-content>
-    <div *ngIf="!note.edit">{{ note.text }}</div>
-  </mat-card-content>
-
-  <mat-form-field
-    style="width: 100%; margin-bottom: 0"
-    appearance="fill"
-    *ngIf="note.edit"
-  >
-    <textarea
-      #noteTextarea
-      cdkTextareaAutosize
-      cdkAutosizeMinRows="1"
-      cdkAutosizeMaxRows="20"
-      matInput
-      placeholder="Note text"
-      >{{ note.text }}</textarea
-    >
-  </mat-form-field>
-  <ng-container *ngIf="isAdmin">
-    <mat-divider class="mt-20"></mat-divider>
-    <mat-card-actions *ngIf="!note.edit">
-      <button
-        mat-button
-        color="primary"
-        aria-label="Edit note"
-        (click)="note.edit = true"
-      >
-        Edit
-      </button>
-    </mat-card-actions>
-
-    <mat-card-actions *ngIf="note.edit">
-      <button
-        class="mr-10"
-        color="primary"
-        mat-raised-button
-        (click)="onSaveEditNote()"
-      >
-        Save
-      </button>
-      <button mat-raised-button (click)="note.edit = false">Undo</button>
-    </mat-card-actions>
-  </ng-container>
-</mat-card>
+@if (note) {
+  <mat-card appearance="outlined" class="note-card">
+    <mat-card-subtitle>{{
+      note.updatedDate | date: dateFormat
+    }}</mat-card-subtitle>
+    <mat-card-content>
+      @if (!note.edit) {
+        <div>{{ note.text }}</div>
+      }
+    </mat-card-content>
+    @if (note.edit) {
+      <mat-form-field
+        style="width: 100%; margin-bottom: 0"
+        appearance="fill"
+        >
+        <textarea
+          #noteTextarea
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="20"
+          matInput
+          placeholder="Note text"
+          >{{ note.text }}</textarea
+          >
+        </mat-form-field>
+      }
+      @if (isAdmin) {
+        <mat-divider class="mt-20"></mat-divider>
+        @if (!note.edit) {
+          <mat-card-actions>
+            <button
+              mat-button
+              color="primary"
+              aria-label="Edit note"
+              (click)="note.edit = true"
+              >
+              Edit
+            </button>
+          </mat-card-actions>
+        }
+        @if (note.edit) {
+          <mat-card-actions>
+            <button
+              class="mr-10"
+              color="primary"
+              mat-raised-button
+              (click)="onSaveEditNote()"
+              >
+              Save
+            </button>
+            <button mat-raised-button (click)="note.edit = false">Undo</button>
+          </mat-card-actions>
+        }
+      }
+    </mat-card>
+  }

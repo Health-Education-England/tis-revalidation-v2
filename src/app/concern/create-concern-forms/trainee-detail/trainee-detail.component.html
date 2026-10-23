@@ -2,54 +2,62 @@
   [formGroup]="formGroup"
   class="trainee-detail"
   (ngSubmit)="stepper.next()"
->
-  <div
-    class="d-grid grid-container-2-col"
-    *ngIf="{
-      grades: grades$ | async,
-      sites: sites$ | async,
-      employers: employers$ | async,
-      gmcNumber: gmcNumber$ | async
-    } as data"
   >
-    <mat-form-field>
-      <mat-label>Grade</mat-label>
-      <mat-select formControlName="grade" [compareWith]="compareFn">
-        <mat-option *ngFor="let grade of data.grades" [value]="grade">
-          {{ grade.label }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <app-allocate-admin-autocomplete
-      [gmcNumber]="data.gmcNumber"
-      [admin]="admin"
-    ></app-allocate-admin-autocomplete>
-
-    <mat-form-field>
-      <mat-label>Site</mat-label>
-      <mat-select formControlName="site" [compareWith]="compareFn">
-        <mat-option *ngFor="let site of data.sites" [value]="site">
-          {{ site.label }}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="form.site.hasError('required')">
-        Site must be provided
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-label>Employer</mat-label>
-      <mat-select formControlName="employer" [compareWith]="compareFn">
-        <mat-option *ngFor="let employer of data.employers" [value]="employer">
-          {{ employer.label }}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="form.employer.hasError('required')">
-        Employer must be provided
-      </mat-error>
-    </mat-form-field>
-  </div>
+  @if ({
+    grades: grades$ | async,
+    sites: sites$ | async,
+    employers: employers$ | async,
+    gmcNumber: gmcNumber$ | async
+    }; as data) {
+    <div
+      class="d-grid grid-container-2-col"
+      >
+      <mat-form-field>
+        <mat-label>Grade</mat-label>
+        <mat-select formControlName="grade" [compareWith]="compareFn">
+          @for (grade of data.grades; track grade) {
+            <mat-option [value]="grade">
+              {{ grade.label }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <app-allocate-admin-autocomplete
+        [gmcNumber]="data.gmcNumber"
+        [admin]="admin"
+      ></app-allocate-admin-autocomplete>
+      <mat-form-field>
+        <mat-label>Site</mat-label>
+        <mat-select formControlName="site" [compareWith]="compareFn">
+          @for (site of data.sites; track site) {
+            <mat-option [value]="site">
+              {{ site.label }}
+            </mat-option>
+          }
+        </mat-select>
+        @if (form.site.hasError('required')) {
+          <mat-error>
+            Site must be provided
+          </mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Employer</mat-label>
+        <mat-select formControlName="employer" [compareWith]="compareFn">
+          @for (employer of data.employers; track employer) {
+            <mat-option [value]="employer">
+              {{ employer.label }}
+            </mat-option>
+          }
+        </mat-select>
+        @if (form.employer.hasError('required')) {
+          <mat-error>
+            Employer must be provided
+          </mat-error>
+        }
+      </mat-form-field>
+    </div>
+  }
 
   <div class="button-row">
     <button
@@ -57,7 +65,7 @@
       mat-raised-button
       type="button"
       (click)="stepper.previous()"
-    >
+      >
       Back
     </button>
     <button mat-button mat-raised-button color="primary" type="submit">

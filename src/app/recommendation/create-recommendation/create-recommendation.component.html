@@ -4,129 +4,148 @@
   class="records-form"
   [formGroup]="recommendationForm"
   (ngSubmit)="saveDraft(true)"
->
-  <mat-card
-    appearance="outlined"
-    *ngIf="!isDeferrable"
-    class="mat-card mat-focus-indicator mb-30 alert-warning ng-star-inserted deferral-blocked-message"
   >
-    <mat-card-title>
-      Unable to defer recommendation for this doctor as GMC submission due date
-      is greater than 120 days in the future.
-    </mat-card-title>
-    <mat-card-content class="mat-card-content">
-      Deferral permitted from {{ deferralFrom | date: "fullDate" }}
-    </mat-card-content></mat-card
-  >
-  <div class="d-grid grid-container-2-col">
-    <mat-form-field>
-      <mat-label>Make a recommendation</mat-label>
-      <mat-select data-cy="selectRecommendation" formControlName="action">
-        <mat-option
-          *ngFor="let revalType of recommendationType | keyvalue"
-          [value]="revalType.key"
+  @if (!isDeferrable) {
+    <mat-card
+      appearance="outlined"
+      class="mat-card mat-focus-indicator mb-30 alert-warning ng-star-inserted deferral-blocked-message"
+      >
+      <mat-card-title>
+        Unable to defer recommendation for this doctor as GMC submission due date
+        is greater than 120 days in the future.
+      </mat-card-title>
+      <mat-card-content class="mat-card-content">
+        Deferral permitted from {{ deferralFrom | date: "fullDate" }}
+      </mat-card-content></mat-card
+      >
+    }
+    <div class="d-grid grid-container-2-col">
+      <mat-form-field>
+        <mat-label>Make a recommendation</mat-label>
+        <mat-select data-cy="selectRecommendation" formControlName="action">
+          @for (revalType of recommendationType | keyvalue; track revalType) {
+            <mat-option
+              [value]="revalType.key"
           [disabled]="
             !isDeferrable &&
             recommendationType[revalType.key] === recommendationType.DEFER
           "
-        >
-          {{ revalType.value }}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="actionControl?.hasError('required')">
-        Please make a recommendation
-      </mat-error>
-    </mat-form-field>
+              >
+              {{ revalType.value }}
+            </mat-option>
+          }
+        </mat-select>
+        @if (actionControl?.hasError('required')) {
+          <mat-error>
+            Please make a recommendation
+          </mat-error>
+        }
+      </mat-form-field>
 
-    <mat-form-field data-cy="deferDate" *ngIf="deferSelected">
-      <mat-label>Choose a date</mat-label>
-      <input
-        matInput
-        formControlName="deferralDate"
-        [min]="minReferralDate"
-        [max]="maxReferralDate"
-        [matDatepicker]="picker"
-        readonly
-      />
-      <mat-error *ngIf="deferralDateControl?.hasError('required')">
-        {{ getDeferralDateErrorMessage() }}
-      </mat-error>
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker disabled="false"></mat-datepicker>
-    </mat-form-field>
+      @if (deferSelected) {
+        <mat-form-field data-cy="deferDate">
+          <mat-label>Choose a date</mat-label>
+          <input
+            matInput
+            formControlName="deferralDate"
+            [min]="minReferralDate"
+            [max]="maxReferralDate"
+            [matDatepicker]="picker"
+            readonly
+            />
+            @if (deferralDateControl?.hasError('required')) {
+              <mat-error>
+                {{ getDeferralDateErrorMessage() }}
+              </mat-error>
+            }
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker disabled="false"></mat-datepicker>
+          </mat-form-field>
+        }
 
-    <mat-form-field *ngIf="deferSelected">
-      <mat-label>Reason</mat-label>
-      <mat-select formControlName="deferralReason">
-        <mat-option
-          *ngFor="let reason of deferralReasons"
-          [value]="reason.code"
-        >
-          {{ reason.reason }}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="deferralReasonControl?.hasError('required')">
-        Reason must be provided
-      </mat-error>
-    </mat-form-field>
+        @if (deferSelected) {
+          <mat-form-field>
+            <mat-label>Reason</mat-label>
+            <mat-select formControlName="deferralReason">
+              @for (reason of deferralReasons; track reason) {
+                <mat-option
+                  [value]="reason.code"
+                  >
+                  {{ reason.reason }}
+                </mat-option>
+              }
+            </mat-select>
+            @if (deferralReasonControl?.hasError('required')) {
+              <mat-error>
+                Reason must be provided
+              </mat-error>
+            }
+          </mat-form-field>
+        }
 
-    <mat-form-field *ngIf="deferSelected && deferralSubReasons.length > 0">
-      <mat-label>Sub reason</mat-label>
-      <mat-select formControlName="deferralSubReason">
-        <mat-option
-          *ngFor="let reason of deferralSubReasons"
-          [value]="reason.code"
-        >
-          {{ reason.reason }}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="deferralSubReasonControl?.hasError('required')">
-        Sub reason must be provided
-      </mat-error>
-    </mat-form-field>
-  </div>
-  <app-comments
-    class="d-block mt-20"
-    [featureComments]="recommendation.comments"
-  ></app-comments>
+        @if (deferSelected && deferralSubReasons.length > 0) {
+          <mat-form-field>
+            <mat-label>Sub reason</mat-label>
+            <mat-select formControlName="deferralSubReason">
+              @for (reason of deferralSubReasons; track reason) {
+                <mat-option
+                  [value]="reason.code"
+                  >
+                  {{ reason.reason }}
+                </mat-option>
+              }
+            </mat-select>
+            @if (deferralSubReasonControl?.hasError('required')) {
+              <mat-error>
+                Sub reason must be provided
+              </mat-error>
+            }
+          </mat-form-field>
+        }
+      </div>
+      <app-comments
+        class="d-block mt-20"
+        [featureComments]="recommendation.comments"
+      ></app-comments>
 
-  <div class="button-row">
-    <button type="button" mat-button mat-raised-button [routerLink]="['../']">
-      Back
-    </button>
-    <button
-      data-cy="btnSaveDraft"
-      mat-button
-      type="button"
-      mat-raised-button
-      (click)="saveDraft(false)"
-      color="accent"
-      [disabled]="isSaving"
-    >
-      Save draft
-    </button>
-    <button
-      data-cy="btnMakeRecommendation"
-      *ngIf="isRevalApprover"
-      type="submit"
-      mat-button
-      mat-raised-button
-      color="primary"
-      [disabled]="isSaving"
-    >
-      Make recommendation
-    </button>
-    <span class="spacer"></span>
-    <button
-      type="button"
-      mat-icon-button
-      aria-label="Reset changes"
-      matTooltipPosition="left"
-      color="warn"
-      matTooltip="Reset changes"
-      (click)="resetForm()"
-    >
-      <mat-icon>restore</mat-icon>
-    </button>
-  </div>
-</form>
+      <div class="button-row">
+        <button type="button" mat-button mat-raised-button [routerLink]="['../']">
+          Back
+        </button>
+        <button
+          data-cy="btnSaveDraft"
+          mat-button
+          type="button"
+          mat-raised-button
+          (click)="saveDraft(false)"
+          color="accent"
+          [disabled]="isSaving"
+          >
+          Save draft
+        </button>
+        @if (isRevalApprover) {
+          <button
+            data-cy="btnMakeRecommendation"
+            type="submit"
+            mat-button
+            mat-raised-button
+            color="primary"
+            [disabled]="isSaving"
+            >
+            Make recommendation
+          </button>
+        }
+        <span class="spacer"></span>
+        <button
+          type="button"
+          mat-icon-button
+          aria-label="Reset changes"
+          matTooltipPosition="left"
+          color="warn"
+          matTooltip="Reset changes"
+          (click)="resetForm()"
+          >
+          <mat-icon>restore</mat-icon>
+        </button>
+      </div>
+    </form>

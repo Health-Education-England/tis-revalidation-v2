@@ -1,80 +1,82 @@
-<div
-  class="recommendation-details"
-  [ngClass]="{ 'large-display': (isHandset$ | async) === false }"
-  *ngIf="traineeDetails$ | async as traineeDetails"
->
-  <div class="details-list">
-    <div class="details-list-item">
-      <span class="details-list-item-title">Name</span>
-      <span class="details-list-item-line"
-        >{{ traineeDetails.forenames }} {{ traineeDetails.surname }}</span
-      >
-    </div>
-    <div class="details-list-item">
-      <span class="details-list-item-title">GMC No</span>
-      <span class="details-list-item-line">{{ traineeDetails.gmcNumber }}</span>
-    </div>
-    <div class="details-list-item">
-      <span class="details-list-item-title">Programme membership type</span>
-      <span class="details-list-item-line"
-        >{{
-          traineeDetails.programmeMembershipType === null
+@if (traineeDetails$ | async; as traineeDetails) {
+  <div
+    class="recommendation-details"
+    [ngClass]="{ 'large-display': (isHandset$ | async) === false }"
+    >
+    <div class="details-list">
+      <div class="details-list-item">
+        <span class="details-list-item-title">Name</span>
+        <span class="details-list-item-line"
+          >{{ traineeDetails.forenames }} {{ traineeDetails.surname }}</span
+          >
+        </div>
+        <div class="details-list-item">
+          <span class="details-list-item-title">GMC No</span>
+          <span class="details-list-item-line">{{ traineeDetails.gmcNumber }}</span>
+        </div>
+        <div class="details-list-item">
+          <span class="details-list-item-title">Programme membership type</span>
+          <span class="details-list-item-line"
+            >{{
+            traineeDetails.programmeMembershipType === null
             ? "N/A"
             : traineeDetails.programmeMembershipType
-        }}
-      </span>
-    </div>
-    <div class="details-list-item">
-      <span class="details-list-item-title">Current programme name</span>
-      <span
-        class="details-list-item-line programme-names"
-        *ngIf="traineeDetails.programmeName; else NoProgramme"
-        [innerHTML]="traineeDetails.programmeName | splitStringToHTML: ' | '"
-      ></span>
-
-      <ng-template #NoProgramme mat-line>N/A</ng-template>
-    </div>
-
-    <div class="details-list-item">
-      <span class="details-list-item-title">Programme end date</span>
-      <span class="details-list-item-line"
-        >{{
-          traineeDetails.programmeEndDate
+            }}
+          </span>
+        </div>
+        <div class="details-list-item">
+          <span class="details-list-item-title">Current programme name</span>
+          @if (traineeDetails.programmeName) {
+            <span
+              class="details-list-item-line programme-names"
+              [innerHTML]="traineeDetails.programmeName | splitStringToHTML: ' | '"
+            ></span>
+          } @else {
+            N/A
+          }
+        </div>
+        <div class="details-list-item">
+          <span class="details-list-item-title">Programme end date</span>
+          <span class="details-list-item-line"
+            >{{
+            traineeDetails.programmeEndDate
             ? (traineeDetails.programmeEndDate | date: dateFormat)
             : "N/A"
-        }}
-      </span>
-    </div>
-    <div class="details-list-item">
-      <span class="details-list-item-title">Curriculum end date</span>
-      <span class="details-list-item-line"
-        >{{
-          traineeDetails.curriculumEndDate === null
+            }}
+          </span>
+        </div>
+        <div class="details-list-item">
+          <span class="details-list-item-title">Curriculum end date</span>
+          <span class="details-list-item-line"
+            >{{
+            traineeDetails.curriculumEndDate === null
             ? "N/A"
             : (traineeDetails.curriculumEndDate | date: dateFormat)
-        }}
-      </span>
-    </div>
-    <div class="details-list-item">
-      <span class="details-list-item-title">Current grade</span>
-      <span class="details-list-item-line"
-        >{{
-          traineeDetails.currentGrade === null
+            }}
+          </span>
+        </div>
+        <div class="details-list-item">
+          <span class="details-list-item-title">Current grade</span>
+          <span class="details-list-item-line"
+            >{{
+            traineeDetails.currentGrade === null
             ? "N/A"
             : traineeDetails.currentGrade
-        }}
-      </span>
+            }}
+          </span>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <mat-nav-list>
+        @for (link of sideLinks; track link) {
+          <a
+            mat-list-item
+            href="{{ link.link }}"
+            target="_blank"
+            >
+            {{ link.text }}
+          </a>
+        }
+      </mat-nav-list>
     </div>
-  </div>
-  <mat-divider></mat-divider>
-  <mat-nav-list>
-    <a
-      mat-list-item
-      href="{{ link.link }}"
-      *ngFor="let link of sideLinks"
-      target="_blank"
-    >
-      {{ link.text }}
-    </a>
-  </mat-nav-list>
-</div>
+  }

@@ -1,33 +1,35 @@
-<ng-container *ngFor="let menuItem of menuItems">
-  <ng-container *ngIf="menuItem.menuItems">
+@for (menuItem of menuItems; track menuItem) {
+  @if (menuItem.menuItems) {
     <button
       mat-button
       [matMenuTriggerFor]="subMenu"
       (click)="setActiveItem(menuItem.name)"
       class="nav-item"
       [ngClass]="{ active: menuItem.name === activeItem }"
-    >
+      >
       {{ menuItem.name }}
     </button>
     <mat-menu
       #subMenu="matMenu"
       [class]="menuItem.menuItems?.length > 5 ? 'mega-menu' : ''"
-    >
-      <ng-container *ngFor="let item of menuItem.menuItems">
-        <a
-          mat-menu-item
-          *ngIf="item.type === menuType.INTERNAL"
-          [routerLink]="item.route"
-          routerLinkActive="active-list-item"
-          >{{ item.name }}</a
-        >
-        <a
-          mat-menu-item
-          *ngIf="item.type === menuType.EXTERNAL"
-          [href]="hostURI + item.route"
-          >{{ item.name }}</a
-        >
-      </ng-container>
-    </mat-menu>
-  </ng-container>
-</ng-container>
+      >
+      @for (item of menuItem.menuItems; track item) {
+        @if (item.type === menuType.INTERNAL) {
+          <a
+            mat-menu-item
+            [routerLink]="item.route"
+            routerLinkActive="active-list-item"
+            >{{ item.name }}</a
+            >
+          }
+          @if (item.type === menuType.EXTERNAL) {
+            <a
+              mat-menu-item
+              [href]="hostURI + item.route"
+              >{{ item.name }}</a
+              >
+            }
+          }
+        </mat-menu>
+      }
+    }

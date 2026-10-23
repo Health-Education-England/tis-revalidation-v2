@@ -5,16 +5,17 @@
     [attr.data-cy]="'selectionList' + controlProperties.key | removeWhitespace"
     class="mb-20"
     color="primary"
-  >
-    <div class="h2">{{ controlProperties.label }}</div>
-    <mat-list-option
-      [matTooltip]="option.value.length > 27 ? option.value : null"
-      matTooltipShowDelay="400"
-      *ngFor="let option of controlProperties.options"
-      [value]="option.key"
-      [attr.data-cy]="'selectionOption' + option.key | removeWhitespace"
     >
-      {{ option.value }}
-    </mat-list-option>
+    <div class="h2">{{ controlProperties.label }}</div>
+    @for (option of controlProperties.options; track option) {
+      <mat-list-option
+        [matTooltip]="option.value.length > 27 ? option.value : null"
+        matTooltipShowDelay="400"
+        [value]="option.key"
+        [attr.data-cy]="'selectionOption' + option.key | removeWhitespace"
+        >
+        {{ option.value }}
+      </mat-list-option>
+    }
   </mat-selection-list>
 </div>

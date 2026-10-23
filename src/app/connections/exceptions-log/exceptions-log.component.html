@@ -1,65 +1,71 @@
-<ng-container id="ShowError" *ngIf="pageStatus === 'error'">
-  <div data-test="ErrorMessage" class="mt-20 d-flex justify-content-center">
-    Error loading failed GMC updates.
-  </div>
-</ng-container>
-<ng-container id="ShowLoadingSpinner" *ngIf="pageStatus === 'loading'">
-  <div
-    class="d-flex align-content-center justify-content-center align-items-center progress-spinner"
-  >
-    <mat-spinner></mat-spinner>
-  </div>
-</ng-container>
+@if (pageStatus === 'error') {
+  <ng-container id="ShowError">
+    <div data-test="ErrorMessage" class="mt-20 d-flex justify-content-center">
+      Error loading failed GMC updates.
+    </div>
+  </ng-container>
+}
+@if (pageStatus === 'loading') {
+  <ng-container id="ShowLoadingSpinner">
+    <div
+      class="d-flex align-content-center justify-content-center align-items-center progress-spinner"
+      >
+      <mat-spinner></mat-spinner>
+    </div>
+  </ng-container>
+}
 
-<ng-container id="NoExceptionDataFound" *ngIf="pageStatus === 'empty'">
-  <div
-    data-test="NoExceptionsMessage"
-    class="mt-20 d-flex justify-content-center"
-  >
-    No failed GMC updates from today found.
-  </div>
-</ng-container>
+@if (pageStatus === 'empty') {
+  <ng-container id="NoExceptionDataFound">
+    <div
+      data-test="NoExceptionsMessage"
+      class="mt-20 d-flex justify-content-center"
+      >
+      No failed GMC updates from today found.
+    </div>
+  </ng-container>
+}
 
-<ng-container id="ExceptionDataFound" *ngIf="pageStatus === 'ok'">
-  <h2 class="ml-20 mt-20">
-    List of failed GMC updates from today by current user.
-  </h2>
-
-  <table
-    class="w-100"
-    mat-table
-    [dataSource]="dataSource"
-    matSort
-    matSortActive="timestamp"
-    matSortDirection="desc"
-    matSortDisableClear
-  >
-    <caption class="collapsed no-height">
-      List of failed GMC updates from today.
-    </caption>
-    <ng-container
-      [matColumnDef]="column.name"
-      *ngFor="let column of displayedColumns"
-    >
-      <th mat-header-cell [mat-sort-header]="column.name" *matHeaderCellDef>
-        {{ column.label }}
-      </th>
-      <td mat-cell *matCellDef="let cell">
-        <ng-container *ngIf="column.name === 'timestamp'; else notDate">
-          {{ cell[column.name] | date: dateFormat }}
+@if (pageStatus === 'ok') {
+  <ng-container id="ExceptionDataFound">
+    <h2 class="ml-20 mt-20">
+      List of failed GMC updates from today by current user.
+    </h2>
+    <table
+      class="w-100"
+      mat-table
+      [dataSource]="dataSource"
+      matSort
+      matSortActive="timestamp"
+      matSortDirection="desc"
+      matSortDisableClear
+      >
+      <caption class="collapsed no-height">
+        List of failed GMC updates from today.
+      </caption>
+      @for (column of displayedColumns; track column) {
+        <ng-container
+          [matColumnDef]="column.name"
+          >
+          <th mat-header-cell [mat-sort-header]="column.name" *matHeaderCellDef>
+            {{ column.label }}
+          </th>
+          <td mat-cell *matCellDef="let cell">
+            @if (column.name === 'timestamp') {
+              {{ cell[column.name] | date: dateFormat }}
+            } @else {
+              {{ cell[column.name] }}
+            }
+          </td>
         </ng-container>
-        <ng-template #notDate>
-          {{ cell[column.name] }}
-        </ng-template>
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumnNames"></tr>
-    <tr
-      tabindex="0"
-      mat-row
-      *matRowDef="let row; columns: displayedColumnNames"
-      (click)="navigateToDetails($event, row)"
-    ></tr>
-  </table>
-</ng-container>
+      }
+      <tr mat-header-row *matHeaderRowDef="displayedColumnNames"></tr>
+      <tr
+        tabindex="0"
+        mat-row
+        *matRowDef="let row; columns: displayedColumnNames"
+        (click)="navigateToDetails($event, row)"
+      ></tr>
+    </table>
+  </ng-container>
+}

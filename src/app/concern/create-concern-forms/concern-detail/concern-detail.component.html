@@ -2,121 +2,133 @@
   <div class="pb-20 pt-20">
     <mat-slide-toggle color="primary" formControlName="status"
       >Status: {{ statusText }}</mat-slide-toggle
-    >
-  </div>
+      >
+    </div>
 
-  <div
-    class="d-grid grid-container-2-col"
-    *ngIf="{
+    @if ({
       concernTypes: concernTypes$ | async,
       sources: sources$ | async
-    } as data"
-  >
-    <mat-form-field>
-      <mat-label>Date of incident</mat-label>
-      <input
-        matInput
-        [max]="lessThanEqualToday"
-        formControlName="dateOfIncident"
-        [matDatepicker]="dateOfIncidentPicker"
-        disabled
-      />
-      <mat-error *ngIf="form.dateOfIncident?.hasError('required')">
-        Date of incident is required
-      </mat-error>
-      <mat-datepicker-toggle
-        matSuffix
-        [for]="dateOfIncidentPicker"
-      ></mat-datepicker-toggle>
-      <mat-datepicker
-        touchUi
-        #dateOfIncidentPicker
-        disabled="false"
-      ></mat-datepicker>
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-label>Concern type</mat-label>
-      <mat-select formControlName="concernType" [compareWith]="compareFn">
-        <mat-option
-          *ngFor="let concernType of data.concernTypes"
-          [value]="concernType"
+      }; as data) {
+      <div
+        class="d-grid grid-container-2-col"
         >
-          {{ concernType.label }}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="form.concernType?.hasError('required')">
-        Concern type must be provided
-      </mat-error>
-    </mat-form-field>
+        <mat-form-field>
+          <mat-label>Date of incident</mat-label>
+          <input
+            matInput
+            [max]="lessThanEqualToday"
+            formControlName="dateOfIncident"
+            [matDatepicker]="dateOfIncidentPicker"
+            disabled
+            />
+          @if (form.dateOfIncident?.hasError('required')) {
+            <mat-error>
+              Date of incident is required
+            </mat-error>
+          }
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="dateOfIncidentPicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker
+            touchUi
+            #dateOfIncidentPicker
+            disabled="false"
+          ></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Concern type</mat-label>
+          <mat-select formControlName="concernType" [compareWith]="compareFn">
+            @for (concernType of data.concernTypes; track concernType) {
+              <mat-option
+                [value]="concernType"
+                >
+                {{ concernType.label }}
+              </mat-option>
+            }
+          </mat-select>
+          @if (form.concernType?.hasError('required')) {
+            <mat-error>
+              Concern type must be provided
+            </mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Source</mat-label>
+          <mat-select formControlName="source" [compareWith]="compareFn">
+            @for (source of data.sources; track source) {
+              <mat-option [value]="source">
+                {{ source.label }}
+              </mat-option>
+            }
+          </mat-select>
+          @if (form.source?.hasError('required')) {
+            <mat-error>
+              Source must be provided
+            </mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Date reported</mat-label>
+          <input
+            matInput
+            [max]="lessThanEqualToday"
+            [min]="form.dateOfIncident?.value"
+            formControlName="dateReported"
+            [matDatepicker]="dateReportedPicker"
+            disabled
+            />
+          @if (form.dateReported?.hasError('required')) {
+            <mat-error>
+              Date reported is required
+            </mat-error>
+          }
+          @if (form.dateReported?.hasError('matDatepickerMin')) {
+            <mat-error>
+              Date reported can't be before the date of incident
+            </mat-error>
+          }
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="dateReportedPicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker
+            touchUi
+            #dateReportedPicker
+            disabled="false"
+          ></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Follow up date</mat-label>
+          <input
+            matInput
+            [min]="greaterThanToday"
+            formControlName="followUpDate"
+            [matDatepicker]="followUpDatePicker"
+            disabled
+            />
+          @if (form.followUpDate?.hasError('required')) {
+            <mat-error>
+              Follow up date is required
+            </mat-error>
+          }
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="followUpDatePicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker
+            touchUi
+            #followUpDatePicker
+            disabled="false"
+          ></mat-datepicker>
+        </mat-form-field>
+      </div>
+    }
 
-    <mat-form-field>
-      <mat-label>Source</mat-label>
-      <mat-select formControlName="source" [compareWith]="compareFn">
-        <mat-option *ngFor="let source of data.sources" [value]="source">
-          {{ source.label }}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="form.source?.hasError('required')">
-        Source must be provided
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-label>Date reported</mat-label>
-      <input
-        matInput
-        [max]="lessThanEqualToday"
-        [min]="form.dateOfIncident?.value"
-        formControlName="dateReported"
-        [matDatepicker]="dateReportedPicker"
-        disabled
-      />
-      <mat-error *ngIf="form.dateReported?.hasError('required')">
-        Date reported is required
-      </mat-error>
-      <mat-error *ngIf="form.dateReported?.hasError('matDatepickerMin')">
-        Date reported can't be before the date of incident
-      </mat-error>
-      <mat-datepicker-toggle
-        matSuffix
-        [for]="dateReportedPicker"
-      ></mat-datepicker-toggle>
-      <mat-datepicker
-        touchUi
-        #dateReportedPicker
-        disabled="false"
-      ></mat-datepicker>
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-label>Follow up date</mat-label>
-      <input
-        matInput
-        [min]="greaterThanToday"
-        formControlName="followUpDate"
-        [matDatepicker]="followUpDatePicker"
-        disabled
-      />
-      <mat-error *ngIf="form.followUpDate?.hasError('required')">
-        Follow up date is required
-      </mat-error>
-      <mat-datepicker-toggle
-        matSuffix
-        [for]="followUpDatePicker"
-      ></mat-datepicker-toggle>
-      <mat-datepicker
-        touchUi
-        #followUpDatePicker
-        disabled="false"
-      ></mat-datepicker>
-    </mat-form-field>
-  </div>
-
-  <div class="button-row">
-    <button mat-button mat-raised-button [routerLink]="backRoute">Back</button>
-    <button mat-button mat-raised-button color="primary" type="submit">
-      Next
-    </button>
-  </div>
-</form>
+    <div class="button-row">
+      <button mat-button mat-raised-button [routerLink]="backRoute">Back</button>
+      <button mat-button mat-raised-button color="primary" type="submit">
+        Next
+      </button>
+    </div>
+  </form>

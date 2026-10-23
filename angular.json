@@ -20,7 +20,12 @@
             "stylePreprocessorOptions": {
               "includePaths": ["./node_modules", "."],
               "sass": {
-                "silenceDeprecations": ["global-builtin"]
+                "silenceDeprecations": [
+                  "mixed-decls",
+                  "color-functions",
+                  "global-builtin",
+                  "import"
+                ]
               }
             },
             "allowedCommonJsDependencies": [
@@ -243,6 +248,17 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
+            "stylePreprocessorOptions": {
+              "includePaths": ["src", "node_modules"],
+              "sass": {
+                "silenceDeprecations": [
+                  "mixed-decls",
+                  "color-functions",
+                  "global-builtin",
+                  "import"
+                ]
+              }
+            },
             "main": "src/test.ts",
             "polyfills": ["src/polyfills.ts"],
             "tsConfig": "tsconfig.spec.json",
